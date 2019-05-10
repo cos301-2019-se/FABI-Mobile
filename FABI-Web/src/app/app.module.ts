@@ -1,30 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MaterialModule} from './materials';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SignupComponent } from './signup/signup.component';
-import { SampleFormComponent } from './sample-form/sample-form.component';
-import { MenuComponent } from './menu/menu.component';
-import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 import { ContactComponent } from './contact/contact.component';
+import { MenuComponent } from './menu/menu.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-    SampleFormComponent,
-    MenuComponent,
-    LoginComponent,
     HomeComponent,
-    ContactComponent
+    LoginComponent,
+    ContactComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    MaterialModule,
+    NoopAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
