@@ -1,0 +1,29 @@
+<!--Contact Details-->
+<div id="main_div_contact">
+  <div id="contact_details">
+    <h1>WE ARE HERE TO HELP YOU</h1>
+
+    <h3>CONTACT DETAILS</h3>
+    <p>Telephone: +27 (12) 420-3937 or 3938</p>
+    <p>FAX: +27 (12) 420-3960</p>
+    <p>Email: admin@fabi.up.ac.za</p>
+
+    <h3>ADDRESS</h3>
+    <p>Forestry and Agricultural Biotechnology Institue (FABI)</p>
+    <p>University of Pretoria</p>
+    <p>Lunnon Street Entrance</p>
+    <p>Hatfield</p>
+    <p>0083</p>
+    <p>Pretoria</p>
+    <p>South Africa</p>
+  </div>
+  <div id="contact_form">
+    <h1>TALK TO US</h1>
+    <form id="send_contact" [formGroup]="contactForm" >
+      <input id="contact_name" name="contact_name" type="text" placeholder="John Doe"/><br/>
+      <input id="contact_email" name="contact_email" type="email" placeholder="johndoe@gmail.com"/><br/>
+      <input id="contact_message" name="contact_message" type="text" placeholder="Type your message here"/><br/>
+      <button id="send_message">SEND</button>
+    </form>
+  </div>
+</div>
