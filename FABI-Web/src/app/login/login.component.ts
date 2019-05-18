@@ -8,6 +8,18 @@ import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../error/error.component';
 import { Router } from '@angular/router';
 
+//Object for defining how a organization is structured
+export interface Organization {
+  value: string; //This will contain the ID retreived from the DB 
+  viewValue: string; //This will be the name of the organization
+}
+
+//Object for defining how a userType is structured
+export interface UserType {
+  value: string; //This will contain the ID retreived from the DB 
+  viewValue: string; //This will be the name of the type
+}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,24 +28,50 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  /*
+    GLOBALS
+  */
   loginForm: FormGroup;             // FormGroup object to reference add user type form
   submitted: boolean = false;       // if form has been submitted
   success: boolean = false;         // if form was succesfully filled out
-  loggedIn: boolean = false;                // to check if user is logged in
+  loggedIn: boolean = false;        // to check if user is logged in
+  selectedOrganization: boolean = false;
 
-  // api: APIconnectionService;
-
-  //   loginForm = new FormGroup({
-  //   email: new FormControl(),
-  //   password: new FormControl()
-  // });
-
+  /*
+     CONSTRUCTOR
+   */
   constructor(private api: ApiConnectionService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
     this.loginForm = this.formBuilder.group({
+      organization: ['', Validators.required],
+      userType: ['', Validators.required],
       login_email: ['', Validators.required],
       login_password: ['', Validators.required]
     })
   }
+
+  //Temp Array for Organization dropdown - Should be populated off of an API call
+  organizations: Organization[] = [
+    { value: '0', viewValue: 'Forestry ABC' },
+    { value: '1', viewValue: 'Stick Foundation' },
+    { value: '2', viewValue: 'FABI' }
+  ];
+
+  /*
+    DISPLAY USER TYPE 
+      - onclick event handler for the Organization dropdown
+      - This function is used to indicate that an organization has been 
+        selected and we can now display the user types available for the organization
+  */
+  //Function used to display the user type 
+  displayUserType() {
+    this.selectedOrganization = true;
+  }
+
+  //Temp Array for UserType dropdown - Should be populated off of an API call
+  userTypes: UserType[] = [
+    { value: '0', viewValue: 'Admin' },
+    { value: '1', viewValue: 'Staff' }
+  ];
 
   login() {
     this.submitted = true;
@@ -72,7 +110,7 @@ export class LoginComponent implements OnInit {
       }
     }, (err: HttpErrorResponse) => {
       //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Log In" ,message: err.message } });
+      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Log In", message: err.message } });
       dialogRef.afterClosed().subscribe((result) => {
         if (result == "Retry") {
           this.login();
