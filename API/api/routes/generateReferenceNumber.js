@@ -23,8 +23,8 @@ const client = new MongoClient(url, { useNewUrlParser: true });
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: '',         // Sender Email
-      pass: ''         // Sender Password
+      user: 'u17140634@gmail.com@tuks.co.za',
+      pass: 'Ajlandtuks@2'
     }
 });
 
@@ -62,7 +62,7 @@ function generate(req, res) {
           referenceNum: "1234"
       }
 
-      //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& TEMPORARY  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+      /// TEMPORAORY  ////////////////////////////////
       const mailObject = {
             from: 'FABI_WepApp',
             to: 'novacapstone@gmail.com',
@@ -102,7 +102,7 @@ function generate(req, res) {
           console.log('Email sent: ' + info.response);
         }
       });
-      //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+      /////////////////////////////////////////////////////
 
 // (2) Load the email template (using Promise) - (Call the LoadTemplate function)
     //   loadTemplate('ReferenceNumber', info).then((results) => {
@@ -110,7 +110,7 @@ function generate(req, res) {
     //    // (3) Send Email (call sendEmail() function)
     //         sendEmail({
     //                 from: 'FABI_WepApp',
-    //                 to: 'novacapstone@gmail.com',
+    //                 to: 'u16224940@tuks.co.za',
     //                 subject: result.email.subject,
     //                 html: result.email.html,
     //                 text: result.email.text
@@ -121,7 +121,6 @@ function generate(req, res) {
     // });
  
 }
-
 
 // (3) Send Email
 function sendEmail (obj) {
