@@ -1,14 +1,7 @@
 {
-  "name": "merlot_nfc_api",
-  "version": "1.0.0",
-  "description": "Restful API for Merlot NFC data retrieval",
-  "main": "server.js",
-  "scripts": {
-    "test": "mocha test.js",
-    "start": "node server.js"
-  },
-  "author": "Graeme Coetzee",
-  "license": "ISC",
+  "name": "Fabi-Web-API",
+  "version": "0.0.1",
+  "private": true,
   "dependencies": {
     "bcrypt": "^3.0.5",
     "bcrypt-nodejs": "0.0.3",
@@ -25,11 +18,11 @@
     "nodemailer": "^6.1.1",
     "pug": "^2.0.3",
     "request": "^2.88.0",
-    "router": "^1.3.3"
+    "router": "^1.3.3",
+    "@google-cloud/datastore": "latest",
+    "firebase-admin" : "latest"
   },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.1",
-    "mocha": "^6.0.2"
+  "scripts": {
+    "start": "node server.js"
   }
 }

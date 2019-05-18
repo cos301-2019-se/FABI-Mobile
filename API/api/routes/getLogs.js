@@ -45,7 +45,7 @@ function getLogs(req, res) {
           res.setHeader('Content-Type', 'application/problem+json');
           res.setHeader('Content-Language', 'en');
           res.setHeader("Access-Control-Allow-Origin", "*");
-          res.status(500).json({                                
+          res.status(500).json({                                  // ******* RESPONSE STATUS? ************
               success: false,
               error: {
                   code: 500,
@@ -63,7 +63,7 @@ function getLogs(req, res) {
           res.setHeader('Content-Type', 'application/problem+json');
           res.setHeader('Content-Language', 'en');
           res.setHeader("Access-Control-Allow-Origin", "*");
-          res.status(200).json({                                
+          res.status(200).json({                                  // ******* RESPONSE STATUS? ************
               success: false,
               data: {
                   code: 200,
