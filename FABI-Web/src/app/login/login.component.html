@@ -4,7 +4,6 @@
   <div class="container-fluid">
     <div class="row">
 
-      <!--Login Form-->
       <div id="main_div_login">
         <div class="col-lg-6 col-md-12 col-sm-12" id="login_information">
           <h1>WE ARE EXCITED TO WELCOME YOU</h1>
@@ -18,7 +17,48 @@
         </div>
         <div class="col-lg-6 col-md-12 col-sm-12" id="login_div">
           <h1>LOGIN</h1>
-          <form id="login_submit"  [formGroup]="loginForm" (submit)="login()">
+
+          <!--Login Form-->
+          <form id="login_submit" [formGroup]="loginForm" (submit)="login()">
+
+            <!--Dropdown for Organization selection and Error Handling-->
+            <mat-form-field>
+              <mat-label>Organization</mat-label>
+              <mat-select id="organization" formControlName="organization" (click)="displayUserType()">
+                <mat-option *ngFor="let organization of organizations" [value]="organization.value">
+                  <!--
+                      TODO 
+                        Loop through list recevied from the API and populate using {{}}
+                  -->
+                  {{organization.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="submitted && loginForm.controls.organization.errors" class="errors">
+              <div *ngIf="loginForm.controls.organization.errors.required">Please select an organization</div>
+            </div>
+            <br />
+
+            <!--Dropdown for User Type selection and Error Handling-->
+            <mat-form-field *ngIf="selectedOrganization">
+              <mat-label>User Type</mat-label>
+              <mat-select id="userType" formControlName="userType">
+                <mat-option *ngFor="let userType of userTypes" [value]="userType.value">
+                  <!--
+                        TODO 
+                          Loop through list recevied from the API and populate using {{}}
+                    -->
+                  {{userType.viewValue}}
+                </mat-option>
+              </mat-select>
+              <br />
+            </mat-form-field>
+            <div *ngIf="submitted && loginForm.controls.userType.errors" class="errors">
+              <div *ngIf="loginForm.controls.userType.errors.required">Please select a user type</div>
+            </div>
+            <br />
+
+            <!--Email Address Input and Error Handling-->
             <mat-form-field>
               <input matInput id="login_email" formControlName="login_email" type="email" required>
               <mat-placeholder class="placeholder">johndoe@gmail.com</mat-placeholder>
@@ -28,6 +68,8 @@
               <div *ngIf="loginForm.controls.login_email.errors.required">Please enter your email</div>
             </div>
             <br />
+
+            <!--Password Input and Error Handling-->
             <mat-form-field>
               <input matInput id="login_password" formControlName="login_password" type="password" required>
               <mat-placeholder class="placeholder">Enter your password</mat-placeholder>
@@ -38,6 +80,8 @@
             </div>
             <br />
             <p *ngIf="success" class="errors">Logging In...</p>
+
+            <!--Submit-->
             <input type="submit" id="continue" class="btn btn-default" value="Login" />
           </form>
 
