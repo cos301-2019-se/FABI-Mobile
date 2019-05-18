@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { LoginInfo } from '../apiconnection.service';
-import { APIconnectionService } from '../apiconnection.service';
+import { LoginInfo } from '../api-connection.service';
+import { ApiConnectionService } from '../api-connection.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   //   password: new FormControl()
   // });
 
-  constructor(private api: APIconnectionService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(private api: ApiConnectionService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
     this.loginForm = this.formBuilder.group({
       login_email: ['', Validators.required],
       login_password: ['', Validators.required]
