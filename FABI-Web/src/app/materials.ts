@@ -1,4 +1,4 @@
-//This file provides all the components which are required to use material components which are part of Angular
+// This file provides all the components which are required to use material components which are part of Angular
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
