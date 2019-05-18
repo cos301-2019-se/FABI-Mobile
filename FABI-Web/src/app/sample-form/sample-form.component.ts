@@ -1,7 +1,7 @@
-import { ClientFormData } from '../apiconnection.service';
+import { ClientFormData } from '../api-connection.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { LoginInfo } from '../apiconnection.service';
-import { APIconnectionService } from '../apiconnection.service';
+import { LoginInfo } from '../api-connection.service';
+import { ApiConnectionService } from '../api-connection.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -71,13 +71,8 @@ export class SampleFormComponent implements OnInit {
 
   // api: APIconnectionService;
 
-  constructor(private api: APIconnectionService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(private api: ApiConnectionService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
     this.sampleForm = this.formBuilder.group({
-      sample_form_name: ['', Validators.required],
-      sample_form_company: ['', Validators.required],
-      sample_form_address: ['', Validators.required],
-      sample_form_contact: ['', Validators.required],
-      sample_form_email: ['', Validators.required],
 
       sample_form_tree_species: ['', Validators.required],
       sample_form_number_samples: ['', Validators.required],
@@ -118,10 +113,7 @@ export class SampleFormComponent implements OnInit {
       conditions_weather_disturbances: ['', Validators.required],
       conditions_weather_prior: ['', Validators.required],
       conditions_others: ['', Validators.required],
-      conditions_additional: ['', Validators.required],
-
-      landowner: ['', Validators.required],
-      landowner_signature: ['', Validators.required],
+      conditions_additional: ['', Validators.required]
     })
   }
 
@@ -136,11 +128,6 @@ export class SampleFormComponent implements OnInit {
     this.success = true;
 
     const formDetails: ClientFormData = {
-      name : this.sampleForm.controls.sample_form_name.value,
-      company : this.sampleForm.controls.sample_form_company.value,
-      address : this.sampleForm.controls.sample_form_address.value,
-      contact : this.sampleForm.controls.sample_form_contact.value,
-      email : this.sampleForm.controls.sample_form_email.value,
 
       tree_species : this.sampleForm.controls.sample_form_tree_species.value,
       number_samples : this.sampleForm.controls.sample_form_number_samples.value,
@@ -182,9 +169,6 @@ export class SampleFormComponent implements OnInit {
       conditions_weather_prior : this.sampleForm.controls.conditions_weather_prior.value,
       conditions_other : this.sampleForm.controls.conditions_others.value,
       conditions_additional : this.sampleForm.controls.conditions_additional.value,
-
-      landowner : this.sampleForm.controls.landowner.value,
-      landowner_signature : this.sampleForm.controls.landowner_signature.value
     };
 
 
