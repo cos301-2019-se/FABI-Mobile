@@ -1,3 +1,5 @@
+const next = require("mongodb");
+
 const express = require('express');
 const mysql = require('mysql');
 const router = express.Router();
@@ -5,6 +7,7 @@ const request = require("request");
 const fs = require('fs');
 const bcrypt = require('bcrypt-nodejs');
 const MongoClient = require('mongodb').MongoClient;
+const model = require('./crud.js');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,14 +44,16 @@ router.post('/', addUser);
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
 /////////////////////////////////////////////////////////////////////
+
 function addUser(req, res)
 {
 // Store request data is qs
+    const salt = bcrypt.genSaltSync(10);
     const qs = {
         fname: req.body.name,
         surname: req.body.surname,
         email: req.body.email,
-        password: req.body.password
+        password: bcrypt.hashSync(req.body.password, salt)
     }
 
 // (1) Check if all required data is received and that it is correct. 
@@ -56,7 +61,7 @@ function addUser(req, res)
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
             error: {
                 code: 400,
@@ -69,7 +74,7 @@ function addUser(req, res)
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                               
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
             error: {
                 code: 400,
@@ -82,7 +87,7 @@ function addUser(req, res)
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
             error: {
                 code: 400,
@@ -95,7 +100,7 @@ function addUser(req, res)
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                              
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
             error: {
                 code: 400,
@@ -112,7 +117,7 @@ function addUser(req, res)
     // if(!regEx.test(qs.email)) {
     //     res.setHeader('Content-Type', 'applicagion/problem+json');
     //     res.setHeader('Content-Language', 'en');
-    //     res.status(400).json({                                  
+    //     res.status(400).json({                                  // ******* RESPONSE STATUS? ************
     //         success: false,
     //         error: {
     //             code: 400,
@@ -124,66 +129,29 @@ function addUser(req, res)
 
 
 // (2) Connect to DB
-    client.connect((err) => {
-    
-    // Error: return server error
-        if (err) {
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(500).json({                            
-                success: false,
-                error: {
-                    code: 500,
-                    title: "INTERNAL_SERVER_ERROR",
-                    message: `Error connecting to database :  ${err}` 
-                }
-            });
+    client.connect(() => {
+        model.create(qs, (err) => {
+            if (err) {
+                next(err);
+                return;
+            }
+
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                    success: true,
+                    error: {
+                        code: 200,
+                        title: "SUCCESS",
+                        message: "Public User Added",
+                        content: {message : "Public User Added"}
+                    }
+                });
+
+            console.log("Client Added");
             client.close();
-        }
-        else {
-            
-        // (3) Encrypt Password
-            let password, salt, hashPass;
-            password = qs.password;
-            salt = bcrypt.genSaltSync();
-            hashPass = bcrypt.hashSync(password,salt);
-
-        // (4) Add Public User to public_users collection.   
-            var myobj = { name: qs.fname, surname: qs.surname, email: qs.email, password: hashPass};
-            client.db("test").collection("public_users").insertOne(myobj, function(err) {
-            // Error: return server error
-                if (err) {
-                    res.setHeader('Content-Type', 'application/problem+json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(500).json({                              
-                        success: false,
-                        error: {
-                            code: 500,
-                            title: "INTERNAL_SERVER_ERROR",
-                            message: `Error adding to collection :  ${err.message}` 
-                        }
-                    });
-                    client.close();
-                }
-            // (5) Send appropriate response message.
-                console.log("1 document inserted");
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(200).json({                                 
-                        success: false,
-                        data: {
-                            code: 200,
-                            title: "SUCCESS",
-                            message: `Public User Added` 
-                        }
-                    });
-                    client.close();
-            });
-        }
-
+        });
     });
 
 }

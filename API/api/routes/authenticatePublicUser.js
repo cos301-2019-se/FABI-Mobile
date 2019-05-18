@@ -5,6 +5,7 @@ const request = require("request");
 const fs = require('fs');
 const bcrypt = require('bcrypt-nodejs');
 const MongoClient = require('mongodb').MongoClient;
+const model = require('./crud.js');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            CONNECTION TO MONGO DB 
@@ -17,10 +18,10 @@ const client = new MongoClient(url, { useNewUrlParser: true });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Handle POST request 
-router.get('/', authenticate, logAuthentication);
+//router.get('/', authenticate, logAuthentication);
 
 // Handle POST request 
-router.post('/', authenticate, logAuthentication);
+router.post('/', authenticate);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                               Authenticate User
@@ -47,7 +48,8 @@ function authenticate(req, res, next) {
     const qs = {
         email: req.body.email,
         password: req.body.password
-    }
+    };
+
 // (1) Check if all required data is received and that it is correct.
     if (qs.email == undefined || qs.email == '') {
         res.setHeader('Content-Type', 'application/problem+json');
@@ -66,7 +68,7 @@ function authenticate(req, res, next) {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
             error: {
                 code: 400,
@@ -75,6 +77,22 @@ function authenticate(req, res, next) {
             }
         });
     } 
+    // else {    //////// TEMPORARY ///////////
+    //     res.setHeader('Content-Type', 'application/json');
+    //     res.setHeader('Content-Language', 'en');
+    //     res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+    //         success: true,
+    //         data: {
+    //             code: 200,
+    //             title: "AUTHORIZED",
+    //             message: "Authenticated"
+    //         }
+    //     });
+    //     res.locals.email = qs.email;
+    //     res.locals.description = "Authenticated";
+    //     res.locals.success = true;
+    //     next();
+    // }
 
     // Check if valid email format   (************ CLIENT SIDE? ***************)
     // var regEx = [A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/igm;
@@ -83,7 +101,7 @@ function authenticate(req, res, next) {
     // if(!regEx.test(qs.email)) {
     //     res.setHeader('Content-Type', 'applicagion/problem+json');
     //     res.setHeader('Content-Language', 'en');
-    //     res.status(400).json({                             
+    //     res.status(400).json({                                  // ******* RESPONSE STATUS? ************
     //         success: false,
     //         error: {
     //             code: 400,
@@ -95,114 +113,21 @@ function authenticate(req, res, next) {
 
 
 // (2) Connect to DB
-    client.connect((err) => {
 
-        if (err) {
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(500).json({                               
-                success: false,
-                error: {
-                    code: 500,
-                    title: "INTERNAL_SERVER_ERROR",
-                    message: "Error connecting to database"
-                }
-            });
-            client.close();
-        }
-        else {
+
+
+
             
             //define collection
-            const collection = client.db("test").collection("public_users");
+
 
         // (3) Check if email exists in the DB:
-            var query = {email: qs.email};
-            collection.findOne(query, (err, result) => {
-                if (err) {   // email does not exist
-                    res.setHeader('Content-Type', 'application/problem+json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(400).json({                                 
-                        success: false,
-                        error: {
-                            code: 401,
-                            title: "UNAUTHORIZED",
-                            message: "Not-Authenticated : Could not find user email" + err.message
-                        }
-                    });
-                    res.locals.email = qs.email;
-                    res.locals.description = err.message;
-                    res.locals.success = false;
-                    client.close();
-                    next();
+        client.connect(() => {
+            model.read(qs, res, next);
+            client.close();
+        });
 
-                } else {
-                // (4) Check if password and email are valid (password matches)
-                    if (result != '' && result != undefined) {
-                        var plainPass = qs.password;
-                        let hash = result.password;
-                        let passMatch = bcrypt.compareSync(plainPass, hash);
 
-                        if (passMatch == false) {
-                            res.setHeader('Content-Type', 'application/problem+json');
-                            res.setHeader('Content-Language', 'en');
-                            res.setHeader("Access-Control-Allow-Origin", "*");
-                            res.status(400).json({                                
-                                success: false,
-                                error: {
-                                    code: 401,
-                                    title: "UNAUTHORIZED",
-                                    message: "Not-Authenticated : Incorrect Password"
-                                }
-                            });
-                            res.locals.email = qs.email;
-                            res.locals.description = "Not-Authenticated : Incorrect Password";
-                            res.locals.success = false;
-                            client.close();
-                            next();
-                            
-                        } else {
-                            res.setHeader('Content-Type', 'application/json');
-                            res.setHeader('Content-Language', 'en');
-                            res.setHeader("Access-Control-Allow-Origin", "*");
-                            res.status(200).json({                                 
-                                success: true,
-                                data: {
-                                    code: 200,
-                                    title: "AUTHORIZED",
-                                    message: "Authenticated"
-                                }
-                            });
-                            res.locals.email = qs.email;
-                            res.locals.description = "Authenticated";
-                            res.locals.success = true;
-                            client.close();
-                            next();
-                        }
-                    } else {
-                        res.setHeader('Content-Type', 'application/problem+json');
-                        res.setHeader('Content-Language', 'en');
-                        res.setHeader("Access-Control-Allow-Origin", "*");
-                        res.status(400).json({                                
-                            success: false,
-                            error: {
-                                code: 401,
-                                title: "UNAUTHORIZED",
-                                message: "Not-Authenticated : Could not find user email"
-                            }
-                        });
-                        res.locals.email = qs.email;
-                        res.locals.description = "Could not find user email";
-                        res.locals.success = false;
-                        client.close();
-                        next();
-                    }
-                }
-            });
-        }
-
-    });
 
 }
 
@@ -215,7 +140,7 @@ function authenticate(req, res, next) {
  * @param {*} res Used to access global variables (res.locals)
  */
 /////////////////////////////////////////////////////////////////////
-function logAuthentication(req, res)
+/*function logAuthentication(req, res)
 {
     if(res.locals.email != '' && res.locals.email != undefined){
 
@@ -239,7 +164,7 @@ function logAuthentication(req, res)
         } else {
             var jsonString = JSON.stringify(log);
         }
-        
+
 
         // **************************************************
         //              Write JSON to textfile       
@@ -252,6 +177,6 @@ function logAuthentication(req, res)
         });
         // **************************************************
     }
-}
+}*/
 
 module.exports = router;

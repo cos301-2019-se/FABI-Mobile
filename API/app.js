@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs');
 
-// Declare API Routes
 const authenticatePublicUserRoute = require('./api/routes/authenticatePublicUser');
 const displayHTML = require('./api/routes/displayHTML');
 const addPublicUserRoute = require('./api/routes/addPublicUser');
@@ -16,10 +15,10 @@ const submitFormRoute = require('./api/routes/submitForm');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// Prevent CORS violation
+//Prevent CORS violation
 app.use(cors());
 
-// Call requested route 
+//Send any requests with authenticateNFC to the correct route
 app.use('/authenticatePublicUser', authenticatePublicUserRoute);
 app.use('/',displayHTML);
 app.use('/addPublicUser',addPublicUserRoute);
