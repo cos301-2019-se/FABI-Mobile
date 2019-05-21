@@ -39,10 +39,13 @@ function addOrganization(req, res)
     const salt = bcrypt.genSaltSync(10);
     var pass = generatePassword(10);
     const qs = {
-        fname: req.body.admin.name,
-        surname: req.body.admin.surname,
-        email: req.body.admin.email,
-        password: bcrypt.hashSync(pass, salt)
+        orgName : req.body.orgName,
+        admin : {
+            fname: req.body.admin.name,
+            surname: req.body.admin.surname,
+            email: req.body.admin.email,
+            password: bcrypt.hashSync(pass, salt)
+        }
     }
 
 // (1) Check if all required data is received and that it is correct.
@@ -85,7 +88,7 @@ function addOrganization(req, res)
             }
         });
     }
-    if (req.body.details.orgName == undefined || req.body.details.orgName == '') {
+    if (req.body.orgName == undefined || req.body.orgName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -118,9 +121,9 @@ function addOrganization(req, res)
 
 
 // (2) Connect to DB
-    db.collection('Organizations').doc(req.body.details.orgName).collection('details').doc('values').set(req.body.details).then(() => {
+    
 
-        var docRef  = db.collection('Organizations').doc(req.body.details.orgName).collection('admin').doc(qs.email);
+        var docRef  = db.collection('Organizations').doc(req.body.orgName);
         docRef.set(qs).then(() => {
             res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
@@ -139,7 +142,7 @@ function addOrganization(req, res)
             }
         });
         console.log("New Organization Added");
-    })}).catch((err) => {
+    }).catch((err) => {
         console.log("Database connection error: " + err);
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');

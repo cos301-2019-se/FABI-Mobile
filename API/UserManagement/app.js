@@ -5,11 +5,15 @@ const cors = require('cors');
 const fs = require('fs');
 
 const authenticatePublicUserRoute = require('./api/routes/authenticatePublicUser');
-const displayHTML = require('./api/routes/displayHTML');
 const addPublicUserRoute = require('./api/routes/addPublicUser');
+
+const displayHTML = require('./api/routes/displayHTML');
 const createOrganizationRoute = require('./api/routes/createOrganization');
 const addGuestToOrgRoute = require('./api/routes/addGuestToOrg');
 const addStaffRoute = require('./api/routes/addStaff');
+const getOrgDetailsRoute = require('./api/routes/getOrgDetails');
+const getAllStaffRoute = require('./api/routes/getAllStaff');
+const updateStaffMemberRoute = require('./api/routes/updateStaffMember');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -25,6 +29,9 @@ app.use('/',displayHTML);
 app.use('/createOrganization', createOrganizationRoute);
 app.use('/addGuestToOrg', addGuestToOrgRoute);
 app.use('/addStaff', addStaffRoute);
+app.use('/getOrgDetails', getOrgDetailsRoute);
+app.use('/getAllStaff', getAllStaffRoute);
+app.use('/updateStaffMember', updateStaffMemberRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {

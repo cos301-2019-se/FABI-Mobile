@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const request = require("request");
-const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,6 +32,62 @@ router.post('/', getOrgDetails);
 const db = admin.firestore();
 
 function getOrgDetails(req, res) {
-    
+    var getRef = db.collection('Organizations').doc(req.body.orgName);
+
+    getRef.get().then(doc => {
+            if(isEmptyObject(doc.data())){
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                    success: false,
+                    error: {
+                        code: 404,
+                        title: "FAILURE",
+                        message: "Organization not found"
+                    }
+                });
+            }
+            else
+            {
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                    success: true,
+                    error: {
+                        code: 200,
+                        title: "SUCCESS",
+                        message: "Organization Found",
+                        content: {
+                            details : doc.data()
+                        }
+                    }
+                });
+            }  
+    }).catch((err) =>
+    {
+        console.log("Database connection error: " + err);
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(500).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            error: {
+                code: 500,
+                title: "FAILURE",
+                message: "Error Connecting to User Database"
+            }
+        });
+    });
 }
+
+function isEmptyObject(obj) {
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        return false;
+      }
+    }
+    return true;
+  }
 module.exports = router;
