@@ -1,21 +1,10 @@
 const express = require('express');
-const mysql = require('mysql');
 const router = express.Router();
-const request = require("request");
-const fs = require('fs');
-const bcrypt = require('bcrypt-nodejs');
 const MongoClient = require('mongodb').MongoClient;
 const nodemailer = require('nodemailer');
 const EmailTemplate = require('email-templates');
 const path = require('path');
 const Promise = require('bluebird');
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                            CONNECTION TO MONGO DB 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const url = "mongodb+srv://dbAdmin:<password>@capstone-test-wfnzw.mongodb.net/test?retryWrites=true";
-const client = new MongoClient(url, { useNewUrlParser: true });
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            EMAIL SETTINGS 
@@ -23,21 +12,10 @@ const client = new MongoClient(url, { useNewUrlParser: true });
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'u17140634@gmail.com@tuks.co.za',
-      pass: 'Ajlandtuks@2'
+      user: 'aeronland@gmail.com',
+      pass: 'putwikaovlthpajo'
     }
 });
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                            GET/POST REQUEST HANDLER 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Handle POST request 
-router.get('/', generate);
-
-// Handle POST request 
-router.post('/', generate);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                        Generate Sample Reference Number
@@ -47,61 +25,29 @@ router.post('/', generate);
  *  1. Generate the Reference Number (random 4 digit number)
  *  2. Load the email template (using Promise)
  *  3. Send Email
- *
- * @param {*} res Used to send response to the request
- * @param {*} req Used to receive request information ('body' gets request json)
  */
 /////////////////////////////////////////////////////////////////////
-function generate(req, res) {
+function generate() {
       
 // (1) Generate the Reference Number (random 4 digit number)
-      let refNum = Math.floor(1000 + Math.random() * 9000);
-
-      let info = {
-          name: "John Doe",
-          referenceNum: "1234"
-      }
+      let refNum ='ref-' + new Date().getTime();
 
       /// TEMPORAORY  ////////////////////////////////
       const mailObject = {
             from: 'FABI_WepApp',
-            to: 'novacapstone@gmail.com',
+            to: 'u17140634@tuks.co.za',
             subject: "Sample Reference Number",
-            text: `Your Reference Number is: ${refNum}`
+            text: `Thank you for your sample submission. Your reference number is: ${refNum}`
       }
 
       transporter.sendMail(mailObject, (error, info) => {
-        if (error) {
-            res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(500).json({                                 
-                success: false,
-                error: {
-                    code: 500,
-                    title: "INTERNAL_SERVER_ERROR",
-                    message: error.message
-                }
-            });
+        if (error)
           console.log(error);
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(200).json({                        
-                success: true,
-                data: {
-                    code: 200,
-                    title: "SUCCESS",
-                    message: "Email successfully sent",
-                    content: {
-                        referenceNumber: refNum
-                    }
-                }
-            });
+        else
           console.log('Email sent: ' + info.response);
-        }
       });
+
+      return refNum;
       /////////////////////////////////////////////////////
 
 // (2) Load the email template (using Promise) - (Call the LoadTemplate function)
@@ -172,4 +118,4 @@ function loadTemplate(templateName, info) {
 }
 
 
-module.exports = router;
+module.exports = generate;
