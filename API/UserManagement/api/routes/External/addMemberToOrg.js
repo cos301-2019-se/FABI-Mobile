@@ -9,19 +9,19 @@ const admin = require('firebase-admin');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Handle POST request
-router.post('/', addOrganization);
+router.post('/', addMember);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Add Organization
+//                                             Add Member
 /**
- * @summary Create a new organization with data recieved
- * @description  REQUEST DATA REQUIRED: organization name, organization details, admin details
+ * @summary Add Member to orginization
+ * @description  REQUEST DATA REQUIRED: Organization name, Member name, email, surname
  *  1. Check if all required data is received and that it is correct.
  *      - IF NOT: return Error Response
  *  2. Connect to DB.
  *      - IF ERROR: return Error Response
  *  3. Encrypt Password.
- *  4. Add Organization to Organizations collection and create admin within admin collection int that organization
+ *  4. Add Member to given organization
  *      - IF ERROR: return Error Response
  *  5. Send appropriate response message.
  *
@@ -33,23 +33,20 @@ router.post('/', addOrganization);
 // [START config]
 const db = admin.firestore();
 
-function addOrganization(req, res)
+function addMember(req, res)
 {
 // Store request data is qs
     const salt = bcrypt.genSaltSync(10);
     var pass = generatePassword(10);
     const qs = {
-        orgName : req.body.orgName,
-        admin : {
-            fname: req.body.admin.name,
-            surname: req.body.admin.surname,
-            email: req.body.admin.email,
-            password: bcrypt.hashSync(pass, salt)
-        }
+        fname: req.body.member.name,
+        surname: req.body.member.surname,
+        email: req.body.member.email,
+        password: bcrypt.hashSync(pass, salt)
     }
 
 // (1) Check if all required data is received and that it is correct.
-    if (req.body.admin.name == undefined || req.body.admin.name == '') {
+    if (req.body.member.name == undefined || req.body.member.name == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -58,11 +55,11 @@ function addOrganization(req, res)
             error: {
                 code: 400,
                 title: "BAD_REQUEST",
-                message: "Admin name expected"
+                message: "User name expected"
             }
         });
     }
-    if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
+    if (req.body.member.surname == undefined || req.body.member.surname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -71,11 +68,11 @@ function addOrganization(req, res)
             error: {
                 code: 400,
                 title: "BAD_REQUEST",
-                message: "Admin surname expected"
+                message: "User surname expected"
             }
         });
     }
-    if (req.body.admin.email == undefined || req.body.admin.email == '') {
+    if (req.body.member.email == undefined || req.body.member.email == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -84,11 +81,11 @@ function addOrganization(req, res)
             error: {
                 code: 400,
                 title: "BAD_REQUEST",
-                message: "Admin email expected"
+                message: "User email expected"
             }
         });
     }
-    if (req.body.orgName == undefined || req.body.orgName == '') {
+    if (req.body.orgName == undefined || req.body.member.orgName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -97,7 +94,7 @@ function addOrganization(req, res)
             error: {
                 code: 400,
                 title: "BAD_REQUEST",
-                message: "Organization Name Expected"
+                message: "orgName expected"
             }
         });
     }
@@ -121,41 +118,24 @@ function addOrganization(req, res)
 
 
 // (2) Connect to DB
-    
 
-        var docRef  = db.collection('Organizations').doc(req.body.orgName);
-        docRef.set(qs).then(() => {
-            res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-            success: true,
-            error: {
-                code: 200,
-                title: "SUCCESS",
-                message: "Created Organization",
-                content: {
-                    message: "Public User Added",
-                    orgName: req.body.orgName,
-                    tempPassword: pass
-                }
-            }
-        });
-        console.log("New Organization Added");
-    }).catch((err) => {
-        console.log("Database connection error: " + err);
+    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('members').doc(qs.email);
+    docRef.set(qs).then(() => {
         res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(500).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            error: {
-                code: 500,
-                title: "FAILURE",
-                message: "Error Connecting to User Database"
-            }
-        });
+    res.setHeader('Content-Language', 'en');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+        success: true,
+        data: {
+            code: 200,
+            title: "SUCCESS",
+            message: "Added Member",
+            content: {message : "Member Added to Organization",
+                orgName : req.body.orgName,
+                tempPassword : pass}
+        }
     });
+});
 
 }
 
