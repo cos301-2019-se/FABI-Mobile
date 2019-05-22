@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
+const bcrypt = require('bcrypt-nodejs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -10,7 +11,7 @@ const admin = require('firebase-admin');
 router.post('/', updateStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Org Details
+//                                             Update Staff Member
 /**
  * @summary Update a staff memebr associated with FABI
  * @description  REQUEST DATA REQUIRED: origional email of user to be updated ,fields which are to be changed
@@ -78,6 +79,11 @@ function updateStaff(req, res) {
         }
         else{
             if(req.body.fields.hasOwnProperty('email')){
+                if(req.body.fields.hasOwnProperty('password'))
+                {
+                    const salt = bcrypt.genSaltSync(10);
+                    req.body.fields.password = bcrypt.hashSync(req.body.password, salt);
+                }
                 newMail = req.body.fields.email;
                 newRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.fields.email);
                 newRef.set(doc.data()).then(() => {
@@ -102,6 +108,12 @@ function updateStaff(req, res) {
                 })});
             }
             else{
+                if(req.body.fields.hasOwnProperty('password'))
+                {
+                    const salt = bcrypt.genSaltSync(10);
+                    req.body.fields.password = bcrypt.hashSync(req.body.password, salt);
+                }
+
                 var updateRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(newMail);
                 
                 updateRef.update(req.body.fields).then(() => {

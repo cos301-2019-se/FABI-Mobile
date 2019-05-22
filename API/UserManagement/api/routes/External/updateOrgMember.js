@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
+const bcrypt = require('bcrypt-nodejs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -10,7 +11,7 @@ const admin = require('firebase-admin');
 router.post('/', updateMember);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Org Details
+//                                             Update Organization Member
 /**
  * @summary Update a Member memebr associated with Organization
  * @description  REQUEST DATA REQUIRED: origional email of user to be updated ,fields which are to be changed, name of Organization
@@ -91,7 +92,13 @@ function updateMember(req, res) {
             });
         }
         else{
+            if(req.body.fields.hasOwnProperty('password'))
+            {
+                const salt = bcrypt.genSaltSync(10);
+                req.body.fields.password = bcrypt.hashSync(req.body.password, salt);
+            }
             if(req.body.fields.hasOwnProperty('email')){
+                
                 newMail = req.body.fields.email;
                 newRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.fields.email);
                 newRef.set(doc.data()).then(() => {

@@ -1,16 +1,16 @@
+//node modules
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const fs = require('fs');
+const admin = require('firebase-admin');
+admin.initializeApp({
+    credential: admin.credential.applicationDefault()
+});
 
-const authenticatePublicUserRoute = require('./api/routes/authenticatePublicUser');
 const displayHTML = require('./api/routes/displayHTML');
-const addPublicUserRoute = require('./api/routes/addPublicUser');
-const getLogsRoute = require('./api/routes/getLogs');
-const gererateReferenceNumberRoute = require('./api/routes/generateReferenceNumber');
-const submitFormRoute = require('./api/routes/submitForm');
 
+const submitSampleRoute = require('./api/routes/submitSample');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -18,14 +18,8 @@ app.use(bodyParser.json());
 //Prevent CORS violation
 app.use(cors());
 
-//Send any requests with authenticateNFC to the correct route
-app.use('/authenticatePublicUser', authenticatePublicUserRoute);
 app.use('/',displayHTML);
-app.use('/addPublicUser',addPublicUserRoute);
-app.use('/getLogs',getLogsRoute);
-app.use('/generateReferenceNumber',gererateReferenceNumberRoute);
-app.use('/submitForm',submitFormRoute);
-
+app.use('/submitSample', submitSampleRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {
