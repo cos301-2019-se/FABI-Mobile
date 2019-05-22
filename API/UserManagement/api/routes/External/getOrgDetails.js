@@ -32,6 +32,21 @@ router.post('/', getOrgDetails);
 const db = admin.firestore();
 
 function getOrgDetails(req, res) {
+    
+    if (req.body.orgName == undefined || req.body.orgName == '') {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            error: {
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "orgName of organization to retrieve is required"
+            }
+        });
+    }
+
     var getRef = db.collection('Organizations').doc(req.body.orgName);
 
     getRef.get().then(doc => {
@@ -55,7 +70,7 @@ function getOrgDetails(req, res) {
                 res.setHeader("Access-Control-Allow-Origin", "*");
                 res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                     success: true,
-                    error: {
+                    data: {
                         code: 200,
                         title: "SUCCESS",
                         message: "Organization Found",
@@ -82,12 +97,4 @@ function getOrgDetails(req, res) {
     });
 }
 
-function isEmptyObject(obj) {
-    for (var key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        return false;
-      }
-    }
-    return true;
-  }
 module.exports = router;

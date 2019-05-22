@@ -44,7 +44,7 @@ function getAllStaff(req, res) {
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.status(200).json({                                  // ******* RESPONSE STATUS? ************
             success: true,
-            error: {
+            data: {
                 code: 200,
                 title: "SUCCESS",
                 message: "List of FABI staff",
