@@ -1,54 +1,82 @@
-<h1>Diagnostic Clinic Management System</h1>
-<mat-tab-group>
-  <mat-tab label="Search Current Samples">
-    <br />
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Search for current samples">
-      </mat-form-field>
-    </form>
+<div id="clinic_handler">
+  <div class="top_banner">
+    <h1 id="clinic_heading">Diagnostic Clinic Management</h1>
+  </div>
 
-    <br />
+  <div class="container-fluid">
+    <div class="row">
 
-    <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Sample 1
-            </mat-panel-title>
-            <mat-panel-description>
-              Analysis Phase
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-      
-          <p>Holds the details about a sample and can be used to make changes to the sample processing</p>
-        </mat-expansion-panel>
-      
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Sample 2
-            </mat-panel-title>
-            <mat-panel-description>
-              Completed
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-      
-          <p>Holds the details about a sample and can be used to make changes to the sample processing</p>
-        </mat-expansion-panel>
-      
-      
-      </mat-accordion>
+      <div id="clinic_management_div">
 
-  </mat-tab>
+        <!--Tab Menu-->
+        <mat-tab-group animationDuration="1000ms">
 
+          <!--View Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="material-icons">
+                remove_red_eye
+              </i>
+              View Current Samples
+            </ng-template>
+            <div class="tab_content">
+              <h2>View Current Samples</h2>
+              <br />
+              <!--
+                      TODO
+                        - Retrieve list to all samples in clinic from API
+                  -->
+              <mat-accordion>
 
-  <mat-tab label="Edit Clinic Processes">
-    
-    <p>Find clever way to do this</p>
+                <!--Sample Panels 
+                        TODO
+                          ngFor to generate a panel for each sample
 
-    
-    <button id="save_process_changes" class="btn btn-default" routerLink="">Save Changes</button>
+                    -->
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Sample 1
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Completed
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
 
-  </mat-tab>
-</mat-tab-group>
+                  <p>TODO</p>
+                </mat-expansion-panel>
+
+              </mat-accordion>
+
+            </div>
+          </mat-tab>
+
+          <!--Search Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>search</mat-icon>
+              Search
+            </ng-template>
+            <div class="tab_content">
+              <h2>Search Samples</h2>
+              <br />
+
+              <form id="search_sample_form">
+
+                <!--Search Field-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Search for a sample">
+                </mat-form-field>
+                <br />
+
+                <button type="submit" id="search_sample" class="btn btn-default">Search</button>
+
+              </form>
+
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+    </div>
+  </div>
