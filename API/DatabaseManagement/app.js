@@ -11,13 +11,9 @@ admin.initializeApp({
 const displayHTML = require('./api/routes/displayHTML');
 
 //fabi modules
-const loginAdminRoute = require('./api/routes/FABI/loginAdmin');
-const loginFabiStaffRoute = require('./api/routes/FABI/loginStaff');
-const loginDatabaseAdminRoute = require('./api/routes/FABI/loginDatabaseAdmin');
-
-//External modules
-const loginOrgAdminRoute = require('./api/routes/External/loginOrgAdmin');
-const loginOrgMemberRoute = require('./api/routes/External/loginOrgMember');
+const createDatabaseRoute = require('./api/routes/createDatabase');
+const addDocRoute = require('./api/routes/addDoc');
+const portingRoute = require('./api/routes/porting');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -26,11 +22,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/',displayHTML);
-app.use('/loginAdmin', loginAdminRoute);
-app.use('/loginFabiStaff', loginFabiStaffRoute);
-app.use('/loginOrgAdmin', loginOrgAdminRoute);
-app.use('/loginOrgMember', loginOrgMemberRoute);
-app.use('/loginDatabaseAdmin', loginDatabaseAdminRoute);
+app.use('/createDatabase', createDatabaseRoute);
+app.use('/addDoc', addDocRoute);
+app.use('/porting', portingRoute);
+
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {
