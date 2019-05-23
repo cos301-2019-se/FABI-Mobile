@@ -1,58 +1,33 @@
-<h1>Database Management System</h1>
-<mat-tab-group>
-  <mat-tab label="Search Database">
-    <br />
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Search for a database">
-      </mat-form-field>
-    </form>
+<div id="database_handler">
+  <div class="top_banner">
+    <h1 id="database_heading">Database Management</h1>
+  </div>
 
-    <br />
+  <div class="container-fluid">
+    <div class="row">
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <div id="database_management_div">
 
-      <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
+        <!--Tab Menu-->
+        <mat-tab-group animationDuration="1000ms">
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
+          <!--Porting Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="fas fa-database"></i>
+              Add Database
+            </ng-template>
+            <div class="tab_content">
+              <h2>Add Database via Porting</h2>
+              <br />
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
+              <input type='file' (change)=submitCSV(input) id='fileInput' #input>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-      </ng-container>
+            </div>
+          </mat-tab>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-      </ng-container>
+        </mat-tab-group>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-  </mat-tab>
-
-  <mat-tab label="Add Database">
-    
-    <p>Database Manually</p>
-
-    <p>Database Covnerter Upload</p>
-
-    
-    <button id="add_new_database" class="btn btn-default" routerLink="">Add Database</button>
-
-  </mat-tab>
-</mat-tab-group>
+      </div>
+    </div>
+  </div>
