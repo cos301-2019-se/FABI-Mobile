@@ -6,11 +6,15 @@
 
       <!--Nav-->
       <section id="nav">
-
+        
       </section>
 
       <!--Dashboard Content-->
       <section id="dashboard">
+        <div id="menu_div">
+          <mat-icon [inline]="true" class="menu_icon">menu</mat-icon>
+        </div>
+        <h1 id="dashboard_heading">Dashboard</h1><br/>
         <div id="dashboard_content">
           <button id="guest_management" class="btn btn-default" routerLink="/member-handler">Manage Guests</button>
           <button id="profile" class="btn btn-default" routerLink="/organization-profile">Manage Profile</button>
@@ -18,6 +22,12 @@
             Samples</button>
           <button id="submit_samples" class="btn btn-default" routerLink="/organization-submit-sample">Submit
             Sample</button>
+          <div id="notification_div">
+            <mat-icon [inline]="true" class="notification_icon">notification_important</mat-icon>
+          </div>
+          <div id="help_div">
+              <mat-icon [inline]="true" class="help_icon">help</mat-icon>
+          </div>
         </div>
       </section>
 

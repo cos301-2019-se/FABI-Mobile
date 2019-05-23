@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-
 import { StaffHandlerComponent } from './staff-handler/staff-handler.component';
 import { OrganizationHandlerComponent } from './organization-handler/organization-handler.component';
 import { ClinicHandlerComponent } from './clinic-handler/clinic-handler.component';

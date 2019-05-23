@@ -11,10 +11,20 @@
 
       <!--Dashboard Content-->
       <section id="dashboard">
+        <div id="menu_div">
+          <mat-icon [inline]="true" class="menu_icon">menu</mat-icon>
+        </div>
+        <h1 id="dashboard_heading">Dashboard</h1><br/>
         <div id="dashboard_content">
           <button id="profile" class="btn btn-default" routerLink="/member-profile">Manage Profile</button>
           <button id="view_samples" class="btn btn-default" routerLink="/member-view-samples">View Your Samples</button>
           <button id="submit_samples" class="btn btn-default" routerLink="/member-submit-sample">Submit Sample</button>
+          <div id="notification_div">
+            <mat-icon [inline]="true" class="notification_icon">notification_important</mat-icon>
+          </div>
+          <div id="help_div">
+              <mat-icon [inline]="true" class="help_icon">help</mat-icon>
+          </div>
         </div>
       </section>
 
