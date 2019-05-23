@@ -9,3 +9,11 @@ In collaboration with the Institute of Commercial Forestry Research (ICFR), this
   - [Demo 2 System Requirments Specification](https://drive.google.com/file/d/1-hcnw3aGtpk40dJ0QdBST93czcxZcDcZ/view?usp=sharing)
   -  [Demo 2 Presentation](https://docs.google.com/presentation/d/16RmsGRU3QbiqgNaF87FlqfBXETanff4JX61elvecw5s/edit?usp=sharing)
   -  [Demo 2 Testing Policy](https://drive.google.com/file/d/1n2vZSBECzH9XzkLUa_McMMRlQVahIhqU/view?usp=sharing)
+  -  [Demo 2 User Manual]()
+  -  [Demo 2 Coding Standards Document]()
+  
+ ## Porject Management
+ 
+  - [Trello Board](https://trello.com/b/8eHApP3L)
+  
+  
