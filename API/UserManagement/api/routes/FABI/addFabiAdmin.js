@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
+const mail = require('../sendEmail');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -106,9 +107,9 @@ function addAdmin(req, res)
     var docRef  = db.collection('Organizations').doc('FABI').collection('Admin').doc(qs.email);
     docRef.set(qs).then(() => {
         res.setHeader('Content-Type', 'application/problem+json');
-    res.setHeader('Content-Language', 'en');
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
         success: true,
         data: {
             code: 200,
@@ -120,6 +121,7 @@ function addAdmin(req, res)
         }
     });
     console.log("Admin Added to FABI");
+    mail('FABI Admin', pass);
 });
 
 }
