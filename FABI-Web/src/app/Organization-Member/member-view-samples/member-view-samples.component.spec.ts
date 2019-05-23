@@ -2,13 +2,31 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MemberViewSamplesComponent } from './member-view-samples.component';
 
+//Router
+import { RouterTestingModule } from '@angular/router/testing';
+
+//Import the data service for API calls
+import { APIconnectionService } from '../../apiconnection.service';
+
+//Import form components
+import { ReactiveFormsModule } from '@angular/forms';
+
+//Import the materials component
+import { MaterialModule } from '../../materials';
+
+//Animation Testing
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 describe('MemberViewSamplesComponent', () => {
   let component: MemberViewSamplesComponent;
   let fixture: ComponentFixture<MemberViewSamplesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MemberViewSamplesComponent ]
+      declarations: [ MemberViewSamplesComponent ],
+      imports: [MaterialModule,
+        NoopAnimationsModule,
+        BrowserAnimationsModule]
     })
     .compileComponents();
   }));
