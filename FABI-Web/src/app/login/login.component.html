@@ -24,13 +24,10 @@
             <!--Dropdown for Organization selection and Error Handling-->
             <mat-form-field>
               <mat-label>Organization</mat-label>
-              <mat-select id="organization" formControlName="organization" (click)="displayUserType()">
-                <mat-option *ngFor="let organization of organizations" [value]="organization.value">
-                  <!--
-                      TODO 
-                        Loop through list recevied from the API and populate using {{}}
-                  -->
-                  {{organization.viewValue}}
+              <mat-select [(ngModel)]="selectedOrg" id="organization" formControlName="organization" (click)="displayUserTypes()">
+                  <mat-option>--</mat-option>
+                <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
+                  {{organization.orgName}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -40,15 +37,12 @@
             <br />
 
             <!--Dropdown for User Type selection and Error Handling-->
-            <mat-form-field *ngIf="selectedOrganization">
+            <mat-form-field >
               <mat-label>User Type</mat-label>
-              <mat-select id="userType" formControlName="userType">
-                <mat-option *ngFor="let userType of userTypes" [value]="userType.value">
-                  <!--
-                        TODO 
-                          Loop through list recevied from the API and populate using {{}}
-                    -->
-                  {{userType.viewValue}}
+              <mat-select  id="userType" formControlName="userType">
+                  <mat-option>--</mat-option>
+                <mat-option *ngFor="let userType of userTypes" [value]="userType.Name">
+                  {{userType.Name}}
                 </mat-option>
               </mat-select>
               <br />
@@ -84,6 +78,7 @@
             <!--Submit-->
             <input type="submit" id="continue" class="btn btn-default" value="Login" />
           </form>
+
 
         </div>
       </div>
