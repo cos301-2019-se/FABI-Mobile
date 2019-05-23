@@ -9,7 +9,7 @@
         <!-- <app-sidenav *ngIf="sidenav"></app-sidenav> -->
 
         <div id="menu_div">
-          <mat-icon onclick="sideNavBtnToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
+          <mat-icon (click)="sideNavBtnToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
         </div>
         <h1 id="dashboard_heading">Dashboard</h1><br/>
         <div id="dashboard_content">
@@ -32,9 +32,8 @@
       </section>
 
       <!--Footer-->
-      <section id="footer">
-
-      </section>
+      <section id="footer"></section>
+      
     </div>
   </div>
 </div>
