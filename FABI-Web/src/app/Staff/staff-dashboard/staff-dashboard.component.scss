@@ -6,12 +6,8 @@
 #dashboard {
     color: #ffffff;
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: center;
     height: 100vh;
+    width:100%;
     overflow: hidden;
     position: relative;
 
@@ -19,6 +15,8 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+
+    display: block;
 }
 
 #dashboard .gradient-overlay {
@@ -30,29 +28,84 @@
     height: 100vh;
 }
 
-//Dashboard Content Styling
-#dashboard_content {
+//Dashboard Heading Styling
+#dashboard_heading {
     display: flex;
     -webkit-box-align: center;
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
     text-align: center;
-    height: 70vh;
-    width: 80%;
+    width: 100%;
 
     overflow: hidden;
     position: relative;
 
-    top: 15vh;
-    left: 10%;
+    top: 0.2rem;
+    display: block;
+
+    color: #ffffff;
+    font-size: 3.5rem
+}
+
+//Dashboard Content Styling
+#dashboard_content {
+    display: flex;
+    height: 70vh;
+    width: 95%;
+
+    overflow: hidden;
+    position: relative;
+
+    top: 0.5vh;
+    left: 2%;
 
     background-color: #ffffff;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    opacity: 0.85;
 
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+#menu_div {
+    font-size: 40px;
+}
+
+#help_div, #notification_div{
+    font-size: 38px;
+}
+
+#menu_div .menu_icon {
+    color: #ffffff;
+
+    overflow: hidden;
+    position: relative;
+    display: block;
+
+    left: 2rem;
+    top: 2rem;
+}
+
+#notification_div .notification_icon {
+    color: #196F3D;
+
+    overflow: hidden;
+    position: relative;
+
+    left: 10rem;
+    top: 3%;
+}
+
+#help_div .help_icon {
+    color: #196F3D;
+
+    overflow: hidden;
+    position: relative;
+
+    left: 11rem;
+    top: 2.7%;
 }
 
 #dashboard_content .btn.btn-default {
@@ -62,14 +115,26 @@
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
-    margin-top: 34px;
-    margin-left: 2rem;
+    margin-left: 1rem;
+    margin-top: 1.5rem;
     text-transform: uppercase;
+    height: 3.2rem;
+    width: 15rem;
 
     border-radius: 50px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
     border: 1px solid #196F3D;
 
+    overflow: hidden;
+    position: relative;
+    top: 0.5vh;
+
     display: block;
+}
+
+#dashboard_content .btn.btn-default:hover,
+#dashboard_content .btn.btn-default:focus {
+    color: #ffffff;
+    background-color: #196F3D;
 }

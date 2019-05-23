@@ -1,72 +1,173 @@
-<h1>User Management System</h1>
-<mat-tab-group>
-  <mat-tab label="Search Staff">
-    <br />
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Search for a user">
-      </mat-form-field>
-    </form>
+<div id="staff_handler">
+  <div class="top_banner">
+    <h1 id="staff_heading">Staff Management</h1>
+  </div>
 
-    <br />
+  <div class="container-fluid">
+    <div class="row">
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <div id="staff_management_div">
 
-      <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
+        <!--Tab Menu-->
+        <mat-tab-group animationDuration="1000ms">
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
+          <!--Add Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>person_add</mat-icon>
+              Add Staff Member
+            </ng-template>
+            <div class="tab_content">
+              <h2>Add Staff Member</h2>
+              <br />
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
+              <form id="add_new_member_form">
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-      </ng-container>
+                <!--Name Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Name">
+                </mat-form-field>
+                <br />
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-      </ng-container>
+                <!--Surname Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Surname">
+                </mat-form-field>
+                <br />
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+                <!--Email Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Email">
+                </mat-form-field>
+                <br />
 
-  </mat-tab>
+                <!--Cellphone Number Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Cellphone Number">
+                </mat-form-field>
+                <br />
 
+                <mat-form-field>
+                  <mat-label>Staff Position</mat-label>
+                  <mat-select>
+                    <!--
+                        TODO 
+                          - Loop through types of available staff types 
+                          - If admin is selected we need to determine if clinic or DB admin
+                          - Then if they are a DB admin we must determin which DB 
+                    -->
+                    <mat-option>
+                      Admin
+                    </mat-option>
+                    <mat-option>
+                      Researcher
+                    </mat-option>
+                    <mat-option>
+                      Student
+                    </mat-option>
+                  </mat-select>
+                  <br />
+                </mat-form-field>
+                <br />
 
-  <mat-tab label="Add Staff Member">
-    <mat-form-field>
-      <input matInput placeholder="Name">
-    </mat-form-field>
-    <br />
+                <button type="submit" id="add_new_staff" class="btn btn-default" routerLink="">Add Staff Member</button>
 
-    <mat-form-field>
-      <input matInput placeholder="Surname">
-    </mat-form-field>
-    <br />
+              </form>
 
-    <mat-form-field>
-      <input matInput placeholder="Email">
-    </mat-form-field>
-    <br />
+            </div>
+          </mat-tab>
 
-    <mat-form-field>
-      <input matInput placeholder="Cellphone Number">
-    </mat-form-field>
-    <br />
-    <button id="add_new_staff" class="btn btn-default" routerLink="">Add Staff Member</button>
+          <!--Remove Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>delete</mat-icon>
+              Remove Staff Member
+            </ng-template>
+            <div class="tab_content">
+              <h2>Remove Staff Member</h2>
+              <br />
 
-  </mat-tab>
-</mat-tab-group>
+              <form id="remove_member_form">
+
+                <!--Search Field-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Search for member">
+                </mat-form-field>
+                <br/>
+
+                <button type="submit" id="remove_search_staff" class="btn btn-default">Search</button>
+
+              </form>
+
+            </div>
+          </mat-tab>
+
+          <!--Update Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>update</mat-icon>
+              Update Staff Member
+            </ng-template>
+            <div class="tab_content">
+                <h2>Update Staff Member</h2>
+                <br />
+  
+                <form id="update_member_form">
+  
+                  <!--Search Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Search for member">
+                  </mat-form-field>
+                  <br/>
+  
+                  <button type="submit" id="update_search_staff" class="btn btn-default">Search</button>
+                  
+                </form>
+  
+              </div>
+          </mat-tab>
+
+          <!--View Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>people</mat-icon>
+              View Staff Compliment
+            </ng-template>
+            <div class="tab_content">
+                <h2>View Staff Members</h2>
+                <br />
+                <!--TODO
+                    - Retrieve list to all staff members from API
+                -->
+              </div>
+          </mat-tab>
+
+          <!--Search Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>search</mat-icon>
+              Search
+            </ng-template>
+            <div class="tab_content">
+                <h2>Search Staff Member</h2>
+                <br />
+  
+                <form id="search_member_form">
+  
+                  <!--Search Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Search for member">
+                  </mat-form-field>
+                  <br/>
+  
+                  <button type="submit" id="search_staff" class="btn btn-default">Search</button>
+                  
+                </form>
+  
+              </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+    </div>
+  </div>

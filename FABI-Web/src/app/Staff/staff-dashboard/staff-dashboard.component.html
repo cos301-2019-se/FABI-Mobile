@@ -11,22 +11,23 @@
 
       <!--Dashboard Content-->
       <section id="dashboard">
-        <div id="dashboard_content">
-          <button id="submit_CMW_request" class="btn btn-default" routerLink="/submit-cmw-request">Submit CMW Request
-            Form</button>
-          <button id="submit_CMW_deposit" class="btn btn-default" routerLink="/submit-cmw-deposit">Submit CMW Deposit
-            Form</button>
-          <button id="submit_CMW_revitalization" class="btn btn-default" routerLink="/submit-cmw-revitalization">Submit CMW Revitalization
-            Request Form</button>
-          
+        <div id="menu_div">
+          <mat-icon [inline]="true" class="menu_icon">menu</mat-icon>
         </div>
-        <br/>
+        <h1 id="dashboard_heading">Dashboard</h1><br/>
         <div id="dashboard_content">
-          <button id="submit_CBS_request" class="btn btn-default" routerLink="/submit-cbs-request">Submit CBS Request
-            Form</button>
-          <button id="submit_CBS_deposit" class="btn btn-default" routerLink="/submit-cbs-deposit">Submit CBS Deposit
-            Form</button>
+          <button id="submit_CMW_request" class="btn btn-default" routerLink="/submit-cmw-request">Submit CMW Request Form</button>
+          <button id="submit_CMW_deposit" class="btn btn-default" routerLink="/submit-cmw-deposit">Submit CMW Deposit Form</button>
+          <button id="submit_CMW_revitalization" class="btn btn-default" routerLink="/submit-cmw-revitalization">Submit CMW Revitalization Form</button><br/><br/>
+          <button id="submit_CBS_request" class="btn btn-default" routerLink="/submit-cbs-request">Submit CBS Request Form</button>
+          <button id="submit_CBS_deposit" class="btn btn-default" routerLink="/submit-cbs-deposit">Submit CBS Deposit Form</button>
           <button id="submit_sample" class="btn btn-default" routerLink="/staff-submit-sample">Submit Sample</button>
+          <div id="notification_div">
+            <mat-icon [inline]="true" class="notification_icon">notification_important</mat-icon>
+          </div>
+          <div id="help_div">
+              <mat-icon [inline]="true" class="help_icon">help</mat-icon>
+          </div>
         </div>
       </section>
 
