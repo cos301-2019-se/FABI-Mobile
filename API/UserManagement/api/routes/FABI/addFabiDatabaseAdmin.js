@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
+const mail = require('../sendEmail');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -119,7 +120,8 @@ function addAdmin(req, res)
                 tempPassword : pass}
         }
     });
-    console.log("Admin Added to FABI");
+    console.log("Database Admin Added to FABI");
+    mail('FABI Database Admin', pass);
 });
 
 }
