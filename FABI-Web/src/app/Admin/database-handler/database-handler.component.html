@@ -37,8 +37,7 @@
               <h2>Add Database via Porting</h2>
               <br />
 
-              <input class="ng-hide" id="input-file-id" multiple type="file" />
-              <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
+              <input type='file' (change)=submitCSV(input) id='fileInput' #input>
 
             </div>
           </mat-tab>
