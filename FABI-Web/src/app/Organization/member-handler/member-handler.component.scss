@@ -106,6 +106,72 @@
 }
 
 .form_inputs {
-    width: 40%;
-    margin-left: 1rem;
+    width: 25%;
+}
+
+#menu_div {
+    font-size: 40px;
+}
+
+#menu_div .menu_icon {
+    color: #ffffff;
+
+    overflow: hidden;
+    position: relative;
+    display: block;
+
+    left: 2rem;
+    top: 2rem;
+}
+
+#dashboard_content .icons {
+    color: #ffffff;
+
+    overflow: hidden;
+    position: relative;
+    display: block;
+}
+
+#dashboard_content .icons_div {
+    font-size: 60px;
+}
+
+#sidenav_div .icons_div_menu {
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+.sidenav {
+    height: 100%; 
+    width: 0; 
+    position: fixed; 
+    z-index: 1; 
+    top: 0; 
+    left: 0;
+    background-color: #1F292A;
+    overflow-x: hidden; 
+    padding-top: 6%; 
+    transition: 0.5s; 
+
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+  
+.sidenav button {
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    background: transparent;
+    margin-left: 30px;
+    border: none;
+    padding-bottom: 10px;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }

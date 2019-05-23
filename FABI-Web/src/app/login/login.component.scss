@@ -99,12 +99,14 @@
     background-color: #196F3D !important;
 }
 
-
+mat-form-field {
+    width: 40%;
+}
 
 input#continue.btn.btn-default {
-    background: transparent;
+    background: #196F3D;
     border: 3px solid #196F3D;
-    color: #196F3D;
+    color: white;
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
@@ -122,9 +124,7 @@ input#continue.btn.btn-default {
 
 input#continue.btn.btn-default:hover,
 input#continue.btn.btn-default:focus {
-    opacity: 0.8;
-    color: #ffffff;
-    background-color: #196F3D;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 //Error Messages Styling

@@ -8,20 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class AdminDashboardComponent implements OnInit {
-  //sidenav : boolean;
   constructor() { }
-
-  //public SidenavComponent:SidenavComponent
   
-  /*sideNavBtnToggle(){
-    if(this.sidenav == false)
+  sidenavToggle(){
+    if(document.getElementById("sidenav_div").style.width == "22%")
     {
-      this.sidenav = true;
+      document.getElementById("sidenav_div").style.width = "0";
     }
     else{
-      this.sidenav = false;
+      document.getElementById("sidenav_div").style.width = "22%";
     } 
-  }*/
+  }
+
+  closeNav(){
+    document.getElementById("sidenav_div").style.width = "0";
+  }
 
   ngOnInit() { }
 
