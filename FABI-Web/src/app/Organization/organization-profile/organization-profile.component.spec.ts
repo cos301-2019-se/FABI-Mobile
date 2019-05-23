@@ -2,13 +2,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OrganizationProfileComponent } from './organization-profile.component';
 
+//Import the materials component
+import { MaterialModule } from '../../materials';
+
+//Animation Testing
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 describe('OrganizationProfileComponent', () => {
   let component: OrganizationProfileComponent;
   let fixture: ComponentFixture<OrganizationProfileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganizationProfileComponent ]
+      declarations: [ OrganizationProfileComponent ],
+      imports: [NoopAnimationsModule, BrowserAnimationsModule,MaterialModule]
     })
     .compileComponents();
   }));

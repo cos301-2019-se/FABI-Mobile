@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 import { ErrorComponent } from './error/error.component';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import {ReactiveFormsModule} from '@angular/forms';
 import { AdminModule } from './Admin/admin.module';
@@ -78,8 +77,7 @@ import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalizat
     AdminModule,
     StaffModule,
     OrganizationModule,
-    OrganizationMemberModule,
-    AngularFontAwesomeModule
+    OrganizationMemberModule
   ],
   providers: [],
   bootstrap: [AppComponent],
