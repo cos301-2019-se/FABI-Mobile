@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 import { ErrorComponent } from './error/error.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import {ReactiveFormsModule} from '@angular/forms';
 import { AdminModule } from './Admin/admin.module';
@@ -37,7 +38,6 @@ import { SubmitCbsDepositComponent } from './Staff/submit-cbs-deposit/submit-cbs
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -66,8 +66,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     SubmitCbsDepositComponent,
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
-    SubmitCmwRevitalizationComponent,
-    SidenavComponent
+    SubmitCmwRevitalizationComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +78,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     AdminModule,
     StaffModule,
     OrganizationModule,
-    OrganizationMemberModule
+    OrganizationMemberModule,
+    AngularFontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -41,7 +41,7 @@
     overflow: hidden;
     position: relative;
 
-    top: 0.2rem;
+    top: 2rem;
     display: block;
 
     color: #ffffff;
@@ -59,22 +59,10 @@
 
     top: 0.5vh;
     left: 10%;
-
-    background-color: #ffffff;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.85;
-
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 #menu_div {
     font-size: 40px;
-}
-
-#help_div, #notification_div{
-    font-size: 38px;
 }
 
 #menu_div .menu_icon {
@@ -88,52 +76,83 @@
     top: 2rem;
 }
 
-#notification_div .notification_icon {
-    color: #196F3D;
-
-    overflow: hidden;
-    position: relative;
-
-    left: 12rem;
-    top: 3%;
-}
-
-#help_div .help_icon {
-    color: #196F3D;
-
-    overflow: hidden;
-    position: relative;
-
-    left: 13rem;
-    top: 2.7%;
-}
-
 #dashboard_content .btn.btn-default {
-    background: transparent;
+    background: #196F3D;
     border: 3px solid #196F3D;
-    color: #196F3D;
-    font-size: 12px;
+    color: white;
+    font-size: 16px;
     letter-spacing: 2px;
     padding: 13px 30px;
-    margin-left: 2rem;
-    margin-top: 1.5rem;
+    margin-left: 4rem;
     text-transform: uppercase;
-    height: 2.5rem;
+    height: 14rem;
+    width: 14rem;
 
-    border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
     border: 1px solid #196F3D;
 
     overflow: hidden;
     position: relative;
-    top: 0.5vh;
+    top: 17rem;
+    left: 10rem;
 
     display: block;
+
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 #dashboard_content .btn.btn-default:hover,
 #dashboard_content .btn.btn-default:focus {
+    opacity: 0.9;
+}
+
+#dashboard_content .icons {
     color: #ffffff;
-    background-color: #196F3D;
+
+    overflow: hidden;
+    position: relative;
+    display: block;
+}
+
+#dashboard_content .icons_div {
+    font-size: 60px;
+}
+
+#sidenav_div .icons_div_menu {
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+.sidenav {
+    height: 100%; 
+    width: 0; 
+    position: fixed; 
+    z-index: 1; 
+    top: 0; 
+    left: 0;
+    background-color: #1F292A;
+    overflow-x: hidden; 
+    padding-top: 6%; 
+    transition: 0.5s; 
+
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+  
+.sidenav button {
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    background: transparent;
+    margin-left: 30px;
+    border: none;
+    padding-bottom: 10px;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }
