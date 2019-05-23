@@ -120,7 +120,7 @@ function addMember(req, res)
 
 // (2) Connect to DB
 
-    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('members').doc(qs.email);
+    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.email);
     docRef.set(qs).then(() => {
         res.setHeader('Content-Type', 'application/problem+json');
     res.setHeader('Content-Language', 'en');
