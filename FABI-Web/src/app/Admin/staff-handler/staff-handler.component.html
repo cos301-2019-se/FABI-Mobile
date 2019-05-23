@@ -1,91 +1,173 @@
-<div id="staff_management_div">
-  <h1 id="staff_heading">Staff Management</h1><br/><br/>
-  <div id="staff_content">
-      <mat-tab-group id="tab_group">
-          <mat-tab class="tabs">
+<div id="staff_handler">
+  <div class="top_banner">
+    <h1 id="staff_heading">Staff Management</h1>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div id="staff_management_div">
+
+        <!--Tab Menu-->
+        <mat-tab-group animationDuration="1000ms">
+
+          <!--Add Tab Option-->
+          <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>person_add</mat-icon>
-               Add Staff Member
+              Add Staff Member
             </ng-template>
-            <div id="add_member_div">
-              <h2>Add a new staff member</h2><br/>
+            <div class="tab_content">
+              <h2>Add Staff Member</h2>
+              <br />
+
               <form id="add_new_member_form">
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Firstname">
-                  </mat-form-field>
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Lastname">
-                  </mat-form-field>
-                  <br/>
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Email Address">
-                  </mat-form-field>
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Phone Number">
-                  </mat-form-field>
-                  <br/>
-                  <mat-form-field class="form_inputs">
-                    <mat-select placeholder="Type of User">
-                      <mat-option value="super user">Super user</mat-option>
-                      <mat-option value="administrator">Administrator</mat-option>
-                      <mat-option value="culture collection manager">Culture collection manager</mat-option>
-                      <mat-option value="general FABI user">General FABI user</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <br/><br/>
-                  <input type="submit" id="add_staff" class="btn btn-default" value="Add new staff member" />
+
+                <!--Name Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Name">
+                </mat-form-field>
+                <br />
+
+                <!--Surname Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Surname">
+                </mat-form-field>
+                <br />
+
+                <!--Email Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Email">
+                </mat-form-field>
+                <br />
+
+                <!--Cellphone Number Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Cellphone Number">
+                </mat-form-field>
+                <br />
+
+                <mat-form-field>
+                  <mat-label>Staff Position</mat-label>
+                  <mat-select>
+                    <!--
+                        TODO 
+                          - Loop through types of available staff types 
+                          - If admin is selected we need to determine if clinic or DB admin
+                          - Then if they are a DB admin we must determin which DB 
+                    -->
+                    <mat-option>
+                      Admin
+                    </mat-option>
+                    <mat-option>
+                      Researcher
+                    </mat-option>
+                    <mat-option>
+                      Student
+                    </mat-option>
+                  </mat-select>
+                  <br />
+                </mat-form-field>
+                <br />
+
+                <button type="submit" id="add_new_staff" class="btn btn-default" routerLink="">Add Staff Member</button>
+
               </form>
+
             </div>
           </mat-tab>
 
-          <mat-tab class="tabs">
+          <!--Remove Tab Option-->
+          <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>delete</mat-icon>
-                Remove Staff Member
+              Remove Staff Member
             </ng-template>
-            <h2>Remove a staff member</h2><br/>
-            <form id="remove_member_form">
+            <div class="tab_content">
+              <h2>Remove Staff Member</h2>
+              <br />
+
+              <form id="remove_member_form">
+
+                <!--Search Field-->
                 <mat-form-field class="form_inputs">
                   <input matInput placeholder="Search for member">
                 </mat-form-field>
-                <input type="submit" id="remove_search_staff" value="Search" />
-            </form>
+                <br/>
+
+                <button type="submit" id="remove_search_staff" class="btn btn-default">Search</button>
+
+              </form>
+
+            </div>
           </mat-tab>
 
-          <mat-tab class="tabs">
+          <!--Update Tab Option-->
+          <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>update</mat-icon>
-                Update Staff Member
+              Update Staff Member
             </ng-template>
-            <h2>Update a staff member's details</h2><br/>
-            <form id="update_member_form">
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Search for member">
-                </mat-form-field>
-                <input type="submit" id="update_search_staff" value="Search" />
-            </form>
+            <div class="tab_content">
+                <h2>Update Staff Member</h2>
+                <br />
+  
+                <form id="update_member_form">
+  
+                  <!--Search Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Search for member">
+                  </mat-form-field>
+                  <br/>
+  
+                  <button type="submit" id="update_search_staff" class="btn btn-default">Search</button>
+                  
+                </form>
+  
+              </div>
           </mat-tab>
 
-          <mat-tab class="tabs">
+          <!--View Tab Option-->
+          <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>people</mat-icon>
-                View Staff Compliment
+              View Staff Compliment
             </ng-template>
+            <div class="tab_content">
+                <h2>View Staff Members</h2>
+                <br />
+                <!--TODO
+                    - Retrieve list to all staff members from API
+                -->
+              </div>
           </mat-tab>
 
-          <mat-tab class="tabs">
+          <!--Search Tab Option-->
+          <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>search</mat-icon>
-                Search
+              Search
             </ng-template>
-            <h2>Search for a staff member</h2><br/>
-            <form id="search_member_form">
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Search for member">
-                </mat-form-field>
-                <input type="submit" id="search_staff" value="Search" />
-            </form>
+            <div class="tab_content">
+                <h2>Search Staff Member</h2>
+                <br />
+  
+                <form id="search_member_form">
+  
+                  <!--Search Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Search for member">
+                  </mat-form-field>
+                  <br/>
+  
+                  <button type="submit" id="search_staff" class="btn btn-default">Search</button>
+                  
+                </form>
+  
+              </div>
           </mat-tab>
-      </mat-tab-group>
+        </mat-tab-group>
+
+      </div>
+    </div>
   </div>
-</div>

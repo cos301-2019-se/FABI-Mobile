@@ -5,7 +5,8 @@ import { SampleFormComponent } from './sample-form/sample-form.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'sample-form', component: SampleFormComponent}
+  {path: 'sample-form', component: SampleFormComponent},
+  {path: '', component: LoginComponent}
 ];
 
 @NgModule({

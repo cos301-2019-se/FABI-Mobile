@@ -1,25 +1,33 @@
-#staff_management_div {
-    display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: center;
+/*
+    DASHBOARD DESIGN 
+*/
 
+//Background Setup
+#staff_handler {
+    color: #ffffff;
+    display: flex;
     height: 100vh;
-    width: 70%;
+    width: 100%;
     overflow: hidden;
     position: relative;
+}
 
-    background-color: white;
+//Banner Setup
+.top_banner {
+    background: linear-gradient(to left, #196F3D, black);
+    opacity: 0.8;
+    position: absolute; 
+    top: 0;
+    width: 100%;
+    height: 30vh;
+
+    background-image: url('/assets/images/forest.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-
-    display: block;
 }
 
-#staff_heading {
+.top_banner #staff_heading {
     display: flex;
     -webkit-box-align: center;
     -webkit-align-items: center;
@@ -29,52 +37,54 @@
     width: 100%;
 
     overflow: hidden;
-    position: relative;
+    position: absolute;
 
-    top: 0.2rem;
+    top: 1rem;
     display: block;
 
-    color: black;
+    color: #ffffff;
     font-size: 2rem
 }
 
-#staff_content {
-    display: block;
+#staff_management_div {
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
 
+    height: 80%;
+    width: 90%;
     overflow: hidden;
     position: relative;
 
-    background-color: #ffffff;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.85;
-}
+    left: 5%;
+    top: 15%;
 
-#tab_group {
+    background-color: white;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+
     display: block;
-
-    overflow: hidden;
-    position: relative;
-
-    background-color: #ffffff;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
-#add_new_member_form .form_inputs, 
-#remove_member_form .form_inputs, 
-#update_member_form .form_inputs,
-#search_member_form .form_inputs {
-    width: 25%;
-    margin-left: 1rem;
+.tab_content {
+    text-align: center;
+}
+
+.tab_content h2 {
+    color: #196F3D;
+
+    position: relative;
+    top: 2rem;
+
+    display: block;
 }
 
 .btn.btn-default {
     background: #196F3D;
     border: 3px solid #196F3D;
-    color: white;
+    color: #ffffff;
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
@@ -88,35 +98,14 @@
     -webkit-border-radius: 50px;
     border: 1px solid #196F3D;
 
-    display:block;
+    display: block;
 }
 
-#remove_search_staff, #update_search_staff, #search_staff {
-    background: #196F3D;
-    border: 3px solid #196F3D;
-    color: white;
-    font-size: 12px;
-    letter-spacing: 2px;
-    padding: 13px 30px;
-    margin-top: 0%;
-    margin-left: 4%;
-    text-transform: uppercase;
-
-    border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    border: 1px solid #196F3D;
-
-    display: inline;
+.btn.btn-default:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
 }
 
-#add_new_member_form .btn.btn-default:hover,
-#add_new_member_form .btn.btn-default:focus, 
-#remove_search_staff:focus,
-#remove_search_staff:hover,
-#update_search_staff:focus,
-#update_search_staff:hover,
-#search_staff:focus,
-#search_staff:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 40px 0 rgba(0,0,0,0.19);
+.form_inputs {
+    width: 40%;
+    margin-left: 1rem;
 }
