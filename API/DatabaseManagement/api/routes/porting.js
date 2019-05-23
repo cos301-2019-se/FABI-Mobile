@@ -62,13 +62,15 @@ function addDoc(req, res)
     }
 
 // (2) Connect to DB
+    var ids = [];
     req.body.data.forEach(item => {
+        item.id = new Date().getTime().toString();
         console.log(item);
-        var docRef  = db.collection('Databases').doc(req.body.databaseName).collection('Data').doc(item.num);
+        ids.push(item.id);
+        var docRef  = db.collection('Databases').doc(req.body.databaseName).collection('Data').doc(item.id);
         docRef.set(item).then(() => {
             console.log("reocrd added");
         });
-
     });
 
     res.setHeader('Content-Type', 'application/problem+json');
@@ -81,7 +83,8 @@ function addDoc(req, res)
                 title: "SUCCESS",
                 message: "Added Data",
                 content: {message : "Data submitted to " + req.body.databaseName,
-                    databaseName : req.body.databaseName}
+                    databaseName : req.body.databaseName,
+                    newIdArray : ids}
                 }
             });
 }
