@@ -1,24 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { AdminAPIService } from '../../admin-api.service';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { ErrorComponent } from '../../error/error.component';
+import { Router } from '@angular/router';
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+import { StaffInfo } from '../../admin-api.service';
 
 
 @Component({
@@ -28,12 +18,73 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class StaffHandlerComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  /*
+    GLOBALS
+  */
+ addStaffForm: FormGroup;          // FormGroup object to reference add user type form
+ submitted: boolean = false;       // if form has been submitted
+ success: boolean = false;         // if form was succesfully filled out
 
-  constructor() { }
+  constructor(private service: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router)
+  { 
+    this.addStaffForm = this.formBuilder.group({
+      staff_name: ['', Validators.required],
+      staff_surname: ['', Validators.required],
+      staff_email: ['', Validators.required],
+      staff_phone: ['', Validators.required],
+      staff_position: ['', Validators.required]
+    })
+  }
 
   ngOnInit() {
+  }
+
+  addStaff()
+  {
+    this.submitted = true;
+
+    if (this.addStaffForm.invalid) {
+      return;
+    }
+
+    this.success = true;
+
+    const LstaffName = this.addStaffForm.controls.staff_name.value;
+    const LstaffSurname = this.addStaffForm.controls.staff_surname.value;
+    const LstaffEmail = this.addStaffForm.controls.staff_email.value;
+    const LstaffPhone = this.addStaffForm.controls.staff_phone.value;
+    const LstaffPosition = this.addStaffForm.controls.staff_positon.value;
+
+    const staff_details: StaffInfo = { name: LstaffName, surname:LstaffSurname, email:LstaffEmail, phone:LstaffPhone, position:LstaffPosition };
+
+    this.service.addStaffMember(staff_details).subscribe((response: any) => {
+      if (response.success == true) {
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Successfully added staff member! Temp Password: " + response.data.content.tempPassword, "Dismiss", {
+          duration: 6000
+        });
+
+        console.log("Temp Password: " + response.data.content.tempPassword);
+
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could not add staff member ", message: response.message } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.addStaff();
+          }
+        })
+      }
+    }, (err: HttpErrorResponse) => {
+      //POPUP MESSAGE
+      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could not add staff member", message: err.message } });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result == "Retry") {
+          this.addStaff();
+        }
+      })
+      console.log("ERROR:" + err.message);
+    })
   }
 
 }

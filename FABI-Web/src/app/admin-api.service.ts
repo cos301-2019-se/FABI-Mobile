@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 
 
 const getAllOrganizationsURL: string = 'https://user-management-dot-api-fabi.appspot.com/getAllOrganizations';
+const createOrganizationURL: string = 'https://user-management-dot-api-fabi.appspot.com/createOrganization';
+const getOrgDetailsURL: string = '';
 
 const authenticateFABIAdminURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginAdmin';
 const authenticateStaffURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginFabiStaff';
@@ -14,8 +16,12 @@ const authenticateDataAdminURL: string = 'https://authentication-dot-api-fabi.ap
 const authenticateOrgURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginOrgAdmin';
 const authenticateOrgMemberURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginOrgMember';
 
-const createOrganizationURL: string = '';
-const getOrgDetailsURL: string = '';
+const addStaffMemberURL: string = 'https://user-management-dot-api-fabi.appspot.com/addStaff';
+
+const addFABIAdminURL: string = 'https://user-management-dot-api-fabi.appspot.com/addFabiAdmin';
+
+
+const portingURL: string = 'https://database-management-dot-api-fabi.appspot.com/porting';
 
 
 
@@ -26,6 +32,25 @@ export interface LoginInfo {
   password: string;
 }
 
+export interface OrganizationInfo {
+  orgName: string,
+  location: string
+}
+
+export interface OrganizationAdmin {
+  name: string,
+  surname: string,
+  email: string,
+  phone: number
+}
+
+export interface StaffInfo {
+  name: string;
+  surname: string,
+  email: string,
+  phone: number,
+  position: string
+}
 
 
 @Injectable({
@@ -123,7 +148,6 @@ export class AdminAPIService {
 
   authenticateFABIAdmin(details: LoginInfo) 
   {
-    console.log("----- HERE -----");
     const postData = details;
 
     const options = {
@@ -132,6 +156,7 @@ export class AdminAPIService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
         'Accept': 'application/json'
       },
       body:postData,
@@ -151,6 +176,7 @@ export class AdminAPIService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
         'Accept': 'application/json'
       },
       body:postData,
@@ -171,6 +197,7 @@ export class AdminAPIService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
         'Accept': 'application/json'
       },
       body:postData,
@@ -182,7 +209,11 @@ export class AdminAPIService {
 
   authenticateOrgAdmin(details: LoginInfo) 
   {
-    const postData = details;
+    const postData = {
+      "email": details.email,
+      "password": details.password,
+      "orgName":details.organization
+    }
 
     const options = {
       method: 'POST',
@@ -190,6 +221,7 @@ export class AdminAPIService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
         'Accept': 'application/json'
       },
       body:postData,
@@ -201,7 +233,11 @@ export class AdminAPIService {
 
   authenticateOrgMember(details: LoginInfo) 
   {
-    const postData = details;
+    const postData = {
+      "email": details.email,
+      "password": details.password,
+      "orgName":details.organization
+    }
 
     const options = {
       method: 'POST',
@@ -209,6 +245,7 @@ export class AdminAPIService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
         'Accept': 'application/json'
       },
       body:postData,
@@ -217,6 +254,105 @@ export class AdminAPIService {
 
     return this.http.request('POST', authenticateOrgMemberURL, options);
   }
+
+  porting(jsonObject: Object)
+  {
+    const postData = {
+      "databaseName": "Testing_Third_Api_Call",
+      "data":jsonObject
+    };
+
+    const options = {
+      method: 'POST',
+      url: portingURL,
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
+        'Accept': 'application/json'
+      },
+      body:postData,
+      json: true
+    };
+
+    return this.http.request('POST', portingURL, options);
+  }
+
+  createOrganization(orgInfo: OrganizationInfo, adminInfo: OrganizationAdmin)
+  {
+    const postData = {
+      "orgName": orgInfo.orgName,
+      "admin": adminInfo
+    }
+
+    const options = {
+      method: 'POST',
+      url: createOrganizationURL,
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
+        'Accept': 'application/json'
+      },
+      body:postData,
+      json: true
+    };
+
+    return this.http.request('POST', createOrganizationURL, options);
+  }
+
+  addStaffMember(staffInfo: StaffInfo)
+  {
+    if(staffInfo.position == "Admin")
+    {
+      return this.addFABIAdmin(staffInfo);
+
+    } else {
+      const postData = {
+        "staff": staffInfo
+      }
+  
+      const options = {
+        method: 'POST',
+        url: addStaffMemberURL,
+        headers: {
+          'cache-control': 'no-cache',
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin":"*",
+          'Accept': 'application/json'
+        },
+        body:postData,
+        json: true
+      };
+  
+      return this.http.request('POST', addStaffMemberURL, options);
+    }
+   
+  }
+
+  addFABIAdmin(staffInfo: StaffInfo)
+  {
+    const postData = {
+      "admin": staffInfo
+    }
+
+    const options = {
+      method: 'POST',
+      url: addFABIAdminURL,
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
+        'Accept': 'application/json'
+      },
+      body:postData,
+      json: true
+    };
+
+    return this.http.request('POST', addFABIAdminURL, options);
+  }
+
+
 
 
 

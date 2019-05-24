@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
-import { ErrorComponent } from './error/error.component';
 
 import {ReactiveFormsModule} from '@angular/forms';
 
@@ -41,6 +40,8 @@ import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
+import { ErrorComponent } from './error/error.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +72,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     SubmitCmwRevitalizationComponent,
     SidenavComponent
   ],
+  entryComponents: [ErrorComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
