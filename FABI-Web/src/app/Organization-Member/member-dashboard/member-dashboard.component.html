@@ -20,6 +20,12 @@
           <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
           <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
           <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
+          <form id="menu_search">
+            <mat-form-field class="search_input_field">
+              <input matInput id="menu_search_field" formControlName="menu_search_field" type="text">
+              <mat-placeholder class="placeholder">Search</mat-placeholder>
+            </mat-form-field>
+          </form>
         </div>
         <div id="menu_div">
           <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>

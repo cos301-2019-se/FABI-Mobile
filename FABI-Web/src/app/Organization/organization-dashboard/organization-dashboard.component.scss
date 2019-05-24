@@ -155,3 +155,26 @@
     font-size: 36px;
     margin-left: 50px;
 }
+
+#menu_search {
+    margin-top: 120px;
+    margin-left: 30px;
+    width: 100%;
+}
+
+#menu_search .search_input_field {
+    width: 350px;
+}
+
+#menu_search .placeholder {
+    color: white;
+    font-size: 20px;
+}
+
+::ng-deep .mat-form-field-underline .mat-form-field-ripple{
+    background-color:white !important;
+}
+  
+::ng-deep .mat-form-field-underline{ 
+    background-color:white !important;
+}
