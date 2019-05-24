@@ -10,10 +10,10 @@ admin.initializeApp({
 
 const displayHTML = require('./api/routes/displayHTML');
 
-const submitSampleRoute = require('./api/routes/submitSample');
-const retrieveSampleRoute = require('./api/routes/retrieveSample');
-const retrieveAllOrgSamplesRoute = require('./api/routes/retrieveAllOrgSamples');
-const retrieveAllSamplesRoute = require('./api/routes/retrieveAllSamples');
+//fabi modules
+const createDatabaseRoute = require('./api/routes/createDatabase');
+const addDocRoute = require('./api/routes/addDoc');
+const portingRoute = require('./api/routes/porting');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -22,9 +22,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/',displayHTML);
-app.use('/submitSample', submitSampleRoute);
-app.use('/retrieveSample', retrieveSampleRoute);
-app.use('/retrieveAllSamples', retrieveAllSamplesRoute);
+app.use('/createDatabase', createDatabaseRoute);
+app.use('/addDoc', addDocRoute);
+app.use('/porting', portingRoute);
+
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {
