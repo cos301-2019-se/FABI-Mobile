@@ -8,11 +8,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
-import { ErrorComponent } from './error/error.component';
 
 import {ReactiveFormsModule} from '@angular/forms';
+
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
+
 import { OrganizationModule } from './Organization/organization.module';
 import { OrganizationMemberModule } from './Organization-Member/organization-member.module';
 import { DatabaseHandlerComponent } from './Admin/database-handler/database-handler.component';
@@ -37,6 +38,8 @@ import { SubmitCbsDepositComponent } from './Staff/submit-cbs-deposit/submit-cbs
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
+
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +70,7 @@ import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalizat
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent
   ],
+  entryComponents: [ErrorComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,

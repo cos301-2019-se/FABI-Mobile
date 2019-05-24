@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClinicHandlerComponent } from './clinic-handler.component';
+import { MaterialModule} from '../../materials';
 
 import {MaterialModule} from '../../materials';
 
