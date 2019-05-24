@@ -11,7 +11,6 @@ import { forEach } from '@angular/router/src/utils/collection';
 //import { userInfo } from 'os';
 
 
-
 //Object for defining how a organization is structured
 export interface Organization {
   ID: string; //This will contain the ID retreived from the DB 
@@ -42,6 +41,7 @@ export class LoginComponent implements OnInit {
   selectedOrganization: boolean = false;
   organizations: Object;            //array for Organization dropdown
   userTypes: Object;                //array for User Type dropdown
+  loading: boolean = false;
   selectedOrg: string;
 
   /*
@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+
     this.submitted = true;
 
     if (this.loginForm.invalid) {
@@ -64,6 +65,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.success = true;
+    this.loading = true;
 
     const Lemail = this.loginForm.controls.login_email.value;
     const Lpassw = this.loginForm.controls.login_password.value;
@@ -73,6 +75,9 @@ export class LoginComponent implements OnInit {
     const details: LoginInfo = { email: Lemail, password: Lpassw, organization: Lorg, userType: LuserType };
 
     this.service.login(details).subscribe((response: any) => {
+
+      this.loading = false;
+      
       if (response.success == true) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Logged In", "Dismiss", {
@@ -86,20 +91,37 @@ export class LoginComponent implements OnInit {
         {
           if(details.userType == "Admin" || details.userType == "Database Admin")
           {
-            this.router.navigate('Admin/admin-dashboard');
+            try {
+              this.router.navigate(['fabi-admin-dashboard']);
+            } catch(err) {
+              console.log("Could not redirect to dashboard: " + err.message);
+            }
+            
           }
           else {
-            this.router.navigate(['app-staff-dashboard']);
+            try {
+              this.router.navigate(['fabi-staff-dashboard']);
+            } catch(err) {
+              console.log("Could not redirect to dashboard: " + err.message);
+            }
           }
         }
         else
         {
           if(details.userType == "Admin")
           { 
-            this.router.navigate(['app-organization-dashboard']);
+            try {
+              this.router.navigate(['org-admin-dashboard']);
+            } catch(err) {
+              console.log("Could not redirect to dashboard: " + err.message);
+            }
           } else
           {
-            this.router.navigate(['app-member-dashboard']);
+            try {
+              this.router.navigate(['org-member-dashboard']);
+            } catch(err) {
+              console.log("Could not redirect to dashboard: " + err.message);
+            }
           }
         }
 
@@ -115,6 +137,9 @@ export class LoginComponent implements OnInit {
           //
         })
       }
+
+      this.loading = false;
+
     }, (err: HttpErrorResponse) => {
       //POPUP MESSAGE
       let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Log In", message: err.message } });
@@ -124,6 +149,7 @@ export class LoginComponent implements OnInit {
         }
       })
       console.log("ERROR:" + err.message);
+      this.loading = false;
     })
   }
 
