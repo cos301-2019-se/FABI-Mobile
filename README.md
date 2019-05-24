@@ -28,6 +28,11 @@
 
 # Team Members
 
+<div align="center" style="margin:0 auto;">
+<img src="https://drive.google.com/uc?export=view&id=1f4QUJh61qhxPUtkpV9Byi43FLVFRpNyy" alt="Nova Logo" title="Nova" style="width:80%; height:90%; margin: 0 auto; text-align:center;" />
+<p>Left to Right: Tegan, Aeron, Emma, Luveshan, Kendra</p>
+</div>
+
 ## <a name="Tegan-Carton-Barber">Tegan Carton-Barber</a>
 ###### *Team Leader and Front-End Developer*
 
