@@ -1,6 +1,4 @@
 const express = require('express');
-const router = express.Router();
-const MongoClient = require('mongodb').MongoClient;
 const nodemailer = require('nodemailer');
 const EmailTemplate = require('email-templates');
 const path = require('path');
@@ -28,17 +26,17 @@ const transporter = nodemailer.createTransport({
  *  3. Send Email
  */
 /////////////////////////////////////////////////////////////////////
-function generate() {
+function sendEmail(org, pass) {
       
 // (1) Generate the Reference Number (random 4 digit number)
-      let refNum ='ref-' + new Date().getTime();
+      
 
       /// TEMPORAORY  ////////////////////////////////
       const mailObject = {
             from: 'FABI_WepApp',
             to: 'novacapstone@gmail.com',
-            subject: "Sample Reference Number",
-            text: `Thank you for your sample submission. Your reference number is: ${refNum}`
+            subject: "Temoprary Password",
+            text: `You have been added to the FABI system for organization ${org} , your temporary password is: ${pass}`
       }
 
       transporter.sendMail(mailObject, (error, info) => {
@@ -47,8 +45,6 @@ function generate() {
         else
           console.log('Email sent: ' + info.response);
       });
-
-      return refNum;
       /////////////////////////////////////////////////////
 
 // (2) Load the email template (using Promise) - (Call the LoadTemplate function)
@@ -70,40 +66,6 @@ function generate() {
 }
 
 // (3) Send Email
-function sendEmail (obj) {
-    transporter.sendMail(obj, (error, info) => {
-        if (error) {
-            res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(500).json({                            
-                success: false,
-                error: {
-                    code: 500,
-                    title: "INTERNAL_SERVER_ERROR",
-                    message: error.message
-                }
-            });
-          console.log(error);
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(200).json({                              
-                success: true,
-                data: {
-                    code: 200,
-                    title: "SUCCESS",
-                    message: "Email successfully sent",
-                    content: {
-                        referenceNumber: refNum
-                    }
-                }
-            });
-          console.log('Email sent: ' + info.response);
-        }
-      });
-}
 
 // (2) Load the email template (using Promise)
 function loadTemplate(templateName, info) {
@@ -119,4 +81,4 @@ function loadTemplate(templateName, info) {
 }
 
 
-module.exports = generate;
+module.exports = sendEmail;
