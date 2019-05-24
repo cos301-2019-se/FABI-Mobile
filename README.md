@@ -19,6 +19,7 @@
   -  [Demo 2 Testing Policy](https://drive.google.com/file/d/1n2vZSBECzH9XzkLUa_McMMRlQVahIhqU/view?usp=sharing)
   -  [Demo 2 User Manual]()
   -  [Demo 2 Coding Standards Document]()
+  - [Demo 2 Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
   
  ## Project Management
  
