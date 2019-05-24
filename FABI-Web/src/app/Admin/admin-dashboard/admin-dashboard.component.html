@@ -1,0 +1,40 @@
+<!--Dashboard-->
+<div id="dashboard">
+  <div class="gradient-overlay"></div>
+  <div class="container-fluid">
+    <div class="row">
+
+      <!--Dashboard Content-->
+      <section id="dashboard">
+        <div id="sidenav_div" class="sidenav">
+          <a class="closebtn" (click)="closeNav()">&times;</a>
+          <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
+          <button id="user_management" routerLink="/staff-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Staff Management</button>
+          <button id="organization_management" routerLink="/organization-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>
+          <button id="diagnostic_clinic_management" routerLink="/clinic-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  Diagnostic Clinic Management</button>
+          <button id="database_management" routerLink="/database-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">storage</mat-icon></span>  Database Management</button>
+          <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
+          <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
+          <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
+          <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
+        </div>
+        <div id="menu_div">
+          <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
+        </div>
+        <h1 id="dashboard_heading">Dashboard</h1><br/>
+        <div id="dashboard_content">
+          <button id="user_management" class="btn btn-default" routerLink="/staff-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">people</mat-icon></div><br/>Staff
+            Management</button><button id="organization_management" class="btn btn-default"
+            routerLink="/organization-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">business</mat-icon></div><br/>Organization
+            Management</button><button id="diagnostic_clinic_management" class="btn btn-default"
+            routerLink="/clinic-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></div><br/>Diagnostic Clinic Management</button><button id="database_management" class="btn btn-default" routerLink="/database-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">storage</mat-icon></div><br/>Database
+            Management</button>
+        </div>
+      </section>
+
+      <!--Footer-->
+      <section id="footer"></section>
+      
+    </div>
+  </div>
+</div>

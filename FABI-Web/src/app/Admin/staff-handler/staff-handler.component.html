@@ -1,0 +1,190 @@
+<div id="staff_handler">
+  <div class="top_banner">
+    <h1 id="staff_heading">Staff Management</h1>
+    <div id="menu_div">
+      <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
+    </div>
+  </div>
+
+  <div id="sidenav_div" class="sidenav">
+    <a class="closebtn" (click)="closeNav()">&times;</a>
+    <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
+    <button id="user_management" routerLink="/staff-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Staff Management</button>
+    <button id="organization_management" routerLink="/organization-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>
+    <button id="diagnostic_clinic_management" routerLink="/clinic-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  Diagnostic Clinic Management</button>
+    <button id="database_management" routerLink="/database-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">storage</mat-icon></span>  Database Management</button>
+    <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
+    <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
+    <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
+    <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div id="staff_management_div">
+
+        <!--Tab Menu-->
+        <mat-tab-group animationDuration="1000ms">
+
+          <!--Add Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>person_add</mat-icon>
+              Add Staff Member
+            </ng-template>
+            <div class="tab_content">
+              <h2>Add Staff Member</h2>
+              <br />
+
+              <form id="add_new_member_form" [formGroup]="addStaffForm" (submit)="addStaff()">
+
+                <!--Name Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Name" matInput type="text" formControlName="staff_name">
+                </mat-form-field>
+                <br />
+
+                <!--Surname Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Surname" matInput type="text" formControlName="staff_surname">
+                </mat-form-field>
+                <br />
+
+                <!--Email Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Email" matInput type="text" formControlName="staff_email">
+                </mat-form-field>
+                <br />
+
+                <!--Cellphone Number Field-->
+                <mat-form-field>
+                  <input matInput placeholder="Cellphone Number" matInput type="number" formControlName="staff_phone">
+                </mat-form-field>
+                <br />
+
+                <mat-form-field class="form_inputs">
+                  <mat-label>Staff Position</mat-label>
+                  <mat-select formControlName="staff_position">
+                      <mat-option>--</mat-option>
+                    <!--
+                        TODO 
+                          - Loop through types of available staff types 
+                          - If admin is selected we need to determine if clinic or DB admin
+                          - Then if they are a DB admin we must determin which DB 
+                    -->
+                    <mat-option [value]="Admin">
+                      Admin
+                    </mat-option>
+                    <mat-option [value]="Researcher">
+                      Researcher
+                    </mat-option>
+                    <mat-option [value]="Student">
+                      Student
+                    </mat-option>
+                  </mat-select>
+                  <br />
+                </mat-form-field>
+                <br />
+
+                <button type="submit" id="add_new_staff" class="btn btn-default">Add Staff Member</button>
+
+              </form>
+
+            </div>
+          </mat-tab>
+
+          <!--Remove Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>delete</mat-icon>
+              Remove Staff Member
+            </ng-template>
+            <div class="tab_content">
+              <h2>Remove Staff Member</h2>
+              <br />
+
+              <form id="remove_member_form">
+
+                <!--Search Field-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Search for member">
+                </mat-form-field>
+                <br/>
+
+                <button type="submit" id="remove_search_staff" class="btn btn-default">Search</button>
+
+              </form>
+
+            </div>
+          </mat-tab>
+
+          <!--Update Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>update</mat-icon>
+              Update Staff Member
+            </ng-template>
+            <div class="tab_content">
+                <h2>Update Staff Member</h2>
+                <br />
+  
+                <form id="update_member_form">
+  
+                  <!--Search Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Search for member">
+                  </mat-form-field>
+                  <br/>
+  
+                  <button type="submit" id="update_search_staff" class="btn btn-default">Search</button>
+                  
+                </form>
+  
+              </div>
+          </mat-tab>
+
+          <!--View Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>people</mat-icon>
+              View Staff Compliment
+            </ng-template>
+            <div class="tab_content">
+                <h2>View Staff Members</h2>
+                <br />
+                <!--TODO
+                    - Retrieve list to all staff members from API
+                -->
+              </div>
+          </mat-tab>
+
+          <!--Search Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>search</mat-icon>
+              Search
+            </ng-template>
+            <div class="tab_content">
+                <h2>Search Staff Member</h2>
+                <br />
+  
+                <form id="search_member_form">
+  
+                  <!--Search Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Search for member">
+                  </mat-form-field>
+                  <br/>
+  
+                  <button type="submit" id="search_staff" class="btn btn-default">Search</button>
+                  
+                </form>
+  
+              </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+    </div>
+  </div>

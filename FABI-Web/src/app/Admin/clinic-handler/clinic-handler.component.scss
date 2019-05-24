@@ -1,0 +1,177 @@
+/*
+    DASHBOARD DESIGN 
+*/
+
+//Background Setup
+#clinic_handler {
+    color: #ffffff;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+//Banner Setup
+.top_banner {
+    background: linear-gradient(to left, #196F3D, black);
+    opacity: 0.8;
+    position: absolute; 
+    top: 0;
+    width: 100%;
+    height: 30vh;
+
+    background-image: url('/assets/images/forest.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.top_banner #clinic_heading {
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+
+    overflow: hidden;
+    position: absolute;
+
+    top: 1rem;
+    display: block;
+
+    color: #ffffff;
+    font-size: 2rem
+}
+
+#clinic_management_div {
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+
+    height: 80%;
+    width: 90%;
+    overflow: hidden;
+    position: relative;
+
+    left: 5%;
+    top: 15%;
+
+    background-color: white;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+
+    display: block;
+}
+
+.tab_content {
+    text-align: center;
+}
+
+.tab_content h2 {
+    color: #196F3D;
+
+    position: relative;
+    top: 2rem;
+
+    display: block;
+}
+
+.btn.btn-default {
+    background: #196F3D;
+    border: 3px solid #196F3D;
+    color: #ffffff;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 13px 30px;
+    margin-top: 34px;
+    margin-left: 41%;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border: 1px solid #196F3D;
+
+    display: block;
+}
+
+.btn.btn-default:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form_inputs {
+    width: 25%;
+}
+
+#menu_div {
+    font-size: 40px;
+}
+
+#menu_div .menu_icon {
+    color: #ffffff;
+
+    position: relative;
+    display: block;
+
+    left: 2rem;
+    top: 2rem;
+}
+
+#dashboard_content .icons {
+    color: #ffffff;
+
+    overflow: hidden;
+    position: relative;
+    display: block;
+}
+
+#dashboard_content .icons_div {
+    font-size: 60px;
+}
+
+#sidenav_div .icons_div_menu {
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+.sidenav {
+    height: 100%; 
+    width: 0; 
+    position: fixed; 
+    z-index: 1; 
+    top: 0; 
+    left: 0;
+    background-color: #1F292A;
+    overflow-x: hidden; 
+    padding-top: 6%; 
+    transition: 0.5s; 
+    opacity: 1;
+
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+  
+.sidenav button {
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    background: transparent;
+    margin-left: 30px;
+    border: none;
+    padding-bottom: 10px;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
