@@ -73,7 +73,7 @@
               <div *ngIf="loginForm.controls.login_password.errors.required">Please enter your password</div>
             </div>
             <br />
-            <p *ngIf="success" class="errors">Logging In...</p>
+            <p *ngIf="loading" class="errors">Logging In...</p>
 
             <!--Submit-->
             <input type="submit" id="continue" class="btn btn-default" value="Login" />

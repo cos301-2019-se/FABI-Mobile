@@ -24,6 +24,7 @@
               <input type='file' (change)=submitCSV(input) id='fileInput' #input>
 
             </div>
+            <p *ngIf="loading" style="color: black;">Porting File...</p>
           </mat-tab>
 
         </mat-tab-group>
