@@ -1,33 +1,26 @@
-const next = require("mongodb");
-
 const express = require('express');
-const mysql = require('mysql');
 const router = express.Router();
-const request = require("request");
-const fs = require('fs');
-const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
+const bcrypt = require('bcrypt-nodejs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                            GET/POST REQUEST HANDLER 
+//                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Handle POST request 
-router.get('/', addUser);
 
-// Handle POST request 
-router.post('/', addUser);
+// Handle POST request
+router.post('/', createDatabase);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Add Public User
+//                                             Add Organization
 /**
- * @summary Add a Public User with the data recieved in the request.
- * @description  REQUEST DATA REQUIRED: name, surname, email, password
+ * @summary Create a new organization with data recieved
+ * @description  REQUEST DATA REQUIRED: organization name, organization details, admin details
  *  1. Check if all required data is received and that it is correct.
  *      - IF NOT: return Error Response
  *  2. Connect to DB.
  *      - IF ERROR: return Error Response
  *  3. Encrypt Password.
- *  4. Add Public User to public_users collection.
+ *  4. Add Organization to Organizations collection and create admin within admin collection int that organization
  *      - IF ERROR: return Error Response
  *  5. Send appropriate response message.
  *
@@ -35,24 +28,26 @@ router.post('/', addUser);
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
 /////////////////////////////////////////////////////////////////////
-'use strict';
 
 // [START config]
 const db = admin.firestore();
 
-function addUser(req, res)
+function createDatabase(req, res)
 {
 // Store request data is qs
-    const salt = bcrypt.genSaltSync(10);
+const salt = bcrypt.genSaltSync(10);
+    var pass = generatePassword(10);
     const qs = {
-        fname: req.body.name,
-        surname: req.body.surname,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, salt)
+        databaseName : req.body.databaseName,
+        admin : {
+            fname: req.body.admin.name,
+            surname: req.body.admin.surname,
+            email: req.body.admin.email,
+            password: bcrypt.hashSync(pass, salt)
+        }
     }
-
-// (1) Check if all required data is received and that it is correct. 
-    if (qs.fname == undefined || qs.fname == '') {
+// (1) Check if all required data is received and that it is correct.
+    if (req.body.admin.name == undefined || req.body.admin.name == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -61,11 +56,11 @@ function addUser(req, res)
             error: {
                 code: 400,
                 title: "BAD_REQUEST",
-                message: "User name expected"
+                message: "Admin name expected"
             }
         });
     }
-    if (qs.surname == undefined || qs.surname == '') {
+    if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -74,11 +69,11 @@ function addUser(req, res)
             error: {
                 code: 400,
                 title: "BAD_REQUEST",
-                message: "User surname expected"
+                message: "Admin surname expected"
             }
         });
     }
-    if (qs.email == undefined || qs.email == '') {
+    if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -87,11 +82,11 @@ function addUser(req, res)
             error: {
                 code: 400,
                 title: "BAD_REQUEST",
-                message: "User email expected"
+                message: "Admin surname expected"
             }
         });
     }
-    if (qs.password == undefined || qs.password == '') {
+    if (req.body.databaseName == undefined || req.body.databaseName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -100,7 +95,7 @@ function addUser(req, res)
             error: {
                 code: 400,
                 title: "BAD_REQUEST",
-                message: "User password expected"
+                message: "Database name expected"
             }
         });
     }
@@ -118,30 +113,55 @@ function addUser(req, res)
     //             code: 400,
     //             title: "BAD_REQUEST",
     //             message: "User password expected"
-    //         }       
+    //         }
     //     });
     // }
 
 
 // (2) Connect to DB
+    
 
-    var docRef  = db.collection('Users').doc('FABI').collection('satff').doc('staff').doc(qs.email);
-    docRef.set(qs).then(() => {
+    adminRef = db.collection('Databases').doc(req.body.databaseName).collection('Admins').doc(req.body.admin.email).set(qs.admin).then(()=>{
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                success: true,
+                data: {
+                    code: 200,
+                    title: "SUCCESS",
+                    message: "Created Database",
+                    content: {
+                        message: "Database Created, Admin Set",
+                        databaseName: req.body.databaseName,
+                        tempPassword: pass
+                    }
+                }
+        });
+    }).catch((err) => {
+        console.log("Database connection error: " + err);
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-            success: true,
+        res.status(500).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
             error: {
-                code: 200,
-                title: "SUCCESS",
-                message: "Public User Added",
-                content: {message : "Public User Added"}
+                code: 500,
+                title: "FAILURE",
+                message: "Error Connecting to Database"
             }
         });
-        console.log("Client Added");
     });
 
 }
 
+function generatePassword(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 module.exports = router;

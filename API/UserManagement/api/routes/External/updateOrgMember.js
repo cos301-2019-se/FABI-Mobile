@@ -95,7 +95,7 @@ function updateMember(req, res) {
             if(req.body.fields.hasOwnProperty('password'))
             {
                 const salt = bcrypt.genSaltSync(10);
-                req.body.fields.password = bcrypt.hashSync(req.body.password, salt);
+                req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
             }
             if(req.body.fields.hasOwnProperty('email')){
                 
