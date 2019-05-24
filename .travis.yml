@@ -13,5 +13,4 @@ language: node_js
     - npm install -g @angular/cli
 
   script:
-    - ng lint
     - ng build --prod --aot
