@@ -22,6 +22,13 @@
   -  [Demo 2 Coding Standards Document]()
   - [Demo 2 Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
   
+ ## API Documentation
+  - [Authentication API Documentation](https://authentication-dot-api-fabi.appspot.com)
+  - [Database Management API Documentation](***REMOVED***)
+  - [Diagnostic Clinic API Documentation](***REMOVED***)
+  - [Login API Documentation](***REMOVED***)
+  - [User Management API Documentation](***REMOVED***)
+  
  ## Project Management
  
   - [Trello Board](https://trello.com/b/8eHApP3L)
