@@ -37,48 +37,49 @@
               <h2>Add Staff Member</h2>
               <br />
 
-              <form id="add_new_member_form">
+              <form id="add_new_member_form" [formGroup]="addStaffForm" (submit)="addStaff()">
 
                 <!--Name Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Name">
+                <mat-form-field>
+                  <input matInput placeholder="Name" matInput type="text" formControlName="staff_name">
                 </mat-form-field>
                 <br />
 
                 <!--Surname Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Surname">
+                <mat-form-field>
+                  <input matInput placeholder="Surname" matInput type="text" formControlName="staff_surname">
                 </mat-form-field>
                 <br />
 
                 <!--Email Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Email">
+                <mat-form-field>
+                  <input matInput placeholder="Email" matInput type="text" formControlName="staff_email">
                 </mat-form-field>
                 <br />
 
                 <!--Cellphone Number Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Cellphone Number">
+                <mat-form-field>
+                  <input matInput placeholder="Cellphone Number" matInput type="number" formControlName="staff_phone">
                 </mat-form-field>
                 <br />
 
                 <mat-form-field class="form_inputs">
                   <mat-label>Staff Position</mat-label>
-                  <mat-select>
+                  <mat-select formControlName="staff_position">
+                      <mat-option>--</mat-option>
                     <!--
                         TODO 
                           - Loop through types of available staff types 
                           - If admin is selected we need to determine if clinic or DB admin
                           - Then if they are a DB admin we must determin which DB 
                     -->
-                    <mat-option>
+                    <mat-option [value]="Admin">
                       Admin
                     </mat-option>
-                    <mat-option>
+                    <mat-option [value]="Researcher">
                       Researcher
                     </mat-option>
-                    <mat-option>
+                    <mat-option [value]="Student">
                       Student
                     </mat-option>
                   </mat-select>
@@ -86,7 +87,7 @@
                 </mat-form-field>
                 <br />
 
-                <button type="submit" id="add_new_staff" class="btn btn-default" routerLink="">Add Staff Member</button>
+                <button type="submit" id="add_new_staff" class="btn btn-default">Add Staff Member</button>
 
               </form>
 
