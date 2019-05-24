@@ -1,0 +1,46 @@
+<!--Dashboard-->
+<div id="dashboard">
+  <div class="gradient-overlay"></div>
+  <div class="container-fluid">
+    <div class="row">
+
+      <!--Nav-->
+      <section id="nav">
+        
+      </section>
+
+      <!--Dashboard Content-->
+      <section id="dashboard">
+        <div id="sidenav_div" class="sidenav">
+          <a class="closebtn" (click)="closeNav()">&times;</a>
+          <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
+          <button id="guest_management" routerLink="/member-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Member Management</button>
+          <button id="profile" routerLink="/organization-profile"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>
+          <button id="view_samples" routerLink="/organization-view-samples"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  View Organization's Samples</button>
+          <button id="submit_samples" routerLink="/organization-submit-sample"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">file_copy</mat-icon></span>  Submit Sample</button>
+          <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
+          <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
+          <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
+          <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
+        </div>
+        <div id="menu_div">
+          <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
+        </div>
+        <h1 id="dashboard_heading">Dashboard</h1><br/>
+        <div id="dashboard_content">
+          <button id="guest_management" class="btn btn-default" routerLink="/member-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">people</mat-icon></div><br/>Manage Members</button><button id="profile" class="btn btn-default" routerLink="/organization-profile"><div class="icons_div"><mat-icon [inline]="true" class="icons">person</mat-icon></div><br/>Manage Profile</button><button id="view_samples" class="btn btn-default" routerLink="/organization-view-samples"><div class="icons_div"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></div><br/>View Organization's
+            Samples</button><button id="submit_samples" class="btn btn-default" routerLink="/organization-submit-sample"><div class="icons_div"><mat-icon [inline]="true" class="icons">file_copy</mat-icon></div><br/>Submit
+            <br/>Sample</button>
+        </div>
+      </section>
+
+      <!--Footer-->
+      <section id="footer">
+
+      </section>
+
+
+    </div>
+  </div>
+
+</div>
