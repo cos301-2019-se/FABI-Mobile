@@ -1,7 +1,9 @@
-import { ClientFormData } from '../api-connection.service';
+import { ClientFormData } from '../organization-api.service';
+import { OrganizationInfo } from '../organization-api.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LoginInfo } from '../api-connection.service';
-import { ApiConnectionService } from '../api-connection.service';
+import { OrganizationApiService } from '../organization-api.service';
+import { AdminAPIService } from '../admin-api.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -22,6 +24,7 @@ export class SampleFormComponent implements OnInit {
   success: boolean = false;         // if form was succesfully filled out
   sent: boolean = false;                // to check if user is logged in
   errors: boolean = false;
+  organizations: Object;            //array for Organization dropdown
 
   // sampleForm = new FormGroup({
   //   sample_form_name: new FormControl(),
@@ -71,9 +74,10 @@ export class SampleFormComponent implements OnInit {
 
   // api: APIconnectionService;
 
-  constructor(private api: ApiConnectionService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(private service: OrganizationApiService, private adminServce: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
     this.sampleForm = this.formBuilder.group({
 
+      organization: ['', Validators.required],
       sample_form_tree_species: ['', Validators.required],
       sample_form_number_samples: ['', Validators.required],
       sample_form_location1: ['', Validators.required],
@@ -171,8 +175,10 @@ export class SampleFormComponent implements OnInit {
       conditions_additional : this.sampleForm.controls.conditions_additional.value,
     };
 
+    const orgDetails: OrganizationInfo = { orgName: this.sampleForm.controls.organization.value };
 
-    this.api.submitForm(formDetails).subscribe((response: any) => {
+
+    this.service.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
       console.log("HERE");
       if (response.success == true) {
         //POPUP MESSAGE
@@ -180,9 +186,7 @@ export class SampleFormComponent implements OnInit {
           duration: 3000
         });
 
-        this.api.setSent();
-        this.sent = this.api.isSent();
-        //this.router.navigate(['sample-form']);
+        console.log("Reference Number : " + response.data.content.referenceNumber);
 
       } else if (response.success == false) {
         //POPUP MESSAGE
@@ -213,6 +217,34 @@ export class SampleFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.adminServce.getAllOrganizations().subscribe((response:any) => {
+      if(response.success == true) {
+        // var orgs = response.data.content.qs.Organizations;
+        // forEach(var i in orgs)
+        // {
+        //   this.organizations.push(i);
+        // }
+        this.organizations = response.data.content.qs.Organizations;
+        
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: response.error.message}});
+        dialogRef.afterClosed().subscribe((result) => {
+          if(result == "Retry") {
+            this.ngOnInit();
+          }
+        })
+      }    
+    }, (err: HttpErrorResponse) => {
+      //POPUP MESSAGE
+      let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: err.message}});
+      dialogRef.afterClosed().subscribe((result) => {
+        if(result == "Retry") {
+          this.ngOnInit();
+        }
+      })
+      console.log("ERROR:" + err.message);
+    })
   }
 
 }

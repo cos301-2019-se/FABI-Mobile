@@ -20,6 +20,16 @@
           <h1>SAMPLE SUBMISSION</h1>
           <form id="sample_form" [formGroup]="sampleForm" (submit)="sendForm()">
 
+              <mat-form-field>
+                  <mat-label>Organization</mat-label>
+                  <mat-select id="organization" formControlName="organization">
+                      <mat-option>--</mat-option>
+                    <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
+                      {{organization.orgName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                
             <mat-accordion>
               <mat-expansion-panel>
                 <mat-form-field>
