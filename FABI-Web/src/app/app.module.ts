@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MaterialModule} from './materials';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +14,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
-
 import { OrganizationModule } from './Organization/organization.module';
 import { OrganizationMemberModule } from './Organization-Member/organization-member.module';
 import { DatabaseHandlerComponent } from './Admin/database-handler/database-handler.component';
@@ -81,7 +81,8 @@ import { ErrorComponent } from './error/error.component';
     AdminModule,
     StaffModule,
     OrganizationModule,
-    OrganizationMemberModule
+    OrganizationMemberModule,
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent],

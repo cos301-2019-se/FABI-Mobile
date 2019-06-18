@@ -51,15 +51,14 @@
 //Dashboard Content Styling
 #dashboard_content {
     display: flex;
-    height: 70%;
+    height: 70vh;
     width: 80%;
-    background-color: white;
-    opacity: 0.7;
 
     overflow: hidden;
     position: relative;
 
-    margin: auto;
+    top: 0.5vh;
+    left: 10%;
 }
 
 #menu_div {
@@ -80,8 +79,6 @@
 #sidenav_div .icons_div_menu {
     font-size: 30px;
     margin-right: 10px;
-    display: inline; 
-    vertical-align: sub;
 }
 
 .sidenav {
@@ -94,9 +91,7 @@
     background-color: #1F292A;
     overflow-x: hidden; 
     padding-top: 6%; 
-    transition: 0.5s;
-    text-align: left;
-    word-wrap: break-word; 
+    transition: 0.5s; 
 
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
