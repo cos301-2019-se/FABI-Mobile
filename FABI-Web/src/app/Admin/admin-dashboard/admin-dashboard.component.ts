@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import { SidenavComponent } from '../../sidenav/sidenav.component';
+// import { SidenavComponent } from '../../sidenav/sidenav.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -9,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 
 export class AdminDashboardComponent implements OnInit {
   constructor() { }
-  
+  /**
+   * 
+   *
+   * @memberof AdminDashboardComponent
+   */
   sidenavToggle(){
     if(document.getElementById("sidenav_div").style.width == "22%")
     {

@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule} from './materials';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -13,6 +15,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
+
+import { ErrorsModule } from "./errors/errors.module";
+import { NotificationService } from './services/notification.service';
 
 import { OrganizationModule } from './Organization/organization.module';
 import { OrganizationMemberModule } from './Organization-Member/organization-member.module';
@@ -39,14 +44,11 @@ import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 
-import { ErrorComponent } from './error/error.component';
-
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SampleFormComponent,
-    ErrorComponent,
     DatabaseHandlerComponent,
     ClinicHandlerComponent,
     AdminDashboardComponent,
@@ -70,7 +72,7 @@ import { ErrorComponent } from './error/error.component';
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent
   ],
-  entryComponents: [ErrorComponent],
+  entryComponents: [],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -81,9 +83,12 @@ import { ErrorComponent } from './error/error.component';
     AdminModule,
     StaffModule,
     OrganizationModule,
-    OrganizationMemberModule
+    OrganizationMemberModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    ErrorsModule
   ],
-  providers: [],
+  providers: [NotificationService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
