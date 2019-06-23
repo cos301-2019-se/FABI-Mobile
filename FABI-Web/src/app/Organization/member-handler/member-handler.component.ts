@@ -1,15 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MemberInfo } from '../../organization-api.service';
-import { OrganizationInfo } from '../../organization-api.service';
-import { OrganizationApiService } from '../../organization-api.service';
+import * as Interface from "../../interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../error/error.component';
+import { ErrorComponent } from '../../errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { AdminAPIService } from '../../admin-api.service';
+import { HttpService } from '../../services/http.service';
 
 
 @Component({
@@ -27,7 +25,7 @@ export class MemberHandlerComponent implements OnInit {
  success: boolean = false;         // if form was succesfully filled out
  organizations: Object;            //array for Organization dropdown
   
-  constructor(private service: OrganizationApiService, private adminService: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router)
+  constructor(private service: HttpService, private adminService: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router)
    {
     this.addMemberForm = this.formBuilder.group({
       organization: ['', Validators.required],
@@ -105,8 +103,8 @@ export class MemberHandlerComponent implements OnInit {
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
-    const org_details: OrganizationInfo = { orgName: LorgName };
-    const member_details: MemberInfo = { name: LmemberName, surname: LmemberSurname, location: LmemberLocation , email: LmemberEmail, phone: LmemberPhone};
+    const org_details: Interface.Organisation = { orgName: LorgName };
+    const member_details: Interface.OrganisationMember = { fname: LmemberName, surname: LmemberSurname, email: LmemberEmail, password: LmemberPhone};
 
 
     this.service.addOrgMember(org_details, member_details).subscribe((response: any) => {
