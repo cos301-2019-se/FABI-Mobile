@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AdminAPIService } from '../../admin-api.service';
+import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../error/error.component';
+import { ErrorComponent } from '../../errors/error-component/error.component';
 import { Router } from '@angular/router';
 
-import { OrganizationInfo } from '../../admin-api.service';
-import { OrganizationAdmin } from '../../admin-api.service';
-
+import * as Interface from  '../../interfaces/interfaces';
 
 
 @Component({
@@ -27,7 +25,7 @@ export class OrganizationHandlerComponent implements OnInit {
  submitted: boolean = false;       // if form has been submitted
  success: boolean = false;         // if form was succesfully filled out
   
-  constructor(private service: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) 
+  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) 
   {
     this.createOrgForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
@@ -67,16 +65,16 @@ export class OrganizationHandlerComponent implements OnInit {
     this.success = true;
 
     const LorgName = this.createOrgForm.controls.organization_name.value;
-    const LorgLocation = this.createOrgForm.controls.organization_location.value;
+    // const LorgLocation = this.createOrgForm.controls.organization_location.value;
     const LadminName = this.createOrgForm.controls.admin_name.value;
     const LadminSurname = this.createOrgForm.controls.admin_surname.value;
     const LadminEmail = this.createOrgForm.controls.admin_email.value;
     const LadminPhone = this.createOrgForm.controls.admin_phone.value;
 
-    const org_details: OrganizationInfo = { orgName: LorgName, location: LorgLocation };
-    const admin_details: OrganizationAdmin = { name: LadminName, surname: LadminSurname, email: LadminEmail, phone: LadminPhone};
+    const admin_details: Interface.OrganisationAdmin = { fname: LadminName, surname: LadminSurname, email: LadminEmail, password: LadminPhone};
+    const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };   
 
-    this.service.createOrganization(org_details, admin_details).subscribe((response: any) => {
+    this.service.createOrganization(org_details).subscribe((response: any) => {
       if (response.success == true) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Created Organization! Temp Password :" + response.data.content.tempPassword, "Dismiss", {
