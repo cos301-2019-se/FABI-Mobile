@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AdminAPIService } from '../../admin-api.service';
+import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { ErrorComponent } from '../../error/error.component';
+import { ErrorComponent } from '../../errors/error-component/error.component';
 
 //Import the porting service for DB creation
-import { Porting } from '../../porting.service';
+import { Porting } from '../../services/porting.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
   portCSV: Porting = new Porting();
 
-  constructor(private service: AdminAPIService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
+  constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
 
   sidenavToggle(){
     if(document.getElementById("sidenav_div").style.width == "22%")
