@@ -1,14 +1,12 @@
-import { ClientFormData } from '../organization-api.service';
-import { OrganizationInfo } from '../organization-api.service';
+// import { ClientFormData } from '../organization-api.service';
+import * as Interface from '../interfaces/interfaces';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { LoginInfo } from '../api-connection.service';
-import { OrganizationApiService } from '../organization-api.service';
-import { AdminAPIService } from '../admin-api.service';
+import { HttpService } from '../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../error/error.component';
+import { ErrorComponent } from '../errors/error-component/error.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -74,7 +72,7 @@ export class SampleFormComponent implements OnInit {
 
   // api: APIconnectionService;
 
-  constructor(private service: OrganizationApiService, private adminServce: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(private service: HttpService, private adminServce: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
     this.sampleForm = this.formBuilder.group({
 
       organization: ['', Validators.required],
@@ -131,7 +129,7 @@ export class SampleFormComponent implements OnInit {
 
     this.success = true;
 
-    const formDetails: ClientFormData = {
+    const formDetails: Interface.ClientFormData = {
 
       tree_species : this.sampleForm.controls.sample_form_tree_species.value,
       number_samples : this.sampleForm.controls.sample_form_number_samples.value,
@@ -175,7 +173,7 @@ export class SampleFormComponent implements OnInit {
       conditions_additional : this.sampleForm.controls.conditions_additional.value,
     };
 
-    const orgDetails: OrganizationInfo = { orgName: this.sampleForm.controls.organization.value };
+    const orgDetails: Interface.Organisation = { orgName: this.sampleForm.controls.organization.value };
 
 
     this.service.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
