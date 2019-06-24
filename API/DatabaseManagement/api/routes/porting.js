@@ -40,11 +40,9 @@ function addDoc(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "database name expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "database name expected"
         });
     }
     if (req.body.data == undefined || req.body.data == '') {
@@ -53,11 +51,9 @@ function addDoc(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "data expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "data expected"
         });
     }
 
@@ -69,7 +65,7 @@ function addDoc(req, res)
         ids.push(item.id);
         var docRef  = db.collection('Databases').doc(req.body.databaseName).collection('Data').doc(item.id);
         docRef.set(item).then(() => {
-            console.log("reocrd added");
+            console.log("record added");
         });
     });
 
@@ -77,14 +73,13 @@ function addDoc(req, res)
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-            success: true,
-            data: {
+                success: true,
                 code: 200,
                 title: "SUCCESS",
-                message: "Added Data",
-                content: {message : "Data submitted to " + req.body.databaseName,
+                message : "Data submitted to " + req.body.databaseName,
+                data: {
                     databaseName : req.body.databaseName,
-                    newIdArray : ids}
+                    newIdArray : ids
                 }
             });
 }
