@@ -18,10 +18,10 @@ router.post('/', addAdmin);
  * @description  REQUEST DATA REQUIRED: Name and email for now
  *  1. Check if all required data is received and that it is correct.
  *      - IF NOT: return Error Response
- *  2. Connect to DB.
+ *  2. Encrypt Password.
+ *  3. Connect to DB.
  *      - IF ERROR: return Error Response
- *  3. Encrypt Password.
- *  5. Send appropriate response message.
+ *  4. Send appropriate response message.
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
@@ -33,28 +33,18 @@ const db = admin.firestore();
 
 function addAdmin(req, res)
 {
-// Store request data is qs
-    const salt = bcrypt.genSaltSync(10);
-    var pass = generatePassword(10);
-    const qs = {
-        fname: req.body.admin.name,
-        surname: req.body.admin.surname,
-        email: req.body.admin.email,
-        password: bcrypt.hashSync(pass, salt)
-    }
+    
 
-// (1) Check if all required data is received and that it is correct.
+// (1)
     if (req.body.admin.name == undefined || req.body.admin.name == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User name expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User name expected"
         });
     }
     if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
@@ -62,12 +52,10 @@ function addAdmin(req, res)
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User surname expected"
-            }
+        success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User surname expected"
         });
     }
     if (req.body.admin.email == undefined || req.body.admin.email == '') {
@@ -76,49 +64,38 @@ function addAdmin(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User email expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User email expected"
         });
     }
 
-    // Check if valid email format   (************ CLIENT SIDE? ***************)
-    // var regEx = [A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/igm;
-    // "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"
-    // "^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-    // if(!regEx.test(qs.email)) {
-    //     res.setHeader('Content-Type', 'applicagion/problem+json');
-    //     res.setHeader('Content-Language', 'en');
-    //     res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-    //         success: false,
-    //         error: {
-    //             code: 400,
-    //             title: "BAD_REQUEST",
-    //             message: "User password expected"
-    //         }
-    //     });
-    // }
-
-
-// (2) Connect to DB
-
+    //(2)
+    const salt = bcrypt.genSaltSync(10);
+    var pass = generatePassword(10);
+    const qs = {
+        fname: req.body.admin.name,
+        surname: req.body.admin.surname,
+        email: req.body.admin.email,
+        password: bcrypt.hashSync(pass, salt)
+    }
+    // (3)
     var docRef  = db.collection('Organizations').doc('FABI').collection('Admin').doc(qs.email);
+    
+    //(4)
     docRef.set(qs).then(() => {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-        success: true,
-        data: {
+            success: true,
             code: 200,
             title: "SUCCESS",
             message: "FABI Admin Added",
-            content: {message : "Admin Added to FABI Organization",
-                orgName : req.body.orgName,
-                tempPassword : pass}
-        }
+            data: {
+                    orgName : req.body.orgName,
+                    tempPassword : pass
+            }
     });
     console.log("Admin Added to FABI");
     mail('FABI Admin', pass);
