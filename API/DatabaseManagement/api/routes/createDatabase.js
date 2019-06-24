@@ -53,11 +53,9 @@ const salt = bcrypt.genSaltSync(10);
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "Admin name expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "Admin name expected"
         });
     }
     if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
@@ -66,11 +64,9 @@ const salt = bcrypt.genSaltSync(10);
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "Admin surname expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "Admin surname expected"
         });
     }
     if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
@@ -79,11 +75,9 @@ const salt = bcrypt.genSaltSync(10);
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "Admin surname expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "Admin surname expected"
         });
     }
     if (req.body.databaseName == undefined || req.body.databaseName == '') {
@@ -92,31 +86,11 @@ const salt = bcrypt.genSaltSync(10);
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "Database name expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "Database name expected"
         });
     }
-
-    // Check if valid email format   (************ CLIENT SIDE? ***************)
-    // var regEx = [A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/igm;
-    // "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"
-    // "^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-    // if(!regEx.test(qs.email)) {
-    //     res.setHeader('Content-Type', 'applicagion/problem+json');
-    //     res.setHeader('Content-Language', 'en');
-    //     res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-    //         success: false,
-    //         error: {
-    //             code: 400,
-    //             title: "BAD_REQUEST",
-    //             message: "User password expected"
-    //         }
-    //     });
-    // }
-
 
 // (2) Connect to DB
     
@@ -126,17 +100,14 @@ const salt = bcrypt.genSaltSync(10);
                 res.setHeader('Content-Language', 'en');
                 res.setHeader("Access-Control-Allow-Origin", "*");
                 res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                success: true,
-                data: {
+                    success: true,
                     code: 200,
                     title: "SUCCESS",
-                    message: "Created Database",
-                    content: {
-                        message: "Database Created, Admin Set",
+                    message: "Database Created, Admin Set",
+                    data: {
                         databaseName: req.body.databaseName,
                         tempPassword: pass
                     }
-                }
         });
     }).catch((err) => {
         console.log("Database connection error: " + err);
@@ -145,11 +116,9 @@ const salt = bcrypt.genSaltSync(10);
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(500).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 500,
-                title: "FAILURE",
-                message: "Error Connecting to Database"
-            }
+            code: 500,
+            title: "INTERNAL SERVER ERROR",
+            message: "Error Connecting to Database"
         });
     });
 

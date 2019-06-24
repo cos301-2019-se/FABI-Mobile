@@ -16,14 +16,17 @@ router.post('/', loginAdmin);
 /**
  * @summary Login Organization Admin
  * @description  REQUEST DATA REQUIRED: email, password, organization name
- *  1. Check if all required data is received and that it is correct.
- *      - IF NOT: return Error Response
- *  2. Connect to DB.
- *      - IF ERROR: return Error Response
- *  4. Add Organization to Organizations collection and create admin within admin collection int that organization
- *      - IF ERROR: return Error Response
- *  5. Send appropriate response message.
- *
+ *  
+ *  1. check that all data has been recieved and is in the correct format
+ *  2. connect to database
+ *      - IF connection fails then return 500 server error
+ *  3. get login data from the database
+ *     - IF empty then return username not found 
+ *     - IF undefined then return username not found
+ *  4. compare encrypted password from database to given password
+ *     - IF passwords match then return 200 and verified
+ *     - IF passwords do not match then return NOT AUTHORIZED
+ *  
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
@@ -34,18 +37,17 @@ const db = admin.firestore();
 
 function loginAdmin(req, res)
 {
-// (1) Check if all required data is received and that it is correct.
+// (1) 
     if (req.body.email == undefined || req.body.email == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User email expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User email expected"
+            
         });
     }
 
@@ -55,11 +57,9 @@ function loginAdmin(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User password expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User password expected"
         });
     }
 
@@ -69,51 +69,48 @@ function loginAdmin(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "organization name expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "organization name expected"
         });
     }
     
     var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Admins').doc(req.body.email);
     collectionRef = db.collection('Organizations').doc(req.body.orgName).collection('Admins');
-
+    //(2)
     collectionRef.get().then(collection => 
     {
         if(collection.empty)
         {
+            //(3)
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
                 res.setHeader("Access-Control-Allow-Origin", "*");
                 res.status(404).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                error: {
+                    success: false,
                     code: 404,
                     title: "NOT FOUND",
                     message: "Not Authenticated: Organization with given name not found"
-                }
             });
         }
         else{
             docRef.get().then(doc =>
                 {
+                    //(3)
                     if(typeof doc.data() === 'undefined')
                     {
                         res.setHeader('Content-Type', 'application/problem+json');
                         res.setHeader('Content-Language', 'en');
                         res.setHeader("Access-Control-Allow-Origin", "*");
                         res.status(404).json({                                  // ******* RESPONSE STATUS? ************
-                        success: false,
-                        error: {
+                            success: false,
                             code: 404,
                             title: "NOT FOUND",
                             message: "Not Authenticated: User with given email not found"
-                        }
                         });
                     }
                     else{
+                        //(4)
                         bcrypt.compare(req.body.password, doc.data().password, (err, valid) =>
                         {
                             if(valid)
@@ -123,25 +120,21 @@ function loginAdmin(req, res)
                                 res.setHeader("Access-Control-Allow-Origin", "*");
                                 res.status(200).json({
                                     success: true,
-                                    data: {
-                                        code: 200,
-                                        title: "AUTHORIZED",
-                                        message: "Authenticated",
-                                        token: bcrypt.hashSync(config.OrgAdminToken, bcrypt.genSaltSync(10))
-                                    }
+                                    code: 200,
+                                    title: "AUTHORIZED",
+                                    message: "Authenticated",
+                                    token: bcrypt.hashSync(config.OrgAdminToken, bcrypt.genSaltSync(10))
                                 });
                             }
                             else{
                                 res.setHeader('Content-Type', 'application/problem+json');
                                 res.setHeader('Content-Language', 'en');
                                 res.setHeader("Access-Control-Allow-Origin", "*");
-                                res.status(400).json({
+                                res.status(401).json({
                                     success: false,
-                                    error: {
-                                        code: 401,
-                                        title: "UNAUTHORIZED",
-                                        message: "Not-Authenticated : Incorrect Password"
-                                    }
+                                    code: 401,
+                                    title: "UNAUTHORIZED",
+                                    message: "Not-Authenticated : Incorrect Password"
                                 });
                             }
                         });
@@ -154,11 +147,9 @@ function loginAdmin(req, res)
                 res.setHeader("Access-Control-Allow-Origin", "*");
                 res.status(500).json({
                     success: false,
-                    error: {
-                        code: 500,
-                        title: "SERVER ERROR",
-                        message: "Internal Server Error"
-                    }
+                    code: 500,
+                    title: "SERVER ERROR",
+                    message: "Internal Server Error"
                 });
 });
 
