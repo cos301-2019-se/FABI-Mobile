@@ -15,6 +15,7 @@
 
 
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {ViewEncapsulation} from '@angular/core';
 
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -34,7 +35,8 @@ import * as Interface from '../../interfaces/interfaces';
 @Component({
   selector: 'app-organization-handler',
   templateUrl: './organization-handler.component.html',
-  styleUrls: ['./organization-handler.component.scss']
+  styleUrls: ['./organization-handler.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class OrganizationHandlerComponent implements OnInit {
 
