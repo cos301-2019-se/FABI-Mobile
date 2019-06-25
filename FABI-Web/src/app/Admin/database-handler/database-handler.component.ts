@@ -31,7 +31,8 @@ import { Porting } from '../../services/porting.service';
 @Component({
   selector: 'app-database-handler',
   templateUrl: './database-handler.component.html',
-  styleUrls: ['./database-handler.component.scss']
+  styleUrls: ['./database-handler.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DatabaseHandlerComponent implements OnInit {
 
