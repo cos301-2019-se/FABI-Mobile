@@ -40,6 +40,7 @@ import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 
 import { ErrorComponent } from './error/error.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { ErrorComponent } from './error/error.component';
     SubmitCbsDepositComponent,
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
-    SubmitCmwRevitalizationComponent
+    SubmitCmwRevitalizationComponent,
+    HomeComponent
   ],
   entryComponents: [ErrorComponent],
   imports: [

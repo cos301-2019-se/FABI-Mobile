@@ -1,31 +1,67 @@
-<h1>View Organization Samples</h1>
+<div class="container">
 
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Sample 1
-      </mat-panel-title>
-      <mat-panel-description>
-        Analysis Phase
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+    <!--Nav Section-->
+    <div class="nav">
+  
+      <section class="top-nav">
+        <h1>Organization Samples</h1>
+        <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
+        <a id="guest_management" routerLink="/member-handler"><i class="fas fa-users"></i>Members</a>
+        <a id="view_samples" routerLink="/organization-view-samples"><i class="fas fa-vials"></i>View Samples</a>
+        <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+        <a id="profile" routerLink="/organization-profile"><i class="fas fa-user-circle"></i>Profile</a>
+        <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+        <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
+      </section>
+  
+      <section class="bottom-nav">
+        <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+      </section>
+      <a href="" id="menu"><i class="fas fa-bars"></i></a>
+    </div>
+  
+    <!--Organization Samples Content-->
+    <div class="content">
+      <div class="color-accent">
+        <h1>Organization Samples</h1>
+      </div>
+  
+      <div class="organization-samples">
+          <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Sample 1
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Analysis Phase
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+            
+                <p>This is the sample stuff</p>
+              </mat-expansion-panel>
+            
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Sample 2
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Completed
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+            
+                <p>This is the sample stuff</p>
+              </mat-expansion-panel>
+            
+            
+            </mat-accordion>
+      </div>
+  
+  
+  
+    </div>
+  
+  </div>
 
-    <p>This is the sample stuff</p>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Sample 2
-      </mat-panel-title>
-      <mat-panel-description>
-        Completed
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-
-    <p>This is the sample stuff</p>
-  </mat-expansion-panel>
-
-
-</mat-accordion>
