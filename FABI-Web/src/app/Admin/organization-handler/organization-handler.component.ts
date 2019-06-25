@@ -206,7 +206,7 @@ export class OrganizationHandlerComponent implements OnInit {
   removeOrg() {
 
     this.service.removeOrganization(this.selectedOrg).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Organization Removed", "Dismiss", {
           duration: 3000
