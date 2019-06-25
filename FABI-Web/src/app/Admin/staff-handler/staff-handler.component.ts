@@ -15,6 +15,7 @@
 
 
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {ViewEncapsulation} from '@angular/core';
 
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -35,7 +36,8 @@ import * as Interface from '../../interfaces/interfaces';
 @Component({
   selector: 'app-staff-handler',
   templateUrl: './staff-handler.component.html',
-  styleUrls: ['./staff-handler.component.scss']
+  styleUrls: ['./staff-handler.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class StaffHandlerComponent implements OnInit {
 
