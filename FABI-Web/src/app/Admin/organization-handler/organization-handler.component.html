@@ -1,339 +1,192 @@
 <div class="container">
 
-    <!--Nav Section-->
-    <div class="nav">
-  
-      <section class="top-nav">
-        <h1>Organization Management</h1>
-        <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
-        <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>
-        <a id="organization_management" routerLink="/organization-handler"><i
-            class="fas fa-building"></i>Organizations</a>
-        <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i>Diagnostic
-          Clinic</a>
-        <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Databases</a>
-        <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
-        <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-        <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-        <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
-      </section>
-  
-      <section class="bottom-nav">
-        <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
-      </section>
-      <a href="" id="menu"><i class="fas fa-bars"></i></a>
-    </div>
-  
-    <!--Organization Handler Content-->
-    <div class="content">
-      <div class="color-accent">
-        <h1>Organization Management</h1>
-      </div>
-  
-      <div class="organization-management">
-        <!--Tab Menu-->
-        <mat-tab-group animationDuration="1000ms">
+  <!--Nav Section-->
+  <div class="nav">
 
-            <!--Add Tab Option-->
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <mat-icon>person_add</mat-icon>
-                Add Organization
-              </ng-template>
-              <div class="tab_content">
-                <h2>Add Organization</h2>
-                <br />
-  
-                <form id="add_new_organization_form"  [formGroup]="createOrgForm" (submit)="createOrg()">
-  
-                  <!--Organization Name Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name">
-                  </mat-form-field>
-                  <br />
-  
-                  <!--Location Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Location" matInput type="text" formControlName="organization_location">
-                  </mat-form-field>
-                  <br />
-  
-                  <!--Admin Name Field-->
-                  <mat-form-field class="form_inputs">
-                      <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name">
-                    </mat-form-field>
-                    <br />
-  
-                  <!--Admin Surname Field-->
-                  <mat-form-field class="form_inputs">
-                      <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
-                    </mat-form-field>
-                    <br />
-  
-                  <!--Admin Email Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email">
-                  </mat-form-field>
-                  <br />
-  
-                  <!--Admin Phone Number-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Admin Phone Number" matInput type="number" formControlName="admin_phone">
-                  </mat-form-field>
-  
-  
-                  <button type="submit" id="add_organization" class="btn btn-default">Add new organization</button>
-  
-                </form>
-  
-              </div>
-            </mat-tab>
-  
-            <!--Remove Tab Option-->
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <mat-icon>delete</mat-icon>
-                Remove Organization
-              </ng-template>
-              <div class="tab_content">
-                <h2>Remove Organization</h2>
-                <br />
-  
-                <form id="remove_organization_form">
-  
-                  <!--Search Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Search for organization">
-                  </mat-form-field>
-                  <br />
-  
-                  <button type="submit" id="remove_search_organization" class="btn btn-default">Search</button>
-  
-                </form>
-  
-              </div>
-            </mat-tab>
-  
-            <!--View Tab Option-->
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <mat-icon>people</mat-icon>
-                View Organizations
-              </ng-template>
-              <div class="tab_content">
-                <h2>View Organizations</h2>
-                <br />
-                <!--TODO
-                        - Retrieve list to all organizations from API
-                    -->
-              </div>
-            </mat-tab>
-  
-            <!--Search Tab Option-->
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <mat-icon>search</mat-icon>
-                Search
-              </ng-template>
-              <div class="tab_content">
-                <h2>Search for an Organization</h2>
-                <br />
-  
-                <form id="search_organization_form">
-  
-                  <!--Search Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Search for organization">
-                  </mat-form-field>
-                  <br/>
-  
-                  <button type="submit" id="search_organization" class="btn btn-default">Search</button>
-                
-                </form>
-  
-              </div>
-            </mat-tab>
-          </mat-tab-group>
-      </div>
-  
-  
-  
-    </div>
-  
+    <section class="top-nav">
+      <h1>Organization Management</h1>
+      <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
+      <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>
+      <a id="organization_management" routerLink="/organization-handler"><i
+          class="fas fa-building"></i>Organizations</a>
+      <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i>Diagnostic
+        Clinic</a>
+      <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Databases</a>
+      <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
+      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
+    </section>
+
+    <section class="bottom-nav">
+      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </section>
+    <a href="" id="menu"><i class="fas fa-bars"></i></a>
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="organization_handler">
-  <div class="top_banner">
-    <h1 id="organization_heading">Organization Management</h1>
-    <div id="menu_div">
-      <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
+  <!--Organization Handler Content-->
+  <div class="content">
+    <div class="color-accent">
+      <h1>Organization Management</h1>
     </div>
-  </div>
 
-  <div id="sidenav_div" class="sidenav">
-    <a class="closebtn" (click)="closeNav()">&times;</a>
-    <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
-    <button id="user_management" routerLink="/staff-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Staff Management</button>
-    <button id="organization_management" routerLink="/organization-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>
-    <button id="diagnostic_clinic_management" routerLink="/clinic-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  Diagnostic Clinic Management</button>
-    <button id="database_management" routerLink="/database-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">storage</mat-icon></span>  Database Management</button>
-    <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
-    <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
-    <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
-    <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
-    <form id="menu_search">
-      <mat-form-field class="search_input_field">
-        <input matInput id="menu_search_field" formControlName="menu_search_field" type="text">
-        <mat-placeholder class="placeholder">Search</mat-placeholder>
-      </mat-form-field>
-    </form>
-  </div>
+    <div class="organization-management">
+      <!--Tab Menu-->
+      <mat-tab-group animationDuration="1000ms">
 
-  <div class="container-fluid">
-    <div class="row">
+        <!--Add Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>person_add</mat-icon>
+            Add Organization
+          </ng-template>
+          <div class="tab_content">
+            <h2>Add Organization</h2>
+            <br />
 
-      <div id="organization_management_div">
+            <form id="add_new_organization_form" [formGroup]="registerOrgForm" (submit)="registerOrg()">
 
-        <!--Tab Menu-->
-        <mat-tab-group animationDuration="1000ms">
-
-          <!--Add Tab Option-->
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon>person_add</mat-icon>
-              Add Organization
-            </ng-template>
-            <div class="tab_content">
-              <h2>Add Organization</h2>
+              <!--Organization Name Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Organization Name" matInput type="text"
+                  formControlName="organization_name">
+              </mat-form-field>
               <br />
 
-              <form id="add_new_organization_form"  [formGroup]="registerOrgForm" (submit)="registerOrg()">
-
-                <!--Organization Name Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name">
-                </mat-form-field>
-                <br />
-
-                <!--Location Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Location" matInput type="text" formControlName="organization_location">
-                </mat-form-field>
-                <br />
-
-                <!--Admin Name Field-->
-                <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name">
-                  </mat-form-field>
-                  <br />
-
-                <!--Admin Surname Field-->
-                <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
-                  </mat-form-field>
-                  <br />
-
-                <!--Admin Email Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email">
-                </mat-form-field>
-                <br />
-
-                <!--Admin Phone Number-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Admin Phone Number" matInput type="number" formControlName="admin_phone">
-                </mat-form-field>
-
-
-                <button type="submit" id="add_organization" class="btn btn-default">Add new organization</button>
-
-              </form>
-
-            </div>
-          </mat-tab>
-
-          <!--Remove Tab Option-->
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon>delete</mat-icon>
-              Remove Organization
-            </ng-template>
-            <div class="tab_content">
-              <h2>Remove Organization</h2>
+              <!--Location Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Location" matInput type="text" formControlName="organization_location">
+              </mat-form-field>
               <br />
 
-              <form id="remove_organization_form">
-
-                <!--Search Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Search for organization">
-                </mat-form-field>
-                <br />
-
-                <button type="submit" id="remove_search_organization" class="btn btn-default">Search</button>
-
-              </form>
-
-            </div>
-          </mat-tab>
-
-          <!--View Tab Option-->
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon>people</mat-icon>
-              View Organizations
-            </ng-template>
-            <div class="tab_content">
-              <h2>View Organizations</h2>
-              <br />
-              <!--TODO
-                      - Retrieve list to all organizations from API
-                  -->
-            </div>
-          </mat-tab>
-
-          <!--Search Tab Option-->
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon>search</mat-icon>
-              Search
-            </ng-template>
-            <div class="tab_content">
-              <h2>Search for an Organization</h2>
+              <!--Admin Name Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name">
+              </mat-form-field>
               <br />
 
-              <form id="search_organization_form">
+              <!--Admin Surname Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
+              </mat-form-field>
+              <br />
 
-                <!--Search Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Search for organization">
+              <!--Admin Email Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email">
+              </mat-form-field>
+              <br />
+
+              <!--Admin Phone Number-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Admin Phone Number" matInput type="number" formControlName="admin_phone">
+              </mat-form-field>
+
+
+              <button type="submit" id="add_organization" class="btn btn-default">Add new organization</button>
+
+            </form>
+
+          </div>
+        </mat-tab>
+
+        <!--Remove Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>delete</mat-icon>
+            Remove Organization
+          </ng-template>
+          <div class="tab_content">
+            <h2>Remove Organization</h2>
+            <br />
+
+            <form id="remove_organization_form">
+
+              <!--Search Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Search for organization">
+              </mat-form-field>
+              <br />
+
+              <button type="submit" id="remove_search_organization" class="btn btn-default">Search</button>
+
+            </form>
+
+          </div>
+        </mat-tab>
+
+        <!--View Tab Option-->
+        <mat-tab (click)="viewOrganizations()">
+          <ng-template mat-tab-label>
+            <mat-icon>people</mat-icon>
+            View Organizations
+          </ng-template>
+          <div class="tab_content">
+            <h2>View Organizations</h2>
+            <br />
+            <!--Table of all staff-->
+            <div class="staff-table">
+              <!--Search Filter for the Table-->
+              <div class="search-field">
+                <mat-form-field>
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
                 </mat-form-field>
-                <br/>
+              </div>
+              <br />
 
-                <button type="submit" id="search_organization" class="btn btn-default">Search</button>
-              
-              </form>
+              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="dataSource">
 
+                <!-- Organization Name Column -->
+                <ng-container matColumnDef="Organization Name">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Organization Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.orgName}} </td>
+                </ng-container>
+
+                <!-- Admin Column -->
+                <ng-container matColumnDef="Admin">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Admin </th>
+                  <td mat-cell *matCellDef="let element"> {{element.admin}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <!--Pagination Setup-->
+              <!-- <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons *ngIf="dataSource"></mat-paginator> -->
             </div>
-          </mat-tab>
-        </mat-tab-group>
+          </div>
+        </mat-tab>
 
-      </div>
+        <!--Search Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>search</mat-icon>
+            Search
+          </ng-template>
+          <div class="tab_content">
+            <h2>Search for an Organization</h2>
+            <br />
+
+            <form id="search_organization_form">
+
+              <!--Search Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Search for organization">
+              </mat-form-field>
+              <br />
+
+              <button type="submit" id="search_organization" class="btn btn-default">Search</button>
+
+            </form>
+
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </div>
+
+
+
   </div>
+
+</div>
