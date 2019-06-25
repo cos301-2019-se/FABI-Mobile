@@ -15,6 +15,7 @@
 
 
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {ViewEncapsulation} from '@angular/core';
 
 //Include Material Components
 import { MatPaginator, MatTableDataSource } from '@angular/material';
@@ -34,7 +35,8 @@ import { ConfirmComponent } from "../../confirm/confirm.component";
 @Component({
   selector: 'app-member-handler',
   templateUrl: './member-handler.component.html',
-  styleUrls: ['./member-handler.component.scss']
+  styleUrls: ['./member-handler.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MemberHandlerComponent implements OnInit {
 
