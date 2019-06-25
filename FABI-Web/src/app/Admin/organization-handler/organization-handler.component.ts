@@ -129,11 +129,11 @@ export class OrganizationHandlerComponent implements OnInit {
     const LadminEmail = this.registerOrgForm.controls.admin_email.value;
     const LadminPhone = this.registerOrgForm.controls.admin_phone.value;
 
-    const admin_details: Interface.OrganisationAdmin = { fname: LadminName, surname: LadminSurname, email: LadminEmail, password: LadminPhone };
+    const admin_details: Interface.OrganisationAdmin = { name: LadminName, surname: LadminSurname, email: LadminEmail };
     const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };
 
     this.service.createOrganization(org_details).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
           duration: 6000
@@ -231,6 +231,7 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
+    this.viewOrganizations();
       
   }
 
