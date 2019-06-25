@@ -8,15 +8,21 @@ import { OrganizationDashboardComponent } from "./Organization/organization-dash
 import { StaffDashboardComponent } from "./Staff/staff-dashboard/staff-dashboard.component";
 import { MemberDashboardComponent } from "./Organization-Member/member-dashboard/member-dashboard.component";
 
+import { StaffHandlerComponent } from './Admin/staff-handler/staff-handler.component';
+import { OrganizationHandlerComponent } from './Admin/organization-handler/organization-handler.component';
+import { ClinicHandlerComponent } from './Admin/clinic-handler/clinic-handler.component';
+import { DatabaseHandlerComponent } from './Admin/database-handler/database-handler.component';
 
 
 const routes: Routes = [
-  {path: ' ', component: HomeComponent},
+  {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'admin-dashboard', component: AdminDashboardComponent},
-  {path: 'org-admin-dashboard', component: OrganizationDashboardComponent},
-  {path: 'fabi-staff-dashboard', component: StaffDashboardComponent},
-  {path: 'org-member-dashboard', component: MemberDashboardComponent}
+  {path: 'admin-dashboard', component: AdminDashboardComponent}
+  // {path: 'fabi-admin-dashboard', component: AdminDashboardComponent},
+  // {path: 'org-admin-dashboard', component: OrganizationDashboardComponent},
+  // {path: 'fabi-staff-dashboard', component: StaffDashboardComponent},
+  // {path: 'org-member-dashboard', component: MemberDashboardComponent}
+
 ];
 
 @NgModule({
