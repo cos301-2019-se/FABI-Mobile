@@ -13,8 +13,10 @@
  * <<license>>
  */
 
-import {ViewEncapsulation} from '@angular/core';
+
 import { Component, OnInit } from '@angular/core';
+import {ViewEncapsulation} from '@angular/core';
+import { Router } from '@angular/router';
 
 import { HttpService } from '../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -22,7 +24,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../errors/error-component/error.component';
-import { Router } from '@angular/router';
 import { ConfirmComponent } from "../confirm/confirm.component";
 
 import * as Interface from '../interfaces/interfaces';
@@ -50,21 +51,20 @@ export class HomeComponent implements OnInit {
   selectedOrg: Interface.Organisation;
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
-   * Creates an instance of HomeComponent.
+   * Creates an instance of OrganizationHandlerComponent.
    * @param {AdminAPIService} service For calling the API service
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
    * @param {Router} router For navigating to other modules/components
-   * @memberof HomeComponent
+   * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) 
-  {
+  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
     this.registerOrgForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
       organization_location: ['', Validators.required],
