@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /** Object for defining the Create Organisation form -  @type {FormGroup} */
   registerOrgForm: FormGroup;
+  contactForm: FormGroup;
   /** To check if form has been submitted - @type {boolean} */
   submitted: boolean = false;
   /** To check if form has been submitted correctly - @type {boolean} */
@@ -72,6 +73,11 @@ export class HomeComponent implements OnInit {
       admin_surname: ['', Validators.required],
       admin_email: ['', Validators.required],
       admin_phone: ['', Validators.required]
+    })
+    this.contactForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      mesage: ['', Validators.required]
     })
   }
 
@@ -105,11 +111,11 @@ export class HomeComponent implements OnInit {
     const LadminEmail = this.registerOrgForm.controls.admin_email.value;
     const LadminPhone = this.registerOrgForm.controls.admin_phone.value;
 
-    const admin_details: Interface.OrganisationAdmin = { fname: LadminName, surname: LadminSurname, email: LadminEmail, password: LadminPhone };
+    const admin_details: Interface.OrganisationAdmin = { name: LadminName, surname: LadminSurname, email: LadminEmail };
     const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };
 
     this.service.createOrganization(org_details).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
           duration: 6000
