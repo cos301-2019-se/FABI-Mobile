@@ -14,7 +14,7 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -25,6 +25,9 @@ import { ErrorComponent } from '../../errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 
+//Include Material Components
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+
 import * as Interface from '../../interfaces/interfaces';
 
 
@@ -34,6 +37,9 @@ import * as Interface from '../../interfaces/interfaces';
   styleUrls: ['./organization-handler.component.scss']
 })
 export class OrganizationHandlerComponent implements OnInit {
+
+  displayedColumns: string[] = ['Organization Name', 'Admin'];
+  dataSource = new MatTableDataSource([]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -51,6 +57,7 @@ export class OrganizationHandlerComponent implements OnInit {
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -92,6 +99,7 @@ export class OrganizationHandlerComponent implements OnInit {
   //                                                            NG_ON_INIT()
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.viewOrganizations();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -237,8 +245,11 @@ export class OrganizationHandlerComponent implements OnInit {
   viewOrganizations() {
     
     this.service.getAllOrganizations().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        this.organizations = response.data;
+      if (response.success == true && response.code == 200) {
+        this.organizations = response.data.Organizations;
+        console.log(this.organizations);
+        this.dataSource = new MatTableDataSource(this.organizations);
+        this.dataSource.paginator = this.paginator;
 
       } else if (response.success == false) {
         //POPUP MESSAGE
