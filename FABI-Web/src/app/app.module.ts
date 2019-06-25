@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule} from './materials';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -14,6 +16,10 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
+
+import { ErrorsModule } from "./errors/errors.module";
+import { NotificationService } from './services/notification.service';
+
 import { OrganizationModule } from './Organization/organization.module';
 import { OrganizationMemberModule } from './Organization-Member/organization-member.module';
 import { DatabaseHandlerComponent } from './Admin/database-handler/database-handler.component';
@@ -38,16 +44,13 @@ import { SubmitCbsDepositComponent } from './Staff/submit-cbs-deposit/submit-cbs
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
-
-import { ErrorComponent } from './error/error.component';
-import { HomeComponent } from './home/home.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SampleFormComponent,
-    ErrorComponent,
     DatabaseHandlerComponent,
     ClinicHandlerComponent,
     AdminDashboardComponent,
@@ -70,9 +73,9 @@ import { HomeComponent } from './home/home.component';
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
-    HomeComponent
+    ConfirmComponent
   ],
-  entryComponents: [ErrorComponent],
+  entryComponents: [ConfirmComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -84,9 +87,11 @@ import { HomeComponent } from './home/home.component';
     StaffModule,
     OrganizationModule,
     OrganizationMemberModule,
-    LayoutModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    ErrorsModule
   ],
-  providers: [],
+  providers: [NotificationService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

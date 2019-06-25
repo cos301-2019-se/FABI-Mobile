@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Porting } from './porting.service';
+import { Porting } from './services/porting.service';
 
 @Component({
   selector: 'app-root',

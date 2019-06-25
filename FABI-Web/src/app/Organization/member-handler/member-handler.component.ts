@@ -1,15 +1,30 @@
+/**
+ * File Name: member-handler.component.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Organization\member-handler\member-handler.component.ts
+ * Project Name: fabi-web
+ * Created Date: Sunday, June 23rd 2019
+ * Author: Team Nova - novacapstone@gmail.com
+ * -----
+ * Last Modified: Tuesday, June 25th 2019
+ * Modified By: Team Nova
+ * -----
+ * Copyright (c) 2019 University of Pretoria
+ * 
+ * <<license>>
+ */
+
+
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MemberInfo } from '../../organization-api.service';
-import { OrganizationInfo } from '../../organization-api.service';
-import { OrganizationApiService } from '../../organization-api.service';
+import * as Interface from "../../interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../error/error.component';
+import { ErrorComponent } from '../../errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { AdminAPIService } from '../../admin-api.service';
+import { HttpService } from '../../services/http.service';
+import { ConfirmComponent } from "../../confirm/confirm.component";
 
 
 @Component({
@@ -19,16 +34,37 @@ import { AdminAPIService } from '../../admin-api.service';
 })
 export class MemberHandlerComponent implements OnInit {
 
-   /*
-    GLOBALS
-  */
- addMemberForm: FormGroup;         // FormGroup object to reference add user type form
- submitted: boolean = false;       // if form has been submitted
- success: boolean = false;         // if form was succesfully filled out
- organizations: Object;            //array for Organization dropdown
-  
-  constructor(private service: OrganizationApiService, private adminService: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router)
-   {
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /** Object for defining the Add Member form -  @type {FormGroup} */
+  addMemberForm: FormGroup;
+  /** To check if form has been submitted - @type {boolean} */
+  submitted: boolean = false;
+  /** To check if form has been submitted correctly - @type {boolean} */
+  valid: boolean = false;
+  /** If page is busy loading something - @type {boolean} */
+  loading: boolean = false;
+  /** Selected Member from the table - @type {Interface.OrganisationMember} */
+  selectedMember: Interface.OrganisationMember;
+  /** Array of Organization objects - @type {Organisation[]} */
+  organizations: Interface.Organisation[];
+   /** Array of Member objects - @type {OrganisationMember[]} */
+  orgMembers: Interface.OrganisationMember[];
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          CONSTRUCTOR
+  /**
+   * Creates an instance of MemberHandlerComponent.
+   * @param {AdminAPIService} service For calling the API service
+   * @param {FormBuilder} formBuilder For creating the login form
+   * @param {MatSnackBar} snackBar For snack-bar pop-up messages
+   * @param {MatDialog} dialog For dialog pop-up messages
+   * @param {Router} router For navigating to other modules/components
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(private service: HttpService, private adminService: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
     this.addMemberForm = this.formBuilder.group({
       organization: ['', Validators.required],
       member_name: ['', Validators.required],
@@ -40,107 +76,203 @@ export class MemberHandlerComponent implements OnInit {
     })
   }
 
-  sidenavToggle(){
-    if(document.getElementById("sidenav_div").style.width == "22%")
-    {
+  sidenavToggle() {
+    if (document.getElementById("sidenav_div").style.width == "22%") {
       document.getElementById("sidenav_div").style.width = "0";
     }
-    else{
+    else {
       document.getElementById("sidenav_div").style.width = "22%";
-    } 
+    }
   }
 
-  closeNav(){
+  closeNav() {
     document.getElementById("sidenav_div").style.width = "0";
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            NG_ON_INIT()
+  /**
+   *  
+   *
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
 
-    this.adminService.getAllOrganizations().subscribe((response:any) => {
-      if(response.success == true) {
-        // var orgs = response.data.content.qs.Organizations;
-        // forEach(var i in orgs)
-        // {
-        //   this.organizations.push(i);
-        // }
-        this.organizations = response.data.content.qs.Organizations;
-        
+    //--- Get the Organization's Details
+    this.service.getOrganizationDetails().subscribe((response: any) => {
+      if (response.success == true && response.status == 200) {
+        // ***********************************
+        // POLPULATE FIELDS BASED ALREADY KNOWN INFORMATION
+        // *************
+
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: response.error.message}});
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Load Organizations' Details", message: response.message } });
         dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
+          if (result == "Retry") {
             this.ngOnInit();
           }
         })
-      }    
-    }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: err.message}});
-      dialogRef.afterClosed().subscribe((result) => {
-        if(result == "Retry") {
-          this.ngOnInit();
-        }
-      })
-      console.log("ERROR:" + err.message);
-    })
+      }
+    });
 
   }
 
-
-  addMember()
-  {
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          ADD MEMBER
+  /**
+   * This function calls the *http* service to add a new Organization Member
+   *
+   * @returns
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  addMember() {
     this.submitted = true;
 
     if (this.addMemberForm.invalid) {
       return;
     }
 
-    this.success = true;
+    this.valid = true;
+    this.loading = true;
 
     const LorgName = this.addMemberForm.controls.organization.value;
-    const LmemberLocation = this.addMemberForm.controls.member_location.value;
+    // const LmemberLocation = this.addMemberForm.controls.member_location.value;
     const LmemberName = this.addMemberForm.controls.member_name.value;
     const LmemberSurname = this.addMemberForm.controls.member_surname.value;
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
-    const org_details: OrganizationInfo = { orgName: LorgName };
-    const member_details: MemberInfo = { name: LmemberName, surname: LmemberSurname, location: LmemberLocation , email: LmemberEmail, phone: LmemberPhone};
+    const org_details: Interface.Organisation = { orgName: LorgName };
+    const member_details: Interface.OrganisationMember = { fname: LmemberName, surname: LmemberSurname, email: LmemberEmail, password: LmemberPhone };
 
 
     this.service.addOrgMember(org_details, member_details).subscribe((response: any) => {
-      if (response.success == true) {
+      if (response.success == true && response.status == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Successfully added member! Temp Password: " + response.data.content.tempPassword, "Dismiss", {
+        let snackBarRef = this.snackBar.open("Member Added", "Dismiss", {
           duration: 6000
         });
-
-        console.log("Temp Password: " + response.data.content.tempPassword);
-
       } else if (response.success == false) {
-        console.log("---- HERE ----");
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could not add member", message: response.message } });
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Adding Member", message: response.message } });
         dialogRef.afterClosed().subscribe((result) => {
           if (result == "Retry") {
             this.addMember();
           }
-          //Take out when authenication is working - Just for test/demp purposes
-          this.router.navigate(['sample-form']);
-          //
         })
       }
-    }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could not add member", message: err.message } });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result == "Retry") {
-          this.addMember();
-        }
-      })
-      console.log("ERROR:" + err.message);
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SELECTED MEMBER
+  /**
+   * This function sets the Member selected by the user in the table
+   *
+   * @param {Interface.OrganisationMember} member
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  selectOrganisation(member: Interface.OrganisationMember) {
+    this.selectedMember = member;
+  }
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     REMOVE MEMBER PROMPT
+  /**
+   * This function prompts the user to confirm if they wish to remove the selected Member
+   *
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeMemberPrompt() {
+    
+    const memberDetails = this.selectedMember.fname + " " + this.selectedMember.surname + " " + this.selectedMember.email;
+
+    let dialogRef = this.dialog.open(ConfirmComponent, {
+      data: {
+        title: "Remove Member",
+        message: "Are you sure you want to remove this Member?",
+        info: memberDetails,
+        cancel: "Cancel",
+        confirm: "Remove"
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == "Confirm") {
+        this.removeMember();
+      }
     })
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                           REMOVE MEMBER   
+  /**
+   * This function calls the *http* service to remove the selected Organisation 
+   *
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeMember() {
+
+    this.service.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
+      if (response.success == true && response.status == 200) {
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Member Removed", "Dismiss", {
+          duration: 3000
+        });
+        this.refreshDataSource();
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.removeMember();
+          }
+        })
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            REFRESH
+  /**
+   * This function refreshes the Datasource (in most cases, the table that has changed)
+   *
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  refreshDataSource() {
+      
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            VIEW STAFF
+  /**
+   * This function calls the *http* service to get all registered Organization Members
+   *
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  viewMembers() {
+    
+    this.service.getAllOrganizationMembers().subscribe((response: any) => {
+      if (response.success == true && response.status == 200) {
+        this.orgMembers = response.data;
+
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Members", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.viewMembers();
+          }
+        })
+      }
+    });
   }
 
 }
