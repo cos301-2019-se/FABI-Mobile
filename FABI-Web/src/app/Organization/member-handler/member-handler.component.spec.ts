@@ -8,6 +8,13 @@ import { MaterialModule } from '../../materials';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+//Router
+import { RouterTestingModule } from '@angular/router/testing';
+
+
+//Http Testing
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 
 describe('MemberHandlerComponent', () => {
   let component: MemberHandlerComponent;
@@ -18,7 +25,7 @@ describe('MemberHandlerComponent', () => {
       declarations: [ MemberHandlerComponent ],
       imports: [MaterialModule,
         NoopAnimationsModule,
-        BrowserAnimationsModule ]
+        BrowserAnimationsModule, RouterTestingModule, HttpClientTestingModule ]
     })
     .compileComponents();
   }));
