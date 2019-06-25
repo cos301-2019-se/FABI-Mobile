@@ -112,10 +112,12 @@ export class LoginComponent implements OnInit {
 
     this.service.login(details).subscribe((response: any) => {
 
+     console.log(response);
+
       this.loading = false;
 
       // API Request successful
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
 
         // User NOT Authorised
         if (response.title != "AUTHORIZED") {
@@ -130,14 +132,14 @@ export class LoginComponent implements OnInit {
           duration: 3000
         });
 
-        this.service.setSessionVariables(response.data.token, details.orgName, details.userType);
+        this.service.setSessionVariables(response.token, details.orgName, details.userType);
         // this.service.setLoggedin();
 
         // Navigate to specific dashboard, based on user's type
         if (details.orgName == "FABI") {
           if (details.userType == "Admin" || details.userType == "Database Admin") {
             try {
-              this.router.navigate(['fabi-admin-dashboard']);
+              this.router.navigate(['admin-dashboard']);
             } catch (err) {
               console.log("Could not redirect to dashboard: " + err.message);
             }
@@ -145,7 +147,7 @@ export class LoginComponent implements OnInit {
           }
           else {
             try {
-              this.router.navigate(['fabi-staff-dashboard']);
+              this.router.navigate(['staff-dashboard']);
             } catch (err) {
               console.log("Could not redirect to dashboard: " + err.message);
             }
