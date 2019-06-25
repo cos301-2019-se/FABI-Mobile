@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, June 21st 2019
+ * Last Modified: Sunday, June 23rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -27,7 +27,11 @@ export class NotificationService {
 
   showToastNotification(message: string) {
     console.log("------------------- NOTIFICATION ------------------");
-      this.toastr.success(message, 'Oops');
+      // return this.toastr.success(message, 'Oops');
+
+      let snackBarRef = this.snackBar.open(message, "Dismiss", {
+        duration: 3000
+      });
   }
 
   showDialogNotification(message) {
