@@ -43,6 +43,7 @@ import { SubmitCbsDepositComponent } from './Staff/submit-cbs-deposit/submit-cbs
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -70,9 +71,10 @@ import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalizat
     SubmitCbsDepositComponent,
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
-    SubmitCmwRevitalizationComponent
+    SubmitCmwRevitalizationComponent,
+    ConfirmComponent
   ],
-  entryComponents: [],
+  entryComponents: [ConfirmComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
