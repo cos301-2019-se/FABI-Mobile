@@ -23,9 +23,9 @@
 
   <!--Member Handler Content-->
   <div class="content">
-    <div class="color-accent">
+    <!-- <div class="color-accent">
       <h1>Member Management</h1>
-    </div>
+    </div> -->
 
     <div class="member-management">
       <!--Tab Menu-->
@@ -37,26 +37,11 @@
             <mat-icon>person_add</mat-icon>
             Add Member
           </ng-template>
-          <div class="tab_content">
+          <div class="tab-content">
             <h2>Add Member</h2>
             <br />
 
             <form id="add_new_member_form" [formGroup]="addMemberForm" (submit)="addMember()">
-
-              <!--Dropdown for Organization selection and Error Handling-->
-              <mat-form-field>
-                <mat-label>Organization</mat-label>
-                <mat-select id="organization" formControlName="organization">
-                  <mat-option>--</mat-option>
-                  <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
-                    {{organization.orgName}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <div *ngIf="submitted && addMemberForm.controls.organization.errors" class="errors">
-                <div *ngIf="addMemberForm.controls.organization.errors.required">Please select an organization</div>
-              </div>
-              <br />
 
               <!--Name Field-->
               <mat-form-field class="form_inputs">
@@ -96,18 +81,18 @@
         </mat-tab>
 
         <!--Remove Tab Option-->
-        <mat-tab>
+        <!-- <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon>delete</mat-icon>
             Remove Member
           </ng-template>
-          <div class="tab_content">
+          <div class="tab-content">
             <h2>Remove Member</h2>
             <br />
 
             <form id="remove_member_form">
 
-              <!--Search Field-->
+              Search Field
               <mat-form-field class="form_inputs">
                 <input matInput placeholder="Search for a member">
               </mat-form-field>
@@ -118,7 +103,7 @@
             </form>
 
           </div>
-        </mat-tab>
+        </mat-tab> -->
 
         <!--View Tab Option-->
         <mat-tab (click)="viewMembers()">
@@ -126,11 +111,11 @@
             <mat-icon>people</mat-icon>
             View Members
           </ng-template>
-          <div class="tab_content">
+          <div class="tab-content">
             <h2>View Members</h2>
             <br />
-            <!--Table of all staff-->
-            <div class="staff-table">
+            <!--Table of all members-->
+            <div class="member-table">
               <!--Search Filter for the Table-->
               <div class="search-field">
                 <mat-form-field>
@@ -177,18 +162,17 @@
         </mat-tab>
 
         <!--Search Tab Option-->
-        <mat-tab>
+        <!-- <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon>search</mat-icon>
             Search
           </ng-template>
-          <div class="tab_content">
+          <div class="tab-content">
             <h2>Search for a member</h2>
             <br />
 
             <form id="search_member_form">
 
-              <!--Search Field-->
               <mat-form-field class="form_inputs">
                 <input matInput placeholder="Search for a member">
               </mat-form-field>
@@ -199,7 +183,7 @@
             </form>
 
           </div>
-        </mat-tab>
+        </mat-tab> -->
       </mat-tab-group>
     </div>
 
@@ -272,7 +256,7 @@
               <mat-icon>person_add</mat-icon>
               Add Member
             </ng-template>
-            <div class="tab_content">
+            <div class="tab-content">
               <h2>Add Member</h2>
               <br />
 
@@ -336,7 +320,7 @@
               <mat-icon>delete</mat-icon>
               Remove Member
             </ng-template>
-            <div class="tab_content">
+            <div class="tab-content">
               <h2>Remove Member</h2>
               <br />
 
@@ -361,7 +345,7 @@
               <mat-icon>people</mat-icon>
               View Members
             </ng-template>
-            <div class="tab_content">
+            <div class="tab-content">
               <h2>View Members</h2>
               <br />
               <!--TODO
@@ -376,7 +360,7 @@
               <mat-icon>search</mat-icon>
               Search
             </ng-template>
-            <div class="tab_content">
+            <div class="tab-content">
               <h2>Search for a member</h2>
               <br />
 
