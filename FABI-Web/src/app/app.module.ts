@@ -45,11 +45,13 @@ import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 import { ConfirmComponent } from './confirm/confirm.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    HomeComponent,
     SampleFormComponent,
     DatabaseHandlerComponent,
     ClinicHandlerComponent,
