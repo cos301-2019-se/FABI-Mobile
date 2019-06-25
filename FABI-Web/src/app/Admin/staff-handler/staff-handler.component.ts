@@ -121,7 +121,7 @@ export class StaffHandlerComponent implements OnInit {
     const LstaffPhone = this.addStaffForm.controls.staff_phone.value;
     const LstaffPosition = this.addStaffForm.controls.staff_positon.value;
 
-    const staff_details: Interface.StaffInfo = { name: LstaffName, surname:LstaffSurname, email:LstaffEmail, phone:LstaffPhone, position:LstaffPosition };
+    const staff_details: Interface.StaffInfo = { fname: LstaffName, surname:LstaffSurname, email:LstaffEmail, phone:LstaffPhone, position:LstaffPosition };
 
     this.service.addStaffMember(staff_details).subscribe((response: any) => {
       if (response.success == true && response.status == 200) {
@@ -165,7 +165,7 @@ export class StaffHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeStaffMemberPrompt() {
     
-    const staffDetails = this.selectedStaff.name + " " + this.selectedStaff.surname + " " + this.selectedStaff.email;
+    const staffDetails = this.selectedStaff.fname + " " + this.selectedStaff.surname + " " + this.selectedStaff.email;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
       data: {
@@ -235,8 +235,8 @@ export class StaffHandlerComponent implements OnInit {
   viewStaff() {
     
     this.service.getAllStaffMembers().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        this.staffMembers = response.data;
+      if (response.success == true && response.code == 200) {
+        this.staffMembers = response.data.staff.researchers;
 
       } else if (response.success == false) {
         //POPUP MESSAGE
