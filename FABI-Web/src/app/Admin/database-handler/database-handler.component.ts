@@ -68,6 +68,7 @@ export class DatabaseHandlerComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       let text = reader.result;
+      console.log("redaer: " + text);
       let jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
       console.log(jsonData);
 

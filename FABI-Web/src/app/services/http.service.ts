@@ -82,7 +82,7 @@ export class HttpService {
       }
     }
 
-    const method = 'POST';  // Http Request Method
+    let method = 'POST';  // Http Request Method
 
     const postData = details; // Data to send as JSON
 
