@@ -6,6 +6,13 @@ import {MaterialModule} from '../../materials';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+//Http Testing
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+//Router
+import { RouterTestingModule } from '@angular/router/testing';
+
+
 describe('StaffHandlerComponent', () => {
   let component: StaffHandlerComponent;
   let fixture: ComponentFixture<StaffHandlerComponent>;
@@ -14,7 +21,9 @@ describe('StaffHandlerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ StaffHandlerComponent ],
       imports: [MaterialModule,
-        NoopAnimationsModule]
+        NoopAnimationsModule,
+        HttpClientTestingModule,
+        RouterTestingModule]
     })
     .compileComponents();
   }));
