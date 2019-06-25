@@ -108,6 +108,7 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
 
+    console.log("--------- HELLO ----------");
     this.viewMembers();
 
     //--- Get the Organization's Details
@@ -269,6 +270,10 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewMembers() {
+    
+    console.log("orgName: " + localStorage.getItem('orgName'));
+    console.log("--------- HELLO ----------");
+
     
     this.service.getAllOrganizationMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {

@@ -21,10 +21,11 @@ import { OrganizationDashboardComponent } from './organization-dashboard/organiz
 import { OrganizationProfileComponent } from './organization-profile/organization-profile.component';
 import { OrganizationViewSamplesComponent } from './organization-view-samples/organization-view-samples.component';
 import { OrganizationSubmitSampleComponent } from './organization-submit-sample/organization-submit-sample.component';
+import { MemberHandlerComponent } from "./member-handler/member-handler.component";
 
 const routes: Routes = [
   {path: 'organization-dashboard', component: OrganizationDashboardComponent},
-  // {path: 'member-handler', component: MemberHandlerComponent},
+  {path: 'member-handler', component: MemberHandlerComponent},
   {path: 'organization-profile', component: OrganizationProfileComponent},
   {path: 'organization-view-samples', component: OrganizationViewSamplesComponent},
   {path: 'organization-submit-sample', component: OrganizationSubmitSampleComponent}

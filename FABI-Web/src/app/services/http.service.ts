@@ -591,12 +591,20 @@ export class HttpService {
     let getAllOrganizationsMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllOrgMembers';
     let method = 'POST';
 
+    console.log("orgName: " + localStorage.getItem('orgName'));
+    const postData = {
+      "orgName": localStorage.getItem('orgName')
+    }
+
+    console.log("postData: " + postData);
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
+      body: postData,
       json: true
     };
 
