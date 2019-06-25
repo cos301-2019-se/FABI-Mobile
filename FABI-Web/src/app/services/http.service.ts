@@ -195,7 +195,7 @@ export class HttpService {
       json: true
     };
 
-    return this.http.request<any>(method, portingURL, options);
+    return this.http.request<any>('POST', '***REMOVED***/porting', options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,8 +209,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   createOrganization(orgInfo: Interface.Organisation) {
-    const createOrganizationURL = '***REMOVED***/createOrganization';
-    const method = 'POST';
+    let createOrganizationURL = '***REMOVED***/createOrganization';
+    let method = 'POST';
 
     const postData = orgInfo;
 
