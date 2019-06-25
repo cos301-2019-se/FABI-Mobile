@@ -26,11 +26,11 @@
 
   <!--Database Handler Content-->
   <div class="content">
-    <div class="color-accent">
+    <!-- <div class="color-accent">
       <h1>Database Management</h1>
-    </div>
+    </div> -->
 
-    <div class="database-management ">
+    <div class="database-management">
       <!--Tab Menu-->
       <mat-tab-group animationDuration="1000ms">
 
@@ -40,11 +40,10 @@
             <i class="fas fa-database"></i>
             Add Database
           </ng-template>
-          <div class="tab_content">
+          <div class="tab-content" id="add_new_database_form">
             <h2>Add Database via Porting</h2>
             <br />
-
-            <input type='file' (change)=submitCSV(input) id='fileInput' #input>
+            <input type='file' (change)=submitCSV(input) id='fileInput' class="btn.btn-default" #input>
 
           </div>
           <p *ngIf="loading" style="color: black;">Porting File...</p>
