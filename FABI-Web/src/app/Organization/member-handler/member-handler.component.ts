@@ -14,7 +14,11 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+//Include Material Components
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+
 import * as Interface from "../../interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -34,6 +38,9 @@ import { ConfirmComponent } from "../../confirm/confirm.component";
 })
 export class MemberHandlerComponent implements OnInit {
 
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Action'];
+  dataSource = new MatTableDataSource([]);
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,6 +58,8 @@ export class MemberHandlerComponent implements OnInit {
   organizations: Interface.Organisation[];
    /** Array of Member objects - @type {OrganisationMember[]} */
   orgMembers: Interface.OrganisationMember[];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -98,6 +107,8 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+
+    this.viewMembers();
 
     //--- Get the Organization's Details
     this.service.getOrganizationDetails().subscribe((response: any) => {
@@ -260,8 +271,10 @@ export class MemberHandlerComponent implements OnInit {
   viewMembers() {
     
     this.service.getAllOrganizationMembers().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        this.orgMembers = response.data;
+      if (response.success == true && response.code == 200) {
+        this.orgMembers = response.data.members;
+        this.dataSource = new MatTableDataSource(this.orgMembers);
+        this.dataSource.paginator = this.paginator;
 
       } else if (response.success == false) {
         //POPUP MESSAGE
