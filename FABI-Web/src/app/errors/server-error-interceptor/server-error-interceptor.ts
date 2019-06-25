@@ -21,6 +21,12 @@ import { throwError, Observable, BehaviorSubject, of, from } from "rxjs";
 
 @core.Injectable()
 export class ServerErrorInterceptor implements Http.HttpInterceptor {
+
+  private AUTH_HEADER = "Authorization";
+  private token = localStorage.getItem('token');
+  private refreshTokenInProgress = false;
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
   constructor() { }
 
 
