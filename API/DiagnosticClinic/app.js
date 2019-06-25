@@ -25,6 +25,7 @@ app.use('/',displayHTML);
 app.use('/submitSample', submitSampleRoute);
 app.use('/retrieveSample', retrieveSampleRoute);
 app.use('/retrieveAllSamples', retrieveAllSamplesRoute);
+app.use('/retrieveAllOrgSamples', retrieveAllOrgSamplesRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {

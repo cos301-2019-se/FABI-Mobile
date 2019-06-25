@@ -32,11 +32,9 @@ function getAllOrgSamples(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "orgName of samples to be retrieved expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "orgName of samples to be retrieved expected"
         });
     }
     
@@ -47,19 +45,18 @@ function getAllOrgSamples(req, res) {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************                    success: false,
-                error: {
-                    code: 400,
-                    title: "NOT FOUND",
-                    message: "No samples from organization with given name found"
-                }
+            res.status(400).json({                                  // ******* RESPONSE STATUS? ************                    
+                success: false,
+                code: 400,
+                title: "NOT FOUND",
+                message: "No samples from organization with given name found"
             });
         }
         else{
-            var qs = {samples : []}
+            var data = {samples : []}
                 
             snapshot.forEach(doc => {
-                qs.samples.push(doc.data());
+                data.samples.push(doc.data());
             })
 
             res.setHeader('Content-Type', 'application/json');
@@ -67,14 +64,11 @@ function getAllOrgSamples(req, res) {
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                 success: true,
-                data: {
-                    code: 200,
-                    title: "SUCCESS",
-                    message: "List of " + req.body.orgName + " samples",
-                    content: {
-                        qs
-                    }
-                }
+                code: 200,
+                title: "SUCCESS",
+                message: "List of " + req.body.orgName + " samples",
+                data
+                
             });
         }
     }).catch((err) =>
@@ -85,11 +79,9 @@ function getAllOrgSamples(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(500).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 500,
-                title: "FAILURE",
-                message: "Error Connecting to User Database"
-            }
+            code: 500,
+            title: "INTERNAL SERVER ERROR",
+            message: "Error Connecting to User Database"
         });
     });
 }
