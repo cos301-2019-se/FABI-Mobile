@@ -9,7 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
 //Import the materials component
-import { MaterialModule } from '../materials';
+import { MaterialModule } from '../../materials';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
