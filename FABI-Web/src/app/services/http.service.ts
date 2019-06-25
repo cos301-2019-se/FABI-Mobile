@@ -242,8 +242,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganization(orgInfo: Interface.Organisation) {
 
-    const removeOrganizationURL = 'https://user-management-dot-api-fabi.appspot.com/removeOrg';
-    const method = 'POST';
+    let removeOrganizationURL = 'https://user-management-dot-api-fabi.appspot.com/removeOrg';
+    let method = 'POST';
 
     const postData = orgInfo;
 
@@ -273,8 +273,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addStaffMember(staffInfo: Interface.StaffInfo) {
-    const addStaffMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addStaff';
-    const method = 'POST';
+    let addStaffMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addStaff';
+    let method = 'POST';
 
     const postData = staffInfo;
 
@@ -303,8 +303,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
    
-    const removeStaffMemberURL = '';
-    const method = 'POST';
+    let removeStaffMemberURL = '';
+    let method = 'POST';
 
     const postData = staffInfo;
 
@@ -334,8 +334,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaffMembers() {
 
-    const getStaffMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllStaff';
-    const method = 'POST';
+    let getStaffMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllStaff';
+    let method = 'POST';
 
     const options = {
       headers: {
@@ -363,8 +363,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addFABIAdmin(staffInfo: Interface.StaffInfo) {
-    const addFABIAdminURL = 'https://user-management-dot-api-fabi.appspot.com/addFabiAdmin';
-    const method = 'POST';
+    let addFABIAdminURL = 'https://user-management-dot-api-fabi.appspot.com/addFabiAdmin';
+    let method = 'POST';
 
     const postData = {
       "admin": staffInfo
@@ -399,8 +399,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addOrgMember(orgInfo: Interface.Organisation, memberInfo: Interface.OrganisationMember) {
 
-    const addMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addMemberToOrg';
-    const method = 'POST';
+    let addMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addMemberToOrg';
+    let method = 'POST';
     
     const postData = {
       "orgName": orgInfo.orgName,
@@ -432,8 +432,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
    
-    const removeMemberURL = 'https://user-management-dot-api-fabi.appspot.com/removeMember';
-    const method = 'POST';
+    let removeMemberURL = 'https://user-management-dot-api-fabi.appspot.com/removeMember';
+    let method = 'POST';
 
     const postData = memberInfo;
 
@@ -466,8 +466,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData)
   {
-    const submitSampleURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/submitSample';
-    const method = 'POST';
+    let submitSampleURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/submitSample';
+    let method = 'POST';
 
     const postData = {
       "orgName": orgInfo.orgName,
@@ -501,8 +501,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveAllSamples(orgInfo: Interface.Organisation) {
-    const retrieveAllOrgSamples = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples';
-    const method = 'POST';
+    let retrieveAllOrgSamples = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples';
+    let method = 'POST';
 
     const postData = {
       "orgName": orgInfo.orgName
@@ -534,8 +534,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationDetails() {
     
-    const getOrganizationDetails = 'https://user-management-dot-api-fabi.appspot.com/getOrgDetails';
-    const method = 'POST';
+    let getOrganizationDetails = 'https://user-management-dot-api-fabi.appspot.com/getOrgDetails';
+    let method = 'POST';
 
     const postData = {
       "ID": localStorage.getItem('ID')
@@ -567,8 +567,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationMemberDetails() {
     
-    const getOrganizationMemberDetails = 'https://user-management-dot-api-fabi.appspot.com/getOrgMember';
-    const method = 'POST';
+    let getOrganizationMemberDetails = 'https://user-management-dot-api-fabi.appspot.com/getOrgMember';
+    let method = 'POST';
 
     const postData = {
       "ID": localStorage.getItem('ID')
@@ -602,8 +602,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllOrganizationMembers() {
 
-    const getAllOrganizationsMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllOrgMembers';
-    const method = 'POST';
+    let getAllOrganizationsMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllOrgMembers';
+    let method = 'POST';
 
     const options = {
       headers: {
