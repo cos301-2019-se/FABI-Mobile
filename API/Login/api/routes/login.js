@@ -33,11 +33,9 @@ function loginAdmin(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User email expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User email expected"
         });
     }
 
@@ -47,11 +45,9 @@ function loginAdmin(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User password expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User password expected"
         });
     }
 
@@ -61,11 +57,9 @@ function loginAdmin(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User Type expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User Type expected"
         });
     }
     
@@ -172,11 +166,9 @@ function loginAdmin(req, res)
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.status(400).json({                                  // ******* RESPONSE STATUS? ************
                 success: false,
-                error: {
-                    code: 400,
-                    title: "BAD_REQUEST",
-                    message: "User Type not supported"
-                }
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "User Type not supported"
             });
         }
     }catch(err) {
