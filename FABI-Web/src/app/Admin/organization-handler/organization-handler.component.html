@@ -112,13 +112,13 @@
 
             <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="dataSource">
 
-              <!-- Organization Name Column -->
+              Organization Name Column
               <ng-container matColumnDef="Organization Name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Organization Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.orgName}} </td>
               </ng-container>
 
-              <!-- Admin Column -->
+              Admin Column
               <ng-container matColumnDef="Admin">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Admin </th>
                 <td mat-cell *matCellDef="let element"> {{element.admin}} </td>
