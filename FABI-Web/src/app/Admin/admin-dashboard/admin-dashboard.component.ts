@@ -17,15 +17,18 @@
 import { Component, OnInit } from '@angular/core';
 // import { SidenavComponent } from '../../sidenav/sidenav.component';
 
+import { Router } from '@angular/router';
+
 declare var require: any;
 
 @Component({
   selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html'
+  templateUrl: './admin-dashboard.component.html',
+  styleUrls: ['./admin-dashboard.component.scss']
 })
 
 export class AdminDashboardComponent implements OnInit {
-  constructor() { }
+  constructor(private router: Router) { }
 
   
   /**
