@@ -14,7 +14,7 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -25,6 +25,10 @@ import { ErrorComponent } from '../../errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 
+//Include Material Components
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+
+
 import * as Interface from '../../interfaces/interfaces';
 
 
@@ -34,6 +38,9 @@ import * as Interface from '../../interfaces/interfaces';
   styleUrls: ['./staff-handler.component.scss']
 })
 export class StaffHandlerComponent implements OnInit {
+
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Action'];
+  dataSource = new MatTableDataSource([]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -50,6 +57,8 @@ export class StaffHandlerComponent implements OnInit {
   selectedStaff: Interface.StaffInfo;
   /** Array of Staff Member objects - @type {StaffInfo[]} */
   staffMembers: Interface.StaffInfo[];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -92,6 +101,7 @@ export class StaffHandlerComponent implements OnInit {
   //                                                            NG_ON_INIT()
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.viewStaff();
   }
 
 
@@ -237,6 +247,9 @@ export class StaffHandlerComponent implements OnInit {
     this.service.getAllStaffMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.staffMembers = response.data.staff.researchers;
+        console.log(this.staffMembers);
+        this.dataSource = new MatTableDataSource(this.staffMembers);
+        this.dataSource.paginator = this.paginator;
 
       } else if (response.success == false) {
         //POPUP MESSAGE
