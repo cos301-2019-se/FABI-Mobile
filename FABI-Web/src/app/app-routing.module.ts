@@ -18,7 +18,6 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'admin-dashboard', component: AdminDashboardComponent},
-  // {path: 'fabi-admin-dashboard', component: AdminDashboardComponent},
   {path: 'org-admin-dashboard', component: OrganizationDashboardComponent},
   {path: 'staff-dashboard', component: StaffDashboardComponent},
   {path: 'org-member-dashboard', component: MemberDashboardComponent}
