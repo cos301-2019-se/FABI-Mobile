@@ -35,10 +35,11 @@ export interface Organisation {
  * @interface OrganisationAdmin
  */
 export interface OrganisationAdmin {
-    fname: string;  // First Name of Admin
+    name?: string;  // First Name of Admin
+    fname?: string;  // First Name of Admin
     surname: string; // Surname of Admin
     email: string; // Email of Admin
-    password: string; // Passsword of Admin
+    password?: string; // Passsword of Admin
 }
 
 /**
@@ -52,7 +53,7 @@ export interface OrganisationMember {
   fname: string, // First Name of Member
   surname: string, // Surname of Member
   email: string, // Email of Member
-  password: string // Password of Member
+  password?: string // Password of Member
 }
 
 /**
