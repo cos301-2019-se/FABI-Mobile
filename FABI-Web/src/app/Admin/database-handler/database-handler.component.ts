@@ -72,8 +72,6 @@ export class DatabaseHandlerComponent implements OnInit {
       let jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
       console.log(jsonData);
 
-
-      // ** place api calls here ** //
       this.service.porting(jsonData).subscribe((response:any) => {
         this.loading = false;
         if(response.success == true && response.code == 200) {
@@ -102,7 +100,6 @@ export class DatabaseHandlerComponent implements OnInit {
         console.log("ERROR:" + err.message);
       });
     };
-    console.log(input.files[0]);
     reader.readAsText(input.files[0]);
   }
 
