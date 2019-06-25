@@ -15,7 +15,6 @@ router.post('/', submitForm);
  * @summary submit a sample to the diagnostic clinic
  * @description  REQUEST DATA REQUIRED: all form data
  *
- * 1. 
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
@@ -36,14 +35,13 @@ function submitForm(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(200).json({                                  // ******* RESPONSE STATUS? ************
         success: true,
-        data: {
             code: 200,
             title: "SUCCESS",
-            message: "form submitted",
-            content: {message : "form succesfully submitted",
-                referenceNumber : refnum}
-        }
-    });
+            message : "form succesfully submitted",
+            data: {
+                referenceNumber : refnum
+            }
+        });
     })
 }
 
