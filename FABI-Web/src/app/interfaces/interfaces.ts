@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, June 21st 2019
+ * Last Modified: Tuesday, June 25th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -48,6 +48,7 @@ export interface OrganisationAdmin {
  * @interface MemberInfo
  */
 export interface OrganisationMember {
+  ID?: string, // ID of the Member
   fname: string, // First Name of Member
   surname: string, // Surname of Member
   email: string, // Email of Member
@@ -78,8 +79,13 @@ export interface LoginInfo {
     password: string;
 }
   
-
-  export interface StaffInfo {
+/**
+ * Defines a FABI Staff Member object
+ *
+ * @export
+ * @interface StaffInfo
+ */
+export interface StaffInfo {
     name: string;
     surname: string,
     email: string,
