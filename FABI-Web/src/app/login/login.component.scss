@@ -157,21 +157,24 @@ screen and (max-height: 800px) {
 /*----------------------------------
         Form and Input Styling
 -----------------------------------*/
+/*----------------------------------
+        Form and Input Styling
+-----------------------------------*/
 .mat-form-field.mat-focused {
     .mat-form-field-label {
-        color: #3C5148;
+        color: #6B8E4E;
     }
 
     .mat-form-field-ripple {
-        background-color: #3C5148;
+        background-color: #6B8E4E;
     }
 
     .mat-form-field-required-marker {
-        color: #3C5148;
+        color: #6B8E4E;
     }
 
     .mat-input-element {
-        color: #3C5148;
+        color: #6B8E4E;
     }
 }
 
