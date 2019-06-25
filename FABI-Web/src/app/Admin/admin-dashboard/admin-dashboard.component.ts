@@ -1,8 +1,21 @@
-import { Component, OnInit, isDevMode, Inject } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { DomSanitizer } from '@angular/platform-browser';
-import { sharedStylesheetJitUrl } from '@angular/compiler';
+/**
+ * File Name: admin-dashboard.component.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Admin\admin-dashboard\admin-dashboard.component.ts
+ * Project Name: fabi-web
+ * Created Date: Sunday, June 23rd 2019
+ * Author: Team Nova - novacapstone@gmail.com
+ * -----
+ * Last Modified: Tuesday, June 25th 2019
+ * Modified By: Team Nova
+ * -----
+ * Copyright (c) 2019 University of Pretoria
+ * 
+ * <<license>>
+ */
+
+
+import { Component, OnInit } from '@angular/core';
+// import { SidenavComponent } from '../../sidenav/sidenav.component';
 
 declare var require: any;
 
@@ -12,10 +25,14 @@ declare var require: any;
 })
 
 export class AdminDashboardComponent implements OnInit {
-  navWidth: string;
+  constructor() { }
 
-  constructor(public sanitizer: DomSanitizer) { }
   
+  /**
+   * 
+   *
+   * @memberof AdminDashboardComponent
+   */
   sidenavToggle(){
     if(document.getElementById("sidenav_div").style.width == this.navWidth)
     {
