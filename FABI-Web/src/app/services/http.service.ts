@@ -342,8 +342,8 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
+        // "Authorization": localStorage.getItem('token')
       },
       json: true
     };
