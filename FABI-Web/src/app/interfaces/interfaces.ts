@@ -86,11 +86,12 @@ export interface LoginInfo {
  * @interface StaffInfo
  */
 export interface StaffInfo {
-    name: string;
+    ID?: number,
+    fname: string
     surname: string,
     email: string,
-    phone: number,
-    position: string
+    phone?: number,
+    position?: string
   }
 
 
