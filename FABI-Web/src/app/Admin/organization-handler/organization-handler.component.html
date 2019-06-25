@@ -1,3 +1,183 @@
+<div class="container">
+
+    <!--Nav Section-->
+    <div class="nav">
+  
+      <section class="top-nav">
+        <h1>Organization Management</h1>
+        <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
+        <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>
+        <a id="organization_management" routerLink="/organization-handler"><i
+            class="fas fa-building"></i>Organizations</a>
+        <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i>Diagnostic
+          Clinic</a>
+        <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Databases</a>
+        <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
+        <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+        <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
+      </section>
+  
+      <section class="bottom-nav">
+        <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+      </section>
+      <a href="" id="menu"><i class="fas fa-bars"></i></a>
+    </div>
+  
+    <!--Organization Handler Content-->
+    <div class="content">
+      <div class="color-accent">
+        <h1>Organization Management</h1>
+      </div>
+  
+      <div class="organization-management">
+        <!--Tab Menu-->
+        <mat-tab-group animationDuration="1000ms">
+
+            <!--Add Tab Option-->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>person_add</mat-icon>
+                Add Organization
+              </ng-template>
+              <div class="tab_content">
+                <h2>Add Organization</h2>
+                <br />
+  
+                <form id="add_new_organization_form"  [formGroup]="createOrgForm" (submit)="createOrg()">
+  
+                  <!--Organization Name Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name">
+                  </mat-form-field>
+                  <br />
+  
+                  <!--Location Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Location" matInput type="text" formControlName="organization_location">
+                  </mat-form-field>
+                  <br />
+  
+                  <!--Admin Name Field-->
+                  <mat-form-field class="form_inputs">
+                      <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name">
+                    </mat-form-field>
+                    <br />
+  
+                  <!--Admin Surname Field-->
+                  <mat-form-field class="form_inputs">
+                      <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
+                    </mat-form-field>
+                    <br />
+  
+                  <!--Admin Email Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email">
+                  </mat-form-field>
+                  <br />
+  
+                  <!--Admin Phone Number-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Admin Phone Number" matInput type="number" formControlName="admin_phone">
+                  </mat-form-field>
+  
+  
+                  <button type="submit" id="add_organization" class="btn btn-default">Add new organization</button>
+  
+                </form>
+  
+              </div>
+            </mat-tab>
+  
+            <!--Remove Tab Option-->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>delete</mat-icon>
+                Remove Organization
+              </ng-template>
+              <div class="tab_content">
+                <h2>Remove Organization</h2>
+                <br />
+  
+                <form id="remove_organization_form">
+  
+                  <!--Search Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Search for organization">
+                  </mat-form-field>
+                  <br />
+  
+                  <button type="submit" id="remove_search_organization" class="btn btn-default">Search</button>
+  
+                </form>
+  
+              </div>
+            </mat-tab>
+  
+            <!--View Tab Option-->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>people</mat-icon>
+                View Organizations
+              </ng-template>
+              <div class="tab_content">
+                <h2>View Organizations</h2>
+                <br />
+                <!--TODO
+                        - Retrieve list to all organizations from API
+                    -->
+              </div>
+            </mat-tab>
+  
+            <!--Search Tab Option-->
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>search</mat-icon>
+                Search
+              </ng-template>
+              <div class="tab_content">
+                <h2>Search for an Organization</h2>
+                <br />
+  
+                <form id="search_organization_form">
+  
+                  <!--Search Field-->
+                  <mat-form-field class="form_inputs">
+                    <input matInput placeholder="Search for organization">
+                  </mat-form-field>
+                  <br/>
+  
+                  <button type="submit" id="search_organization" class="btn btn-default">Search</button>
+                
+                </form>
+  
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+      </div>
+  
+  
+  
+    </div>
+  
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="organization_handler">
   <div class="top_banner">
     <h1 id="organization_heading">Organization Management</h1>

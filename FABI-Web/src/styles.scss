@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
+//Import Google Fonts 
+@import url('https://fonts.googleapis.com/css?family=Oswald:700|Roboto&display=swap');
+
 //Container Setup for Responsiveness
 html {
     height: 100%

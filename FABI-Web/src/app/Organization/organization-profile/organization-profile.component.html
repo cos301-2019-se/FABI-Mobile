@@ -1,32 +1,66 @@
-<h1>Organization Details</h1>
-<mat-card>
-  <form class="example-form">
+<div class="container">
 
-      <mat-form-field class="example-full-width">
+  <!--Nav Section-->
+  <div class="nav">
+
+    <section class="top-nav">
+      <h1>Organization Profile</h1>
+      <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
+      <a id="guest_management" routerLink="/member-handler"><i class="fas fa-users"></i>Members</a>
+      <a id="view_samples" routerLink="/organization-view-samples"><i class="fas fa-vials"></i>View Samples</a>
+      <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+      <a id="profile" routerLink="/organization-profile"><i class="fas fa-user-circle"></i>Profile</a>
+      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
+    </section>
+
+    <section class="bottom-nav">
+      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </section>
+    <a href="" id="menu"><i class="fas fa-bars"></i></a>
+  </div>
+
+  <!--Organization Profile Content-->
+  <div class="content">
+    <div class="color-accent">
+      <h1>Organization Profile</h1>
+    </div>
+
+    <div class="organization-profile">
+      <form class="example-form">
+
+        <mat-form-field class="example-full-width">
           <input matInput placeholder="Organization Name" value="Org1">
         </mat-form-field>
-        <br/>
+        <br />
 
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="Name" value="John">
-          </mat-form-field>
-          <br/>
-      
-          <mat-form-field class="example-full-width">
-              <input matInput placeholder="Surname" value="Doe">
-            </mat-form-field>
-            <br/>
+          <input matInput placeholder="Name" value="John">
+        </mat-form-field>
+        <br />
 
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="Email" value="john@org1.co.za">
-          </mat-form-field>
-          <br/>
+          <input matInput placeholder="Surname" value="Doe">
+        </mat-form-field>
+        <br />
 
-          <mat-form-field class="example-full-width">
-              <input matInput placeholder="Phone Number" value="0219875367">
-            </mat-form-field>
-            <br/>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Email" value="john@org1.co.za">
+        </mat-form-field>
+        <br />
 
-            <button id="submit_edited_details" class="btn btn-default" routerLink="">Save Changes</button>
-  </form>
-</mat-card>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Phone Number" value="0219875367">
+        </mat-form-field>
+        <br />
+
+        <button id="submit_edited_details" class="btn btn-default" routerLink="">Save Changes</button>
+      </form>
+    </div>
+
+
+
+  </div>
+
+</div>
