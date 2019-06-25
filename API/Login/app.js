@@ -10,7 +10,8 @@ admin.initializeApp({
 
 const displayHTML = require('./api/routes/displayHTML');
 
-const loginRoute = require("./api/routes/login")
+const loginRoute = require("./api/routes/login");
+const getUserTypesRoute = require('./api/routes/getUserTypes');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -20,6 +21,7 @@ app.use(cors());
 
 app.use('/',displayHTML);
 app.use('/login', loginRoute);
+app.use('/getUserTypes', getUserTypesRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {

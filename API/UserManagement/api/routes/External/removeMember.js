@@ -7,7 +7,7 @@ const admin = require('firebase-admin');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Handle POST request
-router.post('/', getMember);
+router.post('/', removeMember);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                             Get Organization Member
@@ -26,7 +26,7 @@ router.post('/', getMember);
 const db = admin.firestore();
 
 
-function getMember(req, res) {
+function removeMember(req, res) {
     //(1)
     if (req.body.email == undefined || req.body.email == '') {
         res.setHeader('Content-Type', 'application/problem+json');
@@ -50,9 +50,6 @@ function getMember(req, res) {
             message: "orgName expected"
         });
     }
-
-    if(req.body.orgName!= "FABI")
-    {
 
     var memRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.email);
     memRef.get().then(doc => {
@@ -88,43 +85,7 @@ function getMember(req, res) {
             });
             
     });
-}
-else{
-    var memRef = db.collection('Organizations').doc(req.body.orgName).collection('Staff').doc(req.body.email);
-    memRef.get().then(doc => {
-        //(2)
-        if(typeof(doc.data()) === 'undefined')
-        {
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(404).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                code: 404,
-                title: "NOT FOUND",
-                message: "User does not exist"
-            });
-        }
-            qs = doc.data();
-            delete qs.password;
-            //(3)
-            db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.email).delete().then(() => {
-                res.setHeader('Content-Type', 'application/problem+json');
-                            res.setHeader('Content-Language', 'en');
-                            res.setHeader("Access-Control-Allow-Origin", "*");
-                            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                                success: true,
-                                code: 200,
-                                title: "SUCCESS",
-                                message: "FABI Staff Deleted",
-                                data: {
-                                    Member : qs
-                                }
-                            
-                        });
-            });
-            
-    });
-}
+
+
 }
 module.exports = router;

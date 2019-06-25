@@ -37,9 +37,9 @@ function getAllOrganizations(req, res) {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************                    
+            res.status(404).json({                                  // ******* RESPONSE STATUS? ************                    
                 success: false,
-                code: 400,
+                code: 404,
                 title: "NOT FOUND",
                 message: "No organizations found"
                 
