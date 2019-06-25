@@ -242,8 +242,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganization(orgInfo: Interface.Organisation) {
 
-    const removeOrganizationURL = '***REMOVED***/removeOrg';
-    const method = 'POST';
+    let removeOrganizationURL = '***REMOVED***/removeOrg';
+    let method = 'POST';
 
     const postData = orgInfo;
 
@@ -273,8 +273,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addStaffMember(staffInfo: Interface.StaffInfo) {
-    const addStaffMemberURL = '***REMOVED***/addStaff';
-    const method = 'POST';
+    let addStaffMemberURL = '***REMOVED***/addStaff';
+    let method = 'POST';
 
     const postData = staffInfo;
 
@@ -303,8 +303,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
    
-    const removeStaffMemberURL = '';
-    const method = 'POST';
+    let removeStaffMemberURL = '';
+    let method = 'POST';
 
     const postData = staffInfo;
 
@@ -334,8 +334,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaffMembers() {
 
-    const getStaffMembersURL = '***REMOVED***/getAllStaff';
-    const method = 'POST';
+    let getStaffMembersURL = '***REMOVED***/getAllStaff';
+    let method = 'POST';
 
     const options = {
       headers: {
@@ -363,8 +363,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addFABIAdmin(staffInfo: Interface.StaffInfo) {
-    const addFABIAdminURL = '***REMOVED***/addFabiAdmin';
-    const method = 'POST';
+    let addFABIAdminURL = '***REMOVED***/addFabiAdmin';
+    let method = 'POST';
 
     const postData = {
       "admin": staffInfo
@@ -399,8 +399,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addOrgMember(orgInfo: Interface.Organisation, memberInfo: Interface.OrganisationMember) {
 
-    const addMemberURL = '***REMOVED***/addMemberToOrg';
-    const method = 'POST';
+    let addMemberURL = '***REMOVED***/addMemberToOrg';
+    let method = 'POST';
     
     const postData = {
       "orgName": orgInfo.orgName,
@@ -432,8 +432,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
    
-    const removeMemberURL = '***REMOVED***/removeMember';
-    const method = 'POST';
+    let removeMemberURL = '***REMOVED***/removeMember';
+    let method = 'POST';
 
     const postData = memberInfo;
 
@@ -466,8 +466,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData)
   {
-    const submitSampleURL = '***REMOVED***/submitSample';
-    const method = 'POST';
+    let submitSampleURL = '***REMOVED***/submitSample';
+    let method = 'POST';
 
     const postData = {
       "orgName": orgInfo.orgName,
@@ -501,8 +501,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveAllSamples(orgInfo: Interface.Organisation) {
-    const retrieveAllOrgSamples = '***REMOVED***/retrieveAllOrgSamples';
-    const method = 'POST';
+    let retrieveAllOrgSamples = '***REMOVED***/retrieveAllOrgSamples';
+    let method = 'POST';
 
     const postData = {
       "orgName": orgInfo.orgName
@@ -534,8 +534,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationDetails() {
     
-    const getOrganizationDetails = '***REMOVED***/getOrgDetails';
-    const method = 'POST';
+    let getOrganizationDetails = '***REMOVED***/getOrgDetails';
+    let method = 'POST';
 
     const postData = {
       "ID": localStorage.getItem('ID')
@@ -567,8 +567,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationMemberDetails() {
     
-    const getOrganizationMemberDetails = '***REMOVED***/getOrgMember';
-    const method = 'POST';
+    let getOrganizationMemberDetails = '***REMOVED***/getOrgMember';
+    let method = 'POST';
 
     const postData = {
       "ID": localStorage.getItem('ID')
@@ -602,8 +602,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllOrganizationMembers() {
 
-    const getAllOrganizationsMembersURL = '***REMOVED***/getAllOrgMembers';
-    const method = 'POST';
+    let getAllOrganizationsMembersURL = '***REMOVED***/getAllOrgMembers';
+    let method = 'POST';
 
     const options = {
       headers: {
