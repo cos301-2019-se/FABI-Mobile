@@ -1,11 +1,16 @@
+//node modules
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const fs = require('fs');
+const admin = require('firebase-admin');
+admin.initializeApp({
+    credential: admin.credential.applicationDefault()
+});
 
 const displayHTML = require('./api/routes/displayHTML');
-const loginRoute = require('./api/routes/login');
+
+const loginRoute = require("./api/routes/login")
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -13,8 +18,8 @@ app.use(bodyParser.json());
 //Prevent CORS violation
 app.use(cors());
 
-//Send any requests with authenticateNFC to the correct route
-app.use('/',loginRoute);
+app.use('/',displayHTML);
+app.use('/login', loginRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {
