@@ -44,19 +44,19 @@ export class DatabaseHandlerComponent implements OnInit {
 
   constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
 
-  sidenavToggle(){
-    if(document.getElementById("sidenav_div").style.width == "22%")
-    {
-      document.getElementById("sidenav_div").style.width = "0";
-    }
-    else{
-      document.getElementById("sidenav_div").style.width = "22%";
-    } 
-  }
+  // sidenavToggle(){
+  //   if(document.getElementById("sidenav_div").style.width == "22%")
+  //   {
+  //     document.getElementById("sidenav_div").style.width = "0";
+  //   }
+  //   else{
+  //     document.getElementById("sidenav_div").style.width = "22%";
+  //   } 
+  // }
 
-  closeNav(){
-    document.getElementById("sidenav_div").style.width = "0";
-  }
+  // closeNav(){
+  //   document.getElementById("sidenav_div").style.width = "0";
+  // }
 
   ngOnInit() {
   }
@@ -75,7 +75,7 @@ export class DatabaseHandlerComponent implements OnInit {
       // ** place api calls here ** //
       this.service.porting(jsonData).subscribe((response:any) => {
         this.loading = false;
-        if(response.success == true) {
+        if(response.success == true && response.code == 200) {
           //POPUP MESSAGE
           let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
             duration: 3000
@@ -99,8 +99,9 @@ export class DatabaseHandlerComponent implements OnInit {
           }
         })
         console.log("ERROR:" + err.message);
-      })
+      });
     };
+    console.log(input.files[0]);
     reader.readAsText(input.files[0]);
   }
 

@@ -194,7 +194,7 @@ export class StaffHandlerComponent implements OnInit {
   removeStaffMember() {
 
     this.service.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Staff Member Removed", "Dismiss", {
           duration: 3000
