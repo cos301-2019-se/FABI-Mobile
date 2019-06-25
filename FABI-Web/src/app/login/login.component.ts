@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, June 21st 2019
+ * Last Modified: Monday, June 24th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -34,22 +34,27 @@ import * as Interface from '../interfaces/interfaces';
 
 export class LoginComponent implements OnInit {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /** Object for defining the login form -  @type {FormGroup} */
-  loginForm : FormGroup;
+  loginForm: FormGroup;
   /** To check if form has been submitted - @type {boolean} */
-  submitted : boolean = false;
+  submitted: boolean = false;
   /** To check if form has been submitted correctly - @type {boolean} */
-  valid : boolean = false;
+  valid: boolean = false;
   /** To check if user is logged in - @type {boolean} */
-  loggedIn : boolean = false;
+  loggedIn: boolean = false;
   /** Array of Organization objects for form dropdown - @type {Organisation[]} */
-  organizations : Interface.Organisation[];
+  organizations: Interface.Organisation[];
   /** Array of User Type objects for form dropdown - @type {UserType[]} */
-  userTypes : Interface.UserType[];
+  userTypes: Interface.UserType[];
   /** If page is busy loading something - @type {boolean} */
-  loading : boolean = false;
+  loading: boolean = false;
   /** Selected organisation on dropdown. Used to adjust login form according to organisation selected - @type {string} */
-  selectedOrg : string;         
+  selectedOrg: string;
+  /** Selected user type on dropdown - @type {string} */
+  selectedUserType: string;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -75,7 +80,7 @@ export class LoginComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                           LOGIN FUNCTION
+  //                                                              LOGIN
   /**
    * This function calls the *http* service to authenticate the user's login details. If the user is authenticated, they're directed 
    * to their respective dashboard. If they're NOT authenticated, an appropriate error message is shown.
@@ -90,7 +95,7 @@ export class LoginComponent implements OnInit {
 
     // Check if form input is valid 
     if (this.loginForm.invalid) {
-        return;
+      return;
     }
 
     this.valid = true;
@@ -108,25 +113,25 @@ export class LoginComponent implements OnInit {
     this.service.login(details).subscribe((response: any) => {
 
       this.loading = false;
-      
+
       // API Request successful
-      if (response.success == true) {
+      if (response.success == true && response.status == 200) {
 
         // User NOT Authorised
-        if (response.data.title != "AUTHORIZED") {
+        if (response.title != "AUTHORIZED") {
           //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: response.data.title, message: response.data.message, retry: false} });
+          let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: response.data.title, message: response.data.message, retry: false } });
           return;
         }
         // ELSE user Authorised:
-        
+
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Logged In", "Dismiss", {
           duration: 3000
         });
 
-        this.service.setToken(response.data.token);
-        this.service.setLoggedin();
+        this.service.setSessionVariables(response.data.token, details.orgName, details.userType);
+        // this.service.setLoggedin();
 
         // Navigate to specific dashboard, based on user's type
         if (details.orgName == "FABI") {
@@ -164,110 +169,88 @@ export class LoginComponent implements OnInit {
 
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: response.error.error.title,  message: response.erro.message, status: response.error.code } });
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: response.title, message: response.message, status: response.status, retry: false } });
         dialogRef.afterClosed().subscribe((result) => {
           if (result == "Retry") {
             this.login();
           }
-          //Take out when authenication is working - Just for test/demp purposes
-          this.router.navigate(['sample-form']);
-          //
         })
       }
-
-      this.loading = false;
-
-    }
-    // (error: HttpErrorResponse) => {
-
-
-    //   console.log(error);
-      
-    //   //POPUP MESSAGE
-    //   let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: error.error.title, status: error.status, type: error.name, error: error.message } });
-    //   dialogRef.afterClosed().subscribe((result) => {
-    //     if (result == "Retry") {
-    //     }
-    //   })
-    //   // console.log("ERROR:" + err.message);
-    //   this.loading = false;
-    // }
-    )
+    });
+    
+    this.loading = false;
   }
-/**
- * This function is called when the page loads
- * 
- * @description 1. Check if user is already logged in | 2. Check if their session ID (Token) is valid | 3. Populate form drop downs 
- *
- * @memberof LoginComponent
- */
-ngOnInit() {
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT()  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Check if user is already logged in | 2. Check if their session ID (Token) is valid | 3. Populate form drop downs 
+   *
+   * @memberof LoginComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+    
     this.loggedIn = this.service.isLoggedIn();
     if (this.loggedIn == true) {
-      this.router.navigate(['sample-form']);
+      // Navigate to respective dashboard
     }
 
+    //-------- Load Organisation names for Drop Down --------
     this.service.getAllOrganizations().subscribe((response: any) => {
-      if (response.success == true) {
-        // var orgs = response.data.content.qs.Organizations;
-        // forEach(var i in orgs)
-        // {
-        //   this.organisations.push(i);
-        // }
-        this.organizations = response.data.content.qs.Organizations;
+      if (response.success == true && response.status == 200) {
+        this.organizations = response.data;
 
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Load Organizations", message: response.error.message } });
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the Organisations", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
           if (result == "Retry") {
             this.ngOnInit();
           }
         })
       }
-    }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Load Organizations", message: err.message } });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result == "Retry") {
-          this.ngOnInit();
-        }
-      })
-      console.log("ERROR:" + err.message);
-    })
+    }
+      //  (err: HttpErrorResponse) => {
+      //   //POPUP MESSAGE
+      //   let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Load Organizations", message: err.message } });
+      //   dialogRef.afterClosed().subscribe((result) => {
+      //     if (result == "Retry") {
+      //       this.ngOnInit();
+      //     }
+      //   })
+      //   console.log("ERROR:" + err.message);
+      // }
+    );
 
   }
 
-  displayUserTypes() {
-    if (this.selectedOrg == "FABI") {
-      this.userTypes = [
-        {
-          "ID": 1,
-          "Name": "Admin"
-        },
-        {
-          "ID": 2,
-          "Name": "Staff"
-        },
-        {
-          "ID": 3,
-          "Name": "Database Admin"
-        }
-      ]
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //    USER TYPES -> TO BE FETCHED FROM DB IN THE FUTURE
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayUserTypes() {
+
+    //-------- Load User Types for Drop Down --------
+    this.service.getUserTypes(this.selectedOrg).subscribe((response: any) => {
+      if (response.success == true && response.status == 200) {
+        this.userTypes = response.data;
+
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the User Types", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.displayUserTypes();
+          }
+        })
+      }
     }
-    else {
-      this.userTypes = [
-        {
-          "ID": 1,
-          "Name": "Admin"
-        },
-        {
-          "ID": 2,
-          "Name": "Member"
-        }
-      ]
-    }
+    )
+
   }
 
 }
