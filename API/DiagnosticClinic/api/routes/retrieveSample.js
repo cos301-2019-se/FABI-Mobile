@@ -31,11 +31,9 @@ function getSample(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "Reference number expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "Reference number expected"
         });
     }
 
@@ -48,11 +46,9 @@ function getSample(req, res) {
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.status(400).json({                                  // ******* RESPONSE STATUS? ************
                 success: false,
-                error: {
-                    code: 400,
-                    title: "NOT FOUND",
-                    message: "Sample with given Reference number does not exist"
-                }
+                code: 400,
+                title: "NOT FOUND",
+                message: "Sample with given Reference number does not exist"
             });
         }
             res.setHeader('Content-Type', 'application/problem+json');
@@ -60,13 +56,11 @@ function getSample(req, res) {
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                 success: true,
+                code: 200,
+                title: "SUCCESS",
+                message: "Sample Found",
                 data: {
-                    code: 200,
-                    title: "SUCCESS",
-                    message: "Sample Found",
-                    content: {
-                        sample : doc.data()
-                    }
+                    sample : doc.data()
                 }
             });
     });
