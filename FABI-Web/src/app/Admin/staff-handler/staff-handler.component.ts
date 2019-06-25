@@ -39,8 +39,7 @@ import * as Interface from '../../interfaces/interfaces';
 })
 export class StaffHandlerComponent implements OnInit {
 
-  // displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Action'];
-  displayedColumns: string[] = ['First Name', 'Surname', 'Email'];
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Action'];
   dataSource = new MatTableDataSource([]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,6 +101,7 @@ export class StaffHandlerComponent implements OnInit {
   //                                                            NG_ON_INIT()
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.viewStaff();
   }
 
 
@@ -245,8 +245,9 @@ export class StaffHandlerComponent implements OnInit {
   viewStaff() {
     
     this.service.getAllStaffMembers().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
         this.staffMembers = response.data.staff.researchers;
+        console.log(this.staffMembers);
         this.dataSource = new MatTableDataSource(this.staffMembers);
         this.dataSource.paginator = this.paginator;
 
