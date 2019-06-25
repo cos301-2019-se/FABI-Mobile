@@ -117,16 +117,16 @@ export class HttpService {
     const method = 'POST';
 
     const options = {
-      headers: {
+      headers: new HttpHeaders({
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
-      },
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      }),
       json: true
     };
 
-    return this.http.request<any>(method, getAllOrganizationsURL, options);
+    return this.http.request<any>("POST", 'https://user-management-dot-api-fabi.appspot.com/getAllOrganizations', options);
 
   }
 
@@ -159,7 +159,7 @@ export class HttpService {
       json: true
     };
 
-    return this.http.request<any>(method, getUserTypesURL, options);
+    return this.http.request<any>('POST', 'https://login-dot-api-fabi.appspot.com/getUserTypes', options);
 
   }
 

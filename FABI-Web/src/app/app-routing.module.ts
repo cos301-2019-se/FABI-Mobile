@@ -13,11 +13,10 @@ import { MemberDashboardComponent } from "./Organization-Member/member-dashboard
 const routes: Routes = [
   {path: ' ', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'fabi-admin-dashboard', component: AdminDashboardComponent},
+  {path: 'admin-dashboard', component: AdminDashboardComponent},
   {path: 'org-admin-dashboard', component: OrganizationDashboardComponent},
   {path: 'fabi-staff-dashboard', component: StaffDashboardComponent},
   {path: 'org-member-dashboard', component: MemberDashboardComponent}
-
 ];
 
 @NgModule({
