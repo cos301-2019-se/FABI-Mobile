@@ -195,7 +195,7 @@ export class HttpService {
       json: true
     };
 
-    return this.http.request<any>(method, portingURL, options);
+    return this.http.request<any>('POST', 'https://database-management-dot-api-fabi.appspot.com/porting', options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,8 +209,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   createOrganization(orgInfo: Interface.Organisation) {
-    const createOrganizationURL = 'https://user-management-dot-api-fabi.appspot.com/createOrganization';
-    const method = 'POST';
+    let createOrganizationURL = 'https://user-management-dot-api-fabi.appspot.com/createOrganization';
+    let method = 'POST';
 
     const postData = orgInfo;
 
