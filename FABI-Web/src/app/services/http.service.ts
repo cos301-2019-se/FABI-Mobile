@@ -152,8 +152,7 @@ export class HttpService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -179,7 +178,7 @@ export class HttpService {
     const method = 'POST';
 
     const postData = {
-      "databaseName": "mpg",
+      "databaseName": "mpgTest",
       "data": jsonObject
     };
 
@@ -188,8 +187,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -219,8 +217,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -252,8 +249,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -283,8 +279,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -313,8 +308,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -342,8 +336,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       json: true
     };
@@ -375,8 +368,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -412,8 +404,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -442,8 +433,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -479,8 +469,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -513,8 +502,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -546,8 +534,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -579,8 +566,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -609,8 +595,7 @@ export class HttpService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       json: true
     };
