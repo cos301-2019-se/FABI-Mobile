@@ -15,6 +15,8 @@
 
 import {ViewEncapsulation} from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import {ViewEncapsulation} from '@angular/core';
+import { Router } from '@angular/router';
 
 import { HttpService } from '../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -35,45 +37,7 @@ import * as Interface from '../interfaces/interfaces';
 })
 export class HomeComponent implements OnInit {
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          GLOBAL VARIABLES
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /** Object for defining the Create Organisation form -  @type {FormGroup} */
-  registerOrgForm: FormGroup;
-  /** To check if form has been submitted - @type {boolean} */
-  submitted: boolean = false;
-  /** To check if form has been submitted correctly - @type {boolean} */
-  valid: boolean = false;
-  /** If page is busy loading something - @type {boolean} */
-  loading: boolean = false;
-  /** Selected Organisation from the table - @type {Interface.Organisation} */
-  selectedOrg: Interface.Organisation;
-  /** Array of Organization objects - @type {Organisation[]} */
-  organizations: Interface.Organisation[];
-  
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          CONSTRUCTOR
-  /**
-   * Creates an instance of HomeComponent.
-   * @param {AdminAPIService} service For calling the API service
-   * @param {FormBuilder} formBuilder For creating the login form
-   * @param {MatSnackBar} snackBar For snack-bar pop-up messages
-   * @param {MatDialog} dialog For dialog pop-up messages
-   * @param {Router} router For navigating to other modules/components
-   * @memberof HomeComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) 
-  {
-    this.registerOrgForm = this.formBuilder.group({
-      organization_name: ['', Validators.required],
-      organization_location: ['', Validators.required],
-      admin_name: ['', Validators.required],
-      admin_surname: ['', Validators.required],
-      admin_email: ['', Validators.required],
-      admin_phone: ['', Validators.required]
-    })
-  }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
