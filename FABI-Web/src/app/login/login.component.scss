@@ -44,7 +44,7 @@ html {
     color: white;
     background-color: #6B8E4E;
 
-    width: 50%;
+    width: 40%;
     height: 100%;
 }
 
@@ -56,11 +56,15 @@ html {
 
     text-align: center;
 
-    color: #3C5148;
     background-color: #ffffff;
 
-    width: 50%;
+    width: 60%;
     height: 100%;
+}
+
+.right h1{
+    color: #3C5148;
+    font-size:60px;
 }
 
 @media (max-width: 1100px) {
@@ -79,6 +83,10 @@ html {
     .right {
         width: 100%;
         height: 80%;
+    }
+
+    .right h1{
+        font-size: 100px;
     }
 }
 
@@ -135,6 +143,16 @@ html {
     }
 }
 
+@media (max-height: 650px) {
+    .left {
+        display:none;
+    }
+
+    .right{
+        height: 100%;
+    }
+}
+
 /*-------------
     Right Div
 ---------------*/
@@ -154,9 +172,16 @@ screen and (max-height: 800px) {
     }
 }
 
-/*----------------------------------
-        Form and Input Styling
------------------------------------*/
+@media (max-width: 450px) {
+    .right{
+        flex-direction: column;
+    }
+    
+    .right h1 {
+        font-size:28px;
+    }
+}
+
 /*----------------------------------
         Form and Input Styling
 -----------------------------------*/
@@ -179,8 +204,8 @@ screen and (max-height: 800px) {
 }
 
 .right .btn.btn-default {
-    background: #3C5148;
-    border: 3px solid #3C5148;
+    background: #6B8E4E;
+    border: 3px solid #6B8E4E;
     color: white;
     font-size: 12px;
     letter-spacing: 2px;
@@ -192,7 +217,7 @@ screen and (max-height: 800px) {
     border-radius: 50px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
-    border: 1px solid #3C5148;
+    border: 1px solid #6B8E4E;
 
 }
 
