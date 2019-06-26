@@ -46,6 +46,7 @@ import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { HomeComponent } from './home/home.component';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { HomeComponent } from './home/home.component';
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    UpdateComponent
   ],
   entryComponents: [ConfirmComponent],
   imports: [

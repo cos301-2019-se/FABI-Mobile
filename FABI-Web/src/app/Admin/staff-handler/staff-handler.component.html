@@ -71,29 +71,18 @@
 
               <mat-form-field class="form-inputs">
                 <mat-label>Staff Position</mat-label>
-                <mat-select formControlName="staff_position">
+                <mat-select  [(ngModel)]="selectedUserType" id="staff_position" formControlName="staff_position">
                   <mat-option>--</mat-option>
-                  <!--
-                          TODO 
-                            - Loop through types of available staff types 
-                            - If admin is selected we need to determine if clinic or DB admin
-                            - Then if they are a DB admin we must determin which DB 
-                      -->
-                  <mat-option [value]="Admin">
-                    Admin
-                  </mat-option>
-                  <mat-option [value]="Researcher">
-                    Researcher
-                  </mat-option>
-                  <mat-option [value]="Student">
-                    Student
+                  <mat-option *ngFor="let userType of userTypes" [value]="userType.Name">
+                    {{userType.Name}}
                   </mat-option>
                 </mat-select>
                 <br />
               </mat-form-field>
               <br />
-
-              <button type="submit" id="add_new_staff" class="btn btn-default">Add Staff Member</button>
+              <p *ngIf="loading" class="errors">Adding Member...</p>
+              <br />
+              <input type="submit" id="add_new_staff" class="btn btn-default" value="Add Staff Member"/>
 
             </form>
 
@@ -164,12 +153,14 @@
               <!--Search Filter for the Table-->
               <div class="search-field">
                 <mat-form-field>
-                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                  <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />
+                  <mat-placeholder class="placeholder">Search Member</mat-placeholder>
+                  <br />
                 </mat-form-field>
               </div>
               <br />
 
-              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="dataSource">
+              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info"  *ngIf="dataSource">
 
                 <!-- First Name Column -->
                 <ng-container matColumnDef="First Name">
@@ -194,6 +185,12 @@
                   <th mat-header-cell *matHeaderCellDef> Action </th>
                   <td mat-cell *matCellDef="let element"><button [id]="element.email"
                       class="btn btn-default">Update</button></td>
+                </ng-container>
+
+                <!-- Remove Column -->
+                <ng-container matColumnDef="Remove">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+                  <td mat-cell *matCellDef="let element" (click)="removeStaffMemberPrompt(element)"> <span style="color: darkred">Remove</span> </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
