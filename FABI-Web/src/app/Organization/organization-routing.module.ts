@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -20,7 +20,7 @@ import { OrganizationDashboardComponent } from './organization-dashboard/organiz
 // import { MemberHandlerComponent } from './member-handler/member-handler.component';
 import { OrganizationProfileComponent } from './organization-profile/organization-profile.component';
 import { OrganizationViewSamplesComponent } from './organization-view-samples/organization-view-samples.component';
-import { OrganizationSubmitSampleComponent } from './organization-submit-sample/organization-submit-sample.component';
+import { SampleFormComponent } from '../sample-form/sample-form.component';
 import { MemberHandlerComponent } from "./member-handler/member-handler.component";
 
 const routes: Routes = [
@@ -28,7 +28,7 @@ const routes: Routes = [
   {path: 'member-handler', component: MemberHandlerComponent},
   {path: 'organization-profile', component: OrganizationProfileComponent},
   {path: 'organization-view-samples', component: OrganizationViewSamplesComponent},
-  {path: 'organization-submit-sample', component: OrganizationSubmitSampleComponent}
+  {path: 'submit-sample', component: SampleFormComponent}
 ];
 
 @NgModule({
