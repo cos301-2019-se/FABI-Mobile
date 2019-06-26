@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -19,11 +19,28 @@ import { CommonModule } from '@angular/common';
 
 import { OrganizationMemberRoutingModule } from './organization-member-routing.module';
 
+import { BrowserModule } from '@angular/platform-browser';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../materials';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+
+import { AppRoutingModule } from '../app-routing.module';
+
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
-    OrganizationMemberRoutingModule
+    OrganizationMemberRoutingModule,
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    NoopAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule
+    
   ]
 })
 export class OrganizationMemberModule { }

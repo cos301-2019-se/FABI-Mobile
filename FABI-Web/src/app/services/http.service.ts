@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -269,10 +269,16 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addStaffMember(staffInfo: Interface.StaffInfo) {
+
+    if(staffInfo.position == "Admin")
+      return this.addFABIAdmin(staffInfo);
+
     let addStaffMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addStaff';
     let method = 'POST';
 
-    const postData = staffInfo;
+    const postData = {
+      "staff": staffInfo
+    }
 
     const options = {
       headers: {
@@ -289,7 +295,7 @@ export class HttpService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    REMOVE FABI STAFF MEMBER ************************************************
+  //                                                    REMOVE FABI STAFF MEMBER 
   /**
    * Method that sends a request to the API to remove a FABI Staff Member
    *
@@ -298,7 +304,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
    
-    let removeStaffMemberURL = '';
+    let removeStaffMemberURL = 'https://user-management-dot-api-fabi.appspot.com/removeStaff';
     let method = 'POST';
 
     const postData = staffInfo;
@@ -394,6 +400,7 @@ export class HttpService {
     let addMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addMemberToOrg';
     let method = 'POST';
     
+    console.log("orgName: " + orgInfo.orgName);
     const postData = {
       "orgName": orgInfo.orgName,
       "member": memberInfo
@@ -426,7 +433,10 @@ export class HttpService {
     let removeMemberURL = 'https://user-management-dot-api-fabi.appspot.com/removeMember';
     let method = 'POST';
 
-    const postData = memberInfo;
+    const postData = {
+      "orgName": localStorage.getItem('orgName'),
+      "email": memberInfo.email
+    }
 
     const options = {
       headers: {
@@ -558,7 +568,7 @@ export class HttpService {
     let method = 'POST';
 
     const postData = {
-      "ID": localStorage.getItem('ID')
+      "orgName": localStorage.getItem('orgName')
     }
 
     const options = {

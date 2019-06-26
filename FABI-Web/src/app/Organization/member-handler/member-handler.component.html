@@ -72,8 +72,10 @@
                 <input matInput placeholder="Phone Number" matInput type="number" formControlName="member_phone">
               </mat-form-field>
 
-
-              <button type="submit" id="add_member" class="btn btn-default">Add Member</button>
+              <br />
+              <p *ngIf="loading" class="errors">Adding Member...</p>
+              <br />
+              <input type="submit" id="add_member" class="btn btn-default" value="Add Member" />
 
             </form>
 
@@ -119,12 +121,14 @@
               <!--Search Filter for the Table-->
               <div class="search-field">
                 <mat-form-field>
-                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                  <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />
+                  <mat-placeholder class="placeholder">Search Member</mat-placeholder>
+                  <br />
                 </mat-form-field>
               </div>
               <br />
 
-              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="dataSource">
+              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info" *ngIf="dataSource">
 
                 <!-- First Name Column -->
                 <ng-container matColumnDef="First Name">
@@ -149,6 +153,12 @@
                   <th mat-header-cell *matHeaderCellDef> Action </th>
                   <td mat-cell *matCellDef="let element"><button [id]="element.email"
                       class="btn btn-default">Update</button></td>
+                </ng-container>
+
+                <!-- Remove Column -->
+                <ng-container matColumnDef="Remove">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+                  <td mat-cell *matCellDef="let element" (click)="removeMemberPrompt(element)"> <span style="color: darkred">Remove</span> </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
