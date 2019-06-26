@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -230,44 +230,32 @@ export class LoginComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayUserTypes() {
 
-    this.userTypes = [
-      {
-        "ID":1,
-        "Name":"Admin"
-      },
-      {
-        "ID":2,
-        "Name":"Staff"
-      }
-    ]
+    if(this.selectedOrg == "FABI")
+    {
+      this.userTypes = [
+        {
+          "ID":1,
+          "Name":"Admin"
+        },
+        {
+          "ID":2,
+          "Name":"Staff"
+        }
+      ]
 
-
-    // if(this.selectedOrg == "FABI")
-    // {
-    //   this.userTypes = [
-    //     {
-    //       "ID":1,
-    //       "Name":"Admin"
-    //     },
-    //     {
-    //       "ID":2,
-    //       "Name":"Staff"
-    //     }
-    //   ]
-
-    // }
-    // else {
-    //   this.userTypes = [
-    //     {
-    //       "ID":1,
-    //       "Name":"Admin"
-    //     },
-    //     {
-    //       "ID":2,
-    //       "Name":"Member"
-    //     }
-    //   ]
-    // }
+    }
+    else {
+      this.userTypes = [
+        {
+          "ID":1,
+          "Name":"Admin"
+        },
+        {
+          "ID":2,
+          "Name":"Member"
+        }
+      ]
+    }
 
     //-------- Load User Types for Drop Down --------
     // this.service.getUserTypes(this.selectedOrg).subscribe((response: any) => {
