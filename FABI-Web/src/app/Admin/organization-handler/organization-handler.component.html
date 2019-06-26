@@ -110,7 +110,7 @@
 
             </form>
 
-            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="dataSource">
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="dataSource"> -->
 
               <!-- Organization Name Column -->
               <!-- <ng-container matColumnDef="Organization Name">
@@ -126,9 +126,9 @@
 
               <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table> -->
+            </table>
             
-          <!-- </div>
+          </div>
         </mat-tab> -->
 
         <!--View Tab Option-->
@@ -145,12 +145,14 @@
               <!--Search Filter for the Table-->
               <div class="search-field">
                 <mat-form-field>
-                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                  <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />
+                  <mat-placeholder class="placeholder">Search Organization</mat-placeholder>
+                  <br />
                 </mat-form-field>
               </div>
               <br />
 
-              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="dataSource">
+              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info" *ngIf="dataSource">
 
                 <!-- Organization Name Column -->
                 <ng-container matColumnDef="Organization Name">
@@ -164,6 +166,12 @@
                   <td mat-cell *matCellDef="let element"> {{element.admin}} </td>
                 </ng-container>
 
+                <!-- Remove Column -->
+                <ng-container matColumnDef="Remove">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+                  <td mat-cell *matCellDef="let element" (click)="removeOrganizationPrompt(element)"> <span style="color: darkred">Remove</span> </td>
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
@@ -171,6 +179,9 @@
               <!--Pagination Setup-->
               <!-- <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons *ngIf="dataSource"></mat-paginator> -->
             </div>
+
+            <button type="submit" id="add_organization" class="btn btn-default">Delete Selected Organizations</button>
+
           </div>
         </mat-tab>
 
