@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -19,14 +19,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { MemberDashboardComponent } from './member-dashboard/member-dashboard.component';
 import { MemberProfileComponent } from './member-profile/member-profile.component';
 import { MemberViewSamplesComponent } from './member-view-samples/member-view-samples.component';
-import { MemberSubmitSampleComponent } from './member-submit-sample/member-submit-sample.component';
+import { SampleFormComponent } from '../sample-form/sample-form.component';
 
 
 const routes: Routes = [
   {path: 'member-dashboard', component: MemberDashboardComponent},
   {path: 'member-profile', component: MemberProfileComponent},
   {path: 'member-view-samples', component: MemberViewSamplesComponent},
-  {path: 'member-submit-sample', component: MemberSubmitSampleComponent}
+  {path: 'submit-sample', component: SampleFormComponent}
 ];
 
 @NgModule({

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -40,7 +40,7 @@ import * as Interface from '../../interfaces/interfaces';
 })
 export class OrganizationHandlerComponent implements OnInit {
 
-  displayedColumns: string[] = ['Organization Name', 'Admin'];
+  displayedColumns: string[] = ['Organization Name', 'Admin', "Remove"];
   dataSource = new MatTableDataSource([]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,9 +175,9 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeOrganizationPrompt() {
+  removeOrganizationPrompt(org: Interface.Organisation) {
     
-    const orgDetails = this.selectedOrg.orgName;
+    const orgDetails = org.orgName;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
       data: {
@@ -190,6 +190,7 @@ export class OrganizationHandlerComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == "Confirm") {
+        this.selectedOrg = org;
         this.removeOrg();
       }
     })
