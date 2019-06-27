@@ -41,6 +41,16 @@ export class MemberDashboardComponent implements OnInit {
   */
   getNumberOfCompletedMemberSamples(){}
 
+  /*
+    This function will use an API call to populate the sample section provided on the HTML page.
+  */
+  loadSamples(){}
+
+  /*
+    This function will load the organization member's notifications into the notification section on the HTML page
+  */
+  loadNotifications(){}
+
   sidenavToggle(){
     if(document.getElementById("sidenav_div").style.width == "22%")
     {
@@ -55,7 +65,12 @@ export class MemberDashboardComponent implements OnInit {
     document.getElementById("sidenav_div").style.width = "0";
   }
 
+  //These functions are called when the page loads and the component is created
   ngOnInit() {
+    this.getNumberOfMemberSamples();
+    this.getNumberOfCompletedMemberSamples();
+    this.loadSamples();
+    this.loadNotifications();
   }
 
 }
