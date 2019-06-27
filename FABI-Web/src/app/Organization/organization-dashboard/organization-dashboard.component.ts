@@ -56,9 +56,29 @@ export class OrganizationDashboardComponent implements OnInit {
   */
   getNumberOfCompletedOrganizationSamples(){}
 
+  /*
+    This function will load the organization's members into the HTML page
+  */
+  loadMembers(){}
 
+  /*
+    This function will load the organization's notifications into the notification section on the HTML page
+  */
+  loadNotifications(){}
+
+  /*
+    This function will remove a notification for the notification section when the user clicks on the 'exit'
+    button/icon associated with that notification
+  */
+  removeNotification(){}
 
   ngOnInit() {
+    //These functions are called when the page loads and the component is created
+    this.getNumberOfOrganizationMembers();
+    this.getNumberOfOrganizationSamples();
+    this.getNumberOfCompletedOrganizationSamples();
+    this.loadMembers();
+    this.loadNotifications();
   }
 
 }
