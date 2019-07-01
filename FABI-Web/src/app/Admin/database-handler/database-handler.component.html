@@ -44,7 +44,10 @@
             <h2>Add Database via Porting</h2>
             <br />
             <input type='file' (change)=submitCSV(input) id='fileInput' class="btn.btn-default" #input>
-
+            <br/>
+            <h2>Reverse Porting</h2>
+            <br />
+            <input type='file' (change)=submitCSV(input) id='fileInput2' class="btn.btn-default" #input2>
           </div>
           <p *ngIf="loading" style="color: black;">Porting File...</p>
         </mat-tab>
