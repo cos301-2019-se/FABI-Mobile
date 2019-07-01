@@ -47,13 +47,13 @@ export class Porting{
         var headers = lines[0].split(";");
         // console.log(headers);
 
-        for (var i = 1; i < lines.length-1; i++) {
+        for (var i = 1; i < lines.length; i++) {
             var obj = {};
             var currentline = lines[i].split(";");
             for (var j = 0; j < currentline.length; j++) {
-                if(currentline!="" && currentline!="null"){
+                //if(currentline!="" && currentline!="null"){
                     obj[headers[j]] = currentline[j];
-                }
+                //}
             }
 
             result.push(obj);
@@ -61,7 +61,7 @@ export class Porting{
 
         //console.log("in porting");
         //console.log(JSON.stringify(result));
-        //console.log(result);
+        console.log(result);
         this.JSONfile = result;
         
         return result;

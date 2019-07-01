@@ -69,9 +69,9 @@ export class DatabaseHandlerComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       let text = reader.result;
-      console.log("redaer: " + text);
+      console.log("porting data:");
       let jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
-      console.log(jsonData);
+      //console.log(jsonData);
 
       this.service.porting(jsonData).subscribe((response:any) => {
         this.loading = false;
