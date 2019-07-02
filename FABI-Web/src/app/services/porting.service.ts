@@ -67,4 +67,29 @@ export class Porting{
         return result;
     }
 
+    extractDatabase(dbJSON , dbName:String){ // Reverse porting
+
+        var CSVdata = "";  //angular.toJson(dbJSON, true);
+        
+        for(var i=0; i<dbJSON.length; i++){
+            var obj = dbJSON[i];
+                // for(var k=0; k<obj.length; k++){
+                //     CSVdata += obj[k]+";";
+                // }
+            var record = JSON.stringify(obj);
+            //record.replace("}","");
+            //record.replace("{","");
+            CSVdata += record + "\n";
+        }
+
+        //Save data in csv file and show download dialog
+        var blob = new Blob([CSVdata], {type: 'text/plain;charset=utf-8'});
+        var downloadLink = document.createElement('a');
+        downloadLink.setAttribute('download', dbName+".csv" );
+        downloadLink.setAttribute('href', window.URL.createObjectURL(blob) );
+        downloadLink.click();
+
+    }
+
+
 }
