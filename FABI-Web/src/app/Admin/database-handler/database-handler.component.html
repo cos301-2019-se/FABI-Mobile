@@ -48,6 +48,19 @@
             <h2>Reverse Porting</h2>
             <br />
             <input type='file' (change)=submitCSV(input) id='fileInput2' class="btn.btn-default" #input2>
+
+            <table id="previewTable" >
+              <thead>
+                <tr>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+          
+
           </div>
           <p *ngIf="loading" style="color: black;">Porting File...</p>
         </mat-tab>
