@@ -43,6 +43,8 @@ export class DatabaseHandlerComponent implements OnInit {
 
   portCSV: Porting = new Porting();
 
+  jsonData: any;
+
   constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
 
   // sidenavToggle(){
@@ -70,10 +72,17 @@ export class DatabaseHandlerComponent implements OnInit {
     reader.onload = () => {
       let text = reader.result;
       console.log("porting data:");
-      let jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
+      this.jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
       //console.log(jsonData);
+      
+      console.log(this.jsonData[0]["Key"]);
+      var columnsIn = this.jsonData[0]; 
+      for(var key in columnsIn){
+        console.log(this.jsonData[0][key]);
+      } 
 
-      this.service.porting(jsonData).subscribe((response:any) => {
+
+      this.service.porting(this.jsonData).subscribe((response:any) => {
         this.loading = false;
         if(response.success == true && response.code == 200) {
           //POPUP MESSAGE
