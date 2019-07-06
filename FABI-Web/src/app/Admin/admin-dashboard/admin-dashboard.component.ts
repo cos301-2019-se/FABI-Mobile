@@ -1,40 +1,36 @@
-import { Component, OnInit, isDevMode, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, isDevMode, Inject } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 
-declare var require: any;
-
-//Object for defining how a member of FABI is structured
-export interface Member {
-  ID: string;       //This will contain the ID retreived from the DB 
-  Name: string;     //This will be the name of the member
-  Surname: string;  //This will be the surname of the member
-}
-
-//Object for defining how a sample is structured
-export interface Sample {
-  ID: string; //This will contain the ID retreived from the DB 
-}
+import { Member, UserManagementAPIService } from '../../user-management-api.service';
+import { DiagnosticClinicAPIService } from '../../diagnostic-clinic-api.service';
 
 @Component({
   selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html'
+  templateUrl: './admin-dashboard.component.html',
+  styleUrls: ['./admin-dashboard.component.scss']
 })
 
 export class AdminDashboardComponent implements OnInit {
-  navWidth: string;
+  
+  //Global string variables to dynamically load the HTML statistic elements
+  userStats: string;
+  sampleStats: string;
 
-  /*
-    GLOBALS
-  */
-  members: Object;            //array containing all FABI members that are not admins
-  admins: Object;             //array containing all FABI members that are admins
-  samples: Object;            //array containing all current samples for FABI
-  completedSamples: Object;   //array containing all completed samples for FABI
+  admins: Member[] = [];                         //array containing all FABI members that are admins
+  staff: Member[] = [];                          //array containing all the members of FABI with the user type of 'staff'
+  databaseAdmins: Member[] = [];                 //array containing all the members of FABI with the user type of 'databaseAdmins'
+  cultureCurators: Member[] = [];                //array containing all the members of FABI with the user type of 'cultureCurators'
+  diagnosticClinicAdmins: Member[] = [];         //array containing all the members of FABI with the user type of 'diagnosticClinicAdmins'
+  samples: Object[] = [];                        //array containing all current samples for FABI
+  completedSamples: Object[] = [];               //array containing all completed samples for FABI
+  numberOfFABIMembers: number;                   //a variable holding the total number of FABI members
+  numberOfSamples: number;                       //a variable holding the total number of samples
 
-  constructor(public sanitizer: DomSanitizer) { }
+  constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService) { }
 
   /*
     This function will use an API service to get all the members of FABI. These members will be read into the
@@ -42,14 +38,46 @@ export class AdminDashboardComponent implements OnInit {
     HTML page with the number of members belonging to FABI. This function will also use API calls to populate
     the admins object.
   */
-  getNumberOfFABIMembers(){}
+  getNumberOfFABIMembers(){
+    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
+      if(response.success == true){
+        //Populating the arrays with the returned data
+        this.admins = response.data.qs.admins;
+        this.staff = response.data.qs.staff;
+        this.databaseAdmins = response.data.qs.databaseAdmins;
+        this.cultureCurators = response.data.qs.cultureCurators;
+        this.diagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
+
+        this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
+        this.userStats = this.numberOfFABIMembers.toString();
+      }
+      else{
+        //The FABI members could not be retrieved
+      }
+    });
+  }
 
   /*
     This function will use an API service to get all the samples of FABI. These samples will be read into the
     'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
     HTML page with the number of samples belonging to FABI.
   */
-  getNumberOfFABISamples(){}
+  getNumberOfFABISamples(){
+    //Subscribing to the DiagnosticClinicAPIService to get a list containing all of FABI's samples
+    this.diagnosticClinicService.getAllSamples().subscribe((response: any) => {
+      if(response.success == true){
+        //Populating the arrays with the returned data
+        this.samples = response.data.samples;
+
+        this.numberOfSamples = this.samples.length;
+        this.sampleStats = this.numberOfSamples.toString();
+      }
+      else{
+        //The FABI members could not be retrieved
+      }
+    });
+  }
 
   /*
     This function will use an API service to get all the completed (processed) samples of FABI. These 
@@ -78,34 +106,7 @@ export class AdminDashboardComponent implements OnInit {
     this.loadStaff();
     this.loadNotifications();
 
-    // if(window.innerWidth <= 520){
-    //   //Mobile device
-    //   require("style-loader!./../../../assets/admin_dashboard_styles/mobile_style.scss");
-    //   this.navWidth = "100%";
-    // }
-    // else if(window.innerWidth <= 1400 && window.innerWidth > 520){
-    //   //Tablet device
-    //   require("style-loader!./../../../assets/admin_dashboard_styles/tablet_style.scss");
-
-    //   if(window.innerWidth > 920 && window.innerWidth < 1000){
-    //     this.navWidth = "50%";
-    //   }
-    //   else if(window.innerWidth >= 1000 && window.innerWidth < 1050){
-    //     this.navWidth = "40%";
-    //   }
-    //   else{
-    //     this.navWidth = "34%";
-    //   }
-    // }
-    // else if(window.innerWidth <= 2500 && window.innerWidth > 1400){
-    //   //Laptop device
-    //   require("style-loader!./admin-dashboard.component.scss");
-    //   this.navWidth = "22%";
-    // }
-    // else if(window.innerWidth > 2500){
-    //   //Desktop device
-    //   require("style-loader!./../../../assets/admin_dashboard_styles/desktop_style.scss");
-    //   this.navWidth = "70%";
-    // }
+    this.getNumberOfFABIMembers();
+    this.getNumberOfFABISamples();
   }
 }

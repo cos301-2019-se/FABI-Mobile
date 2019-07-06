@@ -34,17 +34,17 @@
         <section class="statistics">
           <div class="box">
             <i class="fas fa-vial"></i>
-            <h2 id="admin_samples_stats">1500</h2>
+            <h2 #admin_samples_stats id="admin_samples_stats" [innerHTML]="sampleStats"></h2>
           </div>
 
           <div class="box">
             <i class="fas fa-stethoscope"></i>
-            <h2 id="admin_completed_samples_stats">75%</h2>
+            <h2 #admin_completed_samples_stats id="admin_completed_samples_stats">75%</h2>
           </div>
 
           <div class="box">
             <i class="fas fa-users"></i>
-            <h2 id="admin_users_stats">2600</h2>
+            <h2 #admin_user_stats id="admin_users_stats" [innerHTML]="userStats"></h2>
           </div>
         </section>
 
@@ -56,6 +56,16 @@
         <section class="staff">
           <div class="admins">
             <h1>Admins:</h1>
+            <div class="box">
+              <h2>Name Surname</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+
+            <div class="box">
+              <h2>Name Surname</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+
             <div class="box">
               <h2>Name Surname</h2>
               <p>Lorem ipsum dolor sit amet.</p>
@@ -88,9 +98,7 @@
               <h2>Name Surname</h2>
               <p>Lorem ipsum dolor sit amet.</p>
             </div>
-          </div>
-
-
+          </div>  
         </section>
 
       </div>
