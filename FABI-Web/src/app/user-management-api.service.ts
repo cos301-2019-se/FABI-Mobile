@@ -31,9 +31,9 @@ export class UserManagementAPIService {
    constructor(private http: HttpClient) { }
 
    /*
-        This function sends a POST request to the API to retrieve a list containing
-        all the FABI members
-   */
+    *    This function sends a POST request to the API to retrieve a list containing
+    *    all the FABI members
+    */
     getAllFABIMembers() {
         const options = {
             method: 'POST',
@@ -50,9 +50,9 @@ export class UserManagementAPIService {
     }
 
     /*
-        This function sends a POST request to the API to retrieve a list containing
-        all the FABI administrators
-   */
+    *    This function sends a POST request to the API to retrieve a list containing
+    *    all the FABI administrators
+    */
     getAllFABIAdmins() {
         const options = {
             method: 'POST',
@@ -69,9 +69,9 @@ export class UserManagementAPIService {
     }
 
     /*
-        This function sends a POST request to the API to retrieve a list containing
-        all the Members of an Organization
-   */
+    *    This function sends a POST request to the API to retrieve a list containing
+    *    all the Members of an Organization
+    */
     getAllOrganizationMembers(organization: string) {
         var data: POSTOrganization = { orgName: organization };
         console.log(data);
