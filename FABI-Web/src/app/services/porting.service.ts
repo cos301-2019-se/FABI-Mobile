@@ -69,26 +69,36 @@ export class Porting{
 
     extractDatabase(dbJSON , dbName:String){ // Reverse porting
 
-        var CSVdata = "";  //angular.toJson(dbJSON, true);
+        console.log(dbJSON);
+        var CSVdata = "";
+
+        var headings = [];
+
+        var columnsIn = dbJSON[0];
+        for(var key in columnsIn){
+          // console.log(key);
+          CSVdata += key+";";
+          headings.push(key);
+        }
+        CSVdata += "\r\n";
         
-        for(var i=0; i<dbJSON.length; i++){
-            var obj = dbJSON[i];
-                // for(var k=0; k<obj.length; k++){
-                //     CSVdata += obj[k]+";";
-                // }
-            var record = JSON.stringify(obj);
-            //record.replace("}","");
-            //record.replace("{","");
-            CSVdata += record + "\n";
+        for(var i =0; i<dbJSON.length; i++){
+            var columnsIn = dbJSON[i];
+            for(var key in headings){
+                console.log(key);
+                if(dbJSON[i][ headings[key] ] != null){
+                    CSVdata += dbJSON[i][ headings[key] ] +";";
+                }else{
+                    CSVdata += "  ;";
+                }              
+                
+            }
+            CSVdata += "\r\n";
         }
 
-        //Save data in csv file and show download dialog
-        var blob = new Blob([CSVdata], {type: 'text/plain;charset=utf-8'});
-        var downloadLink = document.createElement('a');
-        downloadLink.setAttribute('download', dbName+".csv" );
-        downloadLink.setAttribute('href', window.URL.createObjectURL(blob) );
-        downloadLink.click();
-
+        console.log(CSVdata);
+        return CSVdata;
+        
     }
 
 
