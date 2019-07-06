@@ -10,6 +10,13 @@ import { DiagnosticClinicAPIService } from '../../diagnostic-clinic-api.service'
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
 
+/**
+ *
+ *
+ * @export
+ * @class AdminDashboardComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -41,10 +48,13 @@ export class AdminDashboardComponent implements OnInit {
     private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { }
 
   /*
-    This function will use an API service to get all the members of FABI. These members will be read into the
-    'members' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-    HTML page with the number of members belonging to FABI. This function will also use API calls to populate
-    the admins object.
+  *  This function will use an API service to get all the members of FABI. These members will be read into the
+  *  'members' Object. The function does not receive any parameters but it will populate a 'heading' element on the
+  *  HTML page with the number of members belonging to FABI. This function will also use API calls to populate
+  *  the admins object.
+  * 
+  *  This function will also dynamically create elements and load them with information about the adminstrators
+  *  and other FABI staff members. These dynamic elements will be loaded into the HTML page
   */
   getNumberOfFABIMembers(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
@@ -122,9 +132,9 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   /*
-    This function will use an API service to get all the samples of FABI. These samples will be read into the
-    'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-    HTML page with the number of samples belonging to FABI.
+  *  This function will use an API service to get all the samples of FABI. These samples will be read into the
+  *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
+  *  HTML page with the number of samples belonging to FABI.
   */
   getNumberOfFABISamples(){
     //Subscribing to the DiagnosticClinicAPIService to get a list containing all of FABI's samples
@@ -143,14 +153,14 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   /*
-    This function will use an API service to get all the completed (processed) samples of FABI. These 
-    samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
-    populate a 'heading' element on the HTML page with the percentage of completed samples belonging to FABI.
+  *  This function will use an API service to get all the completed (processed) samples of FABI. These 
+  *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
+  *  populate a 'heading' element on the HTML page with the percentage of completed samples belonging to FABI.
   */
   getNumberOfCompletedFABISamples(){}
 
   /*
-    This function will load the admin's notifications into the notification section on the HTML page
+  *  This function will load the admin's notifications into the notification section on the HTML page
   */
   loadNotifications(){}
 
