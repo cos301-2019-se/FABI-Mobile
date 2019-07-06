@@ -78,11 +78,12 @@ const qs = {
     fname: req.body.staff.name,
     surname: req.body.staff.surname,
     email: req.body.staff.email,
-    password: bcrypt.hashSync(pass, salt)
+    password: bcrypt.hashSync(pass, salt),
+    id : new Date().getTime().toString()
 }
 
 // (3) 
-var docRef  = db.collection('Organizations').doc('FABI').collection('Staff').doc(qs.email);    
+var docRef  = db.collection('Organizations').doc('FABI').collection('Staff').doc(qs.id);    
 
     //(4)
     docRef.set(qs).then(() => {

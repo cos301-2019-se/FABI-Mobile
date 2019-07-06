@@ -27,7 +27,8 @@ const db = admin.firestore();
 
 //(1)
 function getMember(req, res) {
-    if (req.body.email == undefined || req.body.email == '') {
+    
+    if (req.body.userID == undefined || req.body.userID == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -35,23 +36,12 @@ function getMember(req, res) {
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "User email expected"
-        });
-    }
-    if (req.body.orgName == undefined || req.body.orgName == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "orgName expected"
+            message: "userID expected"
         });
     }
 
     //(2)
-    var memRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').where('email', '==', req.body.email);
+    var memRef = db.collection('Diagnostic').doc('Samples').collection('Processing').where('userID', '==', req.body.userID);
     memRef.get().then(doc => {
         if(doc.empty)
         {
@@ -62,15 +52,14 @@ function getMember(req, res) {
                 success: false,
                 code: 400,
                 title: "NOT FOUND",
-                message: "User does not exist"
+                message: "No samples for given member found"
             });
         }
-            var member;
+            samples = [];
             doc.forEach(element => {
-                member = element.data();
+                samples.push(element.data());
             });
             //(3)
-            delete member.password;
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
@@ -78,9 +67,9 @@ function getMember(req, res) {
                 success: true,
                 code: 200,
                 title: "SUCCESS",
-                message: "Organization Member Found",
+                message: "Samples for member Found",
                 data: {
-                    member         
+                    samples         
                 }
             });
     });

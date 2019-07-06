@@ -90,11 +90,12 @@ function addMember(req, res)
         fname: req.body.member.name,
         surname: req.body.member.surname,
         email: req.body.member.email,
-        password: bcrypt.hashSync(pass, salt)
+        password: bcrypt.hashSync(pass, salt),
+        id : new Date().getTime().toString()
     }
     
     // (3)
-    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.email);
+    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.id);
     
     
     
