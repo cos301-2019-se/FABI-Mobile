@@ -13,7 +13,7 @@ export class StaffDashboardComponent implements OnInit {
   //Retriving an HTML element from the HTML page
   @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
 
-  admins: Member[] = [];                         //array containing all FABI members that are admins
+  admins: Member[] = [];         //array containing all FABI members that are admins
 
   constructor(private userManagementService: UserManagementAPIService, private resolver: ComponentFactoryResolver) { }
 
@@ -32,7 +32,9 @@ export class StaffDashboardComponent implements OnInit {
   }
 
   /*
-    This function will load admin users into the section provided on the HTML page
+  *  This function will load admin users into the section provided on the HTML page. 
+  *  This function will also dynamically load elements containing information about the administrators
+  *  to the HTML page dynamically
   */
   loadAdmins(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
@@ -60,13 +62,13 @@ export class StaffDashboardComponent implements OnInit {
   }
 
   /*
-    This function will load the staff member's notifications into the notification section on the HTML page
+  *  This function will load the staff member's notifications into the notification section on the HTML page
   */
   loadNotifications(){}
 
   /*
-    This function will remove a notification for the notification section when the user clicks on the 'exit'
-    button/icon associated with that notification
+  *  This function will remove a notification for the notification section when the user clicks on the 'exit'
+  *  button/icon associated with that notification
   */
  removeNotification(){}
 

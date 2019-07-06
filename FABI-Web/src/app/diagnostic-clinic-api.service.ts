@@ -17,9 +17,9 @@ export class DiagnosticClinicAPIService {
    constructor(private http: HttpClient) { }
 
    /*
-        This function sends a POST request to the API to retrieve a list containing
-        all the samples that FABI is currently processing
-   */
+    *    This function sends a POST request to the API to retrieve a list containing
+    *    all the samples that FABI is currently processing
+    */
    getAllSamples(){
         const options = {
             method: 'POST',

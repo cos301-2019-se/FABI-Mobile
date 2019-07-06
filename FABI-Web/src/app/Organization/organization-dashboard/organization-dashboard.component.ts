@@ -27,9 +27,9 @@ export class OrganizationDashboardComponent implements OnInit {
   constructor(private userManagementService: UserManagementAPIService) { }
 
   /*
-    This function will use an API service to get all the members of an organization. These members will be read into the
-    'members' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-    HTML page with the number of members belonging to the organization.
+  *  This function will use an API service to get all the members of an organization. These members will be read into the
+  *  'members' Object. The function does not receive any parameters but it will populate a 'heading' element on the
+  *  HTML page with the number of members belonging to the organization.
   */
   getNumberOfOrganizationMembers(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
@@ -52,27 +52,27 @@ export class OrganizationDashboardComponent implements OnInit {
   }
 
   /*
-    This function will use an API service to get all the samples of an organization. These samples will be read into the
-    'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-    HTML page with the number of samples belonging to the organization.
+  *  This function will use an API service to get all the samples of an organization. These samples will be read into the
+  *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
+  *  HTML page with the number of samples belonging to the organization.
   */
   getNumberOfOrganizationSamples(){}
 
   /*
-    This function will use an API service to get all the completed (processed) samples of an organization. These 
-    samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
-    populate a 'heading' element on the HTML page with the percentage of completed samples belonging to the organization.
+  *  This function will use an API service to get all the completed (processed) samples of an organization. These 
+  *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
+  *  populate a 'heading' element on the HTML page with the percentage of completed samples belonging to the organization.
   */
   getNumberOfCompletedOrganizationSamples(){}
 
   /*
-    This function will load the organization's notifications into the notification section on the HTML page
+  *  This function will load the organization's notifications into the notification section on the HTML page
   */
   loadNotifications(){}
 
   /*
-    This function will remove a notification for the notification section when the user clicks on the 'exit'
-    button/icon associated with that notification
+  *  This function will remove a notification for the notification section when the user clicks on the 'exit'
+  *  button/icon associated with that notification
   */
   removeNotification(){}
 
