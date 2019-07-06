@@ -258,6 +258,7 @@ a i {
 
     display: flex;
     flex-direction: row;
+    overflow-y: scroll;
 }
 
 .admins {
@@ -309,6 +310,7 @@ a i {
 @media (max-width: 1400px) {
     .staff {
         margin: 5% 0 0 5%;
+        overflow-y: scroll;
     }
 }
 
@@ -317,6 +319,7 @@ a i {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        overflow-y: scroll;
     }
 
     .admins {
