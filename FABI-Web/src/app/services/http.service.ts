@@ -197,6 +197,37 @@ export class HttpService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         REVERSE PORTING
+  /**
+   * Method thats sends a request to the API to get data from the database to create a .csv file 
+   *
+   * @param {String} databaseName
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  reversePorting(databaseName: String) {
+    const portingURL = '***REMOVED***/retrieveDatabase';
+    const method = 'POST';
+
+    const postData = {
+      "databaseName": databaseName,
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', '***REMOVED***/retrieveDatabase', options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                   CREATE/ADD NEW ORGANISATION
   /**
    * Method that sends a request to the API to create a new Organisation 
