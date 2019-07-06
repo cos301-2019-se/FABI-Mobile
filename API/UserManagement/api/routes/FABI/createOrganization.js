@@ -96,13 +96,14 @@ function addOrganization(req, res)
                 fname: req.body.admin.name,
                 surname: req.body.admin.surname,
                 email: req.body.admin.email,
-                password: bcrypt.hashSync(pass, salt)
+                password: bcrypt.hashSync(pass, salt),
+                id : new Date().getTime().toString()
             }
         }
 
         // (4)
         docRef.set(qs).then(() => {
-            adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Admins').doc(req.body.admin.email).set(qs.admin).then(()=>{
+            adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Admins').doc(qs.admin.id).set(qs.admin).then(()=>{
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
                 res.setHeader("Access-Control-Allow-Origin", "*");
