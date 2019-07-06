@@ -19,11 +19,6 @@ export interface Sample {
 
 export class MemberDashboardComponent implements OnInit {
 
-  /*
-    GLOBALS
-  */
-  samples: Object;            //array containing all current samples for the member
-  completedSamples: Object;   //array containing all completed samples for the member
 
   constructor() { }
 
