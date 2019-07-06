@@ -33,7 +33,7 @@ const db = admin.firestore();
 function updateStaff(req, res) {
     
     //(1)
-    if (req.body.email == undefined || req.body.email == '') {
+    if (req.body.id == undefined || req.body.id == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -58,7 +58,7 @@ function updateStaff(req, res) {
     }
 
     
-    var docRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.email);
+    var docRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
     newMail = req.body.email;
 
     docRef.get().then(doc =>{
@@ -77,36 +77,7 @@ function updateStaff(req, res) {
         }
         else{
             //(3)
-            if(req.body.fields.hasOwnProperty('email')){
-                //(4)
-                if(req.body.fields.hasOwnProperty('password'))
-                {
-                    const salt = bcrypt.genSaltSync(10);
-                    req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
-                }
-                newMail = req.body.fields.email;
-                newRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.fields.email);
-                //(5)
-                newRef.set(doc.data()).then(() => {
-                    var updateRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(newMail);
-                    docRef.delete();
-                    updateRef.update(req.body.fields).then(() => {
-
-                    res.setHeader('Content-Type', 'application/problem+json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                        success: true,
-                        code: 200,
-                        title: "SUCCESS",
-                        message: "User Updated",
-                        data: {
-                            
-                        }
-                    });
-                })});
-            }
-            else{
+            
                 //(4)
                 if(req.body.fields.hasOwnProperty('password'))
                 {
@@ -114,7 +85,7 @@ function updateStaff(req, res) {
                     req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
                 }
 
-                var updateRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(newMail);
+                var updateRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
                 
                 //(5)
                 updateRef.update(req.body.fields).then(() => {
@@ -132,7 +103,7 @@ function updateStaff(req, res) {
                         }
                 });
             
-        })}}}).catch((err) =>{
+        })}}).catch((err) =>{
             console.log("Database connection error: " + err);
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
