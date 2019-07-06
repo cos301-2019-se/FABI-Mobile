@@ -14,7 +14,7 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -44,6 +44,8 @@ export class DatabaseHandlerComponent implements OnInit {
   portCSV: Porting = new Porting();
 
   jsonData: any;
+
+  @ViewChild("rpDBname") rPort : ElementRef;
 
   constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
 
@@ -75,12 +77,22 @@ export class DatabaseHandlerComponent implements OnInit {
       this.jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
       //console.log(jsonData);
       
-      console.log(this.jsonData[0]["Key"]);
-      var columnsIn = this.jsonData[0]; 
-      for(var key in columnsIn){
-        console.log(this.jsonData[0][key]);
-      } 
+      var headings = [];
 
+      var columnsIn = this.jsonData[0];
+      for(var key in columnsIn){
+        // console.log(key);
+        headings.push(key);
+      } 
+      
+      for(var i =0; i<this.jsonData.length; i++){
+        var columnsIn = this.jsonData[i];
+        for(var key in columnsIn){
+          console.log(this.jsonData[i][key]);
+        } 
+      }
+
+      // Print to screen somehow...
 
       this.service.porting(this.jsonData).subscribe((response:any) => {
         this.loading = false;
@@ -112,5 +124,49 @@ export class DatabaseHandlerComponent implements OnInit {
     };
     reader.readAsText(input.files[0]);
   }
+
+  public getCSV(){
+
+    let data = "";
+    let dbname = this.rPort.nativeElement.value;
+    // console.log(dbname);
+
+    this.service.reversePorting(dbname).subscribe((response:any) => {
+        this.loading = false;
+        if(response.success == true && response.code == 200) {
+          data = response.data.docs;
+          let CSVdata = this.portCSV.extractDatabase(data, dbname);
+          
+          //Save data in csv file and show download dialog
+          var blob = new Blob([CSVdata], {type: 'application/csv;charset=utf-8'});
+          var downloadLink = document.createElement('a');
+          downloadLink.setAttribute('download', dbname+".csv" );
+          downloadLink.setAttribute('href', window.URL.createObjectURL(blob) );
+          var event = new MouseEvent("click");
+          downloadLink.dispatchEvent(event);
+
+        } else if (response.success == false) {
+
+          //POPUP MESSAGE
+          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
+          dialogRef.afterClosed().subscribe((result) => {
+            if(result == "Retry") {
+              this.ngOnInit();
+            }
+          })
+        }    
+      }, (err: HttpErrorResponse) => {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
+        dialogRef.afterClosed().subscribe((result) => {
+          if(result == "Retry") {
+            this.ngOnInit();
+          }
+        })
+        console.log("ERROR:" + err.message);
+      });
+    
+  }
+  
 
 }
