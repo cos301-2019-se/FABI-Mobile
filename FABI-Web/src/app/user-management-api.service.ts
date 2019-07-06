@@ -12,8 +12,8 @@ const getAllFABIAdminsURL = 'https://user-management-dot-api-fabi.appspot.com/ge
 //Object for defining how a member of FABI is structured
 export interface Member {
     Email: string;      //This will contain the email retreived from the DB (is the unique identifier for the member) 
-    Name?: string;       //This will be the name of the member
-    Surname?: string;    //This will be the surname of the member
+    Name: string;       //This will be the name of the member
+    Surname: string;    //This will be the surname of the member
 }
 
 @Injectable({
