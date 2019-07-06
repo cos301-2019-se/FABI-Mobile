@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, isDevMode, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
+  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -6,6 +7,8 @@ import { sharedStylesheetJitUrl } from '@angular/compiler';
 
 import { Member, UserManagementAPIService } from '../../user-management-api.service';
 import { DiagnosticClinicAPIService } from '../../diagnostic-clinic-api.service';
+import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
+import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,6 +17,10 @@ import { DiagnosticClinicAPIService } from '../../diagnostic-clinic-api.service'
 })
 
 export class AdminDashboardComponent implements OnInit {
+
+  //Retriving an HTML element from the HTML page
+  @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
+  @ViewChild('staffContainer', {read: ViewContainerRef}) staffContainer;
   
   //Global string variables to dynamically load the HTML statistic elements
   userStats: string;
@@ -26,11 +33,12 @@ export class AdminDashboardComponent implements OnInit {
   diagnosticClinicAdmins: Member[] = [];         //array containing all the members of FABI with the user type of 'diagnosticClinicAdmins'
   samples: Object[] = [];                        //array containing all current samples for FABI
   completedSamples: Object[] = [];               //array containing all completed samples for FABI
+  
   numberOfFABIMembers: number;                   //a variable holding the total number of FABI members
   numberOfSamples: number;                       //a variable holding the total number of samples
 
   constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService) { }
+    private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { }
 
   /*
     This function will use an API service to get all the members of FABI. These members will be read into the
@@ -43,14 +51,69 @@ export class AdminDashboardComponent implements OnInit {
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
       if(response.success == true){
         //Populating the arrays with the returned data
-        this.admins = response.data.qs.admins;
-        this.staff = response.data.qs.staff;
-        this.databaseAdmins = response.data.qs.databaseAdmins;
-        this.cultureCurators = response.data.qs.cultureCurators;
-        this.diagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
+        var tempAdmins = response.data.qs.admins;
+        for(var i = 0; i < tempAdmins.length; i++){
+          var tempMember: Member = {Name: tempAdmins[i].fname, Surname: tempAdmins[i].surname, Email: tempAdmins[i].email};
+          this.admins.push(tempMember);
+        }
+
+        var tempStaff = response.data.qs.staff;
+        for(var i = 0; i < tempStaff.length; i++){
+          var tempMember: Member = {Name: tempStaff[i].fname, Surname: tempStaff[i].surname, Email: tempStaff[i].email};
+          this.staff.push(tempMember);
+        }
+
+        var tempDatabaseAdmins = response.data.qs.databaseAdmins;
+        for(var i = 0; i < tempDatabaseAdmins.length; i++){
+          if(!tempDatabaseAdmins[i].fname){
+            var tempMember: Member = {Name: '', Surname: '', Email: tempDatabaseAdmins[i].email};
+          }
+          else{
+            var tempMember: Member = {Name: tempDatabaseAdmins[i].fname, Surname: tempDatabaseAdmins[i].surname, Email: tempDatabaseAdmins[i].email};
+          }
+          this.databaseAdmins.push(tempMember);
+        }
+        
+        var tempCultureCurators = response.data.qs.cultureCurators;
+        for(var i = 0; i < tempCultureCurators.length; i++){
+          if(!tempCultureCurators[i].fname){
+            var tempMember: Member = {Name: '', Surname: '', Email: tempCultureCurators[i].email};
+          }
+          else{
+            var tempMember: Member = {Name: tempCultureCurators[i].fname, Surname: tempCultureCurators[i].surname, Email: tempCultureCurators[i].email};
+          }
+          this.databaseAdmins.push(tempMember);
+        }
+
+        var tempDiagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
+        for(var i = 0; i < tempDiagnosticClinicAdmins.length; i++){
+          if(!tempDiagnosticClinicAdmins[i].fname){
+            var tempMember: Member = {Name: '', Surname: '', Email: tempDiagnosticClinicAdmins[i].email};
+          }
+          else{
+            var tempMember: Member = {Name: tempDiagnosticClinicAdmins[i].fname, Surname: tempDiagnosticClinicAdmins[i].surname, Email: tempDiagnosticClinicAdmins[i].email};
+          }
+          this.databaseAdmins.push(tempMember);
+        }
 
         this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
         this.userStats = this.numberOfFABIMembers.toString();
+
+        //Dynamically loads all the admins into the HTML page
+        for(var i = 0; i < this.admins.length; i++){
+          const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+          adminDivRef.instance.Name = this.admins[i].Name;
+          adminDivRef.instance.Surname = this.admins[i].Surname;
+          adminDivRef.instance.Email = this.admins[i].Email;
+        }
+
+        //Dynamically loads all the staff into the HTML page
+        for(var i = 0; i < this.staff.length; i++){
+          const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
+          staffDivRef.instance.Name = this.staff[i].Name;
+          staffDivRef.instance.Surname = this.staff[i].Surname;
+          staffDivRef.instance.Email = this.staff[i].Email;
+        }
       }
       else{
         //The FABI members could not be retrieved
@@ -87,26 +150,13 @@ export class AdminDashboardComponent implements OnInit {
   getNumberOfCompletedFABISamples(){}
 
   /*
-    This function will load all the admin staff into the section provided on the HTML page
-  */
-  loadAdmins(){}
-
-  /*
-    This function will load all the staff members into the section provided on the HTML page
-  */
-  loadStaff(){}
-
-  /*
     This function will load the admin's notifications into the notification section on the HTML page
   */
   loadNotifications(){}
 
   ngOnInit() { 
-    this.loadAdmins();
-    this.loadStaff();
-    this.loadNotifications();
-
     this.getNumberOfFABIMembers();
     this.getNumberOfFABISamples();
+    this.loadNotifications();
   }
 }
