@@ -7,37 +7,34 @@ const admin = require('firebase-admin');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Handle POST request
-router.post('/', getMember);
+router.post('/', getUserTypes);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Organization Member
+//                                             Get All User Types
 /**
- * @summary Get User assotiated with Organization
- * @description  REQUEST DATA REQUIRED: user email, organization
- *  1. check that email of user and organization is recieved
- *  2. retrieve user data of given user
- *  3. remove user password from data to be sent
+ * @summary Get all members associated with an organization
+ * @description  REQUEST DATA REQUIRED: null
+ * 
+ *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
 /////////////////////////////////////////////////////////////////////
 
 // [START config]
-const db = admin.firestore();
+userTypesFABI = {
+    1 : "admin",
+    2 : "databaseAdmin",
+    3 : "fabiStaff"
+}
 
-//(1)
-function getMember(req, res) {
-    if (req.body.email == undefined || req.body.email == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "User email expected"
-        });
-    }
+userTypesOrg = 
+{
+    1 : "orgAdmin",
+    2 : "orgMember"
+}
+
+function getUserTypes(req, res) {
     if (req.body.orgName == undefined || req.body.orgName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
@@ -46,31 +43,12 @@ function getMember(req, res) {
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "orgName expected"
+            message: "organization name expected"
         });
     }
-
-    //(2)
-    var memRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').where('email', '==', req.body.email);
-    memRef.get().then(doc => {
-        if(doc.empty)
+    else{
+        if(req.body.orgName === "FABI")
         {
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                code: 400,
-                title: "NOT FOUND",
-                message: "User does not exist"
-            });
-        }
-            var member;
-            doc.forEach(element => {
-                member = element.data();
-            });
-            //(3)
-            delete member.password;
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
@@ -78,11 +56,25 @@ function getMember(req, res) {
                 success: true,
                 code: 200,
                 title: "SUCCESS",
-                message: "Organization Member Found",
-                data: {
-                    member         
-                }
-            });
-    });
+                message: "List of User Types",
+                data : userTypesFABI
+            }) 
+        }
+        else
+        {
+            res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                success: true,
+                code: 200,
+                title: "SUCCESS",
+                message: "List of User Types",
+                data : userTypesOrg
+            })
+        }    
+    }
+            
 }
+
 module.exports = router;

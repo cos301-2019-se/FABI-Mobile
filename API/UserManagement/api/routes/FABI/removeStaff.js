@@ -28,7 +28,7 @@ const db = admin.firestore();
 
 function removeStaff(req, res) {
     //(1)
-    if (req.body.email == undefined || req.body.email == '') {
+    if (req.body.id == undefined || req.body.id == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -36,11 +36,11 @@ function removeStaff(req, res) {
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "User email expected"
+            message: "User id expected"
         });
     }
 
-    var memRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.email);
+    var memRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
     memRef.get().then(doc => {
         //(2)
         if(typeof(doc.data()) === 'undefined')

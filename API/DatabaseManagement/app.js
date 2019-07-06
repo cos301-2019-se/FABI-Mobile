@@ -14,6 +14,7 @@ const displayHTML = require('./api/routes/displayHTML');
 const createDatabaseRoute = require('./api/routes/createDatabase');
 const addDocRoute = require('./api/routes/addDoc');
 const portingRoute = require('./api/routes/porting');
+const retrieveDatabaseRoute = require('./api/routes/retrieveDatabase');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -25,6 +26,7 @@ app.use('/',displayHTML);
 app.use('/createDatabase', createDatabaseRoute);
 app.use('/addDoc', addDocRoute);
 app.use('/porting', portingRoute);
+app.use('/retrieveDatabase', retrieveDatabaseRoute);
 
 
 //Error handling when url doesn't exist
