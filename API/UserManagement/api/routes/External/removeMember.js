@@ -28,7 +28,7 @@ const db = admin.firestore();
 
 function removeMember(req, res) {
     //(1)
-    if (req.body.email == undefined || req.body.email == '') {
+    if (req.body.id == undefined || req.body.id == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -36,7 +36,7 @@ function removeMember(req, res) {
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "User email expected"
+            message: "User id expected"
         });
     }
     if (req.body.orgName == undefined || req.body.orgName == '') {
@@ -51,7 +51,7 @@ function removeMember(req, res) {
         });
     }
 
-    var memRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.email);
+    var memRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.id);
     memRef.get().then(doc => {
         //(2)
         if(typeof(doc.data()) === 'undefined')

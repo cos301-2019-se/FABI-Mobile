@@ -79,12 +79,13 @@ function addAdmin(req, res)
         fname: req.body.admin.name,
         surname: req.body.admin.surname,
         email: req.body.admin.email,
-        password: bcrypt.hashSync(pass, salt)
+        password: bcrypt.hashSync(pass, salt),
+        id : new Date().getTime().toString()
     }
 
     // (3)
 
-    var docRef  = db.collection('Organizations').doc('FABI').collection('DatabaseAdmin').doc(qs.email);
+    var docRef  = db.collection('Organizations').doc('FABI').collection('DatabaseAdmin').doc(qs.id);
     
     
 

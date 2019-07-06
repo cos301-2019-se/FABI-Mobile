@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt-nodejs');
 router.post('/', updateMember);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Update the Status of a given Sample
+//                                             Update Organization Member
 /**
  * @summary Update a Member memebr associated with Organization
  * @description  REQUEST DATA REQUIRED: origional email of user to be updated ,fields which are to be changed, name of Organization
@@ -33,7 +33,7 @@ const db = admin.firestore();
 function updateMember(req, res) {
     
     //(1)
-    if (req.body.orgName == undefined || req.body.orgName == '') {
+    if (req.body.refNum == undefined || req.body.refNum == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -41,37 +41,25 @@ function updateMember(req, res) {
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "Organization of User to update required"
+            message: "Reference number of sample to update required"
+            
+        });
+    }
+    if (req.body.status == undefined || req.body.status == '') {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "New status of sample to update required"
             
         });
     }
 
-    if (req.body.id == undefined || req.body.id == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "id of User to update required"
-        });
-    }
 
-    if (req.body.fields == undefined || req.body.fields == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "fields to update required"
-        });
-    }
-
-    var docRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.id);
-    newMail = req.body.email;
+    var docRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(req.body.refNum);
 
     docRef.get().then(doc =>{
         //(2)
@@ -84,24 +72,16 @@ function updateMember(req, res) {
                 success: false,
                 code: 404,
                 title: "NOT FOUND",
-                message: "User does not exist"
+                message: "Sample does not exist"
             });
         }
         else{
+            
 
-            //(4)
-            if(req.body.fields.hasOwnProperty('password'))
-            {
-                const salt = bcrypt.genSaltSync(10);
-                req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
-            }
-            //(3)
-            
-            
-                var updateRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.id);
+                var updateRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(req.body.refNum);
                 
                 //(5)
-                updateRef.update(req.body.fields).then(() => {
+                updateRef.update({status : req.body.status}).then(() => {
 
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
@@ -110,7 +90,7 @@ function updateMember(req, res) {
                         success: true,
                         code: 200,
                         title: "SUCCESS",
-                        message: "User Updated",
+                        message: "Sample Status Updated",
                         data: {
                                 
                         }
