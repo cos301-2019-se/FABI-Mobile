@@ -10,7 +10,7 @@ const admin = require('firebase-admin');
 router.post('/', getAllStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get All Staff
+//                                             Get All Fabi Admins
 /**
  * @summary Get all staff assotiated with FABI
  * @description  REQUEST DATA REQUIRED: null
@@ -32,16 +32,16 @@ const db = admin.firestore();
 function getAllStaff(req, res) {
 
     //(1)
-    var staffRef = db.collection('Organizations').doc('FABI').collection('Staff');
+    var staffRef = db.collection('Organizations').doc('FABI').collection('Admin');
     staffRef.get().then(snapshot => {
-            var qs = {staff : []}
+            var qs = {admins : []}
 
             //(2)
             snapshot.forEach(doc => {
-                qs.staff.push(doc.data());
+                qs.admins.push(doc.data());
             })
             //(3)
-            qs.staff.forEach(doc => {
+            qs.admins.forEach(doc => {
                 delete doc.password;
             })
             
@@ -53,7 +53,7 @@ function getAllStaff(req, res) {
             success: true,
             code: 200,
             title: "SUCCESS",
-            message: "List of FABI staff",
+            message: "List of FABI Admins",
             data: {
                 qs
             }

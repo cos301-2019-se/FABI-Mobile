@@ -10,7 +10,7 @@ const admin = require('firebase-admin');
 router.post('/', getAllOrgMembers);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Org Members
+//                                             Retrive Datatabase and Return as JSON Object
 /**
  * @summary Get all members associated with an organization
  * @description  REQUEST DATA REQUIRED: Org Name
@@ -29,7 +29,7 @@ const db = admin.firestore();
 
 function getAllOrgMembers(req, res) {
     //(1)
-    if (req.body.orgName == undefined || req.body.orgName == '') {
+    if (req.body.databaseName == undefined || req.body.databaseName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -38,15 +38,15 @@ function getAllOrgMembers(req, res) {
             error: {
                 code: 400,
                 title: "BAD_REQUEST",
-                message: "orgName of members to be retrieved expected"
+                message: "database name of data to be retrieved expected"
             }
         });
     }
     
     //(2)
-    var orgRef = db.collection('Organizations').doc(req.body.orgName);
+    var orgRef = db.collection('Databases').doc(req.body.databaseName);
     orgRef.get().then(doc => {
-        if(typeof(doc.data()) === 'undefined')
+        if(typeof(doc) === 'undefined')
         {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
@@ -55,13 +55,13 @@ function getAllOrgMembers(req, res) {
                 success: false,
                 code: 404,
                 title: "NOT FOUND",
-                message: "No organization with given name found"
+                message: "No database with given name found"
             });
         }
         else
         {
 
-        var staffRef = db.collection('Organizations').doc(req.body.orgName).collection('Members');
+        var staffRef = db.collection('Databases').doc(req.body.databaseName).collection('Data');
         staffRef.get().then(snapshot => {
             
             if(snapshot.empty)
@@ -73,23 +73,18 @@ function getAllOrgMembers(req, res) {
                     success: false,
                     code: 200,
                     title: "SUCCESS",
-                    message: "No Data for organization found",
+                    message: "No Data for database found",
                     data : {}
                 });
             }
             else{
-                var data = {members : []}
+                var data = {docs : []}
                 
                 //(3)
                 snapshot.forEach(doc => {
-                    data.members.push(doc.data());
+                    data.docs.push(doc.data());
                 })
                 
-                //(4)
-                data.members.forEach(doc=>
-                {
-                    delete doc.password;
-                })
 
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
@@ -98,9 +93,9 @@ function getAllOrgMembers(req, res) {
                     success: true,
                     code: 200,
                     title: "SUCCESS",
-                    message: "List of " + req.body.orgName + " members",
+                    message: "Data from " + req.body.databaseName,
                     data
-                    
+                     
                 });
         }
     }).catch((err) =>
@@ -113,7 +108,7 @@ function getAllOrgMembers(req, res) {
             success: false,
             code: 500,
             title: "INTERNAL SERVERE ERROR",
-            message: "Error Connecting to User Database"
+            message: "Error Connecting to Database"
             
         });
     });
