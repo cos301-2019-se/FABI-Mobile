@@ -41,6 +41,8 @@ import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalizat
 
 import { ErrorComponent } from './error/error.component';
 import { HomeComponent } from './home/home.component';
+import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
+import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
 
 @NgModule({
   declarations: [
@@ -70,9 +72,15 @@ import { HomeComponent } from './home/home.component';
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
-    HomeComponent
+    HomeComponent,
+    AdminDivComponent,
+    StaffDivComponent
   ],
-  entryComponents: [ErrorComponent],
+  entryComponents: [
+    ErrorComponent, 
+    AdminDivComponent,
+    StaffDivComponent
+  ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
