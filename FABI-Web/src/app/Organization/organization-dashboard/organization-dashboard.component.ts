@@ -3,20 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-// import { ErrorComponent } from '../error/error.component';
 import { Router } from '@angular/router';
 
-//Object for defining how a member of an organization is structured
-export interface Member {
-  ID: string;       //This will contain the ID retreived from the DB 
-  Name: string;     //This will be the name of the member
-  Surname: string;  //This will be the surname of the member
-}
-
-//Object for defining how a sample is structured
-export interface Sample {
-  ID: string; //This will contain the ID retreived from the DB 
-}
+import { UserManagementAPIService, Member } from '../../user-management-api.service';
+import { DiagnosticClinicAPIService } from '../../diagnostic-clinic-api.service';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -26,21 +16,40 @@ export interface Sample {
 
 export class OrganizationDashboardComponent implements OnInit {
 
-  /*
-    GLOBALS
-  */
-  members: Object;            //array containing all of the organization's members
-  samples: Object;            //array containing all current samples for the organization
-  completedSamples: Object;   //array containing all completed samples for the organization
+  //Global string variables to dynamically load the HTML statistic elements
+  memberStats: string;
 
-  constructor() { }
+  organizationMembers: Member[] = [];                    //array containing all the members for an organization
+
+  numberOfOrganizationMembers: number;                   //a variable containing the number of members belonging to the organization
+  organizationName: string = 'Organization1';            //a variable containing the name of the organization
+
+  constructor(private userManagementService: UserManagementAPIService) { }
 
   /*
     This function will use an API service to get all the members of an organization. These members will be read into the
     'members' Object. The function does not receive any parameters but it will populate a 'heading' element on the
     HTML page with the number of members belonging to the organization.
   */
-  getNumberOfOrganizationMembers(){}
+  getNumberOfOrganizationMembers(){
+    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+    this.userManagementService.getAllOrganizationMembers(this.organizationName).subscribe((response: any) => {
+      if(response.success == true){
+          //Populating the arrays with the returned data
+        var tempMembers = response.data.members;
+        for(var i = 0; i < tempMembers.length; i++){
+          var tempMember: Member = {Name: tempMembers[i].fname, Surname: tempMembers[i].surname, Email: tempMembers[i].email};
+          this.organizationMembers.push(tempMember);
+        }
+
+        this.numberOfOrganizationMembers = this.organizationMembers.length;
+        this.memberStats = this.numberOfOrganizationMembers.toString();
+      }
+      else{
+        //The organization's members could not be retrieved
+      }
+    });
+  }
 
   /*
     This function will use an API service to get all the samples of an organization. These samples will be read into the
@@ -55,11 +64,6 @@ export class OrganizationDashboardComponent implements OnInit {
     populate a 'heading' element on the HTML page with the percentage of completed samples belonging to the organization.
   */
   getNumberOfCompletedOrganizationSamples(){}
-
-  /*
-    This function will load the organization's members into the HTML page
-  */
-  loadMembers(){}
 
   /*
     This function will load the organization's notifications into the notification section on the HTML page
@@ -77,7 +81,6 @@ export class OrganizationDashboardComponent implements OnInit {
     this.getNumberOfOrganizationMembers();
     this.getNumberOfOrganizationSamples();
     this.getNumberOfCompletedOrganizationSamples();
-    this.loadMembers();
     this.loadNotifications();
   }
 
