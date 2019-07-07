@@ -1,0 +1,150 @@
+/*
+    DASHBOARD DESIGN 
+*/
+
+//Background Setup
+#dashboard {
+    color: #ffffff;
+    display: flex;
+    height: 100vh;
+    width:100%;
+    overflow: hidden;
+    position: relative;
+
+    background-image: url('/assets/images/primary_background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: block;
+}
+
+#dashboard .gradient-overlay {
+    background: linear-gradient(to left, #196F3D, black);
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+//Dashboard Heading Styling
+#dashboard_heading {
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+
+    overflow: hidden;
+    position: relative;
+
+    top: 1rem;
+    display: block;
+
+    color: #ffffff;
+    font-size: 2.5rem
+}
+
+//Dashboard Content Styling
+#dashboard_content {
+    display: flex;
+    height: 70%;
+    width: 80%;
+    background-color: white;
+    opacity: 0.7;
+
+    overflow: hidden;
+    position: relative;
+
+    top: 0.5vh;
+    left: 10%;
+}
+
+#menu_div {
+    font-size: 35px;
+}
+
+#menu_div .menu_icon {
+    color: #ffffff;
+
+    overflow: hidden;
+    position: relative;
+    display: block;
+
+    left: 2rem;
+    top: 2rem;
+}
+
+#sidenav_div .icons_div_menu {
+    font-size: 25px;
+    margin-right: 10px;
+    display: inline; 
+    vertical-align: sub;   
+}
+
+.sidenav {
+    height: 100%; 
+    width: 0; 
+    position: fixed; 
+    z-index: 1; 
+    top: 0; 
+    left: 0;
+    background-color: #1F292A;
+    overflow-x: hidden; 
+    padding-top: 20%; 
+    transition: 0.5s; 
+    text-align: left;
+    word-wrap: break-word;
+
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+  
+.sidenav button {
+    text-decoration: none;
+    font-size: 15px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    background: transparent;
+    margin-left: 30px;
+    border: none;
+    margin-bottom: 14px;
+    text-align: left;
+    word-wrap: break-word;
+    text-justify: inter-word;
+}
+
+.sidenav button:hover{
+    font-size: 21px;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#menu_search {
+    margin-top: 120px;
+    margin-left: 30px;
+    width: 100%;
+}
+
+#menu_search .search_input_field {
+    width: 280px;
+}
+
+#menu_search .placeholder {
+    color: white;
+    font-size: 17px;
+}
+
+.mat-form-field-underline .mat-form-field-ripple{
+    background-color:white !important;
+    border-bottom: 1px solid white !important;
+}
