@@ -47,13 +47,13 @@ export class Porting{
         var headers = lines[0].split(";");
         // console.log(headers);
 
-        for (var i = 1; i < lines.length-1; i++) {
+        for (var i = 1; i < lines.length; i++) {
             var obj = {};
             var currentline = lines[i].split(";");
             for (var j = 0; j < currentline.length; j++) {
-                if(currentline!="" && currentline!="null"){
+                //if(currentline!="" && currentline!="null"){
                     obj[headers[j]] = currentline[j];
-                }
+                //}
             }
 
             result.push(obj);
@@ -61,10 +61,45 @@ export class Porting{
 
         //console.log("in porting");
         //console.log(JSON.stringify(result));
-        //console.log(result);
+        console.log(result);
         this.JSONfile = result;
         
         return result;
     }
+
+    extractDatabase(dbJSON , dbName:String){ // Reverse porting
+
+        console.log(dbJSON);
+        var CSVdata = "";
+
+        var headings = [];
+
+        var columnsIn = dbJSON[0];
+        for(var key in columnsIn){
+          // console.log(key);
+          CSVdata += key+";";
+          headings.push(key);
+        }
+        CSVdata += "\r\n";
+        
+        for(var i =0; i<dbJSON.length; i++){
+            var columnsIn = dbJSON[i];
+            for(var key in headings){
+                console.log(key);
+                if(dbJSON[i][ headings[key] ] != null){
+                    CSVdata += dbJSON[i][ headings[key] ] +";";
+                }else{
+                    CSVdata += "  ;";
+                }              
+                
+            }
+            CSVdata += "\r\n";
+        }
+
+        console.log(CSVdata);
+        return CSVdata;
+        
+    }
+
 
 }
