@@ -13,18 +13,11 @@
       <!--Sample Submission Form-->
       <form id="sample_form" [formGroup]="sampleForm" (submit)="sendForm()">
 
-        <mat-form-field>
-          <mat-label>Organization</mat-label>
-          <mat-select id="organization" formControlName="organization">
-            <mat-option>--</mat-option>
-            <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
-              {{organization.orgName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
         <mat-accordion>
-          <mat-expansion-panel>
+
+          <!--Personal Details-->
+
+          <!-- <mat-expansion-panel>
             <mat-form-field>
               <input matInput id="sample_form_tree_species" formControlName="sample_form_tree_species" type="text"
                 required>
@@ -82,9 +75,10 @@
             </mat-form-field>
             <br />
 
-          </mat-expansion-panel>
+          </mat-expansion-panel> -->
 
-          <mat-expansion-panel>
+          <!--Sample Info-->
+          <mat-expansion-panel class="sample-info">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Type of Sample
@@ -110,7 +104,8 @@
 
           </mat-expansion-panel>
 
-          <mat-expansion-panel>
+          <!--Symptom Info-->
+          <mat-expansion-panel class="symptom-info">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Symptoms
@@ -139,7 +134,8 @@
 
           </mat-expansion-panel>
 
-          <mat-expansion-panel>
+          <!--Distribution Info-->
+          <mat-expansion-panel class="distribution-info">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Distribution
@@ -159,7 +155,8 @@
 
           </mat-expansion-panel>
 
-          <mat-expansion-panel>
+          <!--Conditions Info-->
+          <mat-expansion-panel class="condition-info">
             <mat-expansion-panel-header>
 
               <mat-panel-title>
@@ -171,13 +168,13 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <mat-form-field>
+            <mat-form-field class="form-inputs">
               <input matInput id="conditions_affected" formControlName="conditions_affected" type="text" required>
               <mat-placeholder class="placeholder">% of plants affected</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
+            <mat-form-field class="form-inputs">
               <input matInput [matDatepicker]="conditions_problem_noticed" id="conditions_problem_noticed"
                 formControlName="conditions_problem_noticed" type="datetime"
                 placeholder="Date problem was first noticed" required>
@@ -186,7 +183,7 @@
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
+            <mat-form-field class="form-inputs">
               <input matInput [matDatepicker]="conditions_date_planted" id="conditions_date_planted"
                 formControlName="conditions_date_planted" type="datetime" placeholder="Date plants were planted"
                 required>
@@ -195,21 +192,21 @@
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
+            <mat-form-field class="form-inputs">
               <input matInput id="conditions_weather_disturbances" formControlName="conditions_weather_disturbances"
                 type="text" required>
               <mat-placeholder class="placeholder">Unusual weather disturbances</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
+            <mat-form-field class="form-inputs">
               <input matInput id="conditions_weather_prior" formControlName="conditions_weather_prior" type="text"
                 required>
               <mat-placeholder class="placeholder">Weather conditions prior to symptom development</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
+            <mat-form-field class="form-inputs">
               <input matInput id="conditions_others" formControlName="conditions_others" type="text" required>
               <mat-placeholder class="placeholder">Other tree species in the environment that display similar
                 symptoms?
@@ -217,7 +214,7 @@
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
+            <mat-form-field class="form-inputs">
               <input matInput id="conditions_additional" formControlName="conditions_additional" type="text" required>
               <mat-placeholder class="placeholder">Additional information (Please include any information about
                 planting

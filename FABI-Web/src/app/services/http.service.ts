@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -82,7 +82,7 @@ export class HttpService {
       }
     }
 
-    const method = 'POST';  // Http Request Method
+    let method = 'POST';  // Http Request Method
 
     const postData = details; // Data to send as JSON
 
@@ -117,16 +117,16 @@ export class HttpService {
     const method = 'POST';
 
     const options = {
-      headers: {
+      headers: new HttpHeaders({
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
-      },
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      }),
       json: true
     };
 
-    return this.http.request<any>(method, getAllOrganizationsURL, options);
+    return this.http.request<any>("POST", 'https://user-management-dot-api-fabi.appspot.com/getAllOrganizations', options);
 
   }
 
@@ -152,14 +152,13 @@ export class HttpService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
     };
 
-    return this.http.request<any>(method, getUserTypesURL, options);
+    return this.http.request<any>('POST', 'https://login-dot-api-fabi.appspot.com/getUserTypes', options);
 
   }
 
@@ -174,12 +173,12 @@ export class HttpService {
    * @memberof HttpService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  porting(jsonObject: Object) {
+  porting(dbname: String, jsonObject: Object) {
     const portingURL = 'https://database-management-dot-api-fabi.appspot.com/porting';
     const method = 'POST';
 
     const postData = {
-      "databaseName": "mpg",
+      "databaseName": dbname,
       "data": jsonObject
     };
 
@@ -188,14 +187,44 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
     };
 
-    return this.http.request<any>(method, portingURL, options);
+    return this.http.request<any>('POST', 'https://database-management-dot-api-fabi.appspot.com/porting', options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         REVERSE PORTING
+  /**
+   * Method thats sends a request to the API to get data from the database to create a .csv file 
+   *
+   * @param {String} databaseName
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  reversePorting(databaseName: String) {
+    const portingURL = 'https://database-management-dot-api-fabi.appspot.com/retrieveDatabase';
+    const method = 'POST';
+
+    const postData = {
+      "databaseName": databaseName,
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', 'https://database-management-dot-api-fabi.appspot.com/retrieveDatabase', options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,8 +238,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   createOrganization(orgInfo: Interface.Organisation) {
-    const createOrganizationURL = 'https://user-management-dot-api-fabi.appspot.com/createOrganization';
-    const method = 'POST';
+    let createOrganizationURL = 'https://user-management-dot-api-fabi.appspot.com/createOrganization';
+    let method = 'POST';
 
     const postData = orgInfo;
 
@@ -219,8 +248,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -242,8 +270,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganization(orgInfo: Interface.Organisation) {
 
-    const removeOrganizationURL = 'https://user-management-dot-api-fabi.appspot.com/removeOrg';
-    const method = 'POST';
+    let removeOrganizationURL = 'https://user-management-dot-api-fabi.appspot.com/removeOrg';
+    let method = 'POST';
 
     const postData = orgInfo;
 
@@ -252,8 +280,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -273,18 +300,23 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addStaffMember(staffInfo: Interface.StaffInfo) {
-    const addStaffMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addStaff';
-    const method = 'POST';
 
-    const postData = staffInfo;
+    if(staffInfo.position == "Admin")
+      return this.addFABIAdmin(staffInfo);
+
+    let addStaffMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addStaff';
+    let method = 'POST';
+
+    const postData = {
+      "staff": staffInfo
+    }
 
     const options = {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -294,7 +326,7 @@ export class HttpService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    REMOVE FABI STAFF MEMBER ************************************************
+  //                                                    REMOVE FABI STAFF MEMBER 
   /**
    * Method that sends a request to the API to remove a FABI Staff Member
    *
@@ -303,8 +335,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
    
-    const removeStaffMemberURL = '';
-    const method = 'POST';
+    let removeStaffMemberURL = 'https://user-management-dot-api-fabi.appspot.com/removeStaff';
+    let method = 'POST';
 
     const postData = staffInfo;
 
@@ -313,8 +345,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -334,16 +365,15 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaffMembers() {
 
-    const getStaffMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllStaff';
-    const method = 'POST';
+    let getStaffMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllStaff';
+    let method = 'POST';
 
     const options = {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       json: true
     };
@@ -363,8 +393,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addFABIAdmin(staffInfo: Interface.StaffInfo) {
-    const addFABIAdminURL = 'https://user-management-dot-api-fabi.appspot.com/addFabiAdmin';
-    const method = 'POST';
+    let addFABIAdminURL = 'https://user-management-dot-api-fabi.appspot.com/addFabiAdmin';
+    let method = 'POST';
 
     const postData = {
       "admin": staffInfo
@@ -375,8 +405,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -399,9 +428,10 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addOrgMember(orgInfo: Interface.Organisation, memberInfo: Interface.OrganisationMember) {
 
-    const addMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addMemberToOrg';
-    const method = 'POST';
+    let addMemberURL = 'https://user-management-dot-api-fabi.appspot.com/addMemberToOrg';
+    let method = 'POST';
     
+    console.log("orgName: " + orgInfo.orgName);
     const postData = {
       "orgName": orgInfo.orgName,
       "member": memberInfo
@@ -412,8 +442,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -432,18 +461,20 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
    
-    const removeMemberURL = 'https://user-management-dot-api-fabi.appspot.com/removeMember';
-    const method = 'POST';
+    let removeMemberURL = 'https://user-management-dot-api-fabi.appspot.com/removeMember';
+    let method = 'POST';
 
-    const postData = memberInfo;
+    const postData = {
+      "orgName": localStorage.getItem('orgName'),
+      "email": memberInfo.email
+    }
 
     const options = {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -466,8 +497,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData)
   {
-    const submitSampleURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/submitSample';
-    const method = 'POST';
+    let submitSampleURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/submitSample';
+    let method = 'POST';
 
     const postData = {
       "orgName": orgInfo.orgName,
@@ -479,8 +510,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -501,8 +531,8 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveAllSamples(orgInfo: Interface.Organisation) {
-    const retrieveAllOrgSamples = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples';
-    const method = 'POST';
+    let retrieveAllOrgSamples = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples';
+    let method = 'POST';
 
     const postData = {
       "orgName": orgInfo.orgName
@@ -513,8 +543,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -534,8 +563,8 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationDetails() {
     
-    const getOrganizationDetails = 'https://user-management-dot-api-fabi.appspot.com/getOrgDetails';
-    const method = 'POST';
+    let getOrganizationDetails = 'https://user-management-dot-api-fabi.appspot.com/getOrgDetails';
+    let method = 'POST';
 
     const postData = {
       "ID": localStorage.getItem('ID')
@@ -546,8 +575,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -567,11 +595,11 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationMemberDetails() {
     
-    const getOrganizationMemberDetails = 'https://user-management-dot-api-fabi.appspot.com/getOrgMember';
-    const method = 'POST';
+    let getOrganizationMemberDetails = 'https://user-management-dot-api-fabi.appspot.com/getOrgMember';
+    let method = 'POST';
 
     const postData = {
-      "ID": localStorage.getItem('ID')
+      "orgName": localStorage.getItem('orgName')
     }
 
     const options = {
@@ -579,8 +607,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
       body:postData,
       json: true
@@ -602,16 +629,23 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllOrganizationMembers() {
 
-    const getAllOrganizationsMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllOrgMembers';
-    const method = 'POST';
+    let getAllOrganizationsMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllOrgMembers';
+    let method = 'POST';
+
+    console.log("orgName: " + localStorage.getItem('orgName'));
+    const postData = {
+      "orgName": localStorage.getItem('orgName')
+    }
+
+    console.log("postData: " + postData);
 
     const options = {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        "Authorization": localStorage.getItem('token')
+        'Accept': 'application/json'
       },
+      body: postData,
       json: true
     };
 

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,7 +14,8 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {ViewEncapsulation} from '@angular/core';
 
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -25,15 +26,23 @@ import { ErrorComponent } from '../../errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 
+//Include Material Components
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+
+
 import * as Interface from '../../interfaces/interfaces';
 
 
 @Component({
   selector: 'app-staff-handler',
   templateUrl: './staff-handler.component.html',
-  styleUrls: ['./staff-handler.component.scss']
+  styleUrls: ['./staff-handler.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class StaffHandlerComponent implements OnInit {
+
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove' ,'Action'];
+  dataSource = new MatTableDataSource([]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -50,6 +59,12 @@ export class StaffHandlerComponent implements OnInit {
   selectedStaff: Interface.StaffInfo;
   /** Array of Staff Member objects - @type {StaffInfo[]} */
   staffMembers: Interface.StaffInfo[];
+  /** Array of User Type objects for form dropdown - @type {UserType[]} */
+  userTypes: Interface.UserType[];
+  /** Selected user type on dropdown - @type {string} */
+  selectedUserType: string;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -92,6 +107,9 @@ export class StaffHandlerComponent implements OnInit {
   //                                                            NG_ON_INIT()
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.displayUserTypes();
+    this.viewStaff();
+    
   }
 
 
@@ -119,16 +137,20 @@ export class StaffHandlerComponent implements OnInit {
     const LstaffSurname = this.addStaffForm.controls.staff_surname.value;
     const LstaffEmail = this.addStaffForm.controls.staff_email.value;
     const LstaffPhone = this.addStaffForm.controls.staff_phone.value;
-    const LstaffPosition = this.addStaffForm.controls.staff_positon.value;
+    const LstaffPosition = this.addStaffForm.controls.staff_position.value;
 
-    const staff_details: Interface.StaffInfo = { name: LstaffName, surname:LstaffSurname, email:LstaffEmail, phone:LstaffPhone, position:LstaffPosition };
+    const staff_details: Interface.StaffInfo = { name: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition};
 
     this.service.addStaffMember(staff_details).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      
+      this.loading = false;
+
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Staff Member Added", "Dismiss", {
           duration: 6000
         });
+        this.refreshDataSource();
       } else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Adding Staff Member", message: response.message, retry: true }});
@@ -163,9 +185,9 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeStaffMemberPrompt() {
+  removeStaffMemberPrompt(member: Interface.StaffInfo) {
     
-    const staffDetails = this.selectedStaff.name + " " + this.selectedStaff.surname + " " + this.selectedStaff.email;
+    const staffDetails = member.fname + " " + member.surname + " " + member.email;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
       data: {
@@ -178,7 +200,9 @@ export class StaffHandlerComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == "Confirm") {
+        this.selectedStaff = member;
         this.removeStaffMember();
+        
       }
     })
   }
@@ -194,7 +218,7 @@ export class StaffHandlerComponent implements OnInit {
   removeStaffMember() {
 
     this.service.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Staff Member Removed", "Dismiss", {
           duration: 3000
@@ -221,7 +245,7 @@ export class StaffHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
-      
+      this.viewStaff();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,8 +259,11 @@ export class StaffHandlerComponent implements OnInit {
   viewStaff() {
     
     this.service.getAllStaffMembers().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        this.staffMembers = response.data;
+      if (response.success == true && response.code == 200) {
+        this.staffMembers = response.data.staff.researchers;
+        console.log(this.staffMembers);
+        this.dataSource = new MatTableDataSource(this.staffMembers);
+        this.dataSource.paginator = this.paginator;
 
       } else if (response.success == false) {
         //POPUP MESSAGE
@@ -249,5 +276,68 @@ export class StaffHandlerComponent implements OnInit {
       }
     });
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //    USER TYPES -> TO BE FETCHED FROM DB IN THE FUTURE
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayUserTypes() {
+
+    this.userTypes = [
+      {
+        "ID":1,
+        "Name":"Admin"
+      },
+      {
+        "ID":2,
+        "Name":"Staff"
+      }
+    ]
+
+
+    // if(this.selectedOrg == "FABI")
+    // {
+    //   this.userTypes = [
+    //     {
+    //       "ID":1,
+    //       "Name":"Admin"
+    //     },
+    //     {
+    //       "ID":2,
+    //       "Name":"Staff"
+    //     }
+    //   ]
+
+    // }
+    // else {
+    //   this.userTypes = [
+    //     {
+    //       "ID":1,
+    //       "Name":"Admin"
+    //     },
+    //     {
+    //       "ID":2,
+    //       "Name":"Member"
+    //     }
+    //   ]
+    // }
+
+    //-------- Load User Types for Drop Down --------
+    // this.service.getUserTypes(this.selectedOrg).subscribe((response: any) => {
+    //   if (response.success == true && response.status == 200) {
+    //     this.userTypes = response.data;
+
+    //   } else if (response.success == false) {
+    //     //POPUP MESSAGE
+    //     let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the User Types", message: response.message, retry: true } });
+    //     dialogRef.afterClosed().subscribe((result) => {
+    //       if (result == "Retry") {
+    //         this.displayUserTypes();
+    //       }
+    //     })
+    //   }
+    // });
+
+  }
+
 
 }
