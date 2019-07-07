@@ -13,8 +13,9 @@
  * <<license>>
  */
 
-import { Component, OnInit, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
+import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
   ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
+  import { OnInit} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
