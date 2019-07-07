@@ -38,7 +38,7 @@ export class OrganizationDashboardComponent implements OnInit {
   organizationMembers: Member[] = [];                    //array containing all the members for an organization
 
   numberOfOrganizationMembers: number;                   //a variable containing the number of members belonging to the organization
-  organizationName: string = 'Organization1';            //a variable containing the name of the organization
+  organizationName: string = 'TestOrg4';            //a variable containing the name of the organization
 
   constructor(private userManagementService: UserManagementAPIService) { }
 
