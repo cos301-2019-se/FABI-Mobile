@@ -1,7 +1,6 @@
 /*-------------
     General
 -------------*/
-
 * {
     margin: 0;
     padding: 0;
@@ -21,7 +20,7 @@ html {
 
     display: flex;
 
-    z-index: -2;
+    z-index: 0;
 
 }
 
@@ -39,7 +38,7 @@ html {
 
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
 
-    z-index: 0;
+    z-index: 2;
 
     font-family: 'Roboto', sans-serif;
 
@@ -90,7 +89,7 @@ html {
     color: #ffffff;
 }
 
-a:hover {
+.nav a:hover {
     font-size: 26px;
 }
 
@@ -140,6 +139,41 @@ a i {
 
 }
 
+@media (max-height: 850px) {
+
+    .bottom-nav{
+        justify-content: flex-start;
+    }
+}
+
+@media (max-height: 750px) {
+    .nav a{
+        font-size:18px;
+    }
+
+    .nav a:hover{
+        font-size:20px;
+    }
+}
+
+@media (max-height: 670px) and  (min-width: 1400px){
+    .nav{
+        width:5%;
+    }
+
+    .nav>* {
+        display: none;
+    }
+
+    .nav #menu {
+        display: block;
+    }
+
+    .top-nav{
+        justify-content: center;
+    }
+}
+
 /*-------------
     Content
 -------------*/
@@ -153,7 +187,7 @@ a i {
     flex-direction: column;
     align-items: center;
 
-    z-index: -1;
+    z-index: 1;
 }
 
 .content h1 {
@@ -212,6 +246,11 @@ a i {
     font-size: 22px;
 }
 
+.statistics .box:hover {
+    transform: scale(1.1);
+    transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 @media (max-width: 1400px) {
     .statistics {
         margin: 5% 0 0 5%;
@@ -245,6 +284,20 @@ a i {
         width: 80%;
 
         text-align: center;
+    }
+}
+
+@media (max-height: 850px) {
+
+    .statistics {
+        margin: 5% 0 0 2%;
+    }
+
+}
+
+@media (max-height: 750px) {
+    .statistics {
+        margin: 1% 0 0 1%;
     }
 }
 
@@ -291,6 +344,13 @@ a i {
     height: 20%;
 
     text-align: left;
+
+    border-radius: 5px;
+}
+
+.staff .box:hover {
+    transform: scale(1.1);
+    transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .staff h2 {
@@ -341,6 +401,32 @@ a i {
     }
 }
 
+@media (max-height: 850px) {
+
+    .staff {
+        margin: 2% 0 0 2%;
+    }
+
+}
+
+@media (max-height: 680px){
+    .staff  .box{
+        height: 20%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .staff .box h2{
+        margin: 0;
+    }
+
+    .staff .box p{
+        display: none;
+    }
+}
+
 /*------------------
     Notifications
 -------------------*/
@@ -356,6 +442,8 @@ a i {
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
+
+    z-index: 2;
 }
 
 .notifications h1 {
