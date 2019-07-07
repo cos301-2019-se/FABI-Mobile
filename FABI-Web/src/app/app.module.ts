@@ -81,7 +81,9 @@ import { UpdateComponent } from './update/update.component';
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
     ConfirmComponent,
-    UpdateComponent
+    UpdateComponent,
+    AdminDivComponent,
+    StaffDivComponent
   ],
   entryComponents: [
     ConfirmComponent,
