@@ -45,7 +45,11 @@ import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 import { ConfirmComponent } from './confirm/confirm.component';
+
+import { ErrorComponent } from './errors/error-component/error.component';
 import { HomeComponent } from './home/home.component';
+import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
+import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
 import { UpdateComponent } from './update/update.component';
 
 @NgModule({
@@ -79,7 +83,12 @@ import { UpdateComponent } from './update/update.component';
     ConfirmComponent,
     UpdateComponent
   ],
-  entryComponents: [ConfirmComponent],
+  entryComponents: [
+    ConfirmComponent,
+    AdminDivComponent,
+    StaffDivComponent,
+    ErrorComponent
+  ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -93,7 +102,8 @@ import { UpdateComponent } from './update/update.component';
     OrganizationMemberModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    ErrorsModule
+    ErrorsModule,
+    LayoutModule
   ],
   providers: [NotificationService],
   bootstrap: [AppComponent],
