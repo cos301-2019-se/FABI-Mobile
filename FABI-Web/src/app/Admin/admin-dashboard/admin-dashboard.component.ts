@@ -41,28 +41,6 @@ import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.
 })
 
 export class AdminDashboardComponent implements OnInit {
-  
-  /**
-   * 
-   *
-   * @memberof AdminDashboardComponent
-   */
-  sidenavToggle(){
-    // if(document.getElementById("sidenav_div").style.width == this.navWidth)
-    // {
-    //   document.getElementById("sidenav_div").style.width = "0";
-    // }
-    // else{
-    //   document.getElementById("sidenav_div").style.width = this.navWidth;
-    // } 
-  }
-
-  closeNav(){
-    document.getElementById("sidenav_div").style.width = "0";
-  }
-  else{
-    document.getElementById("sidenav_div").style.width = "22%";
-  } 
 
   //Retriving an HTML element from the HTML page
   @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
