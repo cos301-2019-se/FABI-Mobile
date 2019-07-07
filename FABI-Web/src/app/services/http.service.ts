@@ -173,12 +173,12 @@ export class HttpService {
    * @memberof HttpService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  porting(jsonObject: Object) {
+  porting(dbname: String, jsonObject: Object) {
     const portingURL = 'https://database-management-dot-api-fabi.appspot.com/porting';
     const method = 'POST';
 
     const postData = {
-      "databaseName": "mpgTest",
+      "databaseName": dbname,
       "data": jsonObject
     };
 
