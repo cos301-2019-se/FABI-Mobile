@@ -3,6 +3,7 @@ const router = express.Router();
 const request = require("request");
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
+const mail = require('../sendEmail');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -119,7 +120,7 @@ function addMember(req, res)
 
 // (2) Connect to DB
 
-    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('members').doc(qs.email);
+    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.email);
     docRef.set(qs).then(() => {
         res.setHeader('Content-Type', 'application/problem+json');
     res.setHeader('Content-Language', 'en');
@@ -135,6 +136,7 @@ function addMember(req, res)
                 tempPassword : pass}
         }
     });
+    mail(req.body.orgName + ' Member', pass);
 });
 
 }

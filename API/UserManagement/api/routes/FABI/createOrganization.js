@@ -3,6 +3,7 @@ const router = express.Router();
 const request = require("request");
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
+const mail = require('../sendEmail');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -125,22 +126,25 @@ function addOrganization(req, res)
 
         var docRef  = db.collection('Organizations').doc(req.body.orgName);
         docRef.set(qs).then(() => {
-            res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-            success: true,
-            data: {
-                code: 200,
-                title: "SUCCESS",
-                message: "Created Organization",
-                content: {
-                    message: "Public User Added",
-                    orgName: req.body.orgName,
-                    tempPassword: pass
+            adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Admins').doc(req.body.admin.email).set(qs.admin).then(()=>{
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                success: true,
+                data: {
+                    code: 200,
+                    title: "SUCCESS",
+                    message: "Created Organization",
+                    content: {
+                        message: "Organization Created, Admin Set",
+                        orgName: req.body.orgName,
+                        tempPassword: pass
+                    }
                 }
-            }
-        });
+        })
+        mail(req.body.orgName + ' Admin', pass);
+    });
         console.log("New Organization Added");
     }).catch((err) => {
         console.log("Database connection error: " + err);
