@@ -31,17 +31,17 @@
           <section class="statistics">
             <div class="box">
                 <i class="fas fa-users"></i>
-              <h2>25</h2>
+              <h2 id="organization_users_stats" [innerHTML]="memberStats"></h2>
             </div>
   
             <div class="box">
                 <i class="fas fa-vial"></i>
-              <h2>37</h2>
+              <h2 id="organization_samples_stats">37</h2>
             </div>
 
             <div class="box">
                 <i class="fas fa-tasks"></i>
-              <h2>75%</h2>
+              <h2 id="organization_completed_samples_stats">75%</h2> <!-- percentage of completed (processed) samples -->
             </div>
           </section>
   
