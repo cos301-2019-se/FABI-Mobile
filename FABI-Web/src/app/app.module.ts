@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule} from './materials';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -45,6 +46,11 @@ import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 
+import { ErrorComponent } from './error/error.component';
+import { HomeComponent } from './home/home.component';
+import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
+import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,6 +81,11 @@ import { ConfirmComponent } from './confirm/confirm.component';
     ConfirmComponent
   ],
   entryComponents: [ConfirmComponent],
+    HomeComponent,
+    AdminDivComponent,
+    StaffDivComponent,
+    ErrorComponent
+  ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -88,7 +99,8 @@ import { ConfirmComponent } from './confirm/confirm.component';
     OrganizationMemberModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    ErrorsModule
+    ErrorsModule,
+    LayoutModule
   ],
   providers: [NotificationService],
   bootstrap: [AppComponent],
