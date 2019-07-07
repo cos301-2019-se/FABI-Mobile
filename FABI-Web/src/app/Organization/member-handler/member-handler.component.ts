@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,7 +14,12 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {ViewEncapsulation} from '@angular/core';
+
+//Include Material Components
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+
 import * as Interface from "../../interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -30,9 +35,13 @@ import { ConfirmComponent } from "../../confirm/confirm.component";
 @Component({
   selector: 'app-member-handler',
   templateUrl: './member-handler.component.html',
-  styleUrls: ['./member-handler.component.scss']
+  styleUrls: ['./member-handler.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MemberHandlerComponent implements OnInit {
+
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove' ,'Action' ];
+  dataSource = new MatTableDataSource([]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -52,6 +61,8 @@ export class MemberHandlerComponent implements OnInit {
    /** Array of Member objects - @type {OrganisationMember[]} */
   orgMembers: Interface.OrganisationMember[];
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
@@ -66,7 +77,6 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(private service: HttpService, private adminService: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
     this.addMemberForm = this.formBuilder.group({
-      organization: ['', Validators.required],
       member_name: ['', Validators.required],
       member_surname: ['', Validators.required],
       member_location: ['', Validators.required],
@@ -98,6 +108,7 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.viewMembers();
 
     //--- Get the Organization's Details
     this.service.getOrganizationDetails().subscribe((response: any) => {
@@ -129,32 +140,39 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addMember() {
+    
     this.submitted = true;
 
     if (this.addMemberForm.invalid) {
+      console.log("------------ HERE -----------");
+
       return;
     }
 
     this.valid = true;
     this.loading = true;
 
-    const LorgName = this.addMemberForm.controls.organization.value;
+    
     // const LmemberLocation = this.addMemberForm.controls.member_location.value;
     const LmemberName = this.addMemberForm.controls.member_name.value;
     const LmemberSurname = this.addMemberForm.controls.member_surname.value;
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
-    const org_details: Interface.Organisation = { orgName: LorgName };
-    const member_details: Interface.OrganisationMember = { fname: LmemberName, surname: LmemberSurname, email: LmemberEmail, password: LmemberPhone };
+    const org_details: Interface.Organisation = { orgName: localStorage.getItem('orgName') };
+    const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
 
     this.service.addOrgMember(org_details, member_details).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+
+      this.loading = false;
+      
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Member Added", "Dismiss", {
           duration: 6000
         });
+        this.refreshDataSource();
       } else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Adding Member", message: response.message } });
@@ -188,9 +206,9 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeMemberPrompt() {
+  removeMemberPrompt(member: Interface.OrganisationMember) {
     
-    const memberDetails = this.selectedMember.fname + " " + this.selectedMember.surname + " " + this.selectedMember.email;
+    const memberDetails = member.fname + " " + member.surname + " " + member.email;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
       data: {
@@ -203,6 +221,7 @@ export class MemberHandlerComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == "Confirm") {
+        this.selectedMember = member;
         this.removeMember();
       }
     })
@@ -219,7 +238,7 @@ export class MemberHandlerComponent implements OnInit {
   removeMember() {
 
     this.service.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Member Removed", "Dismiss", {
           duration: 3000
@@ -246,7 +265,7 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
-      
+      this.viewMembers();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -259,9 +278,15 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewMembers() {
     
+    console.log("orgName: " + localStorage.getItem('orgName'));
+    console.log("--------- HELLO ----------");
+
+    
     this.service.getAllOrganizationMembers().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        this.orgMembers = response.data;
+      if (response.success == true && response.code == 200) {
+        this.orgMembers = response.data.members;
+        this.dataSource = new MatTableDataSource(this.orgMembers);
+        this.dataSource.paginator = this.paginator;
 
       } else if (response.success == false) {
         //POPUP MESSAGE

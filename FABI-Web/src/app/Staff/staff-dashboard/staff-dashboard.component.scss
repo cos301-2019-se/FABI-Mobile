@@ -140,6 +140,41 @@ a i {
 
 }
 
+@media (max-height: 850px) {
+
+    .bottom-nav{
+        justify-content: flex-start;
+    }
+}
+
+@media (max-height: 970px) {
+    .nav a{
+        font-size:18px;
+    }
+
+    .nav a:hover{
+        font-size:20px;
+    }
+}
+
+@media (max-height: 700px) and  (min-width: 1400px){
+    .nav{
+        width:5%;
+    }
+
+    .nav>* {
+        display: none;
+    }
+
+    .nav #menu {
+        display: block;
+    }
+
+    .top-nav{
+        justify-content: center;
+    }
+}
+
 /*-------------
     Content
 -------------*/
@@ -249,6 +284,20 @@ a i {
     }
 }
 
+@media (max-height: 850px) {
+
+    .statistics {
+        margin: 5% 0 0 2%;
+    }
+
+}
+
+@media (max-height: 750px) {
+    .statistics {
+        margin: 1% 0 0 1%;
+    }
+}
+
 /**********************
     Staff section
 ***********************/
@@ -328,6 +377,32 @@ a i {
 
     .admins .box {
         width: 90%;
+    }
+}
+
+@media (max-height: 850px) {
+
+    .member {
+        margin: 2% 0 0 2%;
+    }
+
+}
+
+@media (max-height: 680px){
+    .staff  .box{
+        height: 20%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .staff .box h2{
+        margin: 0;
+    }
+
+    .staff .box p{
+        display: none;
     }
 }
 
