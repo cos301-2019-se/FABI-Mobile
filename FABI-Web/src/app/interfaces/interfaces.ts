@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -35,10 +35,11 @@ export interface Organisation {
  * @interface OrganisationAdmin
  */
 export interface OrganisationAdmin {
-    fname: string;  // First Name of Admin
+    name?: string;  // First Name of Admin
+    fname?: string;  // First Name of Admin
     surname: string; // Surname of Admin
     email: string; // Email of Admin
-    password: string; // Passsword of Admin
+    password?: string; // Passsword of Admin
 }
 
 /**
@@ -49,10 +50,11 @@ export interface OrganisationAdmin {
  */
 export interface OrganisationMember {
   ID?: string, // ID of the Member
-  fname: string, // First Name of Member
+  fname?: string, // First Name of Member
+  name?: string, // First Name of Member
   surname: string, // Surname of Member
   email: string, // Email of Member
-  password: string // Password of Member
+  password?: string // Password of Member
 }
 
 /**
@@ -86,11 +88,13 @@ export interface LoginInfo {
  * @interface StaffInfo
  */
 export interface StaffInfo {
-    name: string;
+    ID?: number,
+    fname?: string,
+    name?: string
     surname: string,
     email: string,
-    phone: number,
-    position: string
+    phone?: number,
+    position?: string
   }
 
 

@@ -30,7 +30,7 @@
     color: white;
     background-color: #6B8E4E;
 
-    width: 50%;
+    width: 40%;
     height: 100%;
 }
 
@@ -45,7 +45,7 @@
     color: #3C5148;
     background-color: #ffffff;
 
-    width: 50%;
+    width: 60%;
     height: 100%;
 }
 
@@ -126,16 +126,16 @@
     font-size: 32px;
 }
 
-@media screen and (max-width: 1100px), screen and (max-height: 800px){
-    .right{
-        flex-direction: row;
-        justify-content: space-evenly;
-    }
+// @media screen and (max-width: 1100px), screen and (max-height: 800px){
+//     .right{
+//         flex-direction: row;
+//         justify-content: space-evenly;
+//     }
 
-    .right h1{
-        font-size: 40px;
-    }
-}
+//     .right h1{
+//         font-size: 40px;
+//     }
+// }
 
 /*----------------------------------
         Form and Input Styling
@@ -159,9 +159,9 @@
 }
 
 .right .btn.btn-default {
-    background: #3C5148;
-    border: 3px solid #3C5148;
-    color: white;
+    background: #6B8E4E;
+    border: 3px solid #6B8E4E;
+    color: #ffffff;
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
@@ -172,7 +172,7 @@
     border-radius: 50px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
-    border: 1px solid #3C5148;
+    border: 1px solid #6B8E4E;
 
 }
 
@@ -180,6 +180,16 @@
 .right .btn.btn-default:focus {
     outline: none;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);       
+}
+
+.form-inputs {
+    width: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+.sample-info, .symptom-info, .distribution-info, .condition-info{
+    text-align: left;
 }
 
 /*----------------------------------
