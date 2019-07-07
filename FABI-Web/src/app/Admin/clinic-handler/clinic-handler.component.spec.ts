@@ -3,7 +3,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClinicHandlerComponent } from './clinic-handler.component';
 import { MaterialModule} from '../../materials';
 
-import {MaterialModule} from '../../materials';
+//Router
+import { RouterTestingModule } from '@angular/router/testing';
+
+
+//Http Testing
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,7 +21,7 @@ describe('ClinicHandlerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ClinicHandlerComponent ],
       imports: [MaterialModule,
-        NoopAnimationsModule]
+        NoopAnimationsModule, HttpClientTestingModule, RouterTestingModule]
     })
     .compileComponents();
   }));

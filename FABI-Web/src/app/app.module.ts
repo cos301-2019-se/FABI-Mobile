@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule} from './materials';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -14,6 +16,10 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
+
+import { ErrorsModule } from "./errors/errors.module";
+import { NotificationService } from './services/notification.service';
+
 import { OrganizationModule } from './Organization/organization.module';
 import { OrganizationMemberModule } from './Organization-Member/organization-member.module';
 import { DatabaseHandlerComponent } from './Admin/database-handler/database-handler.component';
@@ -38,6 +44,7 @@ import { SubmitCbsDepositComponent } from './Staff/submit-cbs-deposit/submit-cbs
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 import { ErrorComponent } from './error/error.component';
 import { HomeComponent } from './home/home.component';
@@ -49,7 +56,6 @@ import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.comp
     AppComponent,
     LoginComponent,
     SampleFormComponent,
-    ErrorComponent,
     DatabaseHandlerComponent,
     ClinicHandlerComponent,
     AdminDashboardComponent,
@@ -72,14 +78,13 @@ import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.comp
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
+    ConfirmComponent
+  ],
+  entryComponents: [ConfirmComponent],
     HomeComponent,
     AdminDivComponent,
-    StaffDivComponent
-  ],
-  entryComponents: [
-    ErrorComponent, 
-    AdminDivComponent,
-    StaffDivComponent
+    StaffDivComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -92,9 +97,12 @@ import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.comp
     StaffModule,
     OrganizationModule,
     OrganizationMemberModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    ErrorsModule,
     LayoutModule
   ],
-  providers: [],
+  providers: [NotificationService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
