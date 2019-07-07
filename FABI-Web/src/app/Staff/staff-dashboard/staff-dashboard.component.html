@@ -1,49 +1,126 @@
-<!--Dashboard-->
-<div id="dashboard">
-  <div class="gradient-overlay"></div>
-  <div class="container-fluid">
-    <div class="row">
+<div class="container">
 
-      <!--Nav-->
-      <section id="nav">
+  <!--Nav Section-->
+  <div class="nav">
 
-      </section>
+    <section class="top-nav">
+      <h1>Staff Dashboard</h1>
+      <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
+      <a id="submit_CMW_request" routerLink="/submit-cmw-request"><i class="fab fa-wpforms"></i>CMW Request
+        Form</a>
+      <a id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><i class="fab fa-wpforms"></i>CMW Deposit
+        Form</a>
+      <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW
+        Revitalization Form</a>
+      <a id="submit_CBS_request" routerLink="/submit-cbs-request"><i class="fab fa-wpforms"></i>CBS Request
+        Form</a>
+      <a id="submit_CBS_deposit" routerLink="/submit-cbs-deposit"><i class="fab fa-wpforms"></i>CBS Deposit
+        Form</a>
+      <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+      <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
+      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
+    </section>
 
-      <!--Dashboard Content-->
-      <section id="dashboard">
-        <div id="sidenav_div" class="sidenav">
-          <a class="closebtn" (click)="closeNav()">&times;</a>
-          <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
-          <button id="submit_CMW_request" routerLink="/submit-cmw-request"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></span>  Submit CMW Request Form</button>
-          <button id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></span>  Submit CMW Deposit Form</button>
-          <button id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></span>  Submit CMW Revitalization Form</button>
-          <button id="submit_CBS_request" routerLink="/submit-cbs-request"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></span>  Submit CBS Request Form</button>
-          <button id="submit_CBS_deposit" routerLink="/submit-cbs-deposit"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></span>  View Organization's Samples</button>
-          <button id="submit_samples" routerLink="/staff-submit-sample"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">file_copy</mat-icon></span>  Submit CBS Deposit Form</button>
-          <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
-          <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
-          <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
-          <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
-        </div>
-        <div id="menu_div">
-          <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
-        </div>
-        <h1 id="dashboard_heading">Dashboard</h1><br/>
-        <div id="dashboard_content">
-          <button id="submit_CMW_request" class="btn btn-default" routerLink="/submit-cmw-request"><div class="icons_div"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></div><br/>Submit CMW Request Form</button>
-          <button id="submit_CMW_deposit" class="btn btn-default" routerLink="/submit-cmw-deposit"><div class="icons_div"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></div><br/>Submit CMW Deposit Form</button>
-          <button id="submit_CMW_revitalization" class="btn btn-default" routerLink="/submit-cmw-revitalization"><div class="icons_div"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></div><br/>Submit CMW Revitalization Form</button><br/><br/>
-          <button id="submit_CBS_request" class="btn btn-default" routerLink="/submit-cbs-request"><div class="icons_div"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></div><br/>Submit CBS Request Form</button>
-          <button id="submit_CBS_deposit" class="btn btn-default" routerLink="/submit-cbs-deposit"><div class="icons_div"><mat-icon [inline]="true" class="icons">insert_drive_file</mat-icon></div><br/>Submit CBS Deposit Form</button>
-          <button id="submit_sample" class="btn btn-default" routerLink="/staff-submit-sample"><div class="icons_div"><mat-icon [inline]="true" class="icons">file_copy</mat-icon></div><br/>Submit Sample</button>
-        </div>
-      </section>
+    <section class="bottom-nav">
+      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </section>
+    <a href="" id="menu"><i class="fas fa-bars"></i></a>
+  </div>
 
-      <!--Footer-->
-      <section id="footer">
+  <!--Dashboard Content-->
+  <div class="content">
+    <h1>Staff Dashboard</h1>
+    <div class="container-fluid">
+      <div class="col-md-4">
 
-      </section>
+        <!--Statistics Section-->
+        <section class="statistics">
+          <div class="box">
+            <i class="fas fa-vial"></i>
+            <h2>CMW Report</h2>
+          </div>
 
+          <div class="box">
+            <i class="fas fa-stethoscope"></i>
+            <h2>CBS Report</h2>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="col-md-4">
+
+        <!--Staff Section-->
+        <section class="staff">
+          <div class="admins">
+            <h1>Admins:</h1>
+            <div #adminContainer></div>
+            <!-- <div class="box">
+              <h2>Name Surname</h2>
+              <p class="contant-details">Contact: xxxxxxxxxx</p>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div> -->
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+
+  </div>
+  <div class="notifications">
+    <div class="container-fluid">
+
+
+      <div class="col-md-4">
+
+        <!--Notifcations Section-->
+        <section class="notification-items">
+          <h1>Notifications</h1>
+          <div class="box">
+            <div class="notification-content">
+              <h2>Notification 1</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="notification-action">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="notification-content">
+              <h2>Notification 2</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="notification-action">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="notification-content">
+              <h2>Notification 3</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="notification-action">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="notification-content">
+              <h2>Notification 4</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="notification-action">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+        </section>
+
+      </div>
     </div>
   </div>
 

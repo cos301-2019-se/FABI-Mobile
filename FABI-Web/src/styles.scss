@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
+//Import Google Fonts 
+@import url('https://fonts.googleapis.com/css?family=Oswald:700|Roboto&display=swap');
+
 //Container Setup for Responsiveness
 html {
     height: 100%
@@ -28,4 +31,70 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
+}
+
+/*
+    Styling for dynamically added AdminDivComponent
+*/
+app-admin-div .box {
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+    margin: 15px;
+
+    height: 20%;
+
+    text-align: left;
+}
+
+app-admin-div h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #3C5148;
+    font-size: 20px;
+    padding: 15px 15px 0px 15px;
+}
+
+app-admin-div p {
+    font-family: 'Open Sans', sans-serif;
+    color: #999;
+    font-size: 16px;
+    padding: 5px 15px 15px 15px;
+}
+
+@media (max-width: 500px) {
+    app-admin-div .box {
+        width: 100%;
+    }
+}
+
+/*
+    Styling for dynamically added StaffDivComponent
+*/
+app-staff-div .box {
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+    margin: 15px;
+
+    height: 20%;
+
+    text-align: left;
+}
+
+app-staff-div h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #3C5148;
+    font-size: 20px;
+    padding: 15px 15px 0px 15px;
+}
+
+app-staff-div p {
+    font-family: 'Open Sans', sans-serif;
+    color: #999;
+    font-size: 16px;
+    padding: 5px 15px 15px 15px;
+}
+
+@media (max-width: 500px) {
+    app-staff-div .box {
+        width: 100%;
+    }
 }

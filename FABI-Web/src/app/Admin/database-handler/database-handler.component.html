@@ -1,3 +1,68 @@
+<div class="container">
+
+  <!--Nav Section-->
+  <div class="nav">
+
+    <section class="top-nav">
+      <h1>Database Management</h1>
+      <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
+      <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>
+      <a id="organization_management" routerLink="/organization-handler"><i
+          class="fas fa-building"></i>Organizations</a>
+      <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i>Diagnostic
+        Clinic</a>
+      <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Databases</a>
+      <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
+      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
+    </section>
+
+    <section class="bottom-nav">
+      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </section>
+    <a href="" id="menu"><i class="fas fa-bars"></i></a>
+  </div>
+
+  <!--Database Handler Content-->
+  <div class="content">
+    <div class="color-accent">
+      <h1>Database Management</h1>
+    </div>
+
+    <div class="database-management ">
+      <!--Tab Menu-->
+      <mat-tab-group animationDuration="1000ms">
+
+        <!--Porting Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="fas fa-database"></i>
+            Add Database
+          </ng-template>
+          <div class="tab_content">
+            <h2>Add Database via Porting</h2>
+            <br />
+
+            <input type='file' (change)=submitCSV(input) id='fileInput' #input>
+
+          </div>
+          <p *ngIf="loading" style="color: black;">Porting File...</p>
+        </mat-tab>
+
+      </mat-tab-group>
+    </div>
+
+
+
+  </div>
+
+</div>
+
+
+
+
+
 <div id="database_handler">
   <div class="top_banner">
     <h1 id="database_heading">Database Management</h1>
@@ -8,15 +73,39 @@
 
   <div id="sidenav_div" class="sidenav">
     <a class="closebtn" (click)="closeNav()">&times;</a>
-    <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
-    <button id="user_management" routerLink="/staff-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Staff Management</button>
-    <button id="organization_management" routerLink="/organization-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>
-    <button id="diagnostic_clinic_management" routerLink="/clinic-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  Diagnostic Clinic Management</button>
-    <button id="database_management" routerLink="/database-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">storage</mat-icon></span>  Database Management</button>
-    <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
-    <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
-    <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
-    <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
+    <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">home</mat-icon>
+      </span> Dashboard</button>
+    <button id="user_management" routerLink="/staff-handler"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">people</mat-icon>
+      </span> Staff Management</button>
+    <button id="organization_management" routerLink="/organization-handler"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">business</mat-icon>
+      </span> Organization Management</button>
+    <button id="diagnostic_clinic_management" routerLink="/clinic-handler"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">insert_chart</mat-icon>
+      </span> Diagnostic Clinic Management</button>
+    <button id="database_management" routerLink="/database-handler"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">storage</mat-icon>
+      </span> Database Management</button>
+    <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">person</mat-icon>
+      </span> Profile</button>
+    <button id="help_menu_link" routerLink="/"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">help</mat-icon>
+      </span> Help</button>
+    <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">settings</mat-icon>
+      </span> Settings</button>
+    <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon>
+      </span> Logout</button>
+    <form id="menu_search">
+      <mat-form-field class="search_input_field">
+        <input matInput id="menu_search_field" formControlName="menu_search_field" type="text">
+        <mat-placeholder class="placeholder">Search</mat-placeholder>
+      </mat-form-field>
+    </form>
   </div>
 
   <div class="container-fluid">
