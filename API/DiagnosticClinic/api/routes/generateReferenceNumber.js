@@ -6,6 +6,7 @@ const EmailTemplate = require('email-templates');
 const path = require('path');
 const Promise = require('bluebird');
 
+const passwordKey = 'putwikaovlthpajo';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            EMAIL SETTINGS 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +36,7 @@ function generate() {
       /// TEMPORAORY  ////////////////////////////////
       const mailObject = {
             from: 'FABI_WepApp',
-            to: 'u17140634@tuks.co.za',
+            to: 'novacapstone@gmail.com',
             subject: "Sample Reference Number",
             text: `Thank you for your sample submission. Your reference number is: ${refNum}`
       }

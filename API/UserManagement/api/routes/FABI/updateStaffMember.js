@@ -82,7 +82,7 @@ function updateStaff(req, res) {
                 if(req.body.fields.hasOwnProperty('password'))
                 {
                     const salt = bcrypt.genSaltSync(10);
-                    req.body.fields.password = bcrypt.hashSync(req.body.password, salt);
+                    req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
                 }
                 newMail = req.body.fields.email;
                 newRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.fields.email);
@@ -111,7 +111,7 @@ function updateStaff(req, res) {
                 if(req.body.fields.hasOwnProperty('password'))
                 {
                     const salt = bcrypt.genSaltSync(10);
-                    req.body.fields.password = bcrypt.hashSync(req.body.password, salt);
+                    req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
                 }
 
                 var updateRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(newMail);
