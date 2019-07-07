@@ -50,11 +50,13 @@ import { ErrorComponent } from './errors/error-component/error.component';
 import { HomeComponent } from './home/home.component';
 import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
 import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    HomeComponent,
     SampleFormComponent,
     DatabaseHandlerComponent,
     ClinicHandlerComponent,
@@ -78,7 +80,8 @@ import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.comp
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    UpdateComponent
   ],
   entryComponents: [
     ConfirmComponent,

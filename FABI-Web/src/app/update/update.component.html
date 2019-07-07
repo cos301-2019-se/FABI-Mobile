@@ -1,0 +1,38 @@
+<div class="container">
+
+  <h2>Update Profile</h2>
+
+  <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()">
+
+      <mat-form-field>
+        <input matInput type="text" formControlName="OrgName" placeholder="Organization"  value="{{data.orgName}}" disabled/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" formControlName="Name" placeholder="Name"  value="{{data.name}}"/>
+      </mat-form-field>
+      <div *ngIf="submitted && updateProfileForm.controls.Name.errors" class="errors">
+        <div *ngIf="updateProfileForm.controls.Name.errors.required">Please enter name</div>
+      </div>
+      <br>
+
+      <mat-form-field>
+        <input matInput type="number" formControlName="Surname" placeholder="Surname" value="{{data.surname}}" />
+      </mat-form-field>
+      <div *ngIf="submitted && updateProfileForm.controls.Surname.errors" class="errors">
+        <div *ngIf="updateProfileForm.controls.Surname.errors.required">Please enter surname</div>
+      </div>
+      <br>
+
+      <mat-form-field>
+        <input matInput type="number" formControlName="Email" placeholder="Email" value="{{data.email}}" />
+      </mat-form-field>
+      <div *ngIf="submitted && updateProfileForm.controls.Email.errors" class="errors">
+        <div *ngIf="updateProfileForm.controls.Email.errors.required">Please enter the price</div>
+      </div>
+      <br>
+
+      <input id="add-button" type="submit" value="Save Changes" class="btn btn-default" />
+
+    </form>
+</div>
