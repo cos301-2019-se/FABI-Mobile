@@ -1,46 +1,138 @@
-<!--Dashboard-->
-<div id="dashboard">
-  <div class="gradient-overlay"></div>
-  <div class="container-fluid">
-    <div class="row">
+<div class="container">
 
-      <!--Nav-->
-      <section id="nav">
-        
+    <!--Nav Section-->
+    <div class="nav">
+  
+      <section class="top-nav">
+        <h1>Organization Dashboard</h1>
+        <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
+        <a id="guest_management" routerLink="/member-handler"><i class="fas fa-users"></i>Members</a>
+        <a id="view_samples" routerLink="/organization-view-samples"><i class="fas fa-vials"></i>View Samples</a>
+        <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+        <a id="profile" routerLink="/organization-profile"><i class="fas fa-user-circle"></i>Profile</a>
+        <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+        <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
       </section>
-
-      <!--Dashboard Content-->
-      <section id="dashboard">
-        <div id="sidenav_div" class="sidenav">
-          <a class="closebtn" (click)="closeNav()">&times;</a>
-          <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
-          <button id="guest_management" routerLink="/member-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Member Management</button>
-          <button id="profile" routerLink="/organization-profile"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>
-          <button id="view_samples" routerLink="/organization-view-samples"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  View Organization's Samples</button>
-          <button id="submit_samples" routerLink="/organization-submit-sample"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">file_copy</mat-icon></span>  Submit Sample</button>
-          <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
-          <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
-          <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
-          <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
-        </div>
-        <div id="menu_div">
-          <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
-        </div>
-        <h1 id="dashboard_heading">Dashboard</h1><br/>
-        <div id="dashboard_content">
-          <button id="guest_management" class="btn btn-default" routerLink="/member-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">people</mat-icon></div><br/>Manage Members</button><button id="profile" class="btn btn-default" routerLink="/organization-profile"><div class="icons_div"><mat-icon [inline]="true" class="icons">person</mat-icon></div><br/>Manage Profile</button><button id="view_samples" class="btn btn-default" routerLink="/organization-view-samples"><div class="icons_div"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></div><br/>View Organization's
-            Samples</button><button id="submit_samples" class="btn btn-default" routerLink="/organization-submit-sample"><div class="icons_div"><mat-icon [inline]="true" class="icons">file_copy</mat-icon></div><br/>Submit
-            <br/>Sample</button>
-        </div>
+  
+      <section class="bottom-nav">
+        <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
       </section>
-
-      <!--Footer-->
-      <section id="footer">
-
-      </section>
-
-
+      <a href="" id="menu"><i class="fas fa-bars"></i></a>
     </div>
+  
+    <!--Dashboard Content-->
+    <div class="content">
+      <h1>Organization Dashboard</h1>
+      <div class="container-fluid">
+        <div class="col-md-4">
+  
+          <!--Statistics Section-->
+          <section class="statistics">
+            <div class="box">
+                <i class="fas fa-users"></i>
+              <h2 id="organization_users_stats" [innerHTML]="memberStats"></h2>
+            </div>
+  
+            <div class="box">
+                <i class="fas fa-vial"></i>
+              <h2 id="organization_samples_stats">37</h2>
+            </div>
+
+            <div class="box">
+                <i class="fas fa-tasks"></i>
+              <h2 id="organization_completed_samples_stats">75%</h2> <!-- percentage of completed (processed) samples -->
+            </div>
+          </section>
+  
+        </div>
+  
+        <div class="col-md-4">
+  
+          <!--Member Section-->
+          <section class="members">
+            <div class="member">
+              <h1>Members:</h1>
+              <div class="box">
+                <h2>Name Surname</h2>
+                <p class="contant-details">Contact: xxxxxxxxxx</p>
+                <p>Lorem ipsum dolor sit amet.</p>
+              </div>
+  
+              <div class="box">
+                <h2>Name Surname</h2>
+                <p class="contant-details">Contact: xxxxxxxxxx</p>
+                <p>Lorem ipsum dolor sit amet.</p>
+              </div>
+  
+              <div class="box">
+                <h2>Name Surname</h2>
+                <p class="contant-details">Contact: xxxxxxxxxx</p>
+                <p>Lorem ipsum dolor sit amet.</p>
+              </div>
+            </div>
+  
+          </section>
+  
+        </div>
+      </div>
+  
+  
+    </div>
+    <div class="notifications">
+      <div class="container-fluid">
+  
+  
+        <div class="col-md-4">
+  
+          <!--Notifcations Section-->
+          <section class="notification-items">
+            <h1>Notifications</h1>
+            <div class="box">
+              <div class="notification-content">
+                <h2>Notification 1</h2>
+                <p>Lorem ipsum dolor sit amet.</p>
+              </div>
+              <div class="notification-action">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+  
+            <div class="box">
+              <div class="notification-content">
+                <h2>Notification 2</h2>
+                <p>Lorem ipsum dolor sit amet.</p>
+              </div>
+              <div class="notification-action">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+  
+            <div class="box">
+              <div class="notification-content">
+                <h2>Notification 3</h2>
+                <p>Lorem ipsum dolor sit amet.</p>
+              </div>
+              <div class="notification-action">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+  
+            <div class="box">
+              <div class="notification-content">
+                <h2>Notification 4</h2>
+                <p>Lorem ipsum dolor sit amet.</p>
+              </div>
+              <div class="notification-action">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+          </section>
+  
+        </div>
+      </div>
+    </div>
+  
   </div>
 
-</div>
+
