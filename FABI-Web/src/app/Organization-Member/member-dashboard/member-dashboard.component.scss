@@ -140,6 +140,55 @@ a i {
 
 }
 
+@media (max-height: 850px) {
+
+    .bottom-nav{
+        justify-content: flex-start;
+    }
+}
+
+@media (max-height: 750px) {
+    .nav a{
+        font-size:18px;
+    }
+
+    .nav a:hover{
+        font-size:20px;
+    }
+}
+
+@media (max-height: 670px) and  (min-width: 1400px){
+    .nav{
+        width:5%;
+    }
+
+    .nav>* {
+        display: none;
+    }
+
+    .nav #menu {
+        display: block;
+    }
+
+    .top-nav{
+        justify-content: center;
+    }
+}
+
+@media (max-height: 850px) {
+
+    .statistics {
+        margin: 5% 0 0 2%;
+    }
+
+}
+
+@media (max-height: 750px) {
+    .statistics {
+        margin: 1% 0 0 1%;
+    }
+}
+
 /*-------------
     Content
 -------------*/
