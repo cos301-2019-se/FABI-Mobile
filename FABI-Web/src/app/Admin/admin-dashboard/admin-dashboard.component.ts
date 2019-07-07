@@ -13,12 +13,14 @@
  * <<license>>
  */
 
-import { Component, OnInit, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
+import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
   ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
+  import { OnInit} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 import { Member, UserManagementAPIService } from '../../user-management-api.service';
 import { DiagnosticClinicAPIService } from '../../diagnostic-clinic-api.service';
@@ -39,10 +41,23 @@ import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.
 })
 
 export class AdminDashboardComponent implements OnInit {
-
+  
+  /**
+   * 
+   *
+   * @memberof AdminDashboardComponent
+   */
   sidenavToggle(){
-  if(document.getElementById("sidenav_div").style.width == "22%")
-  {
+    // if(document.getElementById("sidenav_div").style.width == this.navWidth)
+    // {
+    //   document.getElementById("sidenav_div").style.width = "0";
+    // }
+    // else{
+    //   document.getElementById("sidenav_div").style.width = this.navWidth;
+    // } 
+  }
+
+  closeNav(){
     document.getElementById("sidenav_div").style.width = "0";
   }
   else{
