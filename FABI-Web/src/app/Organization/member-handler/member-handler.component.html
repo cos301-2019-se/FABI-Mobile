@@ -1,162 +1,360 @@
-<div id="member_handler">
-    <div class="top_banner">
-      <h1 id="member_heading">Member Management</h1>
-      <div id="menu_div">
-        <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
-      </div>
+<div class="container">
+
+  <!--Nav Section-->
+  <div class="nav">
+
+    <section class="top-nav">
+      <h1>Member Management</h1>
+      <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
+      <a id="guest_management" routerLink="/member-handler"><i class="fas fa-users"></i>Members</a>
+      <a id="view_samples" routerLink="/organization-view-samples"><i class="fas fa-vials"></i>View Samples</a>
+      <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+      <a id="profile" routerLink="/organization-profile"><i class="fas fa-user-circle"></i>Profile</a>
+      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
+    </section>
+
+    <section class="bottom-nav">
+      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </section>
+    <a href="" id="menu"><i class="fas fa-bars"></i></a>
+  </div>
+
+  <!--Member Handler Content-->
+  <div class="content">
+    <div class="color-accent">
+      <h1>Member Management</h1>
     </div>
 
-    <div id="sidenav_div" class="sidenav">
-      <a class="closebtn" (click)="closeNav()">&times;</a>
-      <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
-      <button id="guest_management" routerLink="/member-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Member Management</button>
-      <button id="profile" routerLink="/organization-profile"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>
-      <button id="view_samples" routerLink="/organization-view-samples"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  View Organization's Samples</button>
-      <button id="submit_samples" routerLink="/organization-submit-sample"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">file_copy</mat-icon></span>  Submit Sample</button>
-      <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
-      <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
-      <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
-      <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
+    <div class="member-management">
+      <!--Tab Menu-->
+      <mat-tab-group animationDuration="1000ms">
+
+        <!--Add Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>person_add</mat-icon>
+            Add Member
+          </ng-template>
+          <div class="tab_content">
+            <h2>Add Member</h2>
+            <br />
+
+            <form id="add_new_member_form" [formGroup]="addMemberForm" (submit)="addMember()">
+
+              <!--Dropdown for Organization selection and Error Handling-->
+              <mat-form-field>
+                <mat-label>Organization</mat-label>
+                <mat-select id="organization" formControlName="organization">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
+                    {{organization.orgName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="submitted && addMemberForm.controls.organization.errors" class="errors">
+                <div *ngIf="addMemberForm.controls.organization.errors.required">Please select an organization</div>
+              </div>
+              <br />
+
+              <!--Name Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Name" matInput type="text" formControlName="member_name">
+              </mat-form-field>
+              <br />
+
+              <!--Surname Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname">
+              </mat-form-field>
+              <br />
+
+              <!--Location Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Location" matInput type="text" formControlName="member_location">
+              </mat-form-field>
+              <br />
+
+              <!--Email Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Email Address" matInput type="text" formControlName="member_email">
+              </mat-form-field>
+              <br />
+
+              <!--Phone Number-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Phone Number" matInput type="number" formControlName="member_phone">
+              </mat-form-field>
+
+
+              <button type="submit" id="add_member" class="btn btn-default">Add Member</button>
+
+            </form>
+
+          </div>
+        </mat-tab>
+
+        <!--Remove Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>delete</mat-icon>
+            Remove Member
+          </ng-template>
+          <div class="tab_content">
+            <h2>Remove Member</h2>
+            <br />
+
+            <form id="remove_member_form">
+
+              <!--Search Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Search for a member">
+              </mat-form-field>
+              <br />
+
+              <button type="submit" id="remove_search_member" class="btn btn-default">Search</button>
+
+            </form>
+
+          </div>
+        </mat-tab>
+
+        <!--View Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>people</mat-icon>
+            View Members
+          </ng-template>
+          <div class="tab_content">
+            <h2>View Members</h2>
+            <br />
+            <!--TODO
+                        - Retrieve list to all organization members from API
+                    -->
+          </div>
+        </mat-tab>
+
+        <!--Search Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>search</mat-icon>
+            Search
+          </ng-template>
+          <div class="tab_content">
+            <h2>Search for a member</h2>
+            <br />
+
+            <form id="search_member_form">
+
+              <!--Search Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Search for a member">
+              </mat-form-field>
+              <br />
+
+              <button type="submit" id="search_member" class="btn btn-default">Search</button>
+
+            </form>
+
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </div>
-  
-    <div class="container-fluid">
-      <div class="row">
-  
-        <div id="member_management_div">
-  
-          <!--Tab Menu-->
-          <mat-tab-group animationDuration="1000ms">
-  
-            <!--Add Tab Option-->
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <mat-icon>person_add</mat-icon>
-                Add Member
-              </ng-template>
-              <div class="tab_content">
-                <h2>Add Member</h2>
-                <br />
-  
-                <form id="add_new_member_form" [formGroup]="addMemberForm" (submit)="addMember()">
+
+
+
+  </div>
+
+</div>
+
+
+
+
+
+<div id="member_handler">
+  <div class="top_banner">
+    <h1 id="member_heading">Member Management</h1>
+    <div id="menu_div">
+      <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
+    </div>
+  </div>
+
+  <div id="sidenav_div" class="sidenav">
+    <a class="closebtn" (click)="closeNav()">&times;</a>
+    <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">home</mat-icon>
+      </span> Dashboard</button>
+    <button id="guest_management" routerLink="/member-handler"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">people</mat-icon>
+      </span> Member Management</button>
+    <button id="profile" routerLink="/organization-profile"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">business</mat-icon>
+      </span> Organization Management</button>
+    <button id="view_samples" routerLink="/organization-view-samples"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">insert_chart</mat-icon>
+      </span> View Organization's Samples</button>
+    <button id="submit_samples" routerLink="/organization-submit-sample"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">file_copy</mat-icon>
+      </span> Submit Sample</button>
+    <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">person</mat-icon>
+      </span> Profile</button>
+    <button id="help_menu_link" routerLink="/"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">help</mat-icon>
+      </span> Help</button>
+    <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons">settings</mat-icon>
+      </span> Settings</button>
+    <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu">
+        <mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon>
+      </span> Logout</button>
+    <form id="menu_search">
+      <mat-form-field class="search_input_field">
+        <input matInput id="menu_search_field" formControlName="menu_search_field" type="text">
+        <mat-placeholder class="placeholder">Search</mat-placeholder>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div id="member_management_div">
+
+        <!--Tab Menu-->
+        <mat-tab-group animationDuration="1000ms">
+
+          <!--Add Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>person_add</mat-icon>
+              Add Member
+            </ng-template>
+            <div class="tab_content">
+              <h2>Add Member</h2>
+              <br />
+
+              <form id="add_new_member_form" [formGroup]="addMemberForm" (submit)="addMember()">
 
                 <!--Dropdown for Organization selection and Error Handling-->
                 <mat-form-field>
-                    <mat-label>Organization</mat-label>
-                    <mat-select id="organization" formControlName="organization">
-                        <mat-option>--</mat-option>
-                      <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
-                        {{organization.orgName}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <div *ngIf="submitted && addMemberForm.controls.organization.errors" class="errors">
-                    <div *ngIf="addMemberForm.controls.organization.errors.required">Please select an organization</div>
-                  </div>
-                  <br />
-  
-                  <!--Name Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Name" matInput type="text" formControlName="member_name">
-                  </mat-form-field>
-                  <br />
+                  <mat-label>Organization</mat-label>
+                  <mat-select id="organization" formControlName="organization">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
+                      {{organization.orgName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && addMemberForm.controls.organization.errors" class="errors">
+                  <div *ngIf="addMemberForm.controls.organization.errors.required">Please select an organization</div>
+                </div>
+                <br />
 
-                   <!--Surname Field-->
-                   <mat-form-field class="form_inputs">
-                      <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname">
-                    </mat-form-field>
-                    <br />
-  
-                  <!--Location Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Location" matInput type="text" formControlName="member_location">
-                  </mat-form-field>
-                  <br />
-  
-                  <!--Email Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Email Address" matInput type="text" formControlName="member_email">
-                  </mat-form-field>
-                  <br />
-  
-                  <!--Phone Number-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Phone Number" matInput type="number" formControlName="member_phone">
-                  </mat-form-field>
-  
-  
-                  <button type="submit" id="add_member" class="btn btn-default">Add Member</button>
-  
-                </form>
-  
-              </div>
-            </mat-tab>
-  
-            <!--Remove Tab Option-->
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <mat-icon>delete</mat-icon>
-                Remove Member
-              </ng-template>
-              <div class="tab_content">
-                <h2>Remove Member</h2>
+                <!--Name Field-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Name" matInput type="text" formControlName="member_name">
+                </mat-form-field>
                 <br />
-  
-                <form id="remove_member_form">
-  
-                  <!--Search Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Search for a member">
-                  </mat-form-field>
-                  <br />
-  
-                  <button type="submit" id="remove_search_member" class="btn btn-default">Search</button>
-  
-                </form>
-  
-              </div>
-            </mat-tab>
-  
-            <!--View Tab Option-->
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <mat-icon>people</mat-icon>
-                View Members
-              </ng-template>
-              <div class="tab_content">
-                <h2>View Members</h2>
+
+                <!--Surname Field-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname">
+                </mat-form-field>
                 <br />
-                <!--TODO
+
+                <!--Location Field-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Location" matInput type="text" formControlName="member_location">
+                </mat-form-field>
+                <br />
+
+                <!--Email Field-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Email Address" matInput type="text" formControlName="member_email">
+                </mat-form-field>
+                <br />
+
+                <!--Phone Number-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Phone Number" matInput type="number" formControlName="member_phone">
+                </mat-form-field>
+
+
+                <button type="submit" id="add_member" class="btn btn-default">Add Member</button>
+
+              </form>
+
+            </div>
+          </mat-tab>
+
+          <!--Remove Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>delete</mat-icon>
+              Remove Member
+            </ng-template>
+            <div class="tab_content">
+              <h2>Remove Member</h2>
+              <br />
+
+              <form id="remove_member_form">
+
+                <!--Search Field-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Search for a member">
+                </mat-form-field>
+                <br />
+
+                <button type="submit" id="remove_search_member" class="btn btn-default">Search</button>
+
+              </form>
+
+            </div>
+          </mat-tab>
+
+          <!--View Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>people</mat-icon>
+              View Members
+            </ng-template>
+            <div class="tab_content">
+              <h2>View Members</h2>
+              <br />
+              <!--TODO
                         - Retrieve list to all organization members from API
                     -->
-              </div>
-            </mat-tab>
-  
-            <!--Search Tab Option-->
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <mat-icon>search</mat-icon>
-                Search
-              </ng-template>
-              <div class="tab_content">
-                <h2>Search for a member</h2>
+            </div>
+          </mat-tab>
+
+          <!--Search Tab Option-->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>search</mat-icon>
+              Search
+            </ng-template>
+            <div class="tab_content">
+              <h2>Search for a member</h2>
+              <br />
+
+              <form id="search_member_form">
+
+                <!--Search Field-->
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Search for a member">
+                </mat-form-field>
                 <br />
-  
-                <form id="search_member_form">
-  
-                  <!--Search Field-->
-                  <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Search for a member">
-                  </mat-form-field>
-                  <br/>
-  
-                  <button type="submit" id="search_member" class="btn btn-default">Search</button>
-                
-                </form>
-  
-              </div>
-            </mat-tab>
-          </mat-tab-group>
-  
-        </div>
+
+                <button type="submit" id="search_member" class="btn btn-default">Search</button>
+
+              </form>
+
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
       </div>
     </div>
+  </div>

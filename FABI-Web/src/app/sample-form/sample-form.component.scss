@@ -1,111 +1,167 @@
-//Sample Submission Design 
-
-#sample-form {
-    color: #ffffff;
+/*--------------
+    Layout
+--------------*/
+.container {
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
+    justify-content: center;
     align-items: center;
-    text-align: center;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
 
-    background-image: url('/assets/images/primary_background.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-#sample-form .gradient-overlay {
-    background: linear-gradient(to left, #196F3D, black);
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    width: 100%;
     height: 100vh;
 }
 
-#submission_div {
+.sample-submission {
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: center;
-    height: 90vh;
-    width: 80%;
+    justify-content: stretch;
 
-    overflow: auto;
-    position: relative;
-
-    top: 5vh;
-    left: 10%;
-
-    background-color: #ffffff;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    height: 90%;
+    width: 80%;   
 
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
-#clinic_information {
-    background-image: url('/assets/images/forest.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    min-height: 90vh;
-    height: auto;
-    width: 40%;
+    text-align: center;
 
-    color: #ffffff;
-    padding: 2rem;
+    color: white;
+    background-color: #6B8E4E;
 
-}
-
-#clinic_information h1 {
-    position: relative;
-    top: 10vh;
-}
-
-#clinic_information p {
-    font-size: 12px;
-}
-
-
-#sample_div {
+    width: 50%;
     height: 100%;
-    width: 60%;
-
-    color: #196F3D;
-
-    padding: 2rem;
-
-    text-align: left;
 }
 
-#sample_div h2 {
-    font-size: 14px;
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    color: #3C5148;
+    background-color: #ffffff;
+
+    width: 50%;
+    height: 100%;
+}
+
+@media (max-width: 1100px) {
+
+    .sample-submission {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .left {    
+        width: 100%;
+        height: 20%;
+    }
+    
+    .right {
+        width: 100%;
+        height: 80%;
+    }
+}
+
+// /*-------------------
+//     Login Section
+// --------------------*/
+.sample-submission .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-image: url('src/assets/images/primary_background.jpg');
+    z-index: -1;
+}
+
+.sample-submission .background-image:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #6B8E4E;
+    opacity: 0.3;
 }
 
 
-//Input Styling 
-.mat-focused .placeholder {
-    color: #196F3D
+/*-------------
+    Left Div
+---------------*/
+.left > * {
+    color: white;
 }
 
-.mat-form-field-ripple {
-    background-color: #196F3D !important;
+.left h1, .right h1{
+    font-family: 'Roboto', sans-serif;
 }
 
+.left p{
+    padding: 25px;
+}
 
-input#sample_form_submit.btn.btn-default {
-    background: transparent;
-    border: 3px solid #196F3D;
-    color: #196F3D;
+@media (max-width: 1100px) {
+    .left h1{
+        padding:25px;
+    }
+    
+    .left h3, .left p {
+        display: none;
+    }
+}
+
+/*-------------
+    Right Div
+---------------*/
+.right h1{
+    font-size: 32px;
+}
+
+@media screen and (max-width: 1100px), screen and (max-height: 800px){
+    .right{
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .right h1{
+        font-size: 40px;
+    }
+}
+
+/*----------------------------------
+        Form and Input Styling
+-----------------------------------*/
+.mat-form-field.mat-focused {
+    .mat-form-field-label {
+        color: #3C5148;
+    }
+
+    .mat-form-field-ripple {
+        background-color: #3C5148;
+    }
+
+    .mat-form-field-required-marker {
+        color: #3C5148;
+    }
+
+    .mat-input-element {
+        color: #3C5148;
+    }
+}
+
+.right .btn.btn-default {
+    background: #3C5148;
+    border: 3px solid #3C5148;
+    color: white;
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
@@ -116,34 +172,20 @@ input#sample_form_submit.btn.btn-default {
     border-radius: 50px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
-    border: 1px solid #196F3D;
+    border: 1px solid #3C5148;
 
 }
 
-input#sample_form_submit.btn.btn-default:hover,
-input#sample_form_submit.btn.btn-default:focus {
-    opacity: 0.8;
-    color: #ffffff;
-    background-color: #196F3D;
+.right .btn.btn-default:hover,
+.right .btn.btn-default:focus {
+    outline: none;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);       
 }
 
-
-//Responsive Logo Display 
-@media (max-width: 768px) {
-
-
-    #clinic_information{
-        display: none;
-    }
-
-    #sample_div {
-        
-        left:10%;
-        width:90%;
-        
-    }
-}
-
-mat-expansion-panel-header{
-    padding:2rem;
+/*----------------------------------
+        Error Message Styling
+-----------------------------------*/
+.errors {
+    margin-top: 1rem;
+    display: block;
 }
