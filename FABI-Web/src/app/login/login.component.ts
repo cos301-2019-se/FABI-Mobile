@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, June 24th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -111,10 +111,12 @@ export class LoginComponent implements OnInit {
 
     this.service.login(details).subscribe((response: any) => {
 
+     console.log(response);
+
       this.loading = false;
 
       // API Request successful
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
 
         // User NOT Authorised
         if (response.title != "AUTHORIZED") {
@@ -129,14 +131,14 @@ export class LoginComponent implements OnInit {
           duration: 3000
         });
 
-        this.service.setSessionVariables(response.data.token, details.orgName, details.userType);
+        this.service.setSessionVariables(response.token, details.orgName, details.userType);
         // this.service.setLoggedin();
 
         // Navigate to specific dashboard, based on user's type
         if (details.orgName == "FABI") {
           if (details.userType == "Admin" || details.userType == "Database Admin") {
             try {
-              this.router.navigate(['fabi-admin-dashboard']);
+              this.router.navigate(['admin-dashboard']);
             } catch (err) {
               console.log("Could not redirect to dashboard: " + err.message);
             }
@@ -144,7 +146,7 @@ export class LoginComponent implements OnInit {
           }
           else {
             try {
-              this.router.navigate(['fabi-staff-dashboard']);
+              this.router.navigate(['staff-dashboard']);
             } catch (err) {
               console.log("Could not redirect to dashboard: " + err.message);
             }
@@ -192,16 +194,21 @@ export class LoginComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+
+    this.displayUserTypes();
     
-    this.loggedIn = this.service.isLoggedIn();
-    if (this.loggedIn == true) {
-      // Navigate to respective dashboard
-    }
+    // this.loggedIn = this.service.isLoggedIn();
+    // if (this.loggedIn == true) {
+    //   // Navigate to respective dashboard
+    // }
 
     //-------- Load Organisation names for Drop Down --------
     this.service.getAllOrganizations().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        this.organizations = response.data;
+      
+      if (response.success == true && response.code == 200) {
+        console.log(response);
+        console.log(response.data);
+        this.organizations = response.data.Organizations;
 
       } else if (response.success == false) {
         //POPUP MESSAGE
@@ -212,18 +219,7 @@ export class LoginComponent implements OnInit {
           }
         })
       }
-    }
-      //  (err: HttpErrorResponse) => {
-      //   //POPUP MESSAGE
-      //   let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Load Organizations", message: err.message } });
-      //   dialogRef.afterClosed().subscribe((result) => {
-      //     if (result == "Retry") {
-      //       this.ngOnInit();
-      //     }
-      //   })
-      //   console.log("ERROR:" + err.message);
-      // }
-    );
+    });
 
   }
 
@@ -233,22 +229,48 @@ export class LoginComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayUserTypes() {
 
-    //-------- Load User Types for Drop Down --------
-    this.service.getUserTypes(this.selectedOrg).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        this.userTypes = response.data;
+    if(this.selectedOrg == "FABI")
+    {
+      this.userTypes = [
+        {
+          "ID":1,
+          "Name":"Admin"
+        },
+        {
+          "ID":2,
+          "Name":"Staff"
+        }
+      ]
 
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the User Types", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.displayUserTypes();
-          }
-        })
-      }
     }
-    )
+    else {
+      this.userTypes = [
+        {
+          "ID":1,
+          "Name":"Admin"
+        },
+        {
+          "ID":2,
+          "Name":"Member"
+        }
+      ]
+    }
+
+    //-------- Load User Types for Drop Down --------
+    // this.service.getUserTypes(this.selectedOrg).subscribe((response: any) => {
+    //   if (response.success == true && response.status == 200) {
+    //     this.userTypes = response.data;
+
+    //   } else if (response.success == false) {
+    //     //POPUP MESSAGE
+    //     let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the User Types", message: response.message, retry: true } });
+    //     dialogRef.afterClosed().subscribe((result) => {
+    //       if (result == "Retry") {
+    //         this.displayUserTypes();
+    //       }
+    //     })
+    //   }
+    // });
 
   }
 
