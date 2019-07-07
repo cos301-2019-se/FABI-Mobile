@@ -1,12 +1,12 @@
-import { ClientFormData } from '../apiconnection.service';
+// import { ClientFormData } from '../organization-api.service';
+import * as Interface from '../interfaces/interfaces';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { LoginInfo } from '../apiconnection.service';
-import { APIconnectionService } from '../apiconnection.service';
+import { HttpService } from '../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../error/error.component';
+import { ErrorComponent } from '../errors/error-component/error.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,6 +22,7 @@ export class SampleFormComponent implements OnInit {
   success: boolean = false;         // if form was succesfully filled out
   sent: boolean = false;                // to check if user is logged in
   errors: boolean = false;
+  organizations: Object;            //array for Organization dropdown
 
   // sampleForm = new FormGroup({
   //   sample_form_name: new FormControl(),
@@ -71,14 +72,10 @@ export class SampleFormComponent implements OnInit {
 
   // api: APIconnectionService;
 
-  constructor(private api: APIconnectionService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(private service: HttpService, private adminServce: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
     this.sampleForm = this.formBuilder.group({
-      sample_form_name: ['', Validators.required],
-      sample_form_company: ['', Validators.required],
-      sample_form_address: ['', Validators.required],
-      sample_form_contact: ['', Validators.required],
-      sample_form_email: ['', Validators.required],
 
+      organization: ['', Validators.required],
       sample_form_tree_species: ['', Validators.required],
       sample_form_number_samples: ['', Validators.required],
       sample_form_location1: ['', Validators.required],
@@ -118,10 +115,7 @@ export class SampleFormComponent implements OnInit {
       conditions_weather_disturbances: ['', Validators.required],
       conditions_weather_prior: ['', Validators.required],
       conditions_others: ['', Validators.required],
-      conditions_additional: ['', Validators.required],
-
-      landowner: ['', Validators.required],
-      landowner_signature: ['', Validators.required],
+      conditions_additional: ['', Validators.required]
     })
   }
 
@@ -135,12 +129,7 @@ export class SampleFormComponent implements OnInit {
 
     this.success = true;
 
-    const formDetails: ClientFormData = {
-      name : this.sampleForm.controls.sample_form_name.value,
-      company : this.sampleForm.controls.sample_form_company.value,
-      address : this.sampleForm.controls.sample_form_address.value,
-      contact : this.sampleForm.controls.sample_form_contact.value,
-      email : this.sampleForm.controls.sample_form_email.value,
+    const formDetails: Interface.ClientFormData = {
 
       tree_species : this.sampleForm.controls.sample_form_tree_species.value,
       number_samples : this.sampleForm.controls.sample_form_number_samples.value,
@@ -182,23 +171,20 @@ export class SampleFormComponent implements OnInit {
       conditions_weather_prior : this.sampleForm.controls.conditions_weather_prior.value,
       conditions_other : this.sampleForm.controls.conditions_others.value,
       conditions_additional : this.sampleForm.controls.conditions_additional.value,
-
-      landowner : this.sampleForm.controls.landowner.value,
-      landowner_signature : this.sampleForm.controls.landowner_signature.value
     };
 
+    const orgDetails: Interface.Organisation = { orgName: localStorage.getItem('orgName') };
 
-    this.api.submitForm(formDetails).subscribe((response: any) => {
+
+    this.service.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
       console.log("HERE");
-      if (response.success == true) {
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Submitted Form", "Dismiss", {
           duration: 3000
         });
 
-        this.api.setSent();
-        this.sent = this.api.isSent();
-        //this.router.navigate(['sample-form']);
+        console.log("Reference Number : " + response.data.referenceNumber);
 
       } else if (response.success == false) {
         //POPUP MESSAGE
@@ -229,6 +215,7 @@ export class SampleFormComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
 }

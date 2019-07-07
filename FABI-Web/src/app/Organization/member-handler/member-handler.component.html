@@ -1,0 +1,204 @@
+<div class="container">
+
+  <!--Nav Section-->
+  <div class="nav">
+
+    <section class="top-nav">
+      <h1>Member Management</h1>
+      <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
+      <a id="guest_management" routerLink="/member-handler"><i class="fas fa-users"></i>Members</a>
+      <a id="view_samples" routerLink="/organization-view-samples"><i class="fas fa-vials"></i>View Samples</a>
+      <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+      <a id="profile" routerLink="/organization-profile"><i class="fas fa-user-circle"></i>Profile</a>
+      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
+    </section>
+
+    <section class="bottom-nav">
+      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </section>
+    <a href="" id="menu"><i class="fas fa-bars"></i></a>
+  </div>
+
+  <!--Member Handler Content-->
+  <div class="content">
+    <!-- <div class="color-accent">
+      <h1>Member Management</h1>
+    </div> -->
+
+    <div class="member-management">
+      <!--Tab Menu-->
+      <mat-tab-group animationDuration="1000ms">
+
+        <!--Add Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>person_add</mat-icon>
+            Add Member
+          </ng-template>
+          <div class="tab-content">
+            <h2>Add Member</h2>
+            <br />
+
+            <form id="add_new_member_form" [formGroup]="addMemberForm" (submit)="addMember()">
+
+              <!--Name Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Name" matInput type="text" formControlName="member_name">
+              </mat-form-field>
+              <br />
+
+              <!--Surname Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname">
+              </mat-form-field>
+              <br />
+
+              <!--Location Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Location" matInput type="text" formControlName="member_location">
+              </mat-form-field>
+              <br />
+
+              <!--Email Field-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Email Address" matInput type="text" formControlName="member_email">
+              </mat-form-field>
+              <br />
+
+              <!--Phone Number-->
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Phone Number" matInput type="number" formControlName="member_phone">
+              </mat-form-field>
+
+              <br />
+              <p *ngIf="loading" class="errors">Adding Member...</p>
+              <br />
+              <input type="submit" id="add_member" class="btn btn-default" value="Add Member" />
+
+            </form>
+
+          </div>
+        </mat-tab>
+
+        <!--Remove Tab Option-->
+        <!-- <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>delete</mat-icon>
+            Remove Member
+          </ng-template>
+          <div class="tab-content">
+            <h2>Remove Member</h2>
+            <br />
+
+            <form id="remove_member_form">
+
+              Search Field
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Search for a member">
+              </mat-form-field>
+              <br />
+
+              <button type="submit" id="remove_search_member" class="btn btn-default">Search</button>
+
+            </form>
+
+          </div>
+        </mat-tab> -->
+
+        <!--View Tab Option-->
+        <mat-tab (click)="viewMembers()">
+          <ng-template mat-tab-label>
+            <mat-icon>people</mat-icon>
+            View Members
+          </ng-template>
+          <div class="tab-content">
+            <h2>View Members</h2>
+            <br />
+            <!--Table of all members-->
+            <div class="member-table">
+              <!--Search Filter for the Table-->
+              <div class="search-field">
+                <mat-form-field>
+                  <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />
+                  <mat-placeholder class="placeholder">Search Member</mat-placeholder>
+                  <br />
+                </mat-form-field>
+              </div>
+              <br />
+
+              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info" *ngIf="dataSource">
+
+                <!-- First Name Column -->
+                <ng-container matColumnDef="First Name">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fname}} </td>
+                </ng-container>
+
+                <!-- Surname Column -->
+                <ng-container matColumnDef="Surname">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Surname </th>
+                  <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+                </ng-container>
+
+                <!-- Email Column -->
+                <ng-container matColumnDef="Email">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                  <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="Action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element"><button [id]="element.email"
+                      class="btn btn-default">Update</button></td>
+                </ng-container>
+
+                <!-- Remove Column -->
+                <ng-container matColumnDef="Remove">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+                  <td mat-cell *matCellDef="let element" (click)="removeMemberPrompt(element)"> <span style="color: darkred">Remove</span> </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <!--Pagination Setup-->
+              <!-- <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons *ngIf="dataSource"></mat-paginator> -->
+            </div>
+          </div>
+        </mat-tab>
+
+        <!--Search Tab Option-->
+        <!-- <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>search</mat-icon>
+            Search
+          </ng-template>
+          <div class="tab-content">
+            <h2>Search for a member</h2>
+            <br />
+
+            <form id="search_member_form">
+
+              <mat-form-field class="form_inputs">
+                <input matInput placeholder="Search for a member">
+              </mat-form-field>
+              <br />
+
+              <button type="submit" id="search_member" class="btn btn-default">Search</button>
+
+            </form>
+
+          </div>
+        </mat-tab> -->
+      </mat-tab-group>
+    </div>
+
+
+
+  </div>
+
+</div>
