@@ -1,124 +1,138 @@
-<!--Home-->
-<section id="welcome_section" *ngIf="!(hidden)">
-  <div class="gradient-overlay"></div>
-  <div class="container-fluid">
-    <div class="row">
+<header>
+  <h2><a href="#"><img id="logo" src="assets/images/FABI_logo_white.png" alt="FABI"></a></h2>
+  <nav>
+    <li><a href="#">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#organizations">Organizations</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </nav>
+</header>
 
-      <div class="col" id="info">
-        <img src="/assets/images/FABI_logo_white.png" alt="Logo" id="logo" class="img-responsive" />
-
-        <div id="welcome">
-          <h2>WELCOME TO THE HOME OF FABI</h2>
-        </div>
-        <div id="login-button">
-          <button id="login" name="login" class="btn btn-default" routerLink="/login" (click)="hide()">LOGIN</button>
-          <button id="submit_form" name="submit_form" class="btn btn-default">SUBMIT FORM</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
+<section class="hero">
+  <div class="background-image"></div>
+  <h1>Welcome to FABI</h1>
+  <h3>Forestry & Agricultural Biotechnology Institute</h3>
+  <a class="btn btn-default" routerLink="/login">Login</a>
+  <a href="#organizations" class="sign-up">Don't have an account? <span>Sign up</span></a>
 </section>
 
-<!-- <section id="information_section" *ngIf="!(hidden)">
-  <div class="container-fluid">
-    <div class="row">
+<section id="services" class="services">
+  <h3 class="title">Our Services</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices. Morbi vitae
+    pulvinar velit. Sed aliquam dictum sapien, id sagittis augue malesuada eu.</p>
+  <hr>
 
-      <div id="infomation_background">
-        <div class="col-12 col-sm-4" id="who">
-          <h2>WHO ARE WE?</h2>
-          <h3>Forestry and Agricultural Biotechnology Institue</h3>
-          <p></p>
-        </div>
-        <div class="col-6 col-sm-4" id="side_info">
-          <div id="what">
-            <h2>WHAT WE DO</h2>
-            <h3>Post-graduate research institue</h3>
-            <p></p>
-          </div>
-          <div id="why">
-            <h2>WHY WE DO IT</h2>
-            <h3>To help the forestry and agriculture industries</h3>
-            <p></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-<!-- <section id="item_info" *ngIf="!(hidden)">
-  <div class="container-fluid">
-    <div class="row">
-      <div id="item_banner">
-        <div id="item_1">
-          Item 1
-        </div>
-        <div id="item_2">
-          Item 2
-        </div>
-        <div id="item_3">
-          Item 3
-        </div>
-        <div id="item_4">
-          Item 4
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-<!-- <section id="handle" *ngIf="!(hidden)">
-  <div id="content">
-    <h1>WE HANDLE EVERYTHING FOR YOU</h1>
-    <p>We will do everything for you</p>
-  </div>
+  <ul class="grid">
+    <li>
+      <i class="fas fa-stethoscope"></i>
+      <h4>Diagnostic Clinic</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices vitae
+        pulvinar velit.</p>
+    </li>
+    <li>
+      <i class="fas fa-info-circle"></i>
+      <h4>Infographics</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices vitae
+        pulvinar velit.</p>
+    </li>
+    <li>
+      <i class="fas fa-search"></i>
+      <h4>Research</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices vitae
+        pulvinar velit.</p>
+    </li>
+  </ul>
 </section>
 
-<section id="form_section" *ngIf="!(hidden)">
-  <div class="gradient-overlay"></div>
-  <div class="container-fluid">
-    <div class="row">
+<section id="organizations" class="organizations">
+  <h3 class="title">Organizations</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices. Morbi vitae
+    pulvinar velit. Sed aliquam dictum sapien, id sagittis augue malesuada eu.</p>
+  <hr>
 
-      <div class="col" id="info">
+  <mat-card class="organization_request_card">
+    <mat-card-header>
+      <mat-card-title>Organization Request Form</mat-card-title>
+      <mat-card-subtitle>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum
+        ultrices.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <!--Organization Request Form-->
+      <form id="add_new_organization_form" [formGroup]="registerOrgForm" (submit)="registerOrg()">
 
-        <div id="form">
-          <h1>FORM SUBMISSION</h1>
-          <h2>LET US HELP YOU</h2>
-          <p>We analyse your samples!</p>
-          <button id="submit_form" name="submit_form" class="btn btn-default">SUBMIT FORM</button>
-        </div>
-      </div>
+        <!--Organization Name Field-->
+        <mat-form-field class="form_inputs">
+          <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name">
+        </mat-form-field>
+        <br />
 
+        <!--Location Field-->
+        <mat-form-field class="form_inputs">
+          <input matInput placeholder="Location" matInput type="text" formControlName="organization_location">
+        </mat-form-field>
+        <br />
+
+        <!--Admin Name Field-->
+        <mat-form-field class="form_inputs">
+          <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name">
+        </mat-form-field>
+        <br />
+
+        <!--Admin Surname Field-->
+        <mat-form-field class="form_inputs">
+          <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
+        </mat-form-field>
+        <br />
+
+        <!--Admin Email Field-->
+        <mat-form-field class="form_inputs">
+          <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email">
+        </mat-form-field>
+        <br />
+
+        <!--Admin Phone Number-->
+        <mat-form-field class="form_inputs">
+          <input matInput placeholder="Admin Phone Number" matInput type="number" formControlName="admin_phone">
+        </mat-form-field>
+
+
+        <button type="submit" id="add_organization" class="btn btn-default">Submit Request</button>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</section>
+
+<section id="contact"  class="contact">
+  <h3 class="title">Contact us</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices. Morbi vitae
+    pulvinar velit. Sed aliquam dictum sapien, id sagittis augue malesuada eu.</p>
+  <hr>
+
+  <form class="contact" [formGroup]="contactForm" (submit)="xxxxxxxxxx()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" formControlName="name" placeholder="John">
     </div>
-  </div>
-</section> -->
-
-<!-- <section id="contact_section" *ngIf="!(hidden)">
-  <div id="row">
-    <div id="details">
-      <h1>GET IN TOUCH</h1>
-      <button id="contact_form" name="contact_form" class="btn btn-default">CONTACT US</button>
-      <div id="address">
-        <h3>ADDRESS</h3>
-        <p>Forestry and Agricultural Biotechnology Institue (FABI)</p>
-        <p>University of Pretoria</p>
-        <p>Lunnon Street Entrance</p>
-        <p>Hatfield</p>
-        <p>0083</p>
-        <p>Pretoria</p>
-        <p>South Africa</p>
-      </div>
-      <div id="contact_details">
-        <h3>CONTACT DETAILS</h3>
-        <p>Telephone: +27 (12) 420-3937 or 3938</p>
-        <p>FAX: +27 (12) 420-3960</p>
-        <p>Email: admin@fabi.up.ac.za</p>
-      </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" formControlName="email" placeholder="john@example.com">
     </div>
-  </div>
-</section> -->
+    <br/>
+    <div class="form-group">
+      <label for="message">Enter your message here</label>
+      <input type="text" class="form-control" id="message" rows="3" formControlName="message"/>
+    </div>
 
+    <button type="submit" id="contact_form_submit" class="btn btn-default">Send</button>
 
-<!--Footer-->
-<!-- <app-footer *ngIf="!(hidden)"></app-footer> -->
+  </form>
+</section>
+
+<footer>
+  <ul>
+    <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+    <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+  </ul>
+</footer>
