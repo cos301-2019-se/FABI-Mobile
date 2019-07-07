@@ -1,7 +1,6 @@
 /*-------------
     General
 -------------*/
-
 * {
     margin: 0;
     padding: 0;
@@ -123,9 +122,9 @@ header nav li {
     margin: 0 15px;
 }
 
-header nav li a{
+header nav li a {
     font-family: 'Roboto', sans-serif;
-    font-size:24px;
+    font-size: 24px;
     margin: 0 15px;
 }
 
@@ -165,11 +164,11 @@ header h2 img#logo {
         width: 8rem;
     }
 
-    header nav li a{
+    header nav li a {
         font-size: 20px;
         margin: 0 15px;
     }
-    
+
 }
 
 @media (max-width: 600px) {
@@ -179,7 +178,7 @@ header h2 img#logo {
         width: 7rem;
     }
 
-    header nav li a{
+    header nav li a {
         font-size: 16px;
         margin: 0 15px;
     }
@@ -228,7 +227,7 @@ header h2 img#logo {
 
 .hero h1 {
     font-family: 'Roboto', sans-serif;
-    font-size:60px;
+    font-size: 60px;
     text-transform: uppercase;
     margin-bottom: 15px;
 }
@@ -238,12 +237,12 @@ header h2 img#logo {
     margin-bottom: 40px;
 }
 
-.hero .sign-up{
-    font-size:20px;
-    margin-top:15px;
+.hero .sign-up {
+    font-size: 20px;
+    margin-top: 15px;
 }
 
-.hero .sign-up span{ 
+.hero .sign-up span {
     text-decoration: underline;
 }
 
@@ -296,17 +295,17 @@ header h2 img#logo {
     }
 
     .hero .btn.btn-default {
-        font-size:12px;
+        font-size: 12px;
     }
 
-    .hero .sign-up{ 
+    .hero .sign-up {
         font-size: 18px;
     }
 }
 
 @media (max-width: 550px) {
 
-    .hero .sign-up{ 
+    .hero .sign-up {
         font-size: 14px;
     }
 }
@@ -380,8 +379,8 @@ header h2 img#logo {
 
 .organizations .organization_request_card {
     width: 80%;
-    
-    padding:20px;
+
+    padding: 20px;
 
     text-align: center;
     justify-content: center;
@@ -481,7 +480,7 @@ mat-card-header.mat-card-header {
     padding: 18px 42px;
 }
 
-.contact .form-group{
+.contact .form-group {
     display: block;
 }
 
@@ -562,7 +561,7 @@ footer p {
     margin-bottom: 10px;
 }
 
-footer ul li i{
+footer ul li i {
     font-size: 32px;
     margin: 0 15px;
 }
