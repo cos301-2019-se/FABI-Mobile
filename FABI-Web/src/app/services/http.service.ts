@@ -178,7 +178,7 @@ export class HttpService {
     const method = 'POST';
 
     const postData = {
-      "databaseName": "mpgTest",
+      "databaseName": "26June_DB_Test",
       "data": jsonObject
     };
 
