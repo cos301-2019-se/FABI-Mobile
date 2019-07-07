@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Wednesday, June 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,7 +14,8 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {ViewEncapsulation} from '@angular/core';
 
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -25,15 +26,22 @@ import { ErrorComponent } from '../../errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 
+//Include Material Components
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+
 import * as Interface from '../../interfaces/interfaces';
 
 
 @Component({
   selector: 'app-organization-handler',
   templateUrl: './organization-handler.component.html',
-  styleUrls: ['./organization-handler.component.scss']
+  styleUrls: ['./organization-handler.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class OrganizationHandlerComponent implements OnInit {
+
+  displayedColumns: string[] = ['Organization Name', 'Admin', "Remove"];
+  dataSource = new MatTableDataSource([]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -51,6 +59,7 @@ export class OrganizationHandlerComponent implements OnInit {
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -92,6 +101,7 @@ export class OrganizationHandlerComponent implements OnInit {
   //                                                            NG_ON_INIT()
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.viewOrganizations();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -121,11 +131,11 @@ export class OrganizationHandlerComponent implements OnInit {
     const LadminEmail = this.registerOrgForm.controls.admin_email.value;
     const LadminPhone = this.registerOrgForm.controls.admin_phone.value;
 
-    const admin_details: Interface.OrganisationAdmin = { fname: LadminName, surname: LadminSurname, email: LadminEmail, password: LadminPhone };
+    const admin_details: Interface.OrganisationAdmin = { name: LadminName, surname: LadminSurname, email: LadminEmail };
     const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };
 
     this.service.createOrganization(org_details).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
           duration: 6000
@@ -165,9 +175,9 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeOrganizationPrompt() {
+  removeOrganizationPrompt(org: Interface.Organisation) {
     
-    const orgDetails = this.selectedOrg.orgName;
+    const orgDetails = org.orgName;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
       data: {
@@ -180,6 +190,7 @@ export class OrganizationHandlerComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == "Confirm") {
+        this.selectedOrg = org;
         this.removeOrg();
       }
     })
@@ -196,7 +207,7 @@ export class OrganizationHandlerComponent implements OnInit {
   removeOrg() {
 
     this.service.removeOrganization(this.selectedOrg).subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
+      if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Organization Removed", "Dismiss", {
           duration: 3000
@@ -223,6 +234,7 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
+    this.viewOrganizations();
       
   }
 
@@ -237,8 +249,11 @@ export class OrganizationHandlerComponent implements OnInit {
   viewOrganizations() {
     
     this.service.getAllOrganizations().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        this.organizations = response.data;
+      if (response.success == true && response.code == 200) {
+        this.organizations = response.data.Organizations;
+        console.log(this.organizations);
+        this.dataSource = new MatTableDataSource(this.organizations);
+        this.dataSource.paginator = this.paginator;
 
       } else if (response.success == false) {
         //POPUP MESSAGE

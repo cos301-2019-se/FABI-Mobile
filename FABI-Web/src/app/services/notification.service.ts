@@ -29,9 +29,9 @@ export class NotificationService {
     console.log("------------------- NOTIFICATION ------------------");
       // return this.toastr.success(message, 'Oops');
 
-      let snackBarRef = this.snackBar.open(message, "Dismiss", {
-        duration: 3000
-      });
+      // let snackBarRef = this.snackBar.open(message, "Dismiss", {
+      //   duration: 3000
+      // });
   }
 
   showDialogNotification(message) {
