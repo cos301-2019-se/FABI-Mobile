@@ -46,6 +46,7 @@ export class DatabaseHandlerComponent implements OnInit {
   jsonData: any;
 
   @ViewChild("rpDBname") rPort : ElementRef;
+  @ViewChild("pDBname") port : ElementRef;
 
   constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
 
@@ -69,6 +70,12 @@ export class DatabaseHandlerComponent implements OnInit {
   public submitCSV(input) {
 
     this.loading = true;
+    let dbname = this.port.nativeElement.value;
+
+    if(dbname == ""){
+      let snackBarRef = this.snackBar.open("Please enter a name for the database", "Dismiss", { duration: 3000 });
+      return;
+    }
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -94,7 +101,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
       // Print to screen somehow...
 
-      this.service.porting(this.jsonData).subscribe((response:any) => {
+      this.service.porting(dbname, this.jsonData).subscribe((response:any) => {
         this.loading = false;
         if(response.success == true && response.code == 200) {
           //POPUP MESSAGE
