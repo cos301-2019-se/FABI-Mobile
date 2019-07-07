@@ -34,17 +34,17 @@
         <section class="statistics">
           <div class="box">
             <i class="fas fa-vial"></i>
-            <h2>1500</h2>
+            <h2 #admin_samples_stats id="admin_samples_stats" [innerHTML]="sampleStats"></h2>
           </div>
 
           <div class="box">
             <i class="fas fa-stethoscope"></i>
-            <h2>75%</h2>
+            <h2 #admin_completed_samples_stats id="admin_completed_samples_stats">75%</h2>
           </div>
 
           <div class="box">
             <i class="fas fa-users"></i>
-            <h2>2600</h2>
+            <h2 #admin_user_stats id="admin_users_stats" [innerHTML]="userStats"></h2>
           </div>
         </section>
 
@@ -55,42 +55,14 @@
         <!--Staff Section-->
         <section class="staff">
           <div class="admins">
-            <h1>Admins:</h1>
-            <div class="box">
-              <h2>Name Surname</h2>
-              <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-
-            <div class="box">
-              <h2>Name Surname</h2>
-              <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-
-            <div class="box">
-              <h2>Name Surname</h2>
-              <p>Lorem ipsum dolor sit amet.</p>
-            </div>
+              <h1>Admins:</h1>
+              <div #adminContainer></div>
           </div>
 
           <div class="other-staff">
             <h1>Other Staff:</h1>
-            <div class="box">
-              <h2>Name Surname</h2>
-              <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-
-            <div class="box">
-              <h2>Name Surname</h2>
-              <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-
-            <div class="box">
-              <h2>Name Surname</h2>
-              <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-          </div>
-
-
+            <div #staffContainer></div>
+          </div>  
         </section>
 
       </div>
