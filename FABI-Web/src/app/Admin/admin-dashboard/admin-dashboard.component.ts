@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Monday, July 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -23,17 +23,10 @@ import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
 
 import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service.ts';
+import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
 
-/**
- *
- *
- * @export
- * @class AdminDashboardComponent
- * @implements {OnInit}
- */
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -41,60 +34,70 @@ import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.
 })
 
 export class AdminDashboardComponent implements OnInit {
-  
-  /**
-   * 
-   *
-   * @memberof AdminDashboardComponent
-   */
-  sidenavToggle(){
-    // if(document.getElementById("sidenav_div").style.width == this.navWidth)
-    // {
-    //   document.getElementById("sidenav_div").style.width = "0";
-    // }
-    // else{
-    //   document.getElementById("sidenav_div").style.width = this.navWidth;
-    // } 
-  }
 
-  closeNav(){
-    document.getElementById("sidenav_div").style.width = "0";
-  }
-  else{
-    document.getElementById("sidenav_div").style.width = "22%";
-  } 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //Retriving an HTML element from the HTML page
+  /** Holds the div element (adminContainer) from the HTML page - @type {ElementRef} */
   @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
+  /** Holds the div element (staffContainer) from the HTML page - @type {ElementRef} */
   @ViewChild('staffContainer', {read: ViewContainerRef}) staffContainer;
   
-  //Global string variables to dynamically load the HTML statistic elements
+  /** Contains the user stats that will be dynamically loaded in the HTML page - @type {string} */
   userStats: string;
+  /** Contains the sample stats that will be dynamically loaded in the HTML page - @type {string} */
   sampleStats: string;
 
-  admins: Member[] = [];                         //array containing all FABI members that are admins
-  staff: Member[] = [];                          //array containing all the members of FABI with the user type of 'staff'
-  databaseAdmins: Member[] = [];                 //array containing all the members of FABI with the user type of 'databaseAdmins'
-  cultureCurators: Member[] = [];                //array containing all the members of FABI with the user type of 'cultureCurators'
-  diagnosticClinicAdmins: Member[] = [];         //array containing all the members of FABI with the user type of 'diagnosticClinicAdmins'
-  samples: Object[] = [];                        //array containing all current samples for FABI
-  completedSamples: Object[] = [];               //array containing all completed samples for FABI
-  
-  numberOfFABIMembers: number;                   //a variable holding the total number of FABI members
-  numberOfSamples: number;                       //a variable holding the total number of samples
+  /** Object array for holding the administrators -  @type {Member[]} */
+  admins: Member[] = []; 
+  /** Object array for holding the staff members -  @type {Member[]} */                        
+  staff: Member[] = [];  
+  /** Object array for holding the database administrators -  @type {Member[]} */                        
+  databaseAdmins: Member[] = [];   
+  /** Object array for holding the culture curators -  @type {Member[]} */              
+  cultureCurators: Member[] = []; 
+  /** Object array for holding the diagnostic clinic administrators -  @type {Member[]} */               
+  diagnosticClinicAdmins: Member[] = []; 
+  /** Object array for holding all of FABI's samples -  @type {Object[]} */        
+  samples: Object[] = [];  
+  /** Object array for holding all of FABI's completed samples -  @type {Object[]} */                      
+  completedSamples: Object[] = [];  
 
+  /** The total number of FABI staff members - @type {number} */
+  numberOfFABIMembers: number;        
+  /** The total number of FABI samples - @type {number} */           
+  numberOfSamples: number;                       
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of AdminDashboardComponent.
+   * 
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { }
 
-  /*
-  *  This function will use an API service to get all the members of FABI. These members will be read into the
-  *  'members' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-  *  HTML page with the number of members belonging to FABI. This function will also use API calls to populate
-  *  the admins object.
-  * 
-  *  This function will also dynamically create elements and load them with information about the adminstrators
-  *  and other FABI staff members. These dynamic elements will be loaded into the HTML page
-  */
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                            GET_NUMBER_OF_FABI_MEMBERS
+  /**
+   *  This function will use an API service to get all the members of FABI. These members will be read into the
+   *  'members' Object. The function does not receive any parameters but it will populate a 'heading' element on the
+   *  HTML page with the number of members belonging to FABI. This function will also use API calls to populate
+   *  the admins object.
+   * 
+   *  This function will also dynamically create elements and load them with information about the adminstrators
+   *  and other FABI staff members. These dynamic elements will be loaded into the HTML page
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfFABIMembers(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
@@ -170,11 +173,17 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  /*
-  *  This function will use an API service to get all the samples of FABI. These samples will be read into the
-  *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-  *  HTML page with the number of samples belonging to FABI.
-  */
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                GET_NUMBER_OF_FABI_SAMPLES
+  /**
+   *  This function will use an API service to get all the samples of FABI. These samples will be read into the
+   *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
+   *  HTML page with the number of samples belonging to FABI.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfFABISamples(){
     //Subscribing to the DiagnosticClinicAPIService to get a list containing all of FABI's samples
     this.diagnosticClinicService.getAllSamples().subscribe((response: any) => {
@@ -191,18 +200,40 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  /*
-  *  This function will use an API service to get all the completed (processed) samples of FABI. These 
-  *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
-  *  populate a 'heading' element on the HTML page with the percentage of completed samples belonging to FABI.
-  */
+ 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                         GET_NUMBER_OF_COMPLETED_FABI_SAMPLES
+  /**
+   *  This function will use an API service to get all the completed (processed) samples of FABI. These 
+   *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
+   *  populate a 'heading' element on the HTML page with the percentage of completed samples belonging to FABI.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfCompletedFABISamples(){}
 
-  /*
-  *  This function will load the admin's notifications into the notification section on the HTML page
-  */
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_NOTIFICATIONS
+  /**
+   *  This function will load the admin's notifications into the notification section on the HTML page
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){}
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT()  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call getNumberOfFABIMembers() | 2. Call getNumberOfFABISamples() | 3. Call loadNotifications() 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() { 
     this.getNumberOfFABIMembers();
     this.getNumberOfFABISamples();
