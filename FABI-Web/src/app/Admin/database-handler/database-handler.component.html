@@ -51,18 +51,10 @@
             <label>Database name</label><input type='text' id='fileInput2' class="btn.btn-default" #rpDBname >
             <button type="button" (click)="getCSV()" > Download CSV file</button>
 
-            <table id="previewTable" >
-              <thead>
-                <tr>
-                  
-                </tr>
-              </thead>
-              <tbody>
-                
-              </tbody>
+            <table mat-table [dataSource]="previewTable" class="mat-elevation-z8" id="previewTable" *ngIf="preview">
+              <div #insertIntoTable></div>
             </table>
           
-
           </div>
           <p *ngIf="loading" style="color: black;">Porting File...</p>
         </mat-tab>
