@@ -51,6 +51,7 @@ import { HomeComponent } from './home/home.component';
 import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
 import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
 import { UpdateComponent } from './update/update.component';
+import { TableComponentComponent } from './Dynamic-Components/table-component/table-component.component';
 
 @NgModule({
   declarations: [
@@ -81,12 +82,16 @@ import { UpdateComponent } from './update/update.component';
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
     ConfirmComponent,
-    UpdateComponent
+    UpdateComponent,
+    AdminDivComponent,
+    StaffDivComponent,
+    TableComponentComponent
   ],
   entryComponents: [
     ConfirmComponent,
     AdminDivComponent,
     StaffDivComponent,
+    TableComponentComponent,
     ErrorComponent
   ],
   imports: [
