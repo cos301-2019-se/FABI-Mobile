@@ -1,3 +1,18 @@
+/**
+ * File Name: diagnostic-clinic-api.service.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\services/diagnostic-clinic-api.service.ts
+ * Project Name: fabi-web
+ * Created Date: Saturday, Juky 6th 2019
+ * Author: Team Nova - novacapstone@gmail.com
+ * -----
+ * Last Modified: Monday, July 8th 2019
+ * Modified By: Team Nova
+ * -----
+ * Copyright (c) 2019 University of Pretoria
+ * 
+ * <<license>>
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
@@ -14,12 +29,28 @@ const getAllSamplesURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/ret
 
 export class DiagnosticClinicAPIService {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of DiagnosticClinicAPIService.
+   * 
+   * @param {HttpClient} http For making calls to the API
+   * @memberof DiagnosticClinicAPIService
+   */
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    constructor(private http: HttpClient) { }
 
-   /*
-    *    This function sends a POST request to the API to retrieve a list containing
-    *    all the samples that FABI is currently processing
-    */
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET_ALL_SAMPLES 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the samples that FABI is currently processing
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    getAllSamples(){
         const options = {
             method: 'POST',
