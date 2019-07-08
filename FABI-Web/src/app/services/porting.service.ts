@@ -54,7 +54,6 @@ export class Porting{
             result.push(obj);
         }
 
-        console.log(result);
         this.JSONfile = result;
         
         return result;
@@ -70,14 +69,11 @@ export class Porting{
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     extractDatabase(dbJSON , dbName:String){
-        console.log(dbJSON);
-
         var CSVdata = "";
         var headings = [];
 
         var columnsIn = dbJSON[0];
         for(var key in columnsIn){
-          // console.log(key);
           CSVdata += key+";";
           headings.push(key);
         }
