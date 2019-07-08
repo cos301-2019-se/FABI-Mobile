@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Monday, July 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,7 +14,7 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -24,9 +24,8 @@ import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
 import { ErrorComponent } from '../../errors/error-component/error.component';
 
-//Import the porting service for DB creation
 import { Porting } from '../../services/porting.service';
-
+import { TableComponentComponent } from '../../Dynamic-Components/table-component/table-component.component'
 
 @Component({
   selector: 'app-database-handler',
@@ -36,25 +35,60 @@ import { Porting } from '../../services/porting.service';
 })
 export class DatabaseHandlerComponent implements OnInit {
 
-  /**
-   *  GLOBALS
-   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  /** Indicates if a file is loading or not - @type {boolean} */
   loading: boolean = false;
-
+  /** Indicates if the preview table can be loaded or not - @type {boolean} */
+  preview: boolean = false;
+  /** An instance of the Porting class - @type {Porting} */
   portCSV: Porting = new Porting();
+  /** Array holding the headings of the new database - @type {any} */
+  headings: any = [];
+  /** Array holding the contents of the csv file - @type {any} */
+  previewTable: any;
 
   jsonData: any;
 
+  /** Holds the div element (rpDBname) from the HTML page - @type {ElementRef} */
   @ViewChild("rpDBname") rPort : ElementRef;
+  /** Holds the div element (pDBname) from the HTML page - @type {ElementRef} */
   @ViewChild("pDBname") port : ElementRef;
+  /** Holds the div element (insertIntoTable) from the HTML page - @type {ElementRef} */
+  @ViewChild("insertIntoTable", {read: ViewContainerRef}) insertIntoTable;
 
-  constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of DatabaseHandlerComponent.
+   * 
+   * @param {HttpService} service For calling the 'http' API service
+   * @param {MatSnackBar} snackBar 
+   * @param {MatDialog} dialog 
+   * @param {Router} router
+   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router, 
+    private resolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
   }
 
-  public submitCSV(input) {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  SUBMIT_CSV
+  /**
+   *  This function will be used to submit a .csv file so that it can be converted into a database for the user
+   *  @param input
+   *  @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  public submitCSV(input) {
     this.loading = true;
     let dbname = this.port.nativeElement.value;
 
@@ -66,26 +100,39 @@ export class DatabaseHandlerComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       let text = reader.result;
+      let columns = [];
+
       console.log("porting data:");
       this.jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
-      //console.log(jsonData);
-      
-      var headings = [];
 
       var columnsIn = this.jsonData[0];
-      for(var key in columnsIn){
-        // console.log(key);
-        headings.push(key);
+      for(var key in columnsIn){;
+        this.headings.push(key);
       } 
       
-      for(var i =0; i<this.jsonData.length; i++){
+      for(var i = 0; i < this.jsonData.length; i++){
         var columnsIn = this.jsonData[i];
         for(var key in columnsIn){
-          console.log(this.jsonData[i][key]);
+          //console.log(this.jsonData[i][key]);
+          columns.push(this.jsonData[i][key]);
         } 
       }
 
-      // Print to screen somehow...
+      if(this.headings.length != 0){
+        this.preview = true;
+      }
+
+      for(var i = 0; i < columns.length; i++){
+        columns[i] = columns[i].split(',');
+      }
+
+      this.previewTable = columns;
+      
+      //Dynamically inserting TableElementComponents into the HTML table
+      for(var i = 0; i < this.headings.length; i++){
+        const tableComponentRef = this.insertIntoTable.createComponent(this.resolver.resolveComponentFactory(TableComponentComponent));
+        tableComponentRef.instance.ColumnName = this.headings[i];
+      }
 
       this.service.porting(dbname, this.jsonData).subscribe((response:any) => {
         this.loading = false;
@@ -119,10 +166,8 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
   public getCSV(){
-
     let data = "";
     let dbname = this.rPort.nativeElement.value;
-    // console.log(dbname);
 
     this.service.reversePorting(dbname).subscribe((response:any) => {
         this.loading = false;
@@ -160,6 +205,4 @@ export class DatabaseHandlerComponent implements OnInit {
       });
     
   }
-  
-
 }
