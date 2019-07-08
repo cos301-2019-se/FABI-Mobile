@@ -22,8 +22,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
 
-import { Member, UserManagementAPIService } from '../../user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../diagnostic-clinic-api.service';
+import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
+import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service.ts';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
 

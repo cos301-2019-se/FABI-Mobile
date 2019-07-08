@@ -21,8 +21,8 @@ import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { UserManagementAPIService, Member } from '../../user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../diagnostic-clinic-api.service';
+import { UserManagementAPIService, Member } from '../../services/user-management-api.service';
+import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
 
 @Component({
   selector: 'app-organization-dashboard',
