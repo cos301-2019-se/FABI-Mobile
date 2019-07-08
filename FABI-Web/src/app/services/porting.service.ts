@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Monday, July 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,65 +13,43 @@
  * <<license>>
  */
 
-
-// https://embed.plnkr.co/DE80sO/
 export class Porting{
 
     constructor(){}
 
-                                            // ** HOW TO USE ** //
+    JSONfile : any = null;      //This variable holds the CSV file as a JSONfile
 
-                // in the .html file
-    //<input type='file' (change)=submitCSV(input) id='fileInput' #input>
-
-                // in the .ts file
-    // portCSV : Porting = new Porting();
-    //
-    // public submitCSV(input){
-    //     const reader = new FileReader();
-    //     reader.onload = () => {
-    //         let text = reader.result;
-    //         let jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
-    //         console.log(jsonData);
-    //         // ** place api calls here ** //
-    //     };
-    //     reader.readAsText(input.files[0]);
-    // }
-
-    JSONfile : any = null;
-
-    convertToJSON(text){ //converts file to JSON
-
+    /*
+    *   This function is used to convert the text sent from the file into JSON
+    */
+    convertToJSON(text){
         var lines = text.split("\n");
         var result = [];
         var headers = lines[0].split(";");
-        // console.log(headers);
 
         for (var i = 1; i < lines.length; i++) {
             var obj = {};
             var currentline = lines[i].split(";");
             for (var j = 0; j < currentline.length; j++) {
-                //if(currentline!="" && currentline!="null"){
-                    obj[headers[j]] = currentline[j];
-                //}
+                obj[headers[j]] = currentline[j];
             }
 
             result.push(obj);
         }
 
-        //console.log("in porting");
-        //console.log(JSON.stringify(result));
         console.log(result);
         this.JSONfile = result;
         
         return result;
     }
 
-    extractDatabase(dbJSON , dbName:String){ // Reverse porting
-
+    /*
+    *   This function is used to perform reverse porting
+    */
+    extractDatabase(dbJSON , dbName:String){
         console.log(dbJSON);
-        var CSVdata = "";
 
+        var CSVdata = "";
         var headings = [];
 
         var columnsIn = dbJSON[0];
@@ -80,6 +58,7 @@ export class Porting{
           CSVdata += key+";";
           headings.push(key);
         }
+
         CSVdata += "\r\n";
         
         for(var i =0; i<dbJSON.length; i++){
@@ -88,18 +67,16 @@ export class Porting{
                 console.log(key);
                 if(dbJSON[i][ headings[key] ] != null){
                     CSVdata += dbJSON[i][ headings[key] ] +";";
-                }else{
+                }
+                else{
                     CSVdata += "  ;";
-                }              
-                
+                }     
             }
+
             CSVdata += "\r\n";
         }
 
         console.log(CSVdata);
-        return CSVdata;
-        
+        return CSVdata;        
     }
-
-
 }
