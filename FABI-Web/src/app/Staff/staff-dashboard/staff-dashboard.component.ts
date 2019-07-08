@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
-import { Member, UserManagementAPIService } from '../../user-management-api.service';
+import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
 
 @Component({
