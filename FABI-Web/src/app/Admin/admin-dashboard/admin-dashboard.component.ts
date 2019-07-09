@@ -26,6 +26,17 @@ import { Member, UserManagementAPIService } from '../../services/user-management
 import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
+import {NotificationDivComponent } from '../../Dynamic-Components/notification-div/notification-div.component'
+
+//Object for defining the JSON object containing the user logs
+export interface UserLogs{
+  Type: string;
+  Action: string;
+  Details: string;
+  Date: string;
+  User: string;
+  MoreInfo: string;
+}
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -43,6 +54,8 @@ export class AdminDashboardComponent implements OnInit {
   @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
   /** Holds the div element (staffContainer) from the HTML page - @type {ElementRef} */
   @ViewChild('staffContainer', {read: ViewContainerRef}) staffContainer;
+  /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
+  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
   
   /** Contains the user stats that will be dynamically loaded in the HTML page - @type {string} */
   userStats: string;
@@ -63,6 +76,10 @@ export class AdminDashboardComponent implements OnInit {
   samples: Object[] = [];  
   /** Object array for holding all of FABI's completed samples -  @type {Object[]} */                      
   completedSamples: Object[] = [];  
+  /** Object array for holding all of the user logs -  @type {UserLogs[]} */ 
+  userNotifications: UserLogs[] = [];
+  /** Object array for holding all of the database logs -  @type {Object[]} */ 
+  databaseNotifications: Object[] = [];
 
   /** The total number of FABI staff members - @type {number} */
   numberOfFABIMembers: number;        
@@ -81,7 +98,12 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { }
+    private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { 
+      var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: 'Tegan Carton-Barber', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: ''};
+      this.userNotifications.push(tempUserNotification);
+      var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: 'Kendra Riddle', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: ''};
+      this.userNotifications.push(tempUserNotification2);
+    }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,7 +244,23 @@ export class AdminDashboardComponent implements OnInit {
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){}
+  loadNotifications(){
+    //Dynamically loads all the user notifications into the HTML page
+    for(var i = 0; i < this.userNotifications.length; i++){
+      const userNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
+      userNotificationDivRef.instance.Number = i + i;
+      userNotificationDivRef.instance.Type = this.userNotifications[i].Type;
+      userNotificationDivRef.instance.Action = this.userNotifications[i].Action;
+      userNotificationDivRef.instance.Date = this.userNotifications[i].Date;
+
+      if(this.userNotifications[i].Action == 'New user added'){
+        userNotificationDivRef.instance.Details = 'New user, ' + this.userNotifications[i].Details + ', was added to the system by ' + this.userNotifications[i].User;
+      }
+      else if(this.userNotifications[i].Action == 'User removed'){
+        userNotificationDivRef.instance.Details = this.userNotifications[i].Details + ' was removed from the system by ' + this.userNotifications[i].User;
+      }
+    }
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

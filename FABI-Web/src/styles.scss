@@ -98,3 +98,75 @@ app-staff-div p {
         width: 100%;
     }
 }
+
+/*------------------
+    Notifications
+-------------------*/
+
+.notification-items .box {
+    background-color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    width: 100%;
+
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+
+    display:flex;
+    justify-content: space-evenly;
+}
+
+.notification-items h2 {
+  font-family: 'Roboto', sans-serif;
+  color: #3C5148;
+  font-size: 20px;
+  padding: 15px 15px 0px 15px;
+  text-align: center;
+}
+
+.notification-items p {
+  font-family: 'Open Sans', sans-serif;
+  color: #999;
+  font-size: 14px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.notification-action{
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+@media (max-width: 1400px) {
+    .notification-items {
+        margin: 5% 0 0 5%;
+    }
+}
+
+@media (max-width: 1250px) {
+    .content {
+        width: 100%;
+    }
+
+    .notifications {
+        display: none;
+    }
+}
+
+@media (max-width: 1400px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .content {
+        height: 100%;
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 400px) {
+    .content {
+        height: 70%;
+    }
+}
