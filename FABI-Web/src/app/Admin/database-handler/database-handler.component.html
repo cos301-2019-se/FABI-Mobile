@@ -46,13 +46,28 @@
             <label>Database name</label><input type='text' id='fileInput1' class="btn.btn-default" #pDBname >
             <input type='file' (change)=submitCSV(input) id='fileInput' class="btn.btn-default" #input>
             <br/>
-            <h2>Reverse Porting</h2>
+            <h2 *ngIf="!preview">Reverse Porting</h2>
             <br />
-            <label>Database name</label><input type='text' id='fileInput2' class="btn.btn-default" #rpDBname >
-            <button type="button" (click)="getCSV()" > Download CSV file</button>
+            <label *ngIf="!preview">Database name</label><input *ngIf="!preview" type='text' id='fileInput2' class="btn.btn-default" #rpDBname >
+            <button *ngIf="!preview" type="button" (click)="getCSV()" > Download CSV file</button>
 
-            <table mat-table [dataSource]="previewTable" class="mat-elevation-z8" id="previewTable" *ngIf="preview">
+            <!-- <table mat-table [dataSource]="previewTable" class="mat-elevation-z8" id="previewTable" *ngIf="preview">
               <div #insertIntoTable></div>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table> -->
+
+            <table border="1" *ngIf="preview" id="previewTable">
+              <thead>
+                <tr>
+                  <th *ngFor="let header of headings; let i = index">{{header}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of columns; let i = index">
+                  <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                </tr>
+              </tbody>
             </table>
           
           </div>
