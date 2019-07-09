@@ -43,8 +43,8 @@
           <div class="tab-content" id="add_new_database_form" ng-app="portApp" ngController="previewCtrl">
             <h2>Add Database via Porting</h2>
             <br />
-            <label>Database name</label><input type='text' id='fileInput1' class="btn.btn-default" #pDBname >
-            <input type='file' (change)=submitCSV(input) id='fileInput' class="btn.btn-default" #input>
+            <label *ngIf="!preview">Database name</label><input *ngIf="!preview" type='text' id='fileInput1' class="btn.btn-default" #pDBname >
+            <input *ngIf="!preview" type='file' (change)=submitCSV(input) id='fileInput' class="btn.btn-default" #input>
             <br/>
             <h2 *ngIf="!preview">Reverse Porting</h2>
             <br />
