@@ -6,7 +6,7 @@
     <p><b>Date:</b> {{Date}}</p>
     <p><b>Details:</b> {{Details}}</p>
   </div>
-  <div class="notification-action">
-    <i class="fas fa-times"></i>
+  <div class="notification-action" (click)="removeNotification({{Number}})">
+    <i class="fas fa-times" (click)="removeNotification({{Number}}, {{Type}})"></i>
   </div>
 </div>
