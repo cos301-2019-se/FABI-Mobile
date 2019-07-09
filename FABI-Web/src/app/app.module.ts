@@ -51,6 +51,7 @@ import { HomeComponent } from './home/home.component';
 import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
 import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
 import { UpdateComponent } from './update/update.component';
+import { NotificationDivComponent } from './Dynamic-Components/notification-div/notification-div.component';
 
 @NgModule({
   declarations: [
@@ -83,12 +84,14 @@ import { UpdateComponent } from './update/update.component';
     ConfirmComponent,
     UpdateComponent,
     AdminDivComponent,
-    StaffDivComponent
+    StaffDivComponent,
+    NotificationDivComponent
   ],
   entryComponents: [
     ConfirmComponent,
     AdminDivComponent,
     StaffDivComponent,
+    NotificationDivComponent,
     ErrorComponent
   ],
   imports: [
