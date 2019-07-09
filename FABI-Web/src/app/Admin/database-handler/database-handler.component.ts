@@ -23,9 +23,9 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
 import { ErrorComponent } from '../../errors/error-component/error.component';
+import {MatTableModule} from '@angular/material/table';
 
 import { Porting } from '../../services/porting.service';
-import { TableComponentComponent } from '../../Dynamic-Components/table-component/table-component.component'
 
 @Component({
   selector: 'app-database-handler',
@@ -47,8 +47,8 @@ export class DatabaseHandlerComponent implements OnInit {
   portCSV: Porting = new Porting();
   /** Array holding the headings of the new database - @type {any} */
   headings: any = [];
-  /** Array holding the contents of the csv file - @type {any} */
-  previewTable: any;
+  /** Array holding the columns of the new database - @type {any} */
+  columns: any = [];
 
   jsonData: any;
 
@@ -56,8 +56,6 @@ export class DatabaseHandlerComponent implements OnInit {
   @ViewChild("rpDBname") rPort : ElementRef;
   /** Holds the div element (pDBname) from the HTML page - @type {ElementRef} */
   @ViewChild("pDBname") port : ElementRef;
-  /** Holds the div element (insertIntoTable) from the HTML page - @type {ElementRef} */
-  @ViewChild("insertIntoTable", {read: ViewContainerRef}) insertIntoTable;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +98,6 @@ export class DatabaseHandlerComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       let text = reader.result;
-      let columns = [];
 
       console.log("porting data:");
       this.jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
@@ -114,7 +111,7 @@ export class DatabaseHandlerComponent implements OnInit {
         var columnsIn = this.jsonData[i];
         for(var key in columnsIn){
           //console.log(this.jsonData[i][key]);
-          columns.push(this.jsonData[i][key]);
+          this.columns.push(this.jsonData[i][key]);
         } 
       }
 
@@ -122,17 +119,14 @@ export class DatabaseHandlerComponent implements OnInit {
         this.preview = true;
       }
 
-      for(var i = 0; i < columns.length; i++){
-        columns[i] = columns[i].split(',');
+      //Making the columns into an array instead of a string
+      for(var i = 0; i < this.columns.length; i++){
+        this.columns[i] = this.columns[i].split(',');
       }
 
-      this.previewTable = columns;
-      
-      //Dynamically inserting TableElementComponents into the HTML table
-      for(var i = 0; i < this.headings.length; i++){
-        const tableComponentRef = this.insertIntoTable.createComponent(this.resolver.resolveComponentFactory(TableComponentComponent));
-        tableComponentRef.instance.ColumnName = this.headings[i];
-      }
+      //Making the headings into an array instead of a string
+      var headingNames = this.headings[0];
+      this.headings = headingNames.split(',');
 
       this.service.porting(dbname, this.jsonData).subscribe((response:any) => {
         this.loading = false;
