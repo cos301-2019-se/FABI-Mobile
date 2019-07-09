@@ -151,6 +151,79 @@ a i {
     z-index: 1;
 }
 
+#previewTable{
+    width: 95%;
+    padding-bottom: 30px;
+}
+
+.tableHeading{
+    background-color: #6B8E4E;
+    color: white;
+    padding: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: Arial;
+}
+
+th{
+    border-bottom: 1.6px solid #ddd;
+}
+
+.btn.btn-default {
+    background: #555;
+    border: 3px solid #555;
+    color: white;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 13px 30px;
+    margin-top: 34px;
+    margin-left: 2rem;
+    text-transform: uppercase;
+
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 1px solid #555;
+
+}
+
+.btn.btn-default:hover,
+.btn.btn-default:focus,
+.fileLabel:hover,
+.fileLabel:focus {
+    outline: none;
+    box-shadow: 0 19px 28px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+    font-size: 12.5px;
+}
+
+.inputFile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.fileLabel{
+    margin-top: 20px;
+    background-color: #6B8E4E;
+    border: 1px solid #6B8E4E;
+    border-radius: 6px;
+    padding: 6px;
+    color: white;
+    font-size: 12px;
+}
+
+.databaseName{
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.inputSpace{
+    height: 28px;
+    width: 20%;
+}
 
 @media (max-width: 1250px) {
     .content {
@@ -165,6 +238,14 @@ a i {
         width: 100%;
     }
 
+}
+
+@media (max-width: 500px) {
+
+    .inputSpace{
+        height: 28px;
+        width: 45%;
+    }
 }
 
 @media (max-width: 400px) {
