@@ -49,8 +49,6 @@ export class DatabaseHandlerComponent implements OnInit {
   headings: any = [];
   /** Array holding the columns of the new database - @type {any} */
   columns: any = [];
-  /** Indicates if the database should be created or not based on the users reaction to the preview table - @type {boolean} */
-  submit: boolean = false;
 
   jsonData: any;
 
@@ -112,7 +110,6 @@ export class DatabaseHandlerComponent implements OnInit {
       for(var i = 0; i < this.jsonData.length; i++){
         var columnsIn = this.jsonData[i];
         for(var key in columnsIn){
-          //console.log(this.jsonData[i][key]);
           this.columns.push(this.jsonData[i][key]);
         } 
       }
@@ -130,37 +127,35 @@ export class DatabaseHandlerComponent implements OnInit {
       var headingNames = this.headings[0];
       this.headings = headingNames.split(',');
 
-      if(this.submit == true){
-        this.service.porting(dbname, this.jsonData).subscribe((response:any) => {
-          this.loading = false;
-          if(response.success == true && response.code == 200) {
-            //POPUP MESSAGE
-            let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
-              duration: 3000
-            });
-          } else if (response.success == false) {
-
-            //POPUP MESSAGE
-            let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-            dialogRef.afterClosed().subscribe((result) => {
-              if(result == "Retry") {
-                this.ngOnInit();
-              }
-            })
-          }    
-        }, (err: HttpErrorResponse) => {
+      this.service.porting(dbname, this.jsonData).subscribe((response:any) => {
+        this.loading = false;
+        if(response.success == true && response.code == 200) {
           //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
+          let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
+            duration: 3000
+          });
+        } else if (response.success == false) {
+
+          //POPUP MESSAGE
+          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
           dialogRef.afterClosed().subscribe((result) => {
             if(result == "Retry") {
               this.ngOnInit();
             }
           })
-          console.log("ERROR:" + err.message);
-        });
-      };
-      reader.readAsText(input.files[0]);
-    }
+        }    
+      }, (err: HttpErrorResponse) => {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
+        dialogRef.afterClosed().subscribe((result) => {
+          if(result == "Retry") {
+            this.ngOnInit();
+          }
+        })
+        console.log("ERROR:" + err.message);
+      });
+    };
+    reader.readAsText(input.files[0]);
   }
 
   public getCSV(){
@@ -205,7 +200,7 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
   submitDatabase(){
-    this.submit = true;
+    // this.submit = true;
   }
 
   removePreview(){
