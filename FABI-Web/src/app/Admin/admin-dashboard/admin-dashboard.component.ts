@@ -36,6 +36,7 @@ export interface UserLogs{
   Date: string;
   User: string;
   MoreInfo: string;
+  Read: boolean
 }
 
 @Component({
@@ -99,10 +100,13 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { 
-      var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: 'Tegan Carton-Barber', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: ''};
+      var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: 'Tegan Carton-Barber', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', Read: false};
       this.userNotifications.push(tempUserNotification);
-      var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: 'Kendra Riddle', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: ''};
+      var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: 'Kendra Riddle', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', Read: false};
       this.userNotifications.push(tempUserNotification2);
+
+      //Loading the user notifications into the local storage
+      localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
     }
 
 
@@ -248,7 +252,7 @@ export class AdminDashboardComponent implements OnInit {
     //Dynamically loads all the user notifications into the HTML page
     for(var i = 0; i < this.userNotifications.length; i++){
       const userNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
-      userNotificationDivRef.instance.Number = i + i;
+      userNotificationDivRef.instance.Number = i + 1;
       userNotificationDivRef.instance.Type = this.userNotifications[i].Type;
       userNotificationDivRef.instance.Action = this.userNotifications[i].Action;
       userNotificationDivRef.instance.Date = this.userNotifications[i].Date;
@@ -259,6 +263,22 @@ export class AdminDashboardComponent implements OnInit {
       else if(this.userNotifications[i].Action == 'User removed'){
         userNotificationDivRef.instance.Details = this.userNotifications[i].Details + ' was removed from the system by ' + this.userNotifications[i].User;
       }
+    }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       REMOVE_NOTIFICATIONS
+  /**
+   *  This function will remove a notification from the notification section on the HTML page
+   * @param {number} id                   //The id of the notification to be removed
+   * @param {string} type                 //The type of the notification to be removed
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeNotification(id: number, type: string){
+    if(type == 'USER'){
+      this.userNotifications[id - 1].Read = true;
     }
   }
 
