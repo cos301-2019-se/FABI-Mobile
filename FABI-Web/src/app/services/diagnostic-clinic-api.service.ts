@@ -106,7 +106,7 @@ export class DiagnosticClinicAPIService {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
         },
-        postData: data,
+        body: data,
         json: true
     };
 
