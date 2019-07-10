@@ -20,9 +20,12 @@ import { registerContentQuery } from '@angular/core/src/render3';
 import { StaticInjector } from '@angular/core/src/di/injector';
 import { BehaviorSubject } from 'rxjs';
 
+import { POSTOrganization } from './user-management-api.service';
+
 //Globals variables used to hold the API call urls
 const getAllSamplesURL = '***REMOVED***/retrieveAllSamples';
 const getAllSamplesForMemberURL = '***REMOVED***/retrieveSamplesForMember';
+const getOrganizationSamplesURL = '***REMOVED***/retrieveAllOrgSamples';
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
@@ -83,6 +86,36 @@ export class DiagnosticClinicAPIService {
 
         return this.http.request('POST', getAllSamplesURL, options);
    }
+
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                   GET_ALL_ORGANIZATION_SAMPLES 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the samples belonging to the specified organization
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllOrganizationSamples(organization:string){
+    // var data: POSTOrganization = { orgName: organization };
+    var data: POSTOrganization = { orgName: 'testOrg3'};
+
+    const options = {
+        method: 'POST',
+        url: getOrganizationSamplesURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', getOrganizationSamplesURL, options);
+}
 
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
