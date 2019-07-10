@@ -85,7 +85,9 @@ export class AdminDashboardComponent implements OnInit {
   /** The total number of FABI staff members - @type {number} */
   numberOfFABIMembers: number;        
   /** The total number of FABI samples - @type {number} */           
-  numberOfSamples: number;                       
+  numberOfSamples: number;
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean = false;                       
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -177,24 +179,46 @@ export class AdminDashboardComponent implements OnInit {
         this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
         this.userStats = this.numberOfFABIMembers.toString();
 
-        //Dynamically loads all the admins into the HTML page
-        for(var i = 0; i < this.admins.length; i++){
+        if(this.admins.length == 0){
+          //Dynamically loads a message indicating that there are no adminsitrators
           const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-          adminDivRef.instance.Name = this.admins[i].Name;
-          adminDivRef.instance.Surname = this.admins[i].Surname;
-          adminDivRef.instance.Email = this.admins[i].Email;
+          adminDivRef.instance.Name = 'There are no administrators to load.';
+          adminDivRef.instance.Surname = '';
+          adminDivRef.instance.Email = '';
+        }
+        else{
+          //Dynamically loads all of the admins into the HTML page
+          for(var i = 0; i < this.admins.length; i++){
+            const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+            adminDivRef.instance.Name = this.admins[i].Name;
+            adminDivRef.instance.Surname = this.admins[i].Surname;
+            adminDivRef.instance.Email = 'Email:' + this.admins[i].Email;
+          }
         }
 
-        //Dynamically loads all the staff into the HTML page
-        for(var i = 0; i < this.staff.length; i++){
+        if(this.staff.length == 0){
+          //Dynamically loads a message indicating that there are no staff members
           const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
-          staffDivRef.instance.Name = this.staff[i].Name;
-          staffDivRef.instance.Surname = this.staff[i].Surname;
-          staffDivRef.instance.Email = this.staff[i].Email;
+          staffDivRef.instance.Name = 'There are no staff members to load.';
+          staffDivRef.instance.Surname = '';
+          staffDivRef.instance.Email = '';
+        }
+        else{
+          //Dynamically loads all the staff into the HTML page
+          for(var i = 0; i < this.staff.length; i++){
+            const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
+            staffDivRef.instance.Name = this.staff[i].Name;
+            staffDivRef.instance.Surname = this.staff[i].Surname;
+            staffDivRef.instance.Email = 'Email:' + this.staff[i].Email;
+          }
         }
       }
       else{
         //The FABI members could not be retrieved
+        this.numberOfFABIMembers = 0;
+        this.userStats = this.numberOfFABIMembers.toString();
+
+        //TODO: Show error message
       }
     });
   }
@@ -222,6 +246,7 @@ export class AdminDashboardComponent implements OnInit {
       }
       else{
         //The FABI members could not be retrieved
+        this.sampleStats = '0';
       }
     });
   }
@@ -250,18 +275,24 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
     //Dynamically loads all the user notifications into the HTML page
-    for(var i = 0; i < this.userNotifications.length; i++){
-      const userNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
-      userNotificationDivRef.instance.Number = i + 1;
-      userNotificationDivRef.instance.Type = this.userNotifications[i].Type;
-      userNotificationDivRef.instance.Action = this.userNotifications[i].Action;
-      userNotificationDivRef.instance.Date = this.userNotifications[i].Date;
-
-      if(this.userNotifications[i].Action == 'New user added'){
-        userNotificationDivRef.instance.Details = 'New user, ' + this.userNotifications[i].Details + ', was added to the system by ' + this.userNotifications[i].User;
-      }
-      else if(this.userNotifications[i].Action == 'User removed'){
-        userNotificationDivRef.instance.Details = this.userNotifications[i].Details + ' was removed from the system by ' + this.userNotifications[i].User;
+    if(this.userNotifications.length == 0){
+      this.notifications = false;
+    }
+    else{
+      this.notifications = true;
+      for(var i = 0; i < this.userNotifications.length; i++){
+        const userNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
+        userNotificationDivRef.instance.Number = i + 1;
+        userNotificationDivRef.instance.Type = this.userNotifications[i].Type;
+        userNotificationDivRef.instance.Action = this.userNotifications[i].Action;
+        userNotificationDivRef.instance.Date = this.userNotifications[i].Date;
+  
+        if(this.userNotifications[i].Action == 'New user added'){
+          userNotificationDivRef.instance.Details = 'New user, ' + this.userNotifications[i].Details + ', was added to the system by ' + this.userNotifications[i].User;
+        }
+        else if(this.userNotifications[i].Action == 'User removed'){
+          userNotificationDivRef.instance.Details = this.userNotifications[i].Details + ' was removed from the system by ' + this.userNotifications[i].User;
+        }
       }
     }
   }
