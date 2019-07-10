@@ -26,7 +26,7 @@ import { Member, UserManagementAPIService } from '../../services/user-management
 import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
-import {NotificationDivComponent } from '../../Dynamic-Components/notification-div/notification-div.component'
+import { NotificationDivComponent } from '../../Dynamic-Components/notification-div/notification-div.component'
 
 //Object for defining the JSON object containing the user logs
 export interface UserLogs{
