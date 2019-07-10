@@ -13,7 +13,7 @@
  * <<license>>
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewContainerRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 
 import { UserManagementAPIService, Member } from '../../services/user-management-api.service';
 import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
+import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -43,7 +44,10 @@ export class OrganizationDashboardComponent implements OnInit {
   /** The total number of members in the organization - @type {number} */
   numberOfOrganizationMembers: number;  
   /** The name of the logged in organization - @type {string} */                 
-  organizationName: string = 'TestOrg4';            
+  organizationName: string = 'TestOrg4';
+  
+  /** Holds the div element (membersContainer) from the HTML page - @type {ElementRef} */
+  @ViewChild('membersContainer', {read: ViewContainerRef}) membersContainer;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,10 +56,11 @@ export class OrganizationDashboardComponent implements OnInit {
    * Creates an instance of OrganizationDashboardComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private userManagementService: UserManagementAPIService) { }
+  constructor(private userManagementService: UserManagementAPIService, private resolver: ComponentFactoryResolver) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,11 +84,23 @@ export class OrganizationDashboardComponent implements OnInit {
           this.organizationMembers.push(tempMember);
         }
 
+        //Dynamically loads all the members into the HTML page
+        for(var i = 0; i < this.organizationMembers.length; i++){
+          const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+          membersDivRef.instance.Name = this.organizationMembers[i].Name;
+          membersDivRef.instance.Surname = this.organizationMembers[i].Surname;
+          membersDivRef.instance.Email = this.organizationMembers[i].Email;
+        }
+
         this.numberOfOrganizationMembers = this.organizationMembers.length;
         this.memberStats = this.numberOfOrganizationMembers.toString();
       }
       else{
         //The organization's members could not be retrieved
+        const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+        membersDivRef.instance.Name = 'Could not load members';
+        membersDivRef.instance.Surname = '';
+        membersDivRef.instance.Email = '';
       }
     });
   }
