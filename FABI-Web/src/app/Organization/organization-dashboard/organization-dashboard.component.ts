@@ -20,7 +20,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { UserManagementAPIService, Member } from '../../services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
+import { DiagnosticClinicAPIService, Sample, Species } from '../../services/diagnostic-clinic-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 
 @Component({
@@ -37,17 +37,27 @@ export class OrganizationDashboardComponent implements OnInit {
 
   /** Contains the member stats that will be dynamically loaded in the HTML page - @type {string} */
   memberStats: string;
+  /** Contains the sample stats for the organization that will be dynamically loaded in the HTML page - @type {string} */
+  sampleStats: string;
 
   /** Object array for holding the members of the organization -  @type {Member[]} */
-  organizationMembers: Member[] = [];                   
+  organizationMembers: Member[] = [];        
+  /** Object array for holding the samples of the organization -  @type {Sample[]} */
+  organizationSamples: Sample[] = [];            
 
   /** The total number of members in the organization - @type {number} */
-  numberOfOrganizationMembers: number;  
+  numberOfOrganizationMembers: number; 
+  /** The total number of samples belonging to the organization - @type {number} */
+  numberOfOrganizationSamples: number;  
   /** The name of the logged in organization - @type {string} */                 
   organizationName: string = 'TestOrg4';
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean = false;
   
   /** Holds the div element (membersContainer) from the HTML page - @type {ElementRef} */
   @ViewChild('membersContainer', {read: ViewContainerRef}) membersContainer;
+  /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
+  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,11 +66,12 @@ export class OrganizationDashboardComponent implements OnInit {
    * Creates an instance of OrganizationDashboardComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private userManagementService: UserManagementAPIService, private resolver: ComponentFactoryResolver) { }
+  constructor(private userManagementService: UserManagementAPIService, private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,12 +95,21 @@ export class OrganizationDashboardComponent implements OnInit {
           this.organizationMembers.push(tempMember);
         }
 
-        //Dynamically loads all the members into the HTML page
-        for(var i = 0; i < this.organizationMembers.length; i++){
+        if(this.organizationMembers.length == 0){
+          //Dynamically loads a message indicating that there are no organization members
           const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-          membersDivRef.instance.Name = this.organizationMembers[i].Name;
-          membersDivRef.instance.Surname = this.organizationMembers[i].Surname;
-          membersDivRef.instance.Email = this.organizationMembers[i].Email;
+          membersDivRef.instance.Name = 'There are no members to load.';
+          membersDivRef.instance.Surname = '';
+          membersDivRef.instance.Email = '';
+        }
+        else{
+          //Dynamically loads all the members into the HTML page
+          for(var i = 0; i < this.organizationMembers.length; i++){
+            const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+            membersDivRef.instance.Name = this.organizationMembers[i].Name;
+            membersDivRef.instance.Surname = this.organizationMembers[i].Surname;
+            membersDivRef.instance.Email = 'Email: ' + this.organizationMembers[i].Email;
+          }
         }
 
         this.numberOfOrganizationMembers = this.organizationMembers.length;
@@ -97,10 +117,10 @@ export class OrganizationDashboardComponent implements OnInit {
       }
       else{
         //The organization's members could not be retrieved
-        const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-        membersDivRef.instance.Name = 'Could not load members';
-        membersDivRef.instance.Surname = '';
-        membersDivRef.instance.Email = '';
+        this.numberOfOrganizationMembers = 0;
+        this.memberStats = this.numberOfOrganizationMembers.toString();
+
+        //TODO: handle error
       }
     });
   }
@@ -116,7 +136,20 @@ export class OrganizationDashboardComponent implements OnInit {
    * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfOrganizationSamples(){}
+  getNumberOfOrganizationSamples(){
+    //Subscribing to the DiagnosticClinicAPIService to get a list containing all the samples belonging to the organization
+    this.diagnosticClinicService.getAllOrganizationSamples(this.organizationName).subscribe((response: any) => {
+      if(response.success == true){
+        var tempSamples = response.data.samples;
+        this.numberOfOrganizationSamples = tempSamples.length;
+        this.sampleStats = this.numberOfOrganizationSamples.toString();
+      }
+      else{
+        this.numberOfOrganizationSamples = 0;
+        this.sampleStats = this.numberOfOrganizationSamples.toString();
+      }
+    });
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

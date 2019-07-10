@@ -32,9 +32,14 @@ export class StaffDashboardComponent implements OnInit {
 
   /** Holds the div element (adminContainer) from the HTML page - @type {ElementRef} */
   @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
+  /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
+  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
 
   /** Object array for holding the administrators -  @type {Member[]} */
-  admins: Member[] = [];         
+  admins: Member[] = [];   
+  
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean = false;  
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,12 +76,21 @@ export class StaffDashboardComponent implements OnInit {
           this.admins.push(tempMember);
         }
 
-        //Dynamically loads all the admins into the HTML page
-        for(var i = 0; i < this.admins.length; i++){
+        if(this.admins.length == 0){
+          //Dynamically loads a message indicating that there are no adminsitrators
           const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-          adminDivRef.instance.Name = this.admins[i].Name;
-          adminDivRef.instance.Surname = this.admins[i].Surname;
-          adminDivRef.instance.Email = this.admins[i].Email;
+          adminDivRef.instance.Name = 'There are no administrators to load.';
+          adminDivRef.instance.Surname = '';
+          adminDivRef.instance.Email = '';
+        }
+        else{
+          //Dynamically loads all the admins into the HTML page
+          for(var i = 0; i < this.admins.length; i++){
+            const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+            adminDivRef.instance.Name = this.admins[i].Name;
+            adminDivRef.instance.Surname = this.admins[i].Surname;
+            adminDivRef.instance.Email = this.admins[i].Email;
+          }
         }
       }
       else{
@@ -85,6 +99,8 @@ export class StaffDashboardComponent implements OnInit {
         adminDivRef.instance.Name = 'Could not load the administrators.';
         adminDivRef.instance.Surname = '';
         adminDivRef.instance.Email = '';
+
+        //TODO: error handling
       }
     });
   }
