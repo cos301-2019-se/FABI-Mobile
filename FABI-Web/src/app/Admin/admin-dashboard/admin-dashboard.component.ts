@@ -192,7 +192,7 @@ export class AdminDashboardComponent implements OnInit {
             const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
             adminDivRef.instance.Name = this.admins[i].Name;
             adminDivRef.instance.Surname = this.admins[i].Surname;
-            adminDivRef.instance.Email = 'Email:' + this.admins[i].Email;
+            adminDivRef.instance.Email = 'Email: ' + this.admins[i].Email;
           }
         }
 
@@ -209,7 +209,7 @@ export class AdminDashboardComponent implements OnInit {
             const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
             staffDivRef.instance.Name = this.staff[i].Name;
             staffDivRef.instance.Surname = this.staff[i].Surname;
-            staffDivRef.instance.Email = 'Email:' + this.staff[i].Email;
+            staffDivRef.instance.Email = 'Email: ' + this.staff[i].Email;
           }
         }
       }

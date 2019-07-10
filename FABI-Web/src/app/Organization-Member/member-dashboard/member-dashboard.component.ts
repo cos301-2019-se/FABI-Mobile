@@ -37,11 +37,15 @@ export class MemberDashboardComponent implements OnInit {
 
   /** Holds the div element (sampleContainer) from the HTML page - @type {ElementRef} */
   @ViewChild('sampleContainer', {read: ViewContainerRef}) sampleContainer;
+  /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
+  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
 
   /** The ID of the logged in member - @type {string} */ 
   memberID: string = '1234';
   /** The number of samples belonging to the member - @type {number} */ 
   numberOfMemberSamples: number;
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean = false;  
 
   /** Object array for holding the samples for the member -  @type {Sample[]} */               
   memberSamples: Sample[] = [];
@@ -87,25 +91,27 @@ export class MemberDashboardComponent implements OnInit {
         if(this.memberSamples.length == 0){
           //Dynamically loads one div if no samples are returned
           const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
-          sampleDivRef.instance.Number = 0;
-          sampleDivRef.instance.Status = 'You currently have no samples.';
+          sampleDivRef.instance.Number = 'You currently have no samples.';
+          sampleDivRef.instance.Status = '';
           sampleDivRef.instance.Details = '';
         }
         else{
           //Dynamically loads all the samples into the HTML page
           for(var i = 0; i < this.memberSamples.length; i++){
             const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
-            sampleDivRef.instance.Number = i + 1;
-            sampleDivRef.instance.Status = this.memberSamples[i].status;
-            sampleDivRef.instance.Details = this.memberSamples[i].data.species;
+            sampleDivRef.instance.Number = 'Sample' + (i + 1).toString();
+            sampleDivRef.instance.Status = 'Status: ' + this.memberSamples[i].status;
+            sampleDivRef.instance.Details = 'Species: ' + this.memberSamples[i].data.species;
           }
         }
       }
       else{
         //Could not return samples
+        this.numberOfMemberSamples = 0;
+
         const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
-        sampleDivRef.instance.Number = 0;
-        sampleDivRef.instance.Status = 'Samples could not be loaded.';
+        sampleDivRef.instance.Number = 'Samples could not be loaded.';
+        sampleDivRef.instance.Status = '';
         sampleDivRef.instance.Details = '';
       }
     });
