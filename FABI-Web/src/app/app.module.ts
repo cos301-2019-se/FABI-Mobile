@@ -52,6 +52,7 @@ import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.comp
 import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
 import { UpdateComponent } from './update/update.component';
 import { NotificationDivComponent } from './Dynamic-Components/notification-div/notification-div.component';
+import { SampleDivComponent } from './Dynamic-Components/sample-div/sample-div.component';
 
 @NgModule({
   declarations: [
@@ -85,13 +86,15 @@ import { NotificationDivComponent } from './Dynamic-Components/notification-div/
     UpdateComponent,
     AdminDivComponent,
     StaffDivComponent,
-    NotificationDivComponent
+    NotificationDivComponent,
+    SampleDivComponent
   ],
   entryComponents: [
     ConfirmComponent,
     AdminDivComponent,
     StaffDivComponent,
     NotificationDivComponent,
+    SampleDivComponent,
     ErrorComponent
   ],
   imports: [

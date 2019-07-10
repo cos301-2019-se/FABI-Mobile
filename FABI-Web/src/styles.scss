@@ -99,6 +99,47 @@ app-staff-div p {
     }
 }
 
+/*
+    Styling for dynamically added SampleDivComponent
+*/
+
+app-sample-div .box {
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+    margin: 15px;
+
+    height: 25%;
+
+    text-align: left;
+}
+
+app-sample-div h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #3C5148;
+    font-size: 20px;
+    padding: 15px 15px 0px 15px;
+}
+
+app-sample-div p {
+    font-family: 'Open Sans', sans-serif;
+    color: #999;
+    font-size: 16px;
+    padding: 5px 15px 15px 15px;
+}
+
+@media (max-width: 1100px) {
+    app-sample-div {
+        margin: 5% 0 0 5%;
+    }
+}
+
+@media (max-width: 720px) {
+
+    app-sample-div .box {
+        width: 90%;
+    }
+}
+
 /*------------------
     Notifications
 -------------------*/
