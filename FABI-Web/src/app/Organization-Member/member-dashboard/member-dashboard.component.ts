@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Wednesday, July 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,11 +14,14 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+
+import { SampleDivComponent } from '../../Dynamic-Components/sample-div/sample-div.component';
+import { DiagnosticClinicAPIService, Sample, Species } from '../../services/diagnostic-clinic-api.service';
 
 @Component({
   selector: 'app-member-dashboard',
@@ -29,14 +32,28 @@ import { Router } from '@angular/router';
 export class MemberDashboardComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /** Holds the div element (sampleContainer) from the HTML page - @type {ElementRef} */
+  @ViewChild('sampleContainer', {read: ViewContainerRef}) sampleContainer;
+
+  /** The ID of the logged in member - @type {string} */ 
+  memberID: string = '1234';
+
+  /** Object array for holding the samples for the member -  @type {Sample[]} */               
+  memberSamples: Sample[] = [];
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of MemberDashboardComponent.
-   * 
+   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor() { }
+  constructor(private resolver: ComponentFactoryResolver, private diagnosticClinicService: DiagnosticClinicAPIService) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +66,44 @@ export class MemberDashboardComponent implements OnInit {
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfMemberSamples(){}
+  getNumberOfMemberSamples(){
+    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+    this.diagnosticClinicService.getAllSamplesForMember(this.memberID).subscribe((response: any) => {
+      if(response.success == true){
+        //Populating the arrays with the returned data
+        var tempSamples = response.data.samples;
+        for(var i = 0; i < tempSamples.length; i++){
+          var tempSpecies: Species = {species: tempSamples[i].data.species};
+          var tempSample: Sample = {userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, data: tempSpecies};
+          this.memberSamples.push(tempSample);
+        }
+
+        if(this.memberSamples.length == 0){
+          //Dynamically loads one div if no samples are returned
+          const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
+          sampleDivRef.instance.Number = 0;
+          sampleDivRef.instance.Status = 'You currently have no samples.';
+          sampleDivRef.instance.Details = '';
+        }
+        else{
+          //Dynamically loads all the samples into the HTML page
+          for(var i = 0; i < this.memberSamples.length; i++){
+            const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
+            sampleDivRef.instance.Number = i + 1;
+            sampleDivRef.instance.Status = this.memberSamples[i].status;
+            sampleDivRef.instance.Details = this.memberSamples[i].data.species;
+          }
+        }
+      }
+      else{
+        //Could not return samples
+        const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
+        sampleDivRef.instance.Number = 0;
+        sampleDivRef.instance.Status = 'Samples could not be loaded.';
+        sampleDivRef.instance.Details = '';
+      }
+    });
+  }
 
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
