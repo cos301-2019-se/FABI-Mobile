@@ -49,7 +49,7 @@ export interface POSTOrganization{
 export class UserManagementAPIService {
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   //                                                             CONSTRUCTOR
+   //                                                          CONSTRUCTOR
    /**
    * Creates an instance of UserManagementAPIService.
    * 
