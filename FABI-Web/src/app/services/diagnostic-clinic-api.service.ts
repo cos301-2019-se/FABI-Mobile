@@ -22,6 +22,24 @@ import { BehaviorSubject } from 'rxjs';
 
 //Globals variables used to hold the API call urls
 const getAllSamplesURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllSamples';
+const getAllSamplesForMemberURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveSamplesForMember';
+
+//Object for defining the JSON object to be sent when requesting the samples of a specific member
+export interface POSTMember{
+    userID: string;
+}
+
+//Object for defining the samples received from the API call
+export interface Sample{
+    userID: string;
+    orgName: string;
+    status: string;
+    data: Species;
+}
+
+export interface Species{
+    species: string;
+}
 
 @Injectable({
     providedIn: 'root'
@@ -66,4 +84,32 @@ export class DiagnosticClinicAPIService {
         return this.http.request('POST', getAllSamplesURL, options);
    }
 
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET_ALL_SAMPLES_FOR_MEMBER 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the samples that correspond to a specific organization member
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllSamplesForMember(id: string){
+    var data: POSTMember = {userID: id};
+
+    const options = {
+        method: 'POST',
+        url: getAllSamplesForMemberURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        postData: data,
+        json: true
+    };
+
+    return this.http.request('POST', getAllSamplesForMemberURL, options);
+}
 }
