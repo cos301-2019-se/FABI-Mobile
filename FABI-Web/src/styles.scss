@@ -41,8 +41,6 @@ app-admin-div .box {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
     margin: 15px;
 
-    height: 20%;
-
     text-align: left;
 }
 
@@ -73,8 +71,6 @@ app-staff-div .box {
     background-color: #ffffff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
     margin: 15px;
-
-    height: 20%;
 
     text-align: left;
 }
@@ -174,8 +170,8 @@ app-sample-div p {
 }
 
 .notification-action{
-    margin-right: 5px;
-    margin-top: 5px;
+    margin-right: 20px;
+    margin-top: 20px;
 }
 
 @media (max-width: 1400px) {
