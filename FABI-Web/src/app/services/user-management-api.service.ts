@@ -125,7 +125,6 @@ export class UserManagementAPIService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     getAllOrganizationMembers(organization: string) {
         var data: POSTOrganization = { orgName: organization };
-        console.log(data);
 
         const options = {
             method: 'POST',
