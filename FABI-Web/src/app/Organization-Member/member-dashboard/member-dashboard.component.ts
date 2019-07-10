@@ -40,6 +40,8 @@ export class MemberDashboardComponent implements OnInit {
 
   /** The ID of the logged in member - @type {string} */ 
   memberID: string = '1234';
+  /** The number of samples belonging to the member - @type {number} */ 
+  numberOfMemberSamples: number;
 
   /** Object array for holding the samples for the member -  @type {Sample[]} */               
   memberSamples: Sample[] = [];
@@ -63,6 +65,8 @@ export class MemberDashboardComponent implements OnInit {
    *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
    *  HTML page with the number of samples belonging to the member.
    * 
+   *  This function will also dynamically load all of the samples into the sample section within the HTML page.
+   * 
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,6 +81,8 @@ export class MemberDashboardComponent implements OnInit {
           var tempSample: Sample = {userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, data: tempSpecies};
           this.memberSamples.push(tempSample);
         }
+
+        this.numberOfMemberSamples = this.memberSamples.length;
 
         if(this.memberSamples.length == 0){
           //Dynamically loads one div if no samples are returned
@@ -107,7 +113,7 @@ export class MemberDashboardComponent implements OnInit {
 
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                            GET_NUMBER_OF_COMPLETED_MEMBER_SAMPLES
+  //                                            GET_NUMBER_OF_COMPLETED_MEMBER_SAMPLES
   /**
    *  This function will use an API service to get all the completed (processed) samples of a member. These 
    *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
@@ -116,18 +122,9 @@ export class MemberDashboardComponent implements OnInit {
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfCompletedMemberSamples(){}
+  getNumberOfCompletedMemberSamples(){
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      LOAD_SAMPLES
-  /**
-   *  This function will use an API call to populate the sample section provided on the HTML page.
-   * 
-   * @memberof MemberDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadSamples(){}
+  }
 
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -147,14 +144,13 @@ export class MemberDashboardComponent implements OnInit {
    * This function is called when the page loads
    * 
    * @description 1. Call getNumberOfMemberSamples() | 2. Call getNumberOfCompletedMemberSamples() | 
-   *              3. Call loadSamples() | 4. Call loadNotifications()
+   *              3. Call loadNotifications()
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.getNumberOfMemberSamples();
     this.getNumberOfCompletedMemberSamples();
-    this.loadSamples();
     this.loadNotifications();
   }
 
