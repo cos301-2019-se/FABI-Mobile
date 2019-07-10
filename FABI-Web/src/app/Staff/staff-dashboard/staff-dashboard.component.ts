@@ -81,6 +81,10 @@ export class StaffDashboardComponent implements OnInit {
       }
       else{
         //The FABI administrators could not be retrieved
+        const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+        adminDivRef.instance.Name = 'Could not load the administrators.';
+        adminDivRef.instance.Surname = '';
+        adminDivRef.instance.Email = '';
       }
     });
   }
