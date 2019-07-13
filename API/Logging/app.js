@@ -10,24 +10,13 @@ admin.initializeApp({
 
 const displayHTML = require('./api/routes/displayHTML');
 
-//fabi modules
-const createOrganizationRoute = require('./api/routes/FABI/createOrganization');
-const addStaffRoute = require('./api/routes/FABI/addStaff');
-const getAllStaffRoute = require('./api/routes/FABI/getAllStaff');
-const updateStaffMemberRoute = require('./api/routes/FABI/updateStaffMember');
-const addAdminRoute = require('./api/routes/FABI/addFabiAdmin');
-const addDatabaseAdminRoute = require('./api/routes/FABI/addFabiDatabaseAdmin');
-const removeOrgRoute = require('./api/routes/FABI/removeOrg');
-const removeStaffRoute = require('./api/routes/FABI/removeStaff');
-
-//External modules
-const addMemberToOrgRoute = require('./api/routes/External/addMemberToOrg');
-const getOrgDetailsRoute = require('./api/routes/External/getOrgDetails');
-const getAllOrgMembersRoute = require('./api/routes/External/getAllOrgMembers');
-const getAllOrgsRoute = require('./api/routes/External/getAllOrginizations');
-const updateOrgMemberRoute = require('./api/routes/External/updateOrgMember');
-const getOrgMemberRoute = require('./api/routes/External/getOrgMember');
-const removeMemberRoute = require('./api/routes/External/removeMember');
+//log modules
+const loggingUSER = require('./api/routes/FABI/USER');
+const loggingDBML = require('./api/routes/FABI/DBML');
+const loggingDGCL = require('./api/routes/FABI/DGCL');
+const loggingACCL = require('./api/routes/FABI/ACCL');
+const loggingERRL = require('./api/routes/FABI/ERRL');
+const getLogs = require('./api/routes/FABI/getLogs');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -36,21 +25,12 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/',displayHTML);
-app.use('/createOrganization', createOrganizationRoute);
-app.use('/addMemberToOrg', addMemberToOrgRoute);
-app.use('/addStaff', addStaffRoute);
-app.use('/getOrgDetails', getOrgDetailsRoute);
-app.use('/getAllStaff', getAllStaffRoute);
-app.use('/updateStaffMember', updateStaffMemberRoute);
-app.use('/getAllOrgMembers', getAllOrgMembersRoute);
-app.use('/getAllOrganizations', getAllOrgsRoute);
-app.use('/updateorgMember', updateOrgMemberRoute);
-app.use('/getOrgMember', getOrgMemberRoute);
-app.use('/addFabiAdmin', addAdminRoute);
-app.use('/addFabiDatabaseAdmin', addDatabaseAdminRoute);
-app.use('/removeOrg', removeOrgRoute);
-app.use('/removeMember', removeMemberRoute);
-app.use('/removeStaff', removeStaffRoute);
+app.use('/USER', loggingUSER);
+app.use('/DBML', loggingDBML);
+app.use('/DGCL', loggingDGCL);
+app.use('/ACCL', loggingACCL);
+app.use('/ERRL', loggingERRL);
+app.use('/getLogs', getLogs);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {
