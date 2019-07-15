@@ -119,14 +119,14 @@ export class DatabaseHandlerComponent implements OnInit {
           })
         }    
       }, (err: HttpErrorResponse) => {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        })
-        console.log("ERROR:" + err.message);
+          //POPUP MESSAGE
+          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
+          dialogRef.afterClosed().subscribe((result) => {
+            if(result == "Retry") {
+              this.ngOnInit();
+            }
+          })
+          console.log("ERROR:" + err.message);
       });
     };
     reader.readAsText(input.files[0]);
