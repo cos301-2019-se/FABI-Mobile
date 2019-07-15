@@ -243,7 +243,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogAccess(type:String, statusCode:String, details:String, user:String, moreInfo: String){
-    const accesslogURL = "";
+    const accesslogURL = "***REMOVED***/ACCL";
 
     const logData = {
       "Log": {
@@ -283,7 +283,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogError(type:String, statusCode:String, details:String, user:String, moreInfo: String){
-    const errorlogURL = "";
+    const errorlogURL = "***REMOVED***/ERRL";
 
     const logData = {
       "Log": {
@@ -320,7 +320,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogDiagnosticClinic(type:String, user:String){
-    const dgcllogURL = "";
+    const dgcllogURL = "***REMOVED***/DGCL";
 
     const logData = {
       "Log": {
@@ -357,7 +357,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogUserCRUD(type:String, statusCode:String, details:String, user:String, moreInfo: String){
-    const userlogURL = "";
+    const userlogURL = "***REMOVED***/USER";
 
     const logData = {
       "Log": {
@@ -397,7 +397,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogDatabaseCRUD(type:String, statusCode:String, details:String, user:String, moreInfo: String){
-    const dbmllogURL = "";
+    const dbmllogURL = "***REMOVED***/DBML";
 
     const logData = {
       "Log": {

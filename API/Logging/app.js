@@ -11,12 +11,12 @@ admin.initializeApp({
 const displayHTML = require('./api/routes/displayHTML');
 
 //log modules
-const loggingUSER = require('./api/routes/FABI/USER');
-const loggingDBML = require('./api/routes/FABI/DBML');
-const loggingDGCL = require('./api/routes/FABI/DGCL');
-const loggingACCL = require('./api/routes/FABI/ACCL');
-const loggingERRL = require('./api/routes/FABI/ERRL');
-const getLogs = require('./api/routes/FABI/getLogs');
+const loggingUSER = require('./api/routes/USER');
+const loggingDBML = require('./api/routes/DBML');
+const loggingDGCL = require('./api/routes/DGCL');
+const loggingACCL = require('./api/routes/ACCL');
+const loggingERRL = require('./api/routes/ERRL');
+const getLogs = require('./api/routes/getLogs');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
