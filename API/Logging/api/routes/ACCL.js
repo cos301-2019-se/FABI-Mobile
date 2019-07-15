@@ -66,7 +66,7 @@ function addLog(req, res){
 			type: req.body.Log.type,
 			statusCode: req.body.Log.statusCode,
 			details: req.body.Log.details,
-			date: , //get on server side
+			date: new Date().getTime().toString(),
 			user: req.body.Log.user
 		}
 		
