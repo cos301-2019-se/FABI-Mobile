@@ -243,7 +243,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogAccess(type:String, statusCode:String, details:String, user:String, moreInfo: String){
-    const accesslogURL = "";
+    const accesslogURL = "https://logging-dot-api-fabi.appspot.com/ACCL";
 
     const logData = {
       "Log": {
@@ -283,7 +283,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogError(type:String, statusCode:String, details:String, user:String, moreInfo: String){
-    const errorlogURL = "";
+    const errorlogURL = "https://logging-dot-api-fabi.appspot.com/ERRL";
 
     const logData = {
       "Log": {
@@ -320,7 +320,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogDiagnosticClinic(type:String, user:String){
-    const dgcllogURL = "";
+    const dgcllogURL = "https://logging-dot-api-fabi.appspot.com/DGCL";
 
     const logData = {
       "Log": {
@@ -357,7 +357,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogUserCRUD(type:String, statusCode:String, details:String, user:String, moreInfo: String){
-    const userlogURL = "";
+    const userlogURL = "https://logging-dot-api-fabi.appspot.com/USER";
 
     const logData = {
       "Log": {
@@ -397,7 +397,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   LogDatabaseCRUD(type:String, statusCode:String, details:String, user:String, moreInfo: String){
-    const dbmllogURL = "";
+    const dbmllogURL = "https://logging-dot-api-fabi.appspot.com/DBML";
 
     const logData = {
       "Log": {
