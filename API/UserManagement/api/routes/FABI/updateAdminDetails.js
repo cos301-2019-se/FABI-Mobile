@@ -58,7 +58,7 @@ function updateStaff(req, res) {
     }
 
     
-    var docRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
+    var docRef = db.collection('Organizations').doc('FABI').collection('Admin').doc(req.body.id);
     newMail = req.body.email;
 
     docRef.get().then(doc =>{
@@ -85,7 +85,7 @@ function updateStaff(req, res) {
                     req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
                 }
 
-                var updateRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
+                var updateRef = db.collection('Organizations').doc('FABI').collection('Admin').doc(req.body.id);
                 
                 //(5)
                 updateRef.update(req.body.fields).then(() => {
