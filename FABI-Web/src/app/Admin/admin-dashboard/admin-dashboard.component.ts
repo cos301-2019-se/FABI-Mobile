@@ -97,13 +97,10 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService, private notificationLoggingService: NotificationLoggingService, private resolver: ComponentFactoryResolver) { 
-      var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: 'Tegan Carton-Barber', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', ID: 1};
+      var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: 2, Date: '09-08-2019', User: 3, MoreInfo: '', ID: 1};
       this.userNotifications.push(tempUserNotification);
-      var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: 'Kendra Riddle', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', ID: 2};
+      var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: 2, Date: '09-08-2019', User: 3, MoreInfo: '', ID: 2};
       this.userNotifications.push(tempUserNotification2);
-
-      //Loading the user notifications into the local storage
-      localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
     }
 
 
@@ -277,7 +274,7 @@ export class AdminDashboardComponent implements OnInit {
       this.notifications = true;
 
       //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
-      const readNotifications = JSON.parse(localStorage.getItem('readNotifications'));
+      const storageNotifications = JSON.parse(localStorage.getItem('readNotifications'));
 
       //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
       this.notificationLoggingService.getAllUserAndDatabaseLogs().subscribe((response: any) => {
