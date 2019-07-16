@@ -10,6 +10,14 @@ const admin = require('firebase-admin');
 admin.initializeApp({
     credential: admin.credential.applicationDefault()
 });
+const oAuth2Server = require("node-oauth2-server");
+//const oAuthModel = require('./api/routes/SuperUserAuthModel');
+
+app.oauth = oAuth2Server({
+    model: require('./api/routes/SuperUserAuthModel'),
+    grants: ['password'],
+    debug: true
+})
 
 const displayHTML = require('./api/routes/displayHTML');
 
@@ -41,6 +49,11 @@ app.use('/loginDatabaseAdmin', loginDatabaseAdminRoute);
 //     error.status = 404;
 //     next(error);
 // });
+
+//Authentication Routes
+app.use(app.oauth.errorHandler());
+app.post('/loginTester', app.oauth.grant(), () => {});
+app.post('/authenticate', app.oauth.authorise(), () => {});
 
 //Error handling for thrown error
 app.use((error, req, res, next) => {

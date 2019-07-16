@@ -75,7 +75,7 @@ function loginAdmin(req, res)
         });
     }
     
-    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Admins').doc(req.body.email);
+    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Admins').where('email', '==', req.body.email);
     collectionRef = db.collection('Organizations').doc(req.body.orgName).collection('Admins');
     //(2)
     collectionRef.get().then(collection => 
@@ -97,7 +97,7 @@ function loginAdmin(req, res)
             docRef.get().then(doc =>
                 {
                     //(3)
-                    if(typeof doc.data() === 'undefined')
+                    if(doc.empty)
                     {
                         res.setHeader('Content-Type', 'application/problem+json');
                         res.setHeader('Content-Language', 'en');
@@ -111,7 +111,12 @@ function loginAdmin(req, res)
                     }
                     else{
                         //(4)
-                        bcrypt.compare(req.body.password, doc.data().password, (err, valid) =>
+                        var member;
+                        doc.forEach(element => {
+                            member = element.data();
+                        });
+
+                        bcrypt.compare(req.body.password, member.password, (err, valid) =>
                         {
                             if(valid)
                             {
