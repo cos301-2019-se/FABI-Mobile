@@ -17,8 +17,8 @@
   - [Demo 2 System Requirments Specification](https://drive.google.com/file/d/1GUlm56NHmDGSRdwLS6femYdWiH-wPJzK/view?usp=sharing)
   -  [Demo 2 Presentation](https://docs.google.com/presentation/d/16RmsGRU3QbiqgNaF87FlqfBXETanff4JX61elvecw5s/edit?usp=sharing)
   -  [Demo 2 Testing Policy](https://drive.google.com/file/d/1n2vZSBECzH9XzkLUa_McMMRlQVahIhqU/view?usp=sharing)
-  -  [Demo 2 User Manual](https://drive.google.com/file/d/1I6FNHaGJLGD-80RoTnXJmUjKroOFyRqb/view?usp=sharing)
-  -  [Demo 2 Organization User Manual](https://drive.google.com/file/d/1_qwIlfbC5OeNFL24gwCwKTY71UnvfJgW/view?usp=sharing)
+  -  [Demo 2 User Manual](https://drive.google.com/file/d/1eGpK43xmKePRt2DQk6c-PcZaWoR5W7eK/view?usp=sharing)
+  -  [Demo 2 Organization User Manual](https://drive.google.com/file/d/1akPpNBxUP95yFKB0HD5fCKWYwKEdAlqK/view?usp=sharing)
   -  [Demo 2 Coding Standards Document](https://drive.google.com/file/d/1liZq7CE1cBzKHsayygcGK0k0Mb5Xq0PC/view?usp=sharing)
   - [Demo 2 Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
   
