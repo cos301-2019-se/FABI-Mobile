@@ -32,21 +32,21 @@ const getAllOrganizationMembers = '***REMOVED***/getAllOrgMembers';
 
 //Object for defining how a member of FABI is structured
 export interface Member {
-    Email: string;      //This will contain the email retreived from the DB (is the unique identifier for the member) 
-    Name: string;       //This will be the name of the member
-    Surname: string;    //This will be the surname of the member
+    Email: string;          //This will contain the email retreived from the DB (is the unique identifier for the member) 
+    Name: string;           //This will be the name of the member
+    Surname: string;        //This will be the surname of the member
 }
 
 //Object for defining the JSON object to be sent when requesting the members of an organization
 export interface POSTOrganization{
-    orgName: string;    //The name of the organization to be fetched
+    orgName: string;        //The name of the organization to be fetched
 }
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class UserManagementAPIService {
+export class UserManagementAPIService {    
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //                                                          CONSTRUCTOR

@@ -33,11 +33,11 @@ const getAllAccessAndErrorLogs = '';
 export interface UserLogs{
     Type: string;           //The type of the log: USER
     Action: string;         //The action performed: CRUD
-    Details: string;        //The user on which the action was performed
+    Details: number;        //The user on which the action was performed
     Date: string;           //The date thas this action occurred
-    User: string;           //The user who performed the action
+    User: number;           //The user who performed the action
     MoreInfo: string;       //More information (if any)
-    ID: number              //The id of the notification
+    ID: number;             //The id of the notification
 }
 
 //Object for defining the JSON object containing the database management logs
@@ -46,9 +46,9 @@ export interface DatabaseManagementLogs{
     Action: string;         //The action performed: CRUD
     Details: string;        //The name of the database that the action was performed on
     Date: string;           //The date thas this action occurred
-    User: string;           //The user who performed the action
+    User: number;           //The user who performed the action
     MoreInfo: string;       //More information (if any)
-    ID: number              //The id of the notification
+    ID: number ;            //The id of the notification
 }
 
 //Object for defining the JSON object containing the access logs
@@ -56,8 +56,8 @@ export interface AccessLogs{
     Type: string;           //The type of the log: ACCL
     Details: string;        //Description of what was accessed
     Date: string;           //The date that this action occured
-    User: string;           //The user who performed the action
-    ID: number              //The id of the notification
+    User: number;           //The user who performed the action
+    ID: number;             //The id of the notification
 }
 
 //Object for defining the JSON object containing the error logs
@@ -66,8 +66,8 @@ export interface ErrorLogs{
     StatusCode: string;     //The status code of the error that occured
     Details: string;        //Description of the error
     Date: string;           //The date that this action occured
-    User: string;           //The user who performed the action
-    ID: number              //The id of the notification
+    User: number;           //The user who performed the action
+    ID: number;             //The id of the notification
 }
 
 @Injectable({

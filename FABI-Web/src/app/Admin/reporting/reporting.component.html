@@ -4,7 +4,7 @@
   <div class="nav">
 
     <section class="top-nav">
-      <h1>Database Management</h1>
+      <h1>System Reporting</h1>
       <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
       <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>
       <a id="organization_management" routerLink="/organization-handler"><i
@@ -13,7 +13,7 @@
         Clinic</a>
       <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Databases</a>
       <a id="database_management" routerLink="/database-handler"><i class="fas fa-chart-pie"></i>Reporting</a>
-      <a id="profile_menu_link" routerLink="/admin-profile"><i class="fas fa-user-circle"></i>Profile</a>
+      <a id="profile_menu_link" routerLink="/admin-profile"><i class="far fa-chart-bar"></i>Profile</a>
       <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
       <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
       <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
@@ -31,47 +31,37 @@
       <h1>Database Management</h1>
     </div> -->
 
-    <div class="database-management">
+    <div class="system-reporting">
       <!--Tab Menu-->
       <mat-tab-group animationDuration="1000ms">
 
-        <!--Porting Tab Option-->
+        <!--Reporting Tab Option-->
         <mat-tab>
           <ng-template mat-tab-label>
-            <i class="fas fa-database"></i>
-            Add Database
+            <i class="fas fa-chart-pie"></i>
+            Reporting
           </ng-template>
-          <div class="tab-content" id="add_new_database_form" ng-app="portApp" ngController="previewCtrl">
-            <h2>Add Database via Porting</h2>
-            <br />
-            <label *ngIf="preview">Is this what the database should look like?</label>
-            <span><button *ngIf="preview" class="btn btn-default" (click)="submitDatabase()">Yes</button><button *ngIf="preview" class="btn btn-default" (click)="removePreview()">No</button></span>
-            
-            <label *ngIf="!preview" class="databaseName">Database name</label><input *ngIf="!preview" type='text' id='fileInput1' class="inputSpace" #pDBname >
-            <input *ngIf="!preview" type='file' (change)=submitCSV(input) id='fileInput' class="inputFile" #input>
-            <label *ngIf="!preview" for="fileInput" class="fileLabel">Choose a file</label>
-            <br/><br/><br/>
-            
-            <h2 *ngIf="!preview">Reverse Porting</h2>
-            <br *ngIf="!preview" />
-            <label *ngIf="!preview" class="databaseName">Database name</label><input *ngIf="!preview" type='text' id='fileInput2' class="inputSpace" #rpDBname >
-            <button *ngIf="!preview" type="button" (click)="getCSV()" class="fileLabel">Download CSV file</button>
+        </mat-tab>
+
+        <!--Logs Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="fas fa-file"></i>
+            Logs
+          </ng-template>
 
             <table *ngIf="preview" id="previewTable">
               <thead>
                 <tr>
-                  <th class="tableHeading" *ngFor="let header of headings; let i = index">{{header}}</th>
+                  <!-- <th class="tableHeading" *ngFor="let header of headings; let i = index">{{header}}</th> -->
                 </tr>
               </thead>
               <tbody>
-                <tr class="tableRow" *ngFor="let row of columns; let i = index">
+                <!-- <tr class="tableRow" *ngFor="let row of columns; let i = index">
                   <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
-          
-          </div>
-          <p *ngIf="loading" style="color: black;">Porting File...</p>
         </mat-tab>
 
       </mat-tab-group>
