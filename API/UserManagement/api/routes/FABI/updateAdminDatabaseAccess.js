@@ -45,7 +45,7 @@ function updateStaff(req, res) {
         });
     }
 
-    if (req.body.fields == undefined || req.body.fields == '') {
+    if (req.body.databases == undefined || req.body.databases == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -53,13 +53,12 @@ function updateStaff(req, res) {
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "Fields to update required"
+            message: "Databases to update required"
         });
     }
 
     
-    var docRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
-    newMail = req.body.email;
+    var docRef = db.collection('Organizations').doc('FABI').collection('Admin').doc(req.body.id);
 
     docRef.get().then(doc =>{
         //(2)
@@ -79,16 +78,11 @@ function updateStaff(req, res) {
             //(3)
             
                 //(4)
-                if(req.body.fields.hasOwnProperty('password'))
-                {
-                    const salt = bcrypt.genSaltSync(10);
-                    req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
-                }
 
-                var updateRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
+                var updateRef = db.collection('Organizations').doc('FABI').collection('Admin').doc(req.body.id);
                 
                 //(5)
-                updateRef.update(req.body.fields).then(() => {
+                updateRef.update(req.body.databases).then(() => {
 
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');

@@ -38,7 +38,7 @@ function getAllOrgSamples(req, res) {
         });
     }
     
-    var staffRef = db.collection('Diagnostic').doc('Samples').collection('Pending').where('orgName', "==", req.body.orgName);
+    var staffRef = db.collection('Diagnostic').doc('Samples').collection('Processing').where('orgName', "==", req.body.orgName);
     staffRef.get().then(snapshot => {
         if(snapshot.empty)
         {

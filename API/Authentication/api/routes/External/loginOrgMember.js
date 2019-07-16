@@ -74,13 +74,13 @@ function loginMember(req, res)
         });
     }
     //(2)
-    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.email);
+    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Members').where('email', '==', req.body.email);
     collectionRef = db.collection('Organizations').doc(req.body.orgName);
 
     //(3)
-    collectionRef.get().then(collection => 
+    collectionRef.get().then(doc => 
     {
-        if(typeof collection.data() === undefined)
+        if(doc.empty)
         {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
@@ -95,7 +95,7 @@ function loginMember(req, res)
         else{
             docRef.get().then(doc =>
                 {
-                    if(typeof doc.data() === 'undefined')
+                    if(doc.empty)
                     {
                         res.setHeader('Content-Type', 'application/problem+json');
                         res.setHeader('Content-Language', 'en');
@@ -109,8 +109,12 @@ function loginMember(req, res)
                         });
                     }
                     else{
+                        var member;
+                        doc.forEach(element => {
+                            member = element.data();
+                        });
                         //(4)
-                        bcrypt.compare(req.body.password, doc.data().password, (err, valid) =>
+                        bcrypt.compare(req.body.password, member.password, (err, valid) =>
                         {
                             if(valid)
                             {

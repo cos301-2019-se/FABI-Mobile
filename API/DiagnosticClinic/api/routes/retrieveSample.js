@@ -37,7 +37,7 @@ function getSample(req, res) {
         });
     }
 
-    var memRef = db.collection('Diagnostic').doc('Samples').collection('Pending').doc(req.body.refNum);
+    var memRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(req.body.refNum);
     memRef.get().then(doc => {
         if(typeof(doc.data()) === 'undefined')
         {

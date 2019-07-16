@@ -71,6 +71,28 @@ function addStaff(req, res)
             
         });
     }
+    if (req.body.databases == undefined || req.body.databases == '') {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "Databases the user has access to required"
+        });
+    }
+    if (req.body.userType == undefined || req.body.userType == '') {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User type of new user is required"
+        });
+    }
 // (2)
 const salt = bcrypt.genSaltSync(10);
 var pass = generatePassword(10);
@@ -79,7 +101,9 @@ const qs = {
     surname: req.body.staff.surname,
     email: req.body.staff.email,
     password: bcrypt.hashSync(pass, salt),
-    id : new Date().getTime().toString()
+    databases : req.body.databases,
+    id : new Date().getTime().toString(),
+    userType : req.body.userType
 }
 
 // (3) 
@@ -101,7 +125,7 @@ var docRef  = db.collection('Organizations').doc('FABI').collection('Staff').doc
         }
     });
     console.log("Staff Added to FABI");
-    mail('FABI Staff', pass);
+    mail('FABI Staff - ' + qs.userType, pass);
 });
 
 }

@@ -26,7 +26,7 @@ const db = admin.firestore();
 
 function getAllSamples(req, res) {
     
-    var staffRef = db.collection('Diagnostic').doc('Samples').collection('Pending');
+    var staffRef = db.collection('Diagnostic').doc('Samples').collection('Processing');
     staffRef.get().then(snapshot => {
         if(snapshot.empty)
         {
