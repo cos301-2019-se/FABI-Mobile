@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Tuesday, July 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -27,17 +27,7 @@ import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
 import { NotificationDivComponent } from '../../Dynamic-Components/notification-div/notification-div.component'
-
-//Object for defining the JSON object containing the user logs
-export interface UserLogs{
-  Type: string;
-  Action: string;
-  Details: string;
-  Date: string;
-  User: string;
-  MoreInfo: string;
-  Read: boolean
-}
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -77,10 +67,13 @@ export class AdminDashboardComponent implements OnInit {
   samples: Object[] = [];  
   /** Object array for holding all of FABI's completed samples -  @type {Object[]} */                      
   completedSamples: Object[] = [];  
+
   /** Object array for holding all of the user logs -  @type {UserLogs[]} */ 
   userNotifications: UserLogs[] = [];
-  /** Object array for holding all of the database logs -  @type {Object[]} */ 
-  databaseNotifications: Object[] = [];
+  /** Object array for holding all of the database logs -  @type {DatabaseManagementLogs[]} */ 
+  databaseNotifications: DatabaseManagementLogs[] = [];
+  /** Object array for holding all of the access logs -  @type {AccessLogs[]} */ 
+  accessNotifications: AccessLogs[] = [];
 
   /** The total number of FABI staff members - @type {number} */
   numberOfFABIMembers: number;        
@@ -101,7 +94,7 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { 
+    private diagnosticClinicService: DiagnosticClinicAPIService, private notificationLoggingService: NotificationLoggingService, private resolver: ComponentFactoryResolver) { 
       var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: 'Tegan Carton-Barber', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', Read: false};
       this.userNotifications.push(tempUserNotification);
       var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: 'Kendra Riddle', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', Read: false};
@@ -280,18 +273,43 @@ export class AdminDashboardComponent implements OnInit {
     }
     else{
       this.notifications = true;
+
+      //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+      this.notificationLoggingService.getAllUserAndDatabaseLogs().subscribe((response: any) => {
+        if(response.success == true){
+          //Populating the arrays with the returned data
+        }
+        else{
+
+        }
+      });
+
+      //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+      this.notificationLoggingService.getAllAccessAndErrorLogs().subscribe((response: any) => {
+        if(response.success == true){
+          //Populating the arrays with the returned data
+        }
+        else{
+
+        }
+      });
+
       for(var i = 0; i < this.userNotifications.length; i++){
         const userNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
         userNotificationDivRef.instance.Number = i + 1;
         userNotificationDivRef.instance.Type = this.userNotifications[i].Type;
         userNotificationDivRef.instance.Action = this.userNotifications[i].Action;
         userNotificationDivRef.instance.Date = this.userNotifications[i].Date;
-  
-        if(this.userNotifications[i].Action == 'New user added'){
-          userNotificationDivRef.instance.Details = 'New user, ' + this.userNotifications[i].Details + ', was added to the system by ' + this.userNotifications[i].User;
-        }
-        else if(this.userNotifications[i].Action == 'User removed'){
-          userNotificationDivRef.instance.Details = this.userNotifications[i].Details + ' was removed from the system by ' + this.userNotifications[i].User;
+
+        var tempAction = this.userNotifications[i].Action.split(',');
+
+        for(var j = 0; j < tempAction.length; j++){
+          if(tempAction[j] == 'C'){
+            userNotificationDivRef.instance.Details = 'New user, ' + this.userNotifications[i].Details + ', was added to the system by ' + this.userNotifications[i].User;
+          }
+          else if(tempAction[j] == 'D'){
+            userNotificationDivRef.instance.Details = this.userNotifications[i].Details + ' was removed from the system by ' + this.userNotifications[i].User;
+          }
         }
       }
     }
