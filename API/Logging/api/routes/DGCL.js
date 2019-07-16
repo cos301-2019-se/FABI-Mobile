@@ -37,7 +37,7 @@ function addLog(req, res){
 		
 		const logEntry = {
 			type: req.body.Log.type,
-			date: new Date().getTime().toString(),
+			date: new Date().toString(),
 			user: req.body.Log.user,
 			// anything else ?????
 		}
