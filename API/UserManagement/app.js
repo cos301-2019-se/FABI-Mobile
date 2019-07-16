@@ -22,6 +22,9 @@ const removeStaffRoute = require('./api/routes/FABI/removeStaff');
 const getAllFabiAdminsRoute = require('./api/routes/FABI/getAllFabiAdmins');
 const getAllDatabaseAdminsRoute = require('./api/routes/FABI/getAllDatabaseAdmins');
 const getAllFabiMembersRoute = require('./api/routes/FABI/getAllFabiMembers');
+const updateAdminDatabaseAccessRoute = require('./api/routes/FABI/updateAdminDatabaseAccess');
+const updateAdminDetailsRoute = require('./api/routes/FABI/updateAdminDetails');
+const updateStaffDatabaseAccessRoute = require('./api/routes/FABI/updateStaffDatabaseAccess');
 
 //External modules
 const addMemberToOrgRoute = require('./api/routes/External/addMemberToOrg');
@@ -29,7 +32,7 @@ const getOrgDetailsRoute = require('./api/routes/External/getOrgDetails');
 const getAllOrgMembersRoute = require('./api/routes/External/getAllOrgMembers');
 const getAllOrgsRoute = require('./api/routes/External/getAllOrginizations');
 const updateOrgMemberRoute = require('./api/routes/External/updateOrgMember');
-const getOrgMemberRoute = require('./api/routes/External/getOrgMember');
+const getUserDetailsRoute = require('./api/routes/External/getUserDetails');
 const removeMemberRoute = require('./api/routes/External/removeMember');
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -48,7 +51,7 @@ app.use('/updateStaffMember', updateStaffMemberRoute);
 app.use('/getAllOrgMembers', getAllOrgMembersRoute);
 app.use('/getAllOrganizations', getAllOrgsRoute);
 app.use('/updateorgMember', updateOrgMemberRoute);
-app.use('/getOrgMember', getOrgMemberRoute);
+app.use('/getUserDetails', getUserDetailsRoute);
 app.use('/addFabiAdmin', addAdminRoute);
 app.use('/addFabiDatabaseAdmin', addDatabaseAdminRoute);
 app.use('/removeOrg', removeOrgRoute);
@@ -57,6 +60,9 @@ app.use('/removeStaff', removeStaffRoute);
 app.use('/getAllFabiAdmins', getAllFabiAdminsRoute);
 app.use('/getAllDatabaseAdminsRoute', getAllDatabaseAdminsRoute);
 app.use('/getAllFabiMembers', getAllFabiMembersRoute);
+app.use('/updateAdminDetails', updateAdminDetailsRoute);
+app.use('/updateAdminDatabaseAccess', updateAdminDatabaseAccessRoute);
+app.use('/updateStaffDatabaseAccess', updateStaffDatabaseAccessRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {
