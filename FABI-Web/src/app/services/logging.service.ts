@@ -5,6 +5,26 @@ export class logging{
 
     constructor(private service: HttpService){}
 
+    getLogs(type:String, before:String, after:String){
+        if(before == null){ before = ""; }
+        if(after == null){ after = ""; }
+        this.service.GetLogs(type, before, after).subscribe((response:any) => {
+            if(response.success == true && response.code == 200) {
+                // log successfully stored 
+                return response.content.data;
+            } else if (response.success == false) {
+                // log unsuccessful
+                return null;
+            }    
+            }, (err: HttpErrorResponse) => {  
+                // error occured
+                console.log("ERROR:" + err.message);
+                return null;
+            });
+    }
+
+    // dont really need but i'll keep just in case
+
     accessLog(type:String, statusCode:String, details:String, user:String, moreInfo: String){
         if(moreInfo == null){ moreInfo = ""; }
         this.service.LogAccess(type, statusCode, details, user, moreInfo).subscribe((response:any) => {
@@ -20,7 +40,7 @@ export class logging{
     }
 
     errorLog(type:String, statusCode:String, details:String, user:String, moreInfo: String){
-        if(moreInfo == null){ moreInfo = ""; }
+        if(moreInfo == null){ moreInfo = ""; } 
         this.service.LogError(type, statusCode, details, user, moreInfo).subscribe((response:any) => {
             if(response.success == true && response.code == 200) {
                 // log successfully stored 
