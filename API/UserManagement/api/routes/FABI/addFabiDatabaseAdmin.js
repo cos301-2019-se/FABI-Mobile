@@ -34,8 +34,16 @@ const db = admin.firestore();
 
 function addAdmin(req, res)
 {
-
-
+    res.setHeader('Content-Type', 'application/problem+json');
+    res.setHeader('Content-Language', 'en');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+        success: false,
+        code: 400,
+        title: "BAD_REQUEST",
+        message: "THIS FUNCTION IS DEPRECATDED, please use the new addFabiAdmin functionality"
+    });
+/*
 // (1)
     if (req.body.admin.name == undefined || req.body.admin.name == '') {
         res.setHeader('Content-Type', 'application/problem+json');
@@ -119,5 +127,6 @@ function generatePassword(length) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+    */
 }
 module.exports = router;
