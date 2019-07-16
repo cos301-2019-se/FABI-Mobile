@@ -57,6 +57,32 @@ function addLog(req, res){
             }
         });
 		
+	}else if(req.body.Log.org1 == undefined || req.body.Log.org1 == '' ){
+		res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS ************
+            success: false,
+            error: {
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "org1 expected"
+            }
+        });
+		
+	}else if(req.body.Log.org2 == undefined ){
+		res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS ************
+            success: false,
+            error: {
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "org2 expected"
+            }
+        });
+		
 	}else if(req.body.Log.moreInfo == undefined ){
 		res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
@@ -76,8 +102,10 @@ function addLog(req, res){
 			type: req.body.Log.type,
 			action: req.body.Log.action,
 			details: req.body.Log.details,
-			date: new Date().getTime().toString(),
+			date: new Date().toString(),
 			user: req.body.Log.user,
+			org1: req.body.Log.org1,
+			org2: req.body.Log.org2,
 			moreInfo: req.body.Log.moreInfo
 		}
 		
