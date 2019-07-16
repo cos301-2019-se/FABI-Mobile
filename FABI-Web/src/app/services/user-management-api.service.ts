@@ -2,10 +2,10 @@
  * File Name: user-management-api.service.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\services/user-management-api.service.ts
  * Project Name: fabi-web
- * Created Date: Saturday, Juky 6th 2019
+ * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Tuesday, July 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -39,7 +39,7 @@ export interface Member {
 
 //Object for defining the JSON object to be sent when requesting the members of an organization
 export interface POSTOrganization{
-    orgName: string;
+    orgName: string;    //The name of the organization to be fetched
 }
 
 @Injectable({
@@ -60,7 +60,7 @@ export class UserManagementAPIService {
    constructor(private http: HttpClient) { }
 
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                     GET_ALL_FABI_MEMBERS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
