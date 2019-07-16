@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NotificationLoggingService } from '../../services/notification-logging.service';
-import { UserManagementAPIService, Member } from '../../services/user-management-api.service';
 
 @Component({
   selector: 'app-reporting',
@@ -32,22 +31,16 @@ export class ReportingComponent implements OnInit {
   /** Array holding the error logs - @type {any} */
   errorLogsArray: any[] = [];
 
-  /** Array holding all FABI staff - @type {Member[]} */
-  staff: Member[] = [];
-  /** Array holding all FABI administrators - @type {Member[]} */
-  admins: Member[] = [];
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of ReportingComponent.
    * 
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @param {userManagementService} userManagementService  For calling the User Management API service
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private notificationLoggingService: NotificationLoggingService, private userManagementService: UserManagementAPIService) { }
+  constructor(private notificationLoggingService: NotificationLoggingService) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,34 +52,6 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAllLogs() {
-    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
-      if(response.success == true){
-        //Populating the arrays with the returned data
-        var tempStaff = response.data.qs.staff;
-        for(var i = 0; i < tempStaff.length; i++){
-          var tempMember: Member = {Name: tempStaff[i].fname, Surname: tempStaff[i].surname, Email: tempStaff[i].email};
-          this.staff.push(tempMember);
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-
-    this.userManagementService.getAllFABIAdmins().subscribe((response: any) => {
-      if(response.success == true){
-        //Populating the arrays with the returned data
-        var tempAdmins = response.data.qs.admins;
-        for(var i = 0; i < tempAdmins.length; i++){
-          var tempMember: Member = {Name: tempAdmins[i].fname, Surname: tempAdmins[i].surname, Email: tempAdmins[i].email};
-          this.admins.push(tempMember);
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-
     this.notificationLoggingService.getAllUserAndDatabaseLogs().subscribe((response: any) => {
       if(response.success = true){
         var data = response.data;
@@ -110,29 +75,6 @@ export class ReportingComponent implements OnInit {
             tempArray.push(data[i].date);
 
             //Fetch user information
-            for(var j = 0; j < this.staff.length; j++){
-              if(this.staff[i].Email == data[i].user){
-                tempArray.push(data[i].user);
-              }
-            }
-
-            for(var j = 0; j < this.admins.length; j++){
-              if(this.admins[i].Email == data[i].user){
-                tempArray.push(data[i].user);
-              }
-            }
-
-            for(var j = 0; j < this.staff.length; j++){
-              if(this.staff[i].Email == data[i].details){
-                tempArray.push(data[i].details);
-              }
-            }
-
-            for(var j = 0; j < this.admins.length; j++){
-              if(this.admins[i].Email == data[i].details){
-                tempArray.push(data[i].details);
-              }
-            }
 
             this.userLogsArray.push(tempArray);
           }
@@ -154,17 +96,6 @@ export class ReportingComponent implements OnInit {
             tempArray.push(data[i].date);
 
             //Fetch user information
-            for(var j = 0; j < this.staff.length; j++){
-              if(this.staff[i].Email == data[i].user){
-                tempArray.push(data[i].user);
-              }
-            }
-
-            for(var j = 0; j < this.admins.length; j++){
-              if(this.admins[i].Email == data[i].user){
-                tempArray.push(data[i].user);
-              }
-            }
 
             tempArray.push(data[i].details);
             this.databaseLogsArray.push(tempArray);
@@ -187,17 +118,6 @@ export class ReportingComponent implements OnInit {
             tempArray.push(data[i].date);
 
             //Fetch user information
-            for(var j = 0; j < this.staff.length; j++){
-              if(this.staff[i].Email == data[i].user){
-                tempArray.push(data[i].user);
-              }
-            }
-
-            for(var j = 0; j < this.admins.length; j++){
-              if(this.admins[i].Email == data[i].user){
-                tempArray.push(data[i].user);
-              }
-            }
 
             this.accessLogsArray.push(tempArray);
           }
@@ -208,17 +128,6 @@ export class ReportingComponent implements OnInit {
             tempArray.push(data[i].date);
 
             //Fetch user information
-            for(var j = 0; j < this.staff.length; j++){
-              if(this.staff[i].Email == data[i].user){
-                tempArray.push(data[i].user);
-              }
-            }
-
-            for(var j = 0; j < this.admins.length; j++){
-              if(this.admins[i].Email == data[i].user){
-                tempArray.push(data[i].user);
-              }
-            }
 
             this.errorLogsArray.push(tempArray);
           }
@@ -228,23 +137,6 @@ export class ReportingComponent implements OnInit {
         //Error handling
       }
     });
-
-    //Setting variables to either display or not display the tables on the HTML page
-    if(this.userLogsArray != null){
-      this.userLogs = true;
-    }
-
-    if(this.databaseLogsArray != null){
-      this.databaseLogs = true;
-    }
-
-    if(this.accessLogsArray != null){
-      this.accessLogs = true;
-    }
-
-    if(this.errorLogsArray != null){
-      this.errorLogs = true;
-    }
   }
 
   ngOnInit() {
