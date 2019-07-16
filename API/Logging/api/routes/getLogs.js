@@ -34,10 +34,18 @@ function getLog(req, res){
             }
         });
 		
-	}else if(req.body.Log.type == "****"){
-		
-		
-		
+	}else if(req.body.Log.after == undefined){
+		res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS ************
+            success: false,
+            error: {
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "Log after date expected"
+            }
+        });
 		
 	}else if(req.body.Log.type == "DBML"){
 		

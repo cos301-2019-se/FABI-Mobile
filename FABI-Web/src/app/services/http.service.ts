@@ -228,6 +228,42 @@ export class HttpService {
     return this.http.request<any>('POST', 'https://database-management-dot-api-fabi.appspot.com/retrieveDatabase', options);
   }
 
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET LOGS
+  /**
+   * Method that gets Logs of any type from the database
+   *
+   * @param {String} type
+   * @param {String} before
+   * @param {String} after
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  GetLogs(type:String, before:String, after:String){
+    const getlogURL = "https://logging-dot-api-fabi.appspot.com/getLogs";
+
+    const logData = {
+      "Log": {
+        "type": type,
+        "before": before,
+        "after": after
+      }
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: logData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', getlogURL, options);
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         ACCESS LOGS
   /**
