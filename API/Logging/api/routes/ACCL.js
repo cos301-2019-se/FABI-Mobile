@@ -60,14 +60,28 @@ function addLog(req, res){
             }
         });
 		
+	}else if(req.body.Log.moreInfo == undefined ){
+		res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS ************
+            success: false,
+            error: {
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "Log moreInfo heading expected"
+            }
+        });
+		
 	}else if(req.body.Log.type == "ACCL"){
 		
 		const logEntry = {
 			type: req.body.Log.type,
 			statusCode: req.body.Log.statusCode,
 			details: req.body.Log.details,
-			date: new Date().getTime().toString(),
-			user: req.body.Log.user
+			date: new Date().toString(),
+			user: req.body.Log.user,
+			moreInfo: req.body.Log.moreInfo
 		}
 		
 		var docRef  = db.collection('Logging').doc('ACCL').collection('logs').doc(logEntry.date);
