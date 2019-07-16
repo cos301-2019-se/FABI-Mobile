@@ -53,6 +53,9 @@ import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.comp
 import { UpdateComponent } from './update/update.component';
 import { NotificationDivComponent } from './Dynamic-Components/notification-div/notification-div.component';
 import { SampleDivComponent } from './Dynamic-Components/sample-div/sample-div.component';
+import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
+import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.component';
+import { ReportingComponent } from './Admin/reporting/reporting.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +90,10 @@ import { SampleDivComponent } from './Dynamic-Components/sample-div/sample-div.c
     AdminDivComponent,
     StaffDivComponent,
     NotificationDivComponent,
-    SampleDivComponent
+    SampleDivComponent,
+    AdminProfileComponent,
+    StaffProfileComponent,
+    ReportingComponent
   ],
   entryComponents: [
     ConfirmComponent,
