@@ -74,6 +74,8 @@ export class AdminDashboardComponent implements OnInit {
   databaseNotifications: DatabaseManagementLogs[] = [];
   /** Object array for holding all of the access logs -  @type {AccessLogs[]} */ 
   accessNotifications: AccessLogs[] = [];
+  /** Object array for holding all of the read logs -  @type {any[]} */ 
+  readNotifications: any[] = [];
 
   /** The total number of FABI staff members - @type {number} */
   numberOfFABIMembers: number;        
@@ -274,14 +276,16 @@ export class AdminDashboardComponent implements OnInit {
     else{
       this.notifications = true;
 
+      //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
+      const readNotifications = JSON.parse(localStorage.getItem('readNotifications'));
+
       //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
       this.notificationLoggingService.getAllUserAndDatabaseLogs().subscribe((response: any) => {
         if(response.success == true){
           //Populating the arrays with the returned data
           //Set the ID's of the notifications
 
-          //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
-          const readNotifications = JSON.parse(localStorage.getItem('readNotifications'));
+          //Need to compare read notifications with those comming in (double for loop)
         }
         else{
           this.notifications = false;
@@ -294,8 +298,7 @@ export class AdminDashboardComponent implements OnInit {
           //Populating the arrays with the returned data
           //Set the ID's of the notifications
 
-          //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
-          const readNotifications = JSON.parse(localStorage.getItem('readNotifications'));
+          //Need to compare read notifications with those comming in (double for loop)
         }
         else{
           this.notifications = false;
@@ -338,24 +341,30 @@ export class AdminDashboardComponent implements OnInit {
     if(type == 'USER'){
       for(var i = 0; i < this.userNotifications.length; i++){
         if(this.userNotifications[i].ID == id){
-          localStorage.setItem('readNotifications', JSON.stringify(this.userNotifications[i]));
+          //Add the notification to the readNotifications array
+          this.readNotifications.push(this.userNotifications[i]);
         }
       }
     }
     else if(type == 'DBML'){
       for(var i = 0; i < this.databaseNotifications.length; i++){
         if(this.databaseNotifications[i].ID == id){
-          localStorage.setItem('readNotifications', JSON.stringify(this.databaseNotifications[i]));
+          //Add the notification to the readNotifications array
+          this.readNotifications.push(this.databaseNotifications[i]);
         }
       }
     }
     else if(type == 'ACCL'){
       for(var i = 0; i < this.accessNotifications.length; i++){
         if(this.accessNotifications[i].ID == id){
-          localStorage.setItem('readNotifications', JSON.stringify(this.accessNotifications[i]));
+          //Add the notification to the readNotifications array
+          this.readNotifications.push(this.accessNotifications[i]);
         }
       }
     }
+
+    //Pushing the readNotifications array to local storage
+    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
   } 
 
 
