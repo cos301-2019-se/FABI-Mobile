@@ -2,7 +2,7 @@ const express = require('express');
 const admin = require('firebase-admin');
 const router = express.Router();
 
-router.get("/", addLog );
+router.post("/", addLog );
 
 const db = admin.firestore();
 
@@ -79,7 +79,7 @@ function addLog(req, res){
 			type: req.body.Log.type,
 			statusCode: req.body.Log.statusCode,
 			details: req.body.Log.details,
-			date: new Date().toString(),
+			date: new Date().getTime().toString(),
 			user: req.body.Log.user,
 			moreInfo: req.body.Log.moreInfo
 		}
