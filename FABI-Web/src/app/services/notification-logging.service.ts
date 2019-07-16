@@ -37,7 +37,7 @@ export interface UserLogs{
     Date: string;           //The date thas this action occurred
     User: string;           //The user who performed the action
     MoreInfo: string;       //More information (if any)
-    Read: boolean           //Whether the notification has been read or not.
+    ID: number              //The id of the notification
 }
 
 //Object for defining the JSON object containing the database management logs
@@ -48,7 +48,7 @@ export interface DatabaseManagementLogs{
     Date: string;           //The date thas this action occurred
     User: string;           //The user who performed the action
     MoreInfo: string;       //More information (if any)
-    Read: boolean           //Whether the notification has been read or not.
+    ID: number              //The id of the notification
 }
 
 //Object for defining the JSON object containing the access logs
@@ -57,7 +57,7 @@ export interface AccessLogs{
     Details: string;        //Description of what was accessed
     Date: string;           //The date that this action occured
     User: string;           //The user who performed the action
-    Read: boolean;          //Whether the notification has been read or not.
+    ID: number              //The id of the notification
 }
 
 //Object for defining the JSON object containing the error logs
@@ -67,7 +67,7 @@ export interface ErrorLogs{
     Details: string;        //Description of the error
     Date: string;           //The date that this action occured
     User: string;           //The user who performed the action
-    Read: boolean;          //Whether the notification has been read or not.
+    ID: number              //The id of the notification
 }
 
 @Injectable({

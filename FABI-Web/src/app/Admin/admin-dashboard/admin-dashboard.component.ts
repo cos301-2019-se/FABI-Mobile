@@ -95,9 +95,9 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService, private notificationLoggingService: NotificationLoggingService, private resolver: ComponentFactoryResolver) { 
-      var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: 'Tegan Carton-Barber', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', Read: false};
+      var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: 'Tegan Carton-Barber', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', ID: 1};
       this.userNotifications.push(tempUserNotification);
-      var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: 'Kendra Riddle', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', Read: false};
+      var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: 'Kendra Riddle', Date: '09-08-2019', User: 'Emma Coetzer', MoreInfo: '', ID: 2};
       this.userNotifications.push(tempUserNotification2);
 
       //Loading the user notifications into the local storage
@@ -278,9 +278,13 @@ export class AdminDashboardComponent implements OnInit {
       this.notificationLoggingService.getAllUserAndDatabaseLogs().subscribe((response: any) => {
         if(response.success == true){
           //Populating the arrays with the returned data
+          //Set the ID's of the notifications
+
+          //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
+          const readNotifications = JSON.parse(localStorage.getItem('readNotifications'));
         }
         else{
-
+          this.notifications = false;
         }
       });
 
@@ -288,9 +292,13 @@ export class AdminDashboardComponent implements OnInit {
       this.notificationLoggingService.getAllAccessAndErrorLogs().subscribe((response: any) => {
         if(response.success == true){
           //Populating the arrays with the returned data
+          //Set the ID's of the notifications
+
+          //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
+          const readNotifications = JSON.parse(localStorage.getItem('readNotifications'));
         }
         else{
-
+          this.notifications = false;
         }
       });
 
@@ -326,10 +334,29 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(id: number, type: string){
+    //Loading the read notifications into the local storage
     if(type == 'USER'){
-      this.userNotifications[id - 1].Read = true;
+      for(var i = 0; i < this.userNotifications.length; i++){
+        if(this.userNotifications[i].ID == id){
+          localStorage.setItem('readNotifications', JSON.stringify(this.userNotifications[i]));
+        }
+      }
     }
-  }
+    else if(type == 'DBML'){
+      for(var i = 0; i < this.databaseNotifications.length; i++){
+        if(this.databaseNotifications[i].ID == id){
+          localStorage.setItem('readNotifications', JSON.stringify(this.databaseNotifications[i]));
+        }
+      }
+    }
+    else if(type == 'ACCL'){
+      for(var i = 0; i < this.accessNotifications.length; i++){
+        if(this.accessNotifications[i].ID == id){
+          localStorage.setItem('readNotifications', JSON.stringify(this.accessNotifications[i]));
+        }
+      }
+    }
+  } 
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
