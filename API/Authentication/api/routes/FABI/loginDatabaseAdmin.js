@@ -63,12 +63,12 @@ function loginAdmin(req, res)
     }
     
     //(2)
-    var docRef  = db.collection('Organizations').doc('FABI').collection('DatabaseAdmin').doc(req.body.email);
+    var docRef  = db.collection('Organizations').doc('FABI').collection('DatabaseAdmin').where('email', '==', req.body.email);
 
     //(3)
     docRef.get().then(doc =>
     {
-        if(typeof doc.data() === 'undefined')
+        if(doc.empty)
         {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
@@ -82,7 +82,11 @@ function loginAdmin(req, res)
         }
         else{
             //(4)
-            bcrypt.compare(req.body.password, doc.data().password, (err, valid) =>
+            var member;
+            doc.forEach(element => {
+                member = element.data();
+            });
+            bcrypt.compare(req.body.password, member.password, (err, valid) =>
             {
                 if(valid)
                 {
