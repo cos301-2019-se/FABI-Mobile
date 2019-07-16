@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
 
-router.get("/", getLog );
+router.post("/", getLog );
 
 const db = admin.firestore();
 
