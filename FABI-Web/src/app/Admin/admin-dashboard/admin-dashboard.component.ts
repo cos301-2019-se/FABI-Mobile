@@ -368,9 +368,17 @@ export class AdminDashboardComponent implements OnInit {
 
     //Pushing the readNotifications array to local storage
     localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
+  }
 
-    console.log(this.numberOfUserLogs);
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_DYNAMIC_NOTIFICATIONS
+  /**
+   *  This function will dynamically load the notifications into the HTML page
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadDynamicNotifications(){
     //Dynamically loading the notification elements into the HTML page
     if(this.numberOfUserLogs != 0 || this.numberOfDatabaseLogs != 0 || this.numberOfAccessLogs != 0){
       this.notifications = true;
@@ -508,5 +516,6 @@ export class AdminDashboardComponent implements OnInit {
     this.getNumberOfFABIMembers();
     this.getNumberOfFABISamples();
     this.loadNotifications();
+    this.loadDynamicNotifications();
   }
 }
