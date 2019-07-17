@@ -47,15 +47,50 @@ function getLog(req, res){
             }
         });
 		
+	}else if( (req.body.Log.after == '' && req.body.Log.before != '') || (req.body.Log.after != '' && req.body.Log.before == '') ){
+		res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS ************
+            success: false,
+            error: {
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "provide both 'after' and 'before' date or neither"
+            }
+        });
+		
+	}else if(req.body.Log.after != '' && req.body.Log.before != '' && req.body.Log.after >= req.body.Log.before){
+		res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS ************
+            success: false,
+            error: {
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "'after' date must be smaller than 'before' date"
+            }
+        });
+		
 	}else if(req.body.Log.type == "DBML"){
 		
 		var LogRef = db.collection('Logging').doc('DBML').collection('logs');
 		LogRef.get().then(snapshot => {
 			var qs = {Logs : []}
-
-			snapshot.forEach(doc => {
-				qs.Logs.push(doc.data());
-			})
+			
+			/* if(req.body.Log.after == '' && req.body.Log.before == ''){ */
+				snapshot.forEach(doc => {
+					qs.Logs.push(doc.data());
+				})
+			/* }else{
+				snapshot.forEach(doc => {
+					var obj = doc.data();
+					if(obj["date"] <= req.body.Log.before && obj["date"] => req.body.Log.after){
+						qs.Logs.push(doc.data());
+					}
+				})
+			} */
 		
 			res.setHeader('Content-Type', 'application/problem+json');
 			res.setHeader('Content-Language', 'en');
