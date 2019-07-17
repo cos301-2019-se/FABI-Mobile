@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 16th 2019
+ * Last Modified: Wednesday, July 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -98,6 +98,7 @@ export class AdminDashboardComponent implements OnInit {
    * 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @memberof AdminDashboardComponent
    */
