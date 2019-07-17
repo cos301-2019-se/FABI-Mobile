@@ -97,9 +97,9 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService, private notificationLoggingService: NotificationLoggingService, private resolver: ComponentFactoryResolver) { 
-      var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: 2, Date: '09-08-2019', User: 3, MoreInfo: '', ID: 1};
+      var tempUserNotification: UserLogs = { Type: 'USER', Action: 'New user added', Details: '', Date: '09-08-2019', Organization1: '', Organization2: '', User: '', MoreInfo: '', ID: 1};
       this.userNotifications.push(tempUserNotification);
-      var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: 2, Date: '09-08-2019', User: 3, MoreInfo: '', ID: 2};
+      var tempUserNotification2: UserLogs = { Type: 'USER', Action: 'User removed', Details: '', Date: '09-08-2019', Organization1: '', Organization2: '', User: '', MoreInfo: '', ID: 2};
       this.userNotifications.push(tempUserNotification2);
     }
 
@@ -277,30 +277,30 @@ export class AdminDashboardComponent implements OnInit {
       const storageNotifications = JSON.parse(localStorage.getItem('readNotifications'));
 
       //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-      this.notificationLoggingService.getAllUserAndDatabaseLogs().subscribe((response: any) => {
-        if(response.success == true){
-          //Populating the arrays with the returned data
-          //Set the ID's of the notifications
+      // this.notificationLoggingService.getAllUserAndDatabaseLogs().subscribe((response: any) => {
+      //   if(response.success == true){
+      //     //Populating the arrays with the returned data
+      //     //Set the ID's of the notifications
 
-          //Need to compare read notifications with those comming in (double for loop)
-        }
-        else{
-          this.notifications = false;
-        }
-      });
+      //     //Need to compare read notifications with those comming in (double for loop)
+      //   }
+      //   else{
+      //     this.notifications = false;
+      //   }
+      // });
 
       //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-      this.notificationLoggingService.getAllAccessAndErrorLogs().subscribe((response: any) => {
-        if(response.success == true){
-          //Populating the arrays with the returned data
-          //Set the ID's of the notifications
+      // this.notificationLoggingService.getAllAccessAndErrorLogs().subscribe((response: any) => {
+      //   if(response.success == true){
+      //     //Populating the arrays with the returned data
+      //     //Set the ID's of the notifications
 
-          //Need to compare read notifications with those comming in (double for loop)
-        }
-        else{
-          this.notifications = false;
-        }
-      });
+      //     //Need to compare read notifications with those comming in (double for loop)
+      //   }
+      //   else{
+      //     this.notifications = false;
+      //   }
+      // });
 
       for(var i = 0; i < this.userNotifications.length; i++){
         const userNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
