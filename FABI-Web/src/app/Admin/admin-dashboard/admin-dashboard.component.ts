@@ -77,6 +77,13 @@ export class AdminDashboardComponent implements OnInit {
   /** Object array for holding all of the read logs -  @type {any[]} */ 
   readNotifications: any[] = [];
 
+  /** The total number of User Logs - @type {number} */           
+  numberOfUserLogs: number = 0;
+  /** The total number of Database Management Logs - @type {number} */           
+  numberOfDatabaseLogs: number = 0;
+  /** The total number of Access Logs - @type {number} */           
+  numberOfAccessLogs: number = 0;
+
   /** The total number of FABI staff members - @type {number} */
   numberOfFABIMembers: number;        
   /** The total number of FABI samples - @type {number} */           
@@ -273,21 +280,26 @@ export class AdminDashboardComponent implements OnInit {
         for(var i = 0; i < data.length; i++){
           var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: data[i].date, Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: i};
           
-          for(var j = 0; j < storageNotifications.length; j++){
-            if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-              storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
-              }
-              else{
-                this.userNotifications.push(tempLog);
-              }
+          if(storageNotifications != null && storageNotifications.length != 0){
+            for(var j = 0; j < storageNotifications.length; j++){
+              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
+                storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
+                  this.readNotifications.push(tempLog);
+                }
+                else{
+                  this.userNotifications.push(tempLog);
+                  this.numberOfUserLogs += 1;
+                }
+            }
+          }
+          else{
+            this.userNotifications.push(tempLog);
+            this.numberOfUserLogs += 1;
           }
         }
       }
       else{
         //Error handling
-
-        this.notifications = false;
       }
     });
 
@@ -300,21 +312,26 @@ export class AdminDashboardComponent implements OnInit {
         for(var i = 0; i < data.length; i++){
           var tempLog: DatabaseManagementLogs = {Type: 'DBML', Action: data[i].action, Date: data[i].date, Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: i};
           
-          for(var j = 0; j < storageNotifications.length; j++){
-            if(storageNotifications[j].Type == 'DBML' && storageNotifications[i].Action == tempLog.Action && 
-              storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
+          if(storageNotifications != null && storageNotifications.length != 0){
+            for(var j = 0; j < storageNotifications.length; j++){
+              if(storageNotifications[j].Type == 'DBML' && storageNotifications[i].Action == tempLog.Action && 
+                storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
                 this.readNotifications.push(tempLog);
               }
               else{
                 this.databaseNotifications.push(tempLog);
+                this.numberOfDatabaseLogs += 1;
               }
+            }
+          }
+          else{
+            this.databaseNotifications.push(tempLog);
+            this.numberOfDatabaseLogs += 1;
           }
         }
       }
       else{
         //Error handling
-
-        this.notifications = false;
       }
     });
 
@@ -326,27 +343,36 @@ export class AdminDashboardComponent implements OnInit {
         for(var i = 0; i < data.length; i++){
           var tempLog: AccessLogs = {Type: 'ACCL', Date: data[i].date, Details: data[i].details, User: data[i].user, ID: i};
           
-          for(var j = 0; j < storageNotifications.length; j++){
-            if(storageNotifications[j].Type == 'ACCL' && storageNotifications[i].Date == tempLog.Date && 
-            storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
-              }
-              else{
-                this.accessNotifications.push(tempLog);
-              }
+          if(storageNotifications != null && storageNotifications.length != 0){
+            for(var j = 0; j < storageNotifications.length; j++){
+              if(storageNotifications[j].Type == 'ACCL' && storageNotifications[i].Date == tempLog.Date && 
+              storageNotifications.User == tempLog.User){
+                  this.readNotifications.push(tempLog);
+                }
+                else{
+                  this.accessNotifications.push(tempLog);
+                  this.numberOfAccessLogs += 1;
+                }
+            }
+          }
+          else{
+            this.accessNotifications.push(tempLog);
+            this.numberOfAccessLogs += 1;
           }
         }
       }
       else{
         //Error handling
-
-        this.notifications = false;
       }
     });
 
+    //Pushing the readNotifications array to local storage
+    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
+
+    console.log(this.numberOfUserLogs);
 
     //Dynamically loading the notification elements into the HTML page
-    if(this.userNotifications.length != 0 || this.databaseNotifications.length != 0 || this.accessNotifications.length != 0){
+    if(this.numberOfUserLogs != 0 || this.numberOfDatabaseLogs != 0 || this.numberOfAccessLogs != 0){
       this.notifications = true;
 
       //User notifications
