@@ -1,17 +1,11 @@
 language: node_js
-  node_js:
-    - "8"
+node_js:
+    - 8
 
-  branches:
-    only:
-      - master
-      
-  before_install:
+before_script:
     - cd 'FABI-Web'
-
-  before_script:
     - npm install -g @angular/cli
 
-  script:
+script:
     - ng lint
     - ng build --prod --aot
