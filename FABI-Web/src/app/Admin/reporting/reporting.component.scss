@@ -169,6 +169,24 @@ th{
     border-bottom: 1.6px solid #ddd;
 }
 
+tr th{
+    width: 25%;
+}
+
+table{
+    text-align: left;
+    width: 90%;
+}
+
+tbody tr th{
+    color: #555;
+    font-weight: normal;
+}
+
+#previewTableErrorLogs{
+    padding-bottom: 50px;
+}
+
 .btn.btn-default {
     background: #555;
     border: 3px solid #555;
