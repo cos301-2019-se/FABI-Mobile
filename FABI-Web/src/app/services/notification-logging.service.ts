@@ -25,17 +25,17 @@ import { BehaviorSubject } from 'rxjs';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Globals variables used to hold the API call urls
-const getAllUserAndDatabaseLogs = '';
-const getAllDiagnoticClinicLogs = '';
-const getAllAccessAndErrorLogs = '';
+const getAllLogsURL = 'https://logging-dot-api-fabi.appspot.com/getLogs';
 
 //Object for defining the JSON object containing the user logs
 export interface UserLogs{
     Type: string;           //The type of the log: USER
     Action: string;         //The action performed: CRUD
-    Details: number;        //The user on which the action was performed
-    Date: string;           //The date thas this action occurred
-    User: number;           //The user who performed the action
+    Date: string;           //The date that the action was performed
+    Details: string;        //The user on which the action was performed (their ID)
+    User: string;           //The user who performed the action (their ID)
+    Organization1: string;  //The organization of the user performing the operation
+    Organization2: string;  //The organization of the user on which the action was performed
     MoreInfo: string;       //More information (if any)
     ID: number;             //The id of the notification
 }
@@ -44,9 +44,11 @@ export interface UserLogs{
 export interface DatabaseManagementLogs{
     Type: string;           //The type of the log: DBML (Database Management Log)
     Action: string;         //The action performed: CRUD
+    Date: string;           //The date that the action was performed
     Details: string;        //The name of the database that the action was performed on
-    Date: string;           //The date thas this action occurred
-    User: number;           //The user who performed the action
+    User: string;           //The user who performed the action
+    Organization1: string;  //The organization of the user performing the operation
+    Organization2: string;  //The organization of the user on which the action was performed
     MoreInfo: string;       //More information (if any)
     ID: number ;            //The id of the notification
 }
@@ -54,20 +56,40 @@ export interface DatabaseManagementLogs{
 //Object for defining the JSON object containing the access logs
 export interface AccessLogs{
     Type: string;           //The type of the log: ACCL
+    Date: string;           //The date that the action was performed
     Details: string;        //Description of what was accessed
-    Date: string;           //The date that this action occured
-    User: number;           //The user who performed the action
+    User: string;           //The user who performed the action (their ID)
     ID: number;             //The id of the notification
 }
 
 //Object for defining the JSON object containing the error logs
 export interface ErrorLogs{
     Type: string;           //The type of the log: ERRL
+    Date: string;           //The date that the action was performed
     StatusCode: string;     //The status code of the error that occured
     Details: string;        //Description of the error
-    Date: string;           //The date that this action occured
-    User: number;           //The user who performed the action
+    User: string;           //The user who performed the action (their ID)
     ID: number;             //The id of the notification
+}
+
+//Object for defining the JSON object containing the diagnostic clinic logs
+export interface DiagnosticClinicLogs{
+    Type: string;           //The type of the log: DGCL
+    Date: string;           //The date that the action was performed
+    User: string;           //The user who performed the action (their ID)
+    ID: number;             //The id of the notification
+}
+
+//Object for defining the JSON object for posting log requests
+export interface POSTLog{
+    Log: Logs;
+}
+
+//Object for defining the JSON object for the logs
+export interface Logs{
+    type: string;
+    before: string;
+    after: string;
 }
 
 @Injectable({
@@ -89,78 +111,151 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                 GET_ALL_User_And_Database_Logs 
+  //                                                               GET_ALL_USER_Logs 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type of USER and/or DBML
+   *    all the logs with type 'USER'
    *
    * @returns API response @type any
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllUserAndDatabaseLogs() {
+  getAllUserLogs() {
+    var tempLog : Logs = {type: 'USER', before: '', after: ''};
+    var data: POSTLog = {Log: tempLog};
+
     const options = {
         method: 'POST',
-        url: getAllUserAndDatabaseLogs,
+        url: getAllLogsURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
         },
+        body: data,
         json: true
     };
 
-        return this.http.request('POST', getAllUserAndDatabaseLogs, options);
+        return this.http.request('POST', getAllLogsURL, options);
   }
 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                 GET_ALL_Diagnostic_Clinic_Logs 
+  //                                                         GET_ALL_DATABASE_MANAGEMENT_Logs 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type of DGCL
+   *    all the logs with type 'DBML'
+   *
+   * @returns API response @type any
+   * @memberof NotificationLoggingService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllDatabaseManagementLogs() {
+    var tempLog : Logs = {type: 'DBML', before: '', after: ''};
+    var data: POSTLog = {Log: tempLog};
+
+    const options = {
+        method: 'POST',
+        url: getAllLogsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+        return this.http.request('POST', getAllLogsURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                               GET_ALL_ACCESS_Logs 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type 'ACCL'
+   *
+   * @returns API response @type any
+   * @memberof NotificationLoggingService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllAccessLogs() {
+    var tempLog : Logs = {type: 'ACCL', before: '', after: ''};
+    var data: POSTLog = {Log: tempLog};
+
+    const options = {
+        method: 'POST',
+        url: getAllLogsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+        return this.http.request('POST', getAllLogsURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                               GET_ALL_ERROR_Logs 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type 'ERRL'
+   *
+   * @returns API response @type any
+   * @memberof NotificationLoggingService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllErrorLogs() {
+    var tempLog : Logs = {type: 'ERRL', before: '', after: ''};
+    var data: POSTLog = {Log: tempLog};
+
+    const options = {
+        method: 'POST',
+        url: getAllLogsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+        return this.http.request('POST', getAllLogsURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET_ALL_DIAGNOTIC_CLINIC_Logs 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type 'DGCL'
    *
    * @returns API response @type any
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllDiagnosticClinicLogs() {
+    var tempLog : Logs = {type: 'DGCL', before: '', after: ''};
+    var data: POSTLog = {Log: tempLog};
+
     const options = {
         method: 'POST',
-        url: getAllDiagnoticClinicLogs,
+        url: getAllLogsURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
         },
+        body: data,
         json: true
     };
 
-        return this.http.request('POST', getAllDiagnoticClinicLogs, options);
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                 GET_ALL_Access_And_Error_Logs 
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type of ACCL and/or ERRL
-   *
-   * @returns API response @type any
-   * @memberof NotificationLoggingService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllAccessAndErrorLogs() {
-    const options = {
-        method: 'POST',
-        url: getAllAccessAndErrorLogs,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        json: true
-    };
-
-        return this.http.request('POST', getAllAccessAndErrorLogs, options);
+        return this.http.request('POST', getAllLogsURL, options);
   }
 }

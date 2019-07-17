@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 16th 2019
+ * Last Modified: Wednesday, July 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -29,6 +29,7 @@ import { BehaviorSubject } from 'rxjs';
 const getAllFABIMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllFabiMembers';
 const getAllFABIAdminsURL = 'https://user-management-dot-api-fabi.appspot.com/getAllFabiAdmins';
 const getAllOrganizationMembers = 'https://user-management-dot-api-fabi.appspot.com/getAllOrgMembers';
+const getUserDetailsURL = 'https://user-management-dot-api-fabi.appspot.com/getUserDetails';
 
 //Object for defining how a member of FABI is structured
 export interface Member {
@@ -40,6 +41,12 @@ export interface Member {
 //Object for defining the JSON object to be sent when requesting the members of an organization
 export interface POSTOrganization{
     orgName: string;        //The name of the organization to be fetched
+}
+
+//Object for defining the JSON object to be sent when requesting the details of a member
+export interface POSTMember{
+    orgName: string;        //The name of the organization to be fetched
+    id: string;             //THe ID of the user
 }
 
 @Injectable({
@@ -140,4 +147,34 @@ export class UserManagementAPIService {
 
         return this.http.request('POST', getAllOrganizationMembers, options);        
     }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            GET_USER_DETAILS 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the Members of an Organization
+   *
+   * @returns API response @type any
+   * @param {string} organization Name of the organization
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getUserDetails(organization: string, idNo: string) {
+    var data: POSTMember = { orgName: organization, id: idNo};
+
+    const options = {
+        method: 'POST',
+        url: getUserDetailsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', getUserDetailsURL, options);        
+}
 }
