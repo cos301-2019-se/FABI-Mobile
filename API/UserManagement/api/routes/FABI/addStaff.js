@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
 const mail = require('../sendEmail');
+const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -32,9 +33,10 @@ router.post('/', addStaff);
 // [START config]
 const db = admin.firestore();
 
+
 function addStaff(req, res)
 {
-
+    userTypes = ['SuperUser', 'ClinicAdmin', 'CultureAdmin', 'Staff'];
 
 // (1)
     if (req.body.staff.name == undefined || req.body.staff.name == '') {
@@ -48,7 +50,7 @@ function addStaff(req, res)
             message: "User name expected"
         });
     }
-    if (req.body.staff.surname == undefined || req.body.staff.surname == '') {
+    else if (req.body.staff.surname == undefined || req.body.staff.surname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -59,7 +61,7 @@ function addStaff(req, res)
             message: "User surname expected"
         });
     }
-    if (req.body.staff.email == undefined || req.body.staff.email == '') {
+    else if (req.body.staff.email == undefined || req.body.staff.email == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -71,7 +73,7 @@ function addStaff(req, res)
             
         });
     }
-    if (req.body.databases == undefined || req.body.databases == '') {
+    else if (req.body.databases == undefined || req.body.databases == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -82,7 +84,7 @@ function addStaff(req, res)
             message: "Databases the user has access to required"
         });
     }
-    if (req.body.userType == undefined || req.body.userType == '') {
+    else if (req.body.userType == undefined || req.body.userType == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -93,6 +95,18 @@ function addStaff(req, res)
             message: "User type of new user is required"
         });
     }
+    else if(!userTypes.includes(req.body.userType)) {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User type of new user is not supported"
+        });
+    }
+    else{
 // (2)
 const salt = bcrypt.genSaltSync(10);
 var pass = generatePassword(10);
@@ -106,27 +120,56 @@ const qs = {
     userType: req.body.userType
 }
 
-// (3) 
-var docRef  = db.collection('Organizations').doc('FABI').collection('Staff').doc(qs.id);    
+var checkRef = db.collection('Organizations').doc('FABI').collection('Staff').where('email', '==', qs.email);
+
+checkRef.get().then(doc => {
+    if(!doc.empty)
+    {
+        res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+                success: false,
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "User email already exists"
+            });
+    }
+    else{
+        var docRef  = db.collection('Organizations').doc('FABI').collection('Staff').doc(qs.id);    
 
     //(4)
-    docRef.set(qs).then(() => {
-        res.setHeader('Content-Type', 'application/problem+json');
-    res.setHeader('Content-Language', 'en');
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-        success: true,
-        code: 200,
-        title: "SUCCESS",
-        message: "FABI Staff Added",
-        data: {
-            orgName : req.body.orgName,
-            tempPassword : pass
-        }
-    });
-    console.log("Staff Added to FABI");
-    mail('FABI Staff - ' + qs.userType, pass);
+        docRef.set(qs).then(() => {
+            res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                success: true,
+                code: 200,
+                title: "SUCCESS",
+                message: "FABI Staff Added",
+                data: {
+                    orgName : req.body.orgName,
+                    tempPassword : pass
+                }
+            });
+
+            mail('FABI Staff - ' + qs.userType, pass);
+            log({
+                type: 'USER',
+                action: 'AddMemberToOrg',
+                details: '1563355277876',
+                user: qs.id,
+                org1: 'FABI',
+                org2: 'FABI',
+                action: '/addStaff'
+            });
+        });
+    }
 });
+// (3) 
+
+}
 
 }
 

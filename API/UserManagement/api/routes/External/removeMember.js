@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
+const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -67,9 +68,10 @@ function removeMember(req, res) {
             });
         }
             qs = doc.data();
+            console.log(qs);
             delete qs.password;
             //(3)
-            db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.email).delete().then(() => {
+            db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.id).delete().then(() => {
                 res.setHeader('Content-Type', 'application/problem+json');
                             res.setHeader('Content-Language', 'en');
                             res.setHeader("Access-Control-Allow-Origin", "*");
@@ -82,6 +84,14 @@ function removeMember(req, res) {
                                         Member : qs
                                 }
                             });
+            });
+            log({
+                type: 'USER',
+                action: '/removeMember',
+                details: '1563355277876',
+                user: qs.id,
+                org1: 'FABI',
+                org2: req.body.orgName,
             });
             
     });
