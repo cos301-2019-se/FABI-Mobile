@@ -6,6 +6,7 @@ import { MaterialModule} from './materials';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 
+
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -119,7 +120,9 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     ErrorsModule,
     LayoutModule
   ],
-  providers: [NotificationService],
+  providers: [
+    NotificationService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
