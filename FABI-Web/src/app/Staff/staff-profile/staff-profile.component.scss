@@ -50,13 +50,16 @@ i {
     color: #ffffff !important;
 }
 
+.nav-item i {
+    padding:5px;
+}
+
 .navbar-nav a:hover {
-    text-decoration: none;
+   text-decoration: none;
 }
 
 .dropdown-menu {
-    right: 0;
-    left: auto;
+    width:200px !important;
 }
 
 .dropdown-menu a {
