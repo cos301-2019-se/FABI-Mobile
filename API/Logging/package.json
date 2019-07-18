@@ -20,7 +20,8 @@
     "request": "^2.88.0",
     "router": "^1.3.3",
     "@google-cloud/datastore": "latest",
-    "firebase-admin" : "latest"
+    "firebase-admin" : "latest",
+    "node-oauth2-server": "latest"
   },
   "scripts": {
     "start": "node server.js"
