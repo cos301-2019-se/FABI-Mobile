@@ -13,7 +13,6 @@
  * <<license>>
  */
 
-
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as Interface from "../../interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -29,12 +28,48 @@ import { ConfirmComponent } from "../../confirm/confirm.component";
 @Component({
   selector: 'app-organization-profile',
   templateUrl: './organization-profile.component.html',
-  styleUrls: ['./organization-profile.component.scss']
+  styleUrls: ['./organization-profile.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class OrganizationProfileComponent implements OnInit {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of OrganizationProfileComponent.
+   * 
+   * 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            NG_ON_INIT()
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
 
     //--- Get the Organization's Details
