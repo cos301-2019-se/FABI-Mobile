@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 15th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -31,8 +31,8 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 import * as Interface from '../../_interfaces/interfaces';
 
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
-import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 
 
 @Component({
