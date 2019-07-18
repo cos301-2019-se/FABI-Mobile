@@ -193,7 +193,7 @@ export class UserManagementAPIService {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         UPDATE_STAFF_MEMBER_DETAILS 
+  //                                                         UPDATE_FABI_MEMBER_DETAILS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the Members of an Organization
@@ -206,7 +206,7 @@ export class UserManagementAPIService {
    * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  updateStaffMemberDetails(mail: string, name: string, lname: string, idNo: string) {
+  updateFABIMemberDetails(mail: string, name: string, lname: string, idNo: string) {
     var member: UpdateMember = { fname: name, surname: lname, email: mail};
     var data: POSTUpdateMember = { id: idNo, fields: member};
 

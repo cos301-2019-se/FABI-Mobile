@@ -45,7 +45,7 @@ export class AdminProfileComponent implements OnInit {
   /** The staff member's user type -  @type {string} */
   userType: string = '';
 
-  /** The form to display the staff member's details -  @type {FormGroup} */
+  /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
 
   /** Indicates if there are notifications to load - @type {boolean} */           
@@ -89,14 +89,14 @@ export class AdminProfileComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_STAFF_PROFILE_DETAILS
+  //                                                  LOAD_Admin_PROFILE_DETAILS
   /**
-   *  This function will use an API service to load all the staff member'e details into the elements on the HTML page.
+   *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
    * @memberof AdminProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadStaffProfileDetails(){
+  loadAdminProfileDetails(){
     this.id = localStorage.getItem('userID');
     this.organization = localStorage.getItem('userOrganization');
 
@@ -312,7 +312,7 @@ export class AdminProfileComponent implements OnInit {
    *  @memberof AdminProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveStaffChanges(){
+  saveChanges(){
     if (this.adminProfileForm.invalid) {
       return;
     }
@@ -321,9 +321,9 @@ export class AdminProfileComponent implements OnInit {
     this.name = this.adminProfileForm.controls.admin_name.value;
     this.surname = this.adminProfileForm.controls.admin_surname.value;
 
-    this.userManagementService.updateStaffMemberDetails(this.email, this.name, this.surname, this.id).subscribe((response: any) => {
+    this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id).subscribe((response: any) => {
       if(response.success == true){
-        this.loadStaffProfileDetails();
+        this.loadAdminProfileDetails();
 
         //Display message to say that details were successfully saved
         let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
@@ -340,7 +340,7 @@ export class AdminProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadStaffProfileDetails();
+    this.loadAdminProfileDetails();
     this.loadNotifications();
   }
 
