@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, June 26th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -16,11 +16,14 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import * as Interface from '../interfaces/interfaces';
-import { catchError, retry } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import * as Interface from '../_interfaces/interfaces';
+import { catchError, retry, map } from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
+
+import { OrganisationAdmin } from "../_interfaces/interfaces";
+import { StickyDirection } from '@angular/cdk/table';
 
 @Injectable({
   providedIn: 'root'
@@ -28,28 +31,52 @@ import { MatDialog } from '@angular/material';
 
 export class HttpService {
 
-  private APItoken: string; // API token   ** TO BE STORED IN LOCALSTORAGE **
-  loggedIn: boolean = false;  // To chedck if the current user is logged in
+  //////////////////////////// AUTHENTICATION SERVICE VARIABLES /////////////////////////// 
+  private currentUser: any;
+  private currentSessionSubject: BehaviorSubject<any>;
+  public currentSession: Observable<any>;
 
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog) {
+    this.currentSessionSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('sessionDetails')));
+    this.currentSession = this.currentSessionSubject.asObservable();
+  }
+  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       SET SESSION VARIABLES 
+  /**
+   *
+   *
+   * @param {string} tokenDetails
+   * @param {*} user
+   * @param {string} org
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setSessionVariables(tokenDetails: string, user: any, org: string) {
 
-  setSessionVariables(token: string, orgName: string, userType: string) {
-    
-    localStorage.setItem('token', token);
-    localStorage.setItem('orgName', orgName);
-    localStorage.setItem('userType', userType);
+    let usersDetails = {
+      'ID': user.id,
+      'organisation': org,
+      'email': user.email,
+      'permission': user.userType
+    }
 
+    let sess = {
+      'token': tokenDetails,
+      'user': usersDetails
+    }
+
+    localStorage.setItem('sessionDetails', JSON.stringify(sess));
+    this.currentSessionSubject.next(sess);
   }
 
-  isLoggedIn() {
-    
-    if(localStorage.getItem('token') == null || localStorage.getItem('token') == "")
-      return false;
-    // Ask API if token is valid
-    return true;
-    
-    
+  public get currentSessionValue(): any {
+    return this.currentSessionSubject.value;
+  }
+
+  public get currentUserValue(): any {
+    return this.currentUser;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,23 +92,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   login(details: Interface.LoginInfo) {
 
-    let url = ""; // Http Request URL
-
-    // Set API endpoint (URL) based on user type
-    if (details.orgName == "FABI") {
-      if (details.userType == "Admin") {
-        url = 'https://authentication-dot-api-fabi.appspot.com/loginAdmin';
-      } else {
-        url = 'https://authentication-dot-api-fabi.appspot.com/loginFabiStaff';
-      }
-    } else {
-      if (details.userType == "Admin") {
-        url = 'https://authentication-dot-api-fabi.appspot.com/loginOrgAdmin';
-      } else {
-        url = 'https://authentication-dot-api-fabi.appspot.com/loginOrgMember';
-      }
-    }
-
+    let url = "***REMOVED***/login"; // Http Request URL
     let method = 'POST';  // Http Request Method
 
     const postData = details; // Data to send as JSON
@@ -97,7 +108,14 @@ export class HttpService {
       json: true
     };
 
-    return this.http.request<any>(method, url, options);
+    return this.http.request<any>(method, url, options).pipe(map(response => {
+
+      if (response && (response.token && response.token != '')) {
+        this.setSessionVariables(response.token, response.userDetails, details.orgName);
+        this.currentUser = response.userDetails;
+      }
+      return response;
+    }));
 
   }
 
@@ -121,7 +139,8 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       }),
       json: true
     };
@@ -152,7 +171,8 @@ export class HttpService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -187,7 +207,8 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -219,6 +240,7 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -248,7 +270,8 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -257,7 +280,7 @@ export class HttpService {
     return this.http.request<any>(method, createOrganizationURL, options);
   }
 
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                     REMOVE AN ORGANISATION
   /**
@@ -280,7 +303,8 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -301,7 +325,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addStaffMember(staffInfo: Interface.StaffInfo) {
 
-    if(staffInfo.position == "Admin")
+    if (staffInfo.position == "Admin")
       return this.addFABIAdmin(staffInfo);
 
     let addStaffMemberURL = '***REMOVED***/addStaff';
@@ -316,13 +340,14 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
     };
 
-      return this.http.request<any>(method, addStaffMemberURL, options);
+    return this.http.request<any>(method, addStaffMemberURL, options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -334,7 +359,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
-   
+
     let removeStaffMemberURL = '***REMOVED***/removeStaff';
     let method = 'POST';
 
@@ -345,13 +370,14 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
     };
 
-      return this.http.request<any>(method, removeStaffMemberURL, options);
+    return this.http.request<any>(method, removeStaffMemberURL, options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -373,12 +399,13 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       json: true
     };
 
-      return this.http.request<any>(method, getStaffMembersURL, options);
+    return this.http.request<any>(method, getStaffMembersURL, options);
 
   }
 
@@ -405,7 +432,8 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -430,7 +458,7 @@ export class HttpService {
 
     let addMemberURL = '***REMOVED***/addMemberToOrg';
     let method = 'POST';
-    
+
     console.log("orgName: " + orgInfo.orgName);
     const postData = {
       "orgName": orgInfo.orgName,
@@ -441,10 +469,11 @@ export class HttpService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json'
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
-      body:postData,
+      body: postData,
       json: true
     };
 
@@ -460,7 +489,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
-   
+
     let removeMemberURL = '***REMOVED***/removeMember';
     let method = 'POST';
 
@@ -474,13 +503,14 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
     };
 
-      return this.http.request<any>(method, removeMemberURL, options);
+    return this.http.request<any>(method, removeMemberURL, options);
   }
 
 
@@ -495,8 +525,7 @@ export class HttpService {
    * @memberof HttpService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData)
-  {
+  submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData) {
     let submitSampleURL = '***REMOVED***/submitSample';
     let method = 'POST';
 
@@ -509,10 +538,11 @@ export class HttpService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json'
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
-      body:postData,
+      body: postData,
       json: true
     };
 
@@ -542,10 +572,11 @@ export class HttpService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json'
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
-      body:postData,
+      body: postData,
       json: true
     };
 
@@ -562,22 +593,25 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationDetails() {
-    
+
     let getOrganizationDetails = '***REMOVED***/getOrgDetails';
     let method = 'POST';
 
     const postData = {
-      "ID": localStorage.getItem('ID')
+      // "ID": localStorage.getItem('ID')
+      "orgName": localStorage.getItem('')
+
     }
 
     const options = {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json'
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
-      body:postData,
+      body: postData,
       json: true
     };
 
@@ -594,7 +628,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationMemberDetails() {
-    
+
     let getOrganizationMemberDetails = '***REMOVED***/getOrgMember';
     let method = 'POST';
 
@@ -606,10 +640,11 @@ export class HttpService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin":"*",
-        'Accept': 'application/json'
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
-      body:postData,
+      body: postData,
       json: true
     };
 
@@ -643,7 +678,8 @@ export class HttpService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -652,5 +688,39 @@ export class HttpService {
     return this.http.request<any>(method, getAllOrganizationsMembersURL, options);
 
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          RETRIEVE DATABASE 
+  /**
+   * Method that sends a request to the API to get the database's data.
+   *
+   * @param {string} database
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveDatabase(database: string) {
+
+      let retrieveDatabaseURL = '***REMOVED***/retrieveDatabase';
+      let method = 'POST';
+
+      const postData = {
+        "databaseName": database
+      }
+
+      const options = {
+        headers: {
+          'cache-control': 'no-cache',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${this.currentSessionValue.token}`
+        },
+        body: postData,
+        json: true
+      };
+
+      return this.http.request<any>(method, retrieveDatabaseURL, options);
+
+    }
 
 }

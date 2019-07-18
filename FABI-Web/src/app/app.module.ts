@@ -17,8 +17,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
 
-import { ErrorsModule } from "./errors/errors.module";
-import { NotificationService } from './services/notification.service';
+import { ErrorsModule } from "./_errors/errors.module";
+import { NotificationService } from './_services/notification.service';
 
 import { OrganizationModule } from './Organization/organization.module';
 import { OrganizationMemberModule } from './Organization-Member/organization-member.module';
@@ -46,7 +46,7 @@ import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 
-import { ErrorComponent } from './errors/error-component/error.component';
+import { ErrorComponent } from './_errors/error-component/error.component';
 import { HomeComponent } from './home/home.component';
 import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
 import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';

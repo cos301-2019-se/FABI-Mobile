@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 17th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -30,6 +30,8 @@ const getAllFABIMembersURL = '***REMOVED***/getAllFabiMembers';
 const getAllFABIAdminsURL = '***REMOVED***/getAllFabiAdmins';
 const getAllOrganizationMembers = '***REMOVED***/getAllOrgMembers';
 const getUserDetailsURL = '***REMOVED***/getUserDetails';
+const updateStaffMemberDetailsURL = '***REMOVED***/updateStaffMember';
+const updateOrganizationMemberDetailsURL = '***REMOVED***/updateOrgMember';
 
 //Object for defining how a member of FABI is structured
 export interface Member {
@@ -47,6 +49,33 @@ export interface POSTOrganization{
 export interface POSTMember{
     orgName: string;        //The name of the organization to be fetched
     id: string;             //THe ID of the user
+}
+
+//Object for defning the JSOn object to be sent when the details of a FABI member are updated
+export interface UpdateMember{
+    fname: string;          //The name of the FABI member
+    surname: string;        //The surname of the FABI member
+    email: string;          //The email of the FABI member
+}
+
+//Object for defning the JSOn object to be sent when the details of a FABI member are updated
+export interface POSTUpdateMember{
+    id: string;                 //The ID number of the FABI member to be updated
+    fields: UpdateMember;       //The fields to the updated
+}
+
+//Object for defning the JSOn object to be sent when the details of an organization member are updated
+export interface UpdateOrganization{
+    fname: string;          //The name of the organization member
+    surname: string;        //The surname of the organization member
+    email: string;          //The email of the organization member
+}
+
+//Object for defning the JSOn object to be sent when the details of an organization member are updated
+export interface POSTUpdateOrganization{
+    orgName: string;            //The name of the organization
+    id: string;                 //The ID of the organization member to be updated
+    fields: UpdateMember;       //The fields to be updated
 }
 
 @Injectable({
@@ -176,5 +205,72 @@ export class UserManagementAPIService {
     };
 
     return this.http.request('POST', getUserDetailsURL, options);        
-}
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         UPDATE_FABI_MEMBER_DETAILS 
+  /**
+   *    This function is used to send updated FABI staff details to the database
+   *
+   * @returns API response @type any
+   * @param {string} mail Email of the staff member
+   * @param {string} name Name of the staff member
+   * @param {string} lname Surname of the staff member
+   * @param {string} idNo ID number of the staff member
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateFABIMemberDetails(mail: string, name: string, lname: string, idNo: string) {
+    var member: UpdateMember = { fname: name, surname: lname, email: mail};
+    var data: POSTUpdateMember = { id: idNo, fields: member};
+
+    const options = {
+        method: 'POST',
+        url: updateStaffMemberDetailsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', updateStaffMemberDetailsURL, options);        
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      UPDATE_ORGANIZATION_MEMBER_DETAILS 
+  /**
+   *    This function is used to send updated organization member details to the database
+   *
+   * @returns API response @type any
+   * @param {string} organization The name of the organization that the member belongs to
+   * @param {string} mail Email of the staff member
+   * @param {string} name Name of the staff member
+   * @param {string} lname Surname of the staff member
+   * @param {string} idNo ID number of the staff member
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateOrganizationMemberDetails(organization: string, mail: string, name: string, lname: string, idNo: string) {
+    var member: UpdateOrganization = { fname: name, surname: lname, email: mail};
+    var data: POSTUpdateOrganization = { orgName: organization, id: idNo, fields: member};
+
+    const options = {
+        method: 'POST',
+        url: updateOrganizationMemberDetailsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', updateOrganizationMemberDetailsURL, options);        
+  }
 }
