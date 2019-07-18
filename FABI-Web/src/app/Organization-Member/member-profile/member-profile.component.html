@@ -96,12 +96,12 @@
     <h2>Member Profile</h2>
     <hr />
 
-    <form id="member_profile_form" [formGroup]="registerOrgForm" (submit)="registerOrg()">
+    <form id="member_profile_form" [formGroup]="memberProfileForm" (submit)="saveChanges()">
       <div class="row">
         <!--Organization Name Field-->
         <div class="organization-name">
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Organization Name" value="{{orgName}}">
+            <input matInput placeholder="Organization Name" formControlName="organization_name" value="{{organization}}" disabled>
           </mat-form-field>
           <br />
         </div>
@@ -109,13 +109,13 @@
         <!--Name Field-->
         <div class="name-inputs">
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Name" value="{{name}}">
+            <input matInput placeholder="Name" formControlName="member_name" value="{{name}}">
           </mat-form-field>
           <br />
 
           <!--Surname Field-->
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
+            <input matInput placeholder="Admin Surname" matInput type="text" formControlName="member_surname" value={{surname}}>
           </mat-form-field>
           <br />
         </div>
@@ -123,7 +123,7 @@
         <!--Email Field-->
         <div class="contact-inputs">
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Email" value="{{email}}">
+            <input matInput placeholder="Email" formControlName="member_email" value="{{email}}">
           </mat-form-field>
           <br />
 
@@ -131,7 +131,7 @@
         <br />
 
         <div class="submit-input">
-          <!-- <button type="submit" id="add_organization" class="btn btn-default">Add new organization</button> -->
+          <button type="submit" id="save" class="btn btn-default">Save Information</button>
         </div>
       </div>
     </form>
@@ -141,38 +141,3 @@
 
 
 </div>
-
-<!--Organization Profile Content-->
-<!-- <div class="content">
-  <div class="color-accent">
-    <h1>Member Profile</h1>
-  </div>
-
-  <div class="organization-profile">
-    <form class="example-form">
-
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Organization Name" value="{{orgName}}" disabled>
-      </mat-form-field>
-      <br />
-
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Name" value="{{name}}" disabled>
-      </mat-form-field>
-      <br />
-
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Surname" value="{{surname}}" disabled>
-      </mat-form-field>
-      <br />
-
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Email" value="{{email}}" disabled>
-      </mat-form-field>
-      <br />
-
-      <button id="submit_edited_details" class="btn btn-default" (click)="updateProfile()">Edit Details</button>
-    </form>
-  </div>
-
-</div> -->
