@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,14 +22,36 @@ import { StaffHandlerComponent } from './staff-handler/staff-handler.component';
 import { OrganizationHandlerComponent } from './organization-handler/organization-handler.component';
 import { ClinicHandlerComponent } from './clinic-handler/clinic-handler.component';
 import { DatabaseHandlerComponent } from './database-handler/database-handler.component';
+import { AuthenticationGuard } from '../_guards/authentication.guard';
+import { Role } from '../_interfaces/role';
 
 
 const routes: Routes = [
   {path: 'admin-dashboard', component: AdminDashboardComponent},
-  {path: 'staff-handler', component: StaffHandlerComponent},
-  {path: 'organization-handler', component: OrganizationHandlerComponent},
-  {path: 'clinic-handler', component: ClinicHandlerComponent},
-  {path: 'database-handler', component: DatabaseHandlerComponent}
+  {
+    path: 'staff-handler', 
+    component: StaffHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.SuperUser]}
+  },
+  {
+    path: 'organization-handler',
+    component: OrganizationHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.SuperUser]}
+  },
+  {
+    path: 'clinic-handler', 
+    component: ClinicHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.ClinicAdmin, Role.SuperUser] }
+  },
+  {
+    path: 'database-handler', 
+    component: DatabaseHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.SuperUser, Role.ClinicAdmin, Role.Staff]}
+  }
 ];
 
 @NgModule({
