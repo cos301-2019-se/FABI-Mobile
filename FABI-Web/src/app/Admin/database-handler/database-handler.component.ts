@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,17 +15,17 @@
 
 
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../_services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { ErrorComponent } from '../../errors/error-component/error.component';
+import { ErrorComponent } from '../../_errors/error-component/error.component';
 
 //Import the porting service for DB creation
-import { Porting } from '../../services/porting.service';
+import { Porting } from '../../_services/porting.service';
 
 
 @Component({
@@ -36,6 +36,14 @@ import { Porting } from '../../services/porting.service';
 })
 export class DatabaseHandlerComponent implements OnInit {
 
+  displayedColumns: string[];
+  dataSource = new MatTableDataSource([]);
+  columns: any[] = [];
+
+  databases: any[];
+  databasePrivileges: any = {'create': false, 'retrieve': true, 'update': false, 'delete': false};
+  
+  selectedDatabase: string;
   /**
    *  GLOBALS
    */
@@ -44,6 +52,7 @@ export class DatabaseHandlerComponent implements OnInit {
   portCSV: Porting = new Porting();
 
   jsonData: any;
+  
 
   @ViewChild("rpDBname") rPort : ElementRef;
   @ViewChild("pDBname") port : ElementRef;
@@ -51,6 +60,11 @@ export class DatabaseHandlerComponent implements OnInit {
   constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
+
+    //-------- Load Databases for Drop Down --------
+    const user = this.service.currentUserValue;
+    this.databases = user.databases;
+
   }
 
   public submitCSV(input) {
@@ -160,6 +174,60 @@ export class DatabaseHandlerComponent implements OnInit {
       });
     
   }
+
+
+  public viewDatabase() {
+
+    this.service.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
+      if (response.success == true && response.code == 200) {
+        
+
+        Object.keys(response.data.docs[0]).forEach((column) => {
+
+          let obj = {
+            'name': column
+          }
+          this.columns.push(obj);
+
+        });
+
+        this.displayedColumns= this.columns.map(column => column.name);
+
+        var databaseDetails = this.databases.find(database => {
+          return database.name == this.selectedDatabase;
+        });
+
+        if(databaseDetails && databaseDetails.privileges.indexOf('create') != -1) {
+          this.databasePrivileges.create = true;
+        }
+        if(databaseDetails && databaseDetails.privileges.indexOf('retrieve') != -1) {
+          this.databasePrivileges.retrieve = true;
+        }
+        if(databaseDetails && databaseDetails.privileges.indexOf('update') != -1) {
+          this.databasePrivileges.update = true;
+          this.displayedColumns.push("Update");
+        }
+        if(databaseDetails && databaseDetails.privileges.indexOf('delete') != -1) {
+          this.databasePrivileges.delete = true;
+          this.displayedColumns.push("Remove");
+        }
+
+        this.dataSource = new MatTableDataSource(response.data.docs);
+        // this.dataSource.paginator = this.paginator;
+  
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the data", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.ngOnInit();
+          }
+        })
+      }
+    });
+
+  }
+  
   
 
 }
