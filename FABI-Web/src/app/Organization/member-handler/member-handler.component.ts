@@ -63,6 +63,9 @@ export class MemberHandlerComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
@@ -98,6 +101,21 @@ export class MemberHandlerComponent implements OnInit {
   closeNav() {
     document.getElementById("sidenav_div").style.width = "0";
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG_ON_INIT()
