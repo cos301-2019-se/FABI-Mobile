@@ -41,7 +41,8 @@ export class OrganizationDashboardComponent implements OnInit {
   sampleStats: string;
 
   /** Object array for holding the members of the organization -  @type {Member[]} */
-  organizationMembers: Member[] = [];        
+  organizationMembers: Member[] = [];     
+  organizationMembersExample: Member[] = [];     
   /** Object array for holding the samples of the organization -  @type {Sample[]} */
   organizationSamples: Sample[] = [];            
 
@@ -58,6 +59,9 @@ export class OrganizationDashboardComponent implements OnInit {
   @ViewChild('membersContainer', {read: ViewContainerRef}) membersContainer;
   /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
   @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,31 +93,34 @@ export class OrganizationDashboardComponent implements OnInit {
     this.userManagementService.getAllOrganizationMembers(this.organizationName).subscribe((response: any) => {
       if(response.success == true){
           //Populating the arrays with the returned data
-        var tempMembers = response.data.members;
-        for(var i = 0; i < tempMembers.length; i++){
-          var tempMember: Member = {Name: tempMembers[i].fname, Surname: tempMembers[i].surname, Email: tempMembers[i].email};
-          this.organizationMembers.push(tempMember);
-        }
 
-        if(this.organizationMembers.length == 0){
-          //Dynamically loads a message indicating that there are no organization members
-          const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-          membersDivRef.instance.Name = 'There are no members to load.';
-          membersDivRef.instance.Surname = '';
-          membersDivRef.instance.Email = '';
-        }
-        else{
-          //Dynamically loads all the members into the HTML page
-          for(var i = 0; i < this.organizationMembers.length; i++){
-            const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-            membersDivRef.instance.Name = this.organizationMembers[i].Name;
-            membersDivRef.instance.Surname = this.organizationMembers[i].Surname;
-            membersDivRef.instance.Email = 'Email: ' + this.organizationMembers[i].Email;
-          }
-        }
+          this.organizationMembersExample = response.data.members;
 
-        this.numberOfOrganizationMembers = this.organizationMembers.length;
-        this.memberStats = this.numberOfOrganizationMembers.toString();
+        // var tempMembers = response.data.members;
+        // for(var i = 0; i < tempMembers.length; i++){
+        //   var tempMember: Member = {Name: tempMembers[i].fname, Surname: tempMembers[i].surname, Email: tempMembers[i].email};
+        //   this.organizationMembers.push(tempMember);
+        // }
+
+        // if(this.organizationMembers.length == 0){
+        //   //Dynamically loads a message indicating that there are no organization members
+        //   const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+        //   membersDivRef.instance.Name = 'There are no members to load.';
+        //   membersDivRef.instance.Surname = '';
+        //   membersDivRef.instance.Email = '';
+        // }
+        // else{
+        //   //Dynamically loads all the members into the HTML page
+        //   for(var i = 0; i < this.organizationMembers.length; i++){
+        //     const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+        //     membersDivRef.instance.Name = this.organizationMembers[i].Name;
+        //     membersDivRef.instance.Surname = this.organizationMembers[i].Surname;
+        //     membersDivRef.instance.Email = 'Email: ' + this.organizationMembers[i].Email;
+        //   }
+        // }
+
+        // this.numberOfOrganizationMembers = this.organizationMembers.length;
+        // this.memberStats = this.numberOfOrganizationMembers.toString();
       }
       else{
         //The organization's members could not be retrieved
@@ -187,6 +194,20 @@ export class OrganizationDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(){}
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    NG_ON_INIT()  
