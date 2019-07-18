@@ -41,6 +41,10 @@ export class Porting{
     JSONfile : any = null;
 
     convertToJSON(text){ //converts file to JSON
+        
+        if(text == ""){
+            return null;
+        }
 
         var lines = text.split("\n");
         var result = [];
@@ -61,7 +65,7 @@ export class Porting{
 
         //console.log("in porting");
         //console.log(JSON.stringify(result));
-        console.log(result);
+        //console.log(result);
         this.JSONfile = result;
         
         return result;
@@ -69,8 +73,11 @@ export class Porting{
 
     extractDatabase(dbJSON , dbName:String){ // Reverse porting
 
-        console.log(dbJSON);
+        //console.log(dbJSON);
         var CSVdata = "";
+        if(dbJSON == null){
+            return CSVdata;
+        }
 
         var headings = [];
 
@@ -85,7 +92,7 @@ export class Porting{
         for(var i =0; i<dbJSON.length; i++){
             var columnsIn = dbJSON[i];
             for(var key in headings){
-                console.log(key);
+               // console.log(key);
                 if(dbJSON[i][ headings[key] ] != null){
                     CSVdata += dbJSON[i][ headings[key] ] +";";
                 }else{
@@ -96,7 +103,7 @@ export class Porting{
             CSVdata += "\r\n";
         }
 
-        console.log(CSVdata);
+        //console.log(CSVdata);
         return CSVdata;
         
     }
