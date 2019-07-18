@@ -1,3 +1,5 @@
+import { Component, Injectable } from '@angular/core';
+
 /**
  * File Name: porting.service.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\services\porting.service.ts
@@ -12,6 +14,10 @@
  * 
  * <<license>>
  */
+
+@Injectable({
+    providedIn: 'root'
+})
 
 export class Porting{
 

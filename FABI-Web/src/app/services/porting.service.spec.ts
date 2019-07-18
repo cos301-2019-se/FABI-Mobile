@@ -5,23 +5,15 @@ import { DebugElement } from '@angular/core';
 describe("Porting service", () =>{
 
     let component : Porting;
-    let fixture : ComponentFixture<Porting>;
-    let de : DebugElement;
 
     beforeEach(async(() =>{
         TestBed.configureTestingModule({
-            declarations: [
-                Porting
-              ]
-        }).compileComponents();
+           
+        })
     }));
 
     beforeEach(() =>{
-        fixture = TestBed.createComponent(Porting);
-        component = fixture.componentInstance;
-        de = fixture.debugElement;
-        
-        fixture.detectChanges();
+        component = TestBed.get(Porting);
     });
 
     it("Should create", () =>{
@@ -52,8 +44,7 @@ describe("Porting service", () =>{
     });
 
     it("Reverse Porting given correct json data should pass", () =>{
-        const dbjson = {
-            "docs": [
+        const dbjson =  [
               {
                 "num": "1",
                 "species": "bug1",
@@ -69,8 +60,7 @@ describe("Porting service", () =>{
                 "num": "3",
                 "id": "1561418451913"
               }
-            ]
-          }
+            ];
 
         const result = component.extractDatabase(dbjson, "databaseName");
         const lines = result.split("\r\n");
