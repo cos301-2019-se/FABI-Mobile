@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 17th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -24,9 +24,6 @@ import { Router } from '@angular/router';
 
 import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
 import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
-import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
-import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
-import { NotificationDivComponent } from '../../Dynamic-Components/notification-div/notification-div.component'
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
 
 @Component({
@@ -40,13 +37,6 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  /** Holds the div element (adminContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
-  /** Holds the div element (staffContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('staffContainer', {read: ViewContainerRef}) staffContainer;
-  /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
   
   /** Contains the user stats that will be dynamically loaded in the HTML page - @type {string} */
   userStats: string;
@@ -55,10 +45,8 @@ export class AdminDashboardComponent implements OnInit {
 
   /** Object array for holding the administrators -  @type {Member[]} */
   admins: Member[] = []; 
-  exampleAdmins: Member[] = []; 
   /** Object array for holding the staff members -  @type {Member[]} */                        
   staff: Member[] = [];  
-  exampleStaff: Member[] = []; 
   /** Object array for holding the database administrators -  @type {Member[]} */                        
   databaseAdmins: Member[] = [];   
   /** Object array for holding the culture curators -  @type {Member[]} */              
@@ -70,12 +58,8 @@ export class AdminDashboardComponent implements OnInit {
   /** Object array for holding all of FABI's completed samples -  @type {Object[]} */                      
   completedSamples: Object[] = [];  
 
-  /** Object array for holding all of the user logs -  @type {UserLogs[]} */ 
-  userNotifications: UserLogs[] = [];
-  /** Object array for holding all of the database logs -  @type {DatabaseManagementLogs[]} */ 
-  databaseNotifications: DatabaseManagementLogs[] = [];
-  /** Object array for holding all of the access logs -  @type {AccessLogs[]} */ 
-  accessNotifications: AccessLogs[] = [];
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] = [];
   /** Object array for holding all of the read logs -  @type {any[]} */ 
   readNotifications: any[] = [];
 
@@ -91,7 +75,9 @@ export class AdminDashboardComponent implements OnInit {
   /** The total number of FABI samples - @type {number} */           
   numberOfSamples: number;
   /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = false;    
+  notifications: boolean = true; 
+  /** THe number of the notifications - @type {number} */   
+  localNotificationNumber : number = 1;    
   
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
@@ -132,97 +118,14 @@ export class AdminDashboardComponent implements OnInit {
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
       if(response.success == true){
 
-        this.exampleAdmins = response.data.qs.admins;
-        this.exampleStaff = response.data.qs.staff;
+        this.admins = response.data.qs.admins;
+        this.staff = response.data.qs.staff;
+        // this.databaseAdmins = response.data.qs.databaseAdmins;
+        // this.cultureCurators = response.data.qs.cultureCurators;
+        // this.diagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
 
-        /****************************************************************************************************************
-                        UNNECESSARY
-        *****************************************************************************************************************/
-        // //Populating the arrays with the returned data
-        // var tempAdmins = response.data.qs.admins;
-        // for(var i = 0; i < tempAdmins.length; i++){
-        //   var tempMember: Member = {Name: tempAdmins[i].fname, Surname: tempAdmins[i].surname, Email: tempAdmins[i].email};
-        //   this.admins.push(tempMember);
-        // }
-
-        // var tempStaff = response.data.qs.staff;
-        // for(var i = 0; i < tempStaff.length; i++){
-        //   var tempMember: Member = {Name: tempStaff[i].fname, Surname: tempStaff[i].surname, Email: tempStaff[i].email};
-        //   this.staff.push(tempMember);
-        // }
-
-        // var tempDatabaseAdmins = response.data.qs.databaseAdmins;
-        // for(var i = 0; i < tempDatabaseAdmins.length; i++){
-        //   if(!tempDatabaseAdmins[i].fname){
-        //     var tempMember: Member = {Name: '', Surname: '', Email: tempDatabaseAdmins[i].email};
-        //   }
-        //   else{
-        //     var tempMember: Member = {Name: tempDatabaseAdmins[i].fname, Surname: tempDatabaseAdmins[i].surname, Email: tempDatabaseAdmins[i].email};
-        //   }
-        //   this.databaseAdmins.push(tempMember);
-        // }
-        
-        // var tempCultureCurators = response.data.qs.cultureCurators;
-        // for(var i = 0; i < tempCultureCurators.length; i++){
-        //   if(!tempCultureCurators[i].fname){
-        //     var tempMember: Member = {Name: '', Surname: '', Email: tempCultureCurators[i].email};
-        //   }
-        //   else{
-        //     var tempMember: Member = {Name: tempCultureCurators[i].fname, Surname: tempCultureCurators[i].surname, Email: tempCultureCurators[i].email};
-        //   }
-        //   this.databaseAdmins.push(tempMember);
-        // }
-
-        // var tempDiagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
-        // for(var i = 0; i < tempDiagnosticClinicAdmins.length; i++){
-        //   if(!tempDiagnosticClinicAdmins[i].fname){
-        //     var tempMember: Member = {Name: '', Surname: '', Email: tempDiagnosticClinicAdmins[i].email};
-        //   }
-        //   else{
-        //     var tempMember: Member = {Name: tempDiagnosticClinicAdmins[i].fname, Surname: tempDiagnosticClinicAdmins[i].surname, Email: tempDiagnosticClinicAdmins[i].email};
-        //   }
-        //   this.databaseAdmins.push(tempMember);
-        // }
-
-        // this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
-        // this.userStats = this.numberOfFABIMembers.toString();
-
-        // if(this.admins.length == 0){
-
-          
-        //   //Dynamically loads a message indicating that there are no adminsitrators
-        //   const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-        //   adminDivRef.instance.Name = 'There are no administrators to load.';
-        //   adminDivRef.instance.Surname = '';
-        //   adminDivRef.instance.Email = '';
-        // }
-        // else{
-        //   //Dynamically loads all of the admins into the HTML page
-        //   for(var i = 0; i < this.admins.length; i++){
-        //     const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-        //     adminDivRef.instance.Name = this.admins[i].Name;
-        //     adminDivRef.instance.Surname = this.admins[i].Surname;
-        //     adminDivRef.instance.Email = 'Email: ' + this.admins[i].Email;
-        //   }
-        // }
-
-        // if(this.staff.length == 0){
-        //   //Dynamically loads a message indicating that there are no staff members
-        //   const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
-        //   staffDivRef.instance.Name = 'There are no staff members to load.';
-        //   staffDivRef.instance.Surname = '';
-        //   staffDivRef.instance.Email = '';
-        // }
-        // else{
-        //   //Dynamically loads all the staff into the HTML page
-        //   for(var i = 0; i < this.staff.length; i++){
-        //     const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
-        //     staffDivRef.instance.Name = this.staff[i].Name;
-        //     staffDivRef.instance.Surname = this.staff[i].Surname;
-        //     staffDivRef.instance.Email = 'Email: ' + this.staff[i].Email;
-        //   }
-        // }
-        /****************************************************************************************************************/
+        this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
+        this.userStats = this.numberOfFABIMembers.toString();
       }
       else{
         //The FABI members could not be retrieved
@@ -294,23 +197,51 @@ export class AdminDashboardComponent implements OnInit {
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: data[i].date, Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: i};
+          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: new Date(data[i].date), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
           
           if(storageNotifications != null && storageNotifications.length != 0){
             for(var j = 0; j < storageNotifications.length; j++){
               if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                  this.readNotifications.push(tempLog);
+                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
+                this.readNotifications.push(tempLog);
+              }
+              else{
+                const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
+                const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+                if(tempLog.Action == 'C'){
+                  tempLog.Action = user1 + ' was added to the system by ' + user2;
                 }
-                else{
-                  this.userNotifications.push(tempLog);
-                  this.numberOfUserLogs += 1;
+                else if(tempLog.Action == 'D'){
+                  tempLog.Action = user1 + ' was removed from the system by ' + user2;
                 }
+                else if(tempLog.Action == 'U'){
+                  tempLog.Action = user1 + ' details where updated by ' + user2;
+                }
+
+                this.allNotifications.push(tempLog);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
+              }
             }
           }
           else{
-            this.userNotifications.push(tempLog);
+            const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
+            const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+            if(tempLog.Action == 'C'){
+              tempLog.Action = user1 + ' was added to the system by ' + user2;
+            }
+            else if(tempLog.Action == 'D'){
+              tempLog.Action = user1 + ' was removed from the system by ' + user2;
+            }
+            else if(tempLog.Action == 'U'){
+              tempLog.Action = user1 + ' details where updated by ' + user2;
+            }
+
+            this.allNotifications.push(tempLog);
             this.numberOfUserLogs += 1;
+            this.localNotificationNumber += 1;
           }
         }
       }
@@ -326,23 +257,49 @@ export class AdminDashboardComponent implements OnInit {
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: DatabaseManagementLogs = {Type: 'DBML', Action: data[i].action, Date: data[i].date, Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: i};
+          var tempLog: DatabaseManagementLogs = {Type: 'DBML', Action: data[i].action, Date: new Date(data[i].date), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
           
           if(storageNotifications != null && storageNotifications.length != 0){
             for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'DBML' && storageNotifications[i].Action == tempLog.Action && 
-                storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
+              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
+                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
                 this.readNotifications.push(tempLog);
               }
               else{
-                this.databaseNotifications.push(tempLog);
-                this.numberOfDatabaseLogs += 1;
+                const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+                if(tempLog.Action == 'C'){
+                  tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
+                }
+                else if(tempLog.Action == 'D'){
+                  tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
+                }
+                else if(tempLog.Action == 'U'){
+                  tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
+                }
+
+                this.allNotifications.push(tempLog);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
             }
           }
           else{
-            this.databaseNotifications.push(tempLog);
-            this.numberOfDatabaseLogs += 1;
+            const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+            if(tempLog.Action == 'C'){
+              tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
+            }
+            else if(tempLog.Action == 'D'){
+              tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
+            }
+            else if(tempLog.Action == 'U'){
+              tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
+            }
+
+            this.allNotifications.push(tempLog);
+            this.numberOfUserLogs += 1;
+            this.localNotificationNumber += 1;
           }
         }
       }
@@ -351,13 +308,14 @@ export class AdminDashboardComponent implements OnInit {
       }
     });
 
+
     //Loading the 'ACCL' logs
     this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
       if(response.success = true){
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: AccessLogs = {Type: 'ACCL', Date: data[i].date, Details: data[i].details, User: data[i].user, ID: i};
+          var tempLog: AccessLogs = {Type: 'ACCL', Action: 'Access', Date: new Date(data[i].date), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
           
           if(storageNotifications != null && storageNotifications.length != 0){
             for(var j = 0; j < storageNotifications.length; j++){
@@ -366,14 +324,17 @@ export class AdminDashboardComponent implements OnInit {
                   this.readNotifications.push(tempLog);
                 }
                 else{
-                  this.accessNotifications.push(tempLog);
+                  //Access notifications
+                  this.allNotifications.push(tempLog);
                   this.numberOfAccessLogs += 1;
+                  this.localNotificationNumber += 1;
                 }
             }
           }
           else{
-            this.accessNotifications.push(tempLog);
+            this.allNotifications.push(tempLog);
             this.numberOfAccessLogs += 1;
+            this.localNotificationNumber += 1;
           }
         }
       }
@@ -384,76 +345,6 @@ export class AdminDashboardComponent implements OnInit {
 
     //Pushing the readNotifications array to local storage
     localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_DYNAMIC_NOTIFICATIONS
-  /**
-   *  This function will dynamically load the notifications into the HTML page
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadDynamicNotifications(){
-    //Dynamically loading the notification elements into the HTML page
-    if(this.numberOfUserLogs != 0 || this.numberOfDatabaseLogs != 0 || this.numberOfAccessLogs != 0){
-      this.notifications = true;
-
-      //User notifications
-      for(var i = 0; i < this.userNotifications.length; i++){
-        const userNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
-        userNotificationDivRef.instance.Number = i + 1;
-        userNotificationDivRef.instance.Type = 'USER';
-  
-        const user1 = this.loadUserDetails(this.userNotifications[i].Organization2, this.userNotifications[i].Details);
-        const user2 = this.loadUserDetails(this.userNotifications[i].Organization1, this.userNotifications[i].User);
-  
-        if(this.userNotifications[i].Action == 'C'){
-          userNotificationDivRef.instance.Action = user1 + ' was added to the system by ' + user2;
-        }
-        else if(this.userNotifications[i].Action == 'D'){
-          userNotificationDivRef.instance.Action = user1 + ' was removed from the system by ' + user2;
-        }
-        else if(this.userNotifications[i].Action == 'U'){
-          userNotificationDivRef.instance.Action = user1 + ' details where updated by ' + user2;
-        }
-  
-        userNotificationDivRef.instance.Date = this.userNotifications[i].Date;
-      }
-
-      //Database management notifications
-      for(var i = 0; i < this.databaseNotifications.length; i++){
-        const databaseNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
-        databaseNotificationDivRef.instance.Number = i + 1;
-        databaseNotificationDivRef.instance.Type = 'DATABASE MANAGEMENT';
-
-        const user1 = this.loadUserDetails(this.databaseNotifications[i].Organization1, this.databaseNotifications[i].User);
-
-        if(this.databaseNotifications[i].Action == 'C'){
-          databaseNotificationDivRef.instance.Action = this.databaseNotifications[i].Details + ' was added to the system by ' + user1;
-        }
-        else if(this.databaseNotifications[i].Action == 'D'){
-          databaseNotificationDivRef.instance.Action = this.databaseNotifications[i].Details + ' was removed from the system by ' + user1;
-        }
-        else if(this.databaseNotifications[i].Action == 'U'){
-          databaseNotificationDivRef.instance.Action = this.databaseNotifications[i].Details + ' details where updated by ' + user1;
-        }
-
-        databaseNotificationDivRef.instance.Date = this.userNotifications[i].Date;
-      }
-
-      //Access notifications
-      for(var i = 0; i < this.accessNotifications.length; i++){
-        const accessNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
-        accessNotificationDivRef.instance.Number = i + 1;
-        accessNotificationDivRef.instance.Type = 'ACCESS';
-        accessNotificationDivRef.instance.Details = this.accessNotifications[i].Details;
-        accessNotificationDivRef.instance.Date = this.accessNotifications[i].Date;
-      }
-    }
-    else{
-      this.notifications = false;
-    }
   }
 
 
@@ -489,30 +380,30 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(id: number, type: string){
     //Loading the read notifications into the local storage
-    if(type == 'USER'){
-      for(var i = 0; i < this.userNotifications.length; i++){
-        if(this.userNotifications[i].ID == id){
-          //Add the notification to the readNotifications array
-          this.readNotifications.push(this.userNotifications[i]);
-        }
-      }
-    }
-    else if(type == 'DBML'){
-      for(var i = 0; i < this.databaseNotifications.length; i++){
-        if(this.databaseNotifications[i].ID == id){
-          //Add the notification to the readNotifications array
-          this.readNotifications.push(this.databaseNotifications[i]);
-        }
-      }
-    }
-    else if(type == 'ACCL'){
-      for(var i = 0; i < this.accessNotifications.length; i++){
-        if(this.accessNotifications[i].ID == id){
-          //Add the notification to the readNotifications array
-          this.readNotifications.push(this.accessNotifications[i]);
-        }
-      }
-    }
+    // if(type == 'USER'){
+    //   for(var i = 0; i < this.userNotifications.length; i++){
+    //     if(this.userNotifications[i].ID == id){
+    //       //Add the notification to the readNotifications array
+    //       this.readNotifications.push(this.userNotifications[i]);
+    //     }
+    //   }
+    // }
+    // else if(type == 'DBML'){
+    //   for(var i = 0; i < this.databaseNotifications.length; i++){
+    //     if(this.databaseNotifications[i].ID == id){
+    //       //Add the notification to the readNotifications array
+    //       this.readNotifications.push(this.databaseNotifications[i]);
+    //     }
+    //   }
+    // }
+    // else if(type == 'ACCL'){
+    //   for(var i = 0; i < this.accessNotifications.length; i++){
+    //     if(this.accessNotifications[i].ID == id){
+    //       //Add the notification to the readNotifications array
+    //       this.readNotifications.push(this.accessNotifications[i]);
+    //     }
+    //   }
+    // }
 
     //Pushing the readNotifications array to local storage
     localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
@@ -533,8 +424,9 @@ export class AdminDashboardComponent implements OnInit {
     this.toggle_status = !this.toggle_status; 
  }
 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
+  //                                                    NG_ON_INIT  
   /**
    * This function is called when the page loads
    * 
@@ -546,6 +438,5 @@ export class AdminDashboardComponent implements OnInit {
     this.getNumberOfFABIMembers();
     this.getNumberOfFABISamples();
     this.loadNotifications();
-    this.loadDynamicNotifications();
   }
 }
