@@ -31,7 +31,7 @@ const getAllLogsURL = 'https://logging-dot-api-fabi.appspot.com/getLogs';
 export interface UserLogs{
     Type: string;           //The type of the log: USER
     Action: string;         //The action performed: CRUD
-    Date: string;           //The date that the action was performed
+    Date: Date;             //The date that the action was performed
     Details: string;        //The user on which the action was performed (their ID)
     User: string;           //The user who performed the action (their ID)
     Organization1: string;  //The organization of the user performing the operation
@@ -44,7 +44,7 @@ export interface UserLogs{
 export interface DatabaseManagementLogs{
     Type: string;           //The type of the log: DBML (Database Management Log)
     Action: string;         //The action performed: CRUD
-    Date: string;           //The date that the action was performed
+    Date: Date;             //The date that the action was performed
     Details: string;        //The name of the database that the action was performed on
     User: string;           //The user who performed the action
     Organization1: string;  //The organization of the user performing the operation
@@ -56,7 +56,8 @@ export interface DatabaseManagementLogs{
 //Object for defining the JSON object containing the access logs
 export interface AccessLogs{
     Type: string;           //The type of the log: ACCL
-    Date: string;           //The date that the action was performed
+    Action: string;         //The action performed: ACCESS
+    Date: Date;             //The date that the action was performed
     Details: string;        //Description of what was accessed
     User: string;           //The user who performed the action (their ID)
     ID: number;             //The id of the notification
@@ -65,7 +66,7 @@ export interface AccessLogs{
 //Object for defining the JSON object containing the error logs
 export interface ErrorLogs{
     Type: string;           //The type of the log: ERRL
-    Date: string;           //The date that the action was performed
+    Date: Date;             //The date that the action was performed
     StatusCode: string;     //The status code of the error that occured
     Details: string;        //Description of the error
     User: string;           //The user who performed the action (their ID)
