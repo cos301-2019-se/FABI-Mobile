@@ -116,6 +116,7 @@ function loginMember(req, res)
                         //(4)
                         bcrypt.compare(req.body.password, member.password, (err, valid) =>
                         {
+                            delete member.password;
                             if(valid)
                             {
                                 res.setHeader('Content-Type', 'application/json');
@@ -126,8 +127,15 @@ function loginMember(req, res)
                                     code: 200,
                                     title: "AUTHORIZED",
                                     message: "Authenticated",
-                                    token: bcrypt.hashSync(config.DiagnosticToken, bcrypt.genSaltSync(10))
+                                    token: bcrypt.hashSync(config.DiagnosticToken, bcrypt.genSaltSync(10)),
+                                    userDetails : member
                                     
+                                });
+                                log({
+                                    type: 'ACCL',
+                                    statusCode: '200',
+                                    details: 'Logged In for organization: ' + req.body.orgName,
+                                    user: member.id
                                 });
                             }
                             else{
@@ -154,6 +162,11 @@ function loginMember(req, res)
                     code: 500,
                     title: "SERVER ERROR",
                     message: "Internal Server Error"
+                });
+                log({
+                    type: 'ERRL',
+                    statusCode: '500',
+                    details: 'Error connecting to database'
                 });
 });
 
