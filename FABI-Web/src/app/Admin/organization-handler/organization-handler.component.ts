@@ -107,6 +107,82 @@ export class OrganizationHandlerComponent implements OnInit {
     })
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET_DATE
+  /**
+   *  This function will put the string date provided into a more readable format for the notifications
+   * @param {string} date The date of the log
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getDate(date: string){
+    var tempDate = (date).split(' ');
+    var newDate = '';
+
+    newDate += tempDate[2];
+
+    if(tempDate[0] == 'Mon'){
+      newDate += ' Monday ';
+    }
+    else if(tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues'){
+      newDate += ' Tuesday ';
+    }
+    else if(tempDate[0] == 'Wed'){
+      newDate += ' Wednesday ';
+    }
+    else if(tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs'){
+      newDate += ' Thursday ';
+    }
+    else if(tempDate[0] == 'Fri'){
+      newDate += ' Friday ';
+    }
+    else if(tempDate[0] == 'Sat'){
+      newDate += ' Saturday ';
+    }
+    else if(tempDate[0] == 'Sun'){
+      newDate += ' Sunday ';
+    }
+
+    if(tempDate[1] == 'Jan'){
+      newDate += 'January';
+    }
+    else if(tempDate[1] == 'Feb'){
+      newDate += 'February';
+    }
+    else if(tempDate[1] == 'Mar'){
+      newDate += 'March';
+    }
+    else if(tempDate[1] == 'Apr'){
+      newDate += 'April';
+    }
+    else if(tempDate[1] == 'Jun'){
+      newDate += 'June';
+    }
+    else if(tempDate[1] == 'Jul'){
+      newDate += 'July';
+    }
+    else if(tempDate[1] == 'Aug'){
+      newDate += 'August';
+    }
+    else if(tempDate[1] == 'Sep' || tempDate[1] == 'Sept'){
+      newDate += 'September';
+    }
+    else if(tempDate[1] == 'Oct'){
+      newDate += 'October';
+    }
+    else if(tempDate[1] == 'Nov'){
+      newDate += 'November';
+    }
+    else if(tempDate[1] == 'Dec'){
+      newDate += 'December';
+    }
+
+    newDate += ' ' + tempDate[3];
+
+    return newDate;
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       LOAD_NOTIFICATIONS
   /**
@@ -125,7 +201,7 @@ export class OrganizationHandlerComponent implements OnInit {
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: data[i].date, Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
           
           if(storageNotifications != null && storageNotifications.length != 0){
             for(var j = 0; j < storageNotifications.length; j++){
@@ -185,7 +261,7 @@ export class OrganizationHandlerComponent implements OnInit {
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: DatabaseManagementLogs = {Type: 'DBML', Action: data[i].action, Date: data[i].date, Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+          var tempLog: DatabaseManagementLogs = {Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
           
           if(storageNotifications != null && storageNotifications.length != 0){
             for(var j = 0; j < storageNotifications.length; j++){
@@ -243,7 +319,7 @@ export class OrganizationHandlerComponent implements OnInit {
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: AccessLogs = {Type: 'ACCL', Action: 'Access', Date: data[i].date, Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
+          var tempLog: AccessLogs = {Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
           
           if(storageNotifications != null && storageNotifications.length != 0){
             for(var j = 0; j < storageNotifications.length; j++){
