@@ -14,6 +14,8 @@ const submitSampleRoute = require('./api/routes/submitSample');
 const retrieveSampleRoute = require('./api/routes/retrieveSample');
 const retrieveAllOrgSamplesRoute = require('./api/routes/retrieveAllOrgSamples');
 const retrieveAllSamplesRoute = require('./api/routes/retrieveAllSamples');
+const updateSampleStatusRoute = require('./api/routes/updateSampleStatus');
+const retriveSamplesForMemberRoute = require('./api/routes/retrieveSamplesForMember');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -25,6 +27,9 @@ app.use('/',displayHTML);
 app.use('/submitSample', submitSampleRoute);
 app.use('/retrieveSample', retrieveSampleRoute);
 app.use('/retrieveAllSamples', retrieveAllSamplesRoute);
+app.use('/retrieveAllOrgSamples', retrieveAllOrgSamplesRoute);
+app.use('/updateSampleStatus', updateSampleStatusRoute);
+app.use('/retrieveSamplesForMember', retriveSamplesForMemberRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {

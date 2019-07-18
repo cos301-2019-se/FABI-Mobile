@@ -10,16 +10,15 @@ const admin = require('firebase-admin');
 router.post('/', getAllStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Org Details
+//                                             Get All Staff
 /**
  * @summary Get all staff assotiated with FABI
  * @description  REQUEST DATA REQUIRED: null
  *
  *  1. Connect to DB.
  *      - IF ERROR: return Error Response
- *  2. Encrypt Password.
- *  3. Add Organization to Organizations collection and create admin within admin collection int that organization
- *      - IF ERROR: return Error Response
+ *  2. Retrieve list from database
+ *  3. remove password information from data to be sent
  *  4. Send appropriate response message.
  *
  * @param {*} res Used to send response to the client
@@ -31,27 +30,34 @@ router.post('/', getAllStaff);
 const db = admin.firestore();
 
 function getAllStaff(req, res) {
+
+    //(1)
     var staffRef = db.collection('Organizations').doc('FABI').collection('Staff');
     staffRef.get().then(snapshot => {
-            var qs = {researchers : []}
+            var qs = {staff : []}
 
+            //(2)
             snapshot.forEach(doc => {
-                qs.researchers.push(doc.data());
+                qs.staff.push(doc.data());
             })
-        
+            //(3)
+            qs.staff.forEach(doc => {
+                delete doc.password;
+            })
+            
+            //(4)
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.status(200).json({                                  // ******* RESPONSE STATUS? ************
             success: true,
+            code: 200,
+            title: "SUCCESS",
+            message: "List of FABI staff",
             data: {
-                code: 200,
-                title: "SUCCESS",
-                message: "List of FABI staff",
-                content: {
-                    staff: qs
-                }
+                qs
             }
+    
         });
     });
 }
