@@ -111,45 +111,20 @@
           Add Database
         </ng-template>
         <div class="tab-content" id="add_new_database_form" ng-app="portApp" ngController="previewCtrl">
-          <br />
           <h2>Add Database via Porting</h2>
-          <hr />
-
+          <br />
           <label *ngIf="preview">Is this what the database should look like?</label>
-          <span><button *ngIf="preview" class="btn btn-default" (click)="submitDatabase()">Yes</button><button
-              *ngIf="preview" class="btn btn-default" (click)="removePreview()">No</button></span>
-
-          <div class="form-group">
-            <label *ngIf="!preview" class="databaseName">Database name</label><input *ngIf="!preview" type='text'
-              id='fileInput1' class="inputSpace" #pDBname>
-            <input *ngIf="!preview" type='file' (change)=submitCSV(input) id='fileInput' class="inputFile"
-              class="form-control" #input>
-            <label *ngIf="!preview" for="fileInput" class="fileLabel">Choose a file</label>
-            <br /><br /><br />
-          </div>
-
-          <!-- <mat-form-field class="form_inputs" class="col" *ngIf="!preview">
-            <input matInput placeholder="Database Name" type="text" *ngIf="!preview" type='text' id='fileInput1'
-              class="inputSpace" #pDBname>
-          </mat-form-field> -->
-
-          <!-- <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-            </div>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01">
-              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-            </div>
-          </div> -->
-
+          <span><button *ngIf="preview" class="btn btn-default" (click)="submitDatabase()">Yes</button><button *ngIf="preview" class="btn btn-default" (click)="removePreview()">No</button></span>
+          
+          <label *ngIf="!preview" class="databaseName">Database name</label><input *ngIf="!preview" type='text' id='fileInput1' class="inputSpace" #pDBname >
+          <input *ngIf="!preview" type='file' (change)=submitCSV(input) id='fileInput' class="inputFile" #input>
+          <label *ngIf="!preview" for="fileInput" class="fileLabel">Choose a file</label>
+          <br/><br/><br/>
+          
           <h2 *ngIf="!preview">Reverse Porting</h2>
           <br *ngIf="!preview" />
-          <label *ngIf="!preview" class="databaseName">Database name</label><input *ngIf="!preview" type='text'
-            id='fileInput2' class="inputSpace" #rpDBname>
-          <button *ngIf="!preview" type="button" (click)="getCSV()" class="fileLabel" class="btn btn-default">Download
-            CSV file</button>
+          <label *ngIf="!preview" class="databaseName">Database name</label><input *ngIf="!preview" type='text' id='fileInput2' class="inputSpace" #rpDBname >
+          <button *ngIf="!preview" type="button" (click)="getCSV()" class="fileLabel">Download CSV file</button>
 
           <table *ngIf="preview" id="previewTable">
             <thead>
@@ -163,7 +138,7 @@
               </tr>
             </tbody>
           </table>
-
+        
         </div>
         <p *ngIf="loading" style="color: black;">Porting File...</p>
       </mat-tab>
