@@ -1,58 +1,143 @@
-<div class="container">
+<!--Bootstrap Navbar-->
+<div class="container-fluid" id="nav-section">
+  <nav class="navbar navbar-expand-xl">
+    <a class="navbar-brand" href="#">Member Profile</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      <i class="fas fa-bars"></i>
+    </button>
 
-  <!--Nav Section-->
-  <div class="nav">
-  
-    <section class="top-nav">
-      <h1>Member Profile</h1>
-      <a id="dashboard_menu_link" routerLink="/member-dashboard"><i class="fas fa-home"></i>Home</a>
-      <a id="view_samples" routerLink="/member-view-samples"><i class="fas fa-vials"></i>View Samples</a>
-      <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
-      <a id="profile" routerLink="/member-profile"><i class="fas fa-user-circle"></i>Profile</a>
-      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
-    </section>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
 
-    <section class="bottom-nav">
-      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
-    </section>
-    <a href="" id="menu"><i class="fas fa-bars"></i></a>
+        <li class="nav-item active">
+          <a id="dashboard_menu_link" routerLink="/member-dashboard"><i class="fas fa-home"></i>Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-vials"></i>Samples
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="view_samples" routerLink="/member-view-samples"><i class="fas fa-vials"></i>View Samples</a>
+            <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
+            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        </li>
+
+        <li class="nav-item">
+          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div>
+<!--SlideOut -->
+<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
+  <!--Tab-->
+  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
+    <div>
+      <p>Notifications</p>
+    </div>
+  </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Admin Notifications</h4>
+    </div>
+    <div class="modal-body" id="notifications-section">
+
+      <h2 *ngIf="!notifications">No notifications</h2>
+      <!--*********************************************************************
+                  DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
+              *************************************************************************-->
+      <div class="box">
+        <div class="notification-heading">
+          <h2>Notification {{Number}}</h2>
+          <i class="fas fa-times"></i>
+        </div>
+
+        <div class="notification-content">
+          <p><b>Type:</b> {{Type}} notification</p>
+          <p><b>Action:</b> {{Action}}</p>
+          <p><b>Date:</b> {{Date}}</p>
+          <p><b>Details:</b> {{Details}}</p>
+        </div>
+      </div>
+
+      <div #notificationContainer></div>
+
+    </div>
+    <div class="modal-footer"> </div>
+  </div>
+</div>
+
+<!--Organization Profile Content-->
+<div class="container-fluid">
+
+  <div class="member-profile">
+
+    <h2>Member Profile</h2>
+    <hr />
+
+    <form id="member_profile_form" [formGroup]="memberProfileForm" (submit)="saveChanges()">
+      <div class="row">
+        <!--Organization Name Field-->
+        <div class="organization-name">
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Organization Name" formControlName="organization_name" value="{{organization}}" disabled>
+          </mat-form-field>
+          <br />
+        </div>
+
+        <!--Name Field-->
+        <div class="name-inputs">
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Name" formControlName="member_name" value="{{name}}">
+          </mat-form-field>
+          <br />
+
+          <!--Surname Field-->
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Admin Surname" matInput type="text" formControlName="member_surname" value={{surname}}>
+          </mat-form-field>
+          <br />
+        </div>
+
+        <!--Email Field-->
+        <div class="contact-inputs">
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Email" formControlName="member_email" value="{{email}}">
+          </mat-form-field>
+          <br />
+
+        </div>
+        <br />
+
+        <div class="submit-input">
+          <button type="submit" id="save" class="btn btn-default">Save Information</button>
+        </div>
+      </div>
+    </form>
+
   </div>
 
-  <!--Organization Profile Content-->
-  <div class="content">
-    <div class="color-accent">
-      <h1>Member Profile</h1>
-    </div>
 
-    <div class="organization-profile">
-      <form class="example-form">
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Organization Name" value="{{orgName}}" disabled>
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Name" value="{{name}}" disabled>
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Surname" value="{{surname}}" disabled>
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Email" value="{{email}}" disabled>
-        </mat-form-field>
-        <br />
-
-        <button id="submit_edited_details" class="btn btn-default" (click)="updateProfile()" >Edit Details</button>
-      </form>
-    </div>
-
-  </div>
 
 </div>

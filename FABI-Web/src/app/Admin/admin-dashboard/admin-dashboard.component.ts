@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 15th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,10 +22,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
 
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
-import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
-import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
+import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
+import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -38,11 +37,6 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  /** Holds the div element (adminContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
-  /** Holds the div element (staffContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('staffContainer', {read: ViewContainerRef}) staffContainer;
   
   /** Contains the user stats that will be dynamically loaded in the HTML page - @type {string} */
   userStats: string;
@@ -64,10 +58,29 @@ export class AdminDashboardComponent implements OnInit {
   /** Object array for holding all of FABI's completed samples -  @type {Object[]} */                      
   completedSamples: Object[] = [];  
 
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] = [];
+  /** Object array for holding all of the read logs -  @type {any[]} */ 
+  readNotifications: any[] = [];
+
+  /** The total number of User Logs - @type {number} */           
+  numberOfUserLogs: number = 0;
+  /** The total number of Database Management Logs - @type {number} */           
+  numberOfDatabaseLogs: number = 0;
+  /** The total number of Access Logs - @type {number} */           
+  numberOfAccessLogs: number = 0;
+
   /** The total number of FABI staff members - @type {number} */
   numberOfFABIMembers: number;        
   /** The total number of FABI samples - @type {number} */           
-  numberOfSamples: number;                       
+  numberOfSamples: number;
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean = true; 
+  /** THe number of the notifications - @type {number} */   
+  localNotificationNumber : number = 1;    
+  
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -76,12 +89,14 @@ export class AdminDashboardComponent implements OnInit {
    * 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { }
+    private diagnosticClinicService: DiagnosticClinicAPIService, private notificationLoggingService: NotificationLoggingService, private resolver: ComponentFactoryResolver) { 
+    }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,73 +117,22 @@ export class AdminDashboardComponent implements OnInit {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
       if(response.success == true){
-        //Populating the arrays with the returned data
-        var tempAdmins = response.data.qs.admins;
-        for(var i = 0; i < tempAdmins.length; i++){
-          var tempMember: Member = {Name: tempAdmins[i].fname, Surname: tempAdmins[i].surname, Email: tempAdmins[i].email};
-          this.admins.push(tempMember);
-        }
 
-        var tempStaff = response.data.qs.staff;
-        for(var i = 0; i < tempStaff.length; i++){
-          var tempMember: Member = {Name: tempStaff[i].fname, Surname: tempStaff[i].surname, Email: tempStaff[i].email};
-          this.staff.push(tempMember);
-        }
-
-        var tempDatabaseAdmins = response.data.qs.databaseAdmins;
-        for(var i = 0; i < tempDatabaseAdmins.length; i++){
-          if(!tempDatabaseAdmins[i].fname){
-            var tempMember: Member = {Name: '', Surname: '', Email: tempDatabaseAdmins[i].email};
-          }
-          else{
-            var tempMember: Member = {Name: tempDatabaseAdmins[i].fname, Surname: tempDatabaseAdmins[i].surname, Email: tempDatabaseAdmins[i].email};
-          }
-          this.databaseAdmins.push(tempMember);
-        }
-        
-        var tempCultureCurators = response.data.qs.cultureCurators;
-        for(var i = 0; i < tempCultureCurators.length; i++){
-          if(!tempCultureCurators[i].fname){
-            var tempMember: Member = {Name: '', Surname: '', Email: tempCultureCurators[i].email};
-          }
-          else{
-            var tempMember: Member = {Name: tempCultureCurators[i].fname, Surname: tempCultureCurators[i].surname, Email: tempCultureCurators[i].email};
-          }
-          this.databaseAdmins.push(tempMember);
-        }
-
-        var tempDiagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
-        for(var i = 0; i < tempDiagnosticClinicAdmins.length; i++){
-          if(!tempDiagnosticClinicAdmins[i].fname){
-            var tempMember: Member = {Name: '', Surname: '', Email: tempDiagnosticClinicAdmins[i].email};
-          }
-          else{
-            var tempMember: Member = {Name: tempDiagnosticClinicAdmins[i].fname, Surname: tempDiagnosticClinicAdmins[i].surname, Email: tempDiagnosticClinicAdmins[i].email};
-          }
-          this.databaseAdmins.push(tempMember);
-        }
+        this.admins = response.data.qs.admins;
+        this.staff = response.data.qs.staff;
+        // this.databaseAdmins = response.data.qs.databaseAdmins;
+        // this.cultureCurators = response.data.qs.cultureCurators;
+        // this.diagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
 
         this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
         this.userStats = this.numberOfFABIMembers.toString();
-
-        //Dynamically loads all the admins into the HTML page
-        for(var i = 0; i < this.admins.length; i++){
-          const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-          adminDivRef.instance.Name = this.admins[i].Name;
-          adminDivRef.instance.Surname = this.admins[i].Surname;
-          adminDivRef.instance.Email = this.admins[i].Email;
-        }
-
-        //Dynamically loads all the staff into the HTML page
-        for(var i = 0; i < this.staff.length; i++){
-          const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
-          staffDivRef.instance.Name = this.staff[i].Name;
-          staffDivRef.instance.Surname = this.staff[i].Surname;
-          staffDivRef.instance.Email = this.staff[i].Email;
-        }
       }
       else{
         //The FABI members could not be retrieved
+        this.numberOfFABIMembers = 0;
+        this.userStats = this.numberOfFABIMembers.toString();
+
+        //TODO: Show error message
       }
     });
   }
@@ -196,6 +160,7 @@ export class AdminDashboardComponent implements OnInit {
       }
       else{
         //The FABI members could not be retrieved
+        this.sampleStats = '0';
       }
     });
   }
@@ -215,6 +180,82 @@ export class AdminDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET_DATE
+  /**
+   *  This function will put the string date provided into a more readable format for the notifications
+   * @param {string} date The date of the log
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getDate(date: string){
+    var tempDate = (date).split(' ');
+    var newDate = '';
+
+    newDate += tempDate[2];
+
+    if(tempDate[0] == 'Mon'){
+      newDate += ' Monday ';
+    }
+    else if(tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues'){
+      newDate += ' Tuesday ';
+    }
+    else if(tempDate[0] == 'Wed'){
+      newDate += ' Wednesday ';
+    }
+    else if(tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs'){
+      newDate += ' Thursday ';
+    }
+    else if(tempDate[0] == 'Fri'){
+      newDate += ' Friday ';
+    }
+    else if(tempDate[0] == 'Sat'){
+      newDate += ' Saturday ';
+    }
+    else if(tempDate[0] == 'Sun'){
+      newDate += ' Sunday ';
+    }
+
+    if(tempDate[1] == 'Jan'){
+      newDate += 'January';
+    }
+    else if(tempDate[1] == 'Feb'){
+      newDate += 'February';
+    }
+    else if(tempDate[1] == 'Mar'){
+      newDate += 'March';
+    }
+    else if(tempDate[1] == 'Apr'){
+      newDate += 'April';
+    }
+    else if(tempDate[1] == 'Jun'){
+      newDate += 'June';
+    }
+    else if(tempDate[1] == 'Jul'){
+      newDate += 'July';
+    }
+    else if(tempDate[1] == 'Aug'){
+      newDate += 'August';
+    }
+    else if(tempDate[1] == 'Sep' || tempDate[1] == 'Sept'){
+      newDate += 'September';
+    }
+    else if(tempDate[1] == 'Oct'){
+      newDate += 'October';
+    }
+    else if(tempDate[1] == 'Nov'){
+      newDate += 'November';
+    }
+    else if(tempDate[1] == 'Dec'){
+      newDate += 'December';
+    }
+
+    newDate += ' ' + tempDate[3];
+
+    return newDate;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       LOAD_NOTIFICATIONS
   /**
    *  This function will load the admin's notifications into the notification section on the HTML page
@@ -222,11 +263,246 @@ export class AdminDashboardComponent implements OnInit {
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){}
+  loadNotifications(){
+    //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
+    const storageNotifications = JSON.parse(localStorage.getItem('readNotifications'));
+
+    //Loading the 'USER' logs
+    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
+      if(response.success = true){
+        const data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+          
+          if(storageNotifications != null && storageNotifications.length != 0){
+            for(var j = 0; j < storageNotifications.length; j++){
+              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
+                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
+                this.readNotifications.push(tempLog);
+              }
+              else{
+                const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
+                const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+                if(tempLog.Action == 'C'){
+                  tempLog.Action = user1 + ' was added to the system by ' + user2;
+                }
+                else if(tempLog.Action == 'D'){
+                  tempLog.Action = user1 + ' was removed from the system by ' + user2;
+                }
+                else if(tempLog.Action == 'U'){
+                  tempLog.Action = user1 + ' details where updated by ' + user2;
+                }
+
+                this.allNotifications.push(tempLog);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
+              }
+            }
+          }
+          else{
+            const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
+            const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+            if(tempLog.Action == 'C'){
+              tempLog.Action = user1 + ' was added to the system by ' + user2;
+            }
+            else if(tempLog.Action == 'D'){
+              tempLog.Action = user1 + ' was removed from the system by ' + user2;
+            }
+            else if(tempLog.Action == 'U'){
+              tempLog.Action = user1 + ' details where updated by ' + user2;
+            }
+
+            this.allNotifications.push(tempLog);
+            this.numberOfUserLogs += 1;
+            this.localNotificationNumber += 1;
+          }
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+
+
+    //Loading the 'DBML' logs
+    this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
+      if(response.success = true){
+        const data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          var tempLog: DatabaseManagementLogs = {Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+          
+          if(storageNotifications != null && storageNotifications.length != 0){
+            for(var j = 0; j < storageNotifications.length; j++){
+              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
+                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
+                this.readNotifications.push(tempLog);
+              }
+              else{
+                const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+                if(tempLog.Action == 'C'){
+                  tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
+                }
+                else if(tempLog.Action == 'D'){
+                  tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
+                }
+                else if(tempLog.Action == 'U'){
+                  tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
+                }
+
+                this.allNotifications.push(tempLog);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
+              }
+            }
+          }
+          else{
+            const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+            if(tempLog.Action == 'C'){
+              tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
+            }
+            else if(tempLog.Action == 'D'){
+              tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
+            }
+            else if(tempLog.Action == 'U'){
+              tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
+            }
+
+            this.allNotifications.push(tempLog);
+            this.numberOfUserLogs += 1;
+            this.localNotificationNumber += 1;
+          }
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+
+
+    //Loading the 'ACCL' logs
+    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
+      if(response.success = true){
+        const data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          var tempLog: AccessLogs = {Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
+          
+          if(storageNotifications != null && storageNotifications.length != 0){
+            for(var j = 0; j < storageNotifications.length; j++){
+              if(storageNotifications[j].Type == 'ACCL' && storageNotifications[i].Date == tempLog.Date && 
+              storageNotifications.User == tempLog.User){
+                  this.readNotifications.push(tempLog);
+                }
+                else{
+                  //Access notifications
+                  this.allNotifications.push(tempLog);
+                  this.numberOfAccessLogs += 1;
+                  this.localNotificationNumber += 1;
+                }
+            }
+          }
+          else{
+            this.allNotifications.push(tempLog);
+            this.numberOfAccessLogs += 1;
+            this.localNotificationNumber += 1;
+          }
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+
+    //Pushing the readNotifications array to local storage
+    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
+  //                                                  LOAD_USER_DETAILS
+  /**
+   *  This function will be called so that the information of a specific user can be fetched
+   *  @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadUserDetails(userOrganization: string, userID: string) {
+    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
+      if(response.success == true){
+        const data = response.data;
+
+        return data.fname + ' ' + data.surname;
+      } 
+      else{
+        //Error control
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       REMOVE_NOTIFICATIONS
+  /**
+   *  This function will remove a notification from the notification section on the HTML page
+   * @param {number} id                   //The id of the notification to be removed
+   * @param {string} type                 //The type of the notification to be removed
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeNotification(id: number, type: string){
+    //Loading the read notifications into the local storage
+    // if(type == 'USER'){
+    //   for(var i = 0; i < this.userNotifications.length; i++){
+    //     if(this.userNotifications[i].ID == id){
+    //       //Add the notification to the readNotifications array
+    //       this.readNotifications.push(this.userNotifications[i]);
+    //     }
+    //   }
+    // }
+    // else if(type == 'DBML'){
+    //   for(var i = 0; i < this.databaseNotifications.length; i++){
+    //     if(this.databaseNotifications[i].ID == id){
+    //       //Add the notification to the readNotifications array
+    //       this.readNotifications.push(this.databaseNotifications[i]);
+    //     }
+    //   }
+    // }
+    // else if(type == 'ACCL'){
+    //   for(var i = 0; i < this.accessNotifications.length; i++){
+    //     if(this.accessNotifications[i].ID == id){
+    //       //Add the notification to the readNotifications array
+    //       this.readNotifications.push(this.accessNotifications[i]);
+    //     }
+    //   }
+    // }
+
+    //Pushing the readNotifications array to local storage
+    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
+  } 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT  
   /**
    * This function is called when the page loads
    * 
