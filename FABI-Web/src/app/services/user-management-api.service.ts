@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 17th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -30,6 +30,7 @@ const getAllFABIMembersURL = '***REMOVED***/getAllFabiMembers';
 const getAllFABIAdminsURL = '***REMOVED***/getAllFabiAdmins';
 const getAllOrganizationMembers = '***REMOVED***/getAllOrgMembers';
 const getUserDetailsURL = '***REMOVED***/getUserDetails';
+const updateStaffMemberDetailsURL = '***REMOVED***/updateStaffMember';
 
 //Object for defining how a member of FABI is structured
 export interface Member {
@@ -47,6 +48,18 @@ export interface POSTOrganization{
 export interface POSTMember{
     orgName: string;        //The name of the organization to be fetched
     id: string;             //THe ID of the user
+}
+
+export interface UpdateMember{
+    fname: string;
+    surname: string;
+    email: string;
+}
+
+//Onject for defning the JSOn object to be sent when the details of a staff member are updated
+export interface POSTUpdateMember{
+    id: string;
+    fields: UpdateMember;
 }
 
 @Injectable({
@@ -176,5 +189,39 @@ export class UserManagementAPIService {
     };
 
     return this.http.request('POST', getUserDetailsURL, options);        
-}
+  }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         UPDATE_STAFF_MEMBER_DETAILS 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the Members of an Organization
+   *
+   * @returns API response @type any
+   * @param {string} mail Email of the staff member
+   * @param {string} name Name of the staff member
+   * @param {string} lname Surname of the staff member
+   * @param {string} idNo ID number of the staff member
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateStaffMemberDetails(mail: string, name: string, lname: string, idNo: string) {
+    var member: UpdateMember = { fname: name, surname: lname, email: mail};
+    var data: POSTUpdateMember = { id: idNo, fields: member};
+
+    const options = {
+        method: 'POST',
+        url: updateStaffMemberDetailsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', updateStaffMemberDetailsURL, options);        
+  }
 }
