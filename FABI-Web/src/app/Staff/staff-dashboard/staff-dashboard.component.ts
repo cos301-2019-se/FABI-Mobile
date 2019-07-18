@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Wednesday, July 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,6 +17,8 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolve
 
 import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
+import { NotificationLoggingService, UserLogs } from '../../services/notification-logging.service';
+import { NotificationDivComponent } from '../../Dynamic-Components/notification-div/notification-div.component'
 
 @Component({
   selector: 'app-staff-dashboard',
@@ -37,9 +39,16 @@ export class StaffDashboardComponent implements OnInit {
 
   /** Object array for holding the administrators -  @type {Member[]} */
   admins: Member[] = [];   
+
+  /** Object array for holding all of the user logs -  @type {UserLogs[]} */ 
+  userNotifications: UserLogs[] = [];
+  /** Object array for holding all of the read logs -  @type {any[]} */ 
+  readNotifications: any[] = [];
   
   /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = false;  
+  notifications: boolean = false; 
+  /** The total number of User Logs - @type {number} */           
+  numberOfUserLogs: number = 0; 
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
@@ -51,11 +60,12 @@ export class StaffDashboardComponent implements OnInit {
    * Creates an instance of StaffDashboardComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private userManagementService: UserManagementAPIService, private resolver: ComponentFactoryResolver) { }
+  constructor(private userManagementService: UserManagementAPIService, private resolver: ComponentFactoryResolver, private notificationLoggingService: NotificationLoggingService) { }
 
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,7 +127,105 @@ export class StaffDashboardComponent implements OnInit {
    * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){}
+  loadNotifications(){
+    //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
+    const storageNotifications = JSON.parse(localStorage.getItem('readNotifications'));
+
+    //Loading the 'USER' logs
+    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
+      if(response.success = true){
+        const data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: data[i].date, Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: i};
+          
+          if(storageNotifications != null && storageNotifications.length != 0){
+            for(var j = 0; j < storageNotifications.length; j++){
+              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
+                storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
+                  this.readNotifications.push(tempLog);
+                }
+                else{
+                  this.userNotifications.push(tempLog);
+                  this.numberOfUserLogs += 1;
+                }
+            }
+          }
+          else{
+            this.userNotifications.push(tempLog);
+            this.numberOfUserLogs += 1;
+          }
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+
+    //Pushing the readNotifications array to local storage
+    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_DYNAMIC_NOTIFICATIONS
+  /**
+   *  This function will dynamically load the notifications into the HTML page
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadDynamicNotifications(){
+    //Dynamically loading the notification elements into the HTML page
+    if(this.numberOfUserLogs != 0){
+      this.notifications = true;
+
+      //User notifications
+      for(var i = 0; i < this.userNotifications.length; i++){
+        const userNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
+        userNotificationDivRef.instance.Number = i + 1;
+        userNotificationDivRef.instance.Type = 'USER';
+  
+        const user1 = this.loadUserDetails(this.userNotifications[i].Organization2, this.userNotifications[i].Details);
+        const user2 = this.loadUserDetails(this.userNotifications[i].Organization1, this.userNotifications[i].User);
+  
+        if(this.userNotifications[i].Action == 'C'){
+          userNotificationDivRef.instance.Action = user1 + ' was added to the system by ' + user2;
+        }
+        else if(this.userNotifications[i].Action == 'D'){
+          userNotificationDivRef.instance.Action = user1 + ' was removed from the system by ' + user2;
+        }
+        else if(this.userNotifications[i].Action == 'U'){
+          userNotificationDivRef.instance.Action = user1 + ' details where updated by ' + user2;
+        }
+  
+        userNotificationDivRef.instance.Date = this.userNotifications[i].Date;
+      }
+    }
+    else{
+      this.notifications = false;
+    }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_USER_DETAILS
+  /**
+   *  This function will be called so that the information of a specific user can be fetched
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadUserDetails(userOrganization: string, userID: string) {
+    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
+      if(response.success == true){
+        const data = response.data;
+
+        return data.fname + ' ' + data.surname;
+      } 
+      else{
+        //Error control
+      }
+    });
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
