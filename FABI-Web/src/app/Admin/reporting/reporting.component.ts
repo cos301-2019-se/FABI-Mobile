@@ -1,3 +1,18 @@
+/**
+ * File Name: reporting.component.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Admin\reporting\reporting.component.ts
+ * Project Name: fabi-web
+ * Created Date: Wednesday, July 17rd 2019
+ * Author: Team Nova - novacapstone@gmail.com
+ * -----
+ * Last Modified: Thursday, July 18th 2019
+ * Modified By: Team Nova
+ * -----
+ * Copyright (c) 2019 University of Pretoria
+ * 
+ * <<license>>
+ */
+
 import { Component, OnInit } from '@angular/core';
 
 import { NotificationLoggingService } from '../../services/notification-logging.service';
@@ -22,6 +37,9 @@ export class ReportingComponent implements OnInit {
   accessLogs: boolean = false;
   /** Indicates if there are logs of type ERRL - @type {boolean} */
   errorLogs: boolean = false;
+
+  /** Indicates if the error report has been generated - @type {boolean} */
+  errorReport: boolean = false;
 
   /** Array holding the user logs - @type {any} */
   userLogsArray: any[] = [];
@@ -93,7 +111,7 @@ export class ReportingComponent implements OnInit {
             tempArray.push('Removed user from system');
           }
           
-          tempArray.push(data[i].date);
+          tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
           tempArray.push(this.loadUserDetails(data[i].org2, data[i].details));
@@ -128,7 +146,7 @@ export class ReportingComponent implements OnInit {
             tempArray.push('Removed database');
           }
           
-          tempArray.push(new Date(data[i].date));
+          tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
           tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
@@ -153,7 +171,7 @@ export class ReportingComponent implements OnInit {
           var tempArray: any = [];
           
           tempArray.push(data[i].details);
-          tempArray.push(new Date(data[i].date));
+          tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
           tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
@@ -178,7 +196,7 @@ export class ReportingComponent implements OnInit {
           var tempArray: any = [];
           
           tempArray.push(data[i].statusCode);
-          tempArray.push(new Date(data[i].date));
+          tempArray.push(this.getDate(data[i].dateString));
           tempArray.push(data[i].details);
 
           //Fetch user information
@@ -208,6 +226,116 @@ export class ReportingComponent implements OnInit {
     if(this.errorLogsArray != null){
       this.errorLogs = true;
     }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  GENERATE_ERROR_REPORT
+  /**
+   *  This function will be used to generate the error report and display it on screen
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  generateErrorReport() {
+    this.errorReport = true;
+
+    //Loading the 'ERRL' logs
+    this.notificationLoggingService.getAllErrorLogs().subscribe((response: any) => {
+      if(response.success = true){
+        var data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          var tempArray: any = [];
+          
+          tempArray.push(data[i].statusCode);
+          tempArray.push(this.getDate(data[i].dateString));
+          tempArray.push(data[i].details);
+
+          //Fetch user information
+          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+
+          this.errorLogsArray.push(tempArray);
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET_DATE
+  /**
+   *  This function will put the string date provided into a more readable format for the notifications
+   * @param {string} date The date of the log
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getDate(date: string){
+    var tempDate = (date).split(' ');
+    var newDate = '';
+
+    newDate += tempDate[2];
+
+    if(tempDate[0] == 'Mon'){
+      newDate += ' Monday ';
+    }
+    else if(tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues'){
+      newDate += ' Tuesday ';
+    }
+    else if(tempDate[0] == 'Wed'){
+      newDate += ' Wednesday ';
+    }
+    else if(tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs'){
+      newDate += ' Thursday ';
+    }
+    else if(tempDate[0] == 'Fri'){
+      newDate += ' Friday ';
+    }
+    else if(tempDate[0] == 'Sat'){
+      newDate += ' Saturday ';
+    }
+    else if(tempDate[0] == 'Sun'){
+      newDate += ' Sunday ';
+    }
+
+    if(tempDate[1] == 'Jan'){
+      newDate += 'January';
+    }
+    else if(tempDate[1] == 'Feb'){
+      newDate += 'February';
+    }
+    else if(tempDate[1] == 'Mar'){
+      newDate += 'March';
+    }
+    else if(tempDate[1] == 'Apr'){
+      newDate += 'April';
+    }
+    else if(tempDate[1] == 'Jun'){
+      newDate += 'June';
+    }
+    else if(tempDate[1] == 'Jul'){
+      newDate += 'July';
+    }
+    else if(tempDate[1] == 'Aug'){
+      newDate += 'August';
+    }
+    else if(tempDate[1] == 'Sep' || tempDate[1] == 'Sept'){
+      newDate += 'September';
+    }
+    else if(tempDate[1] == 'Oct'){
+      newDate += 'October';
+    }
+    else if(tempDate[1] == 'Nov'){
+      newDate += 'November';
+    }
+    else if(tempDate[1] == 'Dec'){
+      newDate += 'December';
+    }
+
+    newDate += ' ' + tempDate[3];
+
+    return newDate;
   }
 
   ngOnInit() {
