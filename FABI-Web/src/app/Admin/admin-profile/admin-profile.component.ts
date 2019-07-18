@@ -64,6 +64,9 @@ export class AdminProfileComponent implements OnInit {
   /** The total number of Access Logs - @type {number} */           
   numberOfAccessLogs: number = 0;
 
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -426,6 +429,21 @@ export class AdminProfileComponent implements OnInit {
       }
     });
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof AdminProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
 
   ngOnInit() {
     this.loadAdminProfileDetails();
