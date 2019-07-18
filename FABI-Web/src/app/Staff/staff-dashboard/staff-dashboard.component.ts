@@ -30,9 +30,6 @@ export class StaffDashboardComponent implements OnInit {
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
-
   /** Object array for holding the administrators -  @type {Member[]} */
   admins: Member[] = [];   
 
