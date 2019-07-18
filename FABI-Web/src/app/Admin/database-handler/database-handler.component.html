@@ -1,74 +1,147 @@
-<div class="container">
+<!--Bootstrap Navbar-->
+<div class="container-fluid" id="nav-section">
+  <nav class="navbar navbar-expand-xl">
+    <a class="navbar-brand" href="#">Database Handler</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      <i class="fas fa-bars"></i>
+    </button>
 
-  <!--Nav Section-->
-  <div class="nav">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
 
-    <section class="top-nav">
-      <h1>Database Management</h1>
-      <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
-      <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>
-      <a id="organization_management" routerLink="/organization-handler"><i
-          class="fas fa-building"></i>Organizations</a>
-      <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i>Diagnostic
-        Clinic</a>
-      <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Databases</a>
-      <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
-      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
-    </section>
+        <li class="nav-item active">
+          <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
+        </li>
 
-    <section class="bottom-nav">
-      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
-    </section>
-    <a href="" id="menu"><i class="fas fa-bars"></i></a>
-  </div>
-
-  <!--Database Handler Content-->
-  <div class="content">
-    <!-- <div class="color-accent">
-      <h1>Database Management</h1>
-    </div> -->
-
-    <div class="database-management">
-      <!--Tab Menu-->
-      <mat-tab-group animationDuration="1000ms">
-
-        <!--Porting Tab Option-->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <i class="fas fa-database"></i>
-            Add Database
-          </ng-template>
-          <div class="tab-content" id="add_new_database_form" ng-app="portApp" ngController="previewCtrl">
-            <h2>Add Database via Porting</h2>
-            <br />
-            <label>Database name</label><input type='text' id='fileInput1' class="btn.btn-default" #pDBname >
-            <input type='file' (change)=submitCSV(input) id='fileInput' class="btn.btn-default" #input>
-            <br/>
-            <h2>Reverse Porting</h2>
-            <br />
-            <label>Database name</label><input type='text' id='fileInput2' class="btn.btn-default" #rpDBname >
-            <button type="button" (click)="getCSV()" > Download CSV file</button>
-
-            <table id="previewTable" >
-              <thead>
-                <tr>
-                  
-                </tr>
-              </thead>
-              <tbody>
-                
-              </tbody>
-            </table>
-          
-
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-tasks"></i>Handlers
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff Handler</a>
+            <a id="organization_management" routerLink="/organization-handler"><i
+                class="fas fa-building"></i>Organization
+              Handler</a>
+            <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i
+                class="fas fa-stethoscope"></i>Diagnostic
+              Clinic Handler</a>
+            <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Database
+              Handler</a>
           </div>
-          <p *ngIf="loading" style="color: black;">Porting File...</p>
-        </mat-tab>
+        </li>
 
-      </mat-tab-group>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="profile_menu_link" routerLink="/admin-profile"><i class="fas fa-user-circle"></i>Profile</a>
+            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        </li>
+
+        <li class="nav-item">
+          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!--SlideOut -->
+<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
+  <!--Tab-->
+  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
+    <div>
+      <p>Notifications</p>
     </div>
   </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Admin Notifications</h4>
+    </div>
+    <div class="modal-body" id="notifications-section">
 
+      <h2 *ngIf="!notifications">No notifications</h2>
+      <!--*********************************************************************
+              DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
+          *************************************************************************-->
+      <div *ngIf="allNotifications">
+        <div class="box" *ngFor="let log of allNotifications">
+          <div class="notification-heading">
+            <h2>Notification {{log.ID}}</h2>
+            <i class="fas fa-times"></i>
+          </div>
+
+          <div class="notification-content">
+            <p><b>Type:</b> {{log.Type}} notification</p>
+            <p><b>Action:</b> {{log.Action}}</p>
+            <p><b>Date:</b> {{log.Date}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer"> </div>
+  </div>
+</div>
+
+<!--Database Handler Content-->
+<div class="container-fluid">
+
+  <div class="database-management">
+    <!--Tab Menu-->
+    <mat-tab-group animationDuration="1000ms">
+
+      <!--Porting Tab Option-->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <i class="fas fa-database"></i>
+          Add Database
+        </ng-template>
+        <div class="tab-content" id="add_new_database_form" ng-app="portApp" ngController="previewCtrl">
+          <h2>Add Database via Porting</h2>
+          <br />
+          <label *ngIf="preview">Is this what the database should look like?</label>
+          <span><button *ngIf="preview" class="btn btn-default" (click)="submitDatabase()">Yes</button><button *ngIf="preview" class="btn btn-default" (click)="removePreview()">No</button></span>
+          
+          <label *ngIf="!preview" class="databaseName">Database name</label><input *ngIf="!preview" type='text' id='fileInput1' class="inputSpace" #pDBname >
+          <input *ngIf="!preview" type='file' (change)=submitCSV(input) id='fileInput' class="inputFile" #input>
+          <label *ngIf="!preview" for="fileInput" class="fileLabel">Choose a file</label>
+          <br/><br/><br/>
+          
+          <h2 *ngIf="!preview">Reverse Porting</h2>
+          <br *ngIf="!preview" />
+          <label *ngIf="!preview" class="databaseName">Database name</label><input *ngIf="!preview" type='text' id='fileInput2' class="inputSpace" #rpDBname >
+          <button *ngIf="!preview" type="button" (click)="getCSV()" class="fileLabel">Download CSV file</button>
+
+          <table *ngIf="preview" id="previewTable">
+            <thead>
+              <tr>
+                <th class="tableHeading" *ngFor="let header of headings; let i = index">{{header}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="tableRow" *ngFor="let row of columns; let i = index">
+                <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+              </tr>
+            </tbody>
+          </table>
+        
+        </div>
+        <p *ngIf="loading" style="color: black;">Porting File...</p>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
 </div>

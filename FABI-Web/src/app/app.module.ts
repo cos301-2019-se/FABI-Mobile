@@ -51,6 +51,11 @@ import { HomeComponent } from './home/home.component';
 import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
 import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
 import { UpdateComponent } from './update/update.component';
+import { NotificationDivComponent } from './Dynamic-Components/notification-div/notification-div.component';
+import { SampleDivComponent } from './Dynamic-Components/sample-div/sample-div.component';
+import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
+import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.component';
+import { ReportingComponent } from './Admin/reporting/reporting.component';
 
 @NgModule({
   declarations: [
@@ -81,12 +86,21 @@ import { UpdateComponent } from './update/update.component';
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
     ConfirmComponent,
-    UpdateComponent
+    UpdateComponent,
+    AdminDivComponent,
+    StaffDivComponent,
+    NotificationDivComponent,
+    SampleDivComponent,
+    AdminProfileComponent,
+    StaffProfileComponent,
+    ReportingComponent
   ],
   entryComponents: [
     ConfirmComponent,
     AdminDivComponent,
     StaffDivComponent,
+    NotificationDivComponent,
+    SampleDivComponent,
     ErrorComponent
   ],
   imports: [
