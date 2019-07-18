@@ -59,7 +59,7 @@ function getOrgDetails(req, res) {
             else
             {
                 //(3)
-                delete doc.data.admin;
+                //delete doc.data.admin.password;
 
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
