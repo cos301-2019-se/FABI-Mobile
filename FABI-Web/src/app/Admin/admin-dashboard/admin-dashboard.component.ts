@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Monday, July 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,8 +22,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
 
-import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 import { StaffDivComponent } from '../../Dynamic-Components/staff-div/staff-div.component';
 

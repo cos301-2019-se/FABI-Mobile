@@ -1,12 +1,12 @@
 // import { ClientFormData } from '../organization-api.service';
-import * as Interface from '../interfaces/interfaces';
+import * as Interface from '../_interfaces/interfaces';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HttpService } from '../services/http.service';
+import { HttpService } from '../_services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../errors/error-component/error.component';
+import { ErrorComponent } from '../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 
 @Component({
