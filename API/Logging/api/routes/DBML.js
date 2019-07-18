@@ -101,11 +101,14 @@ function addLog(req, res){
 		
 	}else if(req.body.Log.type == "DBML"){
 		
+		var datetime = new Date().toString();
+		
 		const logEntry = {
 			type: req.body.Log.type,
 			action: req.body.Log.action,
 			details: req.body.Log.details,
 			date: new Date().getTime().toString(),
+			dateString: datetime,
 			user: req.body.Log.user,
 			org1: req.body.Log.org1,
 			org2: req.body.Log.org2,
