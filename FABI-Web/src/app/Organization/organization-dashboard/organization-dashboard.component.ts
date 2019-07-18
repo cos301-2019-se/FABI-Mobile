@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Monday, July 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -19,8 +19,8 @@ import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { UserManagementAPIService, Member } from '../../services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
+import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 
 @Component({
   selector: 'app-organization-dashboard',
