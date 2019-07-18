@@ -13,6 +13,7 @@ import { OrganizationHandlerComponent } from './Admin/organization-handler/organ
 import { ClinicHandlerComponent } from './Admin/clinic-handler/clinic-handler.component';
 import { DatabaseHandlerComponent } from './Admin/database-handler/database-handler.component';
 import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
+import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'org-admin-dashboard', component: OrganizationDashboardComponent},
   {path: 'staff-dashboard', component: StaffDashboardComponent},
   {path: 'org-member-dashboard', component: MemberDashboardComponent},
-  {path: 'admin-profile', component: AdminProfileComponent}
+  {path: 'admin-profile', component: AdminProfileComponent},
+  {path: 'staff-profile', component: StaffProfileComponent}
 ];
 
 @NgModule({
