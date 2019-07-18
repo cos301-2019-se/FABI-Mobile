@@ -5,7 +5,7 @@
  * Created Date: Monday, July 15th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 17th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,7 +15,7 @@
 
 
 export enum Role {
-    SuperUser = 'superUser',
+    SuperUser = 'SuperUser',
     ClinicAdmin = 'ClinicAdmin',
     Staff = 'Staff',
     Organisation = 'Organization',
