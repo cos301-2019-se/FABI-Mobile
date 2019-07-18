@@ -14,17 +14,60 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+//Include Material Components
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-organization-view-samples',
   templateUrl: './organization-view-samples.component.html',
-  styleUrls: ['./organization-view-samples.component.scss']
+  styleUrls: ['./organization-view-samples.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
+
+
 export class OrganizationViewSamplesComponent implements OnInit {
 
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove' ,'Action'];
+  dataSource = new MatTableDataSource([]);
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of OrganizationViewSamplesComponent.
+   * 
+   * @memberof OrganizationViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor() { }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof OrganizationViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT()  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
   ngOnInit() {
   }
 
