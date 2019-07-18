@@ -41,6 +41,29 @@
             <i class="fas fa-chart-pie"></i>
             Reporting
           </ng-template>
+
+          <button class=".btn.btn-default" (click)="generateErrorReport()">Generate Error Report</button>
+
+          <div id="errorReport" *ngIf='errorReport'>
+            <h2>Error Report</h2>
+            <table *ngIf="errorLogs" id="previewTableErrorLogs">
+              <thead>
+                <tr>
+                    <th>Error status code</th>
+                    <th>Date</th>
+                    <th>Details of error</th>
+                    <th>User performing action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="tableRow" *ngFor="let row of errorLogsArray; let i = index">
+                  <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                </tr>
+              </tbody>
+            </table>
+            <br/><br/>
+            <!-- <button>Download Report</button> -->
+          </div>
         </mat-tab>
 
         <!--Logs Tab Option-->
