@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 17th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -89,7 +89,7 @@ export class AdminDashboardComponent implements OnInit {
   /** The total number of FABI samples - @type {number} */           
   numberOfSamples: number;
   /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = false;                       
+  notifications: boolean = true;                       
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -403,7 +403,7 @@ export class AdminDashboardComponent implements OnInit {
           userNotificationDivRef.instance.Action = user1 + ' details where updated by ' + user2;
         }
   
-        userNotificationDivRef.instance.Date = this.userNotifications[i].Date;
+        userNotificationDivRef.instance.Date = new Date(this.userNotifications[i].Date);
       }
 
       //Database management notifications
@@ -424,7 +424,7 @@ export class AdminDashboardComponent implements OnInit {
           databaseNotificationDivRef.instance.Action = this.databaseNotifications[i].Details + ' details where updated by ' + user1;
         }
 
-        databaseNotificationDivRef.instance.Date = this.userNotifications[i].Date;
+        databaseNotificationDivRef.instance.Date = new Date(this.userNotifications[i].Date);
       }
 
       //Access notifications
@@ -433,7 +433,7 @@ export class AdminDashboardComponent implements OnInit {
         accessNotificationDivRef.instance.Number = i + 1;
         accessNotificationDivRef.instance.Type = 'ACCESS';
         accessNotificationDivRef.instance.Details = this.accessNotifications[i].Details;
-        accessNotificationDivRef.instance.Date = this.accessNotifications[i].Date;
+        accessNotificationDivRef.instance.Date = new Date(this.accessNotifications[i].Date);
       }
     }
     else{
@@ -505,7 +505,21 @@ export class AdminDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
+  //                                                      DELAY  
+  /**
+   * This function is called so that the loadDynamicNotifications function can be delayed
+   * 
+   * @param {number} ms The seconds that the function must be displayed by
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT  
   /**
    * This function is called when the page loads
    * 
@@ -517,6 +531,8 @@ export class AdminDashboardComponent implements OnInit {
     this.getNumberOfFABIMembers();
     this.getNumberOfFABISamples();
     this.loadNotifications();
-    this.loadDynamicNotifications();
+    this.delay(2000).then(any => {
+      this.loadDynamicNotifications()
+    });
   }
 }
