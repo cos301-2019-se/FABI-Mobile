@@ -38,7 +38,7 @@ function getMember(req, res) {
             message: "User id expected"
         });
     }
-    if (req.body.orgName == undefined || req.body.orgName == '') {
+    else if (req.body.orgName == undefined || req.body.orgName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -51,26 +51,26 @@ function getMember(req, res) {
     }
 
     //(2)
-
+    else{
     if(req.body.orgName == 'FABI')  {
         var memRef = db.collection('Organizations').doc(req.body.orgName).collection('Staff').doc(req.body.id);
         memRef.get().then(doc => {
-            console.log(doc);
-            console.log(doc.data());
-            if(typeof(doc.data()) === undefined)
+
+            if(doc.data() === undefined)
             {
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
                 res.setHeader("Access-Control-Allow-Origin", "*");
-                res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+                res.status(404).json({                                  // ******* RESPONSE STATUS? ************
                     success: false,
-                    code: 400,
+                    code: 404,
                     title: "NOT FOUND",
                     message: "User does not exist"
                 });
             }
+            else{
                 //(3)
-                member = doc.data();
+                var member = doc.data();
                 delete member.password;
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
@@ -82,27 +82,41 @@ function getMember(req, res) {
                     message: "Organization Member Found",
                     data: 
                         member   
-                    
+                 
                 });
-        });
+            }
+        }).catch((err) =>
+        {
+            console.log("Database connection error: " + err);
+            res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(500).json({                                  // ******* RESPONSE STATUS? ************
+                success: false,
+                code: 500,
+                title: "INTERNAL SERVERE ERROR",
+                message: "Error Connecting to User Database"
+            });
+        });;
     }
     else {
         var memRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.id);
         memRef.get().then(doc => {
-            if(typeof(doc.data()) === undefined)
+            if(doc.data() === undefined)
             {
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
                 res.setHeader("Access-Control-Allow-Origin", "*");
-                res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+                res.status(404).json({                                  // ******* RESPONSE STATUS? ************
                     success: false,
-                    code: 400,
+                    code: 404,
                     title: "NOT FOUND",
                     message: "User does not exist"
                 });
             }
                 //(3)
-                member = doc.data();
+            else{
+                var member = doc.data();
                 delete member.password;
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
@@ -115,8 +129,21 @@ function getMember(req, res) {
                     data: 
                         member       
                     
-                });
+            })}
+        }).catch((err) =>
+        {
+            console.log("Database connection error: " + err);
+            res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(500).json({                                  // ******* RESPONSE STATUS? ************
+                success: false,
+                code: 500,
+                title: "INTERNAL SERVERE ERROR",
+                message: "Error Connecting to User Database"
+            });
         });
     }
+}
 }
 module.exports = router;

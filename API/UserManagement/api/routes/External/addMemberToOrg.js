@@ -4,6 +4,7 @@ const request = require("request");
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
 const mail = require('../sendEmail');
+const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -93,32 +94,57 @@ function addMember(req, res)
         password: bcrypt.hashSync(pass, salt),
         id : new Date().getTime().toString()
     }
-    
-    // (3)
-    var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.id);
-    
-    
+    var checkRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').where('email', '==', qs.email);
+
+    checkRef.get().then(doc => {
+        if(!doc.empty)
+        {
+            res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+                    success: false,
+                    code: 400,
+                    title: "BAD_REQUEST",
+                    message: "User email already exists"
+                });
+        }
+        else{
+            var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.id);
     
     //(4)
-    docRef.set(qs).then(() => {
+            docRef.set(qs).then(() => {
 
-    //(5)
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-        success: true,
-        code: 200,
-            title: "SUCCESS",
-            message: "Added Member",
-            data: {
-                message : "Member Added to Organization",
-                orgName : req.body.orgName,
-                tempPassword : pass}
-        
+            //(5)
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                success: true,
+                code: 200,
+                    title: "SUCCESS",
+                    message: "Added Member",
+                    data: {
+                        message : "Member Added to Organization",
+                        orgName : req.body.orgName,
+                        tempPassword : pass}
+                    
+                });
+                mail(req.body.orgName + ' Member', pass);
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: qs.id,
+                    org1: 'FABI',
+                    org2: req.body.orgName,
+                    action: '/addmemberToOrg'
+                });
+            });
+        }
     });
-    mail(req.body.orgName + ' Member', pass);
-});
+    // (3)
+    
 
 }
 

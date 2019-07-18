@@ -1,3 +1,5 @@
+const request = require('request');
+
 module.exports = function(log){
 	
 	if(log.type == "ACCL"){
@@ -6,9 +8,9 @@ module.exports = function(log){
 			Log: {
 				type: log.type,
 				statusCode: log.statusCode,
-				details: Log.details,
-				user: Log.user,
-				moreInfo: Log.moreInfo
+				details: log.details,
+				user: log.user,
+				moreInfo : ''
 			}
 		};
 		
@@ -26,18 +28,13 @@ module.exports = function(log){
 			options.path = '/ACCL';
             request.post('***REMOVED***/ACCL', options, (error, response, body) => {
                 if(error){
-                    console.log(error)
-                }else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(response.statusCode).json(body);
+					console.log(error)
                 }
             })
 			
 		}catch(err){
 			console.log(err);
-			res.end();
+			
 		}	
 		
 	}else if(log.type == "ERRL" ){
@@ -46,9 +43,10 @@ module.exports = function(log){
 			Log: {
 				type: log.type,
 				statusCode: log.statusCode,
-				details: Log.details,
-				user: Log.user,
-				moreInfo: Log.moreInfo
+				details: log.details,
+				user: log.user,
+				moreInfo: log.moreInfo,
+				moreInfo : ''
 			}
 		};
 		
@@ -67,30 +65,26 @@ module.exports = function(log){
             request.post('***REMOVED***/ERRL', options, (error, response, body) => {
                 if(error){
                     console.log(error)
-                }else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(response.statusCode).json(body);
                 }
             })
 			
 		}catch(err){
 			console.log(err);
-			res.end();
+			
 		}
 		
 	}else if(log.type == "USER" ){
 		
+		console.log('sending logs');
 		var qs = {
 			Log: {
 				type: log.type,
 				action: log.action,
-				details: Log.details,
-				user: Log.user,
-				org1: Log.org1,
-				org2: Log.org2,
-				moreInfo: Log.moreInfo
+				details: log.details,
+				user: log.user,
+				org1: log.org1,
+				org2: log.org2,
+				moreInfo : ''
 			}
 		};
 		
@@ -109,17 +103,12 @@ module.exports = function(log){
             request.post('***REMOVED***/USER', options, (error, response, body) => {
                 if(error){
                     console.log(error)
-                }else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(response.statusCode).json(body);
-                }
+				}
             })
 			
 		}catch(err){
 			console.log(err);
-			res.end();
+			
 		}
 		
 		
@@ -129,11 +118,10 @@ module.exports = function(log){
 			Log: {
 				type: log.type,
 				action: log.action,
-				details: Log.details,
-				user: Log.user,
-				org1: Log.org1,
-				org2: Log.org2,
-				moreInfo: Log.moreInfo
+				details: log.details,
+				user: log.user,
+				moreInfo : '',
+				org1: 'FABI'
 			}
 		};
 		
@@ -152,17 +140,11 @@ module.exports = function(log){
             request.post('***REMOVED***/DBML', options, (error, response, body) => {
                 if(error){
                     console.log(error)
-                }else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(response.statusCode).json(body);
-                }
+				}
             })
 			
 		}catch(err){
 			console.log(err);
-			res.end();
 		}
 		
 	}else if(log.type == "DGCL" ){
