@@ -27,12 +27,14 @@ export class NotificationService {
 
   showToastNotification(message: string) {
     console.log("------------------- NOTIFICATION ------------------");
+    console.log("------------------- " + message + " ------------------");
+
     
       // return this.toastr.success(message, 'Oops');
 
-      this.snackBar.open(message, "Dismiss", {
-        duration: 1000
-      });
+      // this.snackBar.open(message, "Dismiss", {
+      //   duration: 1000
+      // });
   }
 
   showDialogNotification(message) {
