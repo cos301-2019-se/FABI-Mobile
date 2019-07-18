@@ -14,7 +14,10 @@ router.post('/', getAllOrgMembers);
 /**
  * @summary Get all members associated with an organization
  * @description  REQUEST DATA REQUIRED: Org Name
- *  
+ *  1. check that an org name has been provided
+ *  2. retrieve all the org members from the database
+ *  3. push the details of all the members to a JSON object
+ *  4. remove the password details from the data to be sent
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
@@ -25,7 +28,7 @@ router.post('/', getAllOrgMembers);
 const db = admin.firestore();
 
 function getAllOrgMembers(req, res) {
-    
+    //(1)
     if (req.body.orgName == undefined || req.body.orgName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
@@ -40,47 +43,65 @@ function getAllOrgMembers(req, res) {
         });
     }
     
-    var staffRef = db.collection('Organizations').doc(req.body.orgName).collection('Members');
-    staffRef.get().then(snapshot => {
-        if(snapshot.empty)
+    //(2)
+    var orgRef = db.collection('Organizations').doc(req.body.orgName);
+    orgRef.get().then(doc => {
+        if(typeof(doc.data()) === 'undefined')
         {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************                    success: false,
-                error: {
-                    code: 400,
-                    title: "NOT FOUND",
-                    message: "No organization with given name found"
-                }
+            res.status(404).json({                                  // ******* RESPONSE STATUS? ************                    
+                success: false,
+                code: 404,
+                title: "NOT FOUND",
+                message: "No organization with given name found"
             });
         }
-        else{
-            var qs = {members : []}
-                
-            snapshot.forEach(doc => {
-                qs.members.push(doc.data());
-            })
-            
-            qs.members.forEach(doc=>
-            {
-                delete doc.password;
-            })
+        else
+        {
 
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                success: true,
-                data: {
+        var staffRef = db.collection('Organizations').doc(req.body.orgName).collection('Members');
+        staffRef.get().then(snapshot => {
+            
+            if(snapshot.empty)
+            {
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(200).json({                                  // ******* RESPONSE STATUS? ************                    
+                    success: false,
+                    code: 200,
+                    title: "SUCCESS",
+                    message: "No Data for organization found",
+                    data : {}
+                });
+            }
+            else{
+                var data = {members : []}
+                
+                //(3)
+                snapshot.forEach(doc => {
+                    data.members.push(doc.data());
+                })
+                
+                //(4)
+                data.members.forEach(doc=>
+                {
+                    delete doc.password;
+                })
+
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                    success: true,
                     code: 200,
                     title: "SUCCESS",
                     message: "List of " + req.body.orgName + " members",
-                    content: {
-                        qs
-                    }
-                }
-            });
+                    data
+                    
+                });
         }
     }).catch((err) =>
     {
@@ -90,13 +111,13 @@ function getAllOrgMembers(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(500).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 500,
-                title: "FAILURE",
-                message: "Error Connecting to User Database"
-            }
+            code: 500,
+            title: "INTERNAL SERVERE ERROR",
+            message: "Error Connecting to User Database"
+            
         });
     });
+}});
 }
 
 
