@@ -5,7 +5,7 @@
  * Created Date: Wednesday, June 26th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, June 26th 2019
+ * Last Modified: Wednesday, July 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,15 +15,15 @@
 
 
 import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
-import * as Interface from "../interfaces/interfaces";
+import * as Interface from "../_interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../errors/error-component/error.component';
+import { ErrorComponent } from '../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { HttpService } from '../services/http.service';
+import { HttpService } from '../_services/http.service';
 import { ConfirmComponent } from "../confirm/confirm.component";
 
 @Component({
