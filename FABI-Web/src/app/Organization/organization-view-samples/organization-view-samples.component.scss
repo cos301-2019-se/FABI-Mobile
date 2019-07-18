@@ -1,7 +1,6 @@
-/*-------------
-    General
--------------*/
-
+/* ================================================ */
+/* General Setup                                    */
+/* ================================================ */
 * {
     margin: 0;
     padding: 0;
@@ -11,246 +10,331 @@
 html {
     font-family: 'Open Sans', sans-serif;
     color: #555;
-    background-color: #E0E0E0;
 }
 
-.container {
+.container-fluid {
+    padding: 0;
+}
 
+/* ================================================ */
+/* Navbar Setup and Styling                         */
+/* ================================================ */
+#nav-section {
+    padding: 0;
+}
+
+.navbar {
+    min-height: 100px !important;
+
+    padding: 25px;
+
+    background-color: #6B8E4E;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.30), 0 1px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 2px;
+}
+
+.navbar-brand {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 28px;
+    color: #ffffff;
+}
+
+.nav-item a,
+i {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.navbar-nav>a {
+    color: #ffffff !important;
+}
+
+.navbar-nav a:hover {
+    text-decoration: none;
+}
+
+.dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+.dropdown-menu a {
+    color: #6B8E4E !important;
+}
+
+.dropdown-menu a:hover {
+    text-decoration: none;
+}
+
+.dropdown-menu i {
+    font-size: 18px;
+    color: #6B8E4E;
+}
+
+.navbar .navbar-toggle .navbar-toggler-icon {
+    color: #ffffff;
+}
+
+@media(max-width:375px) {
+    .navbar {
+        min-height: 50px !important;
+
+        padding: 15px;
+    }
+
+    .navbar-brand {
+        font-size: 18px;
+    }
+}
+
+@media (min-width:1200px) {
+    .nav-item i {
+        margin-left: 35px;
+    }
+}
+
+
+/* ================================================ */
+/* Slide Out Notifications Tab	                    */
+/* ================================================ */
+#slideOut {
+    position: fixed;
+    width: 300px;
+    height: 800px;
+    top: 30px;
+    right: -300px;
+    /* Animation  */
+    transition-property: all;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+/* Display slideOut */
+.showSlideOut {
+    right: 0px !important;
+}
+
+/* Tab */
+.slideOutTab {
+    margin-top: 35vh;
+    position: absolute;
+    left: -40px;
+    height: 200px;
+    width: 40px;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    background: #8EBB67;
+    color: white;
+    border-radius: 15px 0px 0px 15px;
+
+    z-index: 3;
+}
+
+.slideOutTab div {
+    text-align: center;
+    position: relative;
+    right: 70px;
+    top: 90px;
+    background: #8EBB67;
+    width: 180px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    writing-mode: lr-tb;
+}
+
+div#slideOut.showSlideOut {
+    width: 30%;
+}
+
+.modal-body {
     height: 100vh;
 
+    background-color: #F7F9F9;
 
-    display: flex;
-
-    z-index: 0;
-
-    //position: relative;
-
+    overflow: auto;
 }
 
-/*-------------
-    Sidenav
--------------*/
-
-.nav {
-    width: 25%;
-
+.modal-header {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
 
-    background-color: #6B8E4E;
+    background-color: #8EBB67;
+}
 
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
-
-    z-index: 2;
-
+.modal-title {
     font-family: 'Roboto', sans-serif;
-
-}
-
-.top-nav {
-    background-color: #6B8E4E;
-
-    display: flex;
-    flex-direction: column;
-}
-
-.top-nav h1 {
-    font-size: 28px;
-    margin: 40px 20px 20px 10%;
-    text-decoration: none;
     color: #ffffff;
+    font-size: 20px;
+
+    padding: 15px;
 }
 
-.bottom-nav {
-    background-color: #6B8E4E;
 
-    height: 100%;
+@media (max-width:375px) {
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.nav #menu i {
-    font-size: 24px;
-    margin: 20px 20px 20px 20%;
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.top-nav a {
-    font-size: 24px;
-    margin: 20px 20px 20px 20%;
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.bottom-nav a {
-    font-size: 24px;
-    margin: 20px 20px 20px 10%;
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.nav a:hover {
-    font-size: 26px;
-}
-
-a i {
-    padding-right: 15px;
-}
-
-.nav #menu,
-.nav #notification-bell {
-    display: none;
-}
-
-@media (max-width: 1250px) {
-    .nav {
-        width: 40%;
-    }
-
-    .nav #notification-bell {
-        display: block;
+    div#slideOut.showSlideOut {
+        width: 80%;
     }
 }
 
-@media (max-width: 1100px) {
-    .container {
-        flex-direction: column;
-    }
-
-    .nav {
-        height: 10%;
-        width: 100%;
-
-
-        flex-direction: row;
-        justify-content: flex-end;
-        order: 0;
-
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
-    }
-
-    .nav>* {
+@media (max-width:575px){
+    .slideOutTab{
         display: none;
     }
-
-    .nav #menu {
-        display: block;
-    }
-
 }
 
-/*-------------
-    Content
--------------*/
+@media (max-width:768px) {
 
-.content {
-    width: 100%;
+    div#slideOut.showSlideOut {
+        width: 80%;
+    }
+}
 
-    background-color: #E0E0E0;
+/* ================================================ */
+/* Notifications Section Setup and Styling          */
+/* ================================================ */
+#notifications-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
+    padding: 15px;
+}
+
+#notifications-section .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    height: auto;
+    width: 95%;
+
+    background-color: #ffffff;
+
+    margin: 10px;
+
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.20), 2px 2px 10px rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+}
+
+.notification-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.notification-content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 
-    z-index: 1;
-}
+    width: 100%;
 
-
-@media (max-width: 1250px) {
-    .content {
-        width: 100%;
-    }
-}
-
-@media (max-width: 1100px) {
-
-    .content {
-        height: 100%;
-        width: 100%;
-    }
+    padding-left: 15px;
+    padding-bottom: 15px;
 
 }
 
-@media (max-width: 400px) {
-    .content {
-        height: 70%;
-    }
+#notifications-section .box h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #6B8E4E;
+    font-size: 24px;
+    margin-top: 0;
+    padding: 15px;
 }
 
-/*------------------
-    Accent Banner
--------------------*/
-.color-accent {
-    background-color: #3C5148;
-    width: 80%;
-    height: 10%;
+#notifications-section .box>i {
+    float: left;
+    color: #ffffff;
+    background-color: #6B8E4E;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 22px;
+}
+
+#notifications-section .box:hover {
+    transform: scale(1.0125);
+    transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+/* ================================================ */
+/* Organization Profile Setup and Styling        */
+/* ================================================ */
+.organization-samples {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #eceaea;
+
+    width: 100% !important;
+    min-height:100vh !important;
+    height: 100% !important;
 
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
     border-radius: 5px;
 
-    z-index: 2;
+    z-index: 0;
 }
 
-.color-accent h1 {
+.organization-samples h2 {
     font-family: 'Roboto', sans-serif;
-    color: #ffffff;
-    font-size: 30px;
+    color: #6B8E4E;
+    font-size: 28px;
+
     text-transform: uppercase;
 
-    margin: 40px 20px 20px 10%;
+    margin-top: 50px;
 }
 
-/*-------------------------
-    Organization Samples
---------------------------*/
-.organization-samples{
-    background-color: #eceaea;
-    width: 90%;
-    height: 80%;
-
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
-    border-radius: 5px;
-
-    z-index: 1;
-
-    display:flex;
-    justify-content: center;
-    align-items: center;
+.organization-samples hr {
+    width: 250px;
+    height: 2px;
+    background-color: #6B8E4E;
+    border: 0;
+    margin-bottom: 25px;
 }
 
-/*----------------------------------
-        Form and Input Styling
------------------------------------*/
-.mat-form-field.mat-focused {
-    .mat-form-field-label {
-        color: #3C5148;
-    }
-
-    .mat-form-field-ripple {
-        background-color: #3C5148;
-    }
-
-    .mat-form-field-required-marker {
-        color: #3C5148;
-    }
-
-    .mat-input-element {
-        color: #3C5148;
+@media (max-width:425px){
+    .organization-samples hr {
+        width: 150px;
     }
 }
 
-.btn.btn-default {
-    background: #6B8E4E;
-    border: 3px solid #6B8E4E;
-    color: #ffffff;
+/* ================================================ */
+/* View Staff Member Tab Setup and Styling          */
+/* ================================================ */
+.organization-sample-table {
+    width: 70%;
+    height: 100%;
+}
+
+@media (max-width:768px){
+    .organization-sample-table {
+        width: 80%;
+    }
+}
+
+.organization-sample-table table {
+    width: 100%;
+}
+
+.organization-sample-table table .btn.btn-default {
+    background: transparent;
+    border: 2px solid #6B8E4E;
+    color: #6B8E4E;
     font-size: 12px;
     letter-spacing: 2px;
-    padding: 13px 30px;
-    margin-top: 34px;
-    margin-bottom: 2rem;
+    padding: 7px 10px;
     text-transform: uppercase;
 
     border-radius: 50px;
@@ -263,10 +347,36 @@ a i {
 
 }
 
-.btn.btn-default:hover {
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+.organization-sample-table table .btn.btn-danger {
+    background: transparent;
+    border: 2px solid darkred;
+    color: darkred;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 7px 10px;
+    text-transform: uppercase;
+
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border: 1px solid darkred;
+
+    display: block;
+    margin: 0 auto;
+
 }
 
-.form_inputs {
-    width: 25%;
+.organization-sample-table table .btn:hover {
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
 }
+
+
+
+
+
+
+
+
+
+
+

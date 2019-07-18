@@ -55,8 +55,10 @@ export class AdminDashboardComponent implements OnInit {
 
   /** Object array for holding the administrators -  @type {Member[]} */
   admins: Member[] = []; 
+  exampleAdmins: Member[] = []; 
   /** Object array for holding the staff members -  @type {Member[]} */                        
   staff: Member[] = [];  
+  exampleStaff: Member[] = []; 
   /** Object array for holding the database administrators -  @type {Member[]} */                        
   databaseAdmins: Member[] = [];   
   /** Object array for holding the culture curators -  @type {Member[]} */              
@@ -89,7 +91,10 @@ export class AdminDashboardComponent implements OnInit {
   /** The total number of FABI samples - @type {number} */           
   numberOfSamples: number;
   /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = true;                       
+  notifications: boolean = true;     
+  
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -126,88 +131,98 @@ export class AdminDashboardComponent implements OnInit {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
       if(response.success == true){
-        //Populating the arrays with the returned data
-        var tempAdmins = response.data.qs.admins;
-        for(var i = 0; i < tempAdmins.length; i++){
-          var tempMember: Member = {Name: tempAdmins[i].fname, Surname: tempAdmins[i].surname, Email: tempAdmins[i].email};
-          this.admins.push(tempMember);
-        }
 
-        var tempStaff = response.data.qs.staff;
-        for(var i = 0; i < tempStaff.length; i++){
-          var tempMember: Member = {Name: tempStaff[i].fname, Surname: tempStaff[i].surname, Email: tempStaff[i].email};
-          this.staff.push(tempMember);
-        }
+        this.exampleAdmins = response.data.qs.admins;
+        this.exampleStaff = response.data.qs.staff;
 
-        var tempDatabaseAdmins = response.data.qs.databaseAdmins;
-        for(var i = 0; i < tempDatabaseAdmins.length; i++){
-          if(!tempDatabaseAdmins[i].fname){
-            var tempMember: Member = {Name: '', Surname: '', Email: tempDatabaseAdmins[i].email};
-          }
-          else{
-            var tempMember: Member = {Name: tempDatabaseAdmins[i].fname, Surname: tempDatabaseAdmins[i].surname, Email: tempDatabaseAdmins[i].email};
-          }
-          this.databaseAdmins.push(tempMember);
-        }
+        /****************************************************************************************************************
+                        UNNECESSARY
+        *****************************************************************************************************************/
+        // //Populating the arrays with the returned data
+        // var tempAdmins = response.data.qs.admins;
+        // for(var i = 0; i < tempAdmins.length; i++){
+        //   var tempMember: Member = {Name: tempAdmins[i].fname, Surname: tempAdmins[i].surname, Email: tempAdmins[i].email};
+        //   this.admins.push(tempMember);
+        // }
+
+        // var tempStaff = response.data.qs.staff;
+        // for(var i = 0; i < tempStaff.length; i++){
+        //   var tempMember: Member = {Name: tempStaff[i].fname, Surname: tempStaff[i].surname, Email: tempStaff[i].email};
+        //   this.staff.push(tempMember);
+        // }
+
+        // var tempDatabaseAdmins = response.data.qs.databaseAdmins;
+        // for(var i = 0; i < tempDatabaseAdmins.length; i++){
+        //   if(!tempDatabaseAdmins[i].fname){
+        //     var tempMember: Member = {Name: '', Surname: '', Email: tempDatabaseAdmins[i].email};
+        //   }
+        //   else{
+        //     var tempMember: Member = {Name: tempDatabaseAdmins[i].fname, Surname: tempDatabaseAdmins[i].surname, Email: tempDatabaseAdmins[i].email};
+        //   }
+        //   this.databaseAdmins.push(tempMember);
+        // }
         
-        var tempCultureCurators = response.data.qs.cultureCurators;
-        for(var i = 0; i < tempCultureCurators.length; i++){
-          if(!tempCultureCurators[i].fname){
-            var tempMember: Member = {Name: '', Surname: '', Email: tempCultureCurators[i].email};
-          }
-          else{
-            var tempMember: Member = {Name: tempCultureCurators[i].fname, Surname: tempCultureCurators[i].surname, Email: tempCultureCurators[i].email};
-          }
-          this.databaseAdmins.push(tempMember);
-        }
+        // var tempCultureCurators = response.data.qs.cultureCurators;
+        // for(var i = 0; i < tempCultureCurators.length; i++){
+        //   if(!tempCultureCurators[i].fname){
+        //     var tempMember: Member = {Name: '', Surname: '', Email: tempCultureCurators[i].email};
+        //   }
+        //   else{
+        //     var tempMember: Member = {Name: tempCultureCurators[i].fname, Surname: tempCultureCurators[i].surname, Email: tempCultureCurators[i].email};
+        //   }
+        //   this.databaseAdmins.push(tempMember);
+        // }
 
-        var tempDiagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
-        for(var i = 0; i < tempDiagnosticClinicAdmins.length; i++){
-          if(!tempDiagnosticClinicAdmins[i].fname){
-            var tempMember: Member = {Name: '', Surname: '', Email: tempDiagnosticClinicAdmins[i].email};
-          }
-          else{
-            var tempMember: Member = {Name: tempDiagnosticClinicAdmins[i].fname, Surname: tempDiagnosticClinicAdmins[i].surname, Email: tempDiagnosticClinicAdmins[i].email};
-          }
-          this.databaseAdmins.push(tempMember);
-        }
+        // var tempDiagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
+        // for(var i = 0; i < tempDiagnosticClinicAdmins.length; i++){
+        //   if(!tempDiagnosticClinicAdmins[i].fname){
+        //     var tempMember: Member = {Name: '', Surname: '', Email: tempDiagnosticClinicAdmins[i].email};
+        //   }
+        //   else{
+        //     var tempMember: Member = {Name: tempDiagnosticClinicAdmins[i].fname, Surname: tempDiagnosticClinicAdmins[i].surname, Email: tempDiagnosticClinicAdmins[i].email};
+        //   }
+        //   this.databaseAdmins.push(tempMember);
+        // }
 
-        this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
-        this.userStats = this.numberOfFABIMembers.toString();
+        // this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
+        // this.userStats = this.numberOfFABIMembers.toString();
 
-        if(this.admins.length == 0){
-          //Dynamically loads a message indicating that there are no adminsitrators
-          const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-          adminDivRef.instance.Name = 'There are no administrators to load.';
-          adminDivRef.instance.Surname = '';
-          adminDivRef.instance.Email = '';
-        }
-        else{
-          //Dynamically loads all of the admins into the HTML page
-          for(var i = 0; i < this.admins.length; i++){
-            const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-            adminDivRef.instance.Name = this.admins[i].Name;
-            adminDivRef.instance.Surname = this.admins[i].Surname;
-            adminDivRef.instance.Email = 'Email: ' + this.admins[i].Email;
-          }
-        }
+        // if(this.admins.length == 0){
 
-        if(this.staff.length == 0){
-          //Dynamically loads a message indicating that there are no staff members
-          const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
-          staffDivRef.instance.Name = 'There are no staff members to load.';
-          staffDivRef.instance.Surname = '';
-          staffDivRef.instance.Email = '';
-        }
-        else{
-          //Dynamically loads all the staff into the HTML page
-          for(var i = 0; i < this.staff.length; i++){
-            const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
-            staffDivRef.instance.Name = this.staff[i].Name;
-            staffDivRef.instance.Surname = this.staff[i].Surname;
-            staffDivRef.instance.Email = 'Email: ' + this.staff[i].Email;
-          }
-        }
+          
+        //   //Dynamically loads a message indicating that there are no adminsitrators
+        //   const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+        //   adminDivRef.instance.Name = 'There are no administrators to load.';
+        //   adminDivRef.instance.Surname = '';
+        //   adminDivRef.instance.Email = '';
+        // }
+        // else{
+        //   //Dynamically loads all of the admins into the HTML page
+        //   for(var i = 0; i < this.admins.length; i++){
+        //     const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
+        //     adminDivRef.instance.Name = this.admins[i].Name;
+        //     adminDivRef.instance.Surname = this.admins[i].Surname;
+        //     adminDivRef.instance.Email = 'Email: ' + this.admins[i].Email;
+        //   }
+        // }
+
+        // if(this.staff.length == 0){
+        //   //Dynamically loads a message indicating that there are no staff members
+        //   const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
+        //   staffDivRef.instance.Name = 'There are no staff members to load.';
+        //   staffDivRef.instance.Surname = '';
+        //   staffDivRef.instance.Email = '';
+        // }
+        // else{
+        //   //Dynamically loads all the staff into the HTML page
+        //   for(var i = 0; i < this.staff.length; i++){
+        //     const staffDivRef = this.staffContainer.createComponent(this.resolver.resolveComponentFactory(StaffDivComponent));
+        //     staffDivRef.instance.Name = this.staff[i].Name;
+        //     staffDivRef.instance.Surname = this.staff[i].Surname;
+        //     staffDivRef.instance.Email = 'Email: ' + this.staff[i].Email;
+        //   }
+        // }
+        /****************************************************************************************************************/
       }
       else{
         //The FABI members could not be retrieved
@@ -503,6 +518,20 @@ export class AdminDashboardComponent implements OnInit {
     localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
   } 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                      DELAY  
