@@ -1,6 +1,6 @@
-/*-------------
-    General
--------------*/
+/* ================================================ */
+/* General Setup                                    */
+/* ================================================ */
 * {
     margin: 0;
     padding: 0;
@@ -96,10 +96,9 @@ ul.grid {
 }
 
 
-/*-------------
-    Header
--------------*/
-
+/* ================================================ */
+/* Nav Header Setup                                 */
+/* ================================================ */
 header {
     position: absolute;
     top: 0;
@@ -191,10 +190,9 @@ header h2 img#logo {
     }
 }
 
-/*----------------
-    Hero Section
-----------------*/
-
+/* ================================================ */
+/* Hero Styling                                     */
+/* ================================================ */
 .hero {
     position: relative;
     justify-content: center;
@@ -310,10 +308,9 @@ header h2 img#logo {
     }
 }
 
-/*----------------------
-    Services Section
-----------------------*/
-
+/* ================================================ */
+/* Services Setup                                   */
+/* ================================================ */
 .services {
     background-color: #E0E0E0;
 }
@@ -368,17 +365,15 @@ header h2 img#logo {
 
 }
 
-
-/*-------------------------
-    Organization Section
----------------------------*/
-
+/* ================================================ */
+/* Organization Request Form Setup                  */
+/* ================================================ */
 .organizations {
     background-color: #fff;
 }
 
 .organizations .organization_request_card {
-    width: 80%;
+    width: 95%;
 
     padding: 20px;
 
@@ -398,24 +393,24 @@ mat-card-header.mat-card-header {
     padding: 20px 40px;
 }
 
-/*----------------------------------
-        Form and Input Styling
------------------------------------*/
+/* ================================================ */
+/* Form and Input Styling                           */
+/* ================================================ */
 .mat-form-field.mat-focused {
     .mat-form-field-label {
-        color: #3C5148;
+        color: #6B8E4E;
     }
 
     .mat-form-field-ripple {
-        background-color: #3C5148;
+        background-color: #6B8E4E;
     }
 
     .mat-form-field-required-marker {
-        color: #3C5148;
+        color: #6B8E4E;
     }
 
     .mat-input-element {
-        color: #3C5148;
+        color: #6B8E4E;
     }
 }
 
@@ -445,13 +440,18 @@ mat-card-header.mat-card-header {
 }
 
 .form_inputs {
-    width: 25%;
+    width: 50%;
 }
 
-/*---------------------
-    Contact Section
----------------------*/
+@media (max-width: 425px) {
+    .form_inputs {
+        width: 75%;
+    }
+}
 
+/* ================================================ */
+/* Contact Setup                                    */
+/* ================================================ */
 .contact {
     background-color: #E0E0E0;
 }
@@ -519,13 +519,9 @@ mat-card-header.mat-card-header {
 
 }
 
-
-
-
-/*-------------
-    Footer
--------------*/
-
+/* ================================================ */
+/* Footer Setup                                     */
+/* ================================================ */
 footer {
     display: flex;
     flex-direction: column;
@@ -576,13 +572,4 @@ footer p a {
         padding: 80px 15px;
     }
 
-}
-
-
-/* -- Demo ads -- */
-
-@media (max-width: 1200px) {
-    #bsaHolder {
-        display: none;
-    }
 }
