@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 17th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit {
     this.service.login(details).subscribe((response: any) => {
 
       this.loading = false;
-      console.log("----- RESPONSE 2: " + response);
+      console.log("----- RESPONSE 2: " + JSON.stringify(response));
       // API Request successful
       if (response.success == true && response.code == 200) {
 
@@ -133,7 +133,7 @@ export class LoginComponent implements OnInit {
         });
 
         // Navigate to specific dashboard, based on user's type
-        if(response.userDetails.userType == 'superUser'|| response.userDetails.userType == 'clinicAdmin') {
+        if(response.userDetails.userType == 'SuperUser'|| response.userDetails.userType == 'clinicAdmin') {
           this.router.navigate(['/admin-dashboard']);
         } else if(response.userDetails.userType == 'organization') {
           this.router.navigate(['/organization-dashboard']);
