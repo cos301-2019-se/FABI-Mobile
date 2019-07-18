@@ -40,6 +40,7 @@
   - [Diagnostic Clinic API Documentation](***REMOVED***)
   - [Login API Documentation](***REMOVED***)
   - [User Management API Documentation](***REMOVED***)
+  - [Logging API Documentation](***REMOVED***)
   
  ## Project Management
  
