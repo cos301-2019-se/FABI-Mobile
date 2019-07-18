@@ -13,7 +13,6 @@
  * <<license>>
  */
 
-
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as Interface from "../../interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -61,7 +60,7 @@ export class OrganizationProfileComponent implements OnInit {
    *  If set to true, a class is added which ensures that the notifications tab is displayed. 
    *  If set to flase, a class is removed which hides the notifications tab.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof OrganizationProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
