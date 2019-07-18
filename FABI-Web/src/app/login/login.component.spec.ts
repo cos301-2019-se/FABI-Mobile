@@ -70,7 +70,7 @@ describe('LoginComponent', () => {
         component.loginForm.controls.userType.setValue("");
         expect(component.loginForm.valid).toBeFalsy();
         
-        expect(component.login()).toBeNull();
+        expect(component.login()).toBeUndefined();
   });
 
   it("Login with valid details should pass", () =>{
@@ -90,7 +90,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.userType.setValue("Admin");
     expect(component.loginForm.valid).toBeTruthy();
 
-    expect(component.login()).toBeNull();
+    expect(component.login()).toBeUndefined();
   });
 
   it("Login with invalid password should fail", () =>{
@@ -100,7 +100,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.userType.setValue("Admin");
     expect(component.loginForm.valid).toBeTruthy();
 
-    expect(component.login()).toBeNull();
+    expect(component.login()).toBeUndefined();
   });
 
 
@@ -111,7 +111,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.userType.setValue("Admin");
     expect(component.loginForm.valid).toBeTruthy();
 
-    expect(component.login()).toBeNull();
+    expect(component.login()).toBeUndefined();
   });
 
   it("Login with invalid user type should fail", () =>{
@@ -121,7 +121,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.userType.setValue("Hokage");
     expect(component.loginForm.valid).toBeTruthy();
 
-    expect(component.login()).toBeNull();
+    expect(component.login()).toBeUndefined();
   });
 
 });
