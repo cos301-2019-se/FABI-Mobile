@@ -13,14 +13,15 @@
  * <<license>>
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewContainerRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { UserManagementAPIService, Member } from '../../services/user-management-api.service';
+import { DiagnosticClinicAPIService, Sample, Species } from '../../services/diagnostic-clinic-api.service';
+import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -36,14 +37,31 @@ export class OrganizationDashboardComponent implements OnInit {
 
   /** Contains the member stats that will be dynamically loaded in the HTML page - @type {string} */
   memberStats: string;
+  /** Contains the sample stats for the organization that will be dynamically loaded in the HTML page - @type {string} */
+  sampleStats: string;
 
   /** Object array for holding the members of the organization -  @type {Member[]} */
-  organizationMembers: Member[] = [];                   
+  organizationMembers: Member[] = [];     
+  organizationMembersExample: Member[] = [];     
+  /** Object array for holding the samples of the organization -  @type {Sample[]} */
+  organizationSamples: Sample[] = [];            
 
   /** The total number of members in the organization - @type {number} */
-  numberOfOrganizationMembers: number;  
+  numberOfOrganizationMembers: number; 
+  /** The total number of samples belonging to the organization - @type {number} */
+  numberOfOrganizationSamples: number;  
   /** The name of the logged in organization - @type {string} */                 
-  organizationName: string = 'TestOrg4';            
+  organizationName: string = 'TestOrg4';
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean = false;
+  
+  /** Holds the div element (membersContainer) from the HTML page - @type {ElementRef} */
+  @ViewChild('membersContainer', {read: ViewContainerRef}) membersContainer;
+  /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
+  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,10 +70,12 @@ export class OrganizationDashboardComponent implements OnInit {
    * Creates an instance of OrganizationDashboardComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private userManagementService: UserManagementAPIService) { }
+  constructor(private userManagementService: UserManagementAPIService, private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,17 +93,17 @@ export class OrganizationDashboardComponent implements OnInit {
     this.userManagementService.getAllOrganizationMembers(this.organizationName).subscribe((response: any) => {
       if(response.success == true){
           //Populating the arrays with the returned data
-        var tempMembers = response.data.members;
-        for(var i = 0; i < tempMembers.length; i++){
-          var tempMember: Member = {Name: tempMembers[i].fname, Surname: tempMembers[i].surname, Email: tempMembers[i].email};
-          this.organizationMembers.push(tempMember);
-        }
+          this.organizationMembers = response.data.members;
 
-        this.numberOfOrganizationMembers = this.organizationMembers.length;
-        this.memberStats = this.numberOfOrganizationMembers.toString();
+          this.numberOfOrganizationMembers = this.organizationMembers.length;
+          this.memberStats = this.numberOfOrganizationMembers.toString();
       }
       else{
         //The organization's members could not be retrieved
+        this.numberOfOrganizationMembers = 0;
+        this.memberStats = this.numberOfOrganizationMembers.toString();
+
+        //TODO: handle error
       }
     });
   }
@@ -99,7 +119,20 @@ export class OrganizationDashboardComponent implements OnInit {
    * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfOrganizationSamples(){}
+  getNumberOfOrganizationSamples(){
+    //Subscribing to the DiagnosticClinicAPIService to get a list containing all the samples belonging to the organization
+    this.diagnosticClinicService.getAllOrganizationSamples(this.organizationName).subscribe((response: any) => {
+      if(response.success == true){
+        var tempSamples = response.data.samples;
+        this.numberOfOrganizationSamples = tempSamples.length;
+        this.sampleStats = this.numberOfOrganizationSamples.toString();
+      }
+      else{
+        this.numberOfOrganizationSamples = 0;
+        this.sampleStats = this.numberOfOrganizationSamples.toString();
+      }
+    });
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,6 +170,20 @@ export class OrganizationDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(){}
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    NG_ON_INIT()  

@@ -39,6 +39,7 @@ export class UpdateComponent implements OnInit {
 
   updateProfileForm: FormGroup;          // Form Group for updating a product
 
+  //constructor(@Inject(MAT_DIALOG_DATA) public data: any,  private formBuilder: FormBuilder, private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,  private formBuilder: FormBuilder, private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) 
   { 
     this.updateProfileForm = this.formBuilder.group({
