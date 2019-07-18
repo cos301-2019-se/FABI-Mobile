@@ -15,19 +15,19 @@
 
 
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../_services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { ErrorComponent } from '../../errors/error-component/error.component';
+import { ErrorComponent } from '../../_errors/error-component/error.component';
 import {MatTableModule} from '@angular/material/table';
 
-import { Porting } from '../../services/porting.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
-import { UserManagementAPIService } from '../../services/user-management-api.service';
+import { Porting } from '../../_services/porting.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
 @Component({
   selector: 'app-database-handler',
@@ -39,7 +39,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
   displayedColumns: string[];
   dataSource = new MatTableDataSource([]);
-  columns: any[] = [];
+  fields: any[] = [];
 
   databases: any[];
   databasePrivileges: any = {'create': false, 'retrieve': true, 'update': false, 'delete': false};
@@ -466,7 +466,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
   public getCSV(){
     let data = "";
-    let dbname = this.rPort.nativeElement.value;
+    let dbname = this.selectedDatabase;
 
     this.service.reversePorting(dbname).subscribe((response:any) => {
         this.loading = false;
@@ -517,11 +517,11 @@ export class DatabaseHandlerComponent implements OnInit {
           let obj = {
             'name': column
           }
-          this.columns.push(obj);
+          this.fields.push(obj);
 
         });
 
-        this.displayedColumns= this.columns.map(column => column.name);
+        this.displayedColumns= this.fields.map(field => field.name);
 
         var databaseDetails = this.databases.find(database => {
           return database.name == this.selectedDatabase;

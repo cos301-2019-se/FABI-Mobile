@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 18th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,8 +15,8 @@
 
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
-import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
-import { NotificationLoggingService, UserLogs } from '../../services/notification-logging.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
 
 @Component({

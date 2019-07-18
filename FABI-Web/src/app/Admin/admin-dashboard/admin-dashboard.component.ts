@@ -22,9 +22,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
 
-import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../services/diagnostic-clinic-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 
 @Component({
   selector: 'app-admin-dashboard',

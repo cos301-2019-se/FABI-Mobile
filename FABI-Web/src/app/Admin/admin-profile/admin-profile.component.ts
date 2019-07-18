@@ -14,8 +14,8 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UserManagementAPIService } from 'src/app/services/user-management-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
+import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
