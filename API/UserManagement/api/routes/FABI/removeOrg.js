@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
+const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -76,7 +77,15 @@ function getOrgDetails(req, res) {
                         }
                     });
                 })
-                
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: doc.data().admin.id,
+                    org1: 'FABI',
+                    org2: req.body.orgName,
+                    action: '/removeOrg'
+                });
             }  
     }).catch((err) =>
     {
