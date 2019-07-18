@@ -18,16 +18,24 @@ import * as core from "@angular/core";
 import * as Http from "@angular/common/http";
 import { catchError, retry } from 'rxjs/operators';
 import { throwError, Observable, BehaviorSubject, of, from } from "rxjs";
+import { HttpService } from 'src/app/_services/http.service';
+import { HttpRequest } from '@angular/common/http';
 
 @core.Injectable()
 export class ServerErrorInterceptor implements Http.HttpInterceptor {
 
-  constructor() { }
+  constructor(private service: HttpService) { }
 
+  private AUTH_HEADER = "Authorization";
+  private token = this.service.currentSessionValue;
+  private refreshTokenInProgress = false;
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   intercept(request: Http.HttpRequest<any>, next: Http.HttpHandler): Observable<Http.HttpEvent<any>> {
 
     console.log("------------------- INTERCEPTOR ------------------");
+
+    request = this.addAuthenticationToken(request);
 
     return next.handle(request).pipe(
       retry(2),
@@ -42,5 +50,16 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
         }
       })
     );
+  }
+
+  private addAuthenticationToken(request: Http.HttpRequest<any>): Http.HttpRequest<any> {
+    // If we do not have a token yet then we should not set the header.
+    // Here we could first retrieve the token from where we store it.
+    if (!this.token) {
+      return request;
+    }
+    return request.clone({
+      headers: request.headers.set(this.AUTH_HEADER, "Bearer " + this.token)
+    });
   }
 }
