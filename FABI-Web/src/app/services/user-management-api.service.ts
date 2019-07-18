@@ -2,10 +2,10 @@
  * File Name: user-management-api.service.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\services/user-management-api.service.ts
  * Project Name: fabi-web
- * Created Date: Saturday, Juky 6th 2019
+ * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Wednesday, July 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -29,24 +29,31 @@ import { BehaviorSubject } from 'rxjs';
 const getAllFABIMembersURL = '***REMOVED***/getAllFabiMembers';
 const getAllFABIAdminsURL = '***REMOVED***/getAllFabiAdmins';
 const getAllOrganizationMembers = '***REMOVED***/getAllOrgMembers';
+const getUserDetailsURL = '***REMOVED***/getUserDetails';
 
 //Object for defining how a member of FABI is structured
 export interface Member {
-    Email: string;      //This will contain the email retreived from the DB (is the unique identifier for the member) 
-    Name: string;       //This will be the name of the member
-    Surname: string;    //This will be the surname of the member
+    Email: string;          //This will contain the email retreived from the DB (is the unique identifier for the member) 
+    Name: string;           //This will be the name of the member
+    Surname: string;        //This will be the surname of the member
 }
 
 //Object for defining the JSON object to be sent when requesting the members of an organization
 export interface POSTOrganization{
-    orgName: string;
+    orgName: string;        //The name of the organization to be fetched
+}
+
+//Object for defining the JSON object to be sent when requesting the details of a member
+export interface POSTMember{
+    orgName: string;        //The name of the organization to be fetched
+    id: string;             //THe ID of the user
 }
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class UserManagementAPIService {
+export class UserManagementAPIService {    
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //                                                          CONSTRUCTOR
@@ -60,7 +67,7 @@ export class UserManagementAPIService {
    constructor(private http: HttpClient) { }
 
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                     GET_ALL_FABI_MEMBERS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
@@ -140,4 +147,34 @@ export class UserManagementAPIService {
 
         return this.http.request('POST', getAllOrganizationMembers, options);        
     }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            GET_USER_DETAILS 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the Members of an Organization
+   *
+   * @returns API response @type any
+   * @param {string} organization Name of the organization
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getUserDetails(organization: string, idNo: string) {
+    var data: POSTMember = { orgName: organization, id: idNo};
+
+    const options = {
+        method: 'POST',
+        url: getUserDetailsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', getUserDetailsURL, options);        
+}
 }
