@@ -66,6 +66,10 @@ html {
     width:200px !important;
 }
 
+.dropdown-toggle{
+    padding:0;
+}
+
 .dropdown-menu a {
    color: #6B8E4E !important;
 }
@@ -213,7 +217,7 @@ html {
 
 .members {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 
