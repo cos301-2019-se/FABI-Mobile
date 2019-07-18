@@ -76,21 +76,20 @@
       <!--*********************************************************************
           DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
       *************************************************************************-->
-      <div class="box">
-        <div class="notification-heading">
-          <h2>Notification {{Number}}</h2>
-          <i class="fas fa-times"></i>
-        </div>
+      <div *ngIf="allNotifications">
+        <div class="box" *ngFor="let log of allNotifications">
+          <div class="notification-heading">
+            <h2>Notification {{log.ID}}</h2>
+            <i class="fas fa-times"></i>
+          </div>
 
-        <div class="notification-content">
-          <p><b>Type:</b> {{Type}} notification</p>
-          <p><b>Action:</b> {{Action}}</p>
-          <p><b>Date:</b> {{Date}}</p>
-          <p><b>Details:</b> {{Details}}</p>
+          <div class="notification-content">
+            <p><b>Type:</b> {{log.Type}} notification</p>
+            <p><b>Action:</b> {{log.Action}}</p>
+            <p><b>Date:</b> {{log.Date}}</p>
+          </div>
         </div>
       </div>
-
-      <div #notificationContainer></div>
 
     </div>
     <div class="modal-footer"> </div>
@@ -127,29 +126,24 @@
   </section>
   <div class="container-fluid" id="staff-section">
 
-    <section class="admins" *ngIf="exampleAdmins">
+    <section class="admins" *ngIf="admins">
       <h1>Administrators:</h1>
       <br />
-      <div class="box" *ngFor="let admin of exampleAdmins">
+      <div class="box" *ngFor="let admin of admins">
         <i class="fas fa-user-shield"></i>
         <h2>{{admin.fname}} {{admin.surname}}</h2>
         <p>{{admin.email}}</p>
       </div>
-
-      <!-- <div #adminContainer></div> -->
     </section>
 
-    <section class="other-staff" *ngIf="exampleStaff">
+    <section class="other-staff" *ngIf="staff">
       <h1>Other Staff:</h1>
       <br />
-      <div class="box" *ngFor="let staff of exampleStaff">
+      <div class="box" *ngFor="let staff of staff">
         <i class="fas fa-users"></i>
         <h2>{{staff.fname}} {{staff.surname}}</h2>
         <p>{{staff.email}}</p>
       </div>
-
-      <!-- <div #staffContainer></div> -->
-
     </section>
   </div>
 </div>

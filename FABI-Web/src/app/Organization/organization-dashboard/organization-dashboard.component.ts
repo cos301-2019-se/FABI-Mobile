@@ -93,34 +93,10 @@ export class OrganizationDashboardComponent implements OnInit {
     this.userManagementService.getAllOrganizationMembers(this.organizationName).subscribe((response: any) => {
       if(response.success == true){
           //Populating the arrays with the returned data
+          this.organizationMembers = response.data.members;
 
-          this.organizationMembersExample = response.data.members;
-
-        // var tempMembers = response.data.members;
-        // for(var i = 0; i < tempMembers.length; i++){
-        //   var tempMember: Member = {Name: tempMembers[i].fname, Surname: tempMembers[i].surname, Email: tempMembers[i].email};
-        //   this.organizationMembers.push(tempMember);
-        // }
-
-        // if(this.organizationMembers.length == 0){
-        //   //Dynamically loads a message indicating that there are no organization members
-        //   const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-        //   membersDivRef.instance.Name = 'There are no members to load.';
-        //   membersDivRef.instance.Surname = '';
-        //   membersDivRef.instance.Email = '';
-        // }
-        // else{
-        //   //Dynamically loads all the members into the HTML page
-        //   for(var i = 0; i < this.organizationMembers.length; i++){
-        //     const membersDivRef = this.membersContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-        //     membersDivRef.instance.Name = this.organizationMembers[i].Name;
-        //     membersDivRef.instance.Surname = this.organizationMembers[i].Surname;
-        //     membersDivRef.instance.Email = 'Email: ' + this.organizationMembers[i].Email;
-        //   }
-        // }
-
-        // this.numberOfOrganizationMembers = this.organizationMembers.length;
-        // this.memberStats = this.numberOfOrganizationMembers.toString();
+          this.numberOfOrganizationMembers = this.organizationMembers.length;
+          this.memberStats = this.numberOfOrganizationMembers.toString();
       }
       else{
         //The organization's members could not be retrieved
