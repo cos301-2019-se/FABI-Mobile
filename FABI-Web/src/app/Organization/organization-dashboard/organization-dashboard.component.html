@@ -121,17 +121,8 @@
     <h1>Members</h1>
   </section>
   <div class="container-fluid" id="member-section">
-
-    <!-- <section class="members">
-      <div class="member">
-        <h1>Members:</h1>
-        <div #membersContainer></div>
-      </div>
-
-    </section> -->
-
-    <section class="members" *ngIf="organizationMembersExample">
-      <div class="box" *ngFor="let member of organizationMembersExample">
+    <section class="members" *ngIf="organizationMembers">
+      <div class="box" *ngFor="let member of organizationMembers">
         <i class="fas fa-users"></i>
         <h2>{{member.fname}} {{member.surname}}</h2>
         <p>{{member.email}}</p>
