@@ -59,7 +59,9 @@ export class HttpService {
       'ID': user.id,
       'organisation': org,
       'email': user.email,
-      'permission': user.userType
+      'permission': user.userType,
+      //REMOVE ASAP:
+      'databases': user.databases
     }
 
     let sess = {
@@ -111,6 +113,7 @@ export class HttpService {
     return this.http.request<any>(method, url, options).pipe(map(response => {
 
       if (response && (response.token && response.token != '')) {
+        console.log("---- RESPONSE: " + JSON.stringify(response));
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
         this.currentUser = response.userDetails;
       }
@@ -139,8 +142,8 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${this.currentSessionValue.token}`
+        'Accept': 'application/json'
+        // 'Authorization': `Bearer ${this.currentSessionValue.token}`
       }),
       json: true
     };
