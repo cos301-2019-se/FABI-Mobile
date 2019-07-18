@@ -50,13 +50,16 @@ i {
     color: #ffffff;
 }
 
+.nav-item i {
+    padding:5px;
+}
+
 .navbar-nav a:hover {
-    text-decoration: none;
+   text-decoration: none;
 }
 
 .dropdown-menu {
-    right: 0;
-    left: auto;
+    width:200px !important;
 }
 
 .dropdown-menu a {
@@ -108,6 +111,8 @@ i {
     transition-property: all;
     transition-duration: .5s;
     transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+    z-index: 3;
 }
 
 /* Display slideOut */
