@@ -16,9 +16,7 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
 import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
-import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
 import { NotificationLoggingService, UserLogs } from '../../services/notification-logging.service';
-import { NotificationDivComponent } from '../../Dynamic-Components/notification-div/notification-div.component'
 
 @Component({
   selector: 'app-staff-dashboard',
@@ -38,15 +36,17 @@ export class StaffDashboardComponent implements OnInit {
   /** Object array for holding the administrators -  @type {Member[]} */
   admins: Member[] = [];   
 
-  /** Object array for holding all of the user logs -  @type {UserLogs[]} */ 
-  userNotifications: UserLogs[] = [];
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] = [];
   /** Object array for holding all of the read logs -  @type {any[]} */ 
   readNotifications: any[] = [];
   
   /** Indicates if there are notifications to load - @type {boolean} */           
   notifications: boolean = true; 
   /** The total number of User Logs - @type {number} */           
-  numberOfUserLogs: number = 0; 
+  numberOfUserLogs: number = 0;
+  /** THe number of the notifications - @type {number} */   
+  localNotificationNumber : number = 1; 
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
@@ -84,23 +84,51 @@ export class StaffDashboardComponent implements OnInit {
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: data[i].date, Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: i};
+          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: new Date(data[i].date), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
           
           if(storageNotifications != null && storageNotifications.length != 0){
             for(var j = 0; j < storageNotifications.length; j++){
               if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                  this.readNotifications.push(tempLog);
+                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
+                this.readNotifications.push(tempLog);
+              }
+              else{
+                const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
+                const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+                if(tempLog.Action == 'C'){
+                  tempLog.Action = user1 + ' was added to the system by ' + user2;
                 }
-                else{
-                  this.userNotifications.push(tempLog);
-                  this.numberOfUserLogs += 1;
+                else if(tempLog.Action == 'D'){
+                  tempLog.Action = user1 + ' was removed from the system by ' + user2;
                 }
+                else if(tempLog.Action == 'U'){
+                  tempLog.Action = user1 + ' details where updated by ' + user2;
+                }
+
+                this.allNotifications.push(tempLog);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
+              }
             }
           }
           else{
-            this.userNotifications.push(tempLog);
+            const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
+            const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+            if(tempLog.Action == 'C'){
+              tempLog.Action = user1 + ' was added to the system by ' + user2;
+            }
+            else if(tempLog.Action == 'D'){
+              tempLog.Action = user1 + ' was removed from the system by ' + user2;
+            }
+            else if(tempLog.Action == 'U'){
+              tempLog.Action = user1 + ' details where updated by ' + user2;
+            }
+
+            this.allNotifications.push(tempLog);
             this.numberOfUserLogs += 1;
+            this.localNotificationNumber += 1;
           }
         }
       }
@@ -111,46 +139,6 @@ export class StaffDashboardComponent implements OnInit {
 
     //Pushing the readNotifications array to local storage
     localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_DYNAMIC_NOTIFICATIONS
-  /**
-   *  This function will dynamically load the notifications into the HTML page
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadDynamicNotifications(){
-    //Dynamically loading the notification elements into the HTML page
-    if(this.numberOfUserLogs != 0){
-      this.notifications = true;
-
-      //User notifications
-      for(var i = 0; i < this.userNotifications.length; i++){
-        const userNotificationDivRef = this.notificationContainer.createComponent(this.resolver.resolveComponentFactory(NotificationDivComponent));
-        userNotificationDivRef.instance.Number = i + 1;
-        userNotificationDivRef.instance.Type = 'USER';
-  
-        const user1 = this.loadUserDetails(this.userNotifications[i].Organization2, this.userNotifications[i].Details);
-        const user2 = this.loadUserDetails(this.userNotifications[i].Organization1, this.userNotifications[i].User);
-  
-        if(this.userNotifications[i].Action == 'C'){
-          userNotificationDivRef.instance.Action = user1 + ' was added to the system by ' + user2;
-        }
-        else if(this.userNotifications[i].Action == 'D'){
-          userNotificationDivRef.instance.Action = user1 + ' was removed from the system by ' + user2;
-        }
-        else if(this.userNotifications[i].Action == 'U'){
-          userNotificationDivRef.instance.Action = user1 + ' details where updated by ' + user2;
-        }
-  
-        userNotificationDivRef.instance.Date = new Date(this.userNotifications[i].Date);
-      }
-    }
-    else{
-      this.notifications = false;
-    }
   }
 
 
@@ -201,21 +189,6 @@ export class StaffDashboardComponent implements OnInit {
     this.toggle_status = !this.toggle_status; 
  }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      DELAY  
-  /**
-   * This function is called so that the loadDynamicNotifications function can be delayed
-   * 
-   * @param {number} ms The seconds that the function must be displayed by
-   * @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  async delay(ms: number) {
-    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
-  }
-
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    NG_ON_INIT()  
   /**
@@ -227,9 +200,6 @@ export class StaffDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.loadNotifications();
-    this.delay(2000).then(any => {
-      this.loadDynamicNotifications()
-    });
   }
 
 }
