@@ -134,8 +134,7 @@ export class LoginComponent implements OnInit {
           duration: 3000
         });
 
-
-        this.router.navigate(['/staff-dashboard']);
+        this.router.navigate(['/admin-dashboard']);
 
         this.service.setSessionVariables(response.token, details.orgName, details.userType);
         // this.service.setLoggedin();
