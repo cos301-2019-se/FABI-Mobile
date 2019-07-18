@@ -40,6 +40,7 @@
   - [Diagnostic Clinic API Documentation](https://diagnostic-clinic-dot-api-fabi.appspot.com)
   - [Login API Documentation](https://login-dot-api-fabi.appspot.com)
   - [User Management API Documentation](https://user-management-dot-api-fabi.appspot.com)
+  - [Logging API Documentation](https://logging-dot-api-fabi.appspot.com)
   
  ## Project Management
  
