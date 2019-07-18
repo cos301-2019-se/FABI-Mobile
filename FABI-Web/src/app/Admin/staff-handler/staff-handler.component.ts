@@ -64,6 +64,9 @@ export class StaffHandlerComponent implements OnInit {
   /** Selected user type on dropdown - @type {string} */
   selectedUserType: string;
 
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,19 +92,20 @@ export class StaffHandlerComponent implements OnInit {
     })
   }
 
-  sidenavToggle(){
-    if(document.getElementById("sidenav_div").style.width == "22%")
-    {
-      document.getElementById("sidenav_div").style.width = "0";
-    }
-    else{
-      document.getElementById("sidenav_div").style.width = "22%";
-    } 
-  }
-
-  closeNav(){
-    document.getElementById("sidenav_div").style.width = "0";
-  }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG_ON_INIT()
@@ -260,8 +264,7 @@ export class StaffHandlerComponent implements OnInit {
     
     this.service.getAllStaffMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
-        this.staffMembers = response.data.staff.researchers;
-        console.log(this.staffMembers);
+        this.staffMembers = response.data.qs.staff;
         this.dataSource = new MatTableDataSource(this.staffMembers);
         this.dataSource.paginator = this.paginator;
 
