@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+    - 10.9
+
+before_script:
+    - cd 'FABI-Web'
+    - npm install @angular/cli
+
+script:
+    - ng test
