@@ -55,13 +55,20 @@ i {
     color: #ffffff;
 }
 
+.nav-item i {
+    padding:5px;
+}
+
 .navbar-nav a:hover {
-    text-decoration: none;
+   text-decoration: none;
 }
 
 .dropdown-menu {
-    right: 0;
-    left: auto;
+    width:300px !important;
+}
+
+.dropdown-toggle{
+    padding:0;
 }
 
 .dropdown-menu a {
