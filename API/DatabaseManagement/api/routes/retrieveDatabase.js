@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
+const log = require('../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -97,6 +98,11 @@ function getAllOrgMembers(req, res) {
                     data
                      
                 });
+                log({
+                    type: "DBML",
+                    action: "retrieveDatabase",
+                    details: {databaseName:   req.body.databaseName}
+                });
         }
     }).catch((err) =>
     {
@@ -111,6 +117,11 @@ function getAllOrgMembers(req, res) {
             message: "Error Connecting to Database"
             
         });
+        log({
+            type: "ERRL",
+            statusCode: "500",
+            details: "Error connection to database"
+        })
     });
 }});
 }

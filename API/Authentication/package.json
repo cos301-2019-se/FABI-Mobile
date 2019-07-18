@@ -21,7 +21,7 @@
     "router": "^1.3.3",
     "@google-cloud/datastore": "latest",
     "firebase-admin" : "latest",
-    "node-oauth2-server": "^2.4.0"
+    "node-oauth2-server": "latest"
   },
   "scripts": {
     "start": "node server.js"
