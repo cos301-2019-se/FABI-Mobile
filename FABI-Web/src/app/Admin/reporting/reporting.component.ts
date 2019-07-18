@@ -128,7 +128,7 @@ export class ReportingComponent implements OnInit {
             tempArray.push('Removed database');
           }
           
-          tempArray.push(data[i].date);
+          tempArray.push(new Date(data[i].date));
 
           //Fetch user information
           tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
@@ -153,7 +153,7 @@ export class ReportingComponent implements OnInit {
           var tempArray: any = [];
           
           tempArray.push(data[i].details);
-          tempArray.push(data[i].date);
+          tempArray.push(new Date(data[i].date));
 
           //Fetch user information
           tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
@@ -178,7 +178,7 @@ export class ReportingComponent implements OnInit {
           var tempArray: any = [];
           
           tempArray.push(data[i].statusCode);
-          tempArray.push(data[i].date);
+          tempArray.push(new Date(data[i].date));
           tempArray.push(data[i].details);
 
           //Fetch user information
