@@ -103,7 +103,7 @@ const qs = {
     password: bcrypt.hashSync(pass, salt),
     databases : req.body.databases,
     id : new Date().getTime().toString(),
-    userType : req.body.userType
+    userType: req.body.userType
 }
 
 // (3) 
