@@ -108,6 +108,13 @@ const salt = bcrypt.genSaltSync(10);
                         databaseName: req.body.databaseName,
                         tempPassword: pass
                     }
+                    
+        }
+        );
+        log({
+            type: "DBML",
+            action: "createDatabase",
+            details: {databaseName:   req.body.databaseName}
         });
     }).catch((err) => {
         console.log("Database connection error: " + err);
@@ -119,6 +126,11 @@ const salt = bcrypt.genSaltSync(10);
             code: 500,
             title: "INTERNAL SERVER ERROR",
             message: "Error Connecting to Database"
+        });
+        log({
+            type: "ERRL",
+            statusCode: "502",
+            details: "Error connecting to database"
         });
     });
 

@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
 const config = require('../config');
+const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -63,7 +64,7 @@ function loginAdmin(req, res)
     }
     
     //(2)
-    var docRef  = db.collection('Organizations').doc('FABI').collection('Admin').where('email', '==', req.body.email);
+    var docRef  = db.collection('Organizations').doc('FABI').collection('Staff').where('email', '==', req.body.email);
 
     //(3)
     docRef.get().then(doc =>
@@ -89,6 +90,7 @@ function loginAdmin(req, res)
 
             bcrypt.compare(req.body.password, member.password, (err, valid) =>
             {
+                delete member.password
                 if(valid)
                 {
                     res.setHeader('Content-Type', 'application/json');
@@ -99,7 +101,14 @@ function loginAdmin(req, res)
                         code: 200,
                         title: "AUTHORIZED",
                         message: "Authenticated",
-                        token: bcrypt.hashSync(config.SuperUserToken, bcrypt.genSaltSync(10))
+                        token: bcrypt.hashSync(config.SuperUserToken, bcrypt.genSaltSync(10)),
+                        userDetails: member
+                    });
+                    log({
+                        type: 'ACCL',
+                        statusCode: '200',
+                        details: 'Logged In FABI Staff',
+                        user: member.id
                     });
                 }
                 else{
@@ -125,6 +134,11 @@ function loginAdmin(req, res)
                     code: 500,
                     title: "SERVER ERROR",
                     message: "Internal Server Error"
+                });
+                log({
+                    type: 'ERRL',
+                    statusCode: '500',
+                    details: 'Error connecting to database',
                 });
 });
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
+const log = require('../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -70,17 +71,23 @@ function addDoc(req, res)
     });
 
     res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                success: true,
-                code: 200,
-                title: "SUCCESS",
-                message : "Data submitted to " + req.body.databaseName,
-                data: {
-                    databaseName : req.body.databaseName,
-                    newIdArray : ids
-                }
-            });
+    res.setHeader('Content-Language', 'en');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+        success: true,
+        code: 200,
+        title: "SUCCESS",
+        message : "Data submitted to " + req.body.databaseName,
+        data: {
+            databaseName : req.body.databaseName,
+            newIdArray : ids
+        }
+    });
+    
+    log({
+        type: "DBML",
+        action: "porting",
+        details: {databaseName:  req.body.databaseName}
+    });
 }
 module.exports = router;
