@@ -80,9 +80,9 @@ export class AdminProfileComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService, private snackBar: MatSnackBar) { 
     this.adminProfileForm = this.formBuilder.group({
       organization_name: '',
-      admin_name: ['', Validators.required],
-      admin_surname: ['', Validators.required],
-      admin_email: ['', Validators.required],
+      admin_name: '',
+      admin_surname: '',
+      admin_email: '',
       admin_type: ''
     });
   }
@@ -313,14 +313,27 @@ export class AdminProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-    if (this.adminProfileForm.invalid) {
-      return;
+    if(this.adminProfileForm.controls.admin_email.value == ''){
+      this.email = this.email;
+    }
+    else{
+      this.email = this.adminProfileForm.controls.admin_email.value;
     }
 
-    this.email = this.adminProfileForm.controls.admin_email.value;
-    this.name = this.adminProfileForm.controls.admin_name.value;
-    this.surname = this.adminProfileForm.controls.admin_surname.value;
+    if(this.adminProfileForm.controls.admin_name.value == ''){
+      this.name = this.name;
+    }
+    else{
+      this.name = this.adminProfileForm.controls.admin_name.value;
+    }
 
+    if(this.adminProfileForm.controls.admin_surname.value == ''){
+      this.surname == this.surname;
+    }
+    else{
+      this.surname = this.adminProfileForm.controls.admin_surname.value;
+    }   
+    
     this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id).subscribe((response: any) => {
       if(response.success == true){
         this.loadAdminProfileDetails();
