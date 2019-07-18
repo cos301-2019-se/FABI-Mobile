@@ -89,7 +89,7 @@ export class AdminDashboardComponent implements OnInit {
    * 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
-   * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @memberof AdminDashboardComponent
    */
@@ -352,7 +352,7 @@ export class AdminDashboardComponent implements OnInit {
   //                                                  LOAD_USER_DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
-   *  @memberof ReportingComponent
+   *  @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {

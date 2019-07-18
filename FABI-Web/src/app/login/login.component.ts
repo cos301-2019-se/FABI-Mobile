@@ -112,8 +112,6 @@ export class LoginComponent implements OnInit {
 
     this.service.login(details).subscribe((response: any) => {
 
-     console.log(response);
-
       this.loading = false;
 
       // API Request successful
@@ -127,13 +125,17 @@ export class LoginComponent implements OnInit {
         }
         // ELSE user Authorised:
 
-        //Setting local storage to hold the users email
-        localStorage.setItem('email', Lemail);
+        //Setting local storage to hold the users details
+        localStorage.setItem('userID', response.userDetails.id);
+        localStorage.setItem('userOrganization', Lorg);
 
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Logged In", "Dismiss", {
           duration: 3000
         });
+
+
+        this.router.navigate(['/admin-dashboard']);
 
         this.service.setSessionVariables(response.token, details.orgName, details.userType);
         // this.service.setLoggedin();
