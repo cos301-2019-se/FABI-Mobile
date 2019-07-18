@@ -15,8 +15,8 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { NotificationLoggingService } from '../../services/notification-logging.service';
-import { UserManagementAPIService } from '../../services/user-management-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
 @Component({
   selector: 'app-reporting',
