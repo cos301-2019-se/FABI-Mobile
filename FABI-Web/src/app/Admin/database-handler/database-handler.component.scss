@@ -12,8 +12,13 @@ html {
     color: #555;
 }
 
-.container-fluid {
-    padding: 0;
+#dashboard-content{
+   display:flex;
+   flex-direction: column;
+
+   height: 100vh;
+
+   background-color: #F7F9F9;
 }
 
 /* ================================================ */
@@ -28,7 +33,7 @@ html {
 
     padding: 25px;
 
-    background-color: #6B8E4E;
+    background-color: #6B8E4E; 
 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.30), 0 1px 10px rgba(0, 0, 0, 0.22);
     border-radius: 2px;
@@ -40,31 +45,37 @@ html {
     color: #ffffff;
 }
 
-.nav-item a,
-i {
+.nav-item a,i {
     font-size: 18px;
     color: #ffffff;
 }
 
-.navbar-nav>a {
-    color: #ffffff;
+.navbar-nav > a {
+   color: #ffffff;
+}
+
+.nav-item i {
+    padding:5px;
 }
 
 .navbar-nav a:hover {
-    text-decoration: none;
+   text-decoration: none;
 }
 
 .dropdown-menu {
-    right: 0;
-    left: auto;
+    width:200px !important;
+}
+
+.dropdown-toggle{
+    padding:0;
 }
 
 .dropdown-menu a {
-    color: #6B8E4E !important;
+   color: #6B8E4E !important;
 }
 
 .dropdown-menu a:hover {
-    text-decoration: none;
+   text-decoration: none;
 }
 
 .dropdown-menu i {
@@ -72,9 +83,7 @@ i {
     color: #6B8E4E;
 }
 
-.navbar .navbar-toggle .navbar-toggler-icon {
-    color: #ffffff;
-}
+.navbar .navbar-toggle .navbar-toggler-icon { color: #ffffff;}
 
 @media(max-width:375px) {
     .navbar {
@@ -108,6 +117,8 @@ i {
     transition-property: all;
     transition-duration: .5s;
     transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+    z-index: 3;
 }
 
 /* Display slideOut */
@@ -282,6 +293,22 @@ div#slideOut.showSlideOut {
 }
 
 /* ================================================ */
+/* Add Database Form Setup and Styling              */
+/* ================================================ */
+#add_new_database_form{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+
+    margin: 0;
+    padding-top:50px;
+    padding-bottom:15px;
+}
+
+
+/* ================================================ */
 /* Tab Menu Setup and Styling                       */
 /* ================================================ */
 .mat-ink-bar {
@@ -311,7 +338,7 @@ mat-icon {
 .tab-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     width: 100% !important;
@@ -363,20 +390,21 @@ th{
 }
 
 .btn.btn-default {
-    background: #555;
-    border: 3px solid #555;
-    color: white;
+    background: transparent;
+    border: 2px solid #6B8E4E;
+    color: #6B8E4E;
     font-size: 12px;
     letter-spacing: 2px;
-    padding: 13px 30px;
-    margin-top: 34px;
-    margin-left: 2rem;
+    padding: 7px 10px;
     text-transform: uppercase;
 
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border: 1px solid #555;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border: 1px solid #6B8E4E;
+
+    display: block;
+    margin: 0 auto;
 
 }
 
@@ -384,9 +412,7 @@ th{
 .btn.btn-default:focus,
 .fileLabel:hover,
 .fileLabel:focus {
-    outline: none;
-    box-shadow: 0 19px 28px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
-    font-size: 12.5px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
 }
 
 .inputFile {
