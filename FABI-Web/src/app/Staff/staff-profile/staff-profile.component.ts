@@ -207,32 +207,32 @@ export class StaffProfileComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  SAVE_STAFF_CHANGES
+  //                                                      SAVE_CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
    *  @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-    if(this.staffProfileForm.controls.admin_email.value == ''){
+    if(this.staffProfileForm.controls.staff_email.value == ''){
       this.email = this.email;
     }
     else{
-      this.email = this.staffProfileForm.controls.admin_email.value;
+      this.email = this.staffProfileForm.controls.staff_email.value;
     }
 
-    if(this.staffProfileForm.controls.admin_name.value == ''){
+    if(this.staffProfileForm.controls.staff_name.value == ''){
       this.name = this.name;
     }
     else{
-      this.name = this.staffProfileForm.controls.admin_name.value;
+      this.name = this.staffProfileForm.controls.staff_name.value;
     }
 
-    if(this.staffProfileForm.controls.admin_surname.value == ''){
+    if(this.staffProfileForm.controls.staff_surname.value == ''){
       this.surname == this.surname;
     }
     else{
-      this.surname = this.staffProfileForm.controls.admin_surname.value;
+      this.surname = this.staffProfileForm.controls.staff_surname.value;
     }
 
     this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id).subscribe((response: any) => {

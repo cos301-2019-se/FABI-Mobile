@@ -31,6 +31,7 @@ const getAllFABIAdminsURL = 'https://user-management-dot-api-fabi.appspot.com/ge
 const getAllOrganizationMembers = 'https://user-management-dot-api-fabi.appspot.com/getAllOrgMembers';
 const getUserDetailsURL = 'https://user-management-dot-api-fabi.appspot.com/getUserDetails';
 const updateStaffMemberDetailsURL = 'https://user-management-dot-api-fabi.appspot.com/updateStaffMember';
+const updateOrganizationMemberDetailsURL = 'https://user-management-dot-api-fabi.appspot.com/updateOrgMember';
 
 //Object for defining how a member of FABI is structured
 export interface Member {
@@ -50,16 +51,31 @@ export interface POSTMember{
     id: string;             //THe ID of the user
 }
 
+//Object for defning the JSOn object to be sent when the details of a FABI member are updated
 export interface UpdateMember{
-    fname: string;
-    surname: string;
-    email: string;
+    fname: string;          //The name of the FABI member
+    surname: string;        //The surname of the FABI member
+    email: string;          //The email of the FABI member
 }
 
-//Onject for defning the JSOn object to be sent when the details of a staff member are updated
+//Object for defning the JSOn object to be sent when the details of a FABI member are updated
 export interface POSTUpdateMember{
-    id: string;
-    fields: UpdateMember;
+    id: string;                 //The ID number of the FABI member to be updated
+    fields: UpdateMember;       //The fields to the updated
+}
+
+//Object for defning the JSOn object to be sent when the details of an organization member are updated
+export interface UpdateOrganization{
+    fname: string;          //The name of the organization member
+    surname: string;        //The surname of the organization member
+    email: string;          //The email of the organization member
+}
+
+//Object for defning the JSOn object to be sent when the details of an organization member are updated
+export interface POSTUpdateOrganization{
+    orgName: string;            //The name of the organization
+    id: string;                 //The ID of the organization member to be updated
+    fields: UpdateMember;       //The fields to be updated
 }
 
 @Injectable({
@@ -192,11 +208,10 @@ export class UserManagementAPIService {
   }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         UPDATE_FABI_MEMBER_DETAILS 
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the Members of an Organization
+   *    This function is used to send updated FABI staff details to the database
    *
    * @returns API response @type any
    * @param {string} mail Email of the staff member
@@ -223,5 +238,39 @@ export class UserManagementAPIService {
     };
 
     return this.http.request('POST', updateStaffMemberDetailsURL, options);        
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      UPDATE_ORGANIZATION_MEMBER_DETAILS 
+  /**
+   *    This function is used to send updated organization member details to the database
+   *
+   * @returns API response @type any
+   * @param {string} organization The name of the organization that the member belongs to
+   * @param {string} mail Email of the staff member
+   * @param {string} name Name of the staff member
+   * @param {string} lname Surname of the staff member
+   * @param {string} idNo ID number of the staff member
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateOrganizationMemberDetails(organization: string, mail: string, name: string, lname: string, idNo: string) {
+    var member: UpdateOrganization = { fname: name, surname: lname, email: mail};
+    var data: POSTUpdateOrganization = { orgName: organization, id: idNo, fields: member};
+
+    const options = {
+        method: 'POST',
+        url: updateOrganizationMemberDetailsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', updateOrganizationMemberDetailsURL, options);        
   }
 }
