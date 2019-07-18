@@ -25,7 +25,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { HttpService } from '../../_services/http.service';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 
-import { UserManagementAPIService } from 'src/app/services/user-management-api.service';
+import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 
 @Component({
   selector: 'app-organization-profile',

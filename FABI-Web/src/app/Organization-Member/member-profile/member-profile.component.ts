@@ -28,7 +28,7 @@ import { ConfirmComponent } from "../../confirm/confirm.component";
 import { UpdateComponent } from "../../update/update.component";
 import { template } from '@angular/core/src/render3';
 
-import { UserManagementAPIService } from 'src/app/services/user-management-api.service';
+import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 
 
 @Component({
