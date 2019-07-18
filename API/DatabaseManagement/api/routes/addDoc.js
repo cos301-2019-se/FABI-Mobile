@@ -50,8 +50,8 @@ function addDoc(req, res)
     }
 
 // (2) Connect to DB
-
-    var docRef  = db.collection('Databases').doc(req.body.databaseName).collection('Data').doc(req.body.data.num);
+    req.body.data.id = item.id = new Date().getTime().toString();
+    var docRef  = db.collection('Databases').doc(req.body.databaseName).collection('Data').doc(req.body.data.id);
     docRef.set(req.body.data).then(() => {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
@@ -64,6 +64,11 @@ function addDoc(req, res)
             data: {
                 databaseName : req.body.databaseName
             }
+    });
+    log({
+        type: "DBML",
+        action: "addDoc",
+        details: {databaseName: req.body.databaseName, id: req.body.data.id} 
     });
 });
 
