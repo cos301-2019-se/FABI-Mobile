@@ -38,9 +38,12 @@ function addLog(req, res){
 		
 	}else if(req.body.Log.type == "DGCL"){
 		
+		var datetime = new Date().toString();
+		
 		const logEntry = {
 			type: req.body.Log.type,
 			date: new Date().getTime().toString(),
+			dateString: datetime,
 			user: req.body.Log.user,
 			// anything else ?????
 		}

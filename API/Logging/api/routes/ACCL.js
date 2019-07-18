@@ -75,11 +75,14 @@ function addLog(req, res){
 		
 	}else if(req.body.Log.type == "ACCL"){
 		
+		var datetime = new Date().toString();
+		
 		const logEntry = {
 			type: req.body.Log.type,
 			statusCode: req.body.Log.statusCode,
 			details: req.body.Log.details,
 			date: new Date().getTime().toString(),
+			dateString: datetime,
 			user: req.body.Log.user,
 			moreInfo: req.body.Log.moreInfo
 		}
