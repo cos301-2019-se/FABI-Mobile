@@ -98,7 +98,8 @@ function addOrganization(req, res)
                 surname: req.body.admin.surname,
                 email: req.body.admin.email,
                 password: bcrypt.hashSync(pass, salt),
-                id : new Date().getTime().toString()
+                id : new Date().getTime().toString(),
+                userType: "OrganizationAdmin"
             }
         }
 
