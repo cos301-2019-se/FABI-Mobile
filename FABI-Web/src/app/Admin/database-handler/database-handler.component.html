@@ -1,68 +1,68 @@
 <!--Bootstrap Navbar-->
 <div class="container-fluid" id="nav-section">
-    <nav class="navbar navbar-expand-xl">
-      <a class="navbar-brand" href="#">Admin Dashboard</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        <i class="fas fa-bars"></i>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-  
-          <li class="nav-item active">
-            <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
-          </li>
-  
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-tasks"></i>Handlers
+  <nav class="navbar navbar-expand-xl">
+    <a class="navbar-brand" href="#">Database Handler</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item active">
+          <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-tasks"></i>Handlers
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>
+            <br />
+            <a id="organization_management" routerLink="/organization-handler"><i
+                class="fas fa-building"></i>Organizations</a>
+            <br />
+            <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i
+                class="fas fa-stethoscope"></i>Clinic</a>
+            <br />
+            <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Database
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>
-              <br />
-              <a id="organization_management" routerLink="/organization-handler"><i
-                  class="fas fa-building"></i>Organizations</a>
-              <br />
-              <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i
-                  class="fas fa-stethoscope"></i>Clinic</a>
-              <br />
-              <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Database
-              </a>
-            </div>
-          </li>
-  
-          <li class="nav-item">
-            <a id="reporting" routerLink="/reporting"><i class="fas fa-chart-pie"></i>Reporting</a>
-          </li>
-  
-  
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-user"></i>Account
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a id="profile_menu_link" routerLink="/admin-profile"><i class="fas fa-user-circle"></i>Profile</a>
-              <br />
-              <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-            </div>
-          </li>
-  
-          <li class="nav-item">
-            <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-          </li>
-  
-          <li class="nav-item">
-            <a id="logout_menu_link" (click)="logout()" style="color:#ffffff;"><i class="fas fa-sign-out-alt"></i>Logout</a>
-          </li>
-  
-        </ul>
-      </div>
-    </nav>
-  </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="reporting" routerLink="/reporting"><i class="fas fa-chart-pie"></i>Reporting</a>
+        </li>
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="profile_menu_link" routerLink="/admin-profile"><i class="fas fa-user-circle"></i>Profile</a>
+            <br />
+            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        </li>
+
+        <li class="nav-item">
+          <a id="logout_menu_link" (click)="logout()" style="color:#ffffff;"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div>
 
 
 <!--SlideOut -->
@@ -96,7 +96,7 @@
             <p><b>Date:</b> {{log.Date}}</p>
           </div>
         </div>
-      </div>        
+      </div>
 
     </div>
     <div class="modal-footer"> </div>
@@ -164,7 +164,7 @@
       <!--View Database Tab Option-->
       <mat-tab>
         <ng-template mat-tab-label>
-            <i class="fas fa-eye" style="color:darkgray;padding:5px;"></i>
+          <i class="fas fa-eye" style="color:darkgray;padding:5px;"></i>
           View Database
         </ng-template>
         <div class="tab-content">
