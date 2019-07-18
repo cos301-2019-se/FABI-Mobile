@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, June 26th 2019
+ * Last Modified: Monday, July 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -75,9 +75,8 @@ export interface UserType {
  * @interface LoginInfo
  */
 export interface LoginInfo {
+    orgName: string;
     email: string;
-    userType: string,
-    orgName: string,
     password: string;
 }
   
