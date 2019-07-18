@@ -22,12 +22,17 @@ import { StaffHandlerComponent } from './staff-handler/staff-handler.component';
 import { OrganizationHandlerComponent } from './organization-handler/organization-handler.component';
 import { ClinicHandlerComponent } from './clinic-handler/clinic-handler.component';
 import { DatabaseHandlerComponent } from './database-handler/database-handler.component';
+import { AdminProfileComponent } from "./admin-profile/admin-profile.component";
+
 import { AuthenticationGuard } from '../_guards/authentication.guard';
 import { Role } from '../_interfaces/role';
 
 
 const routes: Routes = [
-  {path: 'admin-dashboard', component: AdminDashboardComponent},
+  {
+    path: 'admin-dashboard',
+    component: AdminDashboardComponent
+  },
   {
     path: 'staff-handler', 
     component: StaffHandlerComponent,
@@ -51,6 +56,10 @@ const routes: Routes = [
     component: DatabaseHandlerComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.SuperUser, Role.ClinicAdmin, Role.Staff]}
+  },
+  {
+    path: 'admin-profile', 
+    component: AdminProfileComponent
   }
 ];
 
