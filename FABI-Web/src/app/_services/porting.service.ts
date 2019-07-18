@@ -15,13 +15,30 @@
 
 export class Porting{
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of Porting.
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     constructor(){}
 
-    JSONfile : any = null;      //This variable holds the CSV file as a JSONfile
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*
-    *   This function is used to convert the text sent from the file into JSON
-    */
+   /** Holds the CSV file as a JSONfile - @type {any} */
+    JSONfile : any = null;       
+
+ 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                CONVERT_TO_JSON
+  /**
+   *  This function is used to convert the text sent from the file into JSON
+   *  @param {string} text 
+   *  @memberof Porting
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     convertToJSON(text){
         var lines = text.split("\n");
         var result = [];
@@ -37,24 +54,26 @@ export class Porting{
             result.push(obj);
         }
 
-        console.log(result);
         this.JSONfile = result;
         
         return result;
     }
 
-    /*
-    *   This function is used to perform reverse porting
-    */
-    extractDatabase(dbJSON , dbName:String){
-        console.log(dbJSON);
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                EXTRACT_DATABASE
+  /**
+   *  This function is used to perform reverse porting
+   *  @param {string} dbName
+   *  @memberof Porting
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    extractDatabase(dbJSON , dbName:String){
         var CSVdata = "";
         var headings = [];
 
         var columnsIn = dbJSON[0];
         for(var key in columnsIn){
-          // console.log(key);
           CSVdata += key+";";
           headings.push(key);
         }

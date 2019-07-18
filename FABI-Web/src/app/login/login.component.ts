@@ -67,7 +67,8 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, 
+    private router: Router) {
     this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
       login_email: ['', Validators.required],
@@ -121,6 +122,10 @@ export class LoginComponent implements OnInit {
           return;
         }
         // ELSE user Authorised:
+
+        //Setting local storage to hold the users details
+        localStorage.setItem('userID', response.userDetails.id);
+        localStorage.setItem('userOrganization', Lorg);
 
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Logged In", "Dismiss", {
