@@ -39,6 +39,7 @@ function addMember(req, res)
 {
 
 // (1)
+    var userTypes = ['OrganizationAdmin', 'Member'];
     if (req.body.member.name == undefined || req.body.member.name == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
@@ -50,7 +51,7 @@ function addMember(req, res)
             message: "User name expected"
         });
     }
-    if (req.body.member.surname == undefined || req.body.member.surname == '') {
+    else if (req.body.member.surname == undefined || req.body.member.surname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -61,7 +62,7 @@ function addMember(req, res)
             message: "User surname expected"
         });
     }
-    if (req.body.member.email == undefined || req.body.member.email == '') {
+    else if (req.body.member.email == undefined || req.body.member.email == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -72,7 +73,7 @@ function addMember(req, res)
             message: "User email expected"
         });
     }
-    if (req.body.orgName == undefined || req.body.member.orgName == '') {
+    else if (req.body.orgName == undefined || req.body.member.orgName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -81,6 +82,28 @@ function addMember(req, res)
             code: 400,
             title: "BAD_REQUEST",
             message: "orgName expected"
+        });
+    }
+    else if (req.body.userType == undefined || req.body.member.userType == '') {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "userType expected"
+        });
+    }
+    else if(!userTypes.includes(req.body.userType)) {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User type of new user is not supported"
         });
     }
 
@@ -92,7 +115,8 @@ function addMember(req, res)
         surname: req.body.member.surname,
         email: req.body.member.email,
         password: bcrypt.hashSync(pass, salt),
-        id : new Date().getTime().toString()
+        id : new Date().getTime().toString(),
+        userType: req.body.userType
     }
     var checkRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').where('email', '==', qs.email);
 
