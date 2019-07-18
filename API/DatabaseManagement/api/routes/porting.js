@@ -86,8 +86,10 @@ function addDoc(req, res)
     
     log({
         type: "DBML",
-        action: "porting",
-        details: {databaseName:  req.body.databaseName}
+        action: "/porting",
+        details: req.body.databaseName,
+        user: '1563355277876',
+        org1: 'FABI'
     });
 }
 module.exports = router;

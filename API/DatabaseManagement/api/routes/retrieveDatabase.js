@@ -100,8 +100,10 @@ function getAllOrgMembers(req, res) {
                 });
                 log({
                     type: "DBML",
-                    action: "retrieveDatabase",
-                    details: {databaseName:   req.body.databaseName}
+                    action: "/retrieveDatabase",
+                    details: req.body.databaseName,
+                    user: '1563355277876',
+                    org1: 'FABI'
                 });
         }
     }).catch((err) =>
@@ -121,7 +123,7 @@ function getAllOrgMembers(req, res) {
             type: "ERRL",
             statusCode: "500",
             details: "Error connection to database"
-        })
+        });
     });
 }});
 }
