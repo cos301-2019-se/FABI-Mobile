@@ -166,9 +166,10 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          PORTING
   /**
-   * Method thats sends a request to the API to port a CSV file to a Database 
+   * Method that sends a request to the API to port a CSV file to a Database 
    *
    * @param {Object} jsonObject
+   * @param {String} dbname
    * @returns API response 
    * @memberof HttpService
    */
@@ -199,7 +200,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         REVERSE PORTING
   /**
-   * Method thats sends a request to the API to get data from the database to create a .csv file 
+   * Method that sends a request to the API to get data from the database to create a .csv file 
    *
    * @param {String} databaseName
    * @returns API response 
@@ -226,6 +227,237 @@ export class HttpService {
 
     return this.http.request<any>('POST', 'https://database-management-dot-api-fabi.appspot.com/retrieveDatabase', options);
   }
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET LOGS
+  /**
+   * Method that gets Logs of any type from the database
+   *
+   * @param {String} type
+   * @param {String} before
+   * @param {String} after
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  GetLogs(type:String, before:String, after:String){
+    const getlogURL = "https://logging-dot-api-fabi.appspot.com/getLogs";
+
+    const logData = {
+      "Log": {
+        "type": type,
+        "before": before,
+        "after": after
+      }
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: logData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', getlogURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         ACCESS LOGS
+  /**
+   * Method that sends Access logs to the database
+   *
+   * @param {String} type
+   * @param {String} statusCode
+   * @param {String} details
+   * @param {String} user
+   * @param {String} moreInfo
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  LogAccess(type:String, statusCode:String, details:String, user:String, moreInfo: String){
+    const accesslogURL = "https://logging-dot-api-fabi.appspot.com/ACCL";
+
+    const logData = {
+      "Log": {
+        "type": type,
+        "statusCode": statusCode,
+        "details": details,
+        "user": user,
+        "moreInfo": moreInfo
+      }
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: logData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', accesslogURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         ERROR LOGS
+  /**
+   * Method that sends Error logs to the database
+   *
+   * @param {String} type
+   * @param {String} statusCode
+   * @param {String} details
+   * @param {String} user
+   * @param {String} moreInfo
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  LogError(type:String, statusCode:String, details:String, user:String, moreInfo: String){
+    const errorlogURL = "https://logging-dot-api-fabi.appspot.com/ERRL";
+
+    const logData = {
+      "Log": {
+        "type": type,
+        "statusCode": statusCode,
+        "details": details,
+        "user": user,
+        "moreInfo": moreInfo
+      }
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: logData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', errorlogURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         DIAGNOSTIC CLINIC LOGS
+  /**
+   * Method that sends Diagnostic Clinic logs to the database
+   *
+   * @param {String} type
+   * @param {String} user
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  LogDiagnosticClinic(type:String, user:String){
+    const dgcllogURL = "https://logging-dot-api-fabi.appspot.com/DGCL";
+
+    const logData = {
+      "Log": {
+        "type": type,
+        "user": user
+      }
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: logData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', dgcllogURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         USER CRUD LOGS
+  /**
+   * Method that sends user CRUD logs to the database
+   *
+   * @param {String} type
+   * @param {String} action
+   * @param {String} details
+   * @param {String} user
+   * @param {String} moreInfo
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  LogUserCRUD(type:String, statusCode:String, details:String, user:String, moreInfo: String){
+    const userlogURL = "https://logging-dot-api-fabi.appspot.com/USER";
+
+    const logData = {
+      "Log": {
+        "type": type,
+        "statusCode": statusCode,
+        "details": details,
+        "user": user,
+        "moreInfo": moreInfo
+      }
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: logData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', userlogURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         DATABASE CRUD LOGS
+  /**
+   * Method that sends database CRUD logs to the database
+   *
+   * @param {String} type
+   * @param {String} action
+   * @param {String} details
+   * @param {String} user
+   * @param {String} moreInfo
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  LogDatabaseCRUD(type:String, statusCode:String, details:String, user:String, moreInfo: String){
+    const dbmllogURL = "https://logging-dot-api-fabi.appspot.com/DBML";
+
+    const logData = {
+      "Log": {
+        "type": type,
+        "statusCode": statusCode,
+        "details": details,
+        "user": user,
+        "moreInfo": moreInfo
+      }
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: logData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', dbmllogURL, options);
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                   CREATE/ADD NEW ORGANISATION
