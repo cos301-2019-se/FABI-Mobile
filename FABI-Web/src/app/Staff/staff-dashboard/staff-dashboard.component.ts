@@ -32,8 +32,6 @@ export class StaffDashboardComponent implements OnInit {
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /** Holds the div element (adminContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
   /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
   @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
 
@@ -66,57 +64,6 @@ export class StaffDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(private userManagementService: UserManagementAPIService, private resolver: ComponentFactoryResolver, private notificationLoggingService: NotificationLoggingService) { }
-
- 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                LOAD_ADMINS
-  /**
-   *  This function will load admin users into the section provided on the HTML page. 
-   *  This function will also dynamically load elements containing information about the administrators
-   *  to the HTML page dynamically
-   * 
-   * @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadAdmins(){
-    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllFABIAdmins().subscribe((response: any) => {
-      if(response.success == true){
-        //Populating the arrays with the returned data
-        var tempAdmins = response.data.qs.admins;
-        for(var i = 0; i < tempAdmins.length; i++){
-          var tempMember: Member = {Name: tempAdmins[i].fname, Surname: tempAdmins[i].surname, Email: tempAdmins[i].email};
-          this.admins.push(tempMember);
-        }
-
-        if(this.admins.length == 0){
-          //Dynamically loads a message indicating that there are no adminsitrators
-          const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-          adminDivRef.instance.Name = 'There are no administrators to load.';
-          adminDivRef.instance.Surname = '';
-          adminDivRef.instance.Email = '';
-        }
-        else{
-          //Dynamically loads all the admins into the HTML page
-          for(var i = 0; i < this.admins.length; i++){
-            const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-            adminDivRef.instance.Name = this.admins[i].Name;
-            adminDivRef.instance.Surname = this.admins[i].Surname;
-            adminDivRef.instance.Email = this.admins[i].Email;
-          }
-        }
-      }
-      else{
-        //The FABI administrators could not be retrieved
-        const adminDivRef = this.adminContainer.createComponent(this.resolver.resolveComponentFactory(AdminDivComponent));
-        adminDivRef.instance.Name = 'Could not load the administrators.';
-        adminDivRef.instance.Surname = '';
-        adminDivRef.instance.Email = '';
-
-        //TODO: error handling
-      }
-    });
-  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -279,7 +226,6 @@ export class StaffDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    this.loadAdmins();
     this.loadNotifications();
     this.delay(2000).then(any => {
       this.loadDynamicNotifications()
