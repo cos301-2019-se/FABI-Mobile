@@ -18,6 +18,6 @@ export enum Role {
     SuperUser = 'SuperUser',
     ClinicAdmin = 'ClinicAdmin',
     Staff = 'Staff',
-    Organisation = 'Organization',
+    OrganizationAdmin = 'OrganizationAdmin',
     Member = 'Member'
 }

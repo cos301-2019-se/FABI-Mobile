@@ -22,13 +22,40 @@ import { OrganizationProfileComponent } from './organization-profile/organizatio
 import { OrganizationViewSamplesComponent } from './organization-view-samples/organization-view-samples.component';
 import { SampleFormComponent } from '../sample-form/sample-form.component';
 import { MemberHandlerComponent } from "./member-handler/member-handler.component";
+import { AuthenticationGuard } from '../_guards/authentication.guard';
+import { Role } from '../_interfaces/role';
 
 const routes: Routes = [
-  {path: 'organization-dashboard', component: OrganizationDashboardComponent},
-  {path: 'member-handler', component: MemberHandlerComponent},
-  {path: 'organization-profile', component: OrganizationProfileComponent},
-  {path: 'organization-view-samples', component: OrganizationViewSamplesComponent},
-  {path: 'submit-sample', component: SampleFormComponent}
+  {
+    path: 'organization-dashboard', 
+    component: OrganizationDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.OrganizationAdmin] }
+  },
+  {
+    path: 'member-handler', 
+    component: MemberHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.OrganizationAdmin] }
+  },
+  {
+    path: 'organization-profile', 
+    component: OrganizationProfileComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.OrganizationAdmin] }
+  },
+  {
+    path: 'organization-view-samples', 
+    component: OrganizationViewSamplesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.OrganizationAdmin] }
+  },
+  {
+    path: 'submit-sample', 
+    component: SampleFormComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.OrganizationAdmin] }
+  }
 ];
 
 @NgModule({
