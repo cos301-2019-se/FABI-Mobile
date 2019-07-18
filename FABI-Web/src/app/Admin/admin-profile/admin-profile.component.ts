@@ -89,7 +89,7 @@ export class AdminProfileComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_Admin_PROFILE_DETAILS
+  //                                                  LOAD_ADMIN_PROFILE_DETAILS
   /**
    *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
