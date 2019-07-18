@@ -343,102 +343,80 @@ mat-icon {
     }
 }
 
-/* ================================================ */
-/* Add Staff Member Form Setup and Styling          */
-/* ================================================ */
-#add_new_database_form {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 50%;
-    height: 100%;
 
-    margin: 0;
-    padding-bottom:15px;
+#previewTable{
+    width: 95%;
+    padding-bottom: 30px;
 }
 
-#add_new_database_form .row{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+.tableHeading{
+    background-color: #6B8E4E;
+    color: white;
+    padding: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: Arial;
 }
 
-.organization-inputs{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+th{
+    border-bottom: 1.6px solid #ddd;
 }
 
-.admin-name-inputs{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.admin-contact-inputs{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.position-inputs{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.submit-input{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-@media(min-width:576px)
-{
-    #add_new_database_form {
-        width: 50%;
-    }
-
-    .organization-name{
-        width: 50%;
-    }
-
-    .organization-location{
-        width: 50%;
-    }
-
-    .organization-inputs{
-        flex-direction: row;
-    }
-    
-    .admin-name-inputs{
-        flex-direction: row;
-    }
-    
-    .admin-contact-inputs{
-        flex-direction: row;
-    }
-}
-
-#add_new_database_form .btn.btn-default {
-    background: #6B8E4E;
-    border: 3px solid #ffffff;
-    color: #ffffff;
+.btn.btn-default {
+    background: #555;
+    border: 3px solid #555;
+    color: white;
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
+    margin-top: 34px;
+    margin-left: 2rem;
     text-transform: uppercase;
 
-    border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    border: 1px solid #6B8E4E;
-
-    display: block;
-    margin: 0 auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 1px solid #555;
 
 }
 
-#add_new_database_form .btn.btn-default:hover {
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+.btn.btn-default:hover,
+.btn.btn-default:focus,
+.fileLabel:hover,
+.fileLabel:focus {
+    outline: none;
+    box-shadow: 0 19px 28px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+    font-size: 12.5px;
+}
+
+.inputFile {
+    display: none;
+}
+
+.fileLabel{
+    margin-top: 20px;
+    background-color: #6B8E4E;
+    border: 1px solid #6B8E4E;
+    border-radius: 6px;
+    padding: 6px;
+    color: white;
+    font-size: 12px;
+}
+
+.databaseName{
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.inputSpace{
+    height: 28px;
+    width: 20%;
+}
+
+@media (max-width: 500px) {
+
+    .inputSpace{
+        height: 28px;
+        width: 45%;
+    }
 }
