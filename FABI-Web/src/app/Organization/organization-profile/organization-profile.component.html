@@ -101,20 +101,12 @@
     <h2>Organization Profile</h2>
     <hr />
 
-    <form id="add_new_organization_form" [formGroup]="registerOrgForm" (submit)="registerOrg()">
+    <form id="add_new_organization_form" [formGroup]="adminProfileForm" (submit)="saveChanges()">
       <div class="row">
         <!--Organization Name Field-->
         <div class="organization-name">
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name">
-          </mat-form-field>
-          <br />
-        </div>
-
-        <!--Location Field-->
-        <div class="organization-location">
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Location" matInput type="text" formControlName="organization_location">
+            <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name" value="{{organization}}" disabled>
           </mat-form-field>
           <br />
         </div>
@@ -122,13 +114,13 @@
         <!--Admin Name Field-->
         <div class="admin-name-inputs">
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name">
+            <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name" value="{{name}}">
           </mat-form-field>
           <br />
 
           <!--Admin Surname Field-->
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
+            <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname" value="{{surname}}">
           </mat-form-field>
           <br />
         </div>
@@ -136,57 +128,16 @@
         <!--Admin Email Field-->
         <div class="admin-contact-inputs">
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email">
+            <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email" value="{{email}}">
           </mat-form-field>
           <br />
-
-          <!--Admin Phone Number-->
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Admin Phone Number" matInput type="number" formControlName="admin_phone">
-          </mat-form-field>
         </div>
         <br />
 
         <div class="submit-input">
-          <!-- <button type="submit" id="add_organization" class="btn btn-default">Add new organization</button> -->
+          <button type="submit" id="save" class="btn btn-default">Save Information</button>
         </div>
       </div>
     </form>
-
-
-
-    <!-- <form class="organization_profile_form">
-      <div class="row">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Organization Name" value="Org1">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Name" value="John">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Surname" value="Doe">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Email" value="john@org1.co.za">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Phone Number" value="0219875367">
-        </mat-form-field>
-        <br />
-
-        <button id="submit_edited_details" class="btn btn-default" routerLink="">Save Changes</button>
-      </div>
-    </form> -->
   </div>
-
-
-
 </div>
