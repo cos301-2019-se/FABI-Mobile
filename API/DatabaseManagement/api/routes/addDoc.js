@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
+const log = require('../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -50,7 +51,7 @@ function addDoc(req, res)
     }
 
 // (2) Connect to DB
-    req.body.data.id = item.id = new Date().getTime().toString();
+    req.body.data.id = new Date().getTime().toString();
     var docRef  = db.collection('Databases').doc(req.body.databaseName).collection('Data').doc(req.body.data.id);
     docRef.set(req.body.data).then(() => {
         res.setHeader('Content-Type', 'application/problem+json');
@@ -67,8 +68,10 @@ function addDoc(req, res)
     });
     log({
         type: "DBML",
-        action: "addDoc",
-        details: {databaseName: req.body.databaseName, id: req.body.data.id} 
+        action: "/addDoc",
+        details: req.body.databaseName,
+        user: '1563355277876',
+        org1: 'FABI'
     });
 });
 

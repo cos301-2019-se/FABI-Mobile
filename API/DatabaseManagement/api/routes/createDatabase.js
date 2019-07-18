@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
 const bcrypt = require('bcrypt-nodejs');
+const log = require('../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -113,8 +114,10 @@ const salt = bcrypt.genSaltSync(10);
         );
         log({
             type: "DBML",
-            action: "createDatabase",
-            details: {databaseName:   req.body.databaseName}
+            action: "/createDatabase",
+            details: req.body.databaseName,
+            user: '1563355277876',
+            org1: 'FABI'
         });
     }).catch((err) => {
         console.log("Database connection error: " + err);

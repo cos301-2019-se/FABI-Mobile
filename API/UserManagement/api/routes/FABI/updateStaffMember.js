@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
 const bcrypt = require('bcrypt-nodejs');
+const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -102,7 +103,15 @@ function updateStaff(req, res) {
                             
                         }
                 });
-            
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: req.body.id,
+                    org1: 'FABI',
+                    org2: 'FABI',
+                    action: '/updateStaffMember'
+                });
         })}}).catch((err) =>{
             console.log("Database connection error: " + err);
             res.setHeader('Content-Type', 'application/problem+json');

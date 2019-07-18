@@ -4,6 +4,7 @@ const request = require("request");
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
 const mail = require('../sendEmail');
+const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -118,6 +119,15 @@ function addOrganization(req, res)
                 }
         })
         mail(req.body.orgName + ' Admin', pass);
+        log({
+            type: 'USER',
+            action: 'AddMemberToOrg',
+            details: '1563355277876',
+            user: qs.admin.id,
+            org1: 'FABI',
+            org2: req.body.orgName,
+            action: '/createOrganization'
+        });
     });
         console.log("New Organization Added");
     }).catch((err) => {

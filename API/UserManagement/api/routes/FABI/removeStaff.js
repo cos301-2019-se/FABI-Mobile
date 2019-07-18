@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
+const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -58,7 +59,7 @@ function removeStaff(req, res) {
             qs = doc.data();
             delete qs.password;
             //(3)
-            db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.email).delete().then(() => {
+            db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id).delete().then(() => {
                 res.setHeader('Content-Type', 'application/problem+json');
                             res.setHeader('Content-Language', 'en');
                             res.setHeader("Access-Control-Allow-Origin", "*");
@@ -71,6 +72,15 @@ function removeStaff(req, res) {
                                     Member : qs
                                 }
                             
+                        });
+                        log({
+                            type: 'USER',
+                            action: 'AddMemberToOrg',
+                            details: '1563355277876',
+                            user: doc.data().id,
+                            org1: 'FABI',
+                            org2: 'FABI',
+                            action: '/removeStaff'
                         });
             });
             

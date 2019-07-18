@@ -123,18 +123,18 @@ module.exports.getAccessToken = function(bearerToken, callback)
             var member;
             doc.forEach(element => {
                 member = element.data();
-                console.log(member);
             });
-
+            now = new Date();
+            now = now.getTime();
             const accessToken = {
                 user: {
                     id: member.userID
                 },
-                accessTokenExpiresAt: member.expires,
+                accessTokenExpiresAt: (member.expires - now),
                 accessToken: member.accessToken
             };
-            
-            callback(false, accessToken);
+            console.log(accessToken);
+            callback(false, null);
         }
     }).catch(error => {console.log("ERROR: " + error)});
 
