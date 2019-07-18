@@ -32,8 +32,8 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 import * as Interface from '../../_interfaces/interfaces';
 
-import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 
 
 @Component({
