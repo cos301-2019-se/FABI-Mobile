@@ -36,7 +36,7 @@ const routes: Routes = [
     path: 'organization-dashboard',
     component: OrganizationDashboardComponent,
     canActivate: [AuthenticationGuard],
-    data: { roles: [Role.Organisation] }
+    data: { roles: [Role.OrganizationAdmin] }
   },
   {
     path: 'staff-dashboard',

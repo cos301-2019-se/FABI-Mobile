@@ -133,13 +133,13 @@ export class LoginComponent implements OnInit {
         });
 
         // Navigate to specific dashboard, based on user's type
-        if(response.userDetails.userType == 'SuperUser'|| response.userDetails.userType == 'clinicAdmin') {
+        if(response.userDetails.userType == 'SuperUser'|| response.userDetails.userType == 'ClinicAdmin') {
           this.router.navigate(['/admin-dashboard']);
-        } else if(response.userDetails.userType == 'organization') {
+        } else if(response.userDetails.userType == 'OrganizationAdmin') {
           this.router.navigate(['/organization-dashboard']);
-        } else if(response.userDetails.userType == 'member') {
+        } else if(response.userDetails.userType == 'Member') {
           this.router.navigate(['/member-dashboard']);
-        } else if(response.userDetails.userType == 'staff') {
+        } else if(response.userDetails.userType == 'Staff') {
           this.router.navigate(['/staff-dashboard']);
         } else {
           let snackBarRef = this.snackBar.open("User not supported", "Dismiss", {
@@ -174,11 +174,6 @@ export class LoginComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    
-    // this.loggedIn = this.service.isLoggedIn();
-    // if (this.loggedIn == true) {
-    //   // Navigate to respective dashboard
-    // }
 
     //-------- Load Organisation names for Drop Down --------
     this.service.getAllOrganizations().subscribe((response: any) => {
