@@ -520,6 +520,7 @@ export class DatabaseHandlerComponent implements OnInit {
     this.service.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         
+        console.log("---- RESPONSE: " + JSON.stringify(response));
 
         Object.keys(response.data.docs[0]).forEach((column) => {
 
@@ -552,6 +553,7 @@ export class DatabaseHandlerComponent implements OnInit {
         }
 
         this.dataSource = new MatTableDataSource(response.data.docs);
+        
         // this.dataSource.paginator = this.paginator;
   
       } else if (response.success == false) {
