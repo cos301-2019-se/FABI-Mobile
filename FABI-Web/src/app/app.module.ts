@@ -6,6 +6,7 @@ import { MaterialModule} from './materials';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 
+
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,6 +52,11 @@ import { HomeComponent } from './home/home.component';
 import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
 import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
 import { UpdateComponent } from './update/update.component';
+import { NotificationDivComponent } from './Dynamic-Components/notification-div/notification-div.component';
+import { SampleDivComponent } from './Dynamic-Components/sample-div/sample-div.component';
+import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
+import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.component';
+import { ReportingComponent } from './Admin/reporting/reporting.component';
 
 @NgModule({
   declarations: [
@@ -83,12 +89,19 @@ import { UpdateComponent } from './update/update.component';
     ConfirmComponent,
     UpdateComponent,
     AdminDivComponent,
-    StaffDivComponent
+    StaffDivComponent,
+    NotificationDivComponent,
+    SampleDivComponent,
+    AdminProfileComponent,
+    StaffProfileComponent,
+    ReportingComponent
   ],
   entryComponents: [
     ConfirmComponent,
     AdminDivComponent,
     StaffDivComponent,
+    NotificationDivComponent,
+    SampleDivComponent,
     ErrorComponent
   ],
   imports: [
@@ -107,7 +120,9 @@ import { UpdateComponent } from './update/update.component';
     ErrorsModule,
     LayoutModule
   ],
-  providers: [NotificationService],
+  providers: [
+    NotificationService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
