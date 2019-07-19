@@ -237,43 +237,338 @@ export class SubmitCbsDepositComponent implements OnInit {
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;h1&gt;Submit CBS Deposit Form&lt;/h1&gt;
-&lt;mat-card&gt;
-  &lt;form class&#x3D;&quot;example-form&quot;&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container&quot;&gt;
 
-      &lt;mat-form-field class&#x3D;&quot;example-full-width&quot;&gt;
+  &lt;!--Nav Section--&gt;
+  &lt;div class&#x3D;&quot;nav&quot;&gt;
+
+    &lt;section class&#x3D;&quot;top-nav&quot;&gt;
+      &lt;h1&gt;CBS Deposit Form&lt;/h1&gt;
+      &lt;a id&#x3D;&quot;dashboard_menu_link&quot; routerLink&#x3D;&quot;/staff-dashboard&quot;&gt;&lt;i class&#x3D;&quot;fas fa-home&quot;&gt;&lt;/i&gt;Home&lt;/a&gt;
+      &lt;a id&#x3D;&quot;submit_CMW_request&quot; routerLink&#x3D;&quot;/submit-cmw-request&quot;&gt;&lt;i class&#x3D;&quot;fab fa-wpforms&quot;&gt;&lt;/i&gt;CMW Request
+        Form&lt;/a&gt;
+      &lt;a id&#x3D;&quot;submit_CMW_deposit&quot; routerLink&#x3D;&quot;/submit-cmw-deposit&quot;&gt;&lt;i class&#x3D;&quot;fab fa-wpforms&quot;&gt;&lt;/i&gt;CMW Deposit
+        Form&lt;/a&gt;
+      &lt;a id&#x3D;&quot;submit_CMW_revitalization&quot; routerLink&#x3D;&quot;/submit-cmw-revitalization&quot;&gt;&lt;i class&#x3D;&quot;fab fa-wpforms&quot;&gt;&lt;/i&gt;CMW
+        Revitalization Form&lt;/a&gt;
+      &lt;a id&#x3D;&quot;submit_CBS_request&quot; routerLink&#x3D;&quot;/submit-cbs-request&quot;&gt;&lt;i class&#x3D;&quot;fab fa-wpforms&quot;&gt;&lt;/i&gt;CBS Request
+        Form&lt;/a&gt;
+      &lt;a id&#x3D;&quot;submit_CBS_deposit&quot; routerLink&#x3D;&quot;/submit-cbs-deposit&quot;&gt;&lt;i class&#x3D;&quot;fab fa-wpforms&quot;&gt;&lt;/i&gt;CBS Deposit
+        Form&lt;/a&gt;
+      &lt;a id&#x3D;&quot;submit_samples&quot; routerLink&#x3D;&quot;/staff-submit-sample&quot;&gt;&lt;i class&#x3D;&quot;fas fa-vial&quot;&gt;&lt;/i&gt;Submit Sample&lt;/a&gt;
+      &lt;a id&#x3D;&quot;profile_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;i class&#x3D;&quot;fas fa-user-circle&quot;&gt;&lt;/i&gt;Profile&lt;/a&gt;
+      &lt;a id&#x3D;&quot;help_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;i class&#x3D;&quot;fas fa-question&quot;&gt;&lt;/i&gt;Help&lt;/a&gt;
+      &lt;a id&#x3D;&quot;settings_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;i class&#x3D;&quot;fas fa-cogs&quot;&gt;&lt;/i&gt;Settings&lt;/a&gt;
+      &lt;a href&#x3D;&quot;&quot; id&#x3D;&quot;notification-bell&quot;&gt;&lt;i class&#x3D;&quot;fas fa-bell&quot;&gt;&lt;/i&gt;Notifications&lt;/a&gt;
+    &lt;/section&gt;
+
+    &lt;section class&#x3D;&quot;bottom-nav&quot;&gt;
+      &lt;a id&#x3D;&quot;logout_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;i class&#x3D;&quot;fas fa-sign-out-alt&quot;&gt;&lt;/i&gt;Logout&lt;/a&gt;
+    &lt;/section&gt;
+    &lt;a href&#x3D;&quot;&quot; id&#x3D;&quot;menu&quot;&gt;&lt;i class&#x3D;&quot;fas fa-bars&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+  &lt;/div&gt;
+
+  &lt;!--CBS Deposit Form Content--&gt;
+  &lt;div class&#x3D;&quot;content&quot;&gt;
+    &lt;div class&#x3D;&quot;color-accent&quot;&gt;
+      &lt;h1&gt;CBS Deposit Form&lt;/h1&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;cbs-deposit&quot;&gt;
+      &lt;form class&#x3D;&quot;example-form&quot;&gt;
+
+        &lt;mat-form-field class&#x3D;&quot;example-full-width&quot;&gt;
           &lt;input matInput placeholder&#x3D;&quot;Culture Type&quot;&gt;
         &lt;/mat-form-field&gt;
-        &lt;br/&gt;
+        &lt;br /&gt;
 
 
-            &lt;button id&#x3D;&quot;submit_cbs_deposit&quot; class&#x3D;&quot;btn btn-default&quot; routerLink&#x3D;&quot;/fabi-internal-dashboard&quot;&gt;Submit&lt;/button&gt;
-  &lt;/form&gt;
-&lt;/mat-card&gt;</code></pre>
+        &lt;button id&#x3D;&quot;submit_cbs_deposit&quot; class&#x3D;&quot;btn btn-default&quot; routerLink&#x3D;&quot;/fabi-internal-dashboard&quot;&gt;Submit&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+
+
+
+  &lt;/div&gt;
+
+&lt;/div&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
                 <p class="comment">
                     <code>./submit-cbs-deposit.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">.btn.btn-default {
-    background: transparent;
-    border: 3px solid #196F3D;
-    color: #196F3D;
+                <pre class="line-numbers"><code class="language-scss">/*-------------
+    General
+-------------*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: &#x27;Open Sans&#x27;, sans-serif;
+    color: #555;
+    background-color: #E0E0E0;
+}
+
+.container {
+
+    height: 100vh;
+
+
+    display: flex;
+
+    z-index: -2;
+
+    //position: relative;
+
+}
+
+/*-------------
+    Sidenav
+-------------*/
+
+.nav {
+    width: 25%;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #6B8E4E;
+
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+
+    z-index: 0;
+
+    font-family: &#x27;Roboto&#x27;, sans-serif;
+
+}
+
+.top-nav {
+    background-color: #6B8E4E;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.top-nav h1 {
+    font-size: 28px;
+    margin: 40px 20px 20px 10%;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.bottom-nav {
+    background-color: #6B8E4E;
+
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.nav #menu i {
+    font-size: 24px;
+    margin: 20px 20px 20px 20%;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.top-nav a {
+    font-size: 24px;
+    margin: 20px 20px 20px 20%;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.bottom-nav a {
+    font-size: 24px;
+    margin: 20px 20px 20px 10%;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.nav a:hover {
+    font-size: 26px;
+}
+
+a i {
+    padding-right: 15px;
+}
+
+.nav #menu,
+.nav #notification-bell {
+    display: none;
+}
+
+@media (max-width: 1250px) {
+    .nav {
+        width: 40%;
+    }
+
+    .nav #notification-bell {
+        display: block;
+    }
+}
+
+@media (max-width: 1100px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .nav {
+        height: 10%;
+        width: 100%;
+
+
+        flex-direction: row;
+        justify-content: flex-end;
+        order: 0;
+
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+    }
+
+    .nav&gt;* {
+        display: none;
+    }
+
+    .nav #menu {
+        display: block;
+    }
+
+}
+
+/*-------------
+    Content
+-------------*/
+
+.content {
+    width: 100%;
+
+    background-color: #E0E0E0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    z-index: -1;
+}
+
+
+@media (max-width: 1250px) {
+    .content {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1100px) {
+
+    .content {
+        height: 100%;
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 400px) {
+    .content {
+        height: 70%;
+    }
+}
+
+/*------------------
+    Accent Banner
+-------------------*/
+.color-accent {
+    background-color: #3C5148;
+    width: 80%;
+    height: 10%;
+
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+
+    z-index: 1;
+}
+
+.color-accent h1 {
+    font-family: &#x27;Roboto&#x27;, sans-serif;
+    color: #ffffff;
+    font-size: 30px;
+    text-transform: uppercase;
+
+    margin: 40px 20px 20px 10%;
+}
+
+/*------------------------
+    CBS Deposit Form
+-------------------------*/
+.cbs-deposit{
+    background-color: #eceaea;
+    width: 90%;
+    height: 80%;
+
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+
+    z-index: 0;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*----------------------------------
+        Form and Input Styling
+-----------------------------------*/
+.mat-form-field.mat-focused {
+    .mat-form-field-label {
+        color: #3C5148;
+    }
+
+    .mat-form-field-ripple {
+        background-color: #3C5148;
+    }
+
+    .mat-form-field-required-marker {
+        color: #3C5148;
+    }
+
+    .mat-input-element {
+        color: #3C5148;
+    }
+}
+
+.btn.btn-default {
+    background: #6B8E4E;
+    border: 3px solid #6B8E4E;
+    color: #ffffff;
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
     margin-top: 34px;
-    margin-left: 2rem;
+    margin-bottom: 2rem;
     text-transform: uppercase;
 
     border-radius: 50px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
-    border: 1px solid #196F3D;
+    border: 1px solid #6B8E4E;
 
-    display:block;
+    display: block;
+    margin: 0 auto;
 
+}
+
+.btn.btn-default:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form_inputs {
+    width: 25%;
 }</code></pre>
     </div>
 
@@ -302,8 +597,8 @@ export class SubmitCbsDepositComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><h1>Submit CBS Deposit Form</h1><mat-card>  <form class="example-form">      <mat-form-field class="example-full-width">          <input matInput placeholder="Culture Type">        </mat-form-field>        <br/>            <button id="submit_cbs_deposit" class="btn btn-default" routerLink="/fabi-internal-dashboard">Submit</button>  </form></mat-card></div>'
-    var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'}];
+        var COMPONENT_TEMPLATE = '<div><div class="container">  <!--Nav Section-->  <div class="nav">    <section class="top-nav">      <h1>CBS Deposit Form</h1>      <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>      <a id="submit_CMW_request" routerLink="/submit-cmw-request"><i class="fab fa-wpforms"></i>CMW Request        Form</a>      <a id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><i class="fab fa-wpforms"></i>CMW Deposit        Form</a>      <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW        Revitalization Form</a>      <a id="submit_CBS_request" routerLink="/submit-cbs-request"><i class="fab fa-wpforms"></i>CBS Request        Form</a>      <a id="submit_CBS_deposit" routerLink="/submit-cbs-deposit"><i class="fab fa-wpforms"></i>CBS Deposit        Form</a>      <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>      <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>    </section>    <section class="bottom-nav">      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>    </section>    <a href="" id="menu"><i class="fas fa-bars"></i></a>  </div>  <!--CBS Deposit Form Content-->  <div class="content">    <div class="color-accent">      <h1>CBS Deposit Form</h1>    </div>    <div class="cbs-deposit">      <form class="example-form">        <mat-form-field class="example-full-width">          <input matInput placeholder="Culture Type">        </mat-form-field>        <br />        <button id="submit_cbs_deposit" class="btn btn-default" routerLink="/fabi-internal-dashboard">Submit</button>      </form>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AdminDivComponent', 'selector': 'app-admin-div'},{'name': 'AdminProfileComponent', 'selector': 'app-admin-profile'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'ConfirmComponent', 'selector': 'app-confirm'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'NotificationDivComponent', 'selector': 'app-notification-div'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'ReportingComponent', 'selector': 'app-reporting'},{'name': 'SampleDivComponent', 'selector': 'app-sample-div'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffDivComponent', 'selector': 'app-staff-div'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffProfileComponent', 'selector': 'app-staff-profile'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'},{'name': 'UpdateComponent', 'selector': 'app-update'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SubmitCbsDepositComponent'};
 </script>
@@ -318,6 +613,7 @@ export class SubmitCbsDepositComponent implements OnInit {
 
 
 
+                   
 
 
 
