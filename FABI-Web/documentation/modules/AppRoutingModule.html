@@ -73,25 +73,71 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
 import { Routes, RouterModule } from &#x27;@angular/router&#x27;;
 
-import { LoginComponent } from &#x27;./login/login.component&#x27;;
-import { SampleFormComponent } from &#x27;./sample-form/sample-form.component&#x27;;
+import { LoginComponent } from &quot;./login/login.component&quot;;
+import { HomeComponent } from &quot;./home/home.component&quot;;
 import { AdminDashboardComponent } from &quot;./Admin/admin-dashboard/admin-dashboard.component&quot;;
 import { OrganizationDashboardComponent } from &quot;./Organization/organization-dashboard/organization-dashboard.component&quot;;
 import { StaffDashboardComponent } from &quot;./Staff/staff-dashboard/staff-dashboard.component&quot;;
 import { MemberDashboardComponent } from &quot;./Organization-Member/member-dashboard/member-dashboard.component&quot;;
 
-
+import { Role } from &quot;./_interfaces/role&quot;;
+import { AuthenticationGuard } from &#x27;./_guards/authentication.guard&#x27;;
+import { UpdateComponent } from &#x27;./update/update.component&#x27;;
+import { SampleFormComponent } from &#x27;./sample-form/sample-form.component&#x27;;
+import { ReportingComponent } from &#x27;./Admin/reporting/reporting.component&#x27;;
 
 const routes: Routes &#x3D; [
-  {path: &#x27;login&#x27;, component: LoginComponent},
-  {path: &#x27;sample-form&#x27;, component: SampleFormComponent},
-  {path: &#x27;&#x27;, component: LoginComponent},
-  {path: &#x27;fabi-admin-dashboard&#x27;, component: AdminDashboardComponent},
-  {path: &#x27;org-admin-dashboard&#x27;, component: OrganizationDashboardComponent},
-  {path: &#x27;fabi-staff-dashboard&#x27;, component: StaffDashboardComponent},
-  {path: &#x27;org-member-dashboard&#x27;, component: MemberDashboardComponent}
-
-
+  {
+    path: &#x27;home&#x27;, 
+    component: HomeComponent
+  },
+  { 
+    path: &#x27;&#x27;,   
+    redirectTo: &#x27;/home&#x27;, 
+    pathMatch: &#x27;full&#x27; 
+  },
+  {
+    path: &#x27;login&#x27;, 
+    component: LoginComponent
+  },
+  {
+    path: &#x27;admin-dashboard&#x27;, 
+    component: AdminDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: { roles: [&#x27;SuperUser&#x27;, &#x27;ClinicAdmin&#x27;] }
+  },
+  {
+    path: &#x27;organization-dashboard&#x27;,
+    component: OrganizationDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: { roles: [&#x27;OrganizationAdmin&#x27;] }
+  },
+  {
+    path: &#x27;staff-dashboard&#x27;,
+    component: StaffDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: { roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;member-dashboard&#x27;, 
+    component: MemberDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: { roles: [&#x27;Member&#x27;] }
+  },
+  {
+    path: &#x27;update&#x27;,
+    component: UpdateComponent,
+  },
+  {
+    path: &#x27;submit-sample&#x27;, 
+    component: SampleFormComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Member&#x27;] }
+  },
+  {
+    path: &#x27;reporting&#x27;,
+    component: ReportingComponent
+  }
 
 ];
 
@@ -113,6 +159,7 @@ export class AppRoutingModule { }
 
 
 
+                   
 
 
 
