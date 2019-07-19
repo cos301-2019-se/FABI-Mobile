@@ -173,7 +173,7 @@ export class SampleFormComponent implements OnInit {
       conditions_additional : this.sampleForm.controls.conditions_additional.value,
     };
 
-    const orgDetails: Interface.Organisation = { orgName: localStorage.getItem('orgName') };
+    const orgDetails: Interface.Organisation = { orgName: this.service.currentSessionValue.user.organisation };
 
 
     this.service.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
