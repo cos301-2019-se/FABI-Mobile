@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Friday, July 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -26,6 +26,7 @@ import { AdminProfileComponent } from "./admin-profile/admin-profile.component";
 
 import { AuthenticationGuard } from '../_guards/authentication.guard';
 import { Role } from '../_interfaces/role';
+import { ReportingComponent } from './reporting/reporting.component';
 
 
 const routes: Routes = [
@@ -62,7 +63,12 @@ const routes: Routes = [
   {
     path: 'admin-profile', 
     component: AdminProfileComponent
+  },
+  {
+    path: 'reporting', 
+    component: ReportingComponent
   }
+  
 ];
 
 @NgModule({
