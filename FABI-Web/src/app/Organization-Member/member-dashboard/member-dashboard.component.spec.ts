@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemberDashboardComponent } from './member-dashboard.component';
 
 import { MaterialModule } from '../../materials';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MemberDashboardComponent', () => {
@@ -14,7 +14,9 @@ describe('MemberDashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MemberDashboardComponent ],
       imports: [MaterialModule,
-        NoopAnimationsModule]
+        NoopAnimationsModule,
+        HttpClientTestingModule
+      ]
     })
     .compileComponents();
   }));

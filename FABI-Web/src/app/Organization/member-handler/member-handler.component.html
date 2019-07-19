@@ -1,204 +1,232 @@
-<div class="container">
+<!--Bootstrap Navbar-->
+<div class="container-fluid" id="nav-section">
+  <nav class="navbar navbar-expand-xl">
+    <a class="navbar-brand" href="#">Member Handler</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      <i class="fas fa-bars"></i>
+    </button>
 
-  <!--Nav Section-->
-  <div class="nav">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
 
-    <section class="top-nav">
-      <h1>Member Management</h1>
-      <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
-      <a id="guest_management" routerLink="/member-handler"><i class="fas fa-users"></i>Members</a>
-      <a id="view_samples" routerLink="/organization-view-samples"><i class="fas fa-vials"></i>View Samples</a>
-      <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
-      <a id="profile" routerLink="/organization-profile"><i class="fas fa-user-circle"></i>Profile</a>
-      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
-    </section>
+        <li class="nav-item active">
+          <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
+        </li>
 
-    <section class="bottom-nav">
-      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
-    </section>
-    <a href="" id="menu"><i class="fas fa-bars"></i></a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-tasks"></i>Handlers
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff Handler</a>
+            <a id="organization_management" routerLink="/organization-handler"><i
+                class="fas fa-building"></i>Organization
+              Handler</a>
+            <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i
+                class="fas fa-stethoscope"></i>Diagnostic
+              Clinic Handler</a>
+            <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Database
+              Handler</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
+            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        </li>
+
+        <li class="nav-item">
+          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<!--SlideOut -->
+<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
+  <!--Tab-->
+  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
+    <div>
+      <p>Notifications</p>
+    </div>
   </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Admin Notifications</h4>
+    </div>
+    <div class="modal-body" id="notifications-section">
 
-  <!--Member Handler Content-->
-  <div class="content">
-    <!-- <div class="color-accent">
-      <h1>Member Management</h1>
-    </div> -->
+      <h2 *ngIf="!notifications">No notifications</h2>
+      <!--*********************************************************************
+            DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
+        *************************************************************************-->
+      <div class="box">
+        <div class="notification-heading">
+          <h2>Notification {{Number}}</h2>
+          <i class="fas fa-times"></i>
+        </div>
 
-    <div class="member-management">
-      <!--Tab Menu-->
-      <mat-tab-group animationDuration="1000ms">
+        <div class="notification-content">
+          <p><b>Type:</b> {{Type}} notification</p>
+          <p><b>Action:</b> {{Action}}</p>
+          <p><b>Date:</b> {{Date}}</p>
+          <p><b>Details:</b> {{Details}}</p>
+        </div>
+      </div>
 
-        <!--Add Tab Option-->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon>person_add</mat-icon>
-            Add Member
-          </ng-template>
-          <div class="tab-content">
-            <h2>Add Member</h2>
-            <br />
+      <div #notificationContainer></div>
 
-            <form id="add_new_member_form" [formGroup]="addMemberForm" (submit)="addMember()">
+    </div>
+    <div class="modal-footer"> </div>
+  </div>
+</div>
 
+<!--Member Handler Content-->
+<div class="container-fluid">
+
+  <div class="member-management">
+    <!--Tab Menu-->
+    <mat-tab-group animationDuration="1000ms">
+
+      <!--Add Tab Option-->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>person_add</mat-icon>
+          Add Member
+        </ng-template>
+        <div class="tab-content">
+          <h2>Add Member</h2>
+          <br />
+
+          <form id="add_new_member_form" [formGroup]="addMemberForm" (submit)="addMember()">
+            <div class="row">
               <!--Name Field-->
-              <mat-form-field class="form_inputs">
-                <input matInput placeholder="Name" matInput type="text" formControlName="member_name">
-              </mat-form-field>
-              <br />
+              <div class="name-inputs">
+                <mat-form-field class="form_inputs" class="col">
+                  <input matInput placeholder="Name" matInput type="text" formControlName="member_name">
+                </mat-form-field>
+                <br />
 
-              <!--Surname Field-->
-              <mat-form-field class="form_inputs">
-                <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname">
-              </mat-form-field>
-              <br />
-
-              <!--Location Field-->
-              <mat-form-field class="form_inputs">
-                <input matInput placeholder="Location" matInput type="text" formControlName="member_location">
-              </mat-form-field>
-              <br />
+                <!--Surname Field-->
+                <mat-form-field class="form_inputs" class="col">
+                  <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname">
+                </mat-form-field>
+                <br />
+              </div>
 
               <!--Email Field-->
-              <mat-form-field class="form_inputs">
-                <input matInput placeholder="Email Address" matInput type="text" formControlName="member_email">
-              </mat-form-field>
-              <br />
+              <div class="contact-inputs">
+                <mat-form-field class="form_inputs" class="col">
+                  <input matInput placeholder="Email Address" matInput type="text" formControlName="member_email">
+                </mat-form-field>
+                <br />
 
-              <!--Phone Number-->
-              <mat-form-field class="form_inputs">
-                <input matInput placeholder="Phone Number" matInput type="number" formControlName="member_phone">
-              </mat-form-field>
+                <!--Phone Number-->
+                <mat-form-field class="form_inputs" class="col">
+                  <input matInput placeholder="Phone Number" matInput type="number" formControlName="member_phone">
+                </mat-form-field>
+              </div>
+
+              <!--Location Field-->
+              <div class="location-input" class="col">
+                <mat-form-field class="form_inputs">
+                  <input matInput placeholder="Location" matInput type="text" formControlName="member_location">
+                </mat-form-field>
+                <br />
+              </div>
 
               <br />
               <p *ngIf="loading" class="errors">Adding Member...</p>
               <br />
-              <input type="submit" id="add_member" class="btn btn-default" value="Add Member" />
-
-            </form>
-
-          </div>
-        </mat-tab>
-
-        <!--Remove Tab Option-->
-        <!-- <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon>delete</mat-icon>
-            Remove Member
-          </ng-template>
-          <div class="tab-content">
-            <h2>Remove Member</h2>
-            <br />
-
-            <form id="remove_member_form">
-
-              Search Field
-              <mat-form-field class="form_inputs">
-                <input matInput placeholder="Search for a member">
-              </mat-form-field>
-              <br />
-
-              <button type="submit" id="remove_search_member" class="btn btn-default">Search</button>
-
-            </form>
-
-          </div>
-        </mat-tab> -->
-
-        <!--View Tab Option-->
-        <mat-tab (click)="viewMembers()">
-          <ng-template mat-tab-label>
-            <mat-icon>people</mat-icon>
-            View Members
-          </ng-template>
-          <div class="tab-content">
-            <h2>View Members</h2>
-            <br />
-            <!--Table of all members-->
-            <div class="member-table">
-              <!--Search Filter for the Table-->
-              <div class="search-field">
-                <mat-form-field>
-                  <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />
-                  <mat-placeholder class="placeholder">Search Member</mat-placeholder>
-                  <br />
-                </mat-form-field>
+              <div class="submit-input">
+                <input type="submit" id="add_member" class="btn btn-default" value="Add Member" />
               </div>
-              <br />
-
-              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info" *ngIf="dataSource">
-
-                <!-- First Name Column -->
-                <ng-container matColumnDef="First Name">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.fname}} </td>
-                </ng-container>
-
-                <!-- Surname Column -->
-                <ng-container matColumnDef="Surname">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Surname </th>
-                  <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
-                </ng-container>
-
-                <!-- Email Column -->
-                <ng-container matColumnDef="Email">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-                  <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-                </ng-container>
-
-                <!-- Action Column -->
-                <ng-container matColumnDef="Action">
-                  <th mat-header-cell *matHeaderCellDef> Action </th>
-                  <td mat-cell *matCellDef="let element"><button [id]="element.email"
-                      class="btn btn-default">Update</button></td>
-                </ng-container>
-
-                <!-- Remove Column -->
-                <ng-container matColumnDef="Remove">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-                  <td mat-cell *matCellDef="let element" (click)="removeMemberPrompt(element)"> <span style="color: darkred">Remove</span> </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-
-              <!--Pagination Setup-->
-              <!-- <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons *ngIf="dataSource"></mat-paginator> -->
             </div>
-          </div>
-        </mat-tab>
+          </form>
 
-        <!--Search Tab Option-->
-        <!-- <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon>search</mat-icon>
-            Search
-          </ng-template>
-          <div class="tab-content">
-            <h2>Search for a member</h2>
+        </div>
+      </mat-tab>
+
+      <!--View Tab Option-->
+      <mat-tab (click)="viewMembers()">
+        <ng-template mat-tab-label>
+          <mat-icon>people</mat-icon>
+          View Members
+        </ng-template>
+        <div class="tab-content">
+          <h2>View Members</h2>
+          <br />
+          <!--Table of all members-->
+          <div class="member-table">
+            <!--Search Filter for the Table-->
+            <div class="search-field">
+              <mat-form-field>
+                <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />
+                <mat-placeholder class="placeholder">Search Member</mat-placeholder>
+                <br />
+              </mat-form-field>
+            </div>
             <br />
 
-            <form id="search_member_form">
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info" *ngIf="dataSource">
 
-              <mat-form-field class="form_inputs">
-                <input matInput placeholder="Search for a member">
-              </mat-form-field>
-              <br />
+              <!-- First Name Column -->
+              <ng-container matColumnDef="First Name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.fname}} </td>
+              </ng-container>
 
-              <button type="submit" id="search_member" class="btn btn-default">Search</button>
+              <!-- Surname Column -->
+              <ng-container matColumnDef="Surname">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Surname </th>
+                <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+              </ng-container>
 
-            </form>
+              <!-- Email Column -->
+              <ng-container matColumnDef="Email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+              </ng-container>
 
+              <!-- Action Column -->
+              <ng-container matColumnDef="Action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element"><button [id]="element.email"
+                    class="btn btn-default">Update</button></td>
+              </ng-container>
+
+              <!-- Remove Column -->
+              <ng-container matColumnDef="Remove">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                <td mat-cell *matCellDef="let element" (click)="removeMemberPrompt(element)"><button [id]="element.email"
+                  class="btn btn-danger">Remove</button></td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <!--Pagination Setup-->
+            <!-- <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons *ngIf="dataSource"></mat-paginator> -->
           </div>
-        </mat-tab> -->
-      </mat-tab-group>
-    </div>
-
-
-
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
-
 </div>

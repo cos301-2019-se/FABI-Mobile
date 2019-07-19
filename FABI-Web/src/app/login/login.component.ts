@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, June 26th 2019
+ * Last Modified: Tuesday, July 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -68,7 +68,8 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, 
+    private router: Router) {
     this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
       userType: ['', Validators.required],
@@ -111,8 +112,6 @@ export class LoginComponent implements OnInit {
 
     this.service.login(details).subscribe((response: any) => {
 
-     console.log(response);
-
       this.loading = false;
 
       // API Request successful
@@ -126,47 +125,19 @@ export class LoginComponent implements OnInit {
         }
         // ELSE user Authorised:
 
+        //Setting local storage to hold the users details
+        localStorage.setItem('userID', response.userDetails.id);
+        localStorage.setItem('userOrganization', Lorg);
+
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Logged In", "Dismiss", {
           duration: 3000
         });
 
+        this.router.navigate(['/admin-dashboard']);
+
         this.service.setSessionVariables(response.token, details.orgName, details.userType);
         // this.service.setLoggedin();
-
-        // Navigate to specific dashboard, based on user's type
-        if (details.orgName == "FABI") {
-          if (details.userType == "Admin" || details.userType == "Database Admin") {
-            try {
-              this.router.navigate(['admin-dashboard']);
-            } catch (err) {
-              console.log("Could not redirect to dashboard: " + err.message);
-            }
-
-          }
-          else {
-            try {
-              this.router.navigate(['staff-dashboard']);
-            } catch (err) {
-              console.log("Could not redirect to dashboard: " + err.message);
-            }
-          }
-        }
-        else {
-          if (details.userType == "Admin") {
-            try {
-              this.router.navigate(['org-admin-dashboard']);
-            } catch (err) {
-              console.log("Could not redirect to dashboard: " + err.message);
-            }
-          } else {
-            try {
-              this.router.navigate(['org-member-dashboard']);
-            } catch (err) {
-              console.log("Could not redirect to dashboard: " + err.message);
-            }
-          }
-        }
 
       } else if (response.success == false) {
         //POPUP MESSAGE
