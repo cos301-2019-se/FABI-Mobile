@@ -26,9 +26,9 @@
   - [Demo 2 Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
   
   ### Demo 3
-  - [Demo 3 System Requirments Specification]()
+  - [Demo 3 System Requirments Specification](https://drive.google.com/open?id=1uAG7aFw4NiGeMVqJzubG-emya5j2DLei)
   -  [Demo 3 Presentation]()
-  -  [Demo 3 Testing Policy]()
+  -  [Demo 3 Testing Policy](https://drive.google.com/file/d/1cKpRM-BpTHm5TSHKbXVEdhUCf4MpBtTQ/view?usp=sharing)
   -  [Demo 3 User Manual]()
   -  [Demo 3 Organization User Manual]()
   -  [Demo 3 Coding Standards Document]()
