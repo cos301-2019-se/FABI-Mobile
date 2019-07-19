@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, June 26th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,22 +17,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../_services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../errors/error-component/error.component';
+import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 
 //Include Material Components
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
-import * as Interface from '../../interfaces/interfaces';
+import * as Interface from '../../_interfaces/interfaces';
 
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
-import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 
 
 @Component({
@@ -80,6 +80,9 @@ export class OrganizationHandlerComponent implements OnInit {
   notifications: boolean = true; 
   /** THe number of the notifications - @type {number} */   
   localNotificationNumber : number = 1;   
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -543,6 +546,21 @@ export class OrganizationHandlerComponent implements OnInit {
       }
     });
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
 
   
 }

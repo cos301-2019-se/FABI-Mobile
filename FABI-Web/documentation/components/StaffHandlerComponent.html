@@ -80,6 +80,10 @@
         <tbody>
 
 
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
 
 
 
@@ -133,10 +137,59 @@
                                 <a href="#addStaffForm">addStaffForm</a>
                             </li>
                             <li>
+                                <a href="#allNotifications">allNotifications</a>
+                            </li>
+                            <li>
+                                <a href="#dataSource">dataSource</a>
+                            </li>
+                            <li>
+                                <a href="#displayedColumns">displayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#loading">loading</a>
+                            </li>
+                            <li>
+                                <a href="#localNotificationNumber">localNotificationNumber</a>
+                            </li>
+                            <li>
+                                <a href="#notifications">notifications</a>
+                            </li>
+                            <li>
+                                <a href="#numberOfAccessLogs">numberOfAccessLogs</a>
+                            </li>
+                            <li>
+                                <a href="#numberOfDatabaseLogs">numberOfDatabaseLogs</a>
+                            </li>
+                            <li>
+                                <a href="#numberOfUserLogs">numberOfUserLogs</a>
+                            </li>
+                            <li>
+                                <a href="#paginator">paginator</a>
+                            </li>
+                            <li>
+                                <a href="#readNotifications">readNotifications</a>
+                            </li>
+                            <li>
+                                <a href="#selectedStaff">selectedStaff</a>
+                            </li>
+                            <li>
+                                <a href="#selectedUserType">selectedUserType</a>
+                            </li>
+                            <li>
+                                <a href="#staffMembers">staffMembers</a>
+                            </li>
+                            <li>
                                 <a href="#submitted">submitted</a>
                             </li>
                             <li>
-                                <a href="#success">success</a>
+                                    <span class="modifier">Private</span>
+                                <a href="#toggle_status">toggle_status</a>
+                            </li>
+                            <li>
+                                <a href="#userTypes">userTypes</a>
+                            </li>
+                            <li>
+                                <a href="#valid">valid</a>
                             </li>
                         </ul>
                     </td>
@@ -154,13 +207,37 @@
                                 <a href="#addStaff">addStaff</a>
                             </li>
                             <li>
-                                <a href="#closeNav">closeNav</a>
+                                <a href="#displayUserTypes">displayUserTypes</a>
+                            </li>
+                            <li>
+                                <a href="#getDate">getDate</a>
+                            </li>
+                            <li>
+                                <a href="#loadNotifications">loadNotifications</a>
+                            </li>
+                            <li>
+                                <a href="#loadUserDetails">loadUserDetails</a>
                             </li>
                             <li>
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
                             <li>
-                                <a href="#sidenavToggle">sidenavToggle</a>
+                                <a href="#refreshDataSource">refreshDataSource</a>
+                            </li>
+                            <li>
+                                <a href="#removeStaffMember">removeStaffMember</a>
+                            </li>
+                            <li>
+                                <a href="#removeStaffMemberPrompt">removeStaffMemberPrompt</a>
+                            </li>
+                            <li>
+                                <a href="#selectOrganisation">selectOrganisation</a>
+                            </li>
+                            <li>
+                                <a href="#toggleNotificaitonsTab">toggleNotificaitonsTab</a>
+                            </li>
+                            <li>
+                                <a href="#viewStaff">viewStaff</a>
                             </li>
                         </ul>
                     </td>
@@ -180,17 +257,19 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(service: <a href="../injectables/AdminAPIService.html">AdminAPIService</a>, formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, snackBar: MatSnackBar, dialog: MatDialog, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>)</code>
+<code>constructor(service: <a href="../injectables/HttpService.html">HttpService</a>, formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, snackBar: MatSnackBar, dialog: MatDialog, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, userManagementService: <a href="../injectables/UserManagementAPIService.html">UserManagementAPIService</a>, notificationLoggingService: <a href="../injectables/NotificationLoggingService.html">NotificationLoggingService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:90</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Creates an instance of StaffHandlerComponent.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -199,6 +278,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -206,13 +286,17 @@
                                                         <td>service</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/AdminAPIService.html" target="_self" >AdminAPIService</a></code>
+                                                                        <code><a href="../injectables/HttpService.html" target="_self" >HttpService</a></code>
                                                         </td>
                                                   
                                                     <td>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>For calling the API service</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>formBuilder</td>
@@ -225,6 +309,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>For creating the login form</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>snackBar</td>
@@ -237,6 +325,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>For snack-bar pop-up messages</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>dialog</td>
@@ -249,6 +341,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>For dialog pop-up messages</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>router</td>
@@ -261,6 +357,42 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>For navigating to other modules/components</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>userManagementService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserManagementAPIService.html" target="_self" >UserManagementAPIService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>For calling the User Management API service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>notificationLoggingService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationLoggingService.html" target="_self" >NotificationLoggingService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>For calling the Notification Logging API service</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -302,8 +434,54 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="417"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:417</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function calls the <em>http</em> service to add a Staff Member</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayUserTypes"></a>
+                    <span class="name">
+                        <b>
+                            displayUserTypes
+                        </b>
+                        <a href="#displayUserTypes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>displayUserTypes()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="574"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:574</a></div>
                 </td>
             </tr>
 
@@ -323,36 +501,199 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="closeNav"></a>
+                    <a name="getDate"></a>
                     <span class="name">
                         <b>
-                            closeNav
+                            getDate
                         </b>
-                        <a href="#closeNav"><span class="icon ion-ios-link"></span></a>
+                        <a href="#getDate"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>closeNav()</code>
+<code>getDate(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="49"
-                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:49</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="151"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:151</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>This function will put the string date provided into a more readable format for the notifications</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>date</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The date of the log</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadNotifications"></a>
+                    <span class="name">
+                        <b>
+                            loadNotifications
+                        </b>
+                        <a href="#loadNotifications"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadNotifications()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="226"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:226</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will load the admin&#39;s notifications into the notification section on the HTML page</p>
+</div>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadUserDetails"></a>
+                    <span class="name">
+                        <b>
+                            loadUserDetails
+                        </b>
+                        <a href="#loadUserDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadUserDetails(userOrganization: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, userID: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="394"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:394</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will be called so that the information of a specific user can be fetched</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userOrganization</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>userID</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -380,8 +721,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="53"
-                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:53</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:136</a></div>
                 </td>
             </tr>
 
@@ -401,32 +742,303 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="sidenavToggle"></a>
+                    <a name="refreshDataSource"></a>
                     <span class="name">
                         <b>
-                            sidenavToggle
+                            refreshDataSource
                         </b>
-                        <a href="#sidenavToggle"><span class="icon ion-ios-link"></span></a>
+                        <a href="#refreshDataSource"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>sidenavToggle()</code>
+<code>refreshDataSource()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="539"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:539</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>This function refreshes the Datasource (in most cases, the table that has changed)</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeStaffMember"></a>
+                    <span class="name">
+                        <b>
+                            removeStaffMember
+                        </b>
+                        <a href="#removeStaffMember"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeStaffMember()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="510"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:510</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function calls the <em>http</em> service to remove the selected Staff Member </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeStaffMemberPrompt"></a>
+                    <span class="name">
+                        <b>
+                            removeStaffMemberPrompt
+                        </b>
+                        <a href="#removeStaffMemberPrompt"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeStaffMemberPrompt(member: <a href="../interfaces/StaffInfo.html">Interface.StaffInfo</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="480"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:480</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function prompts the user to confirm if they wish to remove the selected Staff Member</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>member</td>
+                                    <td>
+                                                <code><a href="../interfaces/StaffInfo.html" target="_self" >Interface.StaffInfo</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectOrganisation"></a>
+                    <span class="name">
+                        <b>
+                            selectOrganisation
+                        </b>
+                        <a href="#selectOrganisation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>selectOrganisation(staffMem: <a href="../interfaces/StaffInfo.html">Interface.StaffInfo</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="467"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:467</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function sets the Staff Member selected by the user in the table</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>staffMem</td>
+                                    <td>
+                                                <code><a href="../interfaces/StaffInfo.html" target="_self" >Interface.StaffInfo</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleNotificaitonsTab"></a>
+                    <span class="name">
+                        <b>
+                            toggleNotificaitonsTab
+                        </b>
+                        <a href="#toggleNotificaitonsTab"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleNotificaitonsTab()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="129"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:129</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to toggle the notifications tab.</p>
+<p>If set to true, a class is added which ensures that the notifications tab is displayed. 
+If set to flase, a class is removed which hides the notifications tab.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewStaff"></a>
+                    <span class="name">
+                        <b>
+                            viewStaff
+                        </b>
+                        <a href="#viewStaff"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewStaff()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="551"
+                            class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:551</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function calls the <em>http</em> service to get all registered FABI Staff</p>
+</div>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -462,10 +1074,513 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:54</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Object for defining the Add Staff form -  @type {FormGroup} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="allNotifications"></a>
+                        <span class="name">
+                            <b>
+                            allNotifications</b>
+                            <a href="#allNotifications"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>any[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:76</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Object array for holding all of the logs -  @type {any[]} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dataSource"></a>
+                        <span class="name">
+                            <b>
+                            dataSource</b>
+                            <a href="#dataSource"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new MatTableDataSource([])</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:48</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="displayedColumns"></a>
+                        <span class="name">
+                            <b>
+                            displayedColumns</b>
+                            <a href="#displayedColumns"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>string[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[&#x27;First Name&#x27;, &#x27;Surname&#x27;, &#x27;Email&#x27;, &#x27;Remove&#x27; ,&#x27;Action&#x27;]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:47</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loading"></a>
+                        <span class="name">
+                            <b>
+                            loading</b>
+                            <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:60</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>If page is busy loading something - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="localNotificationNumber"></a>
+                        <span class="name">
+                            <b>
+                            localNotificationNumber</b>
+                            <a href="#localNotificationNumber"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>1</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:90</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>THe number of the notifications - @type {number} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="notifications"></a>
+                        <span class="name">
+                            <b>
+                            notifications</b>
+                            <a href="#notifications"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>true</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:88</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if there are notifications to load - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="numberOfAccessLogs"></a>
+                        <span class="name">
+                            <b>
+                            numberOfAccessLogs</b>
+                            <a href="#numberOfAccessLogs"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:85</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The total number of Access Logs - @type {number} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="numberOfDatabaseLogs"></a>
+                        <span class="name">
+                            <b>
+                            numberOfDatabaseLogs</b>
+                            <a href="#numberOfDatabaseLogs"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:83</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The total number of Database Management Logs - @type {number} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="numberOfUserLogs"></a>
+                        <span class="name">
+                            <b>
+                            numberOfUserLogs</b>
+                            <a href="#numberOfUserLogs"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:81</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The total number of User Logs - @type {number} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="paginator"></a>
+                        <span class="name">
+                            <b>
+                            paginator</b>
+                            <a href="#paginator"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatPaginator</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(MatPaginator)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:73</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="readNotifications"></a>
+                        <span class="name">
+                            <b>
+                            readNotifications</b>
+                            <a href="#readNotifications"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>any[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:78</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Object array for holding all of the read logs -  @type {any[]} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedStaff"></a>
+                        <span class="name">
+                            <b>
+                            selectedStaff</b>
+                            <a href="#selectedStaff"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/StaffInfo.html" target="_self" >Interface.StaffInfo</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Selected Staff Member from the table - @type {Interface.Organisation} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedUserType"></a>
+                        <span class="name">
+                            <b>
+                            selectedUserType</b>
+                            <a href="#selectedUserType"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:68</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Selected user type on dropdown - @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="staffMembers"></a>
+                        <span class="name">
+                            <b>
+                            staffMembers</b>
+                            <a href="#staffMembers"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/StaffInfo.html" target="_self" >Interface.StaffInfo[]</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:64</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Array of Staff Member objects - @type {StaffInfo[]} </p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -494,10 +1609,16 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:25</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:56</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>To check if form has been submitted - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -505,11 +1626,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="success"></a>
+                        <a name="toggle_status"></a>
                         <span class="name">
                             <b>
-                            success</b>
-                            <a href="#success"><span class="icon ion-ios-link"></span></a>
+                                <span class="modifier">Private</span>
+                            toggle_status</b>
+                            <a href="#toggle_status"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
@@ -526,10 +1648,87 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:71</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if the notifications tab is hidden/shown - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userTypes"></a>
+                        <span class="name">
+                            <b>
+                            userTypes</b>
+                            <a href="#userTypes"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/UserType.html" target="_self" >Interface.UserType[]</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:66</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Array of User Type objects for form dropdown - @type {UserType[]} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="valid"></a>
+                        <span class="name">
+                            <b>
+                            valid</b>
+                            <a href="#valid"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/Admin/staff-handler/staff-handler.component.ts:58</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>To check if form has been submitted correctly - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -539,34 +1738,97 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewChild } from &#x27;@angular/core&#x27;;
+import {ViewEncapsulation} from &#x27;@angular/core&#x27;;
 
-import { AdminAPIService } from &#x27;../../admin-api.service&#x27;;
+import { HttpService } from &#x27;../../_services/http.service&#x27;;
 import { FormBuilder, FormGroup, Validators, FormControl } from &#x27;@angular/forms&#x27;;
 import { HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
 import { MatSnackBar } from &#x27;@angular/material&#x27;;
 import { MatDialog } from &#x27;@angular/material&#x27;;
-import { ErrorComponent } from &#x27;../../error/error.component&#x27;;
+import { ErrorComponent } from &#x27;../../_errors/error-component/error.component&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
+import { ConfirmComponent } from &quot;../../confirm/confirm.component&quot;;
 
-import { StaffInfo } from &#x27;../../admin-api.service&#x27;;
+//Include Material Components
+import { MatPaginator, MatTableDataSource } from &#x27;@angular/material&#x27;;
+
+
+import * as Interface from &#x27;../../_interfaces/interfaces&#x27;;
+
+import { Member, UserManagementAPIService } from &#x27;../../_services/user-management-api.service&#x27;;
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from &#x27;../../_services/notification-logging.service&#x27;;
 
 
 @Component({
   selector: &#x27;app-staff-handler&#x27;,
   templateUrl: &#x27;./staff-handler.component.html&#x27;,
-  styleUrls: [&#x27;./staff-handler.component.scss&#x27;]
+  styleUrls: [&#x27;./staff-handler.component.scss&#x27;],
+  encapsulation: ViewEncapsulation.None
 })
 export class StaffHandlerComponent implements OnInit {
 
-  /*
-    GLOBALS
-  */
- addStaffForm: FormGroup;          // FormGroup object to reference add user type form
- submitted: boolean &#x3D; false;       // if form has been submitted
- success: boolean &#x3D; false;         // if form was succesfully filled out
+  displayedColumns: string[] &#x3D; [&#x27;First Name&#x27;, &#x27;Surname&#x27;, &#x27;Email&#x27;, &#x27;Remove&#x27; ,&#x27;Action&#x27;];
+  dataSource &#x3D; new MatTableDataSource([]);
 
-  constructor(private service: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router)
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /** Object for defining the Add Staff form -  @type {FormGroup} */
+  addStaffForm: FormGroup;
+  /** To check if form has been submitted - @type {boolean} */
+  submitted: boolean &#x3D; false;
+  /** To check if form has been submitted correctly - @type {boolean} */
+  valid: boolean &#x3D; false;
+  /** If page is busy loading something - @type {boolean} */
+  loading: boolean &#x3D; false;
+  /** Selected Staff Member from the table - @type {Interface.Organisation} */
+  selectedStaff: Interface.StaffInfo;
+  /** Array of Staff Member objects - @type {StaffInfo[]} */
+  staffMembers: Interface.StaffInfo[];
+  /** Array of User Type objects for form dropdown - @type {UserType[]} */
+  userTypes: Interface.UserType[];
+  /** Selected user type on dropdown - @type {string} */
+  selectedUserType: string;
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean &#x3D; false;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] &#x3D; [];
+  /** Object array for holding all of the read logs -  @type {any[]} */ 
+  readNotifications: any[] &#x3D; [];
+
+  /** The total number of User Logs - @type {number} */           
+  numberOfUserLogs: number &#x3D; 0;
+  /** The total number of Database Management Logs - @type {number} */           
+  numberOfDatabaseLogs: number &#x3D; 0;
+  /** The total number of Access Logs - @type {number} */           
+  numberOfAccessLogs: number &#x3D; 0;
+
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean &#x3D; true; 
+  /** THe number of the notifications - @type {number} */   
+  localNotificationNumber : number &#x3D; 1;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          CONSTRUCTOR
+  /**
+   * Creates an instance of StaffHandlerComponent.
+   * @param {AdminAPIService} service For calling the API service
+   * @param {FormBuilder} formBuilder For creating the login form
+   * @param {MatSnackBar} snackBar For snack-bar pop-up messages
+   * @param {MatDialog} dialog For dialog pop-up messages
+   * @param {Router} router For navigating to other modules/components
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, 
+    private router: Router, private userManagementService: UserManagementAPIService, private notificationLoggingService: NotificationLoggingService)
   { 
     this.addStaffForm &#x3D; this.formBuilder.group({
       staff_name: [&#x27;&#x27;, Validators.required],
@@ -577,23 +1839,305 @@ export class StaffHandlerComponent implements OnInit {
     })
   }
 
-  sidenavToggle(){
-    if(document.getElementById(&quot;sidenav_div&quot;).style.width &#x3D;&#x3D; &quot;22%&quot;)
-    {
-      document.getElementById(&quot;sidenav_div&quot;).style.width &#x3D; &quot;0&quot;;
-    }
-    else{
-      document.getElementById(&quot;sidenav_div&quot;).style.width &#x3D; &quot;22%&quot;;
-    } 
-  }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status &#x3D; !this.toggle_status; 
+ }
 
-  closeNav(){
-    document.getElementById(&quot;sidenav_div&quot;).style.width &#x3D; &quot;0&quot;;
-  }
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            NG_ON_INIT()
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.displayUserTypes();
+    this.viewStaff();
+    this.loadNotifications();
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET_DATE
+  /**
+   *  This function will put the string date provided into a more readable format for the notifications
+   * @param {string} date The date of the log
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getDate(date: string){
+    var tempDate &#x3D; (date).split(&#x27; &#x27;);
+    var newDate &#x3D; &#x27;&#x27;;
+
+    newDate +&#x3D; tempDate[2];
+
+    if(tempDate[0] &#x3D;&#x3D; &#x27;Mon&#x27;){
+      newDate +&#x3D; &#x27; Monday &#x27;;
+    }
+    else if(tempDate[0] &#x3D;&#x3D; &#x27;Tue&#x27; || tempDate[0] &#x3D;&#x3D; &#x27;Tu&#x27; || tempDate[0] &#x3D;&#x3D; &#x27;Tues&#x27;){
+      newDate +&#x3D; &#x27; Tuesday &#x27;;
+    }
+    else if(tempDate[0] &#x3D;&#x3D; &#x27;Wed&#x27;){
+      newDate +&#x3D; &#x27; Wednesday &#x27;;
+    }
+    else if(tempDate[0] &#x3D;&#x3D; &#x27;Thu&#x27; || tempDate[0] &#x3D;&#x3D; &#x27;Thur&#x27; || tempDate[0] &#x3D;&#x3D; &#x27;Thurs&#x27;){
+      newDate +&#x3D; &#x27; Thursday &#x27;;
+    }
+    else if(tempDate[0] &#x3D;&#x3D; &#x27;Fri&#x27;){
+      newDate +&#x3D; &#x27; Friday &#x27;;
+    }
+    else if(tempDate[0] &#x3D;&#x3D; &#x27;Sat&#x27;){
+      newDate +&#x3D; &#x27; Saturday &#x27;;
+    }
+    else if(tempDate[0] &#x3D;&#x3D; &#x27;Sun&#x27;){
+      newDate +&#x3D; &#x27; Sunday &#x27;;
+    }
+
+    if(tempDate[1] &#x3D;&#x3D; &#x27;Jan&#x27;){
+      newDate +&#x3D; &#x27;January&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Feb&#x27;){
+      newDate +&#x3D; &#x27;February&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Mar&#x27;){
+      newDate +&#x3D; &#x27;March&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Apr&#x27;){
+      newDate +&#x3D; &#x27;April&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Jun&#x27;){
+      newDate +&#x3D; &#x27;June&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Jul&#x27;){
+      newDate +&#x3D; &#x27;July&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Aug&#x27;){
+      newDate +&#x3D; &#x27;August&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Sep&#x27; || tempDate[1] &#x3D;&#x3D; &#x27;Sept&#x27;){
+      newDate +&#x3D; &#x27;September&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Oct&#x27;){
+      newDate +&#x3D; &#x27;October&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Nov&#x27;){
+      newDate +&#x3D; &#x27;November&#x27;;
+    }
+    else if(tempDate[1] &#x3D;&#x3D; &#x27;Dec&#x27;){
+      newDate +&#x3D; &#x27;December&#x27;;
+    }
+
+    newDate +&#x3D; &#x27; &#x27; + tempDate[3];
+
+    return newDate;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_NOTIFICATIONS
+  /**
+   *  This function will load the admin&#x27;s notifications into the notification section on the HTML page
+   * 
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadNotifications(){
+    //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
+    const storageNotifications &#x3D; JSON.parse(localStorage.getItem(&#x27;readNotifications&#x27;));
+
+    //Loading the &#x27;USER&#x27; logs
+    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) &#x3D;&gt; {
+      if(response.success &#x3D; true){
+        const data &#x3D; response.data.content.data.Logs;
+
+        for(var i &#x3D; 0; i &lt; data.length; i++){
+          var tempLog: UserLogs &#x3D; {Type: &#x27;USER&#x27;, Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+          
+          if(storageNotifications !&#x3D; null &amp;&amp; storageNotifications.length !&#x3D; 0){
+            for(var j &#x3D; 0; j &lt; storageNotifications.length; j++){
+              if(storageNotifications[j].Type &#x3D;&#x3D; &#x27;USER&#x27; &amp;&amp; storageNotifications[i].Action &#x3D;&#x3D; tempLog.Action &amp;&amp; 
+                 storageNotifications[i].Date &#x3D;&#x3D; tempLog.Date &amp;&amp; storageNotifications.User &#x3D;&#x3D; tempLog.User){
+                this.readNotifications.push(tempLog);
+              }
+              else{
+                const user1 &#x3D; this.loadUserDetails(tempLog.Organization2, tempLog.Details);
+                const user2 &#x3D; this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+                if(tempLog.Action &#x3D;&#x3D; &#x27;C&#x27;){
+                  tempLog.Action &#x3D; user1 + &#x27; was added to the system by &#x27; + user2;
+                }
+                else if(tempLog.Action &#x3D;&#x3D; &#x27;D&#x27;){
+                  tempLog.Action &#x3D; user1 + &#x27; was removed from the system by &#x27; + user2;
+                }
+                else if(tempLog.Action &#x3D;&#x3D; &#x27;U&#x27;){
+                  tempLog.Action &#x3D; user1 + &#x27; details where updated by &#x27; + user2;
+                }
+
+                this.allNotifications.push(tempLog);
+                this.numberOfUserLogs +&#x3D; 1;
+                this.localNotificationNumber +&#x3D; 1;
+              }
+            }
+          }
+          else{
+            const user1 &#x3D; this.loadUserDetails(tempLog.Organization2, tempLog.Details);
+            const user2 &#x3D; this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+            if(tempLog.Action &#x3D;&#x3D; &#x27;C&#x27;){
+              tempLog.Action &#x3D; user1 + &#x27; was added to the system by &#x27; + user2;
+            }
+            else if(tempLog.Action &#x3D;&#x3D; &#x27;D&#x27;){
+              tempLog.Action &#x3D; user1 + &#x27; was removed from the system by &#x27; + user2;
+            }
+            else if(tempLog.Action &#x3D;&#x3D; &#x27;U&#x27;){
+              tempLog.Action &#x3D; user1 + &#x27; details where updated by &#x27; + user2;
+            }
+
+            this.allNotifications.push(tempLog);
+            this.numberOfUserLogs +&#x3D; 1;
+            this.localNotificationNumber +&#x3D; 1;
+          }
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+
+
+    //Loading the &#x27;DBML&#x27; logs
+    this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) &#x3D;&gt; {
+      if(response.success &#x3D; true){
+        const data &#x3D; response.data.content.data.Logs;
+
+        for(var i &#x3D; 0; i &lt; data.length; i++){
+          var tempLog: DatabaseManagementLogs &#x3D; {Type: &#x27;DBML&#x27;, Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+          
+          if(storageNotifications !&#x3D; null &amp;&amp; storageNotifications.length !&#x3D; 0){
+            for(var j &#x3D; 0; j &lt; storageNotifications.length; j++){
+              if(storageNotifications[j].Type &#x3D;&#x3D; &#x27;USER&#x27; &amp;&amp; storageNotifications[i].Action &#x3D;&#x3D; tempLog.Action &amp;&amp; 
+                 storageNotifications[i].Date &#x3D;&#x3D; tempLog.Date &amp;&amp; storageNotifications.User &#x3D;&#x3D; tempLog.User){
+                this.readNotifications.push(tempLog);
+              }
+              else{
+                const user1 &#x3D; this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+                if(tempLog.Action &#x3D;&#x3D; &#x27;C&#x27;){
+                  tempLog.Action &#x3D; tempLog.Details + &#x27; was added to the system by &#x27; + user1;
+                }
+                else if(tempLog.Action &#x3D;&#x3D; &#x27;D&#x27;){
+                  tempLog.Action &#x3D; tempLog.Details + &#x27; was removed from the system by &#x27; + user1;
+                }
+                else if(tempLog.Action &#x3D;&#x3D; &#x27;U&#x27;){
+                  tempLog.Action &#x3D; tempLog.Details + &#x27; details where updated by &#x27; + user1;
+                }
+
+                this.allNotifications.push(tempLog);
+                this.numberOfUserLogs +&#x3D; 1;
+                this.localNotificationNumber +&#x3D; 1;
+              }
+            }
+          }
+          else{
+            const user1 &#x3D; this.loadUserDetails(tempLog.Organization1, tempLog.User);
+
+            if(tempLog.Action &#x3D;&#x3D; &#x27;C&#x27;){
+              tempLog.Action &#x3D; tempLog.Details + &#x27; was added to the system by &#x27; + user1;
+            }
+            else if(tempLog.Action &#x3D;&#x3D; &#x27;D&#x27;){
+              tempLog.Action &#x3D; tempLog.Details + &#x27; was removed from the system by &#x27; + user1;
+            }
+            else if(tempLog.Action &#x3D;&#x3D; &#x27;U&#x27;){
+              tempLog.Action &#x3D; tempLog.Details + &#x27; details where updated by &#x27; + user1;
+            }
+
+            this.allNotifications.push(tempLog);
+            this.numberOfUserLogs +&#x3D; 1;
+            this.localNotificationNumber +&#x3D; 1;
+          }
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+
+
+    //Loading the &#x27;ACCL&#x27; logs
+    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) &#x3D;&gt; {
+      if(response.success &#x3D; true){
+        const data &#x3D; response.data.content.data.Logs;
+
+        for(var i &#x3D; 0; i &lt; data.length; i++){
+          var tempLog: AccessLogs &#x3D; {Type: &#x27;ACCL&#x27;, Action: &#x27;Access&#x27;, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
+          
+          if(storageNotifications !&#x3D; null &amp;&amp; storageNotifications.length !&#x3D; 0){
+            for(var j &#x3D; 0; j &lt; storageNotifications.length; j++){
+              if(storageNotifications[j].Type &#x3D;&#x3D; &#x27;ACCL&#x27; &amp;&amp; storageNotifications[i].Date &#x3D;&#x3D; tempLog.Date &amp;&amp; 
+              storageNotifications.User &#x3D;&#x3D; tempLog.User){
+                  this.readNotifications.push(tempLog);
+                }
+                else{
+                  //Access notifications
+                  this.allNotifications.push(tempLog);
+                  this.numberOfAccessLogs +&#x3D; 1;
+                  this.localNotificationNumber +&#x3D; 1;
+                }
+            }
+          }
+          else{
+            this.allNotifications.push(tempLog);
+            this.numberOfAccessLogs +&#x3D; 1;
+            this.localNotificationNumber +&#x3D; 1;
+          }
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+
+    //Pushing the readNotifications array to local storage
+    localStorage.setItem(&#x27;readNotifications&#x27;, JSON.stringify(this.readNotifications));
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_USER_DETAILS
+  /**
+   *  This function will be called so that the information of a specific user can be fetched
+   *  @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadUserDetails(userOrganization: string, userID: string) {
+    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) &#x3D;&gt; {
+      if(response.success &#x3D;&#x3D; true){
+        const data &#x3D; response.data;
+
+        return data.fname + &#x27; &#x27; + data.surname;
+      } 
+      else{
+        //Error control
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          ADD STAFF MEMBER
+  /**
+   * This function calls the *http* service to add a Staff Member
+   *
+   * @returns
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addStaff()
   {
     this.submitted &#x3D; true;
@@ -602,424 +2146,992 @@ export class StaffHandlerComponent implements OnInit {
       return;
     }
 
-    this.success &#x3D; true;
+    this.valid &#x3D; true;
+    this.loading &#x3D; true;
 
     const LstaffName &#x3D; this.addStaffForm.controls.staff_name.value;
     const LstaffSurname &#x3D; this.addStaffForm.controls.staff_surname.value;
     const LstaffEmail &#x3D; this.addStaffForm.controls.staff_email.value;
     const LstaffPhone &#x3D; this.addStaffForm.controls.staff_phone.value;
-    const LstaffPosition &#x3D; this.addStaffForm.controls.staff_positon.value;
+    const LstaffPosition &#x3D; this.addStaffForm.controls.staff_position.value;
 
-    const staff_details: StaffInfo &#x3D; { name: LstaffName, surname:LstaffSurname, email:LstaffEmail, phone:LstaffPhone, position:LstaffPosition };
+    const staff_details: Interface.StaffInfo &#x3D; { name: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition};
 
     this.service.addStaffMember(staff_details).subscribe((response: any) &#x3D;&gt; {
-      if (response.success &#x3D;&#x3D; true) {
+      
+      this.loading &#x3D; false;
+
+      if (response.success &#x3D;&#x3D; true &amp;&amp; response.code &#x3D;&#x3D; 200) {
         //POPUP MESSAGE
-        let snackBarRef &#x3D; this.snackBar.open(&quot;Successfully added staff member! Temp Password: &quot; + response.data.content.tempPassword, &quot;Dismiss&quot;, {
+        let snackBarRef &#x3D; this.snackBar.open(&quot;Staff Member Added&quot;, &quot;Dismiss&quot;, {
           duration: 6000
         });
-
-        console.log(&quot;Temp Password: &quot; + response.data.content.tempPassword);
-
+        this.refreshDataSource();
       } else if (response.success &#x3D;&#x3D; false) {
         //POPUP MESSAGE
-        let dialogRef &#x3D; this.dialog.open(ErrorComponent, { data: { error: &quot;Could not add staff member &quot;, message: response.message } });
+        let dialogRef &#x3D; this.dialog.open(ErrorComponent, { data: { error_title: &quot;Error Adding Staff Member&quot;, message: response.message, retry: true }});
         dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
           if (result &#x3D;&#x3D; &quot;Retry&quot;) {
             this.addStaff();
           }
         })
       }
-    }, (err: HttpErrorResponse) &#x3D;&gt; {
-      //POPUP MESSAGE
-      let dialogRef &#x3D; this.dialog.open(ErrorComponent, { data: { error: &quot;Could not add staff member&quot;, message: err.message } });
-      dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
-        if (result &#x3D;&#x3D; &quot;Retry&quot;) {
-          this.addStaff();
-        }
-      })
-      console.log(&quot;ERROR:&quot; + err.message);
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SELECTED STAFF MEMBER
+  /**
+   * This function sets the Staff Member selected by the user in the table
+   *
+   * @param {Interface.StaffInfo} staffMem
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  selectOrganisation(staffMem: Interface.StaffInfo) {
+    this.selectedStaff &#x3D; staffMem;
+  }
+  
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     REMOVE STAFF MEMBER PROMPT
+  /**
+   * This function prompts the user to confirm if they wish to remove the selected Staff Member
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeStaffMemberPrompt(member: Interface.StaffInfo) {
+    
+    const staffDetails &#x3D; member.fname + &quot; &quot; + member.surname + &quot; &quot; + member.email;
+
+    let dialogRef &#x3D; this.dialog.open(ConfirmComponent, {
+      data: {
+        title: &quot;Remove Staff Member&quot;,
+        message: &quot;Are you sure you want to remove this Staff Member?&quot;,
+        info: staffDetails,
+        cancel: &quot;Cancel&quot;,
+        confirm: &quot;Remove&quot;
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+      if (result &#x3D;&#x3D; &quot;Confirm&quot;) {
+        this.selectedStaff &#x3D; member;
+        this.removeStaffMember();
+        
+      }
     })
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                           REMOVE STAFF   
+  /**
+   * This function calls the *http* service to remove the selected Staff Member 
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeStaffMember() {
+
+    this.service.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) &#x3D;&gt; {
+      if (response.success &#x3D;&#x3D; true &amp;&amp; response.code &#x3D;&#x3D; 200) {
+        //POPUP MESSAGE
+        let snackBarRef &#x3D; this.snackBar.open(&quot;Staff Member Removed&quot;, &quot;Dismiss&quot;, {
+          duration: 3000
+        });
+        this.refreshDataSource();
+      } else if (response.success &#x3D;&#x3D; false) {
+        //POPUP MESSAGE
+        let dialogRef &#x3D; this.dialog.open(ErrorComponent, { data: { error_title: &quot;Error Removing&quot;, message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+          if (result &#x3D;&#x3D; &quot;Retry&quot;) {
+            this.removeStaffMember();
+          }
+        })
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            REFRESH
+  /**
+   * This function refreshes the Datasource (in most cases, the table that has changed)
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  refreshDataSource() {
+      this.viewStaff();
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            VIEW STAFF
+  /**
+   * This function calls the *http* service to get all registered FABI Staff
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  viewStaff() {
+    
+    this.service.getAllStaffMembers().subscribe((response: any) &#x3D;&gt; {
+      if (response.success &#x3D;&#x3D; true &amp;&amp; response.code &#x3D;&#x3D; 200) {
+        this.staffMembers &#x3D; response.data.qs.staff;
+        this.dataSource &#x3D; new MatTableDataSource(this.staffMembers);
+        this.dataSource.paginator &#x3D; this.paginator;
+
+      } else if (response.success &#x3D;&#x3D; false) {
+        //POPUP MESSAGE
+        let dialogRef &#x3D; this.dialog.open(ErrorComponent, { data: { error_title: &quot;Error Loading Staff&quot;, message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+          if (result &#x3D;&#x3D; &quot;Retry&quot;) {
+            this.viewStaff();
+          }
+        })
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //    USER TYPES -&gt; TO BE FETCHED FROM DB IN THE FUTURE
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayUserTypes() {
+
+    this.userTypes &#x3D; [
+      {
+        &quot;ID&quot;:1,
+        &quot;Name&quot;:&quot;Admin&quot;
+      },
+      {
+        &quot;ID&quot;:2,
+        &quot;Name&quot;:&quot;Staff&quot;
+      }
+    ]
+
+
+    // if(this.selectedOrg &#x3D;&#x3D; &quot;FABI&quot;)
+    // {
+    //   this.userTypes &#x3D; [
+    //     {
+    //       &quot;ID&quot;:1,
+    //       &quot;Name&quot;:&quot;Admin&quot;
+    //     },
+    //     {
+    //       &quot;ID&quot;:2,
+    //       &quot;Name&quot;:&quot;Staff&quot;
+    //     }
+    //   ]
+
+    // }
+    // else {
+    //   this.userTypes &#x3D; [
+    //     {
+    //       &quot;ID&quot;:1,
+    //       &quot;Name&quot;:&quot;Admin&quot;
+    //     },
+    //     {
+    //       &quot;ID&quot;:2,
+    //       &quot;Name&quot;:&quot;Member&quot;
+    //     }
+    //   ]
+    // }
+
+    //-------- Load User Types for Drop Down --------
+    // this.service.getUserTypes(this.selectedOrg).subscribe((response: any) &#x3D;&gt; {
+    //   if (response.success &#x3D;&#x3D; true &amp;&amp; response.status &#x3D;&#x3D; 200) {
+    //     this.userTypes &#x3D; response.data;
+
+    //   } else if (response.success &#x3D;&#x3D; false) {
+    //     //POPUP MESSAGE
+    //     let dialogRef &#x3D; this.dialog.open(ErrorComponent, { data: { error_title: &quot;Sorry there was an error loading the User Types&quot;, message: response.message, retry: true } });
+    //     dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+    //       if (result &#x3D;&#x3D; &quot;Retry&quot;) {
+    //         this.displayUserTypes();
+    //       }
+    //     })
+    //   }
+    // });
+
+  }
+
 
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div id&#x3D;&quot;staff_handler&quot;&gt;
-  &lt;div class&#x3D;&quot;top_banner&quot;&gt;
-    &lt;h1 id&#x3D;&quot;staff_heading&quot;&gt;Staff Management&lt;/h1&gt;
-    &lt;div id&#x3D;&quot;menu_div&quot;&gt;
-      &lt;mat-icon (click)&#x3D;&quot;sidenavToggle()&quot; [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;menu_icon&quot;&gt;menu&lt;/mat-icon&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;!--Bootstrap Navbar--&gt;
+&lt;div class&#x3D;&quot;container-fluid&quot; id&#x3D;&quot;nav-section&quot;&gt;
+  &lt;nav class&#x3D;&quot;navbar navbar-expand-xl&quot;&gt;
+    &lt;a class&#x3D;&quot;navbar-brand&quot; href&#x3D;&quot;#&quot;&gt;Staff Handler&lt;/a&gt;
+    &lt;button class&#x3D;&quot;navbar-toggler&quot; type&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#navbarSupportedContent&quot;
+      aria-controls&#x3D;&quot;navbarSupportedContent&quot; aria-expanded&#x3D;&quot;false&quot; aria-label&#x3D;&quot;Toggle navigation&quot;&gt;
+      &lt;span class&#x3D;&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
+      &lt;i class&#x3D;&quot;fas fa-bars&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+
+    &lt;div class&#x3D;&quot;collapse navbar-collapse&quot; id&#x3D;&quot;navbarSupportedContent&quot;&gt;
+      &lt;ul class&#x3D;&quot;navbar-nav mr-auto&quot;&gt;
+
+        &lt;li class&#x3D;&quot;nav-item active&quot;&gt;
+          &lt;a id&#x3D;&quot;dashboard_menu_link&quot; routerLink&#x3D;&quot;/admin-dashboard&quot;&gt;&lt;i class&#x3D;&quot;fas fa-home&quot;&gt;&lt;/i&gt;Home&lt;/a&gt;
+        &lt;/li&gt;
+
+        &lt;li class&#x3D;&quot;nav-item dropdown&quot;&gt;
+          &lt;a class&#x3D;&quot;nav-link dropdown-toggle&quot; href&#x3D;&quot;#&quot; id&#x3D;&quot;navbarDropdown&quot; role&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;dropdown&quot;
+            aria-haspopup&#x3D;&quot;true&quot; aria-expanded&#x3D;&quot;false&quot;&gt;
+            &lt;i class&#x3D;&quot;fas fa-tasks&quot;&gt;&lt;/i&gt;Handlers
+          &lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-menu&quot; aria-labelledby&#x3D;&quot;navbarDropdown&quot;&gt;
+            &lt;a id&#x3D;&quot;user_management&quot; routerLink&#x3D;&quot;/staff-handler&quot;&gt;&lt;i class&#x3D;&quot;fas fa-id-card&quot;&gt;&lt;/i&gt;Staff&lt;/a&gt;
+            &lt;br /&gt;
+            &lt;a id&#x3D;&quot;organization_management&quot; routerLink&#x3D;&quot;/organization-handler&quot;&gt;&lt;i
+                class&#x3D;&quot;fas fa-building&quot;&gt;&lt;/i&gt;Organizations&lt;/a&gt;
+            &lt;br /&gt;
+            &lt;a id&#x3D;&quot;diagnostic_clinic_management&quot; routerLink&#x3D;&quot;/clinic-handler&quot;&gt;&lt;i
+                class&#x3D;&quot;fas fa-stethoscope&quot;&gt;&lt;/i&gt;Clinic&lt;/a&gt;
+            &lt;br /&gt;
+            &lt;a id&#x3D;&quot;database_management&quot; routerLink&#x3D;&quot;/database-handler&quot;&gt;&lt;i class&#x3D;&quot;fas fa-database&quot;&gt;&lt;/i&gt;Database
+            &lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/li&gt;
+
+        &lt;li class&#x3D;&quot;nav-item dropdown&quot;&gt;
+          &lt;a class&#x3D;&quot;nav-link dropdown-toggle&quot; href&#x3D;&quot;#&quot; id&#x3D;&quot;navbarDropdown&quot; role&#x3D;&quot;button&quot; data-toggle&#x3D;&quot;dropdown&quot;
+            aria-haspopup&#x3D;&quot;true&quot; aria-expanded&#x3D;&quot;false&quot;&gt;
+            &lt;i class&#x3D;&quot;fas fa-user&quot;&gt;&lt;/i&gt;Account
+          &lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-menu&quot; aria-labelledby&#x3D;&quot;navbarDropdown&quot;&gt;
+            &lt;a id&#x3D;&quot;profile_menu_link&quot; routerLink&#x3D;&quot;/admin-profile&quot;&gt;&lt;i class&#x3D;&quot;fas fa-user-circle&quot;&gt;&lt;/i&gt;Profile&lt;/a&gt;
+            &lt;br/&gt;
+            &lt;a id&#x3D;&quot;settings_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;i class&#x3D;&quot;fas fa-cogs&quot;&gt;&lt;/i&gt;Settings&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/li&gt;
+
+        &lt;li class&#x3D;&quot;nav-item&quot;&gt;
+          &lt;a id&#x3D;&quot;help_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;i class&#x3D;&quot;fas fa-question&quot;&gt;&lt;/i&gt;Help&lt;/a&gt;
+        &lt;/li&gt;
+
+        &lt;li class&#x3D;&quot;nav-item&quot;&gt;
+          &lt;a id&#x3D;&quot;logout_menu_link&quot; (click)&#x3D;&quot;logout()&quot; style&#x3D;&quot;color:#ffffff;&quot;&gt;&lt;i class&#x3D;&quot;fas fa-sign-out-alt&quot;&gt;&lt;/i&gt;Logout&lt;/a&gt;
+        &lt;/li&gt;
+
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/nav&gt;
+&lt;/div&gt;
+
+
+&lt;!--SlideOut --&gt;
+&lt;div id&#x3D;&quot;slideOut&quot; [ngClass]&#x3D;&quot;{&#x27;showSlideOut&#x27;: toggle_status}&quot;&gt;
+  &lt;!--Tab--&gt;
+  &lt;div class&#x3D;&quot;slideOutTab&quot; (click)&#x3D;&quot;toggleNotificaitonsTab()&quot;&gt;
+    &lt;div&gt;
+      &lt;p&gt;Notifications&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
+  &lt;div class&#x3D;&quot;modal-content&quot;&gt;
+    &lt;div class&#x3D;&quot;modal-header&quot;&gt;
+      &lt;h4 class&#x3D;&quot;modal-title&quot;&gt;Admin Notifications&lt;/h4&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;modal-body&quot; id&#x3D;&quot;notifications-section&quot;&gt;
 
-  &lt;div id&#x3D;&quot;sidenav_div&quot; class&#x3D;&quot;sidenav&quot;&gt;
-    &lt;a class&#x3D;&quot;closebtn&quot; (click)&#x3D;&quot;closeNav()&quot;&gt;&amp;times;&lt;/a&gt;
-    &lt;button id&#x3D;&quot;dashboard_menu_link&quot; routerLink&#x3D;&quot;/admin-dashboard&quot;&gt;&lt;span class&#x3D;&quot;icons_div_menu&quot;&gt;&lt;mat-icon [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;icons&quot;&gt;home&lt;/mat-icon&gt;&lt;/span&gt;  Dashboard&lt;/button&gt;
-    &lt;button id&#x3D;&quot;user_management&quot; routerLink&#x3D;&quot;/staff-handler&quot;&gt;&lt;span class&#x3D;&quot;icons_div_menu&quot;&gt;&lt;mat-icon [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;icons&quot;&gt;people&lt;/mat-icon&gt;&lt;/span&gt;  Staff Management&lt;/button&gt;
-    &lt;button id&#x3D;&quot;organization_management&quot; routerLink&#x3D;&quot;/organization-handler&quot;&gt;&lt;span class&#x3D;&quot;icons_div_menu&quot;&gt;&lt;mat-icon [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;icons&quot;&gt;business&lt;/mat-icon&gt;&lt;/span&gt;  Organization Management&lt;/button&gt;
-    &lt;button id&#x3D;&quot;diagnostic_clinic_management&quot; routerLink&#x3D;&quot;/clinic-handler&quot;&gt;&lt;span class&#x3D;&quot;icons_div_menu&quot;&gt;&lt;mat-icon [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;icons&quot;&gt;insert_chart&lt;/mat-icon&gt;&lt;/span&gt;  Diagnostic Clinic Management&lt;/button&gt;
-    &lt;button id&#x3D;&quot;database_management&quot; routerLink&#x3D;&quot;/database-handler&quot;&gt;&lt;span class&#x3D;&quot;icons_div_menu&quot;&gt;&lt;mat-icon [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;icons&quot;&gt;storage&lt;/mat-icon&gt;&lt;/span&gt;  Database Management&lt;/button&gt;
-    &lt;button id&#x3D;&quot;profile_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;span class&#x3D;&quot;icons_div_menu&quot;&gt;&lt;mat-icon [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;icons&quot;&gt;person&lt;/mat-icon&gt;&lt;/span&gt;  Profile&lt;/button&gt;
-    &lt;button id&#x3D;&quot;help_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;span class&#x3D;&quot;icons_div_menu&quot;&gt;&lt;mat-icon [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;icons&quot;&gt;help&lt;/mat-icon&gt;&lt;/span&gt;  Help&lt;/button&gt;
-    &lt;button id&#x3D;&quot;settings_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;span class&#x3D;&quot;icons_div_menu&quot;&gt;&lt;mat-icon [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;icons&quot;&gt;settings&lt;/mat-icon&gt;&lt;/span&gt;  Settings&lt;/button&gt;
-    &lt;button id&#x3D;&quot;logout_menu_link&quot; routerLink&#x3D;&quot;/&quot;&gt;&lt;span class&#x3D;&quot;icons_div_menu&quot;&gt;&lt;mat-icon [inline]&#x3D;&quot;true&quot; class&#x3D;&quot;icons fas fa-sign-out-alt&quot;&gt;&lt;/mat-icon&gt;&lt;/span&gt;  Logout&lt;/button&gt;
+      &lt;h2 *ngIf&#x3D;&quot;!notifications&quot;&gt;No notifications&lt;/h2&gt;
+      &lt;!--*********************************************************************
+          DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
+      *************************************************************************--&gt;
+      &lt;div *ngIf&#x3D;&quot;allNotifications&quot;&gt;
+        &lt;div class&#x3D;&quot;box&quot; *ngFor&#x3D;&quot;let log of allNotifications&quot;&gt;
+          &lt;div class&#x3D;&quot;notification-heading&quot;&gt;
+            &lt;h2&gt;Notification {{log.ID}}&lt;/h2&gt;
+            &lt;i class&#x3D;&quot;fas fa-times&quot;&gt;&lt;/i&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;notification-content&quot;&gt;
+            &lt;p&gt;&lt;b&gt;Type:&lt;/b&gt; {{log.Type}} notification&lt;/p&gt;
+            &lt;p&gt;&lt;b&gt;Action:&lt;/b&gt; {{log.Action}}&lt;/p&gt;
+            &lt;p&gt;&lt;b&gt;Date:&lt;/b&gt; {{log.Date}}&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;modal-footer&quot;&gt; &lt;/div&gt;
   &lt;/div&gt;
+&lt;/div&gt;
 
-  &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
-    &lt;div class&#x3D;&quot;row&quot;&gt;
+&lt;!--Staff Handler Content--&gt;
+&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+  
+  &lt;div class&#x3D;&quot;staff-management&quot;&gt;
+    &lt;!--Tab Menu--&gt;
+    &lt;mat-tab-group animationDuration&#x3D;&quot;1000ms&quot;&gt;
 
-      &lt;div id&#x3D;&quot;staff_management_div&quot;&gt;
+      &lt;!--Add Tab Option--&gt;
+      &lt;mat-tab&gt;
+        &lt;ng-template mat-tab-label&gt;
+          &lt;mat-icon&gt;person_add&lt;/mat-icon&gt;
+          Add Staff Member
+        &lt;/ng-template&gt;
+        &lt;div class&#x3D;&quot;tab-content&quot;&gt;
+          &lt;h2&gt;Add Staff Member&lt;/h2&gt;
+          &lt;hr /&gt;
 
-        &lt;!--Tab Menu--&gt;
-        &lt;mat-tab-group animationDuration&#x3D;&quot;1000ms&quot;&gt;
-
-          &lt;!--Add Tab Option--&gt;
-          &lt;mat-tab&gt;
-            &lt;ng-template mat-tab-label&gt;
-              &lt;mat-icon&gt;person_add&lt;/mat-icon&gt;
-              Add Staff Member
-            &lt;/ng-template&gt;
-            &lt;div class&#x3D;&quot;tab_content&quot;&gt;
-              &lt;h2&gt;Add Staff Member&lt;/h2&gt;
-              &lt;br /&gt;
-
-              &lt;form id&#x3D;&quot;add_new_member_form&quot; [formGroup]&#x3D;&quot;addStaffForm&quot; (submit)&#x3D;&quot;addStaff()&quot;&gt;
-
-                &lt;!--Name Field--&gt;
-                &lt;mat-form-field&gt;
+          &lt;form id&#x3D;&quot;add_new_member_form&quot; [formGroup]&#x3D;&quot;addStaffForm&quot; (submit)&#x3D;&quot;addStaff()&quot;&gt;
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;!--Name Field--&gt;
+              &lt;div class&#x3D;&quot;name-inputs&quot;&gt;
+                &lt;mat-form-field class&#x3D;&quot;col&quot;&gt;
                   &lt;input matInput placeholder&#x3D;&quot;Name&quot; matInput type&#x3D;&quot;text&quot; formControlName&#x3D;&quot;staff_name&quot;&gt;
                 &lt;/mat-form-field&gt;
                 &lt;br /&gt;
 
                 &lt;!--Surname Field--&gt;
-                &lt;mat-form-field&gt;
+                &lt;mat-form-field class&#x3D;&quot;col&quot;&gt;
                   &lt;input matInput placeholder&#x3D;&quot;Surname&quot; matInput type&#x3D;&quot;text&quot; formControlName&#x3D;&quot;staff_surname&quot;&gt;
                 &lt;/mat-form-field&gt;
                 &lt;br /&gt;
+              &lt;/div&gt;
 
-                &lt;!--Email Field--&gt;
-                &lt;mat-form-field&gt;
+              &lt;!--Email Field--&gt;
+              &lt;div class&#x3D;&quot;contact-inputs&quot;&gt;
+                &lt;mat-form-field class&#x3D;&quot;col&quot;&gt;
                   &lt;input matInput placeholder&#x3D;&quot;Email&quot; matInput type&#x3D;&quot;text&quot; formControlName&#x3D;&quot;staff_email&quot;&gt;
                 &lt;/mat-form-field&gt;
                 &lt;br /&gt;
 
                 &lt;!--Cellphone Number Field--&gt;
-                &lt;mat-form-field&gt;
+                &lt;mat-form-field class&#x3D;&quot;col&quot;&gt;
                   &lt;input matInput placeholder&#x3D;&quot;Cellphone Number&quot; matInput type&#x3D;&quot;number&quot; formControlName&#x3D;&quot;staff_phone&quot;&gt;
                 &lt;/mat-form-field&gt;
                 &lt;br /&gt;
+              &lt;/div&gt;
 
-                &lt;mat-form-field class&#x3D;&quot;form_inputs&quot;&gt;
+              &lt;div class&#x3D;&quot;position-inputs&quot;&gt;
+                &lt;mat-form-field class&#x3D;&quot;form-inputs&quot; class&#x3D;&quot;col&quot;&gt;
                   &lt;mat-label&gt;Staff Position&lt;/mat-label&gt;
-                  &lt;mat-select formControlName&#x3D;&quot;staff_position&quot;&gt;
-                      &lt;mat-option&gt;--&lt;/mat-option&gt;
-                    &lt;!--
-                        TODO 
-                          - Loop through types of available staff types 
-                          - If admin is selected we need to determine if clinic or DB admin
-                          - Then if they are a DB admin we must determin which DB 
-                    --&gt;
-                    &lt;mat-option [value]&#x3D;&quot;Admin&quot;&gt;
-                      Admin
-                    &lt;/mat-option&gt;
-                    &lt;mat-option [value]&#x3D;&quot;Researcher&quot;&gt;
-                      Researcher
-                    &lt;/mat-option&gt;
-                    &lt;mat-option [value]&#x3D;&quot;Student&quot;&gt;
-                      Student
+                  &lt;mat-select [(ngModel)]&#x3D;&quot;selectedUserType&quot; id&#x3D;&quot;staff_position&quot; formControlName&#x3D;&quot;staff_position&quot;&gt;
+                    &lt;mat-option&gt;--&lt;/mat-option&gt;
+                    &lt;mat-option *ngFor&#x3D;&quot;let userType of userTypes&quot; [value]&#x3D;&quot;userType.Name&quot;&gt;
+                      {{userType.Name}}
                     &lt;/mat-option&gt;
                   &lt;/mat-select&gt;
                   &lt;br /&gt;
                 &lt;/mat-form-field&gt;
-                &lt;br /&gt;
+              &lt;/div&gt;
 
-                &lt;button type&#x3D;&quot;submit&quot; id&#x3D;&quot;add_new_staff&quot; class&#x3D;&quot;btn btn-default&quot;&gt;Add Staff Member&lt;/button&gt;
-
-              &lt;/form&gt;
-
-            &lt;/div&gt;
-          &lt;/mat-tab&gt;
-
-          &lt;!--Remove Tab Option--&gt;
-          &lt;mat-tab&gt;
-            &lt;ng-template mat-tab-label&gt;
-              &lt;mat-icon&gt;delete&lt;/mat-icon&gt;
-              Remove Staff Member
-            &lt;/ng-template&gt;
-            &lt;div class&#x3D;&quot;tab_content&quot;&gt;
-              &lt;h2&gt;Remove Staff Member&lt;/h2&gt;
               &lt;br /&gt;
-
-              &lt;form id&#x3D;&quot;remove_member_form&quot;&gt;
-
-                &lt;!--Search Field--&gt;
-                &lt;mat-form-field class&#x3D;&quot;form_inputs&quot;&gt;
-                  &lt;input matInput placeholder&#x3D;&quot;Search for member&quot;&gt;
-                &lt;/mat-form-field&gt;
-                &lt;br/&gt;
-
-                &lt;button type&#x3D;&quot;submit&quot; id&#x3D;&quot;remove_search_staff&quot; class&#x3D;&quot;btn btn-default&quot;&gt;Search&lt;/button&gt;
-
-              &lt;/form&gt;
-
+              &lt;p *ngIf&#x3D;&quot;loading&quot; class&#x3D;&quot;errors&quot;&gt;Adding Member...&lt;/p&gt;
+              &lt;br /&gt;
+              &lt;div class&#x3D;&quot;submit-input&quot;&gt;
+                &lt;input type&#x3D;&quot;submit&quot; id&#x3D;&quot;add_new_staff&quot; class&#x3D;&quot;btn btn-default&quot; value&#x3D;&quot;Add Staff Member&quot; /&gt;
+              &lt;/div&gt;
             &lt;/div&gt;
-          &lt;/mat-tab&gt;
+          &lt;/form&gt;
 
-          &lt;!--Update Tab Option--&gt;
-          &lt;mat-tab&gt;
-            &lt;ng-template mat-tab-label&gt;
-              &lt;mat-icon&gt;update&lt;/mat-icon&gt;
-              Update Staff Member
-            &lt;/ng-template&gt;
-            &lt;div class&#x3D;&quot;tab_content&quot;&gt;
-                &lt;h2&gt;Update Staff Member&lt;/h2&gt;
+        &lt;/div&gt;
+      &lt;/mat-tab&gt;
+
+      &lt;!--View Tab Option--&gt;
+      &lt;mat-tab (click)&#x3D;&quot;viewStaff()&quot;&gt;
+        &lt;ng-template mat-tab-label&gt;
+          &lt;mat-icon&gt;people&lt;/mat-icon&gt;
+          View Staff Compliment
+        &lt;/ng-template&gt;
+        &lt;div class&#x3D;&quot;tab-content&quot;&gt;
+          &lt;h2&gt;View Staff Members&lt;/h2&gt;
+          &lt;hr /&gt;
+          &lt;!--Table of all staff--&gt;
+          &lt;div class&#x3D;&quot;staff-table&quot;&gt;
+            &lt;!--Search Filter for the Table--&gt;
+            &lt;div class&#x3D;&quot;search-field&quot;&gt;
+              &lt;mat-form-field&gt;
+                &lt;input matInput type&#x3D;&quot;text&quot; id&#x3D;&quot;search&quot; onkeyup&#x3D;&quot;searchFunction()&quot; title&#x3D;&quot;Search&quot;&gt;&lt;br /&gt;
+                &lt;mat-placeholder class&#x3D;&quot;placeholder&quot;&gt;Search Member&lt;/mat-placeholder&gt;
                 &lt;br /&gt;
-  
-                &lt;form id&#x3D;&quot;update_member_form&quot;&gt;
-  
-                  &lt;!--Search Field--&gt;
-                  &lt;mat-form-field class&#x3D;&quot;form_inputs&quot;&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Search for member&quot;&gt;
-                  &lt;/mat-form-field&gt;
-                  &lt;br/&gt;
-  
-                  &lt;button type&#x3D;&quot;submit&quot; id&#x3D;&quot;update_search_staff&quot; class&#x3D;&quot;btn btn-default&quot;&gt;Search&lt;/button&gt;
-                  
-                &lt;/form&gt;
-  
-              &lt;/div&gt;
-          &lt;/mat-tab&gt;
+              &lt;/mat-form-field&gt;
+            &lt;/div&gt;
 
-          &lt;!--View Tab Option--&gt;
-          &lt;mat-tab&gt;
-            &lt;ng-template mat-tab-label&gt;
-              &lt;mat-icon&gt;people&lt;/mat-icon&gt;
-              View Staff Compliment
-            &lt;/ng-template&gt;
-            &lt;div class&#x3D;&quot;tab_content&quot;&gt;
-                &lt;h2&gt;View Staff Members&lt;/h2&gt;
-                &lt;br /&gt;
-                &lt;!--TODO
-                    - Retrieve list to all staff members from API
-                --&gt;
-              &lt;/div&gt;
-          &lt;/mat-tab&gt;
+            &lt;table mat-table [dataSource]&#x3D;&quot;dataSource&quot; matSort class&#x3D;&quot;mat-elevation-z8&quot; id&#x3D;&quot;info&quot; *ngIf&#x3D;&quot;dataSource&quot;&gt;
 
-          &lt;!--Search Tab Option--&gt;
-          &lt;mat-tab&gt;
-            &lt;ng-template mat-tab-label&gt;
-              &lt;mat-icon&gt;search&lt;/mat-icon&gt;
-              Search
-            &lt;/ng-template&gt;
-            &lt;div class&#x3D;&quot;tab_content&quot;&gt;
-                &lt;h2&gt;Search Staff Member&lt;/h2&gt;
-                &lt;br /&gt;
-  
-                &lt;form id&#x3D;&quot;search_member_form&quot;&gt;
-  
-                  &lt;!--Search Field--&gt;
-                  &lt;mat-form-field class&#x3D;&quot;form_inputs&quot;&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Search for member&quot;&gt;
-                  &lt;/mat-form-field&gt;
-                  &lt;br/&gt;
-  
-                  &lt;button type&#x3D;&quot;submit&quot; id&#x3D;&quot;search_staff&quot; class&#x3D;&quot;btn btn-default&quot;&gt;Search&lt;/button&gt;
-                  
-                &lt;/form&gt;
-  
-              &lt;/div&gt;
-          &lt;/mat-tab&gt;
-        &lt;/mat-tab-group&gt;
+              &lt;!-- First Name Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;First Name&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt; First Name &lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let element&quot;&gt; {{element.fname}} &lt;/td&gt;
+              &lt;/ng-container&gt;
 
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;</code></pre>
+              &lt;!-- Surname Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;Surname&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt; Surname &lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let element&quot;&gt; {{element.surname}} &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Email Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;Email&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt; Email &lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let element&quot;&gt; {{element.email}} &lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Action Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;Action&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef&gt; Action &lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let element&quot;&gt;&lt;button [id]&#x3D;&quot;element.email&quot;
+                    class&#x3D;&quot;btn btn-default&quot;&gt;Update&lt;/button&gt;&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;!-- Remove Column --&gt;
+              &lt;ng-container matColumnDef&#x3D;&quot;Remove&quot;&gt;
+                &lt;th mat-header-cell *matHeaderCellDef mat-sort-header&gt; &lt;/th&gt;
+                &lt;td mat-cell *matCellDef&#x3D;&quot;let element&quot; (click)&#x3D;&quot;removeStaffMemberPrompt(element)&quot;&gt;
+                    &lt;button [id]&#x3D;&quot;element.email&quot;
+                    class&#x3D;&quot;btn btn-danger&quot;&gt;Remove&lt;/button&gt;&lt;/td&gt;
+              &lt;/ng-container&gt;
+
+              &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns; sticky: true&quot;&gt;&lt;/tr&gt;
+              &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumns;&quot;&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+
+            &lt;!--Pagination Setup--&gt;
+            &lt;!-- &lt;mat-paginator [pageSizeOptions]&#x3D;&quot;[5,10,25]&quot; showFirstLastButtons *ngIf&#x3D;&quot;dataSource&quot;&gt;&lt;/mat-paginator&gt; --&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/mat-tab&gt;
+
+    &lt;/mat-tab-group&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
                 <p class="comment">
                     <code>./staff-handler.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">/*
-    DASHBOARD DESIGN 
-*/
+                <pre class="line-numbers"><code class="language-scss">/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+/* General Setup                                    */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-//Background Setup
-#staff_handler {
+html {
+    font-family: &#x27;Open Sans&#x27;, sans-serif;
+    color: #555;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+/* Navbar Setup and Styling                         */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+#nav-section {
+    padding: 0;
+}
+
+.navbar {
+    min-height: 100px !important;
+
+    padding: 25px;
+
+    background-color: #6B8E4E;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.30), 0 1px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 2px;
+}
+
+.navbar-brand {
+    font-family: &#x27;Open Sans&#x27;, sans-serif;
+    font-size: 28px;
     color: #ffffff;
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-    position: relative;
 }
 
-//Banner Setup
-.top_banner {
-    background: linear-gradient(to left, #196F3D, black);
-    opacity: 0.8;
-    position: absolute; 
-    top: 0;
-    width: 100%;
-    height: 30vh;
-
-    background-image: url(&#x27;/assets/images/forest.jpg&#x27;);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.nav-item a,
+i {
+    font-size: 18px;
+    color: #ffffff;
 }
 
-.top_banner #staff_heading {
-    display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
+.navbar-nav&gt;a {
+    color: #ffffff;
+}
 
-    overflow: hidden;
+.nav-item i {
+    padding:5px;
+}
+
+.navbar-nav a:hover {
+   text-decoration: none;
+}
+
+.dropdown-menu {
+    width:200px !important;
+}
+
+.dropdown-toggle{
+    padding:0;
+}
+
+.dropdown-menu a {
+    color: #6B8E4E !important;
+}
+
+.dropdown-menu a:hover {
+    text-decoration: none;
+}
+
+.dropdown-menu i {
+    font-size: 18px;
+    color: #6B8E4E;
+}
+
+.navbar .navbar-toggle .navbar-toggler-icon {
+    color: #ffffff;
+}
+
+@media(max-width:375px) {
+    .navbar {
+        min-height: 50px !important;
+
+        padding: 15px;
+    }
+
+    .navbar-brand {
+        font-size: 18px;
+    }
+}
+
+@media (min-width:1200px) {
+    .nav-item i {
+        margin-left: 35px;
+    }
+}
+
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+/* Slide Out Notifications Tab	                    */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+#slideOut {
+    position: fixed;
+    width: 300px;
+    height: 800px;
+    top: 30px;
+    right: -300px;
+    /* Animation  */
+    transition-property: all;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+    z-index: 3;
+}
+
+/* Display slideOut */
+.showSlideOut {
+    right: 0px !important;
+}
+
+/* Tab */
+.slideOutTab {
+    margin-top: 35vh;
     position: absolute;
+    left: -40px;
+    height: 200px;
+    width: 40px;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    background: #8EBB67;
+    color: white;
+    border-radius: 15px 0px 0px 15px;
 
-    top: 1rem;
-    display: block;
-
-    color: #ffffff;
-    font-size: 2rem
+    z-index: 3;
 }
 
-#staff_management_div {
+.slideOutTab div {
+    text-align: center;
+    position: relative;
+    right: 70px;
+    top: 90px;
+    background: #8EBB67;
+    width: 180px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    writing-mode: lr-tb;
+}
+
+div#slideOut.showSlideOut {
+    width: 30%;
+}
+
+.modal-body {
+    height: 100vh;
+
+    background-color: #F7F9F9;
+
+    overflow: auto;
+}
+
+.modal-header {
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
+    justify-content: center;
+
+    background-color: #8EBB67;
+}
+
+.modal-title {
+    font-family: &#x27;Roboto&#x27;, sans-serif;
+    color: #ffffff;
+    font-size: 20px;
+
+    padding: 15px;
+}
+
+
+@media (max-width:375px) {
+
+    div#slideOut.showSlideOut {
+        width: 80%;
+    }
+}
+
+@media (max-width:575px){
+    .slideOutTab{
+        display: none;
+    }
+}
+
+@media (max-width:768px) {
+
+    div#slideOut.showSlideOut {
+        width: 80%;
+    }
+}
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+/* Notifications Section Setup and Styling          */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+#notifications-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 15px;
+}
+
+#notifications-section .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     text-align: center;
-    color: black;
 
-    height: 80%;
-    width: 90%;
-    overflow: hidden;
-    position: relative;
+    height: auto;
+    width: 95%;
 
-    left: 5%;
-    top: 15%;
+    background-color: #ffffff;
 
-    background-color: white;
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+    margin: 10px;
 
-    display: block;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.20), 2px 2px 10px rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
 }
 
-.tab_content {
+.notification-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 }
 
-.tab_content h2 {
-    color: #196F3D;
+.notification-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-    position: relative;
-    top: 2rem;
+    width: 100%;
 
-    display: block;
+    padding-left: 15px;
+    padding-bottom: 15px;
+
 }
 
-.btn.btn-default {
-    background: #196F3D;
-    border: 3px solid #196F3D;
+#notifications-section .box h2 {
+    font-family: &#x27;Roboto&#x27;, sans-serif;
+    color: #6B8E4E;
+    font-size: 24px;
+    margin-top: 0;
+    padding: 15px;
+}
+
+#notifications-section .box&gt;i {
+    float: left;
+    color: #ffffff;
+    background-color: #6B8E4E;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 22px;
+}
+
+#notifications-section .box:hover {
+    transform: scale(1.0125);
+    transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+/* Staff Management Setup and Styling               */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+.staff-management {
+    display: flex;
+    background-color: #eceaea;
+    width: 100%;
+    height: 100%;
+
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+
+    z-index: 0;
+}
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+/* Tab Menu Setup and Styling                       */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+.mat-ink-bar {
+    background-color: #6B8E4E !important;
+}
+
+mat-tab-group {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+mat-tab-group {
+    /deep/ .mat-tab-body-wrapper {
+        height: 100%;
+    }
+}
+
+mat-tab {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+mat-icon {
+    padding-right: 30px;
+}
+
+.tab-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100% !important;
+    min-height:100vh !important;
+    height: 100% !important;
+
+    margin-top: 5%;
+}
+
+.tab-content h2 {
+    font-family: &#x27;Roboto&#x27;, sans-serif;
+    color: #6B8E4E;
+    font-size: 28px;
+
+    text-transform: uppercase;
+}
+
+.tab-content hr {
+    width: 250px;
+    height: 2px;
+    background-color: #6B8E4E;
+    border: 0;
+    margin-bottom: 25px;
+}
+
+@media (max-width:425px){
+    .tab-content hr {
+        width: 150px;
+    }
+}
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+/* Add Staff Member Form Setup and Styling          */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+#add_new_member_form {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+
+    margin: 0;
+    padding-bottom:15px;
+}
+
+#add_new_member_form .row{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.name-inputs{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.contact-inputs{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.position-inputs{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.submit-input{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+@media(min-width:576px)
+{
+    #add_new_member_form {
+        width: 50%;
+    }
+
+    .name-inputs{
+        flex-direction: row;
+    }
+    
+    .contact-inputs{
+        flex-direction: row;
+    }
+
+    .position-inputs{
+        width:50%;
+    }
+}
+
+#add_new_member_form .btn.btn-default {
+    background: #6B8E4E;
+    border: 3px solid #ffffff;
     color: #ffffff;
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
-    margin-top: 34px;
-    margin-left: 44%;
-    margin-bottom: 1rem;
     text-transform: uppercase;
 
     border-radius: 50px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
-    border: 1px solid #196F3D;
+    border: 1px solid #6B8E4E;
 
     display: block;
+    margin: 0 auto;
+
 }
 
-.btn.btn-default:hover {
+#add_new_member_form .btn.btn-default:hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
 }
 
-.form_inputs {
-    width: 25%;
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+/* View Staff Member Tab Setup and Styling          */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+.staff-table {
+    width: 70%;
+    height: 100%;
 }
 
-#menu_div {
-    font-size: 40px;
+@media (max-width:768px){
+    .staff-table {
+        width: 80%;
+    }
 }
 
-#menu_div .menu_icon {
-    color: #ffffff;
-
-    position: relative;
-    display: block;
-
-    left: 2rem;
-    top: 2rem;
+.staff-table table {
+    width: 100%;
 }
 
-#dashboard_content .icons {
-    color: #ffffff;
-
-    overflow: hidden;
-    position: relative;
-    display: block;
-}
-
-#dashboard_content .icons_div {
-    font-size: 60px;
-}
-
-#sidenav_div .icons_div_menu {
-    font-size: 40px;
-    margin-right: 10px;
-}
-
-.sidenav {
-    height: 100%; 
-    width: 0; 
-    position: fixed; 
-    z-index: 1; 
-    top: 0; 
-    left: 0;
-    background-color: #1F292A;
-    overflow-x: hidden; 
-    padding-top: 6%; 
-    transition: 0.5s; 
-    opacity: 1;
-
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
-}
-  
-.sidenav button {
-    text-decoration: none;
-    font-size: 20px;
-    color: white;
-    display: block;
-    transition: 0.3s;
+.staff-table table .btn.btn-default {
     background: transparent;
-    margin-left: 30px;
-    border: none;
-    padding-bottom: 10px;
+    border: 2px solid #6B8E4E;
+    color: #6B8E4E;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 7px 10px;
+    text-transform: uppercase;
+
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border: 1px solid #6B8E4E;
+
+    display: block;
+    margin: 0 auto;
+
 }
 
-.sidenav .closebtn {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+.staff-table table .btn.btn-danger {
+    background: transparent;
+    border: 2px solid darkred;
+    color: darkred;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 7px 10px;
+    text-transform: uppercase;
+
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border: 1px solid darkred;
+
+    display: block;
+    margin: 0 auto;
+
+}
+
+.staff-table table .btn:hover {
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+/* Form Setup and Styling                           */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+.mat-form-field.mat-focused {
+    .mat-form-field-label {
+        color: #6B8E4E;
+    }
+
+    .mat-form-field-ripple {
+        background-color: #6B8E4E;
+    }
+
+    .mat-form-field-required-marker {
+        color: #6B8E4E;
+    }
+
+    .mat-input-element {
+        color: #6B8E4E;
+    }
+}
+
+.form-inputs {
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }</code></pre>
     </div>
 
@@ -1048,8 +3160,8 @@ export class StaffHandlerComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div id="staff_handler">  <div class="top_banner">    <h1 id="staff_heading">Staff Management</h1>    <div id="menu_div">      <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>    </div>  </div>  <div id="sidenav_div" class="sidenav">    <a class="closebtn" (click)="closeNav()">&times;</a>    <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>    <button id="user_management" routerLink="/staff-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Staff Management</button>    <button id="organization_management" routerLink="/organization-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>    <button id="diagnostic_clinic_management" routerLink="/clinic-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  Diagnostic Clinic Management</button>    <button id="database_management" routerLink="/database-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">storage</mat-icon></span>  Database Management</button>    <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>    <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>    <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>    <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>  </div>  <div class="container-fluid">    <div class="row">      <div id="staff_management_div">        <!--Tab Menu-->        <mat-tab-group animationDuration="1000ms">          <!--Add Tab Option-->          <mat-tab>            <ng-template mat-tab-label>              <mat-icon>person_add</mat-icon>              Add Staff Member            </ng-template>            <div class="tab_content">              <h2>Add Staff Member</h2>              <br />              <form id="add_new_member_form" [formGroup]="addStaffForm" (submit)="addStaff()">                <!--Name Field-->                <mat-form-field>                  <input matInput placeholder="Name" matInput type="text" formControlName="staff_name">                </mat-form-field>                <br />                <!--Surname Field-->                <mat-form-field>                  <input matInput placeholder="Surname" matInput type="text" formControlName="staff_surname">                </mat-form-field>                <br />                <!--Email Field-->                <mat-form-field>                  <input matInput placeholder="Email" matInput type="text" formControlName="staff_email">                </mat-form-field>                <br />                <!--Cellphone Number Field-->                <mat-form-field>                  <input matInput placeholder="Cellphone Number" matInput type="number" formControlName="staff_phone">                </mat-form-field>                <br />                <mat-form-field class="form_inputs">                  <mat-label>Staff Position</mat-label>                  <mat-select formControlName="staff_position">                      <mat-option>--</mat-option>                    <!--                        TODO                           - Loop through types of available staff types                           - If admin is selected we need to determine if clinic or DB admin                          - Then if they are a DB admin we must determin which DB                     -->                    <mat-option [value]="Admin">                      Admin                    </mat-option>                    <mat-option [value]="Researcher">                      Researcher                    </mat-option>                    <mat-option [value]="Student">                      Student                    </mat-option>                  </mat-select>                  <br />                </mat-form-field>                <br />                <button type="submit" id="add_new_staff" class="btn btn-default">Add Staff Member</button>              </form>            </div>          </mat-tab>          <!--Remove Tab Option-->          <mat-tab>            <ng-template mat-tab-label>              <mat-icon>delete</mat-icon>              Remove Staff Member            </ng-template>            <div class="tab_content">              <h2>Remove Staff Member</h2>              <br />              <form id="remove_member_form">                <!--Search Field-->                <mat-form-field class="form_inputs">                  <input matInput placeholder="Search for member">                </mat-form-field>                <br/>                <button type="submit" id="remove_search_staff" class="btn btn-default">Search</button>              </form>            </div>          </mat-tab>          <!--Update Tab Option-->          <mat-tab>            <ng-template mat-tab-label>              <mat-icon>update</mat-icon>              Update Staff Member            </ng-template>            <div class="tab_content">                <h2>Update Staff Member</h2>                <br />                  <form id="update_member_form">                    <!--Search Field-->                  <mat-form-field class="form_inputs">                    <input matInput placeholder="Search for member">                  </mat-form-field>                  <br/>                    <button type="submit" id="update_search_staff" class="btn btn-default">Search</button>                                  </form>                </div>          </mat-tab>          <!--View Tab Option-->          <mat-tab>            <ng-template mat-tab-label>              <mat-icon>people</mat-icon>              View Staff Compliment            </ng-template>            <div class="tab_content">                <h2>View Staff Members</h2>                <br />                <!--TODO                    - Retrieve list to all staff members from API                -->              </div>          </mat-tab>          <!--Search Tab Option-->          <mat-tab>            <ng-template mat-tab-label>              <mat-icon>search</mat-icon>              Search            </ng-template>            <div class="tab_content">                <h2>Search Staff Member</h2>                <br />                  <form id="search_member_form">                    <!--Search Field-->                  <mat-form-field class="form_inputs">                    <input matInput placeholder="Search for member">                  </mat-form-field>                  <br/>                    <button type="submit" id="search_staff" class="btn btn-default">Search</button>                                  </form>                </div>          </mat-tab>        </mat-tab-group>      </div>    </div>  </div></div>'
-    var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'}];
+        var COMPONENT_TEMPLATE = '<div><!--Bootstrap Navbar--><div class="container-fluid" id="nav-section">  <nav class="navbar navbar-expand-xl">    <a class="navbar-brand" href="#">Staff Handler</a>    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">      <span class="navbar-toggler-icon"></span>      <i class="fas fa-bars"></i>    </button>    <div class="collapse navbar-collapse" id="navbarSupportedContent">      <ul class="navbar-nav mr-auto">        <li class="nav-item active">          <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>        </li>        <li class="nav-item dropdown">          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"            aria-haspopup="true" aria-expanded="false">            <i class="fas fa-tasks"></i>Handlers          </a>          <div class="dropdown-menu" aria-labelledby="navbarDropdown">            <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>            <br />            <a id="organization_management" routerLink="/organization-handler"><i                class="fas fa-building"></i>Organizations</a>            <br />            <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i                class="fas fa-stethoscope"></i>Clinic</a>            <br />            <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Database            </a>          </div>        </li>        <li class="nav-item dropdown">          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"            aria-haspopup="true" aria-expanded="false">            <i class="fas fa-user"></i>Account          </a>          <div class="dropdown-menu" aria-labelledby="navbarDropdown">            <a id="profile_menu_link" routerLink="/admin-profile"><i class="fas fa-user-circle"></i>Profile</a>            <br/>            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>          </div>        </li>        <li class="nav-item">          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>        </li>        <li class="nav-item">          <a id="logout_menu_link" (click)="logout()" style="color:#ffffff;"><i class="fas fa-sign-out-alt"></i>Logout</a>        </li>      </ul>    </div>  </nav></div><!--SlideOut --><div id="slideOut" [ngClass]="{\'showSlideOut\': toggle_status}">  <!--Tab-->  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">    <div>      <p>Notifications</p>    </div>  </div>  <div class="modal-content">    <div class="modal-header">      <h4 class="modal-title">Admin Notifications</h4>    </div>    <div class="modal-body" id="notifications-section">      <h2 *ngIf="!notifications">No notifications</h2>      <!--*********************************************************************          DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR      *************************************************************************-->      <div *ngIf="allNotifications">        <div class="box" *ngFor="let log of allNotifications">          <div class="notification-heading">            <h2>Notification {{log.ID}}</h2>            <i class="fas fa-times"></i>          </div>          <div class="notification-content">            <p><b>Type:</b> {{log.Type}} notification</p>            <p><b>Action:</b> {{log.Action}}</p>            <p><b>Date:</b> {{log.Date}}</p>          </div>        </div>      </div>    </div>    <div class="modal-footer"> </div>  </div></div><!--Staff Handler Content--><div class="container-fluid">    <div class="staff-management">    <!--Tab Menu-->    <mat-tab-group animationDuration="1000ms">      <!--Add Tab Option-->      <mat-tab>        <ng-template mat-tab-label>          <mat-icon>person_add</mat-icon>          Add Staff Member        </ng-template>        <div class="tab-content">          <h2>Add Staff Member</h2>          <hr />          <form id="add_new_member_form" [formGroup]="addStaffForm" (submit)="addStaff()">            <div class="row">              <!--Name Field-->              <div class="name-inputs">                <mat-form-field class="col">                  <input matInput placeholder="Name" matInput type="text" formControlName="staff_name">                </mat-form-field>                <br />                <!--Surname Field-->                <mat-form-field class="col">                  <input matInput placeholder="Surname" matInput type="text" formControlName="staff_surname">                </mat-form-field>                <br />              </div>              <!--Email Field-->              <div class="contact-inputs">                <mat-form-field class="col">                  <input matInput placeholder="Email" matInput type="text" formControlName="staff_email">                </mat-form-field>                <br />                <!--Cellphone Number Field-->                <mat-form-field class="col">                  <input matInput placeholder="Cellphone Number" matInput type="number" formControlName="staff_phone">                </mat-form-field>                <br />              </div>              <div class="position-inputs">                <mat-form-field class="form-inputs" class="col">                  <mat-label>Staff Position</mat-label>                  <mat-select [(ngModel)]="selectedUserType" id="staff_position" formControlName="staff_position">                    <mat-option>--</mat-option>                    <mat-option *ngFor="let userType of userTypes" [value]="userType.Name">                      {{userType.Name}}                    </mat-option>                  </mat-select>                  <br />                </mat-form-field>              </div>              <br />              <p *ngIf="loading" class="errors">Adding Member...</p>              <br />              <div class="submit-input">                <input type="submit" id="add_new_staff" class="btn btn-default" value="Add Staff Member" />              </div>            </div>          </form>        </div>      </mat-tab>      <!--View Tab Option-->      <mat-tab (click)="viewStaff()">        <ng-template mat-tab-label>          <mat-icon>people</mat-icon>          View Staff Compliment        </ng-template>        <div class="tab-content">          <h2>View Staff Members</h2>          <hr />          <!--Table of all staff-->          <div class="staff-table">            <!--Search Filter for the Table-->            <div class="search-field">              <mat-form-field>                <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />                <mat-placeholder class="placeholder">Search Member</mat-placeholder>                <br />              </mat-form-field>            </div>            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info" *ngIf="dataSource">              <!-- First Name Column -->              <ng-container matColumnDef="First Name">                <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>                <td mat-cell *matCellDef="let element"> {{element.fname}} </td>              </ng-container>              <!-- Surname Column -->              <ng-container matColumnDef="Surname">                <th mat-header-cell *matHeaderCellDef mat-sort-header> Surname </th>                <td mat-cell *matCellDef="let element"> {{element.surname}} </td>              </ng-container>              <!-- Email Column -->              <ng-container matColumnDef="Email">                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>                <td mat-cell *matCellDef="let element"> {{element.email}} </td>              </ng-container>              <!-- Action Column -->              <ng-container matColumnDef="Action">                <th mat-header-cell *matHeaderCellDef> Action </th>                <td mat-cell *matCellDef="let element"><button [id]="element.email"                    class="btn btn-default">Update</button></td>              </ng-container>              <!-- Remove Column -->              <ng-container matColumnDef="Remove">                <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>                <td mat-cell *matCellDef="let element" (click)="removeStaffMemberPrompt(element)">                    <button [id]="element.email"                    class="btn btn-danger">Remove</button></td>              </ng-container>              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>            </table>            <!--Pagination Setup-->            <!-- <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons *ngIf="dataSource"></mat-paginator> -->          </div>        </div>      </mat-tab>    </mat-tab-group>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AdminDivComponent', 'selector': 'app-admin-div'},{'name': 'AdminProfileComponent', 'selector': 'app-admin-profile'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'ConfirmComponent', 'selector': 'app-confirm'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'NotificationDivComponent', 'selector': 'app-notification-div'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'ReportingComponent', 'selector': 'app-reporting'},{'name': 'SampleDivComponent', 'selector': 'app-sample-div'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffDivComponent', 'selector': 'app-staff-div'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffProfileComponent', 'selector': 'app-staff-profile'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'},{'name': 'UpdateComponent', 'selector': 'app-update'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'StaffHandlerComponent'};
 </script>
@@ -1064,6 +3176,7 @@ export class StaffHandlerComponent implements OnInit {
 
 
 
+                   
 
 
 

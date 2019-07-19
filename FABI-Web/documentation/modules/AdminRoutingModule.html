@@ -70,7 +70,23 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">/**
+ * File Name: admin-routing.module.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Admin\admin-routing.module.ts
+ * Project Name: fabi-web
+ * Created Date: Friday, May 24th 2019
+ * Author: Team Nova - novacapstone@gmail.com
+ * -----
+ * Last Modified: Friday, July 19th 2019
+ * Modified By: Team Nova
+ * -----
+ * Copyright (c) 2019 University of Pretoria
+ * 
+ * &lt;&lt;license&gt;&gt;
+ */
+
+
+import { NgModule } from &#x27;@angular/core&#x27;;
 import { Routes, RouterModule } from &#x27;@angular/router&#x27;;
 
 import { AdminDashboardComponent } from &#x27;./admin-dashboard/admin-dashboard.component&#x27;;
@@ -78,14 +94,53 @@ import { StaffHandlerComponent } from &#x27;./staff-handler/staff-handler.compon
 import { OrganizationHandlerComponent } from &#x27;./organization-handler/organization-handler.component&#x27;;
 import { ClinicHandlerComponent } from &#x27;./clinic-handler/clinic-handler.component&#x27;;
 import { DatabaseHandlerComponent } from &#x27;./database-handler/database-handler.component&#x27;;
+import { AdminProfileComponent } from &quot;./admin-profile/admin-profile.component&quot;;
+
+import { AuthenticationGuard } from &#x27;../_guards/authentication.guard&#x27;;
+import { Role } from &#x27;../_interfaces/role&#x27;;
+import { ReportingComponent } from &#x27;./reporting/reporting.component&#x27;;
 
 
 const routes: Routes &#x3D; [
-  {path: &#x27;admin-dashboard&#x27;, component: AdminDashboardComponent},
-  {path: &#x27;staff-handler&#x27;, component: StaffHandlerComponent},
-  {path: &#x27;organization-handler&#x27;, component: OrganizationHandlerComponent},
-  {path: &#x27;clinic-handler&#x27;, component: ClinicHandlerComponent},
-  {path: &#x27;database-handler&#x27;, component: DatabaseHandlerComponent}
+  {
+    path: &#x27;admin-dashboard&#x27;,
+    component: AdminDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;ClinicAdmin&#x27;, &#x27;SuperUser&#x27;] }
+  },
+  {
+    path: &#x27;staff-handler&#x27;, 
+    component: StaffHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;SuperUser&#x27;]}
+  },
+  {
+    path: &#x27;organization-handler&#x27;,
+    component: OrganizationHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;SuperUser&#x27;]}
+  },
+  {
+    path: &#x27;clinic-handler&#x27;, 
+    component: ClinicHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;ClinicAdmin&#x27;, &#x27;SuperUser&#x27;] }
+  },
+  {
+    path: &#x27;database-handler&#x27;, 
+    component: DatabaseHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;SuperUser&#x27;, &#x27;ClinicAdmin&#x27;, &#x27;Staff&#x27;]}
+  },
+  {
+    path: &#x27;admin-profile&#x27;, 
+    component: AdminProfileComponent
+  },
+  {
+    path: &#x27;reporting&#x27;, 
+    component: ReportingComponent
+  }
+  
 ];
 
 @NgModule({
@@ -106,6 +161,7 @@ export class AdminRoutingModule { }
 
 
 
+                   
 
 
 

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Friday, July 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,19 +15,19 @@
 
 
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../_services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { ErrorComponent } from '../../errors/error-component/error.component';
+import { ErrorComponent } from '../../_errors/error-component/error.component';
 import {MatTableModule} from '@angular/material/table';
 
-import { Porting } from '../../services/porting.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
-import { UserManagementAPIService } from '../../services/user-management-api.service';
+import { Porting } from '../../_services/porting.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
 @Component({
   selector: 'app-database-handler',
@@ -37,6 +37,17 @@ import { UserManagementAPIService } from '../../services/user-management-api.ser
 })
 export class DatabaseHandlerComponent implements OnInit {
 
+  displayedColumns: string[];
+  dataSource = new MatTableDataSource([]);
+  fields: any[] = [];
+
+  databases: any[];
+  databasePrivileges: any = {'create': false, 'retrieve': true, 'update': false, 'delete': false};
+  
+  selectedDatabase: string;
+  /**
+   *  GLOBALS
+   */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,6 +64,7 @@ export class DatabaseHandlerComponent implements OnInit {
   columns: any = [];
 
   jsonData: any;
+  
 
   /** Holds the div element (rpDBname) from the HTML page - @type {ElementRef} */
   @ViewChild("rpDBname") rPort : ElementRef;
@@ -75,6 +87,9 @@ export class DatabaseHandlerComponent implements OnInit {
   notifications: boolean = true; 
   /** THe number of the notifications - @type {number} */   
   localNotificationNumber : number = 1; 
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,6 +379,17 @@ export class DatabaseHandlerComponent implements OnInit {
 
   ngOnInit() {
     this.loadNotifications();
+
+    //-------- Load Databases for Drop Down --------
+    // const user = this.service.currentUserValue;
+    const user = this.service.currentSessionValue;
+
+
+    console.log("--- USER: " + JSON.stringify(user))
+    // this.databases = user.databases;
+    this.databases = user.user.databases;
+
+
   }
 
 
@@ -449,7 +475,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
   public getCSV(){
     let data = "";
-    let dbname = this.rPort.nativeElement.value;
+    let dbname = this.selectedDatabase;
 
     this.service.reversePorting(dbname).subscribe((response:any) => {
         this.loading = false;
@@ -488,6 +514,63 @@ export class DatabaseHandlerComponent implements OnInit {
     }); 
   }
 
+
+  public viewDatabase() {
+
+    this.service.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
+      if (response.success == true && response.code == 200) {
+        
+        console.log("---- RESPONSE: " + JSON.stringify(response));
+
+        Object.keys(response.data.docs[0]).forEach((column) => {
+
+          let obj = {
+            'name': column
+          }
+          this.fields.push(obj);
+
+        });
+
+        this.displayedColumns= this.fields.map(field => field.name);
+
+        var databaseDetails = this.databases.find(database => {
+          return database.name == this.selectedDatabase;
+        });
+
+        if(databaseDetails && (databaseDetails != null && databaseDetails != '') && databaseDetails.privileges.indexOf('create') != -1) {
+          this.databasePrivileges.create = true;
+        }
+        if(databaseDetails && databaseDetails != null && databaseDetails != '' && databaseDetails.privileges.indexOf('retrieve') != -1) {
+          this.databasePrivileges.retrieve = true;
+        }
+        if(databaseDetails && databaseDetails != null && databaseDetails != '' && databaseDetails.privileges.indexOf('update') != -1) {
+          this.databasePrivileges.update = true;
+          this.displayedColumns.push("Update");
+        }
+        if(databaseDetails && databaseDetails != null && databaseDetails != '' && databaseDetails.privileges.indexOf('delete') != -1) {
+          this.databasePrivileges.delete = true;
+          this.displayedColumns.push("Remove");
+        }
+
+        this.dataSource = new MatTableDataSource(response.data.docs);
+        
+        // this.dataSource.paginator = this.paginator;
+  
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the data", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.ngOnInit();
+          }
+        })
+      }
+    });
+
+  }
+  
+  
+
   submitDatabase(){
     // this.submit = true;
   }
@@ -495,4 +578,20 @@ export class DatabaseHandlerComponent implements OnInit {
   removePreview(){
     this.preview = false;
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
+
 }

@@ -15,20 +15,20 @@
 
 
 import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
-import * as Interface from "../../interfaces/interfaces";
+import * as Interface from "../../_interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../errors/error-component/error.component';
+import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../_services/http.service';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 import { UpdateComponent } from "../../update/update.component";
 import { template } from '@angular/core/src/render3';
 
-import { UserManagementAPIService } from 'src/app/services/user-management-api.service';
+import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 
 
 @Component({

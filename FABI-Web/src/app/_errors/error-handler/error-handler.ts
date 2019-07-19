@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, June 25th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -18,7 +18,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { NotificationService } from '../../services/notification.service';
+import { NotificationService } from '../../_services/notification.service';
 
 // import * as StackTraceParser from 'error-stack-parser';
 
@@ -45,15 +45,17 @@ export class ErrorsHandler implements ErrorHandler {
 
       console.log("------------------- ERROR HANDLER 1 ------------------");
       // Http Error
-      // return notificationService.showToastNotification("TEST");
-      console.log("Http Error : " + error);
+      return notificationService.showToastNotification(error.message);
+      // console.log("Http Error : " + error);
       
     } else {
       console.log("------------------- ERROR HANDLER 2 ------------------");
-      // Client Error Happend      
-      // return notificationService.showToastNotification('Client Error');
+      console.log("------ ERROR: " + error);
 
-      console.log("Client Error : " + error);
+      // Client Error Happend      
+      return notificationService.showToastNotification(error.message);
+
+      // console.log("Client Error : " + error);
     }
     // Log the error anyway
     console.error(error);
