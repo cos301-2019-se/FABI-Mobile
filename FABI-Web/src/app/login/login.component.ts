@@ -126,6 +126,7 @@ export class LoginComponent implements OnInit {
         //Setting local storage to hold the users details
         localStorage.setItem('userID', response.userDetails.id);
         localStorage.setItem('userOrganization', Lorg);
+        localStorage.setItem('userPassword', Lpassw);
 
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Logged In", "Dismiss", {
