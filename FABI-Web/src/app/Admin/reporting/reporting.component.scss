@@ -310,7 +310,8 @@ mat-tab-group {
 
 mat-tab {
     width: 100% !important;
-    height: 100% !important;
+    height: 1000px !important;
+    padding-bottom: 50% !important;
 }
 
 mat-icon {
@@ -428,7 +429,7 @@ mat-icon {
     }
 }
 
-#add_new_organization_form .btn.btn-default {
+.btn .btn-default {
     background: #6B8E4E;
     border: 3px solid #ffffff;
     color: #ffffff;
@@ -711,6 +712,8 @@ tbody tr th{
 
 #previewTableErrorLogs{
     padding-bottom: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .btn.btn-default {
@@ -798,43 +801,20 @@ tbody tr th{
     z-index: 1;
 }
 
-// /****************
-//     Tab Content
-// *****************/
-// .mat-ink-bar {
-//     background-color: #6B8E4E !important;
-// }
+#error_report{
+    font-family: 'Roboto', sans-serif;
+    color: #6B8E4E;
+    font-size: 28px;
 
-// mat-tab-group {
-//     width: 100% !important;
-//     height: 100% !important;
-// }
+    text-transform: uppercase;
 
-// mat-tab-group {
-//     /deep/ .mat-tab-body-wrapper {
-//       height: 100%;
-//     }
-//   }
+    margin-left: 44%;
+}
 
-// mat-tab{
-//     width: 100% !important;
-//     height: 100% !important;
-// }
-
-// i{
-//     padding-right:30px;
-// }
-
-// .tab-content {
-//     display: flex;
-//     align-items: center;
-//     flex-direction: column;
-
-//     width: 100% !important;
-//     height: 100% !important;
-// }
-
-// .tab-content h2{
-//     color:#6B8E4E;
-//     text-transform: uppercase;
-// }
+#errorReport{
+    background-color: white;
+    padding-top: 20px;
+    width: 80%;
+    margin: auto;
+    height: 80%;
+}
