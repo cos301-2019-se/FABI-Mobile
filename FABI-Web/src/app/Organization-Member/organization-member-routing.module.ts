@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, June 26th 2019
+ * Last Modified: Friday, July 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -20,13 +20,35 @@ import { MemberDashboardComponent } from './member-dashboard/member-dashboard.co
 import { MemberProfileComponent } from './member-profile/member-profile.component';
 import { MemberViewSamplesComponent } from './member-view-samples/member-view-samples.component';
 import { SampleFormComponent } from '../sample-form/sample-form.component';
+import { AuthenticationGuard } from '../_guards/authentication.guard';
+import { Role } from '../_interfaces/role';
 
 
 const routes: Routes = [
-  {path: 'member-dashboard', component: MemberDashboardComponent},
-  {path: 'member-profile', component: MemberProfileComponent},
-  {path: 'member-view-samples', component: MemberViewSamplesComponent},
-  {path: 'submit-sample', component: SampleFormComponent}
+  {
+    path: 'member-dashboard', 
+    component: MemberDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Member] }
+  },
+  {
+    path: 'member-profile', 
+    component: MemberProfileComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Member] }
+  },
+  {
+    path: 'member-view-samples', 
+    component: MemberViewSamplesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Member] }
+  },
+  {
+    path: 'submit-sample', 
+    component: SampleFormComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Member] }
+  }
 ];
 
 @NgModule({

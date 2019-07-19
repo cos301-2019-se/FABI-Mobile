@@ -50,6 +50,8 @@ export class ErrorsHandler implements ErrorHandler {
       
     } else {
       console.log("------------------- ERROR HANDLER 2 ------------------");
+      console.log("------ ERROR: " + error);
+
       // Client Error Happend      
       return notificationService.showToastNotification(error.message);
 
