@@ -12,6 +12,7 @@ import { Role } from "./_interfaces/role";
 import { AuthenticationGuard } from './_guards/authentication.guard';
 import { UpdateComponent } from './update/update.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
+import { ReportingComponent } from './Admin/reporting/reporting.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,10 @@ const routes: Routes = [
     component: SampleFormComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.Member] }
+  },
+  {
+    path: 'reporting',
+    component: ReportingComponent
   }
 
 ];
