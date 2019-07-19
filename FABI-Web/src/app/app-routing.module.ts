@@ -8,20 +8,64 @@ import { OrganizationDashboardComponent } from "./Organization/organization-dash
 import { StaffDashboardComponent } from "./Staff/staff-dashboard/staff-dashboard.component";
 import { MemberDashboardComponent } from "./Organization-Member/member-dashboard/member-dashboard.component";
 
-import { StaffHandlerComponent } from './Admin/staff-handler/staff-handler.component';
-import { OrganizationHandlerComponent } from './Admin/organization-handler/organization-handler.component';
-import { ClinicHandlerComponent } from './Admin/clinic-handler/clinic-handler.component';
-import { DatabaseHandlerComponent } from './Admin/database-handler/database-handler.component';
-
+import { Role } from "./_interfaces/role";
+import { AuthenticationGuard } from './_guards/authentication.guard';
+import { UpdateComponent } from './update/update.component';
+import { SampleFormComponent } from './sample-form/sample-form.component';
+import { ReportingComponent } from './Admin/reporting/reporting.component';
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent},
-  { path: '',   redirectTo: '/home', pathMatch: 'full' },
-  {path: 'login', component: LoginComponent},
-  {path: 'admin-dashboard', component: AdminDashboardComponent},
-  {path: 'org-admin-dashboard', component: OrganizationDashboardComponent},
-  {path: 'staff-dashboard', component: StaffDashboardComponent},
-  {path: 'org-member-dashboard', component: MemberDashboardComponent}
+  {
+    path: 'home', 
+    component: HomeComponent
+  },
+  { 
+    path: '',   
+    redirectTo: '/home', 
+    pathMatch: 'full' 
+  },
+  {
+    path: 'login', 
+    component: LoginComponent
+  },
+  {
+    path: 'admin-dashboard', 
+    component: AdminDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: { roles: [Role.SuperUser, Role.ClinicAdmin] }
+  },
+  {
+    path: 'organization-dashboard',
+    component: OrganizationDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: { roles: [Role.OrganizationAdmin] }
+  },
+  {
+    path: 'staff-dashboard',
+    component: StaffDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: { roles: [Role.Staff] }
+  },
+  {
+    path: 'member-dashboard', 
+    component: MemberDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: { roles: [Role.Member] }
+  },
+  {
+    path: 'update',
+    component: UpdateComponent,
+  },
+  {
+    path: 'submit-sample', 
+    component: SampleFormComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Member] }
+  },
+  {
+    path: 'reporting',
+    component: ReportingComponent
+  }
 
 ];
 
