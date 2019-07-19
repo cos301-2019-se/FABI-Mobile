@@ -11,6 +11,7 @@ import { MemberDashboardComponent } from "./Organization-Member/member-dashboard
 import { Role } from "./_interfaces/role";
 import { AuthenticationGuard } from './_guards/authentication.guard';
 import { UpdateComponent } from './update/update.component';
+import { SampleFormComponent } from './sample-form/sample-form.component';
 
 const routes: Routes = [
   {
@@ -36,7 +37,7 @@ const routes: Routes = [
     path: 'organization-dashboard',
     component: OrganizationDashboardComponent,
     canActivate: [AuthenticationGuard],
-    data: { roles: [Role.Organisation] }
+    data: { roles: [Role.OrganizationAdmin] }
   },
   {
     path: 'staff-dashboard',
@@ -53,6 +54,12 @@ const routes: Routes = [
   {
     path: 'update',
     component: UpdateComponent,
+  },
+  {
+    path: 'submit-sample', 
+    component: SampleFormComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Member] }
   }
 
 ];

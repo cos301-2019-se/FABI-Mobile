@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Friday, July 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -59,7 +59,9 @@ export class HttpService {
       'ID': user.id,
       'organisation': org,
       'email': user.email,
-      'permission': user.userType
+      'permission': user.userType,
+      //REMOVE ASAP:
+      'databases': user.databases
     }
 
     let sess = {
@@ -78,6 +80,7 @@ export class HttpService {
   public get currentUserValue(): any {
     return this.currentUser;
   }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             LOGIN 
@@ -111,6 +114,7 @@ export class HttpService {
     return this.http.request<any>(method, url, options).pipe(map(response => {
 
       if (response && (response.token && response.token != '')) {
+        console.log("---- RESPONSE: " + JSON.stringify(response));
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
         this.currentUser = response.userDetails;
       }
@@ -139,8 +143,8 @@ export class HttpService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${this.currentSessionValue.token}`
+        'Accept': 'application/json'
+        // 'Authorization': `Bearer ${this.currentSessionValue.token}`
       }),
       json: true
     };
@@ -462,8 +466,11 @@ export class HttpService {
     console.log("orgName: " + orgInfo.orgName);
     const postData = {
       "orgName": orgInfo.orgName,
-      "member": memberInfo
+      "member": memberInfo,
+      "userType": "Member"
     }
+
+    console.log("//// POST: " + JSON.stringify(postData));
 
     const options = {
       headers: {
@@ -494,9 +501,11 @@ export class HttpService {
     let method = 'POST';
 
     const postData = {
-      "orgName": localStorage.getItem('orgName'),
-      "email": memberInfo.email
+      "orgName": this.currentSessionValue.user.organisation,
+      "id": memberInfo.ID
     }
+
+    console.log("//// POST: " + JSON.stringify(postData))
 
     const options = {
       headers: {
@@ -530,7 +539,8 @@ export class HttpService {
     let method = 'POST';
 
     const postData = {
-      "orgName": orgInfo.orgName,
+      "orgName": this.currentSessionValue.user.organisation,
+      "userID": this.currentSessionValue.user.ID,
       "data": formDetails
     }
 
@@ -560,12 +570,12 @@ export class HttpService {
    * @memberof HttpService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  retrieveAllSamples(orgInfo: Interface.Organisation) {
+  retrieveAllSamples() {
     let retrieveAllOrgSamples = '***REMOVED***/retrieveAllOrgSamples';
     let method = 'POST';
 
     const postData = {
-      "orgName": orgInfo.orgName
+      "orgName": this.currentSessionValue.user.organisation
     }
 
     const options = {
@@ -584,6 +594,39 @@ export class HttpService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    RETREIVE ALL SAMPLES FOR MEMBER
+  /**
+   * Method that sends a request to the API to retreive all Samples for a member
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveMemberSamples() {
+    let retrieveAllMemberSamples = '***REMOVED***/retrieveSamplesForMember';
+    let method = 'POST';
+
+    const postData = {
+      "userID": this.currentSessionValue.user.ID
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.currentSessionValue.token}`
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, retrieveAllMemberSamples, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    GET ORGANIZATION
   /**
    * Function that send a request to retrieve an Organisations' details using their ID
@@ -599,7 +642,7 @@ export class HttpService {
 
     const postData = {
       // "ID": localStorage.getItem('ID')
-      "orgName": localStorage.getItem('')
+      "orgName": this.currentSessionValue.user.organisation
 
     }
 
@@ -633,7 +676,7 @@ export class HttpService {
     let method = 'POST';
 
     const postData = {
-      "orgName": localStorage.getItem('orgName')
+      "orgName": this.currentSessionValue.user.organisation
     }
 
     const options = {
@@ -667,9 +710,8 @@ export class HttpService {
     let getAllOrganizationsMembersURL = '***REMOVED***/getAllOrgMembers';
     let method = 'POST';
 
-    console.log("orgName: " + localStorage.getItem('orgName'));
     const postData = {
-      "orgName": localStorage.getItem('orgName')
+      "orgName": this.currentSessionValue.user.organisation
     }
 
     console.log("postData: " + postData);
