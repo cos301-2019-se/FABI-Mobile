@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, June 26th 2019
+ * Last Modified: Friday, July 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -20,15 +20,15 @@ import {ViewEncapsulation} from '@angular/core';
 //Include Material Components
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
-import * as Interface from "../../interfaces/interfaces";
+import * as Interface from "../../_interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../errors/error-component/error.component';
+import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../_services/http.service';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 
 
@@ -62,6 +62,9 @@ export class MemberHandlerComponent implements OnInit {
   orgMembers: Interface.OrganisationMember[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -98,6 +101,21 @@ export class MemberHandlerComponent implements OnInit {
   closeNav() {
     document.getElementById("sidenav_div").style.width = "0";
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+ }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG_ON_INIT()
@@ -159,11 +177,14 @@ export class MemberHandlerComponent implements OnInit {
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
-    const org_details: Interface.Organisation = { orgName: localStorage.getItem('orgName') };
+    const user = this.service.currentSessionValue;
+    const org_details: Interface.Organisation = { orgName: user.user.organisation };
     const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
 
     this.service.addOrgMember(org_details, member_details).subscribe((response: any) => {
+
+      console.log("////// RESPONSE: " + response);
 
       this.loading = false;
       

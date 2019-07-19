@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "compodoc": "compodoc",
+    "compodoc": "npx compodoc -p src/tsconfig.app.json",
     "generate-docs": "compodoc -p src/tsconfig.app.json",
     "serve-docs": "compodoc -s src/tsconfig.app.json"
   },
@@ -30,6 +30,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.4.1",
     "ngx-toastr": "^10.0.4",
     "rxjs": "~6.3.3",
     "tar": "^4.4.8",
@@ -37,11 +38,11 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.13.0",
+    "@angular-devkit/build-angular": "^0.13.9",
     "@angular/cli": "~7.3.8",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
-    "@types/jasmine": "~2.8.8",
+    "@types/jasmine": "^2.8.16",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^8.10.49",
     "codelyzer": "~4.5.0",

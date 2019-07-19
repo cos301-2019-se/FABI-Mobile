@@ -61,9 +61,16 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/admin-api.service.ts</code>
+            <code>src/app/_interfaces/interfaces.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Defines a FABI Staff Member object</p>
+
+            </p>
 
 
         <section>
@@ -82,12 +89,23 @@
                                         <a href="#email">email</a>
                                 </li>
                                 <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#fname">fname</a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#ID">ID</a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#name">name</a>
                                 </li>
                                 <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#phone">phone</a>
                                 </li>
                                 <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#position">position</a>
                                 </li>
                                 <li>
@@ -137,6 +155,74 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
+                                        <a name="fname"></a>
+                                        <span class="name"><b>fname</b><a href="#fname"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>fname:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="ID"></a>
+                                        <span class="name"><b>ID</b><a href="#ID"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>ID:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
                                         <a name="name"></a>
                                         <span class="name"><b>name</b><a href="#name"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
@@ -156,6 +242,11 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
 
 
 
@@ -185,6 +276,11 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
 
 
 
@@ -214,6 +310,11 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
 
 
 
@@ -254,373 +355,125 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { HttpClient } from &#x27;@angular/common/http&#x27;;
-import { HttpHeaders } from &#x27;@angular/common/http&#x27;;
-import { registerContentQuery } from &#x27;@angular/core/src/render3&#x27;;
-import { StaticInjector } from &#x27;@angular/core/src/di/injector&#x27;;
-import { BehaviorSubject } from &#x27;rxjs&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Organisation {
+    ID?: string; // ID of Organisation 
+    orgName: string; // Name of Organisation
+    admin?: OrganisationAdmin; // Admin of Organisation
+}
 
+/**
+ * Defines an Admin of an Organisation
+ *
+ * @export
+ * @interface OrganisationAdmin
+ */
+export interface OrganisationAdmin {
+    name?: string;  // First Name of Admin
+    fname?: string;  // First Name of Admin
+    surname: string; // Surname of Admin
+    email: string; // Email of Admin
+    password?: string; // Passsword of Admin
+}
 
-const getAllOrganizationsURL: string &#x3D; &#x27;***REMOVED***/getAllOrganizations&#x27;;
-const createOrganizationURL: string &#x3D; &#x27;***REMOVED***/createOrganization&#x27;;
-const getOrgDetailsURL: string &#x3D; &#x27;&#x27;;
+/**
+ * Defines a Organisation&#x27;s Member object
+ *
+ * @export
+ * @interface MemberInfo
+ */
+export interface OrganisationMember {
+  ID?: string, // ID of the Member
+  fname?: string, // First Name of Member
+  name?: string, // First Name of Member
+  surname: string, // Surname of Member
+  email: string, // Email of Member
+  password?: string // Password of Member
+}
 
-const authenticateFABIAdminURL: string &#x3D; &#x27;https://authentication-dot-api-fabi.appspot.com/loginAdmin&#x27;;
-const authenticateStaffURL: string &#x3D; &#x27;https://authentication-dot-api-fabi.appspot.com/loginFabiStaff&#x27;;
-const authenticateDataAdminURL: string &#x3D; &#x27;https://authentication-dot-api-fabi.appspot.com/loginDatabaseAdmin&#x27;;
-const authenticateOrgURL: string &#x3D; &#x27;https://authentication-dot-api-fabi.appspot.com/loginOrgAdmin&#x27;;
-const authenticateOrgMemberURL: string &#x3D; &#x27;https://authentication-dot-api-fabi.appspot.com/loginOrgMember&#x27;;
+/**
+ * Defines a User Type object
+ *
+ * @export
+ * @interface UserType
+ */
+export interface UserType {
+    ID: number; // ID of the User Type
+    Name: string; // Name of the User Type
+}
 
-const addStaffMemberURL: string &#x3D; &#x27;***REMOVED***/addStaff&#x27;;
-
-const addFABIAdminURL: string &#x3D; &#x27;***REMOVED***/addFabiAdmin&#x27;;
-
-
-const portingURL: string &#x3D; &#x27;***REMOVED***/porting&#x27;;
-
-
-
+/**
+ * Defines the User&#x27;s Login Information
+ *
+ * @export
+ * @interface LoginInfo
+ */
 export interface LoginInfo {
-  email: string;
-  userType: string,
-  organization: string,
-  password: string;
+    orgName: string;
+    email: string;
+    password: string;
 }
-
-export interface OrganizationInfo {
-  orgName: string,
-  location: string
-}
-
-export interface OrganizationAdmin {
-  name: string,
-  surname: string,
-  email: string,
-  phone: number
-}
-
+  
+/**
+ * Defines a FABI Staff Member object
+ *
+ * @export
+ * @interface StaffInfo
+ */
 export interface StaffInfo {
-  name: string;
-  surname: string,
-  email: string,
-  phone: number,
-  position: string
-}
-
-
-@Injectable({
-  providedIn: &#x27;root&#x27;
-})
-export class AdminAPIService {
-
-  private APItoken : string;
-  loggedIn: boolean &#x3D; false; 
-
-  constructor(private http: HttpClient) { }
-
-  setToken(token: string)
-  {
-    this.APItoken &#x3D; token;
-  }
-
-  setLoggedin()
-  {
-    this.loggedIn &#x3D; true;
-  }
-
-  isLoggedIn()
-  {
-    return this.loggedIn;
+    ID?: number,
+    fname?: string,
+    name?: string
+    surname: string,
+    email: string,
+    phone?: number,
+    position?: string
   }
 
 
-  getAllOrganizations() {
-
-    const options &#x3D; {
-      method: &#x27;POST&#x27;,
-      url: getAllOrganizationsURL,
-      headers: {
-        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-      },
-      json: true
-    };
-
-    return this.http.request(&#x27;POST&#x27;, getAllOrganizationsURL, options);
-    
-  }
-
-
-  getAllUserTypes() {
-
-    // const options &#x3D; {
-    //   method: &#x27;POST&#x27;,
-    //   url: getAllOrganizationsURL,
-    //   headers: {
-    //     &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-    //     &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-    //     &#x27;Accept&#x27;: &#x27;application/json&#x27;
-    //   },
-    //   json: true
-    // };
-
-    // return this.http.request(&#x27;POST&#x27;, getAllOrganizationsURL, options);
-    
-  }
-
-
-  login(details: LoginInfo) {
   
-    if(details.organization &#x3D;&#x3D; &quot;FABI&quot;)
-    {
-      if(details.userType &#x3D;&#x3D; &quot;Admin&quot;)
-      {
-        return this.authenticateFABIAdmin(details);
-      }
-      else if(details.userType &#x3D;&#x3D; &quot;Database Admin&quot;)
-      {
-        return this.authenticateDataAdmin(details);
-      }
-      else{
-        return this.authenticateFABIStaff(details);
-      }
-    }
-
-    if(details.organization !&#x3D; &quot;FABI&quot;)
-    {
-      if(details.userType &#x3D;&#x3D; &quot;Admin&quot;)
-      {
-        return this.authenticateOrgAdmin(details);
-      }
-      else if(details.userType &#x3D;&#x3D; &quot;Member&quot;)
-      {
-        return this.authenticateOrgMember(details);
-      }
-    }
-
-  }
-
-  authenticateFABIAdmin(details: LoginInfo) 
-  {
-    const postData &#x3D; details;
-
-    const options &#x3D; {
-      method: &#x27;POST&#x27;,
-      url: authenticateFABIAdminURL,
-      headers: {
-        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &quot;Access-Control-Allow-Origin&quot;:&quot;*&quot;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-      },
-      body:postData,
-      json: true
-    };
-
-    return this.http.request(&#x27;POST&#x27;, authenticateFABIAdminURL, options);
-  }
-
-  authenticateFABIStaff(details: LoginInfo) 
-  {
-    const postData &#x3D; details;
-
-    const options &#x3D; {
-      method: &#x27;POST&#x27;,
-      url: authenticateStaffURL,
-      headers: {
-        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &quot;Access-Control-Allow-Origin&quot;:&quot;*&quot;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-      },
-      body:postData,
-      json: true
-    };
-
-    return this.http.request(&#x27;POST&#x27;, authenticateStaffURL, options);
-  }
   
-
-  authenticateDataAdmin(details: LoginInfo) 
-  {
-    const postData &#x3D; details;
-
-    const options &#x3D; {
-      method: &#x27;POST&#x27;,
-      url: authenticateDataAdminURL,
-      headers: {
-        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &quot;Access-Control-Allow-Origin&quot;:&quot;*&quot;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-      },
-      body:postData,
-      json: true
-    };
-
-    return this.http.request(&#x27;POST&#x27;, authenticateDataAdminURL, options);
-  }
-
-  authenticateOrgAdmin(details: LoginInfo) 
-  {
-    const postData &#x3D; {
-      &quot;email&quot;: details.email,
-      &quot;password&quot;: details.password,
-      &quot;orgName&quot;:details.organization
-    }
-
-    const options &#x3D; {
-      method: &#x27;POST&#x27;,
-      url: authenticateOrgURL,
-      headers: {
-        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &quot;Access-Control-Allow-Origin&quot;:&quot;*&quot;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-      },
-      body:postData,
-      json: true
-    };
-
-    return this.http.request(&#x27;POST&#x27;, authenticateOrgURL, options);
-  }
-
-  authenticateOrgMember(details: LoginInfo) 
-  {
-    const postData &#x3D; {
-      &quot;email&quot;: details.email,
-      &quot;password&quot;: details.password,
-      &quot;orgName&quot;:details.organization
-    }
-
-    const options &#x3D; {
-      method: &#x27;POST&#x27;,
-      url: authenticateOrgMemberURL,
-      headers: {
-        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &quot;Access-Control-Allow-Origin&quot;:&quot;*&quot;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-      },
-      body:postData,
-      json: true
-    };
-
-    return this.http.request(&#x27;POST&#x27;, authenticateOrgMemberURL, options);
-  }
-
-  porting(jsonObject: Object)
-  {
-    const postData &#x3D; {
-      &quot;databaseName&quot;: &quot;Testing_Third_Api_Call&quot;,
-      &quot;data&quot;:jsonObject
-    };
-
-    const options &#x3D; {
-      method: &#x27;POST&#x27;,
-      url: portingURL,
-      headers: {
-        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &quot;Access-Control-Allow-Origin&quot;:&quot;*&quot;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-      },
-      body:postData,
-      json: true
-    };
-
-    return this.http.request(&#x27;POST&#x27;, portingURL, options);
-  }
-
-  createOrganization(orgInfo: OrganizationInfo, adminInfo: OrganizationAdmin)
-  {
-    const postData &#x3D; {
-      &quot;orgName&quot;: orgInfo.orgName,
-      &quot;admin&quot;: adminInfo
-    }
-
-    const options &#x3D; {
-      method: &#x27;POST&#x27;,
-      url: createOrganizationURL,
-      headers: {
-        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &quot;Access-Control-Allow-Origin&quot;:&quot;*&quot;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-      },
-      body:postData,
-      json: true
-    };
-
-    return this.http.request(&#x27;POST&#x27;, createOrganizationURL, options);
-  }
-
-  addStaffMember(staffInfo: StaffInfo)
-  {
-    if(staffInfo.position &#x3D;&#x3D; &quot;Admin&quot;)
-    {
-      return this.addFABIAdmin(staffInfo);
-
-    } else {
-      const postData &#x3D; {
-        &quot;staff&quot;: staffInfo
-      }
-  
-      const options &#x3D; {
-        method: &#x27;POST&#x27;,
-        url: addStaffMemberURL,
-        headers: {
-          &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-          &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-          &quot;Access-Control-Allow-Origin&quot;:&quot;*&quot;,
-          &#x27;Accept&#x27;: &#x27;application/json&#x27;
-        },
-        body:postData,
-        json: true
-      };
-  
-      return this.http.request(&#x27;POST&#x27;, addStaffMemberURL, options);
-    }
-   
-  }
-
-  addFABIAdmin(staffInfo: StaffInfo)
-  {
-    const postData &#x3D; {
-      &quot;admin&quot;: staffInfo
-    }
-
-    const options &#x3D; {
-      method: &#x27;POST&#x27;,
-      url: addFABIAdminURL,
-      headers: {
-        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &quot;Access-Control-Allow-Origin&quot;:&quot;*&quot;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-      },
-      body:postData,
-      json: true
-    };
-
-    return this.http.request(&#x27;POST&#x27;, addFABIAdminURL, options);
-  }
-
-
-
-
-
-
-
-
-}
-</code></pre>
+  export interface ClientFormData {
+    tree_species: string;
+    number_samples: string;
+    location1: string;
+    location2: string;
+    compartment: string;
+    gps: string;
+    date_collection: string;
+    date_sent: string;
+    type_soil: string;
+    type_stems: string;
+    type_leaves: string;
+    type_roots: string;
+    type_twigs: string;
+    type_seedlings: string;
+    type_media: string;
+    type_water: string;
+    symptom_wilt: string;
+    symptom_stunting: string;
+    symptom_leafspot: string;
+    symptom_rootrot: string;
+    symptom_dieback: string;
+    symptom_cankers: string;
+    symptom_death: string;
+    symptom_wood: string;
+    symptom_other: string;
+    distribution_localized: string;
+    distribution_scattered: string;
+    distribution_general: string;
+    conditions_affected: string;
+    conditions_problem_noticed: string;
+    conditions_date_planted: string;
+    conditions_weather_disturbance: string;
+    conditions_weather_prior: string;
+    conditions_other: string;
+    conditions_additional: string;
+  }</code></pre>
     </div>
 </div>
 
 
+                   
 
 
 
