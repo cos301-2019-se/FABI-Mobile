@@ -32,7 +32,7 @@
   -  [Demo 3 User Manual](https://drive.google.com/file/d/1CWMj60GFA-hKUdf1s-MtHRHUvUTYIIcr/view?usp=sharing)
   -  [Demo 3 Organization User Manual](https://drive.google.com/file/d/16C7o_s6hWe4fbNceP8F-Xj9wK4JbISsY/view?usp=sharing)
   -  [Demo 3 Coding Standards Document](https://drive.google.com/file/d/1R_GNCb9MTFnDl0LwWKLJaw5WB9nTnF9G/view?usp=sharing)
-  - [Demo 3 Video Guide]()
+  - [Demo 3 Video Guide](https://drive.google.com/file/d/1_Xuhwb8hLuq2v_jcmQpYhO0TUQucjAog/view?usp=sharing)
   - [Functional Requirements](https://drive.google.com/open?id=1qVYf5kSegCpn1NUzlQ8V4w83CuUNhwQAAoZtRqEensA)
   
  ## API Documentation
