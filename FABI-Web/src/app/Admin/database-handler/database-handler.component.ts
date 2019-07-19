@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Friday, July 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -535,8 +535,6 @@ export class DatabaseHandlerComponent implements OnInit {
         var databaseDetails = this.databases.find(database => {
           return database.name == this.selectedDatabase;
         });
-
-        console.log("/////// DATABASE: " + JSON.stringify(databaseDetails));
 
         if(databaseDetails && (databaseDetails != null && databaseDetails != '') && databaseDetails.privileges.indexOf('create') != -1) {
           this.databasePrivileges.create = true;
