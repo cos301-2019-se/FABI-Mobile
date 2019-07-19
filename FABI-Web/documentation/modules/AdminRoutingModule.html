@@ -77,7 +77,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Friday, July 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -98,6 +98,7 @@ import { AdminProfileComponent } from &quot;./admin-profile/admin-profile.compon
 
 import { AuthenticationGuard } from &#x27;../_guards/authentication.guard&#x27;;
 import { Role } from &#x27;../_interfaces/role&#x27;;
+import { ReportingComponent } from &#x27;./reporting/reporting.component&#x27;;
 
 
 const routes: Routes &#x3D; [
@@ -134,7 +135,12 @@ const routes: Routes &#x3D; [
   {
     path: &#x27;admin-profile&#x27;, 
     component: AdminProfileComponent
+  },
+  {
+    path: &#x27;reporting&#x27;, 
+    component: ReportingComponent
   }
+  
 ];
 
 @NgModule({
