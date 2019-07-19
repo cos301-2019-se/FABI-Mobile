@@ -33,6 +33,7 @@
   -  [Demo 3 Organization User Manual](https://drive.google.com/file/d/1akPpNBxUP95yFKB0HD5fCKWYwKEdAlqK/view?usp=sharing)
   -  [Demo 3 Coding Standards Document]()
   - [Demo 3 Video Guide]()
+  - [Functional Requirements](https://drive.google.com/open?id=1qVYf5kSegCpn1NUzlQ8V4w83CuUNhwQAAoZtRqEensA)
   
  ## API Documentation
   - [Authentication API Documentation](https://authentication-dot-api-fabi.appspot.com)
