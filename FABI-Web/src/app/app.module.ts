@@ -14,7 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 
 import {ReactiveFormsModule} from '@angular/forms';
-
+import { MatTabsModule } from '@angular/material';
+import { MatDialogContent } from '@angular/material'
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
 
@@ -94,7 +95,9 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     SampleDivComponent,
     AdminProfileComponent,
     StaffProfileComponent,
-    ReportingComponent
+    ReportingComponent,
+    MatTabsModule,
+    MatDialogContent
   ],
   entryComponents: [
     ConfirmComponent,

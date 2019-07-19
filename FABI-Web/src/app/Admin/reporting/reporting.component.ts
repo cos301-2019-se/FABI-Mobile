@@ -14,7 +14,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-
+import {MatTabsModule} from '@angular/material/tabs';
 import { NotificationLoggingService } from '../../services/notification-logging.service';
 import { UserManagementAPIService } from '../../services/user-management-api.service';
 
