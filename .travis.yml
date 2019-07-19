@@ -10,4 +10,4 @@ before_script:
     - npm install @angular/cli
 
 script:
-    - ng test --watch=false
+    - ng build
