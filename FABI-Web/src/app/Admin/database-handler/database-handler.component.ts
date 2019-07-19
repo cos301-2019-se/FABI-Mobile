@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Friday, July 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -381,8 +381,14 @@ export class DatabaseHandlerComponent implements OnInit {
     this.loadNotifications();
 
     //-------- Load Databases for Drop Down --------
-    const user = this.service.currentUserValue;
-    this.databases = user.databases;
+    // const user = this.service.currentUserValue;
+    const user = this.service.currentSessionValue;
+
+
+    console.log("--- USER: " + JSON.stringify(user))
+    // this.databases = user.databases;
+    this.databases = user.user.databases;
+
 
   }
 
@@ -530,17 +536,17 @@ export class DatabaseHandlerComponent implements OnInit {
           return database.name == this.selectedDatabase;
         });
 
-        if(databaseDetails && databaseDetails.privileges.indexOf('create') != -1) {
+        if(databaseDetails && (databaseDetails != null && databaseDetails != '') && databaseDetails.privileges.indexOf('create') != -1) {
           this.databasePrivileges.create = true;
         }
-        if(databaseDetails && databaseDetails.privileges.indexOf('retrieve') != -1) {
+        if(databaseDetails && databaseDetails != null && databaseDetails != '' && databaseDetails.privileges.indexOf('retrieve') != -1) {
           this.databasePrivileges.retrieve = true;
         }
-        if(databaseDetails && databaseDetails.privileges.indexOf('update') != -1) {
+        if(databaseDetails && databaseDetails != null && databaseDetails != '' && databaseDetails.privileges.indexOf('update') != -1) {
           this.databasePrivileges.update = true;
           this.displayedColumns.push("Update");
         }
-        if(databaseDetails && databaseDetails.privileges.indexOf('delete') != -1) {
+        if(databaseDetails && databaseDetails != null && databaseDetails != '' && databaseDetails.privileges.indexOf('delete') != -1) {
           this.databasePrivileges.delete = true;
           this.displayedColumns.push("Remove");
         }
