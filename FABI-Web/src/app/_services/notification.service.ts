@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, June 23rd 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -16,7 +16,7 @@
 
 import { Injectable } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { ErrorComponent } from '../errors/error-component/error.component';
+import { ErrorComponent } from '../_errors/error-component/error.component';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -27,10 +27,13 @@ export class NotificationService {
 
   showToastNotification(message: string) {
     console.log("------------------- NOTIFICATION ------------------");
+    console.log("------------------- " + message + " ------------------");
+
+    
       // return this.toastr.success(message, 'Oops');
 
-      // let snackBarRef = this.snackBar.open(message, "Dismiss", {
-      //   duration: 3000
+      // this.snackBar.open(message, "Dismiss", {
+      //   duration: 1000
       // });
   }
 

@@ -17,12 +17,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../_services/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../errors/error-component/error.component';
+import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 
@@ -30,10 +30,10 @@ import { ConfirmComponent } from "../../confirm/confirm.component";
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 
-import * as Interface from '../../interfaces/interfaces';
+import * as Interface from '../../_interfaces/interfaces';
 
-import { Member, UserManagementAPIService } from '../../services/user-management-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../services/notification-logging.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 
 
 @Component({
