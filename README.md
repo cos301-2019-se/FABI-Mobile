@@ -27,10 +27,10 @@
   
   ### Demo 3
   - [Demo 3 System Requirments Specification](https://drive.google.com/open?id=1uAG7aFw4NiGeMVqJzubG-emya5j2DLei)
-  -  [Demo 3 Presentation]()
+  -  [Demo 3 Presentation](https://docs.google.com/presentation/d/1_srxPqBm0ErYnZDmh3P9sv13xEf7uaO5rtlEBmX2ags/edit?usp=sharing)
   -  [Demo 3 Testing Policy](https://drive.google.com/file/d/1cKpRM-BpTHm5TSHKbXVEdhUCf4MpBtTQ/view?usp=sharing)
-  -  [Demo 3 User Manual]()
-  -  [Demo 3 Organization User Manual]()
+  -  [Demo 3 User Manual](https://drive.google.com/file/d/1eGpK43xmKePRt2DQk6c-PcZaWoR5W7eK/view?usp=sharing)
+  -  [Demo 3 Organization User Manual](https://drive.google.com/file/d/1akPpNBxUP95yFKB0HD5fCKWYwKEdAlqK/view?usp=sharing)
   -  [Demo 3 Coding Standards Document]()
   - [Demo 3 Video Guide]()
   
