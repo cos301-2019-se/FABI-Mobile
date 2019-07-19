@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 15th 2019
+ * Last Modified: Friday, July 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -177,11 +177,14 @@ export class MemberHandlerComponent implements OnInit {
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
-    const org_details: Interface.Organisation = { orgName: localStorage.getItem('orgName') };
+    const user = this.service.currentSessionValue;
+    const org_details: Interface.Organisation = { orgName: user.user.organisation };
     const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
 
     this.service.addOrgMember(org_details, member_details).subscribe((response: any) => {
+
+      console.log("////// RESPONSE: " + response);
 
       this.loading = false;
       

@@ -31,7 +31,9 @@ import { Role } from '../_interfaces/role';
 const routes: Routes = [
   {
     path: 'admin-dashboard',
-    component: AdminDashboardComponent
+    component: AdminDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.ClinicAdmin, Role.SuperUser] }
   },
   {
     path: 'staff-handler', 
