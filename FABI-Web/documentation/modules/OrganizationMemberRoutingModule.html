@@ -70,19 +70,57 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">/**
+ * File Name: organization-member-routing.module.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Organization-Member\organization-member-routing.module.ts
+ * Project Name: fabi-web
+ * Created Date: Friday, May 24th 2019
+ * Author: Team Nova - novacapstone@gmail.com
+ * -----
+ * Last Modified: Friday, July 19th 2019
+ * Modified By: Team Nova
+ * -----
+ * Copyright (c) 2019 University of Pretoria
+ * 
+ * &lt;&lt;license&gt;&gt;
+ */
+
+
+import { NgModule } from &#x27;@angular/core&#x27;;
 import { Routes, RouterModule } from &#x27;@angular/router&#x27;;
 import { MemberDashboardComponent } from &#x27;./member-dashboard/member-dashboard.component&#x27;;
 import { MemberProfileComponent } from &#x27;./member-profile/member-profile.component&#x27;;
 import { MemberViewSamplesComponent } from &#x27;./member-view-samples/member-view-samples.component&#x27;;
-import { MemberSubmitSampleComponent } from &#x27;./member-submit-sample/member-submit-sample.component&#x27;;
+import { SampleFormComponent } from &#x27;../sample-form/sample-form.component&#x27;;
+import { AuthenticationGuard } from &#x27;../_guards/authentication.guard&#x27;;
+import { Role } from &#x27;../_interfaces/role&#x27;;
 
 
 const routes: Routes &#x3D; [
-  {path: &#x27;member-dashboard&#x27;, component: MemberDashboardComponent},
-  {path: &#x27;member-profile&#x27;, component: MemberProfileComponent},
-  {path: &#x27;member-view-samples&#x27;, component: MemberViewSamplesComponent},
-  {path: &#x27;member-submit-sample&#x27;, component: MemberSubmitSampleComponent}
+  {
+    path: &#x27;member-dashboard&#x27;, 
+    component: MemberDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Member&#x27;] }
+  },
+  {
+    path: &#x27;member-profile&#x27;, 
+    component: MemberProfileComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Member&#x27;] }
+  },
+  {
+    path: &#x27;member-view-samples&#x27;, 
+    component: MemberViewSamplesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Member&#x27;] }
+  },
+  {
+    path: &#x27;submit-sample&#x27;, 
+    component: SampleFormComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Member&#x27;] }
+  }
 ];
 
 @NgModule({
@@ -103,6 +141,7 @@ export class OrganizationMemberRoutingModule { }
 
 
 
+                   
 
 
 
