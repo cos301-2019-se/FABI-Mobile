@@ -12,6 +12,7 @@ import { SubmitCmwDepositComponent } from './submit-cmw-deposit/submit-cmw-depos
 import { SubmitCmwRevitalizationComponent } from './submit-cmw-revitalization/submit-cmw-revitalization.component';
 import { Role } from '../_interfaces/role';
 import { AuthenticationGuard } from '../_guards/authentication.guard';
+import { StaffProfileComponent } from './staff-profile/staff-profile.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'staff-profile', 
-    component: StaffDashboardComponent,
+    component: StaffProfileComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.Staff] }
   },
