@@ -1,7 +1,7 @@
 <!--Bootstrap Navbar-->
 <div class="container-fluid" id="nav-section">
   <nav class="navbar navbar-expand-xl">
-    <a class="navbar-brand" href="#">Organization Profile</a>
+    <a class="navbar-brand" href="#">Admin Profile</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -12,21 +12,24 @@
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item active">
-          <a id="dashboard_menu_link" routerLink="/organization-dashboard"><i class="fas fa-home"></i>Home</a>
-        </li>
-
-        <li class="nav-item">
-          <a id="guest_management" routerLink="/member-handler"><i class="fas fa-users"></i>Members</a>
+          <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
         </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-vials"></i>Samples
+            <i class="fas fa-tasks"></i>Handlers
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="view_samples" routerLink="/organization-view-samples"><i class="fas fa-vials"></i>View Samples</a>
-            <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+            <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff Handler</a>
+            <a id="organization_management" routerLink="/organization-handler"><i
+                class="fas fa-building"></i>Organization
+              Handler</a>
+            <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i
+                class="fas fa-stethoscope"></i>Diagnostic
+              Clinic Handler</a>
+            <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Database
+              Handler</a>
           </div>
         </li>
 
@@ -36,7 +39,7 @@
             <i class="fas fa-user"></i>Account
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="profile" routerLink="/organization-profile"><i class="fas fa-user-circle"></i>Profile</a>
+            <a id="profile_menu_link" routerLink="/admin-profile"><i class="fas fa-user-circle"></i>Profile</a>
             <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
           </div>
         </li>
@@ -46,7 +49,7 @@
         </li>
 
         <li class="nav-item">
-          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          <a id="logout_menu_link" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
         </li>
 
       </ul>

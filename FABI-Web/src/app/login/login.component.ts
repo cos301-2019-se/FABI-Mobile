@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 16th 2019
+ * Last Modified: Thursday, July 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -19,9 +19,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { HttpService } from '../services/http.service';
-import { ErrorComponent } from '../errors/error-component/error.component';
-import * as Interface from '../interfaces/interfaces';
+import { HttpService } from '../_services/http.service';
+import { ErrorComponent } from '../_errors/error-component/error.component';
+import * as Interface from '../_interfaces/interfaces';
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -52,8 +53,6 @@ export class LoginComponent implements OnInit {
   loading: boolean = false;
   /** Selected organisation on dropdown. Used to adjust login form according to organisation selected - @type {string} */
   selectedOrg: string;
-  /** Selected user type on dropdown - @type {string} */
-  selectedUserType: string;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -72,7 +71,6 @@ export class LoginComponent implements OnInit {
     private router: Router) {
     this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
-      userType: ['', Validators.required],
       login_email: ['', Validators.required],
       login_password: ['', Validators.required]
     })
@@ -105,18 +103,18 @@ export class LoginComponent implements OnInit {
     const Lemail = this.loginForm.controls.login_email.value;
     const Lpassw = this.loginForm.controls.login_password.value;
     const Lorg = this.loginForm.controls.organization.value;
-    const LuserType = this.loginForm.controls.userType.value;
 
     // User details to be passed to API
-    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg, userType: LuserType };
+    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
 
     this.service.login(details).subscribe((response: any) => {
 
       this.loading = false;
-
+      console.log("----- RESPONSE 2: " + JSON.stringify(response));
       // API Request successful
       if (response.success == true && response.code == 200) {
 
+        
         // User NOT Authorised
         if (response.title != "AUTHORIZED") {
           //POPUP MESSAGE
@@ -128,16 +126,28 @@ export class LoginComponent implements OnInit {
         //Setting local storage to hold the users details
         localStorage.setItem('userID', response.userDetails.id);
         localStorage.setItem('userOrganization', Lorg);
+        localStorage.setItem('userPassword', Lpassw);
 
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Logged In", "Dismiss", {
           duration: 3000
         });
 
-        this.router.navigate(['/admin-dashboard']);
-
-        this.service.setSessionVariables(response.token, details.orgName, details.userType);
-        // this.service.setLoggedin();
+        // Navigate to specific dashboard, based on user's type
+        if(response.userDetails.userType == 'SuperUser'|| response.userDetails.userType == 'ClinicAdmin') {
+          this.router.navigate(['/admin-dashboard']);
+        } else if(response.userDetails.userType == 'OrganizationAdmin') {
+          this.router.navigate(['/organization-dashboard']);
+        } else if(response.userDetails.userType == 'Member') {
+          this.router.navigate(['/member-dashboard']);
+        } else if(response.userDetails.userType == 'Staff') {
+          this.router.navigate(['/staff-dashboard']);
+        } else {
+          let snackBarRef = this.snackBar.open("User not supported", "Dismiss", {
+            duration: 3000
+          });
+        }
+        
 
       } else if (response.success == false) {
         //POPUP MESSAGE
@@ -166,13 +176,6 @@ export class LoginComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
 
-    this.displayUserTypes();
-    
-    // this.loggedIn = this.service.isLoggedIn();
-    // if (this.loggedIn == true) {
-    //   // Navigate to respective dashboard
-    // }
-
     //-------- Load Organisation names for Drop Down --------
     this.service.getAllOrganizations().subscribe((response: any) => {
       
@@ -191,57 +194,6 @@ export class LoginComponent implements OnInit {
         })
       }
     });
-
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //    USER TYPES -> TO BE FETCHED FROM DB IN THE FUTURE
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  displayUserTypes() {
-
-    if(this.selectedOrg == "FABI")
-    {
-      this.userTypes = [
-        {
-          "ID":1,
-          "Name":"Admin"
-        },
-        {
-          "ID":2,
-          "Name":"Staff"
-        }
-      ]
-
-    }
-    else {
-      this.userTypes = [
-        {
-          "ID":1,
-          "Name":"Admin"
-        },
-        {
-          "ID":2,
-          "Name":"Member"
-        }
-      ]
-    }
-
-    //-------- Load User Types for Drop Down --------
-    // this.service.getUserTypes(this.selectedOrg).subscribe((response: any) => {
-    //   if (response.success == true && response.status == 200) {
-    //     this.userTypes = response.data;
-
-    //   } else if (response.success == false) {
-    //     //POPUP MESSAGE
-    //     let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the User Types", message: response.message, retry: true } });
-    //     dialogRef.afterClosed().subscribe((result) => {
-    //       if (result == "Retry") {
-    //         this.displayUserTypes();
-    //       }
-    //     })
-    //   }
-    // });
 
   }
 
