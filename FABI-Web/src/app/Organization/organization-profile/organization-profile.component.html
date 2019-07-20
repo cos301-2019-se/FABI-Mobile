@@ -134,6 +134,19 @@
           </mat-form-field>
           <br />
         </div>
+
+        <!--Admin Password Field-->
+        <div class="admin-contact-inputs">
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Password" matInput type="password" formControlName="admin_password" value="{{password}}">
+          </mat-form-field>
+          <br />
+
+          <!--Admin Confirm Password-->
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Confirm Password" matInput type="password" formControlName="admin_confirm" value="{{confirmPassword}}">
+          </mat-form-field>
+        </div>
         <br />
 
         <div class="submit-input">
