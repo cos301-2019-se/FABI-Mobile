@@ -14,6 +14,8 @@ html {
 
 .container-fluid {
     padding: 0;
+    height: 100% !important;
+    max-height: 100vh;
 }
 
 /* ================================================ */
@@ -734,21 +736,6 @@ tbody tr th{
 
 }
 
-// @media (max-width: 1250px) {
-//     .content {
-//         width: 100%;
-//     }
-// }
-
-// @media (max-width: 1100px) {
-
-//     .content {
-//         height: 100%;
-//         width: 100%;
-//     }
-
-// }
-
 @media (max-width: 500px) {
 
     .inputSpace{
@@ -756,35 +743,6 @@ tbody tr th{
         width: 45%;
     }
 }
-
-// @media (max-width: 400px) {
-//     .content {
-//         height: 70%;
-//     }
-// }
-
-// /*------------------
-//     Accent Banner
-// -------------------*/
-// .color-accent {
-//     background-color: #3C5148;
-//     width: 80%;
-//     height: 10%;
-
-//     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
-//     border-radius: 5px;
-
-//     z-index: 2;
-// }
-
-// .color-accent h1 {
-//     font-family: 'Roboto', sans-serif;
-//     color: #ffffff;
-//     font-size: 30px;
-//     text-transform: uppercase;
-
-//     margin: 40px 20px 20px 10%;
-// }
 
 // /*-----------------------
 //     Database Management
@@ -808,7 +766,7 @@ tbody tr th{
 
     text-transform: uppercase;
 
-    margin-left: 44%;
+    margin-left: 37%;
 }
 
 #errorReport{
@@ -816,5 +774,13 @@ tbody tr th{
     padding-top: 20px;
     width: 80%;
     margin: auto;
-    height: 80%;
+    height: 90% !important;
+}
+
+#FABI_logo{
+    background-image: url('src/assets/images/fabi-logo.png');
+    width: 10%;
+    height: 10%;
+    margin-left: 2%;
+    position: absolute;
 }
