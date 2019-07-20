@@ -132,7 +132,7 @@
           <h2 *ngIf="!preview">Reverse Porting</h2>
           <br *ngIf="!preview" />
           <!--Dropdown for Database selection-->
-          <mat-form-field>
+          <mat-form-field *ngIf="!preview">
             <mat-label>Database</mat-label>
             <mat-select [(ngModel)]="selectedDatabase" id="database">
               <mat-option>--</mat-option>

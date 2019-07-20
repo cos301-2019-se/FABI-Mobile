@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, July 19th 2019
+ * Last Modified: Saturday, July 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -37,17 +37,6 @@ import { UserManagementAPIService } from '../../_services/user-management-api.se
 })
 export class DatabaseHandlerComponent implements OnInit {
 
-  displayedColumns: string[];
-  dataSource = new MatTableDataSource([]);
-  fields: any[] = [];
-
-  databases: any[];
-  databasePrivileges: any = {'create': false, 'retrieve': true, 'update': false, 'delete': false};
-  
-  selectedDatabase: string;
-  /**
-   *  GLOBALS
-   */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,6 +51,14 @@ export class DatabaseHandlerComponent implements OnInit {
   headings: any = [];
   /** Array holding the columns of the new database - @type {any} */
   columns: any = [];
+  /** The name of the database to create via porting - @type {string} */
+  dbname: string;
+  /** Used to read the csv file for porting - @type {FileReader} */
+  reader: FileReader;
+  /** The value sent through when the file is chosen for porting - @type {any} */
+  fileInput: any;
+  /** Indicates if the database has been ported or not - @type {boolean} */
+  ported: boolean = false;
 
   jsonData: any;
   
@@ -90,6 +87,15 @@ export class DatabaseHandlerComponent implements OnInit {
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
+
+  displayedColumns: string[];
+  dataSource = new MatTableDataSource([]);
+  fields: any[] = [];
+
+  databases: any[];
+  databasePrivileges: any = {'create': false, 'retrieve': true, 'update': false, 'delete': false};
+  
+  selectedDatabase: string;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -397,20 +403,22 @@ export class DatabaseHandlerComponent implements OnInit {
   //                                                  SUBMIT_CSV
   /**
    *  This function will be used to submit a .csv file so that it can be converted into a database for the user
-   *  @param input
+   *  @param {any} input
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public submitCSV(input) {
+    this.fileInput = input;
     this.loading = true;
-    let dbname = this.port.nativeElement.value;
+    this.dbname = this.port.nativeElement.value;
 
-    if(dbname == ""){
+    if(this.dbname == ""){
       let snackBarRef = this.snackBar.open("Please enter a name for the database", "Dismiss", { duration: 3000 });
       return;
     }
 
     const reader = new FileReader();
+    reader.readAsText(this.fileInput.files[0]);
     reader.onload = () => {
       let text = reader.result;
 
@@ -441,39 +449,19 @@ export class DatabaseHandlerComponent implements OnInit {
       //Making the headings into an array instead of a string
       var headingNames = this.headings[0];
       this.headings = headingNames.split(',');
+    }
 
-      this.service.porting(dbname, this.jsonData).subscribe((response:any) => {
-        this.loading = false;
-        if(response.success == true && response.code == 200) {
-          //POPUP MESSAGE
-          let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
-            duration: 3000
-          });
-        } else if (response.success == false) {
-
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          })
-        }    
-      }, (err: HttpErrorResponse) => {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        })
-        console.log("ERROR:" + err.message);
-      });
-    };
-    reader.readAsText(input.files[0]);
+    this.preview = true;
   }
 
-  public getCSV(){
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET_CSV
+  /**
+   *  This function will be used to download the selected database in the format of a .csv file.
+   *  @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getCSV(){
     let data = "";
     let dbname = this.selectedDatabase;
 
@@ -490,9 +478,7 @@ export class DatabaseHandlerComponent implements OnInit {
           downloadLink.setAttribute('href', window.URL.createObjectURL(blob) );
           var event = new MouseEvent("click");
           downloadLink.dispatchEvent(event);
-
         } else if (response.success == false) {
-
           //POPUP MESSAGE
           let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
           dialogRef.afterClosed().subscribe((result) => {
@@ -510,13 +496,12 @@ export class DatabaseHandlerComponent implements OnInit {
           }
         });
       
-      console.log("ERROR:" + err.message);
+        console.log("ERROR:" + err.message);
     }); 
   }
 
 
   public viewDatabase() {
-
     this.service.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         
@@ -570,11 +555,62 @@ export class DatabaseHandlerComponent implements OnInit {
   }
   
   
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  SUBMIT_DATABASE
+  /**
+   *  This function will be used to submit the file chosen for porting and create a database using the .csv file, if the user 
+   *  selects that the database preview table shown in correct.
+   *  @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitDatabase(){
-    // this.submit = true;
+    if(this.ported == true){
+      let snackBarRef = this.snackBar.open("The file has already been ported", "Dismiss", {
+        duration: 4000
+      });
+    }
+    else{
+      this.service.porting(this.dbname, this.jsonData).subscribe((response:any) => {
+        this.loading = false;
+        if(response.success == true && response.code == 200) {
+          //POPUP MESSAGE
+          let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
+            duration: 3000
+          });
+
+          this.ported = true;
+        }else if (response.success == false) {
+          //POPUP MESSAGE
+          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
+          dialogRef.afterClosed().subscribe((result) => {
+            if(result == "Retry") {
+              this.ngOnInit();
+            }
+          });
+        }    
+        }, (err: HttpErrorResponse) => {
+          //POPUP MESSAGE
+          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
+          dialogRef.afterClosed().subscribe((result) => {
+            if(result == "Retry") {
+              this.ngOnInit();
+            }
+          });
+          console.log("ERROR:" + err.message);
+      });
+    }
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  REMOVE_PREVIEW
+  /**
+   *  This function will be used to hide the preview table and stop the processing of the .csv file submitted into a database, if
+   *  the user selects that the database shown in the preview table is not in the correct format.
+   *  @param input
+   *  @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removePreview(){
     this.preview = false;
   }
