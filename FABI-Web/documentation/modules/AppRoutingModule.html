@@ -84,6 +84,7 @@ import { Role } from &quot;./_interfaces/role&quot;;
 import { AuthenticationGuard } from &#x27;./_guards/authentication.guard&#x27;;
 import { UpdateComponent } from &#x27;./update/update.component&#x27;;
 import { SampleFormComponent } from &#x27;./sample-form/sample-form.component&#x27;;
+import { ReportingComponent } from &#x27;./Admin/reporting/reporting.component&#x27;;
 
 const routes: Routes &#x3D; [
   {
@@ -132,6 +133,10 @@ const routes: Routes &#x3D; [
     component: SampleFormComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [&#x27;Member&#x27;] }
+  },
+  {
+    path: &#x27;reporting&#x27;,
+    component: ReportingComponent
   }
 
 ];
