@@ -139,6 +139,19 @@
             <input matInput placeholder="User Type" matInput type="text" formControlName="admin_type" value="{{userType}}" disabled>
           </mat-form-field>
         </div>
+
+        <!--Admin Password Field-->
+        <div class="admin-contact-inputs">
+          <mat-form-field class="form_inputs hiddenPassword" class="col">
+            <input #passwordInput matInput placeholder="Password" matInput type="password" formControlName="admin_password" value="{{password}}"><i class="fas fa-eye-slash" (click)="showPassword"></i>
+          </mat-form-field>
+          <br />
+
+          <!--Admin Confirm Password-->
+          <mat-form-field class="form_inputs hiddenPassword" class="col">
+            <input #confirmInput matInput placeholder="Confirm Password" matInput type="password" formControlName="admin_confirm" value="{{confirmPassword}}"><i class="fas fa-eye-slash" (click)="showPassword"></i>
+          </mat-form-field>
+        </div>
         <br />
 
         <div class="submit-input">

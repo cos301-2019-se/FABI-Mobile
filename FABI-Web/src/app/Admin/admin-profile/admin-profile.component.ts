@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Saturday, July 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,7 +13,7 @@
  * <<license>>
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -44,6 +44,10 @@ export class AdminProfileComponent implements OnInit {
   surname: string = '';
   /** The staff member's user type -  @type {string} */
   userType: string = '';
+  /** The staff member's password -  @type {string} */
+  password: string = '';
+  /** The staff member's confirmed password -  @type {string} */
+  confirmPassword: string = '';
 
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
@@ -67,6 +71,11 @@ export class AdminProfileComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
+  @ViewChild("passwordInput") passwordInput : ElementRef;
+  /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
+  @ViewChild("confirmInput") confirmInput : ElementRef;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -86,7 +95,9 @@ export class AdminProfileComponent implements OnInit {
       admin_name: '',
       admin_surname: '',
       admin_email: '',
-      admin_type: ''
+      admin_type: '',
+      admin_password: '',
+      admin_confirm: ''
     });
   }
 
@@ -102,6 +113,8 @@ export class AdminProfileComponent implements OnInit {
   loadAdminProfileDetails(){
     this.id = localStorage.getItem('userID');
     this.organization = localStorage.getItem('userOrganization');
+    this.password = localStorage.getItem('userPassword');
+    this.confirmPassword = this.password;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -391,44 +404,92 @@ export class AdminProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-    if(this.adminProfileForm.controls.admin_email.value == ''){
-      this.email = this.email;
+    var valid = true;
+
+    if(this.adminProfileForm.controls.admin_password.value != '' && 
+    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
+      this.password = this.adminProfileForm.controls.admin_password.value;
     }
     else{
-      this.email = this.adminProfileForm.controls.admin_email.value;
+      valid = false;
+
+      //POPUP MESSAGE
+      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
+        duration: 3000
+      });
     }
 
-    if(this.adminProfileForm.controls.admin_name.value == ''){
-      this.name = this.name;
-    }
-    else{
-      this.name = this.adminProfileForm.controls.admin_name.value;
-    }
-
-    if(this.adminProfileForm.controls.admin_surname.value == ''){
-      this.surname == this.surname;
-    }
-    else{
-      this.surname = this.adminProfileForm.controls.admin_surname.value;
-    }   
-    
-    this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id).subscribe((response: any) => {
-      if(response.success == true){
-        this.loadAdminProfileDetails();
-
-        //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-          duration: 3000
-        });
+    if(valid == true){
+      if(this.adminProfileForm.controls.admin_email.value == ''){
+        this.email = this.email;
       }
       else{
-        //Error handling
-        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.email = this.adminProfileForm.controls.admin_email.value;
       }
-    });
+
+      if(this.adminProfileForm.controls.admin_name.value == ''){
+        this.name = this.name;
+      }
+      else{
+        this.name = this.adminProfileForm.controls.admin_name.value;
+      }
+
+      if(this.adminProfileForm.controls.admin_surname.value == ''){
+        this.surname == this.surname;
+      }
+      else{
+        this.surname = this.adminProfileForm.controls.admin_surname.value;
+      }  
+      
+      if(this.adminProfileForm.controls.admin_password.value == ''){
+        this.password == this.password;
+      }
+      else{
+        this.password = this.adminProfileForm.controls.admin_password.value;
+      }
+      
+      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
+        if(response.success == true){
+          localStorage.setItem('userPassword', this.password);
+          this.loadAdminProfileDetails();
+
+          //Display message to say that details were successfully saved
+          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+        else{
+          //Error handling
+          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+      });
+    }
+    else{
+      //Error handling
+      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
+        duration: 3000
+      });
+    }
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SHOW_PASSWORD
+  /**
+   *  This function will make the users password visible on request. 
+   * @memberof AdminProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  showPassword(){
+    if(this.passwordInput.nativeElement.type === 'password'){
+      this.passwordInput.nativeElement.type = 'text';
+    }
+    else{
+      this.passwordInput.nativeElement.type = 'password';
+    }
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                           TOGGLE_NOTIFICATIONS_TAB
@@ -443,7 +504,7 @@ export class AdminProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
 
   ngOnInit() {
     this.loadAdminProfileDetails();
