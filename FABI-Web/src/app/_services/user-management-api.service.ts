@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Saturday, July 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -56,6 +56,7 @@ export interface UpdateMember{
     fname: string;          //The name of the FABI member
     surname: string;        //The surname of the FABI member
     email: string;          //The email of the FABI member
+    password: string;       //The password of the FABI member
 }
 
 //Object for defning the JSOn object to be sent when the details of a FABI member are updated
@@ -69,6 +70,7 @@ export interface UpdateOrganization{
     fname: string;          //The name of the organization member
     surname: string;        //The surname of the organization member
     email: string;          //The email of the organization member
+    password: string;       //The password of the organization member
 }
 
 //Object for defning the JSOn object to be sent when the details of an organization member are updated
@@ -221,8 +223,8 @@ export class UserManagementAPIService {
    * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  updateFABIMemberDetails(mail: string, name: string, lname: string, idNo: string) {
-    var member: UpdateMember = { fname: name, surname: lname, email: mail};
+  updateFABIMemberDetails(mail: string, name: string, lname: string, idNo: string, pass: string) {
+    var member: UpdateMember = { fname: name, surname: lname, email: mail, password: pass};
     var data: POSTUpdateMember = { id: idNo, fields: member};
 
     const options = {
@@ -255,8 +257,8 @@ export class UserManagementAPIService {
    * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  updateOrganizationMemberDetails(organization: string, mail: string, name: string, lname: string, idNo: string) {
-    var member: UpdateOrganization = { fname: name, surname: lname, email: mail};
+  updateOrganizationMemberDetails(organization: string, mail: string, name: string, lname: string, idNo: string, pass: string) {
+    var member: UpdateOrganization = { fname: name, surname: lname, email: mail, password: pass};
     var data: POSTUpdateOrganization = { orgName: organization, id: idNo, fields: member};
 
     const options = {

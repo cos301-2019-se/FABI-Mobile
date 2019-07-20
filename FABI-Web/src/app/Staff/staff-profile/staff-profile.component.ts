@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Saturday, July 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -43,6 +43,10 @@ export class StaffProfileComponent implements OnInit {
   surname: string = '';
   /** The staff member's user type -  @type {string} */
   userType: string = '';
+  /** The staff member's password -  @type {string} */
+  password: string = '';
+  /** The staff member's confirmed password -  @type {string} */
+  confirmPassword: string = '';
 
   /** The form to display the staff member's details -  @type {FormGroup} */
   staffProfileForm: FormGroup;
@@ -81,7 +85,9 @@ export class StaffProfileComponent implements OnInit {
       staff_name: '',
       staff_surname: '',
       staff_email: '',
-      staff_type: ''
+      staff_type: '',
+      staff_password: '',
+      staff_confirm: ''
     });
   }
 
@@ -248,6 +254,8 @@ export class StaffProfileComponent implements OnInit {
   loadStaffProfileDetails(){
     this.id = localStorage.getItem('userID');
     this.organization = localStorage.getItem('userOrganization');
+    this.password = localStorage.getItem('userPassword');
+    this.confirmPassword = this.password;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -294,43 +302,66 @@ export class StaffProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-    if(this.staffProfileForm.controls.staff_email.value == ''){
-      this.email = this.email;
+    var valid = true;
+
+    if(this.staffProfileForm.controls.admin_password.value != '' && 
+    this.staffProfileForm.controls.admin_password.value == this.staffProfileForm.controls.admin_confirm.value){
+      this.password = this.staffProfileForm.controls.admin_password.value;
     }
     else{
-      this.email = this.staffProfileForm.controls.staff_email.value;
+      valid = false;
+
+      //POPUP MESSAGE
+      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
+        duration: 3000
+      });
     }
 
-    if(this.staffProfileForm.controls.staff_name.value == ''){
-      this.name = this.name;
-    }
-    else{
-      this.name = this.staffProfileForm.controls.staff_name.value;
-    }
-
-    if(this.staffProfileForm.controls.staff_surname.value == ''){
-      this.surname == this.surname;
-    }
-    else{
-      this.surname = this.staffProfileForm.controls.staff_surname.value;
-    }
-
-    this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id).subscribe((response: any) => {
-      if(response.success == true){
-        this.loadStaffProfileDetails();
-
-        //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-          duration: 3000
-        });
+    if(valid == true){
+      if(this.staffProfileForm.controls.staff_email.value == ''){
+        this.email = this.email;
       }
       else{
-        //Error handling
-        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.email = this.staffProfileForm.controls.staff_email.value;
       }
-    });
+
+      if(this.staffProfileForm.controls.staff_name.value == ''){
+        this.name = this.name;
+      }
+      else{
+        this.name = this.staffProfileForm.controls.staff_name.value;
+      }
+
+      if(this.staffProfileForm.controls.staff_surname.value == ''){
+        this.surname == this.surname;
+      }
+      else{
+        this.surname = this.staffProfileForm.controls.staff_surname.value;
+      }
+
+      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
+        if(response.success == true){
+          this.loadStaffProfileDetails();
+
+          //Display message to say that details were successfully saved
+          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+        else{
+          //Error handling
+          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+      });
+    }
+    else{
+      //Error handling
+      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
+        duration: 3000
+      });
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
