@@ -129,8 +129,9 @@
               <button class="btn btn-default" (click)="generateErrorReport()">Generate Error Report</button>
 
               <br/><br/><br/><br/>
+              <!-- <h3 *ngIf="!errorReport">There are currently no system errors</h3> -->
               <div id="errorReport" *ngIf='errorReport'>
-                <h2 id="error_report">Error Report</h2>
+                <h2 id="error_report">FABI System Error Report</h2>
                 <br/><br/><br/>
                 <table *ngIf="errorLogs" id="previewTableErrorLogs">
                   <thead>
@@ -149,6 +150,8 @@
                 </table>
                 <br /><br />
                 <!-- <button>Download Report</button> -->
+                <div id="FABI_logo"></div>
+                <br/><br/>
               </div>
           </div>
         </mat-tab>
