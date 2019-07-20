@@ -164,30 +164,43 @@
           <br />
         </div>
 
-        <!--Admin Name Field-->
+        <!-- Name Field-->
         <div class="admin-name-inputs">
           <mat-form-field class="form_inputs" class="col">
             <input matInput placeholder="Name" matInput type="text" formControlName="staff_name" value="{{name}}">
           </mat-form-field>
           <br />
 
-          <!--Admin Surname Field-->
+          <!-- Surname Field-->
           <mat-form-field class="form_inputs" class="col">
             <input matInput placeholder="Surname" matInput type="text" formControlName="staff_surname" value="{{surname}}">
           </mat-form-field>
           <br />
         </div>
 
-        <!--Admin Email Field-->
+        <!-- Email Field-->
         <div class="admin-contact-inputs">
           <mat-form-field class="form_inputs" class="col">
             <input matInput placeholder="Email Address" matInput type="text" formControlName="staff_email" value="{{email}}">
           </mat-form-field>
           <br />
 
-          <!--Admin User Type-->
+          <!-- User Type-->
           <mat-form-field class="form_inputs" class="col">
             <input matInput placeholder="User Type" matInput type="text" formControlName="staff_type" value="{{userType}}" disabled>
+          </mat-form-field>
+        </div>
+
+        <!-- Password Field-->
+        <div class="admin-contact-inputs">
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Password" matInput type="password" formControlName="staff_password" value="{{password}}">
+          </mat-form-field>
+          <br />
+
+          <!-- Confirm Password-->
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Confirm Password" matInput type="password" formControlName="staff_confirm" value="{{confirmPassword}}">
           </mat-form-field>
         </div>
         <br />
