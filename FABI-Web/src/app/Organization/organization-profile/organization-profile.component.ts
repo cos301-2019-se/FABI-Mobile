@@ -52,6 +52,10 @@ export class OrganizationProfileComponent implements OnInit {
   name: string = '';
   /** The staff member's surname -  @type {string} */
   surname: string = '';
+  /** The staff member's password -  @type {string} */
+  password: string = '';
+  /** The staff member's confirmed password -  @type {string} */
+  confirmPassword: string = '';
 
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
@@ -73,7 +77,9 @@ export class OrganizationProfileComponent implements OnInit {
       organization_name: '',
       admin_name: '',
       admin_surname: '',
-      admin_email: ''
+      admin_email: '',
+      admin_password: '',
+      admin_confirm: ''
     });
   }
 
@@ -89,6 +95,8 @@ export class OrganizationProfileComponent implements OnInit {
   loadAdminProfileDetails(){
     this.id = localStorage.getItem('userID');
     this.organization = localStorage.getItem('userOrganization');
+    this.password = localStorage.getItem('userPassword');
+    this.confirmPassword = this.password;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -129,43 +137,67 @@ export class OrganizationProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-    if(this.adminProfileForm.controls.admin_email.value == ''){
-      this.email = this.email;
+    var valid = true;
+
+    if(this.adminProfileForm.controls.admin_password.value != '' && 
+    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
+      this.password = this.adminProfileForm.controls.admin_password.value;
     }
     else{
-      this.email = this.adminProfileForm.controls.admin_email.value;
+      valid = false;
+
+      //POPUP MESSAGE
+      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
+        duration: 3000
+      });
     }
 
-    if(this.adminProfileForm.controls.admin_name.value == ''){
-      this.name = this.name;
-    }
-    else{
-      this.name = this.adminProfileForm.controls.admin_name.value;
-    }
-
-    if(this.adminProfileForm.controls.admin_surname.value == ''){
-      this.surname == this.surname;
-    }
-    else{
-      this.surname = this.adminProfileForm.controls.admin_surname.value;
-    }   
-    
-    this.userManagementService.updateOrganizationMemberDetails(this.organization, this.email, this.name, this.surname, this.id).subscribe((response: any) => {
-      if(response.success == true){
-        this.loadAdminProfileDetails();
-
-        //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-          duration: 3000
-        });
+    if(valid == true){
+      if(this.adminProfileForm.controls.admin_email.value == ''){
+        this.email = this.email;
       }
       else{
-        //Error handling
-        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.email = this.adminProfileForm.controls.admin_email.value;
       }
-    });
+
+      if(this.adminProfileForm.controls.admin_name.value == ''){
+        this.name = this.name;
+      }
+      else{
+        this.name = this.adminProfileForm.controls.admin_name.value;
+      }
+
+      if(this.adminProfileForm.controls.admin_surname.value == ''){
+        this.surname == this.surname;
+      }
+      else{
+        this.surname = this.adminProfileForm.controls.admin_surname.value;
+      }   
+      
+      this.userManagementService.updateOrganizationMemberDetails(this.organization, this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
+        if(response.success == true){
+          localStorage.setItem('userPassword', this.password);
+          this.loadAdminProfileDetails();
+
+          //Display message to say that details were successfully saved
+          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+        else{
+          //Error handling
+          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+      });
+    }
+    else{
+      //Error handling
+      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
+        duration: 3000
+      });
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
