@@ -2,10 +2,10 @@
  * File Name: reporting.component.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Admin\reporting\reporting.component.ts
  * Project Name: fabi-web
- * Created Date: Wednesday, July 17rd 2019
+ * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Monday, July 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,7 +13,7 @@
  * <<license>>
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
@@ -53,6 +53,33 @@ export class ReportingComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
+  @ViewChild("userLogsTable") userLogsTable : ElementRef;
+  /** Holds the table element (databaseLogsTable) from the HTML page - @type {ElementRef} */
+  @ViewChild("databaseLogsTable") databaseLogsTable : ElementRef;
+  /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
+  @ViewChild("accessLogsTable") accessLogsTable : ElementRef;
+  /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
+  @ViewChild("errorLogsTable") errorLogsTable : ElementRef;
+
+  /** Holds the table element (userAdd) from the HTML page - @type {ElementRef} */
+  @ViewChild("userAdd") userAdd : ElementRef;
+  /** Holds the table element (databaseAdd) from the HTML page - @type {ElementRef} */
+  @ViewChild("databaseAdd") databaseAdd : ElementRef;
+  /** Holds the table element (accessAdd) from the HTML page - @type {ElementRef} */
+  @ViewChild("accessAdd") accessAdd : ElementRef;
+  /** Holds the table element (errorAdd) from the HTML page - @type {ElementRef} */
+  @ViewChild("errorAdd") errorAdd : ElementRef;
+
+  /** Holds the table element (userCollapse) from the HTML page - @type {ElementRef} */
+  @ViewChild("userCollapse") userCollapse : ElementRef;
+  /** Holds the table element (databaseCollapse) from the HTML page - @type {ElementRef} */
+  @ViewChild("databaseCollapse") databaseCollapse : ElementRef;
+  /** Holds the table element (accessCollapse) from the HTML page - @type {ElementRef} */
+  @ViewChild("accessCollapse") accessCollapse : ElementRef;
+  /** Holds the table element (errorCollapse) from the HTML page - @type {ElementRef} */
+  @ViewChild("errorCollapse") errorCollapse : ElementRef;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -62,7 +89,8 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private notificationLoggingService: NotificationLoggingService, private userManagementService: UserManagementAPIService) { }
+  constructor(private notificationLoggingService: NotificationLoggingService, private userManagementService: UserManagementAPIService,
+    private renderer: Renderer2) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_USER_DETAILS
@@ -355,6 +383,117 @@ export class ReportingComponent implements OnInit {
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  EXPAND_USER_LOG_TABLE
+  /**
+   *  This function will be used to expand the table containing the user logs on depand.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  expandUserLogTable(){
+    this.renderer.setStyle(this.userLogsTable.nativeElement, 'display', 'block');
+    this.renderer.setStyle(this.userCollapse.nativeElement, 'display', 'block');
+    this.renderer.setStyle(this.userAdd.nativeElement, 'display', 'none');
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  EXPAND_DATABASE_LOG_TABLE
+  /**
+   *  This function will be used to expand the table containing the database logs on depand.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  expandDatabaseLogTable(){
+    this.renderer.setStyle(this.databaseLogsTable.nativeElement, 'display', 'block');
+    this.renderer.setStyle(this.databaseCollapse.nativeElement, 'display', 'block');
+    this.renderer.setStyle(this.databaseAdd.nativeElement, 'display', 'none');
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  EXPAND_ACCESS_LOG_TABLE
+  /**
+   *  This function will be used to expand the table containing the access logs on depand.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  expandAccessLogTable(){
+    this.renderer.setStyle(this.accessLogsTable.nativeElement, 'display', 'block');
+    this.renderer.setStyle(this.accessCollapse.nativeElement, 'display', 'block');
+    this.renderer.setStyle(this.accessAdd.nativeElement, 'display', 'none');
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  EXPAND_ERROR_LOG_TABLE
+  /**
+   *  This function will be used to expand the table containing the error logs on depand.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  expandErrorLogTable(){
+    this.renderer.setStyle(this.errorLogsTable.nativeElement, 'display', 'block');
+    this.renderer.setStyle(this.errorCollapse.nativeElement, 'display', 'block');
+    this.renderer.setStyle(this.errorAdd.nativeElement, 'display', 'none');
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  COLLAPSE_USER_LOG_TABLE
+  /**
+   *  This function will be used to collapse the table containing the user logs on depand.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  collapseUserLogTable(){
+    this.renderer.setStyle(this.userLogsTable.nativeElement, 'display', 'none');
+    this.renderer.setStyle(this.userCollapse.nativeElement, 'display', 'none');
+    this.renderer.setStyle(this.userAdd.nativeElement, 'display', 'block');
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  COLLAPSE_DATABASE_LOG_TABLE
+  /**
+   *  This function will be used to collapse the table containing the database logs on depand.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  collapseDatabaseLogTable(){
+    this.renderer.setStyle(this.databaseLogsTable.nativeElement, 'display', 'none');
+    this.renderer.setStyle(this.databaseCollapse.nativeElement, 'display', 'none');
+    this.renderer.setStyle(this.databaseAdd.nativeElement, 'display', 'block');
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  COLLAPSE_ACCESS_LOG_TABLE
+  /**
+   *  This function will be used to collapse the table containing the access logs on depand.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  collapseAccessLogTable(){
+    this.renderer.setStyle(this.accessLogsTable.nativeElement, 'display', 'none');
+    this.renderer.setStyle(this.accessCollapse.nativeElement, 'display', 'none');
+    this.renderer.setStyle(this.accessAdd.nativeElement, 'display', 'block');
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  COLLAPSE_ERROR_LOG_TABLE
+  /**
+   *  This function will be used to collapse the table containing the error logs on depand.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  collapseErrorLogTable(){
+    this.renderer.setStyle(this.errorLogsTable.nativeElement, 'display', 'none');
+    this.renderer.setStyle(this.errorCollapse.nativeElement, 'display', 'none');
+    this.renderer.setStyle(this.errorAdd.nativeElement, 'display', 'block');
+  }
 
   ngOnInit() {
     this.loadAllLogs();
