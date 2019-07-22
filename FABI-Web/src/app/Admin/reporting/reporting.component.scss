@@ -784,3 +784,8 @@ tbody tr th{
     margin-left: 2%;
     position: absolute;
 }
+
+#previewTableUserLogs, #previewTableDatabaseLogs, #previewTableAccessLogs, #previewTableErrorLogs,
+#userCollapse, #databaseCollapse, #accessCollapse, #errorCollapse{
+    display: none;
+}
