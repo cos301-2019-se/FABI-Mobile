@@ -37,12 +37,155 @@
 
     <div class="cmw-deposit">
       <form class="example-form">
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Key" type="text" formControlName="key">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="CMW Culture Number" type="text" formControlName="cmw_culture_number">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Genus" type="text" formControlName="genus">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Epitheton" type="text" formControlName="epitheton">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Personal Collection Number" type="text" formControlName="personal_collection_number">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="International Collection Number" type="text" formControlName="international_collection_number">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Herbarium Number" type="text" formControlName="herbarium_number">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Other FABI Collections" type="text" formControlName="other_FABI_collections">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
 
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Culture Type">
+          <input matInput placeholder="Synonym or Original Name" type="text" formControlName="name">
         </mat-form-field>
         <br />
 
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Type Status" type="text" formControlName="type_status">
+        </mat-form-field>
+        <br />
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Host" type="text" formControlName="host">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Vector" type="text" formControlName="vector">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Substrate" type="text" formControlName="substrate">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Continent" type="text" formControlName="continent">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Country" type="text" formControlName="country">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Region" type="text" formControlName="region">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Locality" type="text" formControlName="locality">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="GPS" type="text" formControlName="gps">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Collected By" type="text" formControlName="collected_by">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Date Collected" type="date" formControlName="date_collected">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Isolated By" type="text" formControlName="isolated_by">
+          </mat-form-field>
+          <br />
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Identified By" type="text" formControlName="identified_by">
+          </mat-form-field>
+          <br />
+        </div>
+        <br/>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Donated By" type="text" formControlName="donated_by">
+        </mat-form-field>
+        <br />  
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Additional Notes" type="text" formControlName="additional_notes">
+        </mat-form-field>
+        <br />
 
         <button id="submit_cmw_deposit" class="btn btn-default" routerLink="/fabi-internal-dashboard">Submit</button>
       </form>
