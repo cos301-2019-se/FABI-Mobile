@@ -124,8 +124,11 @@
             Reporting
           </ng-template>
 
-          <br/><br/>
+          <br/>
           <div>
+              <button class="btn btn-default" (click)="generateRequestReport()">Generate Request Report</button>
+              <button class="btn btn-default" (click)="generateDepositReport()">Generate Deposit Report</button>
+              <button class="btn btn-default" (click)="generateSampleSubmissionReport()">Generate Sample Submission Report</button>
               <button class="btn btn-default" (click)="generateErrorReport()">Generate Error Report</button>
 
               <br/><br/><br/><br/>
@@ -163,13 +166,12 @@
             Logs
           </ng-template>
 
-          <br /><br />
           <div class="tab-content" id="logs" ng-app="portApp" ngController="previewCtrl">
-            <h2>User Log Table</h2>
+            <h2>User Log Table</h2><div #userAdd (click)="expandUserLogTable()"><i class="fas fa-plus-circle"></i></div><div #userCollapse (click)="collapseUserLogTable()" id="userCollapse"><i class="fas fa-minus-circle"></i></div>
             <h3 *ngIf="!userLogs">There are currrently no user logs to display</h3>
             <br />
 
-            <table *ngIf="userLogs" id="previewTableUserLogs">
+            <table *ngIf="userLogs" id="previewTableUserLogs" #userLogsTable>
               <thead>
                 <tr>
                   <th>Action performed</th>
@@ -186,11 +188,11 @@
             </table>
             <br /><br /><br />
 
-            <h2>Database Management Log Table</h2>
+            <h2>Database Management Log Table</h2><div #databaseAdd (click)="expandDatabaseLogTable()"><i class="fas fa-plus-circle"></i></div><div #databaseCollapse (click)="collapseDatabaseLogTable()" id="databaseCollapse"><i class="fas fa-minus-circle"></i></div>
             <h3 *ngIf="!databaseLogs">There are currrently no database management logs to display</h3>
             <br />
 
-            <table *ngIf="databaseLogs" id="previewTableDatabaseLogs">
+            <table *ngIf="databaseLogs" id="previewTableDatabaseLogs" #databaseLogsTable>
               <thead>
                 <tr>
                   <th>Action performed</th>
@@ -207,11 +209,11 @@
             </table>
             <br /><br /><br />
 
-            <h2>Access Log Table</h2>
+            <h2>Access Log Table</h2><div #accessAdd (click)="expandAccessLogTable()"><i class="fas fa-plus-circle"></i></div><div #accessCollapse (click)="collapseAccessLogTable()" id="accessCollapse"><i class="fas fa-minus-circle"></i></div>
             <h3 *ngIf="!accessLogs">There are currrently no access logs to display</h3>
             <br />
 
-            <table *ngIf="accessLogs" id="previewTableAccessLogs">
+            <table *ngIf="accessLogs" id="previewTableAccessLogs" #accessLogsTable>
               <thead>
                 <tr>
                   <th>Details of access</th>
@@ -220,7 +222,7 @@
                   <th>More information(if any)</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="collapsible">
                 <tr class="tableRow" *ngFor="let row of accessLogsArray; let i = index">
                   <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
                 </tr>
@@ -228,11 +230,11 @@
             </table>
             <br /><br /><br />
 
-            <h2>Error Log Table</h2>
+            <h2>Error Log Table</h2><div #errorAdd (click)="expandErrorLogTable()"><i class="fas fa-plus-circle"></i></div><div #errorCollapse (click)="collapseErrorLogTable()" id="errorCollapse"><i class="fas fa-minus-circle"></i></div>
             <h3 *ngIf="!errorLogs">There are currrently no error logs to display</h3>
             <br />
 
-            <table *ngIf="errorLogs" id="previewTableErrorLogs">
+            <table *ngIf="errorLogs" id="previewTableErrorLogs" #errorLogsTable>
               <thead>
                 <tr>
                   <th>Error status code</th>
@@ -241,7 +243,7 @@
                   <th>User performing action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="collapsible">
                 <tr class="tableRow" *ngFor="let row of errorLogsArray; let i = index">
                   <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
                 </tr>
