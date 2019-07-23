@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
+import { DiagnosticClinicAPIService, CBSDeposit } from '../../_services/diagnostic-clinic-api.service';
 
 @Component({
   selector: 'app-submit-cmw-deposit',
@@ -44,12 +45,14 @@ export class SubmitCmwDepositComponent implements OnInit {
   /**
    * Creates an instance of SubmitCmwDepositComponent.
    * 
-   * @param {userManagementService} userManagementService For making calls to the User Management API Service
+   * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService for making calls to the Diagnostic Clinic API Service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private formBuilder: FormBuilder, private userManagementService: UserManagementAPIService) { 
+  constructor(private formBuilder: FormBuilder, private userManagementService: UserManagementAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService) { 
     this.cmwDepositForm = this.formBuilder.group({
       cmw_culture_number: '',
       genus: '',
