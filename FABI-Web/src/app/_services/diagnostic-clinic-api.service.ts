@@ -2,10 +2,10 @@
  * File Name: diagnostic-clinic-api.service.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\services/diagnostic-clinic-api.service.ts
  * Project Name: fabi-web
- * Created Date: Saturday, Juky 6th 2019
+ * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Tuesday, July 23rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -26,6 +26,7 @@ import { POSTOrganization } from './user-management-api.service';
 const getAllSamplesURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllSamples';
 const getAllSamplesForMemberURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveSamplesForMember';
 const getOrganizationSamplesURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples';
+const submitCMWDepositFormURL = '';
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
@@ -42,6 +43,33 @@ export interface Sample{
 
 export interface Species{
     species: string;
+}
+
+//Object for defining the CMW deposit form values
+export interface CBSDeposit{
+    cwmCultureNumber: string;
+    genus: string;
+    epitheton: string;
+    personalCollectionNumber: string;
+    internationalCollectionNumber: string;
+    herbariumNumber: string;
+    otherFABICollections: string;
+    name: string;
+    typeStatus: string;
+    host: string;
+    vector: string;
+    substrate: string;
+    continent: string;
+    region: string;
+    locality: string;
+    gps: string;
+    collectedBy: string;
+    dateCollected: Date;
+    isolatedBy: string;
+    identifiedBy: string;
+    donatedBy: string;
+    additionalNotes: string;
+    dateSubmitted: string;
 }
 
 @Injectable({
@@ -118,7 +146,7 @@ export class DiagnosticClinicAPIService {
 }
 
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    GET_ALL_SAMPLES_FOR_MEMBER 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
@@ -144,5 +172,32 @@ export class DiagnosticClinicAPIService {
     };
 
     return this.http.request('POST', getAllSamplesForMemberURL, options);
-}
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT_CBS_DEPOSIT_FORM 
+  /**
+   *    This function sends a POST request to the server to submit a CBS deposit form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCBSDepositForm(data: CBSDeposit){
+    const options = {
+        method: 'POST',
+        url: submitCMWDepositFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', submitCMWDepositFormURL, options);
+  }
 }
