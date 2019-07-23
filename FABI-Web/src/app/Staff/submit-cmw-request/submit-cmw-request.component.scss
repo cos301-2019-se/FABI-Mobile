@@ -1,7 +1,6 @@
-/*-------------
-    General
--------------*/
-
+/* ================================================ */
+/* General Setup                                    */
+/* ================================================ */
 * {
     margin: 0;
     padding: 0;
@@ -11,135 +10,100 @@
 html {
     font-family: 'Open Sans', sans-serif;
     color: #555;
-    background-color: #E0E0E0;
 }
 
-.container {
+#dashboard-content {
+    display: flex;
+    flex-direction: column;
 
     height: 100vh;
 
-
-    display: flex;
-
-    z-index: -2;
-
-    //position: relative;
-
+    background-color: #F7F9F9;
 }
 
-/*-------------
-    Sidenav
--------------*/
+/* ================================================ */
+/* Navbar Setup and Styling                         */
+/* ================================================ */
+#nav-section {
+    padding: 0;
+}
 
-.nav {
-    width: 25%;
+.navbar {
+    min-height: 100px !important;
 
-    display: flex;
-    flex-direction: column;
+    padding: 25px;
 
     background-color: #6B8E4E;
 
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
-
-    z-index: 0;
-
-    font-family: 'Roboto', sans-serif;
-
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.30), 0 1px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 2px;
 }
 
-.top-nav {
-    background-color: #6B8E4E;
-
-    display: flex;
-    flex-direction: column;
-}
-
-.top-nav h1 {
+.navbar-brand {
+    font-family: 'Open Sans', sans-serif;
     font-size: 28px;
-    margin: 40px 20px 20px 10%;
-    text-decoration: none;
     color: #ffffff;
 }
 
-.bottom-nav {
-    background-color: #6B8E4E;
-
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.nav #menu i {
-    font-size: 24px;
-    margin: 20px 20px 20px 20%;
-    text-decoration: none;
+.nav-item a,
+i {
+    font-size: 18px;
     color: #ffffff;
 }
 
-.top-nav a {
-    font-size: 24px;
-    margin: 20px 20px 20px 20%;
-    text-decoration: none;
+.navbar-nav>a {
     color: #ffffff;
 }
 
-.bottom-nav a {
-    font-size: 24px;
-    margin: 20px 20px 20px 10%;
+.nav-item i {
+    padding:5px;
+}
+
+.navbar-nav a:hover {
+   text-decoration: none;
+}
+
+.dropdown-menu {
+    width:300px !important;
+}
+
+.dropdown-toggle{
+    padding:0;
+}
+
+.dropdown-menu a {
+    color: #6B8E4E !important;
+}
+
+.dropdown-menu a:hover {
     text-decoration: none;
+}
+
+.dropdown-menu i {
+    font-size: 18px;
+    color: #6B8E4E;
+}
+
+.navbar .navbar-toggle .navbar-toggler-icon {
     color: #ffffff;
 }
 
-.nav a:hover {
-    font-size: 26px;
-}
+@media(max-width:375px) {
+    .navbar {
+        min-height: 50px !important;
 
-a i {
-    padding-right: 15px;
-}
-
-.nav #menu,
-.nav #notification-bell {
-    display: none;
-}
-
-@media (max-width: 1250px) {
-    .nav {
-        width: 40%;
+        padding: 15px;
     }
 
-    .nav #notification-bell {
-        display: block;
+    .navbar-brand {
+        font-size: 18px;
     }
 }
 
-@media (max-width: 1100px) {
-    .container {
-        flex-direction: column;
+@media (min-width:1200px) {
+    .nav-item i {
+        margin-left: 35px;
     }
-
-    .nav {
-        height: 10%;
-        width: 100%;
-
-
-        flex-direction: row;
-        justify-content: flex-end;
-        order: 0;
-
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
-    }
-
-    .nav>* {
-        display: none;
-    }
-
-    .nav #menu {
-        display: block;
-    }
-
 }
 
 /*-------------
