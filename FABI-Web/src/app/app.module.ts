@@ -39,8 +39,6 @@ import { MemberViewSamplesComponent } from './Organization-Member/member-view-sa
 import { SplashComponent } from './splash/splash.component';
 import { StaffDashboardComponent } from './Staff/staff-dashboard/staff-dashboard.component';
 import { StaffSubmitSampleComponent } from './Staff/staff-submit-sample/staff-submit-sample.component';
-import { SubmitCbsRequestComponent } from './Staff/submit-cbs-request/submit-cbs-request.component';
-import { SubmitCbsDepositComponent } from './Staff/submit-cbs-deposit/submit-cbs-deposit.component';
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
@@ -80,8 +78,6 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     SplashComponent,
     StaffDashboardComponent,
     StaffSubmitSampleComponent,
-    SubmitCbsRequestComponent,
-    SubmitCbsDepositComponent,
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
