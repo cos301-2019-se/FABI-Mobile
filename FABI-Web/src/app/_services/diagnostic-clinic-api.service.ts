@@ -27,6 +27,7 @@ const getAllSamplesURL = '***REMOVED***/retrieveAllSamples';
 const getAllSamplesForMemberURL = '***REMOVED***/retrieveSamplesForMember';
 const getOrganizationSamplesURL = '***REMOVED***/retrieveAllOrgSamples';
 const submitCMWDepositFormURL = '';
+const submitCMWRequestFormURL = '';
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
@@ -46,7 +47,7 @@ export interface Species{
 }
 
 //Object for defining the CMW deposit form values
-export interface CBSDeposit{
+export interface CMWDeposit{
     cwmCultureNumber: string;
     genus: string;
     epitheton: string;
@@ -70,6 +71,17 @@ export interface CBSDeposit{
     donatedBy: string;
     additionalNotes: string;
     dateSubmitted: string;
+}
+
+//Object for defining the CMW request form values
+export interface CMWRequest{
+    requestor: string;
+    taxonName: string;
+    cultureNumber: string;
+    dateRequested: Date;
+    referenceNumber: string;
+    notes: string;
+    dateSubmitted: Date;
 }
 
 @Injectable({
@@ -176,16 +188,16 @@ export class DiagnosticClinicAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT_CBS_DEPOSIT_FORM 
+  //                                                    SUBMIT_CMW_DEPOSIT_FORM 
   /**
-   *    This function sends a POST request to the server to submit a CBS deposit form and save it to the
+   *    This function sends a POST request to the server to submit a CMW deposit form and save it to the
    *    database.
    *
    * @returns API response @type any
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCBSDepositForm(data: CBSDeposit){
+  submitCMWDepositForm(data: CMWDeposit){
     const options = {
         method: 'POST',
         url: submitCMWDepositFormURL,
@@ -199,5 +211,32 @@ export class DiagnosticClinicAPIService {
     };
 
     return this.http.request('POST', submitCMWDepositFormURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT_CMW_REQUEST_FORM 
+  /**
+   *    This function sends a POST request to the server to submit a CMW request form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCMWRequestForm(data: CMWRequest){
+    const options = {
+        method: 'POST',
+        url: submitCMWRequestFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', submitCMWRequestFormURL, options);
   }
 }
