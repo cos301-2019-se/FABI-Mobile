@@ -11,22 +11,6 @@ export class AppComponent {
 
   constructor(){
   }
-
-  // portCSV : Porting = new Porting();
-
-  // public submitCSV(input){
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //       let text = reader.result;
-  //       let jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
-  //       console.log(jsonData);
-  //         // ** place api calls here ** //
-  //     };
-  //   reader.readAsText(input.files[0]);
-  // }
-
-
-
 }
 
 
