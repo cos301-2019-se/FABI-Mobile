@@ -2,10 +2,10 @@
  * File Name: diagnostic-clinic-api.service.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\services/diagnostic-clinic-api.service.ts
  * Project Name: fabi-web
- * Created Date: Saturday, Juky 6th 2019
+ * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Tuesday, July 23rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -26,6 +26,9 @@ import { POSTOrganization } from './user-management-api.service';
 const getAllSamplesURL = '***REMOVED***/retrieveAllSamples';
 const getAllSamplesForMemberURL = '***REMOVED***/retrieveSamplesForMember';
 const getOrganizationSamplesURL = '***REMOVED***/retrieveAllOrgSamples';
+const submitCMWDepositFormURL = '';
+const submitCMWRequestFormURL = '';
+const submitCMWRevitalizationFormURL = '';
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
@@ -42,6 +45,44 @@ export interface Sample{
 
 export interface Species{
     species: string;
+}
+
+//Object for defining the CMW deposit form values
+export interface CMWDeposit{
+    cwmCultureNumber: string;
+    genus: string;
+    epitheton: string;
+    personalCollectionNumber: string;
+    internationalCollectionNumber: string;
+    herbariumNumber: string;
+    otherFABICollections: string;
+    name: string;
+    typeStatus: string;
+    host: string;
+    vector: string;
+    substrate: string;
+    continent: string;
+    region: string;
+    locality: string;
+    gps: string;
+    collectedBy: string;
+    dateCollected: Date;
+    isolatedBy: string;
+    identifiedBy: string;
+    donatedBy: string;
+    additionalNotes: string;
+    dateSubmitted: string;
+}
+
+//Object for defining the CMW request form values
+export interface CMWRequest{
+    requestor: string;
+    taxonName: string;
+    cultureNumber: string;
+    dateRequested: Date;
+    referenceNumber: string;
+    notes: string;
+    dateSubmitted: Date;
 }
 
 @Injectable({
@@ -118,7 +159,7 @@ export class DiagnosticClinicAPIService {
 }
 
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    GET_ALL_SAMPLES_FOR_MEMBER 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
@@ -144,5 +185,86 @@ export class DiagnosticClinicAPIService {
     };
 
     return this.http.request('POST', getAllSamplesForMemberURL, options);
-}
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT_CMW_DEPOSIT_FORM 
+  /**
+   *    This function sends a POST request to the server to submit a CMW deposit form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCMWDepositForm(data: CMWDeposit){
+    const options = {
+        method: 'POST',
+        url: submitCMWDepositFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', submitCMWDepositFormURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT_CMW_REQUEST_FORM 
+  /**
+   *    This function sends a POST request to the server to submit a CMW request form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCMWRequestForm(data: CMWRequest){
+    const options = {
+        method: 'POST',
+        url: submitCMWRequestFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', submitCMWRequestFormURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT_CMW_REVITALIZATION_FORM 
+  /**
+   *    This function sends a POST request to the server to submit a CMW revitalization form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCMWRevitalizationForm(data: CMWRequest){
+    const options = {
+        method: 'POST',
+        url: submitCMWRevitalizationFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', submitCMWRevitalizationFormURL, options);
+  }
 }
