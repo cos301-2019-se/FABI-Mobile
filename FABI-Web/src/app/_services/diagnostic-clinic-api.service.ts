@@ -28,6 +28,7 @@ const getAllSamplesForMemberURL = 'https://diagnostic-clinic-dot-api-fabi.appspo
 const getOrganizationSamplesURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples';
 const submitCMWDepositFormURL = '';
 const submitCMWRequestFormURL = '';
+const submitCMWRevitalizationFormURL = '';
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
@@ -238,5 +239,32 @@ export class DiagnosticClinicAPIService {
     };
 
     return this.http.request('POST', submitCMWRequestFormURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT_CMW_REVITALIZATION_FORM 
+  /**
+   *    This function sends a POST request to the server to submit a CMW revitalization form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCMWRevitalizationForm(data: CMWRequest){
+    const options = {
+        method: 'POST',
+        url: submitCMWRevitalizationFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', submitCMWRevitalizationFormURL, options);
   }
 }

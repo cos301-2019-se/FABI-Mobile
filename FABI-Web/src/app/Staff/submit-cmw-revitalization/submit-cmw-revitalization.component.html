@@ -70,13 +70,63 @@
   </div>
 
   <div class="cmw-revitalization">
-    <form class="example-form">
+    <form class="example-form" [formGroup]="cmwRevitalizationForm" (submit)="submitCMWRevitaalizationForm">
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Requester (Surname, Initials)" type="text" formControlName="requestor">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Current Name" type="text" formControlName="current_name">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Name as in Bionumerics" type="text" formControlName="name_bionumerics">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Culture Number" type="text" formControlName="culture_number">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
 
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Culture Type">
+        <input matInput placeholder="Condition of the Culture" type="text" formControlName="culture_condition">
       </mat-form-field>
       <br />
 
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Sequence Data Submitted" type="text" formControlName="sequence_data_submitted">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Reference Number" type="text" formControlName="reference_number">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Date Requested" type="date" formControlName="date_requested">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Date Returned" type="date" formControlName="date_returned">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
 
       <button id="submit_cmw_revitalization" class="btn btn-default"
         routerLink="/fabi-internal-dashboard">Submit</button>
