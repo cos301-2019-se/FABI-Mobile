@@ -44,12 +44,12 @@ export class SubmitCmwRequestComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
-   * Creates an instance of SubmitCmwDepositComponent.
+   * Creates an instance of SubmitCmwRequestComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService for making calls to the Diagnostic Clinic API Service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
-   * @memberof SubmitCmwDepositComponent
+   * @memberof SubmitCmwRequestComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(private formBuilder: FormBuilder, private userManagementService: UserManagementAPIService,
@@ -68,7 +68,7 @@ export class SubmitCmwRequestComponent implements OnInit {
   //                                              SUBMIT_CMW_REQUEST_FORM
   /**
    * This function will submit a CMW Request form based on the information provided in the form on the HTML page.
-   * @memberof SubmitCmwDepositComponent
+   * @memberof SubmitCmwRequestComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitCMWRequestForm(){
@@ -81,7 +81,7 @@ export class SubmitCmwRequestComponent implements OnInit {
   /**
    *  This function will load of the FABI staff members and administrators into an array so that they can be selected when filling out
    *  the form to submit.
-   * @memberof SubmitCmwDepositComponent
+   * @memberof SubmitCmwRequestComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaff(){
@@ -105,7 +105,7 @@ export class SubmitCmwRequestComponent implements OnInit {
   //                                            FILTER
   /**
    *  This function will filter the autocomplete results on the form.
-   * @memberof SubmitCmwDepositComponent
+   * @memberof SubmitCmwRequestComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   private filter(value: string): string[] {
