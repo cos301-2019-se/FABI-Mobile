@@ -1,55 +1,87 @@
-<div class="container">
+<!--Bootstrap Navbar-->
+<div class="container-fluid" id="nav-section">
+  <nav class="navbar navbar-expand-xl">
+    <a class="navbar-brand" href="#">Staff Dashboard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      <i class="fas fa-bars"></i>
+    </button>
 
-  <!--Nav Section-->
-  <div class="nav">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
 
-    <section class="top-nav">
-      <h1>CMW Request Form</h1>
-      <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
-      <a id="submit_CMW_request" routerLink="/submit-cmw-request"><i class="fab fa-wpforms"></i>CMW Request
-        Form</a>
-      <a id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><i class="fab fa-wpforms"></i>CMW Deposit
-        Form</a>
-      <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW
-        Revitalization Form</a>
-      <a id="submit_CBS_request" routerLink="/submit-cbs-request"><i class="fab fa-wpforms"></i>CBS Request
-        Form</a>
-      <a id="submit_CBS_deposit" routerLink="/submit-cbs-deposit"><i class="fab fa-wpforms"></i>CBS Deposit
-        Form</a>
-      <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
-      <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
-      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
-    </section>
+        <li class="nav-item active">
+          <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
+        </li>
 
-    <section class="bottom-nav">
-      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
-    </section>
-    <a href="" id="menu"><i class="fas fa-bars"></i></a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fab fa-wpforms"></i>Culture Collection Forms
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="submit_CMW_request" routerLink="/submit-cmw-request"><i class="fab fa-wpforms"></i>CMW Request
+              Form</a>
+            <br />
+            <a id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><i class="fab fa-wpforms"></i>CMW Deposit
+              Form</a>
+            <br />
+            <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW
+              Revitalization Form</a>
+            <br />
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+        </li>
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="profile_menu_link" routerLink="/staff-profile"><i class="fas fa-user-circle"></i>Profile</a>
+            <br />
+            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        </li>
+
+        <li class="nav-item">
+          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<!--CMW Request Form Content-->
+<div class="content">
+  <div class="color-accent">
+    <h1>CMW Request Form</h1>
   </div>
 
-  <!--CMW Request Form Content-->
-  <div class="content">
-    <div class="color-accent">
-      <h1>CMW Request Form</h1>
-    </div>
+  <div class="cmw-request">
+    <form class="example-form">
 
-    <div class="cmw-request">
-      <form class="example-form">
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Culture Type">
-        </mat-form-field>
-        <br />
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Culture Type">
+      </mat-form-field>
+      <br />
 
 
-        <button id="submit_cmw_request" class="btn btn-default" routerLink="/fabi-internal-dashboard">Submit</button>
-      </form>
-    </div>
-
-
-
+      <button id="submit_cmw_request" class="btn btn-default" routerLink="/fabi-internal-dashboard">Submit</button>
+    </form>
   </div>
+
+
 
 </div>
