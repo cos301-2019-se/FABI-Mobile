@@ -83,7 +83,7 @@ export interface CMWRequest{
     dateRequested: Date;
     referenceNumber: string;
     notes: string;
-    dateSubmitted: Date;
+    dateSubmitted: string;
 }
 
 @Injectable({
