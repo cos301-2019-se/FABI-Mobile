@@ -86,6 +86,20 @@ export interface CMWRequest{
     dateSubmitted: string;
 }
 
+//Object for defining the CMW revitalization form values
+export interface CMWRevitalization{
+    requestor: string;
+    currentName: string;
+    nameBionumerics: string;
+    cultureNumber: string;
+    cultureCondition: string;
+    sequenceDateSubmitted: string;
+    referenceNumber: string;
+    dateRequested: Date;
+    dateReturned: Date;
+    dateSubmitted: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -253,7 +267,7 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCMWRevitalizationForm(data: CMWRequest){
+  submitCMWRevitalizationForm(data: CMWRevitalization){
     const options = {
         method: 'POST',
         url: submitCMWRevitalizationFormURL,
