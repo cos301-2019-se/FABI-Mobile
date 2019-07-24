@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 23rd 2019
+ * Last Modified: Wednesday, July 24th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -49,7 +49,7 @@ export interface Species{
 
 //Object for defining the CMW deposit form values
 export interface CMWDeposit{
-    cwmCultureNumber: string;
+    cmwCultureNumber: string;
     genus: string;
     epitheton: string;
     personalCollectionNumber: string;
@@ -62,6 +62,7 @@ export interface CMWDeposit{
     vector: string;
     substrate: string;
     continent: string;
+    country: string;
     region: string;
     locality: string;
     gps: string;
