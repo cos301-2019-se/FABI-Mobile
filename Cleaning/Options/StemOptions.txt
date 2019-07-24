@@ -1,0 +1,221 @@
+dry
+dark streaks
+lesions
+discolouration
+dead
+discolouration, sapwood
+healthy
+insect damage
+Healthy
+mehanical dadmga, resin exudation,
+few,dead
+Discolouration
+alive
+girdling
+Discoloration
+Dead
+Insect/Mechanical damage
+Discoloraiton, Sapwood, Healthy
+Discoloraiton, Sapwood
+Healthy, Discoloration, Sapwood
+Discoloration, Sapwood
+Discoloration, Healthy
+Healthy, Discoloration
+deadf
+Discoloration, Cambium
+Discoloraiton
+Well developed, Few roots
+Well developed, Dead
+Healhty
+Discoloration, Between outer and inner bark
+Healthy, Sapwood
+Discoloraiton, Between outer and inner bark
+Sapwood
+Discoloration, Cambium, Between outer and inner bark
+Outer bark
+Discoloraiton, Cambium
+Insect/Mechanical damage, Discoloration
+Insect/Mechnical damage
+Insect/Mechanical damage, Discoloration, Cambium
+Healthy, Sapwood, Discoloration
+Healthy, Sapwwod
+Girdling, Discoloration, Swelling, Cambium
+Girdling, Swelling, Cambium
+Girdling, Swelling, Discoloration, Cambium
+Health, Discoloration, Sapwood
+Girdling, Insect/Mechanical damage
+Discoloration, Fruiting bodies
+Girdling, Healthy
+Discoloration, Outer bark
+Girdling, Discoloration
+Fruiting bodies
+Discoloration, Sapwood, Healthy
+blue stain
+Well developed, Healthy
+Well developed
+Discoloration, Outer bark, Cambium
+Insect/Mechanical damage, Discoloration, Outer bark, Cambium
+Discoloration, Outer bark, Cambium, Between outer and inner bark
+Healthy, Discoloration, Outer bark
+Discoloration, Outer bark, Between outer and inner bark
+Discoloraiton, Healthy
+Discoloraiton, Outer bark
+Discoloraiton, Outer bark, Between outer and inner bark
+Healthy, Outer bark, Cambium
+Discoloration, Outer bark, Cambium, Between outer inner bark
+Discoloration, Outer bark, Cambium, Between outer and inner bark, Fruiting bodies
+Discoloration, Outer bark, Fruiting bodies
+Discoloration, Outer bark, Cambium, Sapwood
+Discoloration, Outer bark, Cambium, Fruiting bodies
+Discoloration, Outer bark, Cambium, Sapwood, Fruiting bodies
+Discoloraiton, Outer bark, Cambium, Between outer and inner bark
+Discoloraiton, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Discoloraiton, Cambium, Sapwood
+Discoloraiton,Outer bark, Cambium
+Healthy, Discoloration, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Healthy, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Healthy, Outer bark, Cambium, Between outer and inner bark, Sapwood, Discoloration
+Discoloration, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Healthy, Discoloration, Outer bark, Between outer and inner bark
+Discoloration, Outer bark, Between outer and inner bark, Cambium
+Discoloration, Outer bark, Between outer and inner bark, Cambium, Sapwood
+Discoloration, Cambiu
+Insect/Mechanical damage, Healthy
+Girdling, Discoloraiton, Fruiting bodies, Sapwood
+Insect/Mechanical damage, Discoloration, Fruiting bodies, Sapwood
+Girdling, Insect/Mechanical damage, Discoloration, Fruiting bodies, Sapwood
+Insect/Mechanical damage, Healthy, Discoloration, Fruiting bodies, Sapwood
+Discoloration, Outer bark, Between outer and inner bark, Sapwood
+Discolouration, Cambium, Sapwood
+Girdling, Insect/Mechanical damage, Healthy
+Discoloration, Cambium, Sapwood
+Discoloration, Sapwood, Fruiting bodies
+Discolouration, Cambium
+Healthy, Discoloration, Between outer and inner bark
+Discolouration, Sapwood
+Healthy, Cambium
+Insect/Mechanical damage, Discoloraiton, Cambium
+Healthy, Outer bark
+Healthy, Discoloration, Cambium
+Discoloraiton, Outer bark, Cambium, Sapwood
+Healthy, Cambium, Discoloration
+Discoloration, Cambium, Fruiting bodies
+Discoloration, Outer bark, Sapwood
+Girdling, Discoloration, Cambium
+Discoloration, Cambium, Outer bark
+Discoloraiton, Fruiting bodies
+Healthy, Outer bark, Cambium, Sapwood
+Insect/Mechanical damage, Outer bark
+Girdling, Insect/Mechanical damage, Discoloration
+Insect/Mechanical damage, Discoloration, Fruiting bodies
+Rot
+Healthy, Cambium, Sapwood
+Discolouration, Fruiting bodies
+Girdling
+Between outer and inner bark
+Discoloration 
+Discoloration, Outer bark 
+Discoloration, Swelling
+Clean
+Healthy, Discloration
+Healthy, Ouer bark
+Healthy (1-20)
+Healthy (21-40)
+Discloration, Sapwood
+Discloration, Outer bark
+Discoloraiton, Swelling
+Dicoloration, Healthy
+Discoloraiton, Cambium, Healthy
+Insect/Mechanical damage, Discoloration, Outer bark
+Discolouration, Cambium, Outer bark
+Disolouration, Sapwood
+Disolouration, Cambium
+Discoloration, Cambium, Sapwood, Fruiting bodies
+Cambium, Sapwood, Fruiting bodies
+Cambium, Discoloration, Sapwood
+Cambium, Discoloration
+Cambium, Discoloration, Healthy
+Outer bark, Sapwood
+Outer bark, Cambium
+Outer bark, Cambium, Sapwood
+Discoloraiton, Outer bark, Cambium
+Discoloration, Sapwood, Cambium
+Discoloration, Between outer and inner bark, Sapwood
+Discoloration, Cambium, Outer bark, Sapwood
+Discolouration, Outer bark, Cambium, Sapwood
+Discoloration, Cambium, Fruiting bodies, Sapwood
+Discoloration, Outer bark, Cambium, Fruiting bodies, Sapwood
+Almost dry??
+Unhealthy??
+Discoloration, Cambium, Sapwood, Outer bark
+Discoloration, Sapwood, J-rooting
+Well developed, Dead, J-rooting
+Dry
+Discolouration, Outer bark, Sapwood
+Discolouration, Outer bark
+Healthy/Clean
+Healthy/Clean/Dry
+Cambium, Outer bark
+cankers
+Discoloured, Outer bark, Cambium
+Discoloration, Outer bark, Between inner and outer bark
+Discoloration, Outer bark, Cambium, Between inner and outer bark
+Discoloration, Outer bark, Between inner and outer bark, Cambium
+Discoloration, Outer bark, Between inner and outer bark, Cambium, Sapwood
+Discoloration, Outer bark, Between inner and outer bark, Sapwood, Cambium
+Discoloration, Outer bark, Between inner and outer bark, Sapwood, Cambium, Fruiting bodies
+Outer bark, Between outer and inner bark, Cambium, Sapwood
+Cambium
+Discoloraiton, Sapwood, Cambium
+Discoloration, Between outer and inner bark, Cambium
+Healthy, Insect/Mechanical damage
+Healthy, Fruiting bodies
+Healthy, Discoloration, Outer bark, Cambium
+Insect/Mechanical damage, Discoloration, Swelling
+Between outer and inner bark, Sapwood
+Insect Mechanical damage, Discoloration
+Discoloration, Outer bark, Cambium, Between outer and inner bark, Swelling, Sapwood
+Girdling, Discoloration, Outer bark, Cambium, Between outer and inner bark, Swelling, Sapwood
+Outer bark, Between outer and inner bark
+Insect/Mechanical damage, Discoloration, Outer bark, Cambium, Between outer and inner bark
+Discoloration, Between outer and inner bark, Outer bark
+Discoloration, Outer bark, Between outer and inner bark, Cambium, Sapwood, Fruiting bodies
+Healthy, Discoloration, Outer bark, Swelling
+Insect/Mechanical damage, Discoloration, Cambium, Between outer and inner bark
+Insect/Mechanical damage, Discoloration, Cambium, Between outer and inner bark, Sapwood
+Discoloration, Outer bark, Between outer and inner bark, Sapwood, Cambium
+Discoloration, Outer bark, Cambium, Swelling, Between outer and inner bark, Sapwood
+Discoloration, Outer bark, Cambium, Between outer and inner bark, Sapwood, Fruiting bodies
+Discoloration, Fruiting bodies, between outer & inner bark
+Slight discoloration
+Discoloration, between outer & inner bark
+Healthy, Slight discoloration, Outer bark
+Discoloration, Outer bark, Slight browning
+Unhealthy
+Clear (White-ish)
+Clean and a bit dry
+Discoloration,outer bark,cambium, between outer & inner bark, Sapwood
+Clean but debarked and dry
+Clean and dry
+Clean but dry
+Clean and unhealthy
+A bit dry
+Discoloration, Outer Bark
+Dry but clean
+Slight discoloration, Outer bark
+Healthy, Discoloration, Outer bark, Cambium, Between outer & inner bark
+Discoloration, Outer bark, Between outer & inner bark
+Insect/Mechanical damage, Outer bark, Cambium
+Discoloration, Sapwood, Covered with white mycelia
+Discoloration, Sapwood, White mycelia
+Discoloration, Water-soaked
+Discoloration ( dark black)
+Discoloration, Water-soaked, Sapwood
+Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Resins 
+Mechanical damage
+Healthy, Clean
+Discoloration, Outer bark, Swelling
+Upper stem still alive
+Discoloration, Dead from the top
+Disc

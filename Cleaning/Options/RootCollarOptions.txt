@@ -1,0 +1,417 @@
+dry
+dicolouration
+discolouration
+brown discolouration
+insect galleries
+water soaked discolouration
+brown discolouratin
+dead
+discolouration, sapwood
+healthy
+sapwood, discolouration
+Healthy
+insect
+girdling
+Well developed
+Few roots
+Well developed, Dead
+Well developed, Healthy
+Dead
+Well developed, Few roots
+Discoloration
+Few roots, Dead
+Dead, Well developed
+J-rooting, Dead
+Well developed, Dead, Healthy
+Well developed, Dead, J-rooting
+Dead, Few roots
+Few roots, J-rooting
+No roots
+J-rooting
+discolourationdiscolouration
+J-rooting, Plug bound
+Well developed, Health, Dead
+Mechanical damage, J-rooting
+Well developed, J-rooting, Dead
+Well developed, Dead, Few roots
+Well developed, Few roots, Dead
+Well develoepd, Healthy
+Dead, Plug bound
+Few roots, Healthy
+Well developed, J-rooting
+Dead, J-rooting
+Dead, J-rooting, Plug bound
+Well developed, J-rooting, Dead, Plug bound
+Healthy, J-rooting
+Well developed, Dead, Plug bound
+Well developed, Plug bound
+Plug bound
+Well developed, Healthy, J-rooting
+J-rooting, Few roots, Dead
+Dying
+Dead, Few roots, J-rooting
+Well developed, Healthy, Few roots
+Well developed, Healthy, No roots
+Insect/Mechanical damage, Few roots
+Insect/Mechanical damage, Few roots, Dead
+Insect/Mechanical damage
+Few roots, Dead, J-rooting
+well developed
+Insect/Mechanical damage, Dead
+Healthy, Well developed
+Health
+Few roots, Well developed
+ratio
+welldeveloped
+Insect/Mechanical damage, Few roots, J-rooting
+J-rooting, Few roots
+Dead, No roots
+Discoloration, Outer bark, Cambium
+Well developed, Dead, J-rooting, Dead
+Healthy, Few roots
+Well developed, Insect/Mechanical damage
+Well devolped, Dead
+Wilted, Dead
+Well devolped, Healthy
+J-rooting, Dead, Plug bound
+Well develoeped, Dead, J-rooting
+Well developed, J-rooting, Healthy
+J-rooting, Few roots, Dead, Plug bound
+Well developed, J-rooting, Plug bound
+Healthy, Plug bound
+Few roots, Dead, Plug bound
+Well developed, Healthy, J-rooting, Few roots
+Well developed, Healthy, Dead
+Discoloraiton, Sapwood
+Healthy, Dead
+Healthy, Few roots, Dead, Plug bound
+Well developed, Dead, Few roots, Plug bound
+Few roots, Plug bound
+Few roots, j-rooting, Dead
+Well developed, Dead, J-rooting, Plug bound
+Rot
+Healthy, J-rooting, Plug bound
+Well developed, Dead,  No roots
+Well developed, Insect/Mechanical damage, J-rooting
+Well developed, Dead, Few roots, J-rooting
+Well developed, Healthy, J-rooting (3, 6,7)
+Insect/Mechanical damage, Well developed (1,2), Few roots (3)
+Well developed (1-4), No roots (7-8), Few roots (10-12), Dead (8-16)
+J-rooting, Few-roots, Dead
+Well developed (1-20), Healthy (1-20)
+Well developed (21-40), Healthy (21-40)
+Well develoepd
+No roots, J-rooting, Few roots, Plug bound
+Well developed, Healthy, Plug bound
+Well developed, Healthy, J-rooting, Plug bound
+Well developed, Dead, J-rooting, Few roots
+Well developed, No roots, Dead, Few roots
+No roots, Dead, Few roots
+Well developed, Healthy, Dead (some)
+Well developed, Healthy, Insect/Mechanical damage
+Well developed, Plug bound, Healthy
+J-rooting, Well developed
+Healthy, J-rooting, Few roots
+Dead, Healthy, Well developed
+Well developed, Healthy, Dead, J-rooting
+Wel developed, Few roots, Dead
+Well developed, Few roots, J-rooting
+Well developed, Healthy, Dead, Plug bound
+Well developed, Few roots, Dead, J-rooting
+Well developed, Plug bound, Dead
+Dead, Well developed, J-rooting
+Dead, Well developed, Few roots
+Insect/Mechanical damage, J-rooting
+Insect/Mechanical damage, J-rooting, Few roots
+Well developed, Few roots, Dead, Plug bound
+Well developed, Dead, Insect/Mechanical damage
+Well developed, Fewer roots, Dead
+Few roots, Dry
+Few roots, Insect/Mechanical damage
+Well developed, Insect/Mechanical damage, Dead
+Well developed, Dead, Plug Bound
+Wel developed, Plug bound, Dead
+J-rooting, Dead, Few roots
+Well developed, Plug bound, J-rooting
+Plug bound, Dead, J-rooting
+Sapwood
+Discoloration, Sapwood
+Well developed, Discoloration at the tips
+Well developed, Slight discoloration at tips
+Root tips unhealthy
+One root (main)
+Healthy and small
+Root tip is a bit dry
+Very few and dead roots
+Few roots, Debarked roots
+Few, dead roots
+Very few dry roots
+Few dry roots
+Few roots, A bit dry
+Discoloured on tips
+Unhealthy roots
+Few roots, Roots are not developed
+Root discolorations
+Well developed, Dead, No white tips
+Well developed, J-rooting, Dead, White mycelia
+Well developed, J-rooting,Dead, Plug bound
+Few roots, Resins
+Well developed, Brown & mechanically damaged
+Well developed, Mechanical damage
+Well developed roots
+Unhealthy
+Unhealthy, Discoloration
+J-rooting, Unhealthy
+Well develped, Dead
+Dead, Discoloration
+Developed but dry
+Few roots, Discoloration, No white tips
+No roots, Dead, Diseased, No white tips
+Healthy, Outer bark
+Well developed, Dead, Water-soaked
+Well developed, Black resin on roots
+Deformed
+Few roots, J-rooting, Dead
+Not good but enough roots
+Few brown roots
+Massive roots
+Well developed, Healthy, Clean
+Developed
+Well developed, Tips damaged
+Well developed, Damaged tips
+Well developed, Jrooting, Dead
+Damaged roots but massive
+Slight J-rooting, Few roots
+Well developed, Some parts damaged
+Well developed, Healthy, Few roots, Dead
+Well developed, Healthy, J-rooting, Few roots, Dead
+Healthy, Slight J-rooting, Few roots
+Well developed, Healthy, Slight J-rooting
+Well developed, No roots, Healthy, J-rooting, Few roots, Dead
+Almost dry
+Well developed, Dry
+Well developed, damaged
+Massive
+Clean, Massive
+Well developed, Resins
+Well developed, J-rooting, Brown discoloration
+J-rooting, Discoloration
+Well developed, J-rooting, Discoloration
+Well developed, Dead, Discoloration
+Well developed, J-rooting, No white tips, Dry
+Few roots, No white tips
+J-rooting, Few roots, No white tips
+Few roots, No white tips, Discoloration
+Well developed, J-rooting, No white tips, Plug bound
+Well developed, J-rooting, Dry, No white tips
+Well developed, Severe J-rooting, No white tips
+Well developed, Severe J-rooting
+Well developed, Healthy, Few roots, Discoloration
+Healthy, Few roots, Discoloration
+Resins
+J-rooting, Few roots, Plug bound
+Well developed,  J-rooting, Dead, Plug bound
+Healthy, Developed
+Healthy, Massive
+Developed, Mechanical damage
+Healthy, Clean, Discoloration
+Clean
+Discoloration, Outer bark
+Healthy, Discoloration
+Healthy, Clean
+Healthy, Discoloration, Outer bark
+Well developed, J-rooting, Dead, Plug bound, White mycelia
+J-rooting, Few roots, Dead, White mycelia
+Well-developed, J-rooting, Dead
+Mechanical damage, Developed
+Well developed, Healthy, Discoloration
+Healthy, Massive, Clean
+Well developed,Dead
+Well eveloped, Dead
+Well developed, Dead, No white tips, Discoloration
+Well developed, No white tips, Discoloration
+Slight discoloration
+Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Discoloration, Outer bark, Cambium, Between outer & inner bark
+Well developed (some), Dead (some)
+J-rooting, Few roots, Dead, White fungal growth
+Mechanical damage, Few roots
+J-rooting, Few roots, Dead, White mycelial growth
+Well developed, J-rooting, Dead, White mycelial growth
+Well developed, Unhealthy
+Discoloration, Water-soaked
+Discoloration (Brown lesions)
+Discoloration (Blue Stain)
+Discoloration, Outer bark, Between outer & inner bark
+Discoloration, Outer bark, Sapwood
+Discoloration,  Outer bark, Cambium, Between outer & inner bark
+Insect/Mechanical damage, Discoloration, Outer bark, Between outer & inner bark, Sapwood
+Discoloration, White mycelial growth
+Discoloration (Brown lesions), White mycelial growth
+Insect/Mechanical damage, Sapwood
+Discoloration (Water-soaked)
+Outer bark, Cambium, Sapwood
+Insect/Mechanical damage, Outer bark, Between outer & inner bark, Sapwood
+Discoloration, Outer bark, Cambium, Sapwood
+Insect/Mechanical damage, Discoloration, Outer bark, Cambium, Sapwood
+Discoloration, Outer bark, Cambium,  Sapwood
+Insect/Mechanical damage, Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Discoloration, Outer bark, Cambium, Bewteen outer & inner bark
+Discoloration, Between outer & inner bark
+No root collar
+Discoloration, Cambium
+Discoloration, Dead
+Discoloration, Outer bark, Cambium, Resins
+Insect/Mechanical damage, Discoloration
+Insect/Mechanical damage, Discoloration, Outer bark
+Discoloration,Outer bark, Between outer & inner bark
+Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood, Resins
+Disoloration, Outer bark
+E.dunni 1 & 2
+E.macarthurii
+Discoloration, Outer bark, Cambium, Swelling
+Discoloration, Outer bark, Dry
+Discoloration, Dry
+Very dry
+Dry
+Outer bark, Cambium, Between outer & inner bark, Sapwood
+Girdling, Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Girdling, Discoloration, Outer bark, Cambium, Between outer & inner bark
+Girdling, Discoloration, Outer bark, Cambium, Swelling, Between outer & inner bark
+Insect/Mechanical damage, Healthy
+Discoloration, Outer bark, Swelling
+Healthy, Swelling
+Discooration, Outer bark, Between outer & inner bark
+Wilting
+Healthy, Slight swelling at the base
+Insect/mechanical damage, Discoloration, Outer bark, Cambium, Fruiting bodies, Between outer & inner bark
+Discoloration (Pink colour), Outer bark
+Discoloration (Pink & Blue/Black), Outer bark, Cambium
+Discoloration (Blue/Black), Outer bark, Cambium
+Girdling, Discoloration
+Healthy 
+Healthy, In 3: Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Discoloration, Outer bark, Cambium, Fruiting bodies, Between outer & inner bark
+Discoloration, Outer bark, Fruiting bodies, Between outer & inner bark
+Outer bark, Between outer & inner bark
+Only a piece of bark with Armillaria
+Armillaria
+Discoloration (purple colour)
+Girdling
+Discoloration, Outer bark, Gall formation
+Discoloration, Gall formation
+Girdling, Insect/Mechanical damage, Discoloration, Sapwood
+Discoloration, Outer bark, Cambium Between outer & inner bark
+Girdling, Discoloration, Outer bark, Between outer & inner bark
+Discoloration, Swelling (gall), Between outer & inner bark
+J-rooting, Few roots, Healthy
+Well developed, Healthy, Plug Bound
+Well developed, Healthy, J-rooting, Plug Bound
+Healthy, Well developed, J-rooting
+Healthy (2,3), Discoloration, Outer bark, Between outer & inner bark (1,4)
+Discoloration, Cambium, Between outer & inner bark
+Plug Bound
+Healthy, Plug Bound
+J-rooting, Few roots, Plug Bound
+Healthy, J-rooting, Few roots, Plug Bound
+Wel developed, Healthy
+None
+Well developed, dead
+Girdling, Discoloration, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Well developed, J-rooting, dead
+Well developed, J-rooting, dead, Plug bound
+J-rooting, few roots, dead
+Well developed, J-rooting, plug bound
+Well developedJ-rooting, dead
+J-rooting, few roots, plug bound
+Well developed, J-rooting, few roots, dead, plug bound
+J-rooting, few roots, dead, plug bound
+Well developed, J-rooting, dead, plug bound
+J-rooting, dead, few roots
+More white/yellow tips than others
+Discoloration, Outer bark, Between outer and inner bark
+Well developed, J-rooting, Few roots
+Few roots, Dead, Plug nound
+Everything is dead
+"Few roots
+Well developed, Dead, Plug bound, J-rooting
+Dead, Plug bound, J-rooting
+Well developed, J-rooting, Dead, Plug-bound
+J-rooting, Dead, Plug-bound
+Few roots, Dead, Lots of moss
+Well developed, Dark brown
+Few roots, Dead, Fungal growth
+Well developed, healthy
+Healthy, J-rooting, Few roots, Plug bound
+Healthy, Few roots, Plug bound
+Well-developed, J-rooting, Dead, Plug bound
+Well-developed, J-rooting, Dead, Plug bound, Few roots
+Insect/Mechanical damage, Few roots, Dead, Plug bound
+Few roots, Plug bound, Dead
+J-rootng, Dead
+Discoloration, Between outer and inner bark
+ Growth tips dead"
+Healthy, Few roots, Plug bound, J-rooting
+ Resprouts"
+Girdling, Discolration, outer bark, Cambium
+Girdling, Discolration, outer bark, Cambium, Between outer and inner bark
+Well developed, Healthy, Plug bound, J-rooting
+Well developed, J-rooting, Plug bound, Few roots
+Well developed, J-rooting, Plug bound, Dead
+Well developed, J-rooting, Plug bound, Few roots, Dead
+Healthy, Few roots, J-rooting
+Few roots, Healthy, Plug bound
+Well developed, J-rooting, Dead, Plug Bound
+No roots, Dead
+Some discoloration
+Roots discolored
+Well developed, Discoloration
+Brown discoloration
+Well developed, Some discoloration
+Healthy, Some discoloration
+Healthy, Very well developed
+Roots cut off
+Curling, Rotting
+Rotting, Discoloration
+Few roots, Growing interwined, Mouldy
+Decaying, curling
+Curling, Discoloration
+Well-developed, Dead
+White tips, Healthy
+Discoloured
+Blackened
+Well developed, J-rooting, Some discoloration
+Well-developed
+Covered by Fungi
+Healthy, but not well developed
+Very few roots
+Few Roots, J-rooting
+Blue stain
+Blue stain, Few roots
+Well-developed, Plug bound
+J-rooting, Few Roots
+J-rooting, Few Roots, Dead
+Dead, Plug Bound
+Well developed, Looks healthy
+Well developed, Plug Bound
+Few roots, Dead, Plug Bound
+Few roots, Plug Bound
+Alive
+Wilted, Dry
+J-rooting, Few roots, Dead, Plug Bound
+Few Roots
+J-rooting, Few Roots, Plug Bound
+J-rooting, Plug bound, Few roots
+Insect/Mechanical damage, J-rooting, Plug bound
+Plug bound, J-rooting
+Few roots, J-rooting, Plug bound
+Well developed, Dead, Plug boun
+ Well developed, Dead
+Insect/Mechanical damage, Few roots, Plug bound
+No roots, J-rooting
+No roots, J-rooting, Dead
+Well developed, Dead, Plug bound, Few roots
+ Roots dead, little rot? Dry"
+Well developed, Rotten
+Dead, Pluf Bound
+J-rooting, Plug Bound

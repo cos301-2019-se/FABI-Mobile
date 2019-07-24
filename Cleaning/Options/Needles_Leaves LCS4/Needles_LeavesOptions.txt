@@ -1,0 +1,210 @@
+discolouration
+red discolouration
+leaves
+dry
+dicolouration
+spots
+black discolouration
+ducolouration
+purple discolouration
+brown
+Healthy
+healthy
+discoluration
+Discolouration
+dead
+leaf spot
+alive
+scorch
+wilted
+Heathy
+Wilted, Dead
+Alive, Dead
+Dead
+Wilted
+Alive
+Discoloration
+Curled
+Insect/Mechanical damage, Dead
+die-back
+Scorch, Leaf spots
+Alive, Wilted
+Wilted, Dead, Discoloration
+Alive, Wilted, Dead, Discoloration
+dying
+Scorch
+Alive, WIlted
+Alive (Very tip), Dead
+Wilted, Discoloration
+Dead, Discoloration
+Alive, Insect/Mechaniccal damage
+Insect/Mechanical damage, Discoloration
+Alive, Insect/Mechanical damage
+Alive, Discoloration
+Alive, Wilted, Dead
+diiscolouration
+Wilted, Insect/Mechanical damage
+Wilted, Discoloraiton
+Alive, Scorch
+Scorch, Discoloration
+Wilted, Alive, Scorch
+Alive, Dead, Discoloration
+Insect damage, Discoloration, Dead
+Alive, Dead, Fruiting bodies
+Discoloration, Alive
+Alive, Wilted, Discoloration
+Witled, Dead, Discoloration
+Dead, Discoloraiton
+Alive, Witled
+Dead, Wilted
+Wilted, Alive
+Alive, Wilted, Dead, Discoloraiton
+Wilted, Discoloraiton, Dead
+Wilted, Discolration
+Wilted, Dead, Discoloraiton
+Discoloraiton
+Discoloraiton, Wilted
+Alive, Wilted (1-16)
+Alive (1-20)
+Spots
+Alive, Deade
+Alive, Discoloraiton, Wilted
+Alive, Discoloraiton
+No tips
+No tip
+Dry tip
+Dry tips
+No tip
+Alive, Discoloration, Wilted
+Discoloration, Wilted, Dead
+Dry
+yelowing
+Dead, Discoloured
+Alive, Green
+Alive, Very Small but fresh
+Fresh but small
+Clean
+Healthy, Small, Young
+Alive but unhealthy
+Dead, Dry tip
+Dead, Dry
+Dry, Brown
+Alive, A bit dry
+Dying
+Unhealthy tip
+Drying tip
+Alive, Some alive tips, Brown needles
+Alive, Slightly green
+Alive, Some tips alive
+Alive, Some tips green and alive
+Alive, Some green and brown
+Alive, Some brown tips
+Brown
+Alive, Green & brown needles
+Alive, Slight discoloration
+Secondary tip
+Dying tip
+Unhealthy
+Fresh
+Alive, Healthy
+Dying 
+Alive, Unhealthy
+Dead, Scorch, Discoloration
+Wilted, Scorch, Discoloration
+Most needles dead
+Dead, Very dry
+No green tips
+Dead, Tips not green
+Fresh, Clean & Green
+Green & Healthy, Few
+Dead, Needled green lower down stem
+Some alive, Some dead
+Some are fresh, Some are a bit dry
+Dead, Dry/Unhealthy
+Wilted, Green
+Alive, Green & Fresh
+Clean, Almost dead
+Alive, Dry, Turning brown
+Alive, Green, Needles yellow & brown
+Alive, Green, Needles dying
+Alive, Dry, Green
+Alive, Green, Fresh
+Almost dead
+Healthy, Fresh
+Green
+No primary tip
+Discoloration, Brown needles 
+Alive, Dry
+Wilted, No primary tip
+Discoloration, No primary tip
+Clean, Dry
+A little dry
+Clean, Fresh
+Alive, Clean
+Alive, Healthy, Fresh
+Good
+Alive, Fresh
+Alive, Green (Junction)
+Discoloration, Dead
+(Junction)
+Clean, Small
+Alive, Green, Healthy
+Alive, Yellow
+Green, Fresh
+Fresh, Clean
+Alive, Clean, Fresh
+Wilted, Chlorotic & necrotic at bases
+Wilted, Dead, Necrotic
+Discoloration, New needles are necrotic, Others are dying from base
+Slight discoloration
+Alive, Clean, Green
+Sligthly wilted
+Discoloration, Wilted
+Wilted, Stunted
+Dying, Larvae in dead branches
+Leaf spots
+Lady bird larvae
+Leaf spots, Wilting, Dead
+Dull green
+Discoloraion in cambium & sapwood
+Discoloration, Leaf curl
+Leaf curl
+Fungal structures, mites
+No discoloration
+Leaf spots (white spots)
+Die-back
+Wilted, Die-back
+Cut tip
+None
+Wilted, discoloration
+Discoloraition
+Dead, discoloration
+Everything is dead
+Discoloration, Outer bark, Cambium
+Wilted, Discoloration, S?
+Wilted, Dry and brown
+All removed
+Wilted, Dry 
+No growth
+Wilted, S?, Discoloration
+ Discoloration, Outer bark, Between outer and inner bark"
+Alive/Wilted
+Alive/Dead
+No leaves
+Wilted, S?
+Wilted, S?, Dead, Discoloration
+S?, Dead, Discoloration
+Tip die-back
+Discoloration, Outer bark, Healthy
+Decomposting
+Dead, S?
+S?, Discoloration
+S?
+WIlted
+Fruiting bodies
+Dead, S?, Discoloration
+Alive, Insect/Mechanical damage, Dead, Discoloration
+Dead, Blue staining, Dead branches
+Alive (some) and Dead (some)
+Not wilted, Green, Black stem
+Wilted, Scortch (Needles)
