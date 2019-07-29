@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Monday, July 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -154,7 +154,7 @@ export class MemberDashboardComponent implements OnInit {
    *  If set to true, a class is added which ensures that the notifications tab is displayed. 
    *  If set to flase, a class is removed which hides the notifications tab.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){

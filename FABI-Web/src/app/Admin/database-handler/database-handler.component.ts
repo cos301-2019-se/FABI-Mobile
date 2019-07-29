@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, July 20th 2019
+ * Last Modified: Monday, July 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -110,7 +110,7 @@ export class DatabaseHandlerComponent implements OnInit {
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @memberof AdminDashboardComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router, 
