@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -41,6 +41,19 @@ export class SubmitCmwRequestComponent implements OnInit {
   /** Object array for holding the staff members -  @type {String[]} */
   filteredOptions: Observable<string[]>;
   control = new FormControl();
+
+  /** The requestor of the form -  @type {string} */
+  requestor: string;
+  /** The taxonName of the form -  @type {string} */
+  taxonName: string;
+  /** The cultureNumber of the form -  @type {string} */
+  cultureNumber: string;
+  /** The dateRequested of the form -  @type {Date} */
+  dateRequested: Date;
+  /** The reference number of the form -  @type {string} */
+  referenceNumber: string;
+  /** The notes of the form -  @type {string} */
+  notes: string;
 
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +98,57 @@ export class SubmitCmwRequestComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitCMWRequestForm(){
+    if(this.cmwRequestForm.controls.requestor.value == null || this.cmwRequestForm.controls.requestor.value == ""){
+      this.requestor = "";
+    }
+    else{
+      this.requestor = this.cmwRequestForm.controls.requestor.value;
+    }
 
+    if(this.cmwRequestForm.controls.taxon_name.value == null || this.cmwRequestForm.controls.taxon_name.value == ""){
+      this.taxonName = "";
+    }
+    else{
+      this.taxonName = this.cmwRequestForm.controls.taxon_name.value;
+    }
+
+    if(this.cmwRequestForm.controls.culture_number.value == null || this.cmwRequestForm.controls.culture_number.value == ""){
+      this.cultureNumber = "";
+    }
+    else{
+      this.cultureNumber = this.cmwRequestForm.controls.culture_number.value;
+    }
+
+    this.dateRequested = this.cmwRequestForm.controls.date_requested.value;
+    
+    if(this.cmwRequestForm.controls.reference_number.value == null || this.cmwRequestForm.controls.reference_number.value == ""){
+      this.referenceNumber = "";
+    }
+    else{
+      this.referenceNumber = this.cmwRequestForm.controls.reference_number.value;
+    }
+
+    if(this.cmwRequestForm.controls.notes.value == null || this.cmwRequestForm.controls.notes.value == ""){
+      this.notes = "";
+    }
+    else{
+      this.notes = this.cmwRequestForm.controls.notes.value;
+    }
+
+    var date = new Date();
+    var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+    var request: CMWRequest = {userID: localStorage.getItem('userPassword'), requestor: this.requestor, taxonName: this.taxonName, 
+        cultureNumber: this.cultureNumber, dateRequested: this.dateRequested.toDateString(), referenceNumber: this.referenceNumber, notes: this.notes, dateSubmitted: currentDate}
+  
+    this.diagnosticClinicService.submitCMWRequestForm(request).subscribe((response: any) => {
+      if(response.success == true){
+        //Successfully submitted form
+      }
+      else{
+        //Error handling
+      }
+    });
   }
 
 

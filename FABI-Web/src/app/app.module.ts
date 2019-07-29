@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { MaterialModule } from './materials';
+import { MaterialModule} from './materials';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 
@@ -116,6 +117,7 @@ import { AgmCoreModule } from "@agm/core";
     ToastrModule.forRoot(),
     ErrorsModule,
     LayoutModule,
+    MatAutocompleteModule,
     AgmCoreModule.forRoot({
       apiKey: ''
     })

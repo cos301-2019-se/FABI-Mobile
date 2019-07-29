@@ -190,7 +190,7 @@ export class OrganizationDashboardComponent implements OnInit {
    *  If set to true, a class is added which ensures that the notifications tab is displayed. 
    *  If set to flase, a class is removed which hides the notifications tab.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){

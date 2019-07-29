@@ -72,7 +72,7 @@ export class StaffProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
-   * Creates an instance of AdminProfileComponent.
+   * Creates an instance of StaffProfileComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
@@ -291,7 +291,7 @@ export class StaffProfileComponent implements OnInit {
   //                                                  LOAD_USER_DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
-   *  @memberof ReportingComponent
+   *  @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
@@ -386,7 +386,7 @@ export class StaffProfileComponent implements OnInit {
    *  If set to true, a class is added which ensures that the notifications tab is displayed. 
    *  If set to flase, a class is removed which hides the notifications tab.
    * 
-   * @memberof AdminProfileComponent
+   * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){

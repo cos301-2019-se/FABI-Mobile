@@ -101,7 +101,7 @@ export class MemberProfileComponent implements OnInit {
    *  If set to true, a class is added which ensures that the notifications tab is displayed. 
    *  If set to flase, a class is removed which hides the notifications tab.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
@@ -118,7 +118,7 @@ export class MemberProfileComponent implements OnInit {
   /**
    *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
-   * @memberof OrganizationProfileComponent
+   * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadMemberProfileDetails(){
