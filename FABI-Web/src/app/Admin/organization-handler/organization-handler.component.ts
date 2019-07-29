@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,7 +17,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 
-import { HttpService } from '../../_services/http.service';
+import { AuthenticationService } from '../../_services/authentication.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -32,7 +32,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import * as Interface from '../../_interfaces/interfaces';
 
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
 
 @Component({
@@ -98,8 +98,14 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, 
-    private router: Router, private userManagementService: UserManagementAPIService, private notificationLoggingService: NotificationLoggingService) {
+  constructor(private authService: AuthenticationService, 
+    private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router, 
+    private userManagementService: UserManagementAPIService, 
+    private notificationLoggingService: NotificationLoggingService
+    ) {
     this.registerOrgForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
       organization_location: ['', Validators.required],
@@ -382,12 +388,21 @@ export class OrganizationHandlerComponent implements OnInit {
   ngOnInit() {
     this.viewOrganizations();
     this.loadNotifications();
+
+    const user2 = this.authService.getCurrentUserValue;
+    console.log("///////// USER: " + JSON.stringify(user2));
+  }
+
+  logout() {
+
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       REGISTER ORGANIZATION
   /**
-   * This function calls the *http* service to create a new Organisation.
+   * This function calls the *user-management* service to create a new Organisation.
    *
    * @returns
    * @memberof OrganizationHandlerComponent
@@ -414,7 +429,7 @@ export class OrganizationHandlerComponent implements OnInit {
     const admin_details: Interface.OrganisationAdmin = { name: LadminName, surname: LadminSurname, email: LadminEmail };
     const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };
 
-    this.service.createOrganization(org_details).subscribe((response: any) => {
+    this.userManagementService.createOrganization(org_details).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
@@ -479,14 +494,14 @@ export class OrganizationHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        REMOVE ORGANIZATION 
   /**
-   * This function calls the *http* service to remove the selected Organisation 
+   * This function calls the *user-management* service to remove the selected Organisation 
    *
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrg() {
 
-    this.service.removeOrganization(this.selectedOrg).subscribe((response: any) => {
+    this.userManagementService.removeOrganization(this.selectedOrg).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Organization Removed", "Dismiss", {
@@ -521,14 +536,14 @@ export class OrganizationHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       VIEW ORGANIZATIONS
   /**
-   * This function calls the *http* service to get all registered Organizations
+   * This function calls the *user-management* service to get all registered Organizations
    *
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewOrganizations() {
     
-    this.service.getAllOrganizations().subscribe((response: any) => {
+    this.userManagementService.getAllOrganizations().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
         console.log(this.organizations);
