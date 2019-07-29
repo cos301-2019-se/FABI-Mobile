@@ -56,6 +56,7 @@ export class ReportingComponent implements OnInit {
   /** The current dte in string format - @type {string} */
   date: string;
 
+
   /** Array holding the user logs - @type {any} */
   userLogsArray: any[] = [];
   /** Array holding the database logs - @type {any} */
@@ -105,6 +106,7 @@ export class ReportingComponent implements OnInit {
   @ViewChild("requestReportPDF") requestReportPDF : ElementRef;
   /** Holds the table element (depositReportPDF) from the HTML page - @type {ElementRef} */
   @ViewChild("depositReportPDF") depositReportPDF : ElementRef;
+  
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
