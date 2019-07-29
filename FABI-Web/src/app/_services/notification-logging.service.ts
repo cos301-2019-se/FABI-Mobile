@@ -114,7 +114,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_USER_LOGS 
+  //                                                               GET_ALL_USER_LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'USER'
