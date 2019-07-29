@@ -17,7 +17,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService, CMWDeposit } from '../../_services/diagnostic-clinic-api.service';
 
@@ -295,12 +295,12 @@ export class SubmitCmwDepositComponent implements OnInit {
     }
 
     var date = new Date();
-    var currentDate = ('0' + date.getDate()).slice(-2) + '/' + ('0' + date.getMonth() + 1).slice(-2) + '/' + date.getFullYear();
+    var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var deposit: CMWDeposit = {cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
+    var deposit: CMWDeposit = {userID: localStorage.getItem('userPassword'),cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
       internationalCollectionNumber: this.internationalCollectionNumber, herbariumNumber: this.herbariumNumber, otherFABICollections: this.otherFABICollections, name: this.name,
       typeStatus: this.typeStatus, host: this.host, vector: this.vector, substrate: this.substrate, continent: this.continent, country: this.country, region: this.region,
-      locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected, isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
+      locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected.toDateString(), isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
       donatedBy: this.donatedBy, additionalNotes: this.additionalNotes, dateSubmitted: currentDate}
 
     this.diagnosticClinicService.submitCMWDepositForm(deposit).subscribe((response: any) => {

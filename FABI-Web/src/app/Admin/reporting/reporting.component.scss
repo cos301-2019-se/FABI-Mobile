@@ -329,8 +329,6 @@ mat-icon {
     width: 100% !important;
     min-height: 100vh !important;
     height: 100% !important;
-
-    margin-top: 5%;
 }
 
 .tab-content h2 {
@@ -347,6 +345,11 @@ mat-icon {
     background-color: #6B8E4E;
     border: 0;
     margin-bottom: 25px;
+}
+
+#reports button{
+    position: relative;
+    margin-top: 0%;
 }
 
 @media (max-width:425px) {
@@ -431,28 +434,28 @@ mat-icon {
     }
 }
 
-.btn .btn-default {
-    background: #6B8E4E;
-    border: 3px solid #ffffff;
-    color: #ffffff;
-    font-size: 12px;
-    letter-spacing: 2px;
-    padding: 13px 30px;
-    text-transform: uppercase;
+// .btn .btn-default {
+//     background: #6B8E4E;
+//     border: 3px solid #ffffff;
+//     color: #ffffff;
+//     font-size: 10px;
+//     letter-spacing: 2px;
+//     padding: 13px 30px;
+//     text-transform: uppercase;
 
-    border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    border: 1px solid #6B8E4E;
+//     border-radius: 50px;
+//     -moz-border-radius: 50px;
+//     -webkit-border-radius: 50px;
+//     border: 1px solid #6B8E4E;
 
-    display: block;
-    margin: 0 auto;
+//     display: block;
+//     margin: 0 auto;
 
-}
+// }
 
-#add_new_organization_form .btn.btn-default:hover {
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
-}
+// #add_new_organization_form .btn.btn-default:hover {
+//     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+// }
 
 /* ================================================ */
 /* View Organizations Tab Setup and Styling         */
@@ -722,10 +725,10 @@ tbody tr th{
     background: #555;
     border: 3px solid #555;
     color: white;
-    font-size: 12px;
+    font-size: 10px;
     letter-spacing: 2px;
     padding: 13px 30px;
-    margin-top: 34px;
+    // margin-top: 34px;
     margin-left: 2rem;
     text-transform: uppercase;
 
@@ -759,17 +762,18 @@ tbody tr th{
     z-index: 1;
 }
 
-#error_report{
+#error_report, #request_report, #deposit_report{
     font-family: 'Roboto', sans-serif;
     color: #6B8E4E;
     font-size: 28px;
 
     text-transform: uppercase;
 
-    margin-left: 37%;
+    text-align: center;
+    margin-top: 20px;
 }
 
-#errorReport{
+#errorReport, #requestReport, #depositReport{
     background-color: white;
     padding-top: 20px;
     width: 80%;
@@ -778,11 +782,22 @@ tbody tr th{
 }
 
 #FABI_logo{
-    background-image: url('src/assets/images/fabi-logo.png');
-    width: 10%;
-    height: 10%;
-    margin-left: 2%;
+    width: 30%;
+    height: 65%;
+    margin-bottom: 5px !important;
     position: absolute;
+}
+
+#FABI_logo img{
+    width: 30% !important;
+    height: 30% !important;
+}
+
+#errorReport p, #requestReport p, #depositReport p{
+    text-align: center;
+    color: #555;
+    font-size: 20px;
+    margin-top: 5px;
 }
 
 #previewTableUserLogs, #previewTableDatabaseLogs, #previewTableAccessLogs, #previewTableErrorLogs,

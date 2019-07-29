@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule} from './materials';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 
@@ -113,7 +114,8 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ErrorsModule,
-    LayoutModule
+    LayoutModule,
+    MatAutocompleteModule
   ],
   providers: [NotificationService],
   bootstrap: [AppComponent],
