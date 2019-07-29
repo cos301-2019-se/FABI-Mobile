@@ -26,9 +26,6 @@ import { BehaviorSubject } from 'rxjs';
 
 //Globals variables used to hold the API call urls
 const getAllLogsURL = 'https://logging-dot-api-fabi.appspot.com/getLogs';
-const getRequestLogsURL = '';
-const getDepositLogsURL = '';
-const getRevitalizationLogsURL = '';
 
 //Object for defining the JSON object containing the user logs
 export interface UserLogs{
@@ -105,7 +102,7 @@ export class NotificationLoggingService {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //                                                          CONSTRUCTOR
    /**
-   * Creates an instance of UserManagementAPIService.
+   * Creates an instance of NotificationLoggingService.
    * 
    * @param {HttpClient} http For making calls to the API
    * @memberof NotificationLoggingService
@@ -235,7 +232,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_DIAGNOTIC_CLINIC_LOGS 
+  //                                                         GET_ALL_DIAGNOSTIC_CLINIC_LOGS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'DGCL'
@@ -261,81 +258,5 @@ export class NotificationLoggingService {
     };
 
         return this.http.request('POST', getAllLogsURL, options);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_REQUEST_LOGS
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type 'REQUEST'
-   *
-   * @returns API response @type any
-   * @memberof NotificationLoggingService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllRequestLogs() {
-    const options = {
-        method: 'POST',
-        url: getRequestLogsURL,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        json: true
-    };
-
-        return this.http.request('POST', getRequestLogsURL, options);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_DEPOSIT_LOGS
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type 'DEPOSIT'
-   *
-   * @returns API response @type any
-   * @memberof NotificationLoggingService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllDepositLogs() {
-    const options = {
-        method: 'POST',
-        url: getDepositLogsURL,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        json: true
-    };
-
-        return this.http.request('POST', getDepositLogsURL, options);
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_REVITALIZATION_LOGS
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type 'REVITALIZATION'
-   *
-   * @returns API response @type any
-   * @memberof NotificationLoggingService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllRevitalizationLogs() {
-    const options = {
-        method: 'POST',
-        url: getRevitalizationLogsURL,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        json: true
-    };
-
-        return this.http.request('POST', getRevitalizationLogsURL, options);
   }
 }

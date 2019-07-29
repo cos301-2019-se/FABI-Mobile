@@ -17,6 +17,7 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/co
 
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
 
 //These imports are used to created a downloadable PDF of the reports
 import * as jspdf from 'jspdf';
@@ -122,11 +123,13 @@ export class ReportingComponent implements OnInit {
    * Creates an instance of ReportingComponent.
    * 
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API Service
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(private notificationLoggingService: NotificationLoggingService, private userManagementService: UserManagementAPIService,
-    private renderer: Renderer2) { }
+    private renderer: Renderer2, private cultureCollectionService: CultureCollectionAPIService) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_USER_DETAILS
@@ -371,7 +374,7 @@ export class ReportingComponent implements OnInit {
     this.revitalizationReport = false;
 
     //Loading the 'ERRL' logs
-    this.notificationLoggingService.getAllRequestLogs().subscribe((response: any) => {
+    this.cultureCollectionService.getAllRequestLogs().subscribe((response: any) => {
       if(response.success = true){
         // var data = response.data.content.data.Logs;
 
@@ -433,7 +436,7 @@ export class ReportingComponent implements OnInit {
     this.revitalizationReport = false;
 
     //Loading the 'ERRL' logs
-    this.notificationLoggingService.getAllDepositLogs().subscribe((response: any) => {
+    this.cultureCollectionService.getAllDepositLogs().subscribe((response: any) => {
       if(response.success = true){
         // var data = response.data.content.data.Logs;
 
@@ -495,7 +498,7 @@ export class ReportingComponent implements OnInit {
     this.revitalizationReport = true;
 
     //Loading the 'ERRL' logs
-    this.notificationLoggingService.getAllRevitalizationLogs().subscribe((response: any) => {
+    this.cultureCollectionService.getAllRevitalizationLogs().subscribe((response: any) => {
       if(response.success = true){
         // var data = response.data.content.data.Logs;
 
