@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -41,6 +41,25 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   /** Object array for holding the staff members -  @type {String[]} */
   filteredOptions: Observable<string[]>;
   control = new FormControl();
+
+  /** The requestor of the form -  @type {string} */
+  requestor: string;
+  /** The current name of the form -  @type {string} */
+  currentName: string;
+  /** The bionumerics name of the form -  @type {string} */
+  bionumericsName: string;
+  /** The culture number of the form -  @type {string} */
+  cultureNumber: string;
+  /** The culture condition of the form -  @type {string} */
+  cultureCondition: string;
+  /** The sequence of the form -  @type {string} */
+  sequence: string;
+  /** The reference number of the form -  @type {string} */
+  referenceNumber: string;
+  /** The date requested of the form -  @type {string} */
+  dateRequested: Date;
+  /** The date returned of the form -  @type {string} */
+  dateReturned: Date;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -79,14 +98,80 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                    SUBMIT_CMW_REVITALIZATION_FORM
+  //                                               SUBMIT_CMW_REVITALIZATION_FORM
   /**
    * This function will submit a CMW Revitalization form based on the information provided in the form on the HTML page.
    * @memberof SubmitCmwRevitalizationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitCMWRevitalizationForm(){
+    if(this.cmwRevitalizationForm.controls.requestor.value == null || this.cmwRevitalizationForm.controls.requestor.value == ""){
+      this.requestor = "";
+    }
+    else{
+      this.requestor = this.cmwRevitalizationForm.controls.requestor.value;
+    }
 
+    if(this.cmwRevitalizationForm.controls.current_name.value == null || this.cmwRevitalizationForm.controls.current_name.value == ""){
+      this.currentName = "";
+    }
+    else{
+      this.currentName = this.cmwRevitalizationForm.controls.current_name.value;
+    }
+
+    if(this.cmwRevitalizationForm.controls.name_bionumerics.value == null || this.cmwRevitalizationForm.controls.name_bionumerics.value == ""){
+      this.bionumericsName = "";
+    }
+    else{
+      this.bionumericsName = this.cmwRevitalizationForm.controls.name_bionumerics.value;
+    }
+
+    if(this.cmwRevitalizationForm.controls.culture_number.value == null || this.cmwRevitalizationForm.controls.culture_number.value == ""){
+      this.cultureNumber = "";
+    }
+    else{
+      this.cultureNumber = this.cmwRevitalizationForm.controls.culture_number.value;
+    }
+
+    if(this.cmwRevitalizationForm.controls.culture_condition.value == null || this.cmwRevitalizationForm.controls.culture_condition.value == ""){
+      this.cultureCondition = "";
+    }
+    else{
+      this.cultureCondition = this.cmwRevitalizationForm.controls.culture_condition.value;
+    }
+
+    if(this.cmwRevitalizationForm.controls.sequence.value == null || this.cmwRevitalizationForm.controls.sequence.value == ""){
+      this.sequence = "";
+    }
+    else{
+      this.sequence = this.cmwRevitalizationForm.controls.sequence.value;
+    }
+
+    if(this.cmwRevitalizationForm.controls.reference_number.value == null || this.cmwRevitalizationForm.controls.reference_number.value == ""){
+      this.referenceNumber = "";
+    }
+    else{
+      this.referenceNumber = this.cmwRevitalizationForm.controls.reference_number.value;
+    }
+
+    this.dateRequested = this.cmwRevitalizationForm.controls.date_requested.value;
+    this.dateReturned = this.cmwRevitalizationForm.controls.date_returned.value;
+
+    var date = new Date();
+    var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+    var revitalization: CMWRevitalization = {userID: localStorage.getItem('userPassword'), requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
+      cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested.toDateString(),
+      dateReturned: this.dateReturned.toDateString(), dateSubmitted: currentDate};
+
+    this.diagnosticClinicService.submitCMWRevitalizationForm(revitalization).subscribe((response: any) => {
+      if(response.success == true){
+        //Successfully submitted form
+      }
+      else{
+        //Error handling
+      }
+    });
   }
 
 
