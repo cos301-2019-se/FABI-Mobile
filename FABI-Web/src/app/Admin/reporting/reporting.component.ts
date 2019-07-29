@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -19,6 +19,11 @@ import { NotificationLoggingService } from '../../_services/notification-logging
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
+import { CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
+
+//These imports are used to created a downloadable PDF of the reports
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-reporting',
@@ -39,9 +44,25 @@ export class ReportingComponent implements OnInit {
   accessLogs: boolean = false;
   /** Indicates if there are logs of type ERRL - @type {boolean} */
   errorLogs: boolean = false;
+  /** Indicates if there are logs of type REQUEST - @type {boolean} */
+  requestLogs: boolean = false;
+  /** Indicates if there are logs of type DEPOSIT - @type {boolean} */
+  depositLogs: boolean = false;
+  /** Indicates if there are logs of type REVITALIZATION - @type {boolean} */
+  revitalizationLogs: boolean = false;
 
   /** Indicates if the error report has been generated - @type {boolean} */
   errorReport: boolean = false;
+  /** Indicates if the request report has been generated - @type {boolean} */
+  requestReport: boolean = false;
+  /** Indicates if the deposit report has been generated - @type {boolean} */
+  depositReport: boolean = false;
+  /** Indicates if the revitalization report has been generated - @type {boolean} */
+  revitalizationReport: boolean = false;
+
+  /** The current date in string format - @type {string} */
+  date: string;
+
 
   /** Array holding the user logs - @type {any} */
   userLogsArray: any[] = [];
@@ -51,6 +72,12 @@ export class ReportingComponent implements OnInit {
   accessLogsArray: any[] = [];
   /** Array holding the error logs - @type {any} */
   errorLogsArray: any[] = [];
+  /** Array holding the request logs - @type {any} */
+  requestLogsArray: any[] = [];
+  /** Array holding the deposit logs - @type {any} */
+  depositLogsArray: any[] = [];
+  /** Array holding the revitalization logs - @type {any} */
+  revitalizationLogsArray: any[] = [];
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
@@ -82,12 +109,24 @@ export class ReportingComponent implements OnInit {
   /** Holds the table element (errorCollapse) from the HTML page - @type {ElementRef} */
   @ViewChild("errorCollapse") errorCollapse : ElementRef;
 
+  /** Holds the table element (errorReportPDF) from the HTML page - @type {ElementRef} */
+  @ViewChild("errorReportPDF") errorReportPDF : ElementRef;
+  /** Holds the table element (requestReportPDF) from the HTML page - @type {ElementRef} */
+  @ViewChild("requestReportPDF") requestReportPDF : ElementRef;
+  /** Holds the table element (depositReportPDF) from the HTML page - @type {ElementRef} */
+  @ViewChild("depositReportPDF") depositReportPDF : ElementRef;
+  /** Holds the table element (revitalizationReportPDF) from the HTML page - @type {ElementRef} */
+  @ViewChild("revitalizationReportPDF") revitalizationReportPDF : ElementRef;
+  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of ReportingComponent.
    * 
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API Service
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,6 +314,8 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   generateErrorReport() {
+    this.requestReport = false;
+    this.depositReport = false;
     this.errorReport = true;
 
     //Loading the 'ERRL' logs
@@ -300,6 +341,217 @@ export class ReportingComponent implements OnInit {
       }
     });
   }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  DOWNLOAD_ERROR_REPORT
+  /**
+   *  This function will be used to download the error report that is displayed on screen as a PDF document.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  downloadErrorReport() {
+    var report = this.errorReportPDF.nativeElement;
+    html2canvas(report).then(canvas => {
+      var imageWidth = 208;
+      var pageHeight = 295;
+      var imageHeight = canvas.height * imageWidth / canvas.width;
+      var heightLeft = imageHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
+      pdf.save('Error_Report.pdf');
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  GENERATE_REQUEST_REPORT
+  /**
+   *  This function will be used to generate the request report and display it on screen
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  generateRequestReport() {
+    this.errorReport = false;
+    this.depositReport = false;
+    this.requestReport = true;
+    this.revitalizationReport = false;
+
+    //Loading the 'ERRL' logs
+    this.cultureCollectionService.getAllRequestLogs().subscribe((response: any) => {
+      if(response.success = true){
+        // var data = response.data.content.data.Logs;
+
+        // for(var i = 0; i < data.length; i++){
+        //   var tempArray: any = [];
+          
+        //   tempArray.push(data[i].statusCode);
+        //   tempArray.push(this.getDate(data[i].dateString));
+        //   tempArray.push(data[i].details);
+
+        //   //Fetch user information
+        //   tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+
+        //   this.errorLogsArray.push(tempArray);
+        // }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  DOWNLOAD_REQUEST_REPORT
+  /**
+   *  This function will be used to download the request report that is displayed on screen as a PDF document.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  downloadRequestReport() {
+    var report = this.requestReportPDF.nativeElement;
+    html2canvas(report).then(canvas => {
+      var imageWidth = 208;
+      var pageHeight = 295;
+      var imageHeight = canvas.height * imageWidth / canvas.width;
+      var heightLeft = imageHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
+      pdf.save('Request_Report.pdf');
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  GENERATEE_DEPOSIT_REPORT
+  /**
+   *  This function will be used to generate the deposit report and display it on screen
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  generateDepositReport() {
+    this.errorReport = false;
+    this.depositReport = true;
+    this.requestReport = false;
+    this.revitalizationReport = false;
+
+    //Loading the 'ERRL' logs
+    this.cultureCollectionService.getAllDepositLogs().subscribe((response: any) => {
+      if(response.success = true){
+        // var data = response.data.content.data.Logs;
+
+        // for(var i = 0; i < data.length; i++){
+        //   var tempArray: any = [];
+          
+        //   tempArray.push(data[i].statusCode);
+        //   tempArray.push(this.getDate(data[i].dateString));
+        //   tempArray.push(data[i].details);
+
+        //   //Fetch user information
+        //   tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+
+        //   this.errorLogsArray.push(tempArray);
+        // }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  DOWNLOAD_DEPOSIT_REPORT
+  /**
+   *  This function will be used to download the deposit report that is displayed on screen as a PDF document.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  downloadDepositReport() {
+    var report = this.depositReportPDF.nativeElement;
+    html2canvas(report).then(canvas => {
+      var imageWidth = 208;
+      var pageHeight = 295;
+      var imageHeight = canvas.height * imageWidth / canvas.width;
+      var heightLeft = imageHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
+      pdf.save('Deposit_Report.pdf');
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  GENERATE_REVITALIZATION_REPORT
+  /**
+   *  This function will be used to generate the revitalization report and display it on screen
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  generateRevitalizationReport() {
+    this.requestReport = false;
+    this.depositReport = false;
+    this.errorReport = false;
+    this.revitalizationReport = true;
+
+    //Loading the 'ERRL' logs
+    this.cultureCollectionService.getAllRevitalizationLogs().subscribe((response: any) => {
+      if(response.success = true){
+        // var data = response.data.content.data.Logs;
+
+        // for(var i = 0; i < data.length; i++){
+        //   var tempArray: any = [];
+          
+        //   tempArray.push(data[i].statusCode);
+        //   tempArray.push(this.getDate(data[i].dateString));
+        //   tempArray.push(data[i].details);
+
+        //   //Fetch user information
+        //   tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+
+        //   this.errorLogsArray.push(tempArray);
+        // }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  DOWNLOAD_REVITALIZATION_REPORT
+  /**
+   *  This function will be used to download the revitalization report that is displayed on screen as a PDF document.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  downloadRevitalizationReport() {
+    var report = this.revitalizationReportPDF.nativeElement;
+    html2canvas(report).then(canvas => {
+      var imageWidth = 208;
+      var pageHeight = 295;
+      var imageHeight = canvas.height * imageWidth / canvas.width;
+      var heightLeft = imageHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
+      pdf.save('Revitalization_Report.pdf');
+    });
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        GET_DATE
@@ -503,6 +755,8 @@ export class ReportingComponent implements OnInit {
   }
 
   ngOnInit() {
+    var currentDate = new Date();
+    this.date = ('0' + currentDate.getDate()).slice(-2) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
     this.loadAllLogs();
   }
 
