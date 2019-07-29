@@ -125,16 +125,18 @@
           </ng-template>
 
           <br/>
-          <div>
+          <div class="tab-content" id="reports" ng-app="portApp" ngController="previewCtrl">
               <button class="btn btn-default" (click)="generateRequestReport()">Generate Request Report</button>
               <button class="btn btn-default" (click)="generateDepositReport()">Generate Deposit Report</button>
+              <button class="btn btn-default" (click)="generateRevitalizationReport()">Generate Revitalization Report</button>
               <button class="btn btn-default" (click)="generateSampleSubmissionReport()">Generate Sample Submission Report</button>
               <button class="btn btn-default" (click)="generateErrorReport()">Generate Error Report</button>
 
               <br/><br/><br/><br/>
               <!-- <h3 *ngIf="!errorReport">There are currently no system errors</h3> -->
-              <div id="errorReport" *ngIf='errorReport'>
+              <div id="errorReport" *ngIf='errorReport' #errorReportPDF>
                 <h2 id="error_report">FABI System Error Report</h2>
+                <p>Date: {{date}}</p>
                 <br/><br/><br/>
                 <table *ngIf="errorLogs" id="previewTableErrorLogs">
                   <thead>
@@ -152,10 +154,60 @@
                   </tbody>
                 </table>
                 <br /><br />
-                <!-- <button>Download Report</button> -->
-                <div id="FABI_logo"></div>
+                <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
                 <br/><br/>
               </div>
+              <button *ngIf='errorReport' (click)="downloadErrorReport()">Download Error Report</button>
+
+              <div id="requestReport" *ngIf='requestReport' #requestReportPDF>
+                <h2 id="request_report">FABI System Request Report</h2>
+                <p>Date: {{date}}</p>
+                <br/><br/><br/>
+                <table *ngIf="requestLogs" id="previewTableRequestLogs">
+                  <thead>
+                    <tr>
+                      <th>Error status code</th>
+                      <th>Date</th>
+                      <th>Details of error</th>
+                      <th>User performing action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="tableRow" *ngFor="let row of requestLogsArray; let i = index">
+                      <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    </tr>
+                  </tbody>
+                </table>
+                <br /><br />
+                <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
+                <br/><br/>
+              </div>
+              <button *ngIf='requestReport' (click)="downloadRequestReport()">Download Request Report</button>
+
+              <div id="depositReport" *ngIf='depositReport' #depositReportPDF>
+                <h2 id="deposit_report">FABI System Deposit Report</h2>
+                <p>Date: {{date}}</p>
+                <br/><br/><br/>
+                <table *ngIf="depositLogs" id="previewTableDepositLogs">
+                  <thead>
+                    <tr>
+                      <th>Error status code</th>
+                      <th>Date</th>
+                      <th>Details of error</th>
+                      <th>User performing action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="tableRow" *ngFor="let row of depositLogsArray; let i = index">
+                      <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    </tr>
+                  </tbody>
+                </table>
+                <br /><br />
+                <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
+                <br/><br/>
+              </div>
+              <button *ngIf='depositReport' (click)="downloaddepositReport()">Download Request Report</button>  
           </div>
         </mat-tab>
 

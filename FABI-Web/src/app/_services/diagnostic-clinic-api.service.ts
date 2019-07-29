@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 24th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -26,9 +26,9 @@ import { POSTOrganization } from './user-management-api.service';
 const getAllSamplesURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllSamples';
 const getAllSamplesForMemberURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveSamplesForMember';
 const getOrganizationSamplesURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples';
-const submitCMWDepositFormURL = '';
-const submitCMWRequestFormURL = '';
-const submitCMWRevitalizationFormURL = '';
+const submitCMWDepositFormURL = 'https://culture-collection-management-dot-api-fabi.appspot.com/submitCMWDepositForm';
+const submitCMWRequestFormURL = 'https://culture-collection-management-dot-api-fabi.appspot.com/submitCMWRequestForm';
+const submitCMWRevitalizationFormURL = 'https://culture-collection-management-dot-api-fabi.appspot.com/submitCMWRevitalizationForm';
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
@@ -49,6 +49,7 @@ export interface Species{
 
 //Object for defining the CMW deposit form values
 export interface CMWDeposit{
+    userID: string;
     cmwCultureNumber: string;
     genus: string;
     epitheton: string;
@@ -67,7 +68,7 @@ export interface CMWDeposit{
     locality: string;
     gps: string;
     collectedBy: string;
-    dateCollected: Date;
+    dateCollected: string;
     isolatedBy: string;
     identifiedBy: string;
     donatedBy: string;
@@ -77,10 +78,11 @@ export interface CMWDeposit{
 
 //Object for defining the CMW request form values
 export interface CMWRequest{
+    userID: string;
     requestor: string;
     taxonName: string;
     cultureNumber: string;
-    dateRequested: Date;
+    dateRequested: string;
     referenceNumber: string;
     notes: string;
     dateSubmitted: string;
@@ -88,6 +90,7 @@ export interface CMWRequest{
 
 //Object for defining the CMW revitalization form values
 export interface CMWRevitalization{
+    userID: string;
     requestor: string;
     currentName: string;
     nameBionumerics: string;
@@ -95,8 +98,8 @@ export interface CMWRevitalization{
     cultureCondition: string;
     sequenceDateSubmitted: string;
     referenceNumber: string;
-    dateRequested: Date;
-    dateReturned: Date;
+    dateRequested: string;
+    dateReturned: string;
     dateSubmitted: string;
 }
 

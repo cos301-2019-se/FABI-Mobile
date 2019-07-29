@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 24th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -123,10 +123,10 @@ export class SubmitCmwRequestComponent implements OnInit {
     }
 
     var date = new Date();
-    var currentDate = ('0' + date.getDate()).slice(-2) + '/' + ('0' + date.getMonth() + 1).slice(-2) + '/' + date.getFullYear();
+    var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var request: CMWRequest = {requestor: this.requestor, taxonName: this.taxonName, cultureNumber: this.cultureNumber, dateRequested: this.dateRequested,
-      referenceNumber: this.referenceNumber, notes: this.notes, dateSubmitted: currentDate}
+    var request: CMWRequest = {userID: localStorage.getItem('userPassword'), requestor: this.requestor, taxonName: this.taxonName, 
+        cultureNumber: this.cultureNumber, dateRequested: this.dateRequested.toDateString(), referenceNumber: this.referenceNumber, notes: this.notes, dateSubmitted: currentDate}
   
     this.diagnosticClinicService.submitCMWRequestForm(request).subscribe((response: any) => {
       if(response.success == true){
