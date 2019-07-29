@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 23rd 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -86,7 +86,7 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                    SUBMIT_CMW_REVITALIZATION_FORM
+  //                                               SUBMIT_CMW_REVITALIZATION_FORM
   /**
    * This function will submit a CMW Revitalization form based on the information provided in the form on the HTML page.
    * @memberof SubmitCmwRevitalizationComponent
@@ -146,11 +146,11 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     this.dateReturned = this.cmwRevitalizationForm.controls.date_returned.value;
 
     var date = new Date();
-    var currentDate = ('0' + date.getDate()).slice(-2) + '/' + ('0' + date.getMonth() + 1).slice(-2) + '/' + date.getFullYear();
+    var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var revitalization: CMWRevitalization = {requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
-      cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested,
-      dateReturned: this.dateReturned, dateSubmitted: currentDate};
+    var revitalization: CMWRevitalization = {userID: localStorage.getItem('userPassword'), requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
+      cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested.toDateString(),
+      dateReturned: this.dateReturned.toDateString(), dateSubmitted: currentDate};
 
     this.diagnosticClinicService.submitCMWRevitalizationForm(revitalization).subscribe((response: any) => {
       if(response.success == true){

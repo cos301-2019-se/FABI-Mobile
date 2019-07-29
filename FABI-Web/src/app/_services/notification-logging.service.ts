@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 16th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -26,6 +26,8 @@ import { BehaviorSubject } from 'rxjs';
 
 //Globals variables used to hold the API call urls
 const getAllLogsURL = '***REMOVED***/getLogs';
+const getRequestLogsURL = '';
+const getDepositLogsURL = '';
 
 //Object for defining the JSON object containing the user logs
 export interface UserLogs{
@@ -112,7 +114,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_USER_Logs 
+  //                                                               GET_ALL_USER_LOGS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'USER'
@@ -142,7 +144,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_DATABASE_MANAGEMENT_Logs 
+  //                                                         GET_ALL_DATABASE_MANAGEMENT_LOGS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'DBML'
@@ -172,7 +174,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_ACCESS_Logs 
+  //                                                               GET_ALL_ACCESS_LOGS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'ACCL'
@@ -202,7 +204,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_ERROR_Logs 
+  //                                                               GET_ALL_ERROR_LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'ERRL'
@@ -232,7 +234,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_DIAGNOTIC_CLINIC_Logs 
+  //                                                         GET_ALL_DIAGNOTIC_CLINIC_LOGS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'DGCL'
@@ -258,5 +260,55 @@ export class NotificationLoggingService {
     };
 
         return this.http.request('POST', getAllLogsURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET_ALL_REQUEST_LOGS
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type 'REQUEST'
+   *
+   * @returns API response @type any
+   * @memberof NotificationLoggingService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllRequestLogs() {
+    const options = {
+        method: 'POST',
+        url: getRequestLogsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        json: true
+    };
+
+        return this.http.request('POST', getRequestLogsURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET_ALL_DEPOSIT_LOGS
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type 'DEPOSIT'
+   *
+   * @returns API response @type any
+   * @memberof NotificationLoggingService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllDepositLogs() {
+    const options = {
+        method: 'POST',
+        url: getDepositLogsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        json: true
+    };
+
+        return this.http.request('POST', getDepositLogsURL, options);
   }
 }
