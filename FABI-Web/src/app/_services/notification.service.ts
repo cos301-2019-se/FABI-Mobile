@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -25,16 +25,11 @@ export class NotificationService {
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private toastr: ToastrService) {}
 
-  showToastNotification(message: string) {
+  showErrorNotification(title: string, message: string) {
     console.log("------------------- NOTIFICATION ------------------");
     console.log("------------------- " + message + " ------------------");
 
-    
-      // return this.toastr.success(message, 'Oops');
-
-      // this.snackBar.open(message, "Dismiss", {
-      //   duration: 1000
-      // });
+    this.toastr.error(message, title);
   }
 
   showDialogNotification(message) {
@@ -43,6 +38,10 @@ export class NotificationService {
     //     if (result == "Retry") {
     //     }
     //   })
+  }
+
+  showWarningNotifiction(title: string, message: string) {
+    this.toastr.warning(message, title);
   }
 
 }

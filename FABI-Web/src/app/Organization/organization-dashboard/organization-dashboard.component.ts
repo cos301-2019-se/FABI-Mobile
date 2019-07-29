@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService, Sample, Species } from '../../_services/diagnostic-clinic-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -75,7 +76,13 @@ export class OrganizationDashboardComponent implements OnInit {
    * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private userManagementService: UserManagementAPIService, private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { }
+  constructor(
+    private authService: AuthenticationService, 
+    private router: Router, 
+    private userManagementService: UserManagementAPIService, 
+    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private resolver: ComponentFactoryResolver
+    ) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +97,7 @@ export class OrganizationDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfOrganizationMembers(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllOrganizationMembers(this.organizationName).subscribe((response: any) => {
+    this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
       if(response.success == true){
           //Populating the arrays with the returned data
           this.organizationMembers = response.data.members;
@@ -108,6 +115,11 @@ export class OrganizationDashboardComponent implements OnInit {
     });
   }
 
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                            GET_NUMBER_OF_ORGANIZATION_SAMPLES
@@ -121,7 +133,7 @@ export class OrganizationDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfOrganizationSamples(){
     //Subscribing to the DiagnosticClinicAPIService to get a list containing all the samples belonging to the organization
-    this.diagnosticClinicService.getAllOrganizationSamples(this.organizationName).subscribe((response: any) => {
+    this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
       if(response.success == true){
         var tempSamples = response.data.samples;
         this.numberOfOrganizationSamples = tempSamples.length;

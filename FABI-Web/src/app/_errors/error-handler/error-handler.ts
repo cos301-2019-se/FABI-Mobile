@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -19,6 +19,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { NotificationService } from '../../_services/notification.service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 // import * as StackTraceParser from 'error-stack-parser';
 
@@ -26,7 +28,12 @@ import { NotificationService } from '../../_services/notification.service';
 @Injectable()
 export class ErrorsHandler implements ErrorHandler {
     
-  constructor(private injector: Injector) {}
+  constructor(
+    private injector: Injector, 
+    private authService: AuthenticationService,
+    // private notificationService: NotificationService,
+    // private router: Router 
+    ) {}
 
   handleError(error: Error | HttpErrorResponse) {
 
@@ -34,28 +41,28 @@ export class ErrorsHandler implements ErrorHandler {
 
     const notificationService = this.injector.get(NotificationService);
     const router = this.injector.get(Router);
-
+    
     if (error instanceof HttpErrorResponse) {
-    // Server error happened      
+      // Server error happened      
       if (!navigator.onLine) {
         // No Internet connection
-        // return notificationService.showToastNotification('No Internet Connection');
-        console.log("No Internet Connection");
+        this.authService.logoutUser();
+        router.navigate(['/login']);
+        notificationService.showErrorNotification('No Internet Connection','Please Check Your Internet Connection');
       }
 
       console.log("------------------- ERROR HANDLER 1 ------------------");
+      console.log("------------ ERROR: " + JSON.stringify(error));
       // Http Error
-      return notificationService.showToastNotification(error.message);
-      // console.log("Http Error : " + error);
+      notificationService.showErrorNotification(`${error.error.code} ${error.error.title}`, `${error.error.message} - ${error.message}`);
       
     } else {
       console.log("------------------- ERROR HANDLER 2 ------------------");
-      console.log("------ ERROR: " + error);
+      console.log("------ ERROR: " + JSON.stringify(error));
 
       // Client Error Happend      
-      return notificationService.showToastNotification(error.message);
-
-      // console.log("Client Error : " + error);
+      notificationService.showErrorNotification(error.name, error.message);
+      
     }
     // Log the error anyway
     console.error(error);
