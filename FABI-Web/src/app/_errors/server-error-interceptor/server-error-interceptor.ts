@@ -18,32 +18,51 @@ import * as core from "@angular/core";
 import * as Http from "@angular/common/http";
 import { catchError, retry } from 'rxjs/operators';
 import { throwError, Observable, BehaviorSubject, of, from } from "rxjs";
-import { HttpService } from 'src/app/_services/http.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { HttpRequest } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/_services/notification.service';
 
 @core.Injectable()
 export class ServerErrorInterceptor implements Http.HttpInterceptor {
 
-  constructor(private service: HttpService) { }
+  constructor(
+    private authService: AuthenticationService, 
+    private router: Router,
+    private notificationServie: NotificationService
+  ) { }
 
   private AUTH_HEADER = "Authorization";
-  private token = this.service.currentSessionValue;
-  private refreshTokenInProgress = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private session = this.authService.getCurrentSessionValue;
+  // private refreshTokenInProgress = false;
+  // private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   intercept(request: Http.HttpRequest<any>, next: Http.HttpHandler): Observable<Http.HttpEvent<any>> {
 
     console.log("------------------- INTERCEPTOR ------------------");
 
-    request = this.addAuthenticationToken(request);
+    request = this.addJWTToken(request);
 
     return next.handle(request).pipe(
-      retry(2),
+      // retry(1),
       catchError((error: Http.HttpErrorResponse) => {
         if (error && error.status === 401) {
-          // refresh token
+          
+          if(this.authService.isLoggedIn == true) {
+            // refresh token
+            // Prefill User's Email in login form
+            this.authService.logoutUser();
+            this.router.navigate(['/login']);
+          } else {
+            this.notificationServie.showWarningNotifiction("Invalid Login Details", error.error.message);
+          }
+          
           console.log("Server Error: " + error);
           return throwError(error);
+
+        } else if(error && error.status === 404) {
+          this.notificationServie.showWarningNotifiction(error.error.title, error.error.message);
+
         } else {
           console.log("Server Error: " + error.message);
           return throwError(error);
@@ -52,14 +71,20 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
     );
   }
 
-  private addAuthenticationToken(request: Http.HttpRequest<any>): Http.HttpRequest<any> {
-    // If we do not have a token yet then we should not set the header.
-    // Here we could first retrieve the token from where we store it.
-    if (!this.token) {
+  private addJWTToken(request: Http.HttpRequest<any>): Http.HttpRequest<any> {
+  
+    if(this.session && this.session != null && this.session != '') {
+      let token = this.session.token;
+
+      if (token && token != null && token != '') {
+        return request.clone({
+          headers: request.headers.set(
+            this.AUTH_HEADER, `Bearer ${token}`
+          )
+        });
+      }
+    }else {
       return request;
-    }
-    return request.clone({
-      headers: request.headers.set(this.AUTH_HEADER, "Bearer " + this.token)
-    });
+    }  
   }
 }
