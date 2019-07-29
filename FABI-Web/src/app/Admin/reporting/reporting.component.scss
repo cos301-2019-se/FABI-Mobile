@@ -788,7 +788,7 @@ tbody tr th{
     z-index: 1;
 }
 
-#error_report, #request_report, #deposit_report{
+#error_report, #request_report, #deposit_report, #revitalization_report{
     font-family: 'Roboto', sans-serif;
     color: #6B8E4E;
     font-size: 28px;
@@ -798,7 +798,7 @@ tbody tr th{
     margin-top: 20px;
 }
 
-#errorReport, #requestReport, #depositReport{
+#errorReport, #requestReport, #depositReport, #revitalizationReport{
     background-color: white;
     padding-top: 20px;
     width: 80%;
@@ -818,7 +818,7 @@ tbody tr th{
     height: 30% !important;
 }
 
-#errorReport p, #requestReport p, #depositReport p{
+#errorReport p, #requestReport p, #depositReport p, #revitalizationReport p{
     text-align: center;
     color: #555;
     font-size: 20px;
