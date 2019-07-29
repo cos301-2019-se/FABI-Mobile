@@ -166,10 +166,13 @@
                 <table *ngIf="requestLogs" id="previewTableRequestLogs">
                   <thead>
                     <tr>
-                      <th>Error status code</th>
-                      <th>Date</th>
-                      <th>Details of error</th>
-                      <th>User performing action</th>
+                      <th>Person</th>
+                      <th>Requestor</th>
+                      <th>CMW Culture Number</th>
+                      <th>Taxon Name</th>
+                      <th>Reference Number</th>
+                      <th>Date Requested</th>
+                      <th>Date Submitted</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -191,10 +194,13 @@
                 <table *ngIf="depositLogs" id="previewTableDepositLogs">
                   <thead>
                     <tr>
-                      <th>Error status code</th>
-                      <th>Date</th>
-                      <th>Details of error</th>
-                      <th>User performing action</th>
+                      <th>Person</th>
+                      <th>CMW Culture Number</th>
+                      <th>Culture Name</th>
+                      <th>Collected By</th>
+                      <th>Isolated By</th>
+                      <th>Identified By</th>
+                      <th>Date Submitted</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -207,7 +213,7 @@
                 <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
                 <br/><br/>
               </div>
-              <button *ngIf='depositReport' (click)="downloadDepositReport()">Download Deposit Report</button> 
+              <button *ngIf='depositReport' (click)="downloadD  epositReport()">Download Deposit Report</button> 
               
               <div id="revitalizationReport" *ngIf='revitalizationReport' #revitalizationReportPDF>
                 <h2 id="revitalization_report">FABI System Revitalization Report</h2>
@@ -216,10 +222,14 @@
                 <table *ngIf="revitalizationLogs" id="previewTableRevitalizationLogs">
                   <thead>
                     <tr>
-                      <th>Error status code</th>
-                      <th>Date</th>
-                      <th>Details of error</th>
-                      <th>User performing action</th>
+                      <th>Person</th>
+                      <th>Requestor</th>
+                      <th>CMW Culture Number</th>
+                      <th>Culture Name</th>
+                      <th>Reference Number</th>
+                      <th>Date Requested</th>
+                      <th>Date Returned</th>
+                      <th>Date Submitted</th>
                     </tr>
                   </thead>
                   <tbody>
