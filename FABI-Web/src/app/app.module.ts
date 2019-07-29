@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { MaterialModule} from './materials';
+import { MaterialModule } from './materials';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 
@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 
-import {ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
@@ -54,6 +54,8 @@ import { SampleDivComponent } from './Dynamic-Components/sample-div/sample-div.c
 import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
 import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.component';
 import { ReportingComponent } from './Admin/reporting/reporting.component';
+
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   declarations: [
@@ -113,9 +115,12 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ErrorsModule,
-    LayoutModule
+    LayoutModule,
+    AgmCoreModule.forRoot({
+      apiKey: ''
+    })
   ],
   providers: [NotificationService],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
