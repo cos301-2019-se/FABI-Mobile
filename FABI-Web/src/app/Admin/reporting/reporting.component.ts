@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 22nd 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,6 +17,8 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/co
 
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reporting',
@@ -89,8 +91,13 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private notificationLoggingService: NotificationLoggingService, private userManagementService: UserManagementAPIService,
-    private renderer: Renderer2) { }
+  constructor(
+    private notificationLoggingService: NotificationLoggingService, 
+    private userManagementService: UserManagementAPIService,
+    private renderer: Renderer2, 
+    private authService: AuthenticationService, 
+    private router: Router
+    ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_USER_DETAILS
@@ -499,4 +506,10 @@ export class ReportingComponent implements OnInit {
     this.loadAllLogs();
   }
 
+  logout() {
+
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
+  
 }

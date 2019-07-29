@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 23rd 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -19,6 +19,8 @@ import { map, startWith } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService, CMWDeposit } from '../../_services/diagnostic-clinic-api.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-submit-cmw-deposit',
@@ -51,8 +53,13 @@ export class SubmitCmwDepositComponent implements OnInit {
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private formBuilder: FormBuilder, private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService) { 
+  constructor(
+    private formBuilder: FormBuilder, 
+    private userManagementService: UserManagementAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private authService: AuthenticationService, 
+    private router: Router
+    ) { 
     this.cmwDepositForm = this.formBuilder.group({
       cmw_culture_number: '',
       genus: '',
@@ -78,6 +85,11 @@ export class SubmitCmwDepositComponent implements OnInit {
       donated_by: '',
       additional_notes: ''
     });
+  }
+
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
 
