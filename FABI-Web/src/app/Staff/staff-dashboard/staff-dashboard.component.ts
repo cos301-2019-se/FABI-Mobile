@@ -232,7 +232,7 @@ export class StaffDashboardComponent implements OnInit {
   //                                                  LOAD_USER_DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
-   *  @memberof ReportingComponent
+   *  @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
@@ -281,7 +281,7 @@ export class StaffDashboardComponent implements OnInit {
    * This function is called when the page loads
    * 
    * @description 1. Call loadAdmins() | 2. Call loadNotifications() 
-   * @memberof AdminDashboardComponent
+   * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
