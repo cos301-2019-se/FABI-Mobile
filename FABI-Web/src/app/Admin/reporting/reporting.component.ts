@@ -45,6 +45,8 @@ export class ReportingComponent implements OnInit {
   requestLogs: boolean = false;
   /** Indicates if there are logs of type DEPOSIT - @type {boolean} */
   depositLogs: boolean = false;
+  /** Indicates if there are logs of type REVITALIZATION - @type {boolean} */
+  revitalizationLogs: boolean = false;
 
   /** Indicates if the error report has been generated - @type {boolean} */
   errorReport: boolean = false;
@@ -52,8 +54,10 @@ export class ReportingComponent implements OnInit {
   requestReport: boolean = false;
   /** Indicates if the deposit report has been generated - @type {boolean} */
   depositReport: boolean = false;
+  /** Indicates if the revitalization report has been generated - @type {boolean} */
+  revitalizationReport: boolean = false;
 
-  /** The current dte in string format - @type {string} */
+  /** The current date in string format - @type {string} */
   date: string;
 
 
@@ -69,6 +73,8 @@ export class ReportingComponent implements OnInit {
   requestLogsArray: any[] = [];
   /** Array holding the deposit logs - @type {any} */
   depositLogsArray: any[] = [];
+  /** Array holding the revitalization logs - @type {any} */
+  revitalizationLogsArray: any[] = [];
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
@@ -106,6 +112,8 @@ export class ReportingComponent implements OnInit {
   @ViewChild("requestReportPDF") requestReportPDF : ElementRef;
   /** Holds the table element (depositReportPDF) from the HTML page - @type {ElementRef} */
   @ViewChild("depositReportPDF") depositReportPDF : ElementRef;
+  /** Holds the table element (revitalizationReportPDF) from the HTML page - @type {ElementRef} */
+  @ViewChild("revitalizationReportPDF") revitalizationReportPDF : ElementRef;
   
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -350,7 +358,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  REQUEST_ERROR_REPORT
+  //                                                  GENERATE_REQUEST_REPORT
   /**
    *  This function will be used to generate the request report and display it on screen
    *  @memberof ReportingComponent
@@ -360,6 +368,7 @@ export class ReportingComponent implements OnInit {
     this.errorReport = false;
     this.depositReport = false;
     this.requestReport = true;
+    this.revitalizationReport = false;
 
     //Loading the 'ERRL' logs
     this.notificationLoggingService.getAllRequestLogs().subscribe((response: any) => {
@@ -411,7 +420,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  DEPOSIT_ERROR_REPORT
+  //                                                  GENERATEE_DEPOSIT_REPORT
   /**
    *  This function will be used to generate the deposit report and display it on screen
    *  @memberof ReportingComponent
@@ -421,6 +430,7 @@ export class ReportingComponent implements OnInit {
     this.errorReport = false;
     this.depositReport = true;
     this.requestReport = false;
+    this.revitalizationReport = false;
 
     //Loading the 'ERRL' logs
     this.notificationLoggingService.getAllDepositLogs().subscribe((response: any) => {
@@ -455,7 +465,7 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   downloadDepositReport() {
-    var report = this.requestReportPDF.nativeElement;
+    var report = this.depositReportPDF.nativeElement;
     html2canvas(report).then(canvas => {
       var imageWidth = 208;
       var pageHeight = 295;
@@ -467,6 +477,68 @@ export class ReportingComponent implements OnInit {
       var position = 0;
       pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
       pdf.save('Deposit_Report.pdf');
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  GENERATE_REVITALIZATION_REPORT
+  /**
+   *  This function will be used to generate the revitalization report and display it on screen
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  generateRevitalizationReport() {
+    this.requestReport = false;
+    this.depositReport = false;
+    this.errorReport = false;
+    this.revitalizationReport = true;
+
+    //Loading the 'ERRL' logs
+    this.notificationLoggingService.getAllRevitalizationLogs().subscribe((response: any) => {
+      if(response.success = true){
+        // var data = response.data.content.data.Logs;
+
+        // for(var i = 0; i < data.length; i++){
+        //   var tempArray: any = [];
+          
+        //   tempArray.push(data[i].statusCode);
+        //   tempArray.push(this.getDate(data[i].dateString));
+        //   tempArray.push(data[i].details);
+
+        //   //Fetch user information
+        //   tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+
+        //   this.errorLogsArray.push(tempArray);
+        // }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  DOWNLOAD_REVITALIZATION_REPORT
+  /**
+   *  This function will be used to download the revitalization report that is displayed on screen as a PDF document.
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  downloadRevitalizationReport() {
+    var report = this.revitalizationReportPDF.nativeElement;
+    html2canvas(report).then(canvas => {
+      var imageWidth = 208;
+      var pageHeight = 295;
+      var imageHeight = canvas.height * imageWidth / canvas.width;
+      var heightLeft = imageHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
+      pdf.save('Revitalization_Report.pdf');
     });
   }
 

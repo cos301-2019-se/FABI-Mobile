@@ -125,9 +125,10 @@
           </ng-template>
 
           <br/>
-          <div>
+          <div class="tab-content" id="reports" ng-app="portApp" ngController="previewCtrl">
               <button class="btn btn-default" (click)="generateRequestReport()">Generate Request Report</button>
               <button class="btn btn-default" (click)="generateDepositReport()">Generate Deposit Report</button>
+              <button class="btn btn-default" (click)="generateRevitalizationReport()">Generate Revitalization Report</button>
               <button class="btn btn-default" (click)="generateSampleSubmissionReport()">Generate Sample Submission Report</button>
               <button class="btn btn-default" (click)="generateErrorReport()">Generate Error Report</button>
 
@@ -206,7 +207,32 @@
                 <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
                 <br/><br/>
               </div>
-              <button *ngIf='depositReport' (click)="downloaddepositReport()">Download Request Report</button>  
+              <button *ngIf='depositReport' (click)="downloadDepositReport()">Download Deposit Report</button> 
+              
+              <div id="revitalizationReport" *ngIf='revitalizationReport' #revitalizationReportPDF>
+                <h2 id="revitalization_report">FABI System Revitalization Report</h2>
+                <p>Date: {{date}}</p>
+                <br/><br/><br/>
+                <table *ngIf="revitalizationLogs" id="previewTableRevitalizationLogs">
+                  <thead>
+                    <tr>
+                      <th>Error status code</th>
+                      <th>Date</th>
+                      <th>Details of error</th>
+                      <th>User performing action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="tableRow" *ngFor="let row of revitalizationLogsArray; let i = index">
+                      <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    </tr>
+                  </tbody>
+                </table>
+                <br /><br />
+                <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
+                <br/><br/>
+              </div>
+              <button *ngIf='revitalizationReport' (click)="downloadRevitalizationReport()">Download Revitalization Report</button>
           </div>
         </mat-tab>
 
