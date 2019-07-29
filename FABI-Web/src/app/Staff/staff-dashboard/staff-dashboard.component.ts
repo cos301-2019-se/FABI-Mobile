@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Monday, July 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -220,7 +220,7 @@ export class StaffDashboardComponent implements OnInit {
   //                                                  LOAD_USER_DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
-   *  @memberof ReportingComponent
+   *  @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
@@ -269,7 +269,7 @@ export class StaffDashboardComponent implements OnInit {
    * This function is called when the page loads
    * 
    * @description 1. Call loadAdmins() | 2. Call loadNotifications() 
-   * @memberof AdminDashboardComponent
+   * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
