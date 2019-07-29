@@ -28,6 +28,7 @@ import { BehaviorSubject } from 'rxjs';
 const getAllLogsURL = 'https://logging-dot-api-fabi.appspot.com/getLogs';
 const getRequestLogsURL = '';
 const getDepositLogsURL = '';
+const getRevitalizationLogsURL = '';
 
 //Object for defining the JSON object containing the user logs
 export interface UserLogs{
@@ -310,5 +311,31 @@ export class NotificationLoggingService {
     };
 
         return this.http.request('POST', getDepositLogsURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET_ALL_REVITALIZATION_LOGS
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type 'REVITALIZATION'
+   *
+   * @returns API response @type any
+   * @memberof NotificationLoggingService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllRevitalizationLogs() {
+    const options = {
+        method: 'POST',
+        url: getRevitalizationLogsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        json: true
+    };
+
+        return this.http.request('POST', getRevitalizationLogsURL, options);
   }
 }
