@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, July 19th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -28,8 +28,9 @@ import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { HttpService } from '../../_services/http.service';
+import { AuthenticationService } from '../../_services/authentication.service';
 import { ConfirmComponent } from "../../confirm/confirm.component";
+import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 
 
 @Component({
@@ -78,7 +79,14 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private adminService: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(
+    private authService: AuthenticationService, 
+    private userManagementService: UserManagementAPIService,
+    private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router
+    ) {
     this.addMemberForm = this.formBuilder.group({
       member_name: ['', Validators.required],
       member_surname: ['', Validators.required],
@@ -129,7 +137,7 @@ export class MemberHandlerComponent implements OnInit {
     this.viewMembers();
 
     //--- Get the Organization's Details
-    this.service.getOrganizationDetails().subscribe((response: any) => {
+    this.userManagementService.getOrganizationDetails().subscribe((response: any) => {
       if (response.success == true && response.status == 200) {
         // ***********************************
         // POLPULATE FIELDS BASED ALREADY KNOWN INFORMATION
@@ -177,12 +185,12 @@ export class MemberHandlerComponent implements OnInit {
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
-    const user = this.service.currentSessionValue;
+    const user = this.authService.getCurrentSessionValue;
     const org_details: Interface.Organisation = { orgName: user.user.organisation };
     const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
 
-    this.service.addOrgMember(org_details, member_details).subscribe((response: any) => {
+    this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
 
       console.log("////// RESPONSE: " + response);
 
@@ -248,6 +256,11 @@ export class MemberHandlerComponent implements OnInit {
     })
   }
 
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                           REMOVE MEMBER   
   /**
@@ -258,7 +271,7 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMember() {
 
-    this.service.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
+    this.userManagementService.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Member Removed", "Dismiss", {
@@ -303,7 +316,7 @@ export class MemberHandlerComponent implements OnInit {
     console.log("--------- HELLO ----------");
 
     
-    this.service.getAllOrganizationMembers().subscribe((response: any) => {
+    this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.orgMembers = response.data.members;
         this.dataSource = new MatTableDataSource(this.orgMembers);

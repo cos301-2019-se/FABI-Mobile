@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,7 +22,7 @@ import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { HttpService } from '../../_services/http.service';
+import { AuthenticationService } from '../../_services/authentication.service';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
@@ -71,8 +71,14 @@ export class OrganizationProfileComponent implements OnInit {
    * @memberof OrganizationProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router,
-    private formBuilder: FormBuilder, private userManagementService: UserManagementAPIService) { 
+  constructor(
+    private authService: AuthenticationService, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router,
+    private formBuilder: FormBuilder, 
+    private userManagementService: UserManagementAPIService
+    ) { 
     this.adminProfileForm = this.formBuilder.group({
       organization_name: '',
       admin_name: '',
@@ -111,6 +117,11 @@ export class OrganizationProfileComponent implements OnInit {
         //Error handling
       }
     });
+  }
+
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

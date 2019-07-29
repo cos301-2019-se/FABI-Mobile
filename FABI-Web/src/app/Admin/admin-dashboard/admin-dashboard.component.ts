@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -94,9 +95,15 @@ export class AdminDashboardComponent implements OnInit {
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(public sanitizer: DomSanitizer, private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, private notificationLoggingService: NotificationLoggingService, private resolver: ComponentFactoryResolver) { 
-    }
+  constructor(
+    public sanitizer: DomSanitizer, 
+    private userManagementService: UserManagementAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private notificationLoggingService: NotificationLoggingService, 
+    private resolver: ComponentFactoryResolver, 
+    private authService: AuthenticationService, 
+    private router: Router
+    ) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -514,5 +521,15 @@ export class AdminDashboardComponent implements OnInit {
     this.getNumberOfFABIMembers();
     this.getNumberOfFABISamples();
     this.loadNotifications();
+
+    let user = this.authService.getCurrentUserValue;
+    console.log("/////// USER: " + JSON.stringify(user));
+    
+  }
+
+  logout() {
+
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 }

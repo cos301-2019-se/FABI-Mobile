@@ -15,70 +15,84 @@
 
         <mat-accordion>
 
-          <!--Personal Details-->
+           <!--Sample Details-->
+           <mat-expansion-panel class="sample-info">
+            <mat-expansion-panel-header>
 
-          <!-- <mat-expansion-panel>
-            <mat-form-field>
-              <input matInput id="sample_form_tree_species" formControlName="sample_form_tree_species" type="text"
-                required>
-              <mat-placeholder class="placeholder">Tree Species Name</mat-placeholder>
+              <mat-panel-title>
+                Sample Details
+              </mat-panel-title>
+              <mat-panel-description>
+
+                Enter general details about the sample
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-form-field class="form-inputs">
+              <input matInput id="sample_plant_species" formControlName="sample_plant_species" type="text" required>
+              <mat-placeholder class="placeholder">Plant species or common name</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
-              <input matInput id="sample_form_number_samples" formControlName="sample_form_number_samples" type="text"
-                required>
-              <mat-placeholder class="placeholder">Number of Samples</mat-placeholder>
+            <mat-form-field class="form-inputs">
+              <input matInput id="sample_num_samples" formControlName="sample_num_samples" type="text" required>
+              <mat-placeholder class="placeholder">Number of samples</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
-              <input matInput id="sample_form_location1" formControlName="sample_form_location1" type="text" required>
+            <label style="font-weight: bold;">Plantation Details:</label><br />
+             <mat-form-field class="form-inputs">
+              <input matInput id="sample_street" formControlName="sample_street" type="text" required>
+              <mat-placeholder class="placeholder">Estate/Street Address</mat-placeholder>
+              <br />
+            </mat-form-field>
+            <br />
+            <mat-form-field class="form-inputs">
+              <input matInput id="sample_area" formControlName="sample_area" type="text" required>
               <mat-placeholder class="placeholder">Area/City/Suburb</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
-              <input matInput id="sample_form_location2" formControlName="sample_form_location2" type="text" required>
-              <mat-placeholder class="placeholder">Estate/street address</mat-placeholder>
+            <mat-form-field class="form-inputs">
+              <input matInput id="sample_farm" formControlName="sample_farm" type="text" required>
+              <mat-placeholder class="placeholder">Farm/Compartment/Orchard Name</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
-              <input matInput id="sample_form_compartment" formControlName="sample_form_compartment" type="text"
-                required>
-              <mat-placeholder class="placeholder">Compartment Number</mat-placeholder>
+            <mat-form-field class="form-inputs">
+              <input matInput id="sample_province" formControlName="sample_province" type="text" required>
+              <mat-placeholder class="placeholder">Province</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
-              <input matInput id="sample_form_gps" formControlName="sample_form_gps" type="text" required>
+            <mat-form-field class="form-inputs">
+              <input matInput id="sample_gps" formControlName="sample_gps" type="text" required>
               <mat-placeholder class="placeholder">GPS Coordinates</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
-              <input matInput [matDatepicker]="sample_form_date_collection" id="sample_form_date_collection"
-                formControlName="sample_form_date_collection" type="datetime" placeholder="Date of Sample Collection"
-                required>
-              <mat-datepicker-toggle matSuffix [for]="sample_form_date_collection"></mat-datepicker-toggle>
-              <mat-datepicker #sample_form_date_collection></mat-datepicker>
+            <mat-form-field class="form-inputs">
+              <input matInput [matDatepicker]="date_sample_collected" id="date_sample_collected"
+                formControlName="date_sample_collected" type="datetime"
+                placeholder="Date of sample collection" required>
+              <mat-datepicker-toggle matSuffix [for]="date_sample_collected"></mat-datepicker-toggle>
+              <mat-datepicker #data_sample_collected></mat-datepicker>
               <br />
             </mat-form-field>
             <br />
-            <mat-form-field>
-              <input matInput [matDatepicker]="sample_form_date_sent" id="sample_form_date_sent"
-                formControlName="sample_form_date_sent" type="datetime" placeholder="Date Sent" required>
-              <mat-datepicker-toggle matSuffix [for]="sample_form_date_sent"></mat-datepicker-toggle>
-              <mat-datepicker #sample_form_date_sent></mat-datepicker>
+            <mat-form-field class="form-inputs">
+              <input matInput [matDatepicker]="date_sample_sent" id="date_sample_sent"
+                formControlName="date_sample_sent" type="datetime"
+                placeholder="Date sample sent" required>
+              <mat-datepicker-toggle matSuffix [for]="date_sample_sent"></mat-datepicker-toggle>
+              <mat-datepicker #data_sample_collected></mat-datepicker>
               <br />
             </mat-form-field>
-            <br />
+          </mat-expansion-panel> 
 
-          </mat-expansion-panel> -->
 
-          <!--Sample Info-->
-          <mat-expansion-panel class="sample-info">
+          <!--Type of Sample-->
+          <mat-expansion-panel class="type-info">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Type of Sample
@@ -98,13 +112,20 @@
             <br />
             <mat-checkbox id="sample_type_seedlings" formControlName="sample_type_seedlings">Seedlings/Cuttings
             </mat-checkbox><br />
-            <mat-checkbox id="sample_type_media" formControlName="sample_type_media">Media Plates</mat-checkbox>
-            <br />
+            <mat-checkbox id="sample_type_media" formControlName="sample_type_media">Media Plates</mat-checkbox><br />
             <mat-checkbox id="sample_type_water" formControlName="sample_type_water">Water</mat-checkbox><br />
+            <mat-checkbox id="sample_type_insect" formControlName="sample_type_insect">Insect Specimens</mat-checkbox><br />
+            <mat-checkbox id="sample_type_nuts" formControlName="sample_type_nuts">Nuts</mat-checkbox><br />
+            <mat-form-field>
+              <input matInput id="sample_type_other" formControlName="sample_type_other" type="text">
+              <mat-placeholder class="placeholder">Other</mat-placeholder>
+              <br />
+            </mat-form-field>
 
           </mat-expansion-panel>
 
-          <!--Symptom Info-->
+
+          <!--Symptoms-->
           <mat-expansion-panel class="symptom-info">
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -127,7 +148,7 @@
               damage/holes/tunnels/frass(sawdust)</mat-checkbox><br />
 
             <mat-form-field>
-              <input matInput id="symptom_other" formControlName="symptom_other" type="text" required>
+              <input matInput id="symptom_other" formControlName="symptom_other" type="text">
               <mat-placeholder class="placeholder">Other</mat-placeholder>
               <br />
             </mat-form-field>
@@ -150,8 +171,33 @@
               Plant)</mat-checkbox><br />
             <mat-checkbox id="distributed_scattered" formControlName="distributed_scattered">Scattered Plants
             </mat-checkbox><br />
-            <mat-checkbox id="distributed_general" formControlName="distributed_general">General</mat-checkbox>
+            <mat-checkbox id="distributed_general" formControlName="distributed_general">General (Widely )</mat-checkbox>
             <br />
+            <mat-checkbox id="distributed_clumps" formControlName="distributed_clumps">Clumps</mat-checkbox>
+            <br />
+            <mat-checkbox id="distributed_na" formControlName="distributed_na">Not Applicable</mat-checkbox>
+            <br />
+            <mat-form-field>
+              <input matInput id="distibuted_other" formControlName="distributed_other" type="text" required>
+              <mat-placeholder class="placeholder">Other</mat-placeholder>
+              <br />
+            </mat-form-field>
+            <label style="font-weight: bold;">Estimate of the percentage of plants affected:</label><br />
+            <label for="isolated">
+              <input type="radio" id="isolated" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="isolated"> Isolated Cases
+            </label> <br />
+            <label for="less_ten">
+                <input type="radio" id="less_ten" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="less_ten"> < 10%
+            </label> <br />
+            <label for="ten_to_twentyfive">
+                <input type="radio" id="ten_to_twentyfive" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="ten_to_twentyfive"> 10% - 25%
+            </label> <br />
+            <label for="twentyfive_to_fifty">
+                <input type="radio" id="twentyfive_to_fifty" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="twentyfive_to_fifty"> 25% - 50%
+            </label> <br />
+            <label for="greater_fifty">
+                <input type="radio" id="greater_fifty" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="greater_fifty"> > 50%
+            </label> <br />
 
           </mat-expansion-panel>
 
@@ -163,7 +209,6 @@
                 Conditions
               </mat-panel-title>
               <mat-panel-description>
-
                 Enter details about the weather and planting conditions
               </mat-panel-description>
             </mat-expansion-panel-header>
@@ -218,11 +263,10 @@
               <input matInput id="conditions_additional" formControlName="conditions_additional" type="text" required>
               <mat-placeholder class="placeholder">Additional information (Please include any information about
                 planting
-                conditions, fungicide use, herbicide user, changes to fertigation, routine disruptions ...)t
+                conditions, fungicide use, herbicide user, changes to fertigation, routine disruptions ...)
               </mat-placeholder>
               <br />
             </mat-form-field>
-            <br />
           </mat-expansion-panel>
 
         </mat-accordion>
