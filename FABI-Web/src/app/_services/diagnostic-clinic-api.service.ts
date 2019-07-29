@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Monday, July 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -23,10 +23,12 @@ import { POSTOrganization } from './user-management-api.service';
 import { config } from "../../environments/environment.prod";
 
 //Globals variables used to hold the API call urls
-
-const submitCMWDepositFormURL = `${config.diagnosticClinicURL}/`;
-const submitCMWRequestFormURL = `${config.diagnosticClinicURL}/`;
-const submitCMWRevitalizationFormURL = `${config.diagnosticClinicURL}/`;
+const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
+const getAllSamplesForMemberURL = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
+const getOrganizationSamplesURL = `${config.diagnosticClinicURL}/retrieveAllOrgSamples`;
+const submitCMWDepositFormURL = `${config.diagnosticClinicURL}/submitCMWDepositForm`;
+const submitCMWRequestFormURL = `${config.diagnosticClinicURL}/submitCMWRequestForm`;
+const submitCMWRevitalizationFormURL = `${config.diagnosticClinicURL}/submitCMWRevitalizationForm`;
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
@@ -47,7 +49,8 @@ export interface Species{
 
 //Object for defining the CMW deposit form values
 export interface CMWDeposit{
-    cwmCultureNumber: string;
+    userID: string;
+    cmwCultureNumber: string;
     genus: string;
     epitheton: string;
     personalCollectionNumber: string;
@@ -60,11 +63,12 @@ export interface CMWDeposit{
     vector: string;
     substrate: string;
     continent: string;
+    country: string;
     region: string;
     locality: string;
     gps: string;
     collectedBy: string;
-    dateCollected: Date;
+    dateCollected: string;
     isolatedBy: string;
     identifiedBy: string;
     donatedBy: string;
@@ -74,13 +78,29 @@ export interface CMWDeposit{
 
 //Object for defining the CMW request form values
 export interface CMWRequest{
+    userID: string;
     requestor: string;
     taxonName: string;
     cultureNumber: string;
-    dateRequested: Date;
+    dateRequested: string;
     referenceNumber: string;
     notes: string;
-    dateSubmitted: Date;
+    dateSubmitted: string;
+}
+
+//Object for defining the CMW revitalization form values
+export interface CMWRevitalization{
+    userID: string;
+    requestor: string;
+    currentName: string;
+    nameBionumerics: string;
+    cultureNumber: string;
+    cultureCondition: string;
+    sequenceDateSubmitted: string;
+    referenceNumber: string;
+    dateRequested: string;
+    dateReturned: string;
+    dateSubmitted: string;
 }
 
 @Injectable({
@@ -257,7 +277,7 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCMWRevitalizationForm(data: CMWRequest){
+  submitCMWRevitalizationForm(data: CMWRevitalization){
     const options = {
         method: 'POST',
         url: submitCMWRevitalizationFormURL,

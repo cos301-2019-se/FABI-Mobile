@@ -144,7 +144,7 @@ export class OrganizationProfileComponent implements OnInit {
   //                                                        SAVE_CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof AdminProfileComponent
+   *  @memberof OrganizationProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
