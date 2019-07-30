@@ -125,6 +125,14 @@ export class ReportingComponent implements OnInit {
   @ViewChild("requestDateFrom") requestDateFrom : ElementRef;
   /** Holds the table element (requestDateTo) from the HTML page - @type {ElementRef} */
   @ViewChild("requestDateTo") requestDateTo : ElementRef;
+  /** Holds the table element (depositDateFrom) from the HTML page - @type {ElementRef} */
+  @ViewChild("depositDateFrom") depositDateFrom : ElementRef;
+  /** Holds the table element (depositDateTo) from the HTML page - @type {ElementRef} */
+  @ViewChild("depositDateTo") depositDateTo : ElementRef;
+  /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
+  @ViewChild("revitalizationDateFrom") revitalizationDateFrom : ElementRef;
+  /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
+  @ViewChild("revitalizationDateTo") revitalizationDateTo : ElementRef;
   
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +151,8 @@ export class ReportingComponent implements OnInit {
     private userManagementService: UserManagementAPIService,
     private renderer: Renderer2, 
     private authService: AuthenticationService, 
-    private router: Router
+    private router: Router,
+    private cultureCollectionService: CultureCollectionAPIService
     ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1007,7 +1016,18 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   setDateFrom(){
-    var temp = this.requestDateFrom.nativeElement.value;
+    var temp;
+
+    if(this.requestReport == true){
+      temp = this.requestDateFrom.nativeElement.value;
+    }
+    else if(this.depositReport == true){
+      temp = this.depositDateFrom.nativeElement.value;
+    }
+    else if(this.revitalizationReport == true){
+      temp = this.revitalizationDateFrom.nativeElement.value;
+    }
+    
     var day = temp[8] + temp[9];
     var month = temp[5] + temp[6];
     var year = temp[0] + temp[1] + temp[2] + temp[3];
@@ -1029,7 +1049,18 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   setDateTo(){
-    var temp = this.requestDateTo.nativeElement.value;
+    var temp;
+
+    if(this.requestReport == true){
+      temp = this.requestDateTo.nativeElement.value;
+    }
+    else if(this.depositReport == true){
+      temp = this.depositDateTo.nativeElement.value;
+    }
+    else if(this.revitalizationReport == true){
+      temp = this.revitalizationDateTo.nativeElement.value;
+    }
+
     var day = temp[8] + temp[9];
     var month = temp[5] + temp[6];
     var year = temp[0] + temp[1] + temp[2] + temp[3];
