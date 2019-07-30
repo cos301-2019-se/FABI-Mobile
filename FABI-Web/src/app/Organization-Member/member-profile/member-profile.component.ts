@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 26th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -23,7 +23,7 @@ import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { HttpService } from '../../_services/http.service';
+import { AuthenticationService } from '../../_services/authentication.service';
 import { ConfirmComponent } from "../../confirm/confirm.component";
 import { UpdateComponent } from "../../update/update.component";
 import { template } from '@angular/core/src/render3';
@@ -75,8 +75,14 @@ export class MemberProfileComponent implements OnInit {
    * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router,
-    private formBuilder: FormBuilder, private userManagementService: UserManagementAPIService){
+  constructor(
+    private authService: AuthenticationService, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router,
+    private formBuilder: FormBuilder, 
+    private userManagementService: UserManagementAPIService
+    ){
     this.memberProfileForm = this.formBuilder.group({
       organization_name: '',
       member_name: '',
@@ -101,6 +107,11 @@ export class MemberProfileComponent implements OnInit {
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
  }
+
+ logout() {
+  this.authService.logoutUser();
+  this.router.navigate(['/login']);
+}
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_MEMBER_PROFILE_DETAILS

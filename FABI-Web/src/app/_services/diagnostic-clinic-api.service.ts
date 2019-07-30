@@ -15,20 +15,20 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import { registerContentQuery } from '@angular/core/src/render3';
-import { StaticInjector } from '@angular/core/src/di/injector';
-import { BehaviorSubject } from 'rxjs';
+import { AuthenticationService } from "./authentication.service";
+import * as Interface from "../_interfaces/interfaces";
 
 import { POSTOrganization } from './user-management-api.service';
 
+import { config } from "../../environments/environment.prod";
+
 //Globals variables used to hold the API call urls
-const getAllSamplesURL = '***REMOVED***/retrieveAllSamples';
-const getAllSamplesForMemberURL = '***REMOVED***/retrieveSamplesForMember';
-const getOrganizationSamplesURL = '***REMOVED***/retrieveAllOrgSamples';
-const submitCMWDepositFormURL = '***REMOVED***/submitCMWDepositForm';
-const submitCMWRequestFormURL = '***REMOVED***/submitCMWRequestForm';
-const submitCMWRevitalizationFormURL = '***REMOVED***/submitCMWRevitalizationForm';
+const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
+const getAllSamplesForMemberURL = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
+const getOrganizationSamplesURL = `${config.diagnosticClinicURL}/retrieveAllOrgSamples`;
+const submitCMWDepositFormURL = `${config.diagnosticClinicURL}/submitCMWDepositForm`;
+const submitCMWRequestFormURL = `${config.diagnosticClinicURL}/submitCMWRequestForm`;
+const submitCMWRevitalizationFormURL = `${config.diagnosticClinicURL}/submitCMWRevitalizationForm`;
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
@@ -118,7 +118,7 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   constructor(private http: HttpClient) { }
+   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,77 +132,84 @@ export class DiagnosticClinicAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    getAllSamples(){
-        const options = {
-            method: 'POST',
-            url: getAllSamplesURL,
-            headers: {
-            'cache-control': 'no-cache',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-            },
-            json: true
-        };
 
-        return this.http.request('POST', getAllSamplesURL, options);
+    const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
+    const method = "POST";
+    
+    const options = {
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        json: true
+    };
+
+    return this.http.request('POST', getAllSamplesURL, options);
    }
 
-
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                   GET_ALL_ORGANIZATION_SAMPLES 
+     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    RETREIVE ALL SAMPLES
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the samples belonging to the specified organization
+   * Method that sends a request to the API to retreive all Samples
    *
-   * @returns API response @type any
-   * @memberof DiagnosticClinicAPIService
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof HttpService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllOrganizationSamples(organization:string){
-    // var data: POSTOrganization = { orgName: organization };
-    var data: POSTOrganization = { orgName: 'testOrg3'};
+  retrieveAllOrganizationSamples() {
+    let retrieveAllOrgSamples = `${config.diagnosticClinicURL}/retrieveAllOrgSamples`;
+    let method = 'POST';
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation
+    }
 
     const options = {
-        method: 'POST',
-        url: getOrganizationSamplesURL,
-        headers: {
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
         'Accept': 'application/json'
-        },
-        body: data,
-        json: true
+      },
+      body: postData,
+      json: true
     };
 
-    return this.http.request('POST', getOrganizationSamplesURL, options);
-}
-
+    return this.http.request<any>(method, retrieveAllOrgSamples, options);
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ALL_SAMPLES_FOR_MEMBER 
+  //                                                    RETREIVE ALL SAMPLES FOR MEMBER
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the samples that correspond to a specific organization member
+   * Method that sends a request to the API to retreive all Samples for a member
    *
-   * @returns API response @type any
-   * @memberof DiagnosticClinicAPIService
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof HttpService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllSamplesForMember(id: string){
-    var data: POSTMember = {userID: id};
+  retrieveMemberSamples() {
+    let retrieveAllMemberSamples = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
+    let method = 'POST';
+
+    const postData = {
+      "userID": this.authService.getCurrentSessionValue.user.ID
+    }
 
     const options = {
-        method: 'POST',
-        url: getAllSamplesForMemberURL,
-        headers: {
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
         'Accept': 'application/json'
-        },
-        body: data,
-        json: true
+      },
+      body: postData,
+      json: true
     };
 
-    return this.http.request('POST', getAllSamplesForMemberURL, options);
+    return this.http.request<any>(method, retrieveAllMemberSamples, options);
   }
 
 
@@ -285,4 +292,40 @@ export class DiagnosticClinicAPIService {
 
     return this.http.request('POST', submitCMWRevitalizationFormURL, options);
   }
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT SAMPLE FORM
+  /**
+   * Method that send a request to the API to submit a specifc Sample Form
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @param {Interface.ClientFormData} formDetails
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData) {
+    let submitSampleURL = '***REMOVED***/submitSample';
+    let method = 'POST';
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
+      "data": formDetails
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, submitSampleURL, options);
+  }
+  
 }

@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 26th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 
 import { SampleDivComponent } from '../../Dynamic-Components/sample-div/sample-div.component';
 import { DiagnosticClinicAPIService, Sample, Species } from '../../_services/diagnostic-clinic-api.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'app-member-dashboard',
@@ -62,7 +63,12 @@ export class MemberDashboardComponent implements OnInit {
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private resolver: ComponentFactoryResolver, private diagnosticClinicService: DiagnosticClinicAPIService) { }
+  constructor(
+    private authService: AuthenticationService, 
+    private router: Router, 
+    private resolver: ComponentFactoryResolver, 
+    private diagnosticClinicService: DiagnosticClinicAPIService
+    ) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +85,7 @@ export class MemberDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfMemberSamples(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.diagnosticClinicService.getAllSamplesForMember(this.memberID).subscribe((response: any) => {
+    this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
       if(response.success == true){
         //Populating the arrays with the returned data
         var tempSamples = response.data.samples;
@@ -118,6 +124,11 @@ export class MemberDashboardComponent implements OnInit {
         sampleDivRef.instance.Details = '';
       }
     });
+  }
+
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
  

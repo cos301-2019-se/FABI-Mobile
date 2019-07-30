@@ -18,7 +18,9 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService, CMWRequest } from '../../_services/diagnostic-clinic-api.service';
+import { DiagnosticClinicAPIService, CMWDeposit } from '../../_services/diagnostic-clinic-api.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-submit-cmw-request',
@@ -65,10 +67,16 @@ export class SubmitCmwRequestComponent implements OnInit {
    * @memberof SubmitCmwRequestComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private formBuilder: FormBuilder, private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService) { 
-    this.cmwRequestForm = this.formBuilder.group({
-      requestor: '',
+  constructor(
+    private formBuilder: FormBuilder, 
+    private userManagementService: UserManagementAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private authService: AuthenticationService, 
+    private router: Router
+    ) { 
+      this.cmwRequestForm = this.formBuilder.group({
+      
+        requestor: '',
       taxon_name: '',
       culture_number: '',
       date_requested: null,
@@ -77,6 +85,11 @@ export class SubmitCmwRequestComponent implements OnInit {
     });
   }
 
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
+  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                              SUBMIT_CMW_REQUEST_FORM
   /**
