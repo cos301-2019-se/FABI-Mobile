@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 26th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,7 +15,8 @@
 
 
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
-import { HttpService } from '../../_services/http.service';
+import { AuthenticationService } from '../../_services/authentication.service';
+import { DatabaseManagementService } from "../../_services/database-management.service";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatTableDataSource } from '@angular/material';
@@ -113,8 +114,15 @@ export class DatabaseHandlerComponent implements OnInit {
    * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router, 
-    private resolver: ComponentFactoryResolver, private userManagementService: UserManagementAPIService, private notificationLoggingService: NotificationLoggingService) { }
+  constructor(private authService: AuthenticationService, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router, 
+    private resolver: ComponentFactoryResolver, 
+    private userManagementService: UserManagementAPIService, 
+    private notificationLoggingService: NotificationLoggingService,
+    private dbService: DatabaseManagementService
+    ) { }
 
   
   
@@ -387,11 +395,11 @@ export class DatabaseHandlerComponent implements OnInit {
     this.loadNotifications();
 
     //-------- Load Databases for Drop Down --------
-    // const user = this.service.currentUserValue;
-    const user = this.service.currentSessionValue;
+    const user2 = this.authService.getCurrentUserValue;
+    const user = this.authService.getCurrentSessionValue;
 
 
-    console.log("--- USER: " + JSON.stringify(user))
+    console.log("///////// USER: " + JSON.stringify(user2));
     // this.databases = user.databases;
     this.databases = user.user.databases;
 
@@ -465,7 +473,7 @@ export class DatabaseHandlerComponent implements OnInit {
     let data = "";
     let dbname = this.selectedDatabase;
 
-    this.service.reversePorting(dbname).subscribe((response:any) => {
+    this.dbService.reversePorting(dbname).subscribe((response:any) => {
         this.loading = false;
         if(response.success == true && response.code == 200) {
           data = response.data.docs;
@@ -502,7 +510,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
 
   public viewDatabase() {
-    this.service.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
+    this.dbService.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         
         console.log("---- RESPONSE: " + JSON.stringify(response));
@@ -570,7 +578,7 @@ export class DatabaseHandlerComponent implements OnInit {
       });
     }
     else{
-      this.service.porting(this.dbname, this.jsonData).subscribe((response:any) => {
+      this.dbService.porting(this.dbname, this.jsonData).subscribe((response:any) => {
         this.loading = false;
         if(response.success == true && response.code == 200) {
           //POPUP MESSAGE
@@ -629,5 +637,13 @@ export class DatabaseHandlerComponent implements OnInit {
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
  }
+
+
+ logout() {
+
+  this.authService.logoutUser();
+  this.router.navigate(['/login']);
+
+}
 
 }

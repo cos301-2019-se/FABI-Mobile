@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 
-import {ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
@@ -55,6 +55,8 @@ import { SampleDivComponent } from './Dynamic-Components/sample-div/sample-div.c
 import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
 import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.component';
 import { ReportingComponent } from './Admin/reporting/reporting.component';
+
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   declarations: [
@@ -115,9 +117,12 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     ToastrModule.forRoot(),
     ErrorsModule,
     LayoutModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    AgmCoreModule.forRoot({
+      apiKey: ''
+    })
   ],
   providers: [NotificationService],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

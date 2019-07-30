@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 26th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -18,6 +18,8 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolve
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-staff-dashboard',
@@ -61,8 +63,18 @@ export class StaffDashboardComponent implements OnInit {
    * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private userManagementService: UserManagementAPIService, private resolver: ComponentFactoryResolver, private notificationLoggingService: NotificationLoggingService) { }
+  constructor(
+    private authService: AuthenticationService, 
+    private router: Router, 
+    private userManagementService: UserManagementAPIService, 
+    private resolver: ComponentFactoryResolver, 
+    private notificationLoggingService: NotificationLoggingService
+    ) { }
 
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        GET_DATE

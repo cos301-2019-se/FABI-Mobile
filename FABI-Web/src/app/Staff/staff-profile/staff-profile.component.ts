@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 26th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -18,6 +18,8 @@ import { UserManagementAPIService } from 'src/app/_services/user-management-api.
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-staff-profile',
@@ -78,10 +80,17 @@ export class StaffProfileComponent implements OnInit {
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private userManagementService: UserManagementAPIService, private formBuilder: FormBuilder, 
-    private notificationLoggingService: NotificationLoggingService, private snackBar: MatSnackBar) { 
-    this.staffProfileForm = this.formBuilder.group({
-      organization_name: '',
+  constructor(
+    private userManagementService: UserManagementAPIService, 
+    private formBuilder: FormBuilder, 
+    private notificationLoggingService: NotificationLoggingService, 
+    private snackBar: MatSnackBar, 
+    private authService: AuthenticationService, 
+    private router: Router
+    ) { 
+      this.staffProfileForm = this.formBuilder.group({
+      
+        organization_name: '',
       staff_name: '',
       staff_surname: '',
       staff_email: '',
@@ -89,6 +98,11 @@ export class StaffProfileComponent implements OnInit {
       staff_password: '',
       staff_confirm: ''
     });
+  }
+
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -18,7 +18,9 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService, CMWRevitalization } from '../../_services/diagnostic-clinic-api.service';
+import { DiagnosticClinicAPIService, CMWDeposit } from '../../_services/diagnostic-clinic-api.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-submit-cmw-revitalization',
@@ -70,8 +72,13 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
    * @memberof SubmitCmwRevitalizationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private formBuilder: FormBuilder, private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService) { 
+  constructor(
+    private formBuilder: FormBuilder, 
+    private userManagementService: UserManagementAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private authService: AuthenticationService, 
+    private router: Router
+    ) { 
     this.cmwRevitalizationForm = this.formBuilder.group({
       requestor: '',
       current_name: '',
@@ -83,6 +90,11 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
       date_requested: null,
       date_returned: null
     });
+  }
+
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

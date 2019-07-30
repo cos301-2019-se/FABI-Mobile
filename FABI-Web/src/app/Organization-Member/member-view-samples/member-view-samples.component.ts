@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, July 19th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,8 +17,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 //Include Material Components
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { HttpService } from 'src/app/_services/http.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
+import { Router } from '@angular/router';
+import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
 
 @Component({
   selector: 'app-member-view-samples',
@@ -48,7 +50,12 @@ export class MemberViewSamplesComponent implements OnInit {
    * @memberof MemberViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private dialog: MatDialog) { }
+  constructor(
+    private authService: AuthenticationService, 
+    private clinicService: DiagnosticClinicAPIService,
+    private dialog: MatDialog, 
+    private router: Router
+    ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                           TOGGLE_NOTIFICATIONS_TAB
@@ -72,8 +79,13 @@ export class MemberViewSamplesComponent implements OnInit {
     this.viewSamples();
   }
 
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
+
   viewSamples() {
-    this.service.retrieveMemberSamples().subscribe((response: any) => {
+    this.clinicService.retrieveMemberSamples().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
 
         console.log("---- RESPONSE: " + JSON.stringify(response));
