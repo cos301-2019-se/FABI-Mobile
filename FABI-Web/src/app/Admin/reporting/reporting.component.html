@@ -159,6 +159,7 @@
               </div>
               <button *ngIf='errorReport' (click)="downloadErrorReport()">Download Error Report</button>
 
+              <input matInput type="date" placeholder="Date From" #requestDateFrom *ngIf='requestReport' (change)="setDateFrom()"/><input matInput type="date" placeholder="Date To" #requestDateTo *ngIf='requestReport' (change)="setDateTo()"/>
               <div id="requestReport" *ngIf='requestReport' #requestReportPDF>
                 <h2 id="request_report">FABI System Request Report</h2>
                 <p>Date: {{date}}</p>
@@ -198,6 +199,7 @@
                       <th>CMW Culture Number</th>
                       <th>Culture Name</th>
                       <th>Collected By</th>
+                      <th>Date Collected</th>
                       <th>Isolated By</th>
                       <th>Identified By</th>
                       <th>Date Submitted</th>
@@ -213,7 +215,7 @@
                 <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
                 <br/><br/>
               </div>
-              <button *ngIf='depositReport' (click)="downloadD  epositReport()">Download Deposit Report</button> 
+              <button *ngIf='depositReport' (click)="downloadDepositReport()">Download Deposit Report</button> 
               
               <div id="revitalizationReport" *ngIf='revitalizationReport' #revitalizationReportPDF>
                 <h2 id="revitalization_report">FABI System Revitalization Report</h2>
