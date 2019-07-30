@@ -188,6 +188,7 @@
               </div>
               <button *ngIf='requestReport' (click)="downloadRequestReport()">Download Request Report</button>
 
+              <input matInput type="date" placeholder="Date From" #depositDateFrom *ngIf='depositReport' (change)="setDateFrom()"/><input matInput type="date" placeholder="Date To" #depositDateTo *ngIf='depositReport' (change)="setDateTo()"/>
               <div id="depositReport" *ngIf='depositReport' #depositReportPDF>
                 <h2 id="deposit_report">FABI System Deposit Report</h2>
                 <p>Date: {{date}}</p>
@@ -217,6 +218,7 @@
               </div>
               <button *ngIf='depositReport' (click)="downloadDepositReport()">Download Deposit Report</button> 
               
+              <input matInput type="date" placeholder="Date From" #revitalizationDateFrom *ngIf='revitalizationReport' (change)="setDateFrom()"/><input matInput type="date" placeholder="Date To" #revitalizationDateTo *ngIf='revitalizationReport' (change)="setDateTo()"/>
               <div id="revitalizationReport" *ngIf='revitalizationReport' #revitalizationReportPDF>
                 <h2 id="revitalization_report">FABI System Revitalization Report</h2>
                 <p>Date: {{date}}</p>
