@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, July 20th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -18,6 +18,8 @@ import { UserManagementAPIService } from 'src/app/_services/user-management-api.
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-profile',
@@ -88,8 +90,14 @@ export class AdminProfileComponent implements OnInit {
    * @memberof AdminProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private userManagementService: UserManagementAPIService, private formBuilder: FormBuilder, 
-    private notificationLoggingService: NotificationLoggingService, private snackBar: MatSnackBar) { 
+  constructor(
+    private userManagementService: UserManagementAPIService, 
+    private formBuilder: FormBuilder, 
+    private notificationLoggingService: NotificationLoggingService, 
+    private snackBar: MatSnackBar, 
+    private authService: AuthenticationService, 
+    private router: Router
+    ) { 
     this.adminProfileForm = this.formBuilder.group({
       organization_name: '',
       admin_name: '',
@@ -509,6 +517,13 @@ export class AdminProfileComponent implements OnInit {
   ngOnInit() {
     this.loadAdminProfileDetails();
     this.loadNotifications();
+  }
+
+  logout() {
+
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+
   }
 
 }

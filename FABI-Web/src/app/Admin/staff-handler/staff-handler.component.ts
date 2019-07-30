@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,7 +17,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 
-import { HttpService } from '../../_services/http.service';
+import { AuthenticationService } from '../../_services/authentication.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -103,9 +103,15 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, 
-    private router: Router, private userManagementService: UserManagementAPIService, private notificationLoggingService: NotificationLoggingService)
-  { 
+  constructor(
+    private authService: AuthenticationService, 
+    private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router, 
+    private userManagementService: UserManagementAPIService, 
+    private notificationLoggingService: NotificationLoggingService
+    )  { 
     this.addStaffForm = this.formBuilder.group({
       staff_name: ['', Validators.required],
       staff_surname: ['', Validators.required],
@@ -137,6 +143,15 @@ export class StaffHandlerComponent implements OnInit {
     this.displayUserTypes();
     this.viewStaff();
     this.loadNotifications();
+
+    const user2 = this.authService.getCurrentUserValue;
+    console.log("///////// USER: " + JSON.stringify(user2));
+  }
+
+  logout() {
+
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
 
@@ -408,7 +423,7 @@ export class StaffHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          ADD STAFF MEMBER
   /**
-   * This function calls the *http* service to add a Staff Member
+   * This function calls the *user-management* service to add a Staff Member
    *
    * @returns
    * @memberof StaffHandlerComponent
@@ -433,7 +448,7 @@ export class StaffHandlerComponent implements OnInit {
 
     const staff_details: Interface.StaffInfo = { name: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition};
 
-    this.service.addStaffMember(staff_details).subscribe((response: any) => {
+    this.userManagementService.addStaffMember(staff_details).subscribe((response: any) => {
       
       this.loading = false;
 
@@ -502,14 +517,14 @@ export class StaffHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                           REMOVE STAFF   
   /**
-   * This function calls the *http* service to remove the selected Staff Member 
+   * This function calls the *user-management* service to remove the selected Staff Member 
    *
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeStaffMember() {
 
-    this.service.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
+    this.userManagementService.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Staff Member Removed", "Dismiss", {
@@ -543,14 +558,14 @@ export class StaffHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            VIEW STAFF
   /**
-   * This function calls the *http* service to get all registered FABI Staff
+   * This function calls the *user-management* service to get all registered FABI Staff
    *
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewStaff() {
     
-    this.service.getAllStaffMembers().subscribe((response: any) => {
+    this.userManagementService.getAllStaffMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.staffMembers = response.data.qs.staff;
         this.dataSource = new MatTableDataSource(this.staffMembers);

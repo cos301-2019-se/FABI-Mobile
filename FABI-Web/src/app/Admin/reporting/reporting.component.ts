@@ -17,6 +17,8 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/co
 
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Router } from '@angular/router';
 import { CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
 
 //These imports are used to created a downloadable PDF of the reports
@@ -136,8 +138,13 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private notificationLoggingService: NotificationLoggingService, private userManagementService: UserManagementAPIService,
-    private renderer: Renderer2, private cultureCollectionService: CultureCollectionAPIService) { }
+  constructor(
+    private notificationLoggingService: NotificationLoggingService, 
+    private userManagementService: UserManagementAPIService,
+    private renderer: Renderer2, 
+    private authService: AuthenticationService, 
+    private router: Router
+    ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_USER_DETAILS
@@ -1043,4 +1050,10 @@ export class ReportingComponent implements OnInit {
     this.loadAllLogs();
   }
 
+  logout() {
+
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
+  
 }
