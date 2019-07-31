@@ -130,6 +130,26 @@ function addLog(req, res){
 			});
 		});	
 		
+		var notif = {
+			id: logEntry.date
+		}
+		
+		var staffRef = db.collection('Organizations').doc('FABI').collection('Staff');
+		staffRef.get().then(snapshot => {
+			
+			snapshot.forEach(doc => {
+				
+                var staffdoc = db.collection('Organizations').doc('FABI').collection('Staff').doc(doc.id).collection('notifications').doc(notif.id);
+				//doc.collection('notifications').doc(notif.id);
+				staffdoc.set(notif).then(() => { 
+					//dont need anything here
+				});
+				
+            })
+			
+		});
+		
+		
 		
 	}else{
 		res.setHeader('Content-Type', 'application/problem+json');
