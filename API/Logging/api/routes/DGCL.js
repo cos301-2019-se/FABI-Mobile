@@ -63,6 +63,7 @@ function addLog(req, res){
 			});
 		});	
 		
+
 		var notif = {
 			id: logEntry.date
 		}

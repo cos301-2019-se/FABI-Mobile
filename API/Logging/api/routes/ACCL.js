@@ -102,7 +102,7 @@ function addLog(req, res){
 			});
 		});	
 		
-		
+
 		var notif = {
 			id: logEntry.date
 		}
@@ -126,8 +126,7 @@ function addLog(req, res){
 			
 		});
 		
-		
-		
+
 	}else{
 		res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');

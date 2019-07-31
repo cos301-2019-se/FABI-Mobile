@@ -149,8 +149,6 @@ function addLog(req, res){
 			
 		});
 		
-		
-		
 	}else{
 		res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
