@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Wednesday, July 31th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,7 +15,7 @@
 
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 
-import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
@@ -67,6 +67,11 @@ export class ReportingComponent implements OnInit {
   /** The date that the logs must end at - @type {string} */
   dateTo: string = '';
 
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
+
   /** Array holding the user logs - @type {any} */
   userLogsArray: any[] = [];
   /** Array holding the database logs - @type {any} */
@@ -84,6 +89,18 @@ export class ReportingComponent implements OnInit {
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
+
+  /** The total number of User Logs - @type {number} */           
+  numberOfUserLogs: number = 0;
+  /** The total number of Database Management Logs - @type {number} */           
+  numberOfDatabaseLogs: number = 0;
+  /** The total number of Access Logs - @type {number} */           
+  numberOfAccessLogs: number = 0;
+
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean = true; 
+  /** THe number of the notifications - @type {number} */   
+  localNotificationNumber : number = 1; 
 
   /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
   @ViewChild("userLogsTable") userLogsTable : ElementRef;
@@ -304,7 +321,7 @@ export class ReportingComponent implements OnInit {
       }
     });
 
-    //Determines if the
+    //Determines if there are logs to load
     if(this.userLogsArray != null){
       this.userLogs = true;
     }
@@ -1075,14 +1092,111 @@ export class ReportingComponent implements OnInit {
     this.generateErrorReport();
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_NOTIFICATIONS
+  /**
+   *  This function will load the admin's notifications into the notification section on the HTML page
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadNotifications(){
+    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+      if(response.success = true){
+        const data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          if(data[i].Type == 'USER'){
+            var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+          
+            const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
+            const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
+
+            if(tempLogU.Action == 'C'){
+              tempLogU.Action = user1 + ' was added to the system by ' + user2;
+            }
+            else if(tempLogU.Action == 'D'){
+              tempLogU.Action = user1 + ' was removed from the system by ' + user2;
+            }
+            else if(tempLogU.Action == 'U'){
+              tempLogU.Action = user1 + ' details where updated by ' + user2;
+            }
+
+            this.allNotifications.push(tempLogU);
+            this.numberOfUserLogs += 1;
+            this.localNotificationNumber += 1;
+          }
+          else if(data[i].Type == 'DBML'){
+            var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
+
+            const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
+
+            if(tempLogD.Action == 'C'){
+              tempLogD.Action = tempLogD.Details + ' was added to the system by ' + user1;
+            }
+            else if(tempLogD.Action == 'D'){
+              tempLogD.Action = tempLogD.Details + ' was removed from the system by ' + user1;
+            }
+            else if(tempLogD.Action == 'U'){
+              tempLogD.Action = tempLogD.Details + ' details where updated by ' + user1;
+            }
+
+            this.allNotifications.push(tempLogD);
+            this.numberOfUserLogs += 1;
+            this.localNotificationNumber += 1;
+          }
+          else if(data[i].Type == 'ACCL'){
+            var tempLogA: AccessLogs = {LogID: data[i].date, Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
+          
+            this.allNotifications.push(tempLogA);
+            this.numberOfAccessLogs += 1;
+            this.localNotificationNumber += 1;
+          }
+          
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       REMOVE_NOTIFICATIONS
+  /**
+   *  This function will remove a notification from the notification section on the HTML page.
+   * 
+   * @param {string} id                   //The id of the notification to be removed
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeNotification(id: string){
+    for(var i =  0; i < this.allNotifications.length; i++){
+      if(this.allNotifications[i].ID != id){
+        this.newNotifications.push(this.allNotifications[i]);
+      }
+    }
+
+    // this.userManagementService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+    //   if(response.success == true){
+    //     this.loadNotifications();
+    //   }
+    //   else{
+    //     //Error handling
+    //   }
+    // });
+  }
+
   ngOnInit() {
+    this.loadNotifications();
+
     var currentDate = new Date();
     this.date = ('0' + currentDate.getDate()).slice(-2) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
     this.loadAllLogs();
   }
 
   logout() {
-
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }

@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 29th 2019
+ * Last Modified: Wednesday, July 31th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -25,6 +25,7 @@ import { config } from "../../environments/environment.prod";
 //Globals variables used to hold the API call urls
 const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
 const getAllSamplesForMemberURL = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
+const getStaffMembersSamplesURL = `${config.diagnosticClinicURL}/getStaffMembersSamples`;
 const getOrganizationSamplesURL = `${config.diagnosticClinicURL}/retrieveAllOrgSamples`;
 const submitCMWDepositFormURL = `${config.diagnosticClinicURL}/submitCMWDepositForm`;
 const submitCMWRequestFormURL = `${config.diagnosticClinicURL}/submitCMWRequestForm`;
@@ -32,7 +33,7 @@ const submitCMWRevitalizationFormURL = `${config.diagnosticClinicURL}/submitCMWR
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
-    userID: string;
+    userID: string;                         //the user id of the user to be submitted
 }
 
 //Object for defining the samples received from the API call
@@ -49,58 +50,58 @@ export interface Species{
 
 //Object for defining the CMW deposit form values
 export interface CMWDeposit{
-    userID: string;
-    cmwCultureNumber: string;
-    genus: string;
-    epitheton: string;
-    personalCollectionNumber: string;
-    internationalCollectionNumber: string;
-    herbariumNumber: string;
-    otherFABICollections: string;
-    name: string;
-    typeStatus: string;
-    host: string;
-    vector: string;
-    substrate: string;
-    continent: string;
-    country: string;
-    region: string;
-    locality: string;
-    gps: string;
-    collectedBy: string;
-    dateCollected: string;
-    isolatedBy: string;
-    identifiedBy: string;
-    donatedBy: string;
-    additionalNotes: string;
-    dateSubmitted: string;
+    userID: string;                         //The user id of the user submitting the form
+    cmwCultureNumber: string;               //The culture number
+    genus: string;                          //The genus of the culture
+    epitheton: string;                      //The epitheton of the culture
+    personalCollectionNumber: string;       //The personal collection number (if any)
+    internationalCollectionNumber: string;  //The international collection number (if any)
+    herbariumNumber: string;                //The herbarium number of the culture
+    otherFABICollections: string;           //Indicates if there are currently any other collections
+    name: string;                           //The name of the culture
+    typeStatus: string;                     //The type status of the culture
+    host: string;                           //The host of the culture
+    vector: string;                         //The vector of the culture
+    substrate: string;                      //The substrate of the culture
+    continent: string;                      //The continent where the culture originated from
+    country: string;                        //The country where the culture originated from
+    region: string;                         //The region where the culture originated from
+    locality: string;                       //The locality of the culture
+    gps: string;                            //The GPS coordinates of where the culture originated from
+    collectedBy: string;                    //The user who collected the culture
+    dateCollected: string;                  //The date that the culture was collected
+    isolatedBy: string;                     //The user who isolated the culture
+    identifiedBy: string;                   //The user who idnetified the culture
+    donatedBy: string;                      //The user who donated the culture (if any)
+    additionalNotes: string;                //Any additional notes (if any)
+    dateSubmitted: string;                  //The date that the form was submitted
 }
 
 //Object for defining the CMW request form values
 export interface CMWRequest{
-    userID: string;
-    requestor: string;
-    taxonName: string;
-    cultureNumber: string;
-    dateRequested: string;
-    referenceNumber: string;
-    notes: string;
-    dateSubmitted: string;
+    userID: string;                         //The user id of the user submitting the form
+    requestor: string;                      //The user who is requesting the culture
+    taxonName: string;                      //The taxon name of the culture
+    cultureNumber: string;                  //The culture number
+    dateRequested: string;                  //The date that the culture is requested for
+    referenceNumber: string;                //The reference number
+    notes: string;                          //Any notes (if any)
+    dateSubmitted: string;                  //The date that the form was submitted
 }
 
 //Object for defining the CMW revitalization form values
 export interface CMWRevitalization{
-    userID: string;
-    requestor: string;
-    currentName: string;
-    nameBionumerics: string;
-    cultureNumber: string;
-    cultureCondition: string;
-    sequenceDateSubmitted: string;
-    referenceNumber: string;
-    dateRequested: string;
-    dateReturned: string;
-    dateSubmitted: string;
+    userID: string;                         //The user id of the user submitting the form
+    requestor: string;                      //The user who is requesting the culture
+    currentName: string;                    //The current name of the culture
+    nameBionumerics: string;                //The bionumeric name of the culture
+    cultureNumber: string;                  //The culture number
+    cultureCondition: string;               //The condition of the culture
+    sequenceDateSubmitted: string;          //The sequence date submitted (if any)
+    referenceNumber: string;                //The reference number
+    dateRequested: string;                  //The date that the culture is requested
+    dateReturned: string;                   //The date that the culture was returned
+    dateSubmitted: string;                  //The date that the form was submitted
 }
 
 @Injectable({
@@ -146,6 +147,36 @@ export class DiagnosticClinicAPIService {
     };
 
     return this.http.request('POST', getAllSamplesURL, options);
+   }
+
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     GET_SAMPLES_FOR_FABI_STAFF 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the samples corresponding to a specific user.
+   *
+   * @param {string} id The id number of the user whose samples need to be fetched.
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getSamplesForFABIStaff(id: string){
+    const data = {"userID": id};
+    const getAllSamplesURL = `${config.diagnosticClinicURL}/getStaffMembersSamples`;
+    const method = "POST";
+    
+    const options = {
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', getStaffMembersSamplesURL, options);
    }
 
      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

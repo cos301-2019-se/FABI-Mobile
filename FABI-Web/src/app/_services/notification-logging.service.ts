@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 29th 2019
+ * Last Modified: Tuesday, July 30th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -29,6 +29,7 @@ const getAllLogsURL = '***REMOVED***/getLogs';
 
 //Object for defining the JSON object containing the user logs
 export interface UserLogs{
+    LogID: string;          //The id number of the actucal log
     Type: string;           //The type of the log: USER
     Action: string;         //The action performed: CRUD
     Date: string;           //The date that the action was performed
@@ -42,6 +43,7 @@ export interface UserLogs{
 
 //Object for defining the JSON object containing the database management logs
 export interface DatabaseManagementLogs{
+    LogID: string;          //The id number of the actucal log
     Type: string;           //The type of the log: DBML (Database Management Log)
     Action: string;         //The action performed: CRUD
     Date: string;           //The date that the action was performed
@@ -55,6 +57,7 @@ export interface DatabaseManagementLogs{
 
 //Object for defining the JSON object containing the access logs
 export interface AccessLogs{
+    LogID: string;          //The id number of the actucal log
     Type: string;           //The type of the log: ACCL
     Action: string;         //The action performed: ACCESS
     Date: string;           //The date that the action was performed
@@ -65,6 +68,7 @@ export interface AccessLogs{
 
 //Object for defining the JSON object containing the error logs
 export interface ErrorLogs{
+    LogID: string;          //The id number of the actucal log
     Type: string;           //The type of the log: ERRL
     Date: string;           //The date that the action was performed
     StatusCode: string;     //The status code of the error that occured
@@ -83,14 +87,14 @@ export interface DiagnosticClinicLogs{
 
 //Object for defining the JSON object for posting log requests
 export interface POSTLog{
-    Log: Logs;
+    Log: Logs;              //The array of logs to post to the API service
 }
 
 //Object for defining the JSON object for the logs
 export interface Logs{
-    type: string;
-    before: string;
-    after: string;
+    type: string;           //The type of the log
+    before: string;         //The before date
+    after: string;          //The after date
 }
 
 @Injectable({
@@ -258,5 +262,35 @@ export class NotificationLoggingService {
     };
 
         return this.http.request('POST', getAllLogsURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET_USER_LOGS 
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs for a specific user.
+   *
+   * @param {string} userID The id number of the user whose logs need to be feteched for the notifications.
+   * @returns API response @type any
+   * @memberof NotificationLoggingService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getUserLogs(userID: string) {
+    var tempLog : Logs = {type: 'DGCL', before: '', after: ''};
+    var data: POSTLog = {Log: tempLog};
+
+    const options = {
+        method: 'POST',
+        url: getAllLogsURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', getAllLogsURL, options);
   }
 }
