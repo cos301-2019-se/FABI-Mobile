@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Tuesday, July 30th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -33,6 +33,7 @@ const getAllOrganizationMembers = `${config.userManagementURL}/getAllOrgMembers`
 const getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;
 const updateStaffMemberDetailsURL = `${config.userManagementURL}/updateStaffMember`;
 const updateOrganizationMemberDetailsURL = `${config.userManagementURL}/updateOrgMember`;
+// const updateFABIMemberNotificationsURL = `${config.userManagementURL}/updateMemberNotifications`;
 
 //Object for defining how a member of FABI is structured
 export interface Member {
@@ -248,12 +249,12 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET ORGANIZATION
+  //                                                    GET_ORGANIZATION
   /**
    * Function that send a request to retrieve an Organisations' details using their ID
    *
    * @returns
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationDetails() {
@@ -281,12 +282,12 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET ORGANIZATION MEMBER
+  //                                                    GET_ORGANIZATION_MEMBER
   /**
    * Function that send a request to retrieve an Organisations Member's details using their ID
    *
    * @returns
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationMemberDetails() {
@@ -315,12 +316,12 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET ALL ORGANISATION MEMBERS
+  //                                                    GET_ALL_ORGANISATION_MEMBERS
   /**
    * Method that sends a request to the API to get the details of all the organisations' members.
    *
    * @returns API response
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllOrganizationMembers() {
@@ -349,12 +350,12 @@ export class UserManagementAPIService {
   }
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET ALL ORGANISATIONS 
+  //                                                    GET_ALL_ORGANISATIONS 
   /**
    * Method that sends a request to the API to get the details of all the organisations.
    *
    * @returns API response
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllOrganizations() {
@@ -377,12 +378,12 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET ALL USER TYPES 
+  //                                                    GET_ALL_USER_TYPES 
   /**
    * Method that sends a request to the API to get the user types associated with a specific organisation.
    *
    * @returns API response
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getUserTypes(orgName: string) {
@@ -411,13 +412,13 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                   CREATE/ADD NEW ORGANISATION
+  //                                                   CREATE/ADD_NEW_ORGANISATION
   /**
    * Method that sends a request to the API to create a new Organisation 
    *
    * @param {Interface.Organisation} orgInfo
    * @returns
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   createOrganization(orgInfo: Interface.Organisation) {
@@ -442,13 +443,13 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     REMOVE AN ORGANISATION
+  //                                                     REMOVE_AN_ORGANISATION
   /**
    * Method that sends a request to the API to remove (deregister) an Organisation
    *
    * @param {Interface.Organisation} orgInfo
    * @returns
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganization(orgInfo: Interface.Organisation) {
@@ -473,13 +474,13 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    ADD NEW FABI STAFF MEMBER
+  //                                                    ADD_NEW_FABI_STAFF_MEMBER
   /**
    * Method that sends a request to the API to add a new FABI Staff Member to the database
    *
    * @param {Interface.StaffInfo} staffInfo
    * @returns
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addStaffMember(staffInfo: Interface.StaffInfo) {
@@ -509,11 +510,11 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    REMOVE FABI STAFF MEMBER 
+  //                                                    REMOVE_FABI_STAFF_MEMBER 
   /**
    * Method that sends a request to the API to remove a FABI Staff Member
    *
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
@@ -538,12 +539,12 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET ALL FABI STAFF 
+  //                                                        GET_ALL_FABI_STAFF 
   /**
    * Method that sends a request to the API to get all FABI Staff Members
    *
    * @returns
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaffMembers() {
@@ -566,13 +567,13 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      ADD NEW FABI ADMIN
+  //                                                      ADD_NEW_FABI_ADMIN
   /**
    * Method that send a request to the API to add a new FABI Admin to the database
    *
    * @param {Interface.StaffInfo} staffInfo
    * @returns
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addFABIAdmin(staffInfo: Interface.StaffInfo) {
@@ -599,14 +600,14 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  ADD A NEW ORGANISATION MEMBER
+  //                                                  ADD_A_NEW_ORGANISATION_MEMBER
   /**
    * Method that sends a request to the API to add a new Member to a specific Organisation
    *
    * @param {Interface.Organisation} orgInfo
    * @param {Interface.OrganisationMember} memberInfo
    * @returns
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addOrgMember(orgInfo: Interface.Organisation, memberInfo: Interface.OrganisationMember) {
@@ -638,11 +639,11 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    REMOVE ORGANIZATION MEMBER
+  //                                                    REMOVE_ORGANIZATION_MEMBER
   /**
    * Method that sends a request to the API to remove an Organizations Member
    *
-   * @memberof HttpService
+   * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
@@ -669,6 +670,29 @@ export class UserManagementAPIService {
     };
 
     return this.http.request<any>(method, removeMemberURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    UPDATE_FABI_MEMBER_NOTIFICATIONS
+  /**
+   * Method that sends a request to the API to update the notifications associated with a specific user.
+   *
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateFABIMemberNotifications(userID: string, notifications: string[]) {
+    // const options = {
+    //   headers: {
+    //     'cache-control': 'no-cache',
+    //     'Content-Type': 'application/json',
+    //     "Access-Control-Allow-Origin": "*",
+    //     'Accept': 'application/json'
+    //   },
+    //   body: postData,
+    //   json: true
+    // };
+
+    // return this.http.request<any>(method, removeMemberURL, options);
   }
   
 }

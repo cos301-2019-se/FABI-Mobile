@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Tuesday, July 30th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -62,6 +62,11 @@ export class MemberHandlerComponent implements OnInit {
    /** Array of Member objects - @type {OrganisationMember[]} */
   orgMembers: Interface.OrganisationMember[];
 
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
@@ -97,19 +102,6 @@ export class MemberHandlerComponent implements OnInit {
     })
   }
 
-  sidenavToggle() {
-    if (document.getElementById("sidenav_div").style.width == "22%") {
-      document.getElementById("sidenav_div").style.width = "0";
-    }
-    else {
-      document.getElementById("sidenav_div").style.width = "22%";
-    }
-  }
-
-  closeNav() {
-    document.getElementById("sidenav_div").style.width = "0";
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                           TOGGLE_NOTIFICATIONS_TAB
   /**
@@ -128,8 +120,6 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG_ON_INIT()
   /**
-   *  
-   *
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
