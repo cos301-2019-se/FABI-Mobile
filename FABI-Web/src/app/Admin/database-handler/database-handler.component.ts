@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -89,7 +89,9 @@ export class DatabaseHandlerComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  /** Holds the column headings to display in the HTML preview table - @type {string[]} */ 
   displayedColumns: string[];
+  /** The data source of the HTML table - @type {MatTableDataSource([])} */ 
   dataSource = new MatTableDataSource([]);
   fields: any[] = [];
 
@@ -111,6 +113,7 @@ export class DatabaseHandlerComponent implements OnInit {
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * 
    * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,6 +134,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /**
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
+   * 
    * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,14 +215,18 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
+    //Making a call too the notification logging service to return all logs belonging to a specific user
     this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
           if(data[i].Type == 'USER'){
+            //A temporary instance of UserLogs that will be added to the allNotifications array
             var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
+            
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
             const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
 
@@ -237,8 +245,10 @@ export class DatabaseHandlerComponent implements OnInit {
             this.localNotificationNumber += 1;
           }
           else if(data[i].Type == 'DBML'){
+            //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
             var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
 
             if(tempLogD.Action == 'C'){
@@ -256,6 +266,7 @@ export class DatabaseHandlerComponent implements OnInit {
             this.localNotificationNumber += 1;
           }
           else if(data[i].Type == 'ACCL'){
+            //A temporary instance of AccessLogs that will be added to the allNotifications array
             var tempLogA: AccessLogs = {LogID: data[i].date, Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
           
             this.allNotifications.push(tempLogA);
@@ -280,10 +291,13 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
@@ -319,19 +333,26 @@ export class DatabaseHandlerComponent implements OnInit {
   }
   
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadNotifications() 
+   * 
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.loadNotifications();
 
-    //-------- Load Databases for Drop Down --------
+    //Load Databases for Drop Down
     const user2 = this.authService.getCurrentUserValue;
     const user = this.authService.getCurrentSessionValue;
 
-
     console.log("///////// USER: " + JSON.stringify(user2));
-    // this.databases = user.databases;
     this.databases = user.user.databases;
-
-
   }
 
 
@@ -340,6 +361,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /**
    *  This function will be used to submit a .csv file so that it can be converted into a database for the user
    *  @param {any} input
+   * 
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -359,7 +381,8 @@ export class DatabaseHandlerComponent implements OnInit {
       let text = reader.result;
 
       console.log("porting data:");
-      this.jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
+      //converts file to JSON Object
+      this.jsonData = this.portCSV.convertToJSON(text);
 
       var columnsIn = this.jsonData[0];
       for(var key in columnsIn){;
@@ -394,6 +417,7 @@ export class DatabaseHandlerComponent implements OnInit {
   //                                                        GET_CSV
   /**
    *  This function will be used to download the selected database in the format of a .csv file.
+   * 
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -437,6 +461,14 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        VIEW_DATABASE
+  /**
+   *  This function is used to load the selected database and display it in the HTML page
+   * 
+   *  @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public viewDatabase() {
     this.dbService.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
@@ -564,14 +596,20 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
 
 
- logout() {
-
-  this.authService.logoutUser();
-  this.router.navigate(['/login']);
-
-}
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
 
 }

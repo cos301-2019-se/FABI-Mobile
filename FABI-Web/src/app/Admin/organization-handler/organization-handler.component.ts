@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -95,6 +95,7 @@ export class OrganizationHandlerComponent implements OnInit {
    * @param {Router} router For navigating to other modules/components
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * 
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,14 +202,18 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
+    //Making a call too the notification logging service to return all logs belonging to a specific user
     this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
           if(data[i].Type == 'USER'){
+            //A temporary instance of UserLogs that will be added to the allNotifications array
             var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
+            
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
             const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
 
@@ -227,8 +232,10 @@ export class OrganizationHandlerComponent implements OnInit {
             this.localNotificationNumber += 1;
           }
           else if(data[i].Type == 'DBML'){
+            //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
             var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
 
             if(tempLogD.Action == 'C'){
@@ -246,6 +253,7 @@ export class OrganizationHandlerComponent implements OnInit {
             this.localNotificationNumber += 1;
           }
           else if(data[i].Type == 'ACCL'){
+            //A temporary instance of AccessLogs that will be added to the allNotifications array
             var tempLogA: AccessLogs = {LogID: data[i].date, Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
           
             this.allNotifications.push(tempLogA);
@@ -270,10 +278,13 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
@@ -311,9 +322,17 @@ export class OrganizationHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            NG_ON_INIT()
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call viewOrganizations() | 2. Call loadNotifications() 
+   * 
+   * @memberof OrganizationHandlerComponent
+   */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.viewOrganizations();
     this.loadNotifications();
 
@@ -321,14 +340,22 @@ export class OrganizationHandlerComponent implements OnInit {
     console.log("///////// USER: " + JSON.stringify(user2));
   }
 
-  logout() {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REGISTER ORGANIZATION
+  //                                                       REGISTER_ORGANIZATION
   /**
    * This function calls the *user-management* service to create a new Organisation.
    *
@@ -337,7 +364,6 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   registerOrg() {
-
     this.submitted = true;
 
     if (this.registerOrgForm.invalid) {
@@ -348,7 +374,6 @@ export class OrganizationHandlerComponent implements OnInit {
     this.loading = true;
 
     const LorgName = this.registerOrgForm.controls.organization_name.value;
-    // const LorgLocation = this.createOrgForm.controls.organization_location.value;
     const LadminName = this.registerOrgForm.controls.admin_name.value;
     const LadminSurname = this.registerOrgForm.controls.admin_surname.value;
     const LadminEmail = this.registerOrgForm.controls.admin_email.value;
@@ -376,8 +401,9 @@ export class OrganizationHandlerComponent implements OnInit {
     });
   }
 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SELECTED ORGANIZATION
+  //                                                        SELECTED_ORGANIZATION
   /**
    * This function sets the Organisation selected by the user in the table
    *
@@ -391,15 +417,15 @@ export class OrganizationHandlerComponent implements OnInit {
   
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     REMOVE ORGANIZATION PROMPT
+  //                                                     REMOVE_ORGANIZATION_PROMPT
   /**
    * This function prompts the user to confirm if they wish to delete the selected Organisation
+   * @param {Interface.Organisation} org The organization to be deleted
    *
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeOrganizationPrompt(org: Interface.Organisation) {
-    
+  removeOrganizationPrompt(org: Interface.Organisation) {    
     const orgDetails = org.orgName;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
@@ -420,7 +446,7 @@ export class OrganizationHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        REMOVE ORGANIZATION 
+  //                                                        REMOVE_ORGANIZATION 
   /**
    * This function calls the *user-management* service to remove the selected Organisation 
    *
@@ -428,7 +454,6 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrg() {
-
     this.userManagementService.removeOrganization(this.selectedOrg).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -462,15 +487,14 @@ export class OrganizationHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       VIEW ORGANIZATIONS
+  //                                                       VIEW_ORGANIZATIONS
   /**
    * This function calls the *user-management* service to get all registered Organizations
    *
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  viewOrganizations() {
-    
+  viewOrganizations() {    
     this.userManagementService.getAllOrganizations().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
@@ -503,7 +527,7 @@ export class OrganizationHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
 
   
 }

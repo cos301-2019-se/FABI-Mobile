@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 31th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -160,6 +160,10 @@ export class ReportingComponent implements OnInit {
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API Service
    * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
+   * @param {Renderer2} renderer Used for creating the PDF documents to download
+   * 
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -180,10 +184,13 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
@@ -205,6 +212,7 @@ export class ReportingComponent implements OnInit {
     //Loading the 'USER' logs
     this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
@@ -240,6 +248,7 @@ export class ReportingComponent implements OnInit {
     //Loading the 'DBML' logs
     this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
@@ -276,6 +285,7 @@ export class ReportingComponent implements OnInit {
     //Loading the 'ACCL' logs
     this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
@@ -301,6 +311,7 @@ export class ReportingComponent implements OnInit {
     //Loading the 'ERRL' logs
     this.notificationLoggingService.getAllErrorLogs().subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
@@ -321,19 +332,22 @@ export class ReportingComponent implements OnInit {
       }
     });
 
-    //Determines if there are logs to load
+    //Determines if there are user logs to load or not
     if(this.userLogsArray != null){
       this.userLogs = true;
     }
 
+    //Determines if there are database logs to load or not
     if(this.databaseLogsArray != null){
       this.databaseLogs = true;
     }
 
+    //Determines if there are access logs to load or not
     if(this.accessLogsArray != null){
       this.accessLogs = true;
     }
 
+    //Determines if there are error logs to load or not
     if(this.errorLogsArray != null){
       this.errorLogs = true;
     }
@@ -911,7 +925,7 @@ export class ReportingComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1102,14 +1116,18 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
+    //Making a call too the notification logging service to return all logs belonging to a specific user
     this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
           if(data[i].Type == 'USER'){
+            //A temporary instance of UserLogs that will be added to the allNotifications array
             var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
+            
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
             const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
 
@@ -1128,8 +1146,10 @@ export class ReportingComponent implements OnInit {
             this.localNotificationNumber += 1;
           }
           else if(data[i].Type == 'DBML'){
+            //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
             var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
 
             if(tempLogD.Action == 'C'){
@@ -1147,6 +1167,7 @@ export class ReportingComponent implements OnInit {
             this.localNotificationNumber += 1;
           }
           else if(data[i].Type == 'ACCL'){
+            //A temporary instance of AccessLogs that will be added to the allNotifications array
             var tempLogA: AccessLogs = {LogID: data[i].date, Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
           
             this.allNotifications.push(tempLogA);
@@ -1188,7 +1209,18 @@ export class ReportingComponent implements OnInit {
     // });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadNotifications() 
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.loadNotifications();
 
     var currentDate = new Date();
@@ -1196,6 +1228,15 @@ export class ReportingComponent implements OnInit {
     this.loadAllLogs();
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
