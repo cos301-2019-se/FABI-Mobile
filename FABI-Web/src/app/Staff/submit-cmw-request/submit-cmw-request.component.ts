@@ -83,8 +83,12 @@ export class SubmitCmwRequestComponent implements OnInit {
    * 
    * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
    * @param {CultureCollectionAPIService} cultureCollectionService for making calls to the Culture Collection API Service
-   * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {NotificationLoggingAPIService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {FormBuilder} formBuilder Used to build the form from the HTML page
+   * @param {Router} router
+   * 
    * @memberof SubmitCmwRequestComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,6 +111,15 @@ export class SubmitCmwRequestComponent implements OnInit {
     });
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof SubmitCmwRequestComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
@@ -230,14 +243,18 @@ export class SubmitCmwRequestComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
+    //Making a call too the notification logging service to return all logs belonging to a specific user
     this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
           if(data[i].Type == 'USER'){
+            //A temporary instance of UserLogs that will be added to the allNotifications array
             var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
+            
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
             const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
 
@@ -269,10 +286,13 @@ export class SubmitCmwRequestComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
@@ -399,7 +419,19 @@ export class SubmitCmwRequestComponent implements OnInit {
     return newDate;
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadNotifications() | 2. Call getAllStaff()
+   * 
+   * @memberof SubmitCmwRequestComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.loadNotifications();
     this.getAllStaff();
     this.filteredOptions = this.requestorControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
