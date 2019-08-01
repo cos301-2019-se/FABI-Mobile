@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,6 +17,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
@@ -116,12 +117,14 @@ export class SubmitCmwDepositComponent implements OnInit {
    * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {DatePipe} datePipe Used to get the current date in a specific format
+   * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    
   constructor(
     private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar,
     private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService, 
     private authService: AuthenticationService, 
@@ -338,9 +341,19 @@ export class SubmitCmwDepositComponent implements OnInit {
     this.diagnosticClinicService.submitCMWDepositForm(deposit).subscribe((response: any) => {
       if(response.success == true){
         //Successfully submitted deposit form
+
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("CMW Deposit form successfully submitted.", "Dismiss", {
+          duration: 3000
+        });
       }
       else{
         //Error handling
+
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Could not submit CMW Deposit form. Please try again.", "Dismiss", {
+          duration: 3000
+        });
       }
     });
   }
@@ -564,6 +577,7 @@ export class SubmitCmwDepositComponent implements OnInit {
 
   ngOnInit() {
     this.loadNotifications();
+    this.getAllStaff();
     this.filteredOptions = this.control.valueChanges.pipe(startWith(''), map(value => this.filter(value)));
   }
 
