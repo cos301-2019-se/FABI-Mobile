@@ -111,7 +111,10 @@
     <form class="example-form" [formGroup]="cmwRequestForm" (submit)="submitCMWRequestForm">
       <div>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Requestor (Surname, Initials)" type="text" formControlName="requestor">
+          <input matInput placeholder="Requestor (Surname, Initials)" type="text" [formControl]="requestorControl" formControlName="requestor" [matAutocomplete]="autoRequestor">
+          <mat-autocomplete #autoRequestor="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}</mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <br />
 
