@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 29th 2019
+ * Last Modified: Tuesday, July 30th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -61,8 +61,8 @@ export class AdminDashboardComponent implements OnInit {
 
   /** Object array for holding all of the logs -  @type {any[]} */ 
   allNotifications: any[] = [];
-  /** Object array for holding all of the read logs -  @type {any[]} */ 
-  readNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
 
   /** The total number of User Logs - @type {number} */           
   numberOfUserLogs: number = 0;
@@ -271,163 +271,64 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
-    //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
-    const storageNotifications = JSON.parse(localStorage.getItem('readNotifications'));
-
-    //Loading the 'USER' logs
-    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
       if(response.success = true){
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+          if(data[i].Type == 'USER'){
+            var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
           
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
-              }
-              else{
-                const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-                const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+            const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
+            const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
 
-                if(tempLog.Action == 'C'){
-                  tempLog.Action = user1 + ' was added to the system by ' + user2;
-                }
-                else if(tempLog.Action == 'D'){
-                  tempLog.Action = user1 + ' was removed from the system by ' + user2;
-                }
-                else if(tempLog.Action == 'U'){
-                  tempLog.Action = user1 + ' details where updated by ' + user2;
-                }
-
-                this.allNotifications.push(tempLog);
-                this.numberOfUserLogs += 1;
-                this.localNotificationNumber += 1;
-              }
+            if(tempLogU.Action == 'C'){
+              tempLogU.Action = user1 + ' was added to the system by ' + user2;
             }
-          }
-          else{
-            const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-            const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-            if(tempLog.Action == 'C'){
-              tempLog.Action = user1 + ' was added to the system by ' + user2;
+            else if(tempLogU.Action == 'D'){
+              tempLogU.Action = user1 + ' was removed from the system by ' + user2;
             }
-            else if(tempLog.Action == 'D'){
-              tempLog.Action = user1 + ' was removed from the system by ' + user2;
-            }
-            else if(tempLog.Action == 'U'){
-              tempLog.Action = user1 + ' details where updated by ' + user2;
+            else if(tempLogU.Action == 'U'){
+              tempLogU.Action = user1 + ' details where updated by ' + user2;
             }
 
-            this.allNotifications.push(tempLog);
+            this.allNotifications.push(tempLogU);
             this.numberOfUserLogs += 1;
             this.localNotificationNumber += 1;
           }
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
+          else if(data[i].Type == 'DBML'){
+            var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
+            const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
 
-    //Loading the 'DBML' logs
-    this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
-      if(response.success = true){
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          var tempLog: DatabaseManagementLogs = {Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
-              }
-              else{
-                const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-                if(tempLog.Action == 'C'){
-                  tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
-                }
-                else if(tempLog.Action == 'D'){
-                  tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
-                }
-                else if(tempLog.Action == 'U'){
-                  tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
-                }
-
-                this.allNotifications.push(tempLog);
-                this.numberOfUserLogs += 1;
-                this.localNotificationNumber += 1;
-              }
+            if(tempLogD.Action == 'C'){
+              tempLogD.Action = tempLogD.Details + ' was added to the system by ' + user1;
             }
-          }
-          else{
-            const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-            if(tempLog.Action == 'C'){
-              tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
+            else if(tempLogD.Action == 'D'){
+              tempLogD.Action = tempLogD.Details + ' was removed from the system by ' + user1;
             }
-            else if(tempLog.Action == 'D'){
-              tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
-            }
-            else if(tempLog.Action == 'U'){
-              tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
+            else if(tempLogD.Action == 'U'){
+              tempLogD.Action = tempLogD.Details + ' details where updated by ' + user1;
             }
 
-            this.allNotifications.push(tempLog);
+            this.allNotifications.push(tempLogD);
             this.numberOfUserLogs += 1;
             this.localNotificationNumber += 1;
           }
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-
-
-    //Loading the 'ACCL' logs
-    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
-      if(response.success = true){
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          var tempLog: AccessLogs = {Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
+          else if(data[i].Type == 'ACCL'){
+            var tempLogA: AccessLogs = {LogID: data[i].date, Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
           
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'ACCL' && storageNotifications[i].Date == tempLog.Date && 
-              storageNotifications.User == tempLog.User){
-                  this.readNotifications.push(tempLog);
-                }
-                else{
-                  //Access notifications
-                  this.allNotifications.push(tempLog);
-                  this.numberOfAccessLogs += 1;
-                  this.localNotificationNumber += 1;
-                }
-            }
-          }
-          else{
-            this.allNotifications.push(tempLog);
+            this.allNotifications.push(tempLogA);
             this.numberOfAccessLogs += 1;
             this.localNotificationNumber += 1;
           }
+          
         }
       }
       else{
         //Error handling
       }
     });
-
-    //Pushing the readNotifications array to local storage
-    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
   }
 
 
@@ -455,41 +356,27 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       REMOVE_NOTIFICATIONS
   /**
-   *  This function will remove a notification from the notification section on the HTML page
-   * @param {number} id                   //The id of the notification to be removed
-   * @param {string} type                 //The type of the notification to be removed
+   *  This function will remove a notification from the notification section on the HTML page.
+   * 
+   * @param {string} id                   //The id of the notification to be removed
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeNotification(id: number, type: string){
-    //Loading the read notifications into the local storage
-    // if(type == 'USER'){
-    //   for(var i = 0; i < this.userNotifications.length; i++){
-    //     if(this.userNotifications[i].ID == id){
-    //       //Add the notification to the readNotifications array
-    //       this.readNotifications.push(this.userNotifications[i]);
-    //     }
-    //   }
-    // }
-    // else if(type == 'DBML'){
-    //   for(var i = 0; i < this.databaseNotifications.length; i++){
-    //     if(this.databaseNotifications[i].ID == id){
-    //       //Add the notification to the readNotifications array
-    //       this.readNotifications.push(this.databaseNotifications[i]);
-    //     }
-    //   }
-    // }
-    // else if(type == 'ACCL'){
-    //   for(var i = 0; i < this.accessNotifications.length; i++){
-    //     if(this.accessNotifications[i].ID == id){
-    //       //Add the notification to the readNotifications array
-    //       this.readNotifications.push(this.accessNotifications[i]);
-    //     }
-    //   }
-    // }
+  removeNotification(id: string){
+    for(var i =  0; i < this.allNotifications.length; i++){
+      if(this.allNotifications[i].ID != id){
+        this.newNotifications.push(this.allNotifications[i]);
+      }
+    }
 
-    //Pushing the readNotifications array to local storage
-    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
+    // this.userManagementService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+    //   if(response.success == true){
+    //     this.loadNotifications();
+    //   }
+    //   else{
+    //     //Error handling
+    //   }
+    // });
   } 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@
  * Created Date: Monday, July 29th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 29th 2019
+ * Last Modified: Wednesday, July 31th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -24,9 +24,9 @@ import { BehaviorSubject } from 'rxjs';
 //                                                          GLOBAL VARIABLES
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const getRequestLogsURL = '';
-const getDepositLogsURL = '';
-const getRevitalizationLogsURL = '';
+const getRequestLogsURL = '***REMOVED***/getAllRequestForms';
+const getDepositLogsURL = '***REMOVED***/getAllRequestForms';
+const getRevitalizationLogsURL = '***REMOVED***/getAllRevitalizationForms';
 
 @Injectable({
     providedIn: 'root'

@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Tuesday, July 30th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -55,8 +55,8 @@ export class StaffProfileComponent implements OnInit {
 
   /** Object array for holding all of the logs -  @type {any[]} */ 
   allNotifications: any[] = [];
-  /** Object array for holding all of the read logs -  @type {any[]} */ 
-  readNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
 
   /** Indicates if there are notifications to load - @type {boolean} */           
   notifications: boolean = true; 
@@ -190,58 +190,25 @@ export class StaffProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
-    //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
-    const storageNotifications = JSON.parse(localStorage.getItem('readNotifications'));
-
-    //Loading the 'USER' logs
-    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
       if(response.success = true){
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+          if(data[i].Type == 'USER'){
+            var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
           
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
-              }
-              else{
-                const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-                const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
+            const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
+            const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
 
-                if(tempLog.Action == 'C'){
-                  tempLog.Action = user1 + ' was added to the system by ' + user2;
-                }
-                else if(tempLog.Action == 'D'){
-                  tempLog.Action = user1 + ' was removed from the system by ' + user2;
-                }
-                else if(tempLog.Action == 'U'){
-                  tempLog.Action = user1 + ' details where updated by ' + user2;
-                }
-
-                this.allNotifications.push(tempLog);
-                this.numberOfUserLogs += 1;
-                this.localNotificationNumber += 1;
-              }
+            if(tempLogU.Action == 'C'){
+              tempLogU.Action = user1 + ' was added to the system by ' + user2;
             }
-          }
-          else{
-            const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-            const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-            if(tempLog.Action == 'C'){
-              tempLog.Action = user1 + ' was added to the system by ' + user2;
-            }
-            else if(tempLog.Action == 'D'){
-              tempLog.Action = user1 + ' was removed from the system by ' + user2;
-            }
-            else if(tempLog.Action == 'U'){
-              tempLog.Action = user1 + ' details where updated by ' + user2;
+            else if(tempLogU.Action == 'D'){
+              tempLogU.Action = user1 + ' was removed from the system by ' + user2;
             }
 
-            this.allNotifications.push(tempLog);
+            this.allNotifications.push(tempLogU);
             this.numberOfUserLogs += 1;
             this.localNotificationNumber += 1;
           }
@@ -251,10 +218,34 @@ export class StaffProfileComponent implements OnInit {
         //Error handling
       }
     });
-
-    //Pushing the readNotifications array to local storage
-    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
   }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       REMOVE_NOTIFICATIONS
+  /**
+   *  This function will remove a notification from the notification section on the HTML page.
+   * 
+   * @param {string} id                   //The id of the notification to be removed
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeNotification(id: string){
+    for(var i =  0; i < this.allNotifications.length; i++){
+      if(this.allNotifications[i].ID != id){
+        this.newNotifications.push(this.allNotifications[i]);
+      }
+    }
+
+    // this.userManagementService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+    //   if(response.success == true){
+    //     this.loadNotifications();
+    //   }
+    //   else{
+    //     //Error handling
+    //   }
+    // });
+  } 
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
