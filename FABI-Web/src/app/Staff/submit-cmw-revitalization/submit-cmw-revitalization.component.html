@@ -108,10 +108,13 @@
   </div>
 
   <div class="cmw-revitalization">
-    <form class="example-form" [formGroup]="cmwRevitalizationForm" (submit)="submitCMWRevitaalizationForm">
+    <form class="example-form" [formGroup]="cmwRevitalizationForm" (submit)="submitCMWRevitaalizationForm()">
       <div>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Requester (Surname, Initials)" type="text" formControlName="requestor">
+          <input matInput placeholder="Requester (Surname, Initials)" type="text" [formControl]="requestorControl" formControlName="requestor" [matAutocomplete]="autoRequestor">
+          <mat-autocomplete #autoRequestor="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}</mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <br />
 

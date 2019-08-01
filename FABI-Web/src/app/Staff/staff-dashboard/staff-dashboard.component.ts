@@ -17,8 +17,8 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolve
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
-import { DiagnosticClinicAPIService, CMWDeposit, CMWRequest } from '../../_services/diagnostic-clinic-api.service';
-import { CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { CultureCollectionAPIService, CMWDeposit, CMWRequest } from '../../_services/culture-collection-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Route, Router } from '@angular/router';

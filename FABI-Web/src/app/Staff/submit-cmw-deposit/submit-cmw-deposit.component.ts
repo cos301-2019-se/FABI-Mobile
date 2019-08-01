@@ -20,7 +20,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService, CMWDeposit } from '../../_services/diagnostic-clinic-api.service';
+import { CultureCollectionAPIService, CMWDeposit } from '../../_services/culture-collection-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
 
@@ -125,9 +125,8 @@ export class SubmitCmwDepositComponent implements OnInit {
    * Creates an instance of SubmitCmwDepositComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
-   * @param {DiagnosticClinicAPIService} diagnosticClinicService for making calls to the Diagnostic Clinic API Service
+   * @param {CultureCollectionAPIService} cultureCollectionService for making calls to the Culture Collection API Service
    * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @memberof SubmitCmwDepositComponent
    */
@@ -137,7 +136,7 @@ export class SubmitCmwDepositComponent implements OnInit {
     private formBuilder: FormBuilder, 
     private snackBar: MatSnackBar,
     private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private cultureCollectionService: CultureCollectionAPIService, 
     private authService: AuthenticationService, 
     private router: Router,
     private notificationLoggingService: NotificationLoggingService
@@ -345,10 +344,10 @@ export class SubmitCmwDepositComponent implements OnInit {
     var deposit: CMWDeposit = {userID: localStorage.getItem('userPassword'),cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
       internationalCollectionNumber: this.internationalCollectionNumber, herbariumNumber: this.herbariumNumber, otherFABICollections: this.otherFABICollections, name: this.name,
       typeStatus: this.typeStatus, host: this.host, vector: this.vector, substrate: this.substrate, continent: this.continent, country: this.country, region: this.region,
-      locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected.toDateString(), isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
+      locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected.toString(), isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
       donatedBy: this.donatedBy, additionalNotes: this.additionalNotes, dateSubmitted: currentDate}
 
-    this.diagnosticClinicService.submitCMWDepositForm(deposit).subscribe((response: any) => {
+    this.cultureCollectionService.submitCMWDepositForm(deposit).subscribe((response: any) => {
       if(response.success == true){
         //Successfully submitted deposit form
 
