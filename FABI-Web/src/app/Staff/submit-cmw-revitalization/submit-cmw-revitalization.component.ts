@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,9 +17,10 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService, CMWRevitalization } from '../../_services/diagnostic-clinic-api.service';
+import { CultureCollectionAPIService, CMWRevitalization } from '../../_services/culture-collection-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
 
@@ -41,7 +42,8 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   staff: string[] = []; 
   /** Object array for holding the staff members -  @type {String[]} */
   filteredOptions: Observable<string[]>;
-  control = new FormControl();
+  /** The form control for the autocomplete of the requestor input -  @type {FormControl} */
+  requestorControl = new FormControl();
 
   /** The requestor of the form -  @type {string} */
   requestor: string;
@@ -83,7 +85,7 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
    * Creates an instance of SubmitCmwRevitalizationComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
-   * @param {DiagnosticClinicAPIService} diagnosticClinicService for making calls to the Diagnostic Clinic API Service
+   * @param {CultureCollectionAPIService} cultureCollectionService for making calls to the Culture Collection API Service
    * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @memberof SubmitCmwRevitalizationComponent
@@ -91,8 +93,9 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar,
     private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private cultureCollectionService: CultureCollectionAPIService, 
     private authService: AuthenticationService, 
     private router: Router,
     private notificationLoggingService: NotificationLoggingService
@@ -179,15 +182,25 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
     var revitalization: CMWRevitalization = {userID: localStorage.getItem('userPassword'), requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
-      cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested.toDateString(),
-      dateReturned: this.dateReturned.toDateString(), dateSubmitted: currentDate};
+      cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested.toString(),
+      dateReturned: this.dateReturned.toString(), dateSubmitted: currentDate};
 
-    this.diagnosticClinicService.submitCMWRevitalizationForm(revitalization).subscribe((response: any) => {
+    this.cultureCollectionService.submitCMWRevitalizationForm(revitalization).subscribe((response: any) => {
       if(response.success == true){
         //Successfully submitted form
+
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("CMW Revitalization form successfully submitted.", "Dismiss", {
+          duration: 3000
+        });
       }
       else{
         //Error handling
+
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Could not submit CMW Revitalization form. Please try again.", "Dismiss", {
+          duration: 3000
+        });
       }
     });
   }
@@ -206,12 +219,12 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
       if(response.success == true){
         
-        for(var i = 0; i <= response.data.qs.admins.length; i++){
+        for(var i = 0; i < response.data.qs.admins.length; i++){
           this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
         }
 
-        for(var i = 0; i <= response.data.qs.admins.length; i++){
-          this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
+        for(var i = 0; i < response.data.qs.staff.length; i++){
+          this.staff.push(response.data.qs.staff[i].surname + ', ' + response.data.qs.staff[i].fname[0]);
         }
       }
     });
@@ -403,14 +416,15 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
    * @memberof SubmitCmwRevitalizationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  private filter(value: string): string[] {
+  private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.staff.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   ngOnInit() {
     this.loadNotifications();
-    this.filteredOptions = this.control.valueChanges.pipe(startWith(''), map(value => this.filter(value)));
+    this.getAllStaff();
+    this.filteredOptions = this.requestorControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
   }
 
 }

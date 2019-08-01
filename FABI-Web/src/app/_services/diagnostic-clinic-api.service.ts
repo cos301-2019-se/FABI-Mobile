@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 31th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -27,9 +27,6 @@ const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
 const getAllSamplesForMemberURL = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
 const getStaffMembersSamplesURL = `${config.diagnosticClinicURL}/getStaffMembersSamples`;
 const getOrganizationSamplesURL = `${config.diagnosticClinicURL}/retrieveAllOrgSamples`;
-const submitCMWDepositFormURL = `${config.diagnosticClinicURL}/submitCMWDepositForm`;
-const submitCMWRequestFormURL = `${config.diagnosticClinicURL}/submitCMWRequestForm`;
-const submitCMWRevitalizationFormURL = `${config.diagnosticClinicURL}/submitCMWRevitalizationForm`;
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
@@ -46,62 +43,6 @@ export interface Sample{
 
 export interface Species{
     species: string;
-}
-
-//Object for defining the CMW deposit form values
-export interface CMWDeposit{
-    userID: string;                         //The user id of the user submitting the form
-    cmwCultureNumber: string;               //The culture number
-    genus: string;                          //The genus of the culture
-    epitheton: string;                      //The epitheton of the culture
-    personalCollectionNumber: string;       //The personal collection number (if any)
-    internationalCollectionNumber: string;  //The international collection number (if any)
-    herbariumNumber: string;                //The herbarium number of the culture
-    otherFABICollections: string;           //Indicates if there are currently any other collections
-    name: string;                           //The name of the culture
-    typeStatus: string;                     //The type status of the culture
-    host: string;                           //The host of the culture
-    vector: string;                         //The vector of the culture
-    substrate: string;                      //The substrate of the culture
-    continent: string;                      //The continent where the culture originated from
-    country: string;                        //The country where the culture originated from
-    region: string;                         //The region where the culture originated from
-    locality: string;                       //The locality of the culture
-    gps: string;                            //The GPS coordinates of where the culture originated from
-    collectedBy: string;                    //The user who collected the culture
-    dateCollected: string;                  //The date that the culture was collected
-    isolatedBy: string;                     //The user who isolated the culture
-    identifiedBy: string;                   //The user who idnetified the culture
-    donatedBy: string;                      //The user who donated the culture (if any)
-    additionalNotes: string;                //Any additional notes (if any)
-    dateSubmitted: string;                  //The date that the form was submitted
-}
-
-//Object for defining the CMW request form values
-export interface CMWRequest{
-    userID: string;                         //The user id of the user submitting the form
-    requestor: string;                      //The user who is requesting the culture
-    taxonName: string;                      //The taxon name of the culture
-    cultureNumber: string;                  //The culture number
-    dateRequested: string;                  //The date that the culture is requested for
-    referenceNumber: string;                //The reference number
-    notes: string;                          //Any notes (if any)
-    dateSubmitted: string;                  //The date that the form was submitted
-}
-
-//Object for defining the CMW revitalization form values
-export interface CMWRevitalization{
-    userID: string;                         //The user id of the user submitting the form
-    requestor: string;                      //The user who is requesting the culture
-    currentName: string;                    //The current name of the culture
-    nameBionumerics: string;                //The bionumeric name of the culture
-    cultureNumber: string;                  //The culture number
-    cultureCondition: string;               //The condition of the culture
-    sequenceDateSubmitted: string;          //The sequence date submitted (if any)
-    referenceNumber: string;                //The reference number
-    dateRequested: string;                  //The date that the culture is requested
-    dateReturned: string;                   //The date that the culture was returned
-    dateSubmitted: string;                  //The date that the form was submitted
 }
 
 @Injectable({
@@ -180,13 +121,13 @@ export class DiagnosticClinicAPIService {
    }
 
      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    RETREIVE ALL SAMPLES
+  //                                                    RETREIVE_ALL_SAMPLES
   /**
    * Method that sends a request to the API to retreive all Samples
    *
    * @param {Interface.Organisation} orgInfo
    * @returns
-   * @memberof HttpService
+   * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveAllOrganizationSamples() {
@@ -212,13 +153,13 @@ export class DiagnosticClinicAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    RETREIVE ALL SAMPLES FOR MEMBER
+  //                                                    RETREIVE_ALL_SAMPLES_FOR_MEMBER
   /**
    * Method that sends a request to the API to retreive all Samples for a member
    *
    * @param {Interface.Organisation} orgInfo
    * @returns
-   * @memberof HttpService
+   * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveMemberSamples() {
@@ -243,96 +184,15 @@ export class DiagnosticClinicAPIService {
     return this.http.request<any>(method, retrieveAllMemberSamples, options);
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT_CMW_DEPOSIT_FORM 
-  /**
-   *    This function sends a POST request to the server to submit a CMW deposit form and save it to the
-   *    database.
-   *
-   * @returns API response @type any
-   * @memberof DiagnosticClinicAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCMWDepositForm(data: CMWDeposit){
-    const options = {
-        method: 'POST',
-        url: submitCMWDepositFormURL,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
-    };
-
-    return this.http.request('POST', submitCMWDepositFormURL, options);
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT_CMW_REQUEST_FORM 
-  /**
-   *    This function sends a POST request to the server to submit a CMW request form and save it to the
-   *    database.
-   *
-   * @returns API response @type any
-   * @memberof DiagnosticClinicAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCMWRequestForm(data: CMWRequest){
-    const options = {
-        method: 'POST',
-        url: submitCMWRequestFormURL,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
-    };
-
-    return this.http.request('POST', submitCMWRequestFormURL, options);
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT_CMW_REVITALIZATION_FORM 
-  /**
-   *    This function sends a POST request to the server to submit a CMW revitalization form and save it to the
-   *    database.
-   *
-   * @returns API response @type any
-   * @memberof DiagnosticClinicAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCMWRevitalizationForm(data: CMWRevitalization){
-    const options = {
-        method: 'POST',
-        url: submitCMWRevitalizationFormURL,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
-    };
-
-    return this.http.request('POST', submitCMWRevitalizationFormURL, options);
-  }
-
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT SAMPLE FORM
+  //                                                    SUBMIT_SAMPLE_FORM
   /**
    * Method that send a request to the API to submit a specifc Sample Form
    *
    * @param {Interface.Organisation} orgInfo
    * @param {Interface.ClientFormData} formDetails
    * @returns
-   * @memberof HttpService
+   * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData) {
