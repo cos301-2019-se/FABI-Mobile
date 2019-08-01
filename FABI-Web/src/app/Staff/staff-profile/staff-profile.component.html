@@ -189,13 +189,13 @@
         <!-- Password Field-->
         <div class="admin-contact-inputs">
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Password" matInput type="password" formControlName="staff_password" value="{{password}}">
+            <input #passwordInput matInput placeholder="Password" matInput type="password" formControlName="staff_password" value="{{password}}"><i class="fas fa-eye-slash" (click)="showPassword()"></i>
           </mat-form-field>
           <br />
 
           <!-- Confirm Password-->
           <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Confirm Password" matInput type="password" formControlName="staff_confirm" value="{{confirmPassword}}">
+            <input #confirmInput matInput placeholder="Confirm Password" matInput type="password" formControlName="staff_confirm" value="{{confirmPassword}}"><i class="fas fa-eye-slash" (click)="showConfirmedPassword()"></i>
           </mat-form-field>
         </div>
         <br />

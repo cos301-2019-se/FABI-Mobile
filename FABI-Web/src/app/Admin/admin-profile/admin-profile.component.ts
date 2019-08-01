@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -335,7 +335,7 @@ export class AdminProfileComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  SAVE_STAFF_CHANGES
+  //                                                        SAVE_CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
    *  @memberof AdminProfileComponent
@@ -425,6 +425,23 @@ export class AdminProfileComponent implements OnInit {
     }
     else{
       this.passwordInput.nativeElement.type = 'password';
+    }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SHOW_CONFIRMED_PASSWORD
+  /**
+   *  This function will make the users confirmed password visible on request. 
+   * @memberof AdminProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  showConfirmedPassword(){
+    if(this.confirmInput.nativeElement.type === 'password'){
+      this.confirmInput.nativeElement.type = 'text';
+    }
+    else{
+      this.confirmInput.nativeElement.type = 'password';
     }
   }
 
