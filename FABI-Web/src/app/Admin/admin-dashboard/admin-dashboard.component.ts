@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,7 +15,7 @@
 
 import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
   ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
-  import { OnInit} from '@angular/core';
+import { OnInit} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -92,6 +92,10 @@ export class AdminDashboardComponent implements OnInit {
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {DomSanitizer} sanitizer
+   * @param {ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * 
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,12 +128,10 @@ export class AdminDashboardComponent implements OnInit {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
       if(response.success == true){
-
+        //Temporary array to hold the array of admins retuned from the API call
         this.admins = response.data.qs.admins;
+        //Temporary array to hold the array of staff returned from the API call
         this.staff = response.data.qs.staff;
-        // this.databaseAdmins = response.data.qs.databaseAdmins;
-        // this.cultureCurators = response.data.qs.cultureCurators;
-        // this.diagnosticClinicAdmins = response.data.qs.diagnosticClinicAdmins;
 
         this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
         this.userStats = this.numberOfFABIMembers.toString();
@@ -159,7 +161,7 @@ export class AdminDashboardComponent implements OnInit {
     //Subscribing to the DiagnosticClinicAPIService to get a list containing all of FABI's samples
     this.diagnosticClinicService.getAllSamples().subscribe((response: any) => {
       if(response.success == true){
-        //Populating the arrays with the returned data
+        //Populating the sample array with the returned data
         this.samples = response.data.samples;
 
         this.numberOfSamples = this.samples.length;
@@ -191,6 +193,7 @@ export class AdminDashboardComponent implements OnInit {
   /**
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
+   * 
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,14 +274,18 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
+    //Making a call too the notification logging service to return all logs belonging to a specific user
     this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
           if(data[i].Type == 'USER'){
+            //A temporary instance of UserLogs that will be added to the allNotifications array
             var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
+            
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
             const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
 
@@ -297,8 +304,10 @@ export class AdminDashboardComponent implements OnInit {
             this.localNotificationNumber += 1;
           }
           else if(data[i].Type == 'DBML'){
+            //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
             var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
 
             if(tempLogD.Action == 'C'){
@@ -316,6 +325,7 @@ export class AdminDashboardComponent implements OnInit {
             this.localNotificationNumber += 1;
           }
           else if(data[i].Type == 'ACCL'){
+            //A temporary instance of AccessLogs that will be added to the allNotifications array
             var tempLogA: AccessLogs = {LogID: data[i].date, Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
           
             this.allNotifications.push(tempLogA);
@@ -336,14 +346,18 @@ export class AdminDashboardComponent implements OnInit {
   //                                                  LOAD_USER_DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
+   * 
    *  @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
@@ -359,6 +373,7 @@ export class AdminDashboardComponent implements OnInit {
    *  This function will remove a notification from the notification section on the HTML page.
    * 
    * @param {string} id                   //The id of the notification to be removed
+   * 
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -401,10 +416,12 @@ export class AdminDashboardComponent implements OnInit {
    * This function is called when the page loads
    * 
    * @description 1. Call getNumberOfFABIMembers() | 2. Call getNumberOfFABISamples() | 3. Call loadNotifications() 
+   * 
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() { 
+    //Calling the neccessary functions as the page loads
     this.getNumberOfFABIMembers();
     this.getNumberOfFABISamples();
     this.loadNotifications();
@@ -414,8 +431,16 @@ export class AdminDashboardComponent implements OnInit {
     
   }
 
-  logout() {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
