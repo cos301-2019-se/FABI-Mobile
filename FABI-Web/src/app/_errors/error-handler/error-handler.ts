@@ -52,13 +52,13 @@ export class ErrorsHandler implements ErrorHandler {
       }
 
       console.log("------------------- ERROR HANDLER 1 ------------------");
-      console.log("------------ ERROR: " + JSON.stringify(error));
+      console.log("------------ ERROR: " + error);
       // Http Error
       notificationService.showErrorNotification(`${error.error.code} ${error.error.title}`, `${error.error.message} - ${error.message}`);
       
     } else {
       console.log("------------------- ERROR HANDLER 2 ------------------");
-      console.log("------ ERROR: " + JSON.stringify(error));
+      console.log("------ ERROR: " + error);
 
       // Client Error Happend      
       notificationService.showErrorNotification(error.name, error.message);

@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,6 +17,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService, CMWDeposit, CMWRequest } from '../../_services/diagnostic-clinic-api.service';
@@ -41,7 +43,8 @@ export class SubmitCmwRequestComponent implements OnInit {
   staff: string[] = []; 
   /** Object array for holding the staff members -  @type {String[]} */
   filteredOptions: Observable<string[]>;
-  control = new FormControl();
+  /** The form control for the autocomplete of the requestor input -  @type {FormControl} */
+  requestorControl = new FormControl();
 
   /** The requestor of the form -  @type {string} */
   requestor: string;
@@ -93,8 +96,7 @@ export class SubmitCmwRequestComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService
     ) { 
       this.cmwRequestForm = this.formBuilder.group({
-      
-        requestor: '',
+      requestor: '',
       taxon_name: '',
       culture_number: '',
       date_requested: null,
@@ -181,14 +183,13 @@ export class SubmitCmwRequestComponent implements OnInit {
   getAllStaff(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
-      if(response.success == true){
-        
-        for(var i = 0; i <= response.data.qs.admins.length; i++){
+      if(response.success == true){  
+        for(var i = 0; i < response.data.qs.admins.length; i++){
           this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
         }
 
-        for(var i = 0; i <= response.data.qs.admins.length; i++){
-          this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
+        for(var i = 0; i < response.data.qs.staff.length; i++){
+          this.staff.push(response.data.qs.staff[i].surname + ', ' + response.data.qs.staff[i].fname[0]);
         }
       }
     });
@@ -202,7 +203,7 @@ export class SubmitCmwRequestComponent implements OnInit {
    * @memberof SubmitCmwRequestComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  private filter(value: string): string[] {
+  private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.staff.filter(option => option.toLowerCase().includes(filterValue));
   }
@@ -387,7 +388,8 @@ export class SubmitCmwRequestComponent implements OnInit {
 
   ngOnInit() {
     this.loadNotifications();
-    this.filteredOptions = this.control.valueChanges.pipe(startWith(''), map(value => this.filter(value)));
+    this.getAllStaff();
+    this.filteredOptions = this.requestorControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
   }
 
 }

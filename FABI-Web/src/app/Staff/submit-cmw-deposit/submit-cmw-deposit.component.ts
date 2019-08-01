@@ -16,7 +16,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -42,8 +41,21 @@ export class SubmitCmwDepositComponent implements OnInit {
   /** Object array for holding the staff members -  @type {string[]} */                        
   staff: string[] = []; 
   /** Object array for holding the staff members -  @type {String[]} */
-  filteredOptions: Observable<string[]>;
-  control = new FormControl();
+  filteredOptions1: Observable<string[]>;
+  /** Object array for holding the staff members -  @type {String[]} */
+  filteredOptions2: Observable<string[]>;
+  /** Object array for holding the staff members -  @type {String[]} */
+  filteredOptions3: Observable<string[]>;
+  /** Object array for holding the staff members -  @type {String[]} */
+  filteredOptions4: Observable<string[]>;
+  /** The form control for the autocomplete of the collectedBy input -  @type {FormControl} */
+  collectedByControl = new FormControl();
+  /** The form control for the autocomplete of the isolatedBy input -  @type {FormControl} */
+  isolatedByControl = new FormControl();
+  /** The form control for the autocomplete of the identifiedBy input -  @type {FormControl} */
+  identifiedByControl = new FormControl();
+  /** The form control for the autocomplete of the donatedBy input -  @type {FormControl} */
+  donatedByControl = new FormControl();
 
   /** The cmw culture number of the form -  @type {string} */
   cmwCultureNumber: string;
@@ -116,7 +128,6 @@ export class SubmitCmwDepositComponent implements OnInit {
    * @param {DiagnosticClinicAPIService} diagnosticClinicService for making calls to the Diagnostic Clinic API Service
    * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
-   * @param {DatePipe} datePipe Used to get the current date in a specific format
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @memberof SubmitCmwDepositComponent
    */
@@ -129,7 +140,6 @@ export class SubmitCmwDepositComponent implements OnInit {
     private diagnosticClinicService: DiagnosticClinicAPIService, 
     private authService: AuthenticationService, 
     private router: Router,
-    private datePipe: DatePipe,
     private notificationLoggingService: NotificationLoggingService
     ) { 
     this.cmwDepositForm = this.formBuilder.group({
@@ -360,7 +370,7 @@ export class SubmitCmwDepositComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                            GET_ALL_STAFF
+  //                                                      GET_ALL_STAFF
   /**
    *  This function will load of the FABI staff members and administrators into an array so that they can be selected when filling out
    *  the form to submit.
@@ -372,12 +382,12 @@ export class SubmitCmwDepositComponent implements OnInit {
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
       if(response.success == true){
         
-        for(var i = 0; i <= response.data.qs.admins.length; i++){
+        for(var i = 0; i < response.data.qs.admins.length; i++){
           this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
         }
 
-        for(var i = 0; i <= response.data.qs.admins.length; i++){
-          this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
+        for(var i = 0; i < response.data.qs.staff.length; i++){
+          this.staff.push(response.data.qs.staff[i].surname + ', ' + response.data.qs.staff[i].fname[0]);
         }
       }
     });
@@ -570,7 +580,7 @@ export class SubmitCmwDepositComponent implements OnInit {
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  private filter(value: string): string[] {
+  private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.staff.filter(option => option.toLowerCase().includes(filterValue));
   }
@@ -578,7 +588,10 @@ export class SubmitCmwDepositComponent implements OnInit {
   ngOnInit() {
     this.loadNotifications();
     this.getAllStaff();
-    this.filteredOptions = this.control.valueChanges.pipe(startWith(''), map(value => this.filter(value)));
+    this.filteredOptions1 = this.collectedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
+    this.filteredOptions2 = this.identifiedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
+    this.filteredOptions3 = this.isolatedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
+    this.filteredOptions4 = this.donatedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
   }
 
 }
