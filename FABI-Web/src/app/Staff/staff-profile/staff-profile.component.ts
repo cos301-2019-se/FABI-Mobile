@@ -82,6 +82,10 @@ export class StaffProfileComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {FormBuilder} formBuilder Used to get the form elements from the HTML page
+   * @param {Router} router
+   * 
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,6 +109,15 @@ export class StaffProfileComponent implements OnInit {
     });
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof StaffProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
@@ -115,6 +128,7 @@ export class StaffProfileComponent implements OnInit {
   /**
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
+   * 
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,14 +209,18 @@ export class StaffProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
+    //Making a call too the notification logging service to return all logs belonging to a specific user
     this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
           if(data[i].Type == 'USER'){
+            //A temporary instance of UserLogs that will be added to the allNotifications array
             var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
+            
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
             const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
 
@@ -262,19 +280,28 @@ export class StaffProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadStaffProfileDetails(){
+    //The id number of the user that is currently logged in
     this.id = localStorage.getItem('userID');
+    //The organization of the user that is currently logged in
     this.organization = localStorage.getItem('userOrganization');
+    //The password of the user that is currently logged in
     this.password = localStorage.getItem('userPassword');
+    //Setting the confirmPassword variable to have the same value as the user's current password
     this.confirmPassword = this.password;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Setting the user type of the user
         this.userType = data.userType;
+        //Setting the first name of the user
         this.name = data.fname;
+        //Setting the surname of the user
         this.surname = data.surname;
+        //Setting the email of the user
         this.email = data.email;
       }
       else{
@@ -287,14 +314,18 @@ export class StaffProfileComponent implements OnInit {
   //                                                  LOAD_USER_DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
+   * 
    *  @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
@@ -312,13 +343,17 @@ export class StaffProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
+    //Indicates if the details can be changed based on whether the passwords match or not
     var valid = true;
 
+    //Checking to make sure that the passwords are not empty
+    //Checking to make sure that the password and confirmed password match
     if(this.staffProfileForm.controls.admin_password.value != '' && 
     this.staffProfileForm.controls.admin_password.value == this.staffProfileForm.controls.admin_confirm.value){
       this.password = this.staffProfileForm.controls.admin_password.value;
     }
     else{
+      //Indicates that the changes cannot be saved
       valid = false;
 
       //POPUP MESSAGE
@@ -327,6 +362,7 @@ export class StaffProfileComponent implements OnInit {
       });
     }
 
+    //Indicates that the changes that the user has made to their profile details, can be changed
     if(valid == true){
       if(this.staffProfileForm.controls.staff_email.value == ''){
         this.email = this.email;
@@ -349,8 +385,12 @@ export class StaffProfileComponent implements OnInit {
         this.surname = this.staffProfileForm.controls.staff_surname.value;
       }
 
+      //Making a call to the User Management API Service to save the user's changed profile details
       this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
         if(response.success == true){
+          //Making sure that local storage now has the updated password stored
+          localStorage.setItem('userPassword', this.password);
+          //Reloading the updated user's details
           this.loadStaffProfileDetails();
 
           //Display message to say that details were successfully saved
@@ -379,6 +419,7 @@ export class StaffProfileComponent implements OnInit {
   //                                                        SHOW_PASSWORD
   /**
    *  This function will make the users password visible on request. 
+   * 
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -396,6 +437,7 @@ export class StaffProfileComponent implements OnInit {
   //                                                        SHOW_CONFIRMED_PASSWORD
   /**
    *  This function will make the users confirmed password visible on request. 
+   * 
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -421,9 +463,21 @@ export class StaffProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadStaffProfileDetails() | 2. Call loadNotifications() 
+   * 
+   * @memberof StaffProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.loadStaffProfileDetails();
     this.loadNotifications();
   }
