@@ -18,10 +18,11 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService, CMWDeposit, CMWRequest } from '../../_services/diagnostic-clinic-api.service';
+import { CultureCollectionAPIService, CMWDeposit, CMWRequest } from '../../_services/culture-collection-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
 
@@ -81,16 +82,17 @@ export class SubmitCmwRequestComponent implements OnInit {
    * Creates an instance of SubmitCmwRequestComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
-   * @param {DiagnosticClinicAPIService} diagnosticClinicService for making calls to the Diagnostic Clinic API Service
+   * @param {CultureCollectionAPIService} cultureCollectionService for making calls to the Culture Collection API Service
    * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @memberof SubmitCmwRequestComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar, 
     private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private cultureCollectionService: CultureCollectionAPIService, 
     private authService: AuthenticationService, 
     private router: Router,
     private notificationLoggingService: NotificationLoggingService
@@ -159,14 +161,25 @@ export class SubmitCmwRequestComponent implements OnInit {
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
     var request: CMWRequest = {userID: localStorage.getItem('userPassword'), requestor: this.requestor, taxonName: this.taxonName, 
-        cultureNumber: this.cultureNumber, dateRequested: this.dateRequested.toDateString(), referenceNumber: this.referenceNumber, notes: this.notes, dateSubmitted: currentDate}
-  
-    this.diagnosticClinicService.submitCMWRequestForm(request).subscribe((response: any) => {
+        cultureNumber: this.cultureNumber, dateRequested: this.dateRequested.toString(), referenceNumber: this.referenceNumber, 
+        notes: this.notes, dateSubmitted: currentDate}
+    
+    this.cultureCollectionService.submitCMWRequestForm(request).subscribe((response: any) => {
       if(response.success == true){
         //Successfully submitted form
+
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("CMW Request form successfully submitted.", "Dismiss", {
+          duration: 3000
+        });
       }
       else{
         //Error handling
+
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Could not submit CMW Request form. Please try again.", "Dismiss", {
+          duration: 3000
+        });
       }
     });
   }

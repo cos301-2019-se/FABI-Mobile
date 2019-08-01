@@ -108,7 +108,7 @@
   </div>
 
   <div class="cmw-deposit">
-    <form class="example-form" [formGroup]="cmwDepositForm" (submit)="submitCMWDepositForm">
+    <form class="example-form" [formGroup]="cmwDepositForm" (submit)="submitCMWDepositForm()">
       <div>
         <mat-form-field class="example-full-width">
           <input matInput placeholder="CMW Culture Number" type="text" formControlName="cmw_culture_number">
