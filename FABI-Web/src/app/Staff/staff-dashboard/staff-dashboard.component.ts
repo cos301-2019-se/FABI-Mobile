@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 31th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -78,6 +78,9 @@ export class StaffDashboardComponent implements OnInit {
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API service
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
+   * 
    * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +93,16 @@ export class StaffDashboardComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService,
     private cultureCollectionService: CultureCollectionAPIService
     ) { }
+  
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
@@ -181,14 +193,18 @@ export class StaffDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
+    //Making a call too the notification logging service to return all logs belonging to a specific user
     this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
           if(data[i].Type == 'USER'){
+            //A temporary instance of UserLogs that will be added to the allNotifications array
             var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
+            
+            //Getting the name and surname of the users passed using their id numbers
             const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
             const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
 
@@ -220,10 +236,13 @@ export class StaffDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
