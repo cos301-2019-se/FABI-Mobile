@@ -17,7 +17,7 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolve
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { DiagnosticClinicAPIService, Sample } from '../../_services/diagnostic-clinic-api.service';
 import { CultureCollectionAPIService, CMWDeposit, CMWRequest } from '../../_services/culture-collection-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
@@ -64,6 +64,8 @@ export class StaffDashboardComponent implements OnInit {
   deposits: CMWDeposit[] = [];
   /** Object array for holding the requests associated with the user -  @type {CMWRequest[]} */
   requests: CMWRequest[] = [];
+  /** Object array for holding the samples associated with the user -  @type {Sample[]} */
+  samples: Sample[] = [];
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -287,7 +289,8 @@ export class StaffDashboardComponent implements OnInit {
         var data = response.date.samples;
 
         for(var i = 0; i < data.length; i++){
-
+          var tempSample: Sample = {userID: data[i].userID, orgName: data[i].orgName, status: data[i].status, data: data[i].data};
+          this.samples.push(tempSample);
         }
       }
       else{ 

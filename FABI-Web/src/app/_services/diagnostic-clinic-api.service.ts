@@ -30,19 +30,19 @@ const getOrganizationSamplesURL = `${config.diagnosticClinicURL}/retrieveAllOrgS
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
-    userID: string;                         //the user id of the user to be submitted
+    userID: string;                         //The user id of the user to be submitted
 }
 
 //Object for defining the samples received from the API call
 export interface Sample{
-    userID: string;
-    orgName: string;
-    status: string;
-    data: Species;
+    userID: string;                         //The id of the user who submitted the sample
+    orgName: string;                        //The organization that the user belongs to
+    status: string;                         //The status of the sample
+    data: Species;                          //The data within the sample which is the species
 }
 
 export interface Species{
-    species: string;
+    species: string;                        //The species of a sample
 }
 
 @Injectable({
@@ -74,7 +74,6 @@ export class DiagnosticClinicAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    getAllSamples(){
-
     const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
     const method = "POST";
     
@@ -104,7 +103,7 @@ export class DiagnosticClinicAPIService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getSamplesForFABIStaff(id: string){
     const data = {"userID": id};
-    const getAllSamplesURL = `${config.diagnosticClinicURL}/getStaffMembersSamples`;
+    const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
     const method = "POST";
     
     const options = {

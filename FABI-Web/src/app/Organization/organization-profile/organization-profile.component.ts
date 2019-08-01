@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,7 +13,7 @@
  * <<license>>
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import * as Interface from "../../_interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -59,6 +59,11 @@ export class OrganizationProfileComponent implements OnInit {
 
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
+
+  /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
+  @ViewChild("passwordInput") passwordInput : ElementRef;
+  /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
+  @ViewChild("confirmInput") confirmInput : ElementRef;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,6 +213,40 @@ export class OrganizationProfileComponent implements OnInit {
       let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
         duration: 3000
       });
+    }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SHOW_PASSWORD
+  /**
+   *  This function will make the users password visible on request. 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  showPassword(){
+    if(this.passwordInput.nativeElement.type === 'password'){
+      this.passwordInput.nativeElement.type = 'text';
+    }
+    else{
+      this.passwordInput.nativeElement.type = 'password';
+    }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SHOW_CONFIRMED_PASSWORD
+  /**
+   *  This function will make the users confirmed password visible on request. 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  showConfirmedPassword(){
+    if(this.confirmInput.nativeElement.type === 'password'){
+      this.confirmInput.nativeElement.type = 'text';
+    }
+    else{
+      this.confirmInput.nativeElement.type = 'password';
     }
   }
 
