@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Thursday, August 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -93,7 +93,7 @@ export class MemberDashboardComponent implements OnInit {
         var tempSamples = response.data.samples;
         for(var i = 0; i < tempSamples.length; i++){
           var tempSpecies: Species = {species: tempSamples[i].data.species};
-          var tempSample: Sample = {userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, data: tempSpecies};
+          var tempSample: Sample = {userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, referenceNumber: tempSamples[i].referenceNumber, data: tempSpecies};
           this.memberSamples.push(tempSample);
         }
 
