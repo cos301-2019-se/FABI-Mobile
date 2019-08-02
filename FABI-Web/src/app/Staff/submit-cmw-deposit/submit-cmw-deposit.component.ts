@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Thursday, August 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -184,6 +184,54 @@ export class SubmitCmwDepositComponent implements OnInit {
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_COLLECTED_BY 
+  /*** This function will set the 'collectedBy' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setCollectedBy(event$){
+    this.collectedBy = event$.option.value;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_ISOLATED_BY 
+  /*** This function will set the 'isolatedBy' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setIsolatedBy(event$){
+    this.isolatedBy = event$.option.value;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_IDENTIFIED_BY 
+  /*** This function will set the 'identifiedBy' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setIdentifiedBy(event$){
+    this.identifiedBy = event$.option.value;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_DONATED_BY 
+  /*** This function will set the 'donatedBy' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setDonatedBy(event$){
+    this.donatedBy = event$.option.value;
   }
 
 

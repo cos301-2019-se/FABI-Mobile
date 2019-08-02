@@ -7,5 +7,5 @@ export const config = {
   databaseManagementURL: "https://database-management-dot-api-fabi.appspot.com",
   userManagementURL: "https://user-management-dot-api-fabi.appspot.com",
   diagnosticClinicURL: "https://diagnostic-clinic-dot-api-fabi.appspot.com",
-  cultureClinicURL: "https://culture-clinic-dot-apit-fabi.appspot.com"
+  cultureClinicURL: "https://culture-collection-management-dot-api-fabi.appspot.com"
 }

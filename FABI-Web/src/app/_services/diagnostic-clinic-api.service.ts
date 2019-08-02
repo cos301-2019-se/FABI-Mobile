@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Thursday, August 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -38,6 +38,7 @@ export interface Sample{
     userID: string;                         //The id of the user who submitted the sample
     orgName: string;                        //The organization that the user belongs to
     status: string;                         //The status of the sample
+    referenceNumber: string;                //The reference number that was generated for the sample
     data: Species;                          //The data within the sample which is the species
 }
 
@@ -102,10 +103,8 @@ export class DiagnosticClinicAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getSamplesForFABIStaff(id: string){
-    const data = {"userID": id};
-    const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
-    const method = "POST";
-    
+    const data : POSTMember = {userID: id};
+
     const options = {
         headers: {
         'cache-control': 'no-cache',
@@ -116,7 +115,7 @@ export class DiagnosticClinicAPIService {
         json: true
     };
 
-    return this.http.request('POST', getStaffMembersSamplesURL, options);
+    return this.http.request('POST', getAllSamplesForMemberURL, options);
    }
 
      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

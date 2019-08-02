@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Thursday, August 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -308,7 +308,7 @@ export class StaffDashboardComponent implements OnInit {
         var data = response.date.samples;
 
         for(var i = 0; i < data.length; i++){
-          var tempSample: Sample = {userID: data[i].userID, orgName: data[i].orgName, status: data[i].status, data: data[i].data};
+          var tempSample: Sample = {userID: data[i].userID, orgName: data[i].orgName, status: data[i].status, referenceNumber: data[i].referenceNmber, data: data[i].data};
           this.samples.push(tempSample);
         }
       }
@@ -329,7 +329,7 @@ export class StaffDashboardComponent implements OnInit {
   loadDepositForms() {
     this.cultureCollectionService.getAllDepositLogs().subscribe((response: any) => {
       if(response.success == true){
-        var data = response.data;
+        var data = response.data.qs.forms;
 
         for(var i = 0; i < data.length; i++){
           var tempDeposit : CMWDeposit = {userID: data[i].userID, cmwCultureNumber: data[i].cmwCultureNumber, genus: data[i].genus, epitheton: data[i].epitheton, 
@@ -362,7 +362,7 @@ export class StaffDashboardComponent implements OnInit {
   loadRequestForms() {
     this.cultureCollectionService.getAllRequestLogs().subscribe((response: any) => {
       if(response.success == true){
-        var data = response.data;
+        var data = response.data.qs.forms;
 
         for(var i = 0; i < data.length; i++){
           var tempRequest : CMWRequest = {userID: data[i].userID, requestor: data[i].requestor, taxonName: data[i].taxonName, cultureNumber: data[i].cultureNumber,
