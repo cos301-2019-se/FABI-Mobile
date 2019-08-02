@@ -140,9 +140,9 @@ function addLog(req, res){
 			snapshot.forEach(doc => {
 				
                 var staffdoc = db.collection('Organizations').doc('FABI').collection('Staff').doc(doc.id).collection('notifications').doc(notif.id);
-				//doc.collection('notifications').doc(notif.id);
+				
 				staffdoc.set(notif).then(() => { 
-					//dont need anything here
+					
 				});
 				
             })

@@ -17,6 +17,8 @@ const loggingDGCL = require('./api/routes/DGCL');
 const loggingACCL = require('./api/routes/ACCL');
 const loggingERRL = require('./api/routes/ERRL');
 const getLogs = require('./api/routes/getLogs');
+const getUserLogs = require('./api/routes/getUserLogs');
+const deleteUserLogs = require('./api/routes/deleteUserLogs');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -31,6 +33,8 @@ app.use('/DGCL', loggingDGCL);
 app.use('/ACCL', loggingACCL);
 app.use('/ERRL', loggingERRL);
 app.use('/getLogs', getLogs);
+app.use('/getUserLogs', getUserLogs);
+app.use('/deleteUserLogs', deleteUserLogs);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {

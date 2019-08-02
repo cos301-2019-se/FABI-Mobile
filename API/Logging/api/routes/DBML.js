@@ -142,9 +142,9 @@ function addLog(req, res){
 				var type = db.collection('Organizations').doc('FABI').collection('Staff').doc(doc.id).get().then( doc2 => {
 					if(doc2.data().userType == 'SuperUser' || doc2.data().userType == 'Admin'){
 						var staffdoc = db.collection('Organizations').doc('FABI').collection('Staff').doc(doc.id).collection('notifications').doc(notif.id);
-						//doc.collection('notifications').doc(notif.id);
+						
 						staffdoc.set(notif).then(() => { 
-							//dont need anything here
+							
 						});
 					}	
 					
