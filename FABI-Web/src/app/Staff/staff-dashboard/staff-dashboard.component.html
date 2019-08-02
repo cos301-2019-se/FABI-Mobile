@@ -151,9 +151,9 @@
         <div *ngIf="depositForms">
           <div class="box" *ngFor="let deposit of deposits">      
             <div>
-              <p><b>Culture Number:</b> {{sample.cmwCultureNumber}}</p>
-              <p><b>Culture Name:</b> {{sample.name}}</p>
-              <p><b>Date Submitted:</b> {{sample.dateSubmitted}}</p>
+              <p><b>Culture Number:</b> {{deposit.cultureNumber}}</p>
+              <p><b>Culture Name:</b> {{deposit.name}}</p>
+              <p><b>Date Submitted:</b> {{deposit.dateSubmitted}}</p>
             </div>
           </div>
         </div>
@@ -169,11 +169,11 @@
           <div *ngIf="requestForms">
             <div class="box" *ngFor="let request of requests">      
               <div>
-                <p><b>Culture Number:</b> {{sample.cmwCultureNumber}}</p>
-                <p><b>Culture Name:</b> {{sample.taxonName}}</p>
-                <p><b>Reference Number:</b> {{sample.referenceNumber}}</p>
-                <p><b>Date Requested:</b> {{sample.dateRequested}}</p>
-                <p><b>Date Submitted:</b> {{sample.dateSubmitted}}</p>
+                <p><b>Culture Number:</b> {{request.cultureNumber}}</p>
+                <p><b>Culture Name:</b> {{request.taxonName}}</p>
+                <p><b>Reference Number:</b> {{request.referenceNumber}}</p>
+                <p><b>Date Requested:</b> {{request.dateRequested}}</p>
+                <p><b>Date Submitted:</b> {{request.dateSubmitted}}</p>
               </div>
             </div>
           </div>

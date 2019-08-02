@@ -53,8 +53,8 @@ export class SubmitCmwRequestComponent implements OnInit {
   taxonName: string;
   /** The cultureNumber of the form -  @type {string} */
   cultureNumber: string;
-  /** The dateRequested of the form -  @type {Date} */
-  dateRequested: Date;
+  /** The dateRequested of the form -  @type {string} */
+  dateRequested: string;
   /** The reference number of the form -  @type {string} */
   referenceNumber: string;
   /** The notes of the form -  @type {string} */
@@ -166,7 +166,11 @@ export class SubmitCmwRequestComponent implements OnInit {
       this.cultureNumber = this.cmwRequestForm.controls.culture_number.value;
     }
 
-    this.dateRequested = this.cmwRequestForm.controls.date_requested.value;
+    var temp = (this.cmwRequestForm.controls.date_requested.value).toString();
+    var year = temp[0] + temp[1] + temp[2] + temp[3];
+    var month = temp[5] + temp[6];
+    var day = temp[8] + temp[9];
+    this.dateRequested = day + '/' + month + '/' + year;
     
     if(this.cmwRequestForm.controls.reference_number.value == null || this.cmwRequestForm.controls.reference_number.value == ""){
       this.referenceNumber = "";
@@ -185,13 +189,15 @@ export class SubmitCmwRequestComponent implements OnInit {
     var date = new Date();
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var request: CMWRequest = {userID: localStorage.getItem('userPassword'), requestor: this.requestor, taxonName: this.taxonName, 
-        cultureNumber: this.cultureNumber, dateRequested: this.dateRequested.toString(), referenceNumber: this.referenceNumber, 
+    var request: CMWRequest = {userID: localStorage.getItem('userID'), requestor: this.requestor, taxonName: this.taxonName, 
+        cultureNumber: this.cultureNumber, dateRequested: this.dateRequested, referenceNumber: this.referenceNumber, 
         notes: this.notes, dateSubmitted: currentDate};
     
     this.cultureCollectionService.submitCMWRequestForm(request).subscribe((response: any) => {
       if(response.success == true){
         //Successfully submitted form
+
+        this.cmwRequestForm.reset();
 
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("CMW Request form successfully submitted.", "Dismiss", {

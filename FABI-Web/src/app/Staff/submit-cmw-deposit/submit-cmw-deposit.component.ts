@@ -93,8 +93,8 @@ export class SubmitCmwDepositComponent implements OnInit {
   gps: string;
   /** The collected by of the form -  @type {string} */
   collectedBy: string;
-  /** The date collected of the form -  @type {Date} */
-  dateCollected: Date;
+  /** The date collected of the form -  @type {string} */
+  dateCollected: string;
   /** The isolated by of the form -  @type {string} */
   isolatedBy: string;
   /** The identified by of the form -  @type {string} */
@@ -369,7 +369,11 @@ export class SubmitCmwDepositComponent implements OnInit {
       this.collectedBy = this.cmwDepositForm.controls.collected_by.value;
     }
       
-    this.dateCollected = this.cmwDepositForm.controls.dateCollected.value;
+    var temp = (this.cmwDepositForm.controls.date_requested.value).toString();
+    var year = temp[0] + temp[1] + temp[2] + temp[3];
+    var month = temp[5] + temp[6];
+    var day = temp[8] + temp[9];
+    this.dateCollected = day + '/' + month + '/' + year;
 
     if(this.cmwDepositForm.controls.isolated_by.value == null || this.cmwDepositForm.controls.isolated_by.value == ""){
       this.isolatedBy = "";
@@ -402,15 +406,17 @@ export class SubmitCmwDepositComponent implements OnInit {
     var date = new Date();
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var deposit: CMWDeposit = {userID: localStorage.getItem('userPassword'),cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
+    var deposit: CMWDeposit = {userID: localStorage.getItem('userID'),cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
       internationalCollectionNumber: this.internationalCollectionNumber, herbariumNumber: this.herbariumNumber, otherFABICollections: this.otherFABICollections, name: this.name,
       typeStatus: this.typeStatus, host: this.host, vector: this.vector, substrate: this.substrate, continent: this.continent, country: this.country, region: this.region,
-      locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected.toString(), isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
+      locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected, isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
       donatedBy: this.donatedBy, additionalNotes: this.additionalNotes, dateSubmitted: currentDate}
 
     this.cultureCollectionService.submitCMWDepositForm(deposit).subscribe((response: any) => {
       if(response.success == true){
         //Successfully submitted deposit form
+
+        this.cmwDepositForm.reset();
 
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("CMW Deposit form successfully submitted.", "Dismiss", {
