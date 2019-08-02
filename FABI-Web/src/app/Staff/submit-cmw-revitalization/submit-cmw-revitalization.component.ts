@@ -60,9 +60,9 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   /** The reference number of the form -  @type {string} */
   referenceNumber: string;
   /** The date requested of the form -  @type {string} */
-  dateRequested: Date;
+  dateRequested: string;
   /** The date returned of the form -  @type {string} */
-  dateReturned: Date;
+  dateReturned: string;
 
   /** Object array for holding all of the logs -  @type {any[]} */ 
   allNotifications: any[] = [];
@@ -201,19 +201,30 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
       this.referenceNumber = this.cmwRevitalizationForm.controls.reference_number.value;
     }
 
-    this.dateRequested = this.cmwRevitalizationForm.controls.date_requested.value;
-    this.dateReturned = this.cmwRevitalizationForm.controls.date_returned.value;
+    var temp = (this.cmwRevitalizationForm.controls.date_requested.value).toString();
+    var year = temp[0] + temp[1] + temp[2] + temp[3];
+    var month = temp[5] + temp[6];
+    var day = temp[8] + temp[9];
+    this.dateRequested = day + '/' + month + '/' + year;
+
+    var temp = (this.cmwRevitalizationForm.controls.date_requested.value).toString();
+    var year = temp[0] + temp[1] + temp[2] + temp[3];
+    var month = temp[5] + temp[6];
+    var day = temp[8] + temp[9];
+    this.dateReturned = day + '/' + month + '/' + year;
 
     var date = new Date();
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var revitalization: CMWRevitalization = {userID: localStorage.getItem('userPassword'), requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
-      cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested.toString(),
-      dateReturned: this.dateReturned.toString(), dateSubmitted: currentDate};
+    var revitalization: CMWRevitalization = {userID: localStorage.getItem('userID'), requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
+      cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested,
+      dateReturned: this.dateReturned, dateSubmitted: currentDate};
 
     this.cultureCollectionService.submitCMWRevitalizationForm(revitalization).subscribe((response: any) => {
       if(response.success == true){
         //Successfully submitted form
+
+        this.cmwRevitalizationForm.reset();
 
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("CMW Revitalization form successfully submitted.", "Dismiss", {

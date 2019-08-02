@@ -434,75 +434,78 @@ export class ReportingComponent implements OnInit {
         var data = response.data.qs.forms;
 
         if(this.dateFrom != '' && this.dateTo != ''){
-          if(data[i].dateSubmitted == this.dateFrom || data[i].dateSubmitted == this.dateTo){
-            var tempArray: any = [];
-            
-            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-            tempArray.push(data[i].requestor);
-            tempArray.push(data[i].cultureNumber);
-            tempArray.push(data[i].taxonName);
-            tempArray.push(data[i].referenceNumber);
-            tempArray.push(data[i].dateRequested);
-            tempArray.push(data[i].dateSubmitted);
-  
-            this.requestLogsArray.push(tempArray);
-          }
-          else{
-            var month = Number(data[i].dateSubmitted[3] + data[i].dateSubmitted[4]);
-            var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
-
-            if(month == monthFrom){
-              var day = Number(data[i].dateSubmitted[0] + data[i].dateSubmitted[1]);
-              var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
-
-              if(day >= dayFrom){
-                var tempArray: any = [];
-            
-                tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-                tempArray.push(data[i].requestor);
-                tempArray.push(data[i].cultureNumber);
-                tempArray.push(data[i].taxonName);
-                tempArray.push(data[i].referenceNumber);
-                tempArray.push(data[i].dateRequested);
-                tempArray.push(data[i].dateSubmitted);
-      
-                this.requestLogsArray.push(tempArray);
-              }
-            }
-
-            var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
-
-            if(month == monthTo){
-              var day = Number(data[i].dateSubmitted[0] + data[i].dateSubmitted[1]);
-              var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
-
-              if(day <= dayTo){
-                var tempArray: any = [];
-            
-                tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-                tempArray.push(data[i].requestor);
-                tempArray.push(data[i].cultureNumber);
-                tempArray.push(data[i].taxonName);
-                tempArray.push(data[i].referenceNumber);
-                tempArray.push(data[i].dateRequested);
-                tempArray.push(data[i].dateSubmitted);
-      
-                this.requestLogsArray.push(tempArray);
-              }
-            }
-
-            if(month >= monthFrom && month <= monthTo){
+          this.requestLogsArray = [];
+          for(var j = 0; j < data.length; j++){
+            if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
-            
-              tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-              tempArray.push(data[i].requestor);
-              tempArray.push(data[i].cultureNumber);
-              tempArray.push(data[i].taxonName);
-              tempArray.push(data[i].referenceNumber);
-              tempArray.push(data[i].dateRequested);
-              tempArray.push(data[i].dateSubmitted);
+              
+              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              tempArray.push(data[j].requestor);
+              tempArray.push(data[j].cultureNumber);
+              tempArray.push(data[j].taxonName);
+              tempArray.push(data[j].referenceNumber);
+              tempArray.push(data[j].dateRequested);
+              tempArray.push(data[j].dateSubmitted);
     
               this.requestLogsArray.push(tempArray);
+            }
+            else{
+              var month = Number(data[j].dateSubmitted[3] + data[j].dateSubmitted[4]);
+              var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
+
+              if(month == monthFrom){
+                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
+                var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
+
+                if(day >= dayFrom){
+                  var tempArray: any = [];
+              
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(data[j].requestor);
+                  tempArray.push(data[j].cultureNumber);
+                  tempArray.push(data[j].taxonName);
+                  tempArray.push(data[j].referenceNumber);
+                  tempArray.push(data[j].dateRequested);
+                  tempArray.push(data[j].dateSubmitted);
+        
+                  this.requestLogsArray.push(tempArray);
+                }
+              }
+
+              var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
+
+              if(month == monthTo){
+                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
+                var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
+
+                if(day <= dayTo){
+                  var tempArray: any = [];
+              
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(data[j].requestor);
+                  tempArray.push(data[j].cultureNumber);
+                  tempArray.push(data[j].taxonName);
+                  tempArray.push(data[j].referenceNumber);
+                  tempArray.push(data[j].dateRequested);
+                  tempArray.push(data[j].dateSubmitted);
+        
+                  this.requestLogsArray.push(tempArray);
+                }
+              }
+
+              if(month >= monthFrom && month <= monthTo){
+                var tempArray: any = [];
+              
+                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                tempArray.push(data[j].requestor);
+                tempArray.push(data[j].cultureNumber);
+                tempArray.push(data[j].taxonName);
+                tempArray.push(data[j].referenceNumber);
+                tempArray.push(data[j].dateRequested);
+                tempArray.push(data[j].dateSubmitted);
+      
+                this.requestLogsArray.push(tempArray);
+              }
             }
           }
         }
@@ -526,6 +529,10 @@ export class ReportingComponent implements OnInit {
         //Error handling
       }
     });
+
+    if(this.requestLogsArray != null){
+      this.requestLogs = true;
+    }
   }
 
 
@@ -572,78 +579,81 @@ export class ReportingComponent implements OnInit {
         var data = response.data.qs.forms;
 
         if(this.dateFrom != '' && this.dateTo != ''){
-          if(data[i].dateSubmitted == this.dateFrom || data[i].dateSubmitted == this.dateTo){
-            var tempArray: any = [];
-            
-            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-            tempArray.push(data[i].cmwCultureNumber);
-            tempArray.push(data[i].name);
-            tempArray.push(data[i].collectedBy);
-            tempArray.push(data[i].dateCollected);
-            tempArray.push(data[i].isolatedBy);
-            tempArray.push(data[i].identifiedBy);
-            tempArray.push(data[i].dateSubmitted);
-  
-            this.requestLogsArray.push(tempArray);
-          }
-          else{
-            var month = Number(data[i].dateSubmitted[3] + data[i].dateSubmitted[4]);
-            var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
-
-            if(month == monthFrom){
-              var day = Number(data[i].dateSubmitted[0] + data[i].dateSubmitted[1]);
-              var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
-
-              if(day >= dayFrom){
-                var tempArray: any = [];
-            
-                tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-                tempArray.push(data[i].cmwCultureNumber);
-                tempArray.push(data[i].name);
-                tempArray.push(data[i].collectedBy);
-                tempArray.push(data[i].dateCollected);
-                tempArray.push(data[i].isolatedBy);
-                tempArray.push(data[i].identifiedBy);
-                tempArray.push(data[i].dateSubmitted);
-      
-                this.requestLogsArray.push(tempArray);
-              }
-            }
-
-            var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
-
-            if(month == monthTo){
-              var day = Number(data[i].dateSubmitted[0] + data[i].dateSubmitted[1]);
-              var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
-
-              if(day <= dayTo){
-                var tempArray: any = [];
-            
-                tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-                tempArray.push(data[i].cmwCultureNumber);
-                tempArray.push(data[i].name);
-                tempArray.push(data[i].collectedBy);
-                tempArray.push(data[i].dateCollected);
-                tempArray.push(data[i].isolatedBy);
-                tempArray.push(data[i].identifiedBy);
-                tempArray.push(data[i].dateSubmitted);
-      
-                this.requestLogsArray.push(tempArray);
-              }
-            }
-
-            if(month >= monthFrom && month <= monthTo){
+          this.depositLogsArray = [];
+          for(var j = 0; j < data.length; j++){
+            if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
-            
-              tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-              tempArray.push(data[i].requestor);
-              tempArray.push(data[i].cultureNumber);
-              tempArray.push(data[i].taxonName);
-              tempArray.push(data[i].referenceNumber);
-              tempArray.push(data[i].dateRequested);
-              tempArray.push(data[i].dateSubmitted);
+              
+              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              tempArray.push(data[j].cmwCultureNumber);
+              tempArray.push(data[j].name);
+              tempArray.push(data[j].collectedBy);
+              tempArray.push(data[j].dateCollected);
+              tempArray.push(data[j].isolatedBy);
+              tempArray.push(data[j].identifiedBy);
+              tempArray.push(data[j].dateSubmitted);
     
-              this.requestLogsArray.push(tempArray);
+              this.depositLogsArray.push(tempArray);
+            }
+            else{
+              var month = Number(data[j].dateSubmitted[3] + data[j].dateSubmitted[4]);
+              var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
+
+              if(month == monthFrom){
+                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
+                var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
+
+                if(day >= dayFrom){
+                  var tempArray: any = [];
+              
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(data[j].cmwCultureNumber);
+                  tempArray.push(data[j].name);
+                  tempArray.push(data[j].collectedBy);
+                  tempArray.push(data[j].dateCollected);
+                  tempArray.push(data[j].isolatedBy);
+                  tempArray.push(data[j].identifiedBy);
+                  tempArray.push(data[j].dateSubmitted);
+        
+                  this.depositLogsArray.push(tempArray);
+                }
+              }
+
+              var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
+
+              if(month == monthTo){
+                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
+                var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
+
+                if(day <= dayTo){
+                  var tempArray: any = [];
+              
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(data[j].cmwCultureNumber);
+                  tempArray.push(data[j].name);
+                  tempArray.push(data[j].collectedBy);
+                  tempArray.push(data[j].dateCollected);
+                  tempArray.push(data[j].isolatedBy);
+                  tempArray.push(data[j].identifiedBy);
+                  tempArray.push(data[j].dateSubmitted);
+        
+                  this.depositLogsArray.push(tempArray);
+                }
+              }
+
+              if(month >= monthFrom && month <= monthTo){
+                var tempArray: any = [];
+              
+                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                tempArray.push(data[j].requestor);
+                tempArray.push(data[j].cultureNumber);
+                tempArray.push(data[j].taxonName);
+                tempArray.push(data[j].referenceNumber);
+                tempArray.push(data[j].dateRequested);
+                tempArray.push(data[j].dateSubmitted);
+      
+                this.depositLogsArray.push(tempArray);
+              }
             }
           }
         }
@@ -659,7 +669,7 @@ export class ReportingComponent implements OnInit {
             tempArray.push(data[i].dateRequested);
             tempArray.push(data[i].dateSubmitted);
   
-            this.requestLogsArray.push(tempArray);
+            this.depositLogsArray.push(tempArray);
           }
         }
       }
@@ -667,6 +677,10 @@ export class ReportingComponent implements OnInit {
         //Error handling
       }
     });
+
+    if(this.depositLogsArray != null){
+      this.depositLogs = true;
+    }
   }
 
 
@@ -713,79 +727,82 @@ export class ReportingComponent implements OnInit {
         var data = response.data.qs.forms;
 
         if(this.dateFrom != '' && this.dateTo != ''){
-          if(data[i].dateSubmitted == this.dateFrom || data[i].dateSubmitted == this.dateTo){
-            var tempArray: any = [];
-            
-            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-            tempArray.push(data[i].requestor);
-            tempArray.push(data[i].cultureNumber);
-            tempArray.push(data[i].currentName);
-            tempArray.push(data[i].referenceNumber);
-            tempArray.push(data[i].dateRequested);
-            tempArray.push(data[i].dateReturned);
-            tempArray.push(data[i].dateSubmitted);
-  
-            this.requestLogsArray.push(tempArray);
-          }
-          else{
-            var month = Number(data[i].dateSubmitted[3] + data[i].dateSubmitted[4]);
-            var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
-
-            if(month == monthFrom){
-              var day = Number(data[i].dateSubmitted[0] + data[i].dateSubmitted[1]);
-              var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
-
-              if(day >= dayFrom){
-                var tempArray: any = [];
-            
-                tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-                tempArray.push(data[i].requestor);
-                tempArray.push(data[i].cultureNumber);
-                tempArray.push(data[i].currentName);
-                tempArray.push(data[i].referenceNumber);
-                tempArray.push(data[i].dateRequested);
-                tempArray.push(data[i].dateReturned);
-                tempArray.push(data[i].dateSubmitted);
-      
-                this.requestLogsArray.push(tempArray);
-              }
-            }
-
-            var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
-
-            if(month == monthTo){
-              var day = Number(data[i].dateSubmitted[0] + data[i].dateSubmitted[1]);
-              var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
-
-              if(day <= dayTo){
-                var tempArray: any = [];
-            
-                tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-                tempArray.push(data[i].requestor);
-                tempArray.push(data[i].cultureNumber);
-                tempArray.push(data[i].currentName);
-                tempArray.push(data[i].referenceNumber);
-                tempArray.push(data[i].dateRequested);
-                tempArray.push(data[i].dateReturned);
-                tempArray.push(data[i].dateSubmitted);
-      
-                this.requestLogsArray.push(tempArray);
-              }
-            }
-
-            if(month >= monthFrom && month <= monthTo){
+          this.revitalizationLogsArray = [];
+          for(var j = 0; j < data.length; j++){
+            if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
-            
-              tempArray.push(this.loadUserDetails('FABI', data[i].userID));
-              tempArray.push(data[i].requestor);
-              tempArray.push(data[i].cultureNumber);
-              tempArray.push(data[i].currentName);
-              tempArray.push(data[i].referenceNumber);
-              tempArray.push(data[i].dateRequested);
-              tempArray.push(data[i].dateReturned);
-              tempArray.push(data[i].dateSubmitted);
+              
+              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              tempArray.push(data[j].requestor);
+              tempArray.push(data[j].cultureNumber);
+              tempArray.push(data[j].currentName);
+              tempArray.push(data[j].referenceNumber);
+              tempArray.push(data[j].dateRequested);
+              tempArray.push(data[j].dateReturned);
+              tempArray.push(data[j].dateSubmitted);
     
-              this.requestLogsArray.push(tempArray);
+              this.revitalizationLogsArray.push(tempArray);
+            }
+            else{
+              var month = Number(data[j].dateSubmitted[3] + data[j].dateSubmitted[4]);
+              var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
+
+              if(month == monthFrom){
+                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
+                var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
+
+                if(day >= dayFrom){
+                  var tempArray: any = [];
+              
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(data[j].requestor);
+                  tempArray.push(data[j].cultureNumber);
+                  tempArray.push(data[j].currentName);
+                  tempArray.push(data[j].referenceNumber);
+                  tempArray.push(data[j].dateRequested);
+                  tempArray.push(data[j].dateReturned);
+                  tempArray.push(data[j].dateSubmitted);
+        
+                  this.revitalizationLogsArray.push(tempArray);
+                }
+              }
+
+              var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
+
+              if(month == monthTo){
+                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
+                var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
+
+                if(day <= dayTo){
+                  var tempArray: any = [];
+              
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(data[j].requestor);
+                  tempArray.push(data[j].cultureNumber);
+                  tempArray.push(data[j].currentName);
+                  tempArray.push(data[j].referenceNumber);
+                  tempArray.push(data[j].dateRequested);
+                  tempArray.push(data[j].dateReturned);
+                  tempArray.push(data[j].dateSubmitted);
+        
+                  this.revitalizationLogsArray.push(tempArray);
+                }
+              }
+
+              if(month >= monthFrom && month <= monthTo){
+                var tempArray: any = [];
+              
+                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                tempArray.push(data[j].requestor);
+                tempArray.push(data[j].cultureNumber);
+                tempArray.push(data[j].currentName);
+                tempArray.push(data[j].referenceNumber);
+                tempArray.push(data[j].dateRequested);
+                tempArray.push(data[j].dateReturned);
+                tempArray.push(data[j].dateSubmitted);
+      
+                this.revitalizationLogsArray.push(tempArray);
+              }
             }
           }
         }
@@ -802,7 +819,7 @@ export class ReportingComponent implements OnInit {
             tempArray.push(data[i].dateReturned);
             tempArray.push(data[i].dateSubmitted);
   
-            this.requestLogsArray.push(tempArray);
+            this.revitalizationLogsArray.push(tempArray);
           }
         }
       }
@@ -810,6 +827,10 @@ export class ReportingComponent implements OnInit {
         //Error handling
       }
     });
+
+    if(this.revitalizationLogsArray != null){
+      this.revitalizationLogs = true;
+    }
   }
 
 
@@ -1103,7 +1124,15 @@ export class ReportingComponent implements OnInit {
       this.dateFrom = ('0' + tempDate.getDate()).slice(-2) + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
     }
 
-    this.generateErrorReport();
+    if(this.requestReport == true){
+      this.generateRequestReport();
+    }
+    else if(this.depositReport == true){
+      this.generateDepositReport();
+    }
+    else if(this.revitalizationReport == true){
+      this.generateRevitalizationReport();
+    }
   }
 
 

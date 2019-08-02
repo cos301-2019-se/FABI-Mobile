@@ -391,10 +391,11 @@ export class StaffDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //All these functions will be called when the page loads
     this.loadNotifications();
     this.loadSamples();
     this.loadDepositForms();
-    this.loadRequestForms()
+    this.loadRequestForms();
   }
 
 }
