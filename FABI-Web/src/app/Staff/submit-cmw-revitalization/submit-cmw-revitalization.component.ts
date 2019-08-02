@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Thursday, August 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -130,6 +130,19 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_REQUESTOR 
+  /*** This function will set the 'requestor' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwRevitalizationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setRequestor(event$){
+    this.requestor = event$.option.value;
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                               SUBMIT_CMW_REVITALIZATION_FORM

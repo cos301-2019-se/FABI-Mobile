@@ -118,8 +118,6 @@ export class CultureCollectionAPIService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllRequestLogs() {
     const options = {
-        method: 'POST',
-        url: getRequestLogsURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
@@ -129,7 +127,7 @@ export class CultureCollectionAPIService {
         json: true
     };
 
-        return this.http.request('POST', getRequestLogsURL, options);
+    return this.http.request('POST', getRequestLogsURL, options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,8 +142,6 @@ export class CultureCollectionAPIService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllDepositLogs() {
     const options = {
-        method: 'POST',
-        url: getDepositLogsURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
@@ -155,7 +151,7 @@ export class CultureCollectionAPIService {
         json: true
     };
 
-        return this.http.request('POST', getDepositLogsURL, options);
+    return this.http.request('POST', getDepositLogsURL, options);
   }
 
 
@@ -171,8 +167,6 @@ export class CultureCollectionAPIService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllRevitalizationLogs() {
     const options = {
-        method: 'POST',
-        url: getRevitalizationLogsURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
@@ -181,7 +175,7 @@ export class CultureCollectionAPIService {
         json: true
     };
 
-        return this.http.request('POST', getRevitalizationLogsURL, options);
+    return this.http.request('POST', getRevitalizationLogsURL, options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

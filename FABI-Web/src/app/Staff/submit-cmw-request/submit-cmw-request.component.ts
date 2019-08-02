@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Thursday, August 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -114,8 +114,7 @@ export class SubmitCmwRequestComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 
-  /**
-   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+  /*** This function will log the user out of the web application and clear the authentication data stored in the local storage
    * 
    * @memberof SubmitCmwRequestComponent
    */
@@ -124,6 +123,19 @@ export class SubmitCmwRequestComponent implements OnInit {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_REQUESTOR 
+  /*** This function will set the 'requestor' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwRequestComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setRequestor(event$){
+    this.requestor = event$.option.value;
+  }
+  
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                              SUBMIT_CMW_REQUEST_FORM
@@ -175,7 +187,7 @@ export class SubmitCmwRequestComponent implements OnInit {
 
     var request: CMWRequest = {userID: localStorage.getItem('userPassword'), requestor: this.requestor, taxonName: this.taxonName, 
         cultureNumber: this.cultureNumber, dateRequested: this.dateRequested.toString(), referenceNumber: this.referenceNumber, 
-        notes: this.notes, dateSubmitted: currentDate}
+        notes: this.notes, dateSubmitted: currentDate};
     
     this.cultureCollectionService.submitCMWRequestForm(request).subscribe((response: any) => {
       if(response.success == true){
