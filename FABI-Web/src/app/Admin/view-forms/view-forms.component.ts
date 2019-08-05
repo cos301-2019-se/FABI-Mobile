@@ -13,12 +13,13 @@
  * <<license>>
  */
 
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CultureCollectionAPIService, CMWDeposit, CMWRequest, CMWRevitalization } from '../../_services/culture-collection-api.service';
 
 @Component({
@@ -148,6 +149,12 @@ export class ViewFormsComponent implements OnInit {
   /** An array holding all of the revitalization forms - @type {CMWRevitalization[]} */
   revitalizationForms: CMWRevitalization[] = [];  
 
+  /** The form to get the process form details -  @type {FormGroup} */
+  processForm: FormGroup;
+
+  /** Holds the input element (processFormShow) from the HTML page - @type {ElementRef} */
+  @ViewChild("processFormShow") processFormShow : ElementRef;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -159,6 +166,7 @@ export class ViewFormsComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
    * @param {AuthenticationService} authService Used for all authentication and session control
    * @param {Router} router
+   * @param {FormBuilder} formBuilder Used to get the form elements from the HTML page
    * @param {Renderer2} renderer Used for creating the PDF documents to download
    * 
    * @memberof ViewFormsComponent
@@ -168,10 +176,24 @@ export class ViewFormsComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService, 
     private userManagementService: UserManagementAPIService,
     private renderer: Renderer2, 
+    private formBuilder: FormBuilder,
     private authService: AuthenticationService, 
     private router: Router,
     private cultureCollectionService: CultureCollectionAPIService
-  ) { }
+  ) { 
+    this.processForm = this.formBuilder.group({
+      statusOfCulture: '',
+      agarSlants: '',
+      water: '',
+      oil: '',
+      roomTemperature: '',
+      c18: '',
+      freezeDried: '',
+      freeze: '',
+      dateOfCollectionValidation: '',
+      microscopeSlides: ''
+    });
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,8 +216,11 @@ export class ViewFormsComponent implements OnInit {
             substrate: data[i].substrate, continent: data[i].continent, country: data[i].country, region: data[i].region, locality: data[i].locality, 
             gps: data[i].gps, collectedBy: data[i].collectedBy, dateCollected: data[i].dateCollected, isolatedBy: data[i].isolatedBy, identifiedBy: data[i].identifiedBy,
             donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted};
+          
 
-          this.depositForms.push(tempDeposit);
+          if(data[i].status == 'submitted'){
+            this.depositForms.push(tempDeposit);
+          }
         }
 
         this.depositFormNumber = 0;
@@ -582,6 +607,48 @@ export class ViewFormsComponent implements OnInit {
         //Error control
       }
     });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  SHOW_PROCESS_FORM
+  /**
+   *  This function will be called so that the process form can be displayed
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  showProcessForm(){
+    if(this.processFormShow.nativeElement.style.display === 'none'){
+      this.processFormShow.nativeElement.style.display = 'block';
+    }
+    else{
+      this.processFormShow.nativeElement.style.display = 'none';
+    }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  PROCESS_DEPOSIT_FORM
+  /**
+   *  This function will be called so that a deposit form can be processed and its status updated
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  processDepositForm(){
+    var statusOfCulture = this.processForm.controls.statusOfCulture.value;
+    var agarSlants = this.processForm.controls.agarSlants.value;
+    var water = this.processForm.controls.water.value;
+    var oil = this.processForm.controls.oil.value;
+    var roomTemperature = this.processForm.controls.roomTemperature.value;
+    var c18 = this.processForm.controls.c18.value;
+    var freezeDried = this.processForm.controls.freezeDried.value;
+    var freeze = this.processForm.controls.freeze.value;
+    var dateOfCollectionValidation = this.processForm.controls.dateOfCollectionValidation.value;
+    var microscopeSlides = this.processForm.controls.microscopeSlides.value;
+
+    var tempDeposit = this.depositForms[this.depositFormNumber];
+
+    // this.loadNextDepositForm();
   }
 
 
