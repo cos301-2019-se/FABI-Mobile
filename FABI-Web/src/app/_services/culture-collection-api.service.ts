@@ -55,7 +55,7 @@ export interface CMWDeposit{
     collectedBy: string;                    //The user who collected the culture
     dateCollected: string;                  //The date that the culture was collected
     isolatedBy: string;                     //The user who isolated the culture
-    identifiedBy: string;                   //The user who idnetified the culture
+    identifiedBy: string;                   //The user who identified the culture
     donatedBy: string;                      //The user who donated the culture (if any)
     additionalNotes: string;                //Any additional notes (if any)
     dateSubmitted: string;                  //The date that the form was submitted
