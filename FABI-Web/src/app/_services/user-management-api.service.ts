@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Monday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -33,7 +33,6 @@ const getAllOrganizationMembers = `${config.userManagementURL}/getAllOrgMembers`
 const getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;
 const updateStaffMemberDetailsURL = `${config.userManagementURL}/updateStaffMember`;
 const updateOrganizationMemberDetailsURL = `${config.userManagementURL}/updateOrgMember`;
-// const updateFABIMemberNotificationsURL = `${config.userManagementURL}/updateMemberNotifications`;
 
 //Object for defining how a member of FABI is structured
 export interface Member {
@@ -670,29 +669,5 @@ export class UserManagementAPIService {
     };
 
     return this.http.request<any>(method, removeMemberURL, options);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    UPDATE_FABI_MEMBER_NOTIFICATIONS
-  /**
-   * Method that sends a request to the API to update the notifications associated with a specific user.
-   *
-   * @memberof UserManagementAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  updateFABIMemberNotifications(userID: string, notifications: string[]) {
-    // const options = {
-    //   headers: {
-    //     'cache-control': 'no-cache',
-    //     'Content-Type': 'application/json',
-    //     "Access-Control-Allow-Origin": "*",
-    //     'Accept': 'application/json'
-    //   },
-    //   body: postData,
-    //   json: true
-    // };
-
-    // return this.http.request<any>(method, removeMemberURL, options);
-  }
-  
+  }  
 }

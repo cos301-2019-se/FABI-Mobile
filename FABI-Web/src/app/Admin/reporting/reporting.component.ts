@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 2nd 2019
+ * Last Modified: Monday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -71,6 +71,8 @@ export class ReportingComponent implements OnInit {
   allNotifications: any[] = [];
   /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
   newNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
+  allLogs: string[] = [];
 
   /** Array holding the user logs - @type {any} */
   userLogsArray: any[] = [];
@@ -1137,6 +1139,31 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_LOGS
+  /**
+   *  This function will load all of the user's logs into a string array.
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadLogs(){
+    //Making a call to the notification logging service to return all logs belonging to the user
+    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+      if(response.success == true){
+        var data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          this.allLogs.push(data[i].id);
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       LOAD_NOTIFICATIONS
   /**
    *  This function will load the admin's notifications into the notification section on the HTML page
@@ -1145,65 +1172,74 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
-    //Making a call too the notification logging service to return all logs belonging to a specific user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+    //Loading all the logs beloning to the user
+    this.loadLogs();
+
+    //Making a call too the notification logging service to return all USER logs
+    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
       if(response.success = true){
         //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          if(data[i].Type == 'USER'){
-            //A temporary instance of UserLogs that will be added to the allNotifications array
-            var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-            
-            //Getting the name and surname of the users passed using their id numbers
-            const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
-            const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
+          for(var j = 0; j < this.allLogs.length; j++){
+            if(data[i].date == this.allLogs[j]){
+              //A temporary instance of UserLogs that will be added to the allNotifications array
+              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+              
+              //Getting the name and surname of the users passed using their id numbers
+              const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
+              const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
+  
+              if(tempLogU.Action == 'C'){
+                tempLogU.Action = user1 + ' was added to the system by ' + user2;
+              }
+              else if(tempLogU.Action == 'D'){
+                tempLogU.Action = user1 + ' was removed from the system by ' + user2;
+              }
+  
+              this.allNotifications.push(tempLogU);
+              this.numberOfUserLogs += 1;
+              this.localNotificationNumber += 1;
+            }
+          }          
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
 
-            if(tempLogU.Action == 'C'){
-              tempLogU.Action = user1 + ' was added to the system by ' + user2;
-            }
-            else if(tempLogU.Action == 'D'){
-              tempLogU.Action = user1 + ' was removed from the system by ' + user2;
-            }
-            else if(tempLogU.Action == 'U'){
-              tempLogU.Action = user1 + ' details where updated by ' + user2;
-            }
+    //Making a call too the notification logging service to return all DBML logs
+    this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
+      if(response.success == true){
+        //Temporarily holds the data returned from the API call
+        const data = response.data.content.data.Logs;
 
-            this.allNotifications.push(tempLogU);
-            this.numberOfUserLogs += 1;
-            this.localNotificationNumber += 1;
+        for(var i = 0; i < data.length; i++){
+          for(var j = 0; j < this.allLogs.length; j++){
+            if(data[i].date == this.allLogs[j]){
+              //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
+              var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
+
+              //Getting the name and surname of the users passed using their id numbers
+              const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
+
+              if(tempLogD.Action == 'C'){
+                tempLogD.Action = tempLogD.Details + ' was added to the system by ' + user1;
+              }
+              else if(tempLogD.Action == 'D'){
+                tempLogD.Action = tempLogD.Details + ' was removed from the system by ' + user1;
+              }
+              else if(tempLogD.Action == 'U'){
+                tempLogD.Action = tempLogD.Details + ' details where updated by ' + user1;
+              }
+
+              this.allNotifications.push(tempLogD);
+              this.numberOfUserLogs += 1;
+              this.localNotificationNumber += 1;
+            }
           }
-          else if(data[i].Type == 'DBML'){
-            //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
-            var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
-
-            //Getting the name and surname of the users passed using their id numbers
-            const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
-
-            if(tempLogD.Action == 'C'){
-              tempLogD.Action = tempLogD.Details + ' was added to the system by ' + user1;
-            }
-            else if(tempLogD.Action == 'D'){
-              tempLogD.Action = tempLogD.Details + ' was removed from the system by ' + user1;
-            }
-            else if(tempLogD.Action == 'U'){
-              tempLogD.Action = tempLogD.Details + ' details where updated by ' + user1;
-            }
-
-            this.allNotifications.push(tempLogD);
-            this.numberOfUserLogs += 1;
-            this.localNotificationNumber += 1;
-          }
-          else if(data[i].Type == 'ACCL'){
-            //A temporary instance of AccessLogs that will be added to the allNotifications array
-            var tempLogA: AccessLogs = {LogID: data[i].date, Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
-          
-            this.allNotifications.push(tempLogA);
-            this.numberOfAccessLogs += 1;
-            this.localNotificationNumber += 1;
-          }
-          
         }
       }
       else{
@@ -1223,19 +1259,19 @@ export class ReportingComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(id: string){
     for(var i =  0; i < this.allNotifications.length; i++){
-      if(this.allNotifications[i].ID != id){
+      if(this.allNotifications[i].ID == id){
         this.newNotifications.push(this.allNotifications[i]);
       }
     }
 
-    // this.userManagementService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
-    //   if(response.success == true){
-    //     this.loadNotifications();
-    //   }
-    //   else{
-    //     //Error handling
-    //   }
-    // });
+    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+      if(response.success == true){
+        this.loadNotifications();
+      }
+      else{
+        //Error handling
+      }
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
