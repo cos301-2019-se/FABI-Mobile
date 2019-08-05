@@ -141,18 +141,33 @@ export class ReportingComponent implements OnInit {
   @ViewChild("revitalizationReportPDF") revitalizationReportPDF : ElementRef;
 
   /** Holds the table element (requestDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateFrom") requestDateFrom : ElementRef;
+  @ViewChild("requestDateFrom1") requestDateFrom1 : ElementRef;
   /** Holds the table element (requestDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateTo") requestDateTo : ElementRef;
+  @ViewChild("requestDateTo1") requestDateTo1 : ElementRef;
+  /** Holds the table element (requestDateFrom) from the HTML page - @type {ElementRef} */
+  @ViewChild("requestDateFrom2") requestDateFrom2 : ElementRef;
+  /** Holds the table element (requestDateTo) from the HTML page - @type {ElementRef} */
+  @ViewChild("requestDateTo2") requestDateTo2 : ElementRef;
   /** Holds the table element (depositDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateFrom") depositDateFrom : ElementRef;
+  @ViewChild("depositDateFrom1") depositDateFrom1 : ElementRef;
   /** Holds the table element (depositDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateTo") depositDateTo : ElementRef;
+  @ViewChild("depositDateTo1") depositDateTo1 : ElementRef;
+  /** Holds the table element (depositDateFrom) from the HTML page - @type {ElementRef} */
+  @ViewChild("depositDateFrom2") depositDateFrom2 : ElementRef;
+  /** Holds the table element (depositDateTo) from the HTML page - @type {ElementRef} */
+  @ViewChild("depositDateTo2") depositDateTo2 : ElementRef;
   /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateFrom") revitalizationDateFrom : ElementRef;
+  @ViewChild("revitalizationDateFrom1") revitalizationDateFrom1 : ElementRef;
   /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateTo") revitalizationDateTo : ElementRef;
-  
+  @ViewChild("revitalizationDateTo1") revitalizationDateTo1 : ElementRef;
+  /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
+  @ViewChild("revitalizationDateFrom2") revitalizationDateFrom2 : ElementRef;
+  /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
+  @ViewChild("revitalizationDateTo2") revitalizationDateTo2 : ElementRef;
+  /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
+  @ViewChild("revitalizationDateFrom3") revitalizationDateFrom3 : ElementRef;
+  /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
+  @ViewChild("revitalizationDateTo3") revitalizationDateTo3 : ElementRef;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -1066,20 +1081,37 @@ export class ReportingComponent implements OnInit {
   //                                                  SET_DATE_FROM
   /**
    *  This function will set the starting date for the logs on the reporting page.
-   *  @memberof ReportingComponent
+   * @param {string} type The type of the date (Requested or Submitted) 
+   * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setDateFrom(){
+  setDateFrom(type: string){
     var temp;
 
-    if(this.requestReport == true){
-      temp = this.requestDateFrom.nativeElement.value;
+    if(type == 'requested'){
+      if(this.requestReport == true){
+        temp = this.requestDateFrom2.nativeElement.value;
+      }
+      else if(this.revitalizationReport == true){
+        temp = this.revitalizationDateFrom2.nativeElement.value;
+      }
     }
-    else if(this.depositReport == true){
-      temp = this.depositDateFrom.nativeElement.value;
+    else if(type == 'submitted'){
+      if(this.requestReport == true){
+        temp = this.requestDateFrom1.nativeElement.value;
+      }
+      else if(this.depositReport == true){
+        temp = this.depositDateFrom1.nativeElement.value;
+      }
+      else if(this.revitalizationReport == true){
+        temp = this.revitalizationDateFrom1.nativeElement.value;
+      }
     }
-    else if(this.revitalizationReport == true){
-      temp = this.revitalizationDateFrom.nativeElement.value;
+    else if(type == 'collected'){
+      temp = this.depositDateFrom2.nativeElement.value;
+    }
+    else if(type == 'returned'){
+      temp = this.revitalizationDateFrom3.nativeElement.value;
     }
     
     var day = temp[8] + temp[9];
@@ -1099,20 +1131,37 @@ export class ReportingComponent implements OnInit {
   //                                                  SET_DATE_TO
   /**
    *  This function will set the ending date for the logs on the reporting page.
-   *  @memberof ReportingComponent
+   * @param {string} type The type of the date (Requested or Submitted) 
+   * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setDateTo(){
+  setDateTo(type: string){
     var temp;
 
-    if(this.requestReport == true){
-      temp = this.requestDateTo.nativeElement.value;
+    if(type == 'requested'){
+      if(this.requestReport == true){
+        temp = this.requestDateTo2.nativeElement.value;
+      }
+      else if(this.revitalizationReport == true){
+        temp = this.revitalizationDateTo2.nativeElement.value;
+      }
     }
-    else if(this.depositReport == true){
-      temp = this.depositDateTo.nativeElement.value;
+    else if(type == 'submitted'){
+      if(this.requestReport == true){
+        temp = this.requestDateTo1.nativeElement.value;
+      }
+      else if(this.depositReport == true){
+        temp = this.depositDateTo1.nativeElement.value;
+      }
+      else if(this.revitalizationReport == true){
+        temp = this.revitalizationDateTo1.nativeElement.value;
+      }
     }
-    else if(this.revitalizationReport == true){
-      temp = this.revitalizationDateTo.nativeElement.value;
+    else if(type == 'collected'){
+      temp = this.depositDateTo2.nativeElement.value;
+    }
+    else if(type == 'returned'){
+      temp = this.revitalizationDateTo3.nativeElement.value;
     }
 
     var day = temp[8] + temp[9];
