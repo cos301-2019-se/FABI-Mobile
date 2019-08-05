@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Monday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -20,12 +20,16 @@ import { registerContentQuery } from '@angular/core/src/render3';
 import { StaticInjector } from '@angular/core/src/di/injector';
 import { BehaviorSubject } from 'rxjs';
 
+import { config } from "../../environments/environment.prod";
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                          GLOBAL VARIABLES
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Globals variables used to hold the API call urls
-const getAllLogsURL = 'https://logging-dot-api-fabi.appspot.com/getLogs';
+const getAllLogsURL = `${config.logsURL}/getLogs`;
+const getUserLogsURL = `${config.logsURL}/getUserLogs`;
+const updateUserLogsURL = `${config.logsURL}/deleteUserLogs`;
 
 //Object for defining the JSON object containing the user logs
 export interface UserLogs{
@@ -95,6 +99,17 @@ export interface Logs{
     type: string;           //The type of the log
     before: string;         //The before date
     after: string;          //The after date
+}
+
+//Object for defining the JSON object to be sent when requesting the logs belonging to a member
+export interface POSTUser{
+    userID: string;         //The ID of the user
+}
+
+//Object for defining the JSON object to be sent when updating to logs belonging to a user
+export interface POSTUpdate{
+    userID: string;         //The ID of the user
+    logIDs: string[];       //The logs to be removed from the user's profile
 }
 
 @Injectable({
@@ -231,7 +246,7 @@ export class NotificationLoggingService {
         json: true
     };
 
-        return this.http.request('POST', getAllLogsURL, options);
+    return this.http.request('POST', getAllLogsURL, options);
   }
 
 
@@ -261,7 +276,7 @@ export class NotificationLoggingService {
         json: true
     };
 
-        return this.http.request('POST', getAllLogsURL, options);
+    return this.http.request('POST', getAllLogsURL, options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,13 +290,12 @@ export class NotificationLoggingService {
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getUserLogs(userID: string) {
-    var tempLog : Logs = {type: 'DGCL', before: '', after: ''};
-    var data: POSTLog = {Log: tempLog};
+  getUserLogs(id: string) {
+    var data: POSTUser = {userID: id};
 
     const options = {
         method: 'POST',
-        url: getAllLogsURL,
+        url: getUserLogsURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
@@ -291,6 +305,32 @@ export class NotificationLoggingService {
         json: true
     };
 
-    return this.http.request('POST', getAllLogsURL, options);
+    return this.http.request('POST', getUserLogsURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    UPDATE_FABI_MEMBER_NOTIFICATIONS
+  /**
+   * Method that sends a request to the API to update the notifications associated with a specific user.
+   * @param {string} id The ID of the user whose notifications need to be updated
+   * @param {string[]} notifications The notifications to be removed from the user's profile
+   * @memberof NotificationLoggingService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateFABIMemberNotifications(id: string, notifications: string[]) {
+    var postData: POSTUpdate = {userID: id, logIDs: notifications};
+    
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', updateUserLogsURL, options);
   }
 }
