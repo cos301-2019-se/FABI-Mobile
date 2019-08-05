@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 2nd 2019
+ * Last Modified: Monday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -68,6 +68,8 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   allNotifications: any[] = [];
   /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
   newNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
+  allLogs: string[] = []; 
   
   /** Indicates if there are notifications to load - @type {boolean} */           
   notifications: boolean = true; 
@@ -268,6 +270,31 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_LOGS
+  /**
+   *  This function will load all of the user's logs into a string array.
+   * 
+   * @memberof SubmitCmwRevitalizationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadLogs(){
+    //Making a call to the notification logging service to return all logs belonging to the user
+    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+      if(response.success == true){
+        var data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          this.allLogs.push(data[i].id);
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_NOTIFICATIONS
   /**
    *  This function will load the staff member's notifications into the notification section on the HTML page
@@ -276,32 +303,37 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
-    //Making a call too the notification logging service to return all logs belonging to a specific user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+    //Loading all the logs beloning to the user
+    this.loadLogs();
+
+    //Making a call too the notification logging service to return all USER logs
+    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
       if(response.success = true){
         //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          if(data[i].Type == 'USER'){
-            //A temporary instance of UserLogs that will be added to the allNotifications array
-            var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-            
-            //Getting the name and surname of the users passed using their id numbers
-            const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
-            const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
-
-            if(tempLogU.Action == 'C'){
-              tempLogU.Action = user1 + ' was added to the system by ' + user2;
+          for(var j = 0; j < this.allLogs.length; j++){
+            if(data[i].date == this.allLogs[j]){
+              //A temporary instance of UserLogs that will be added to the allNotifications array
+              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+              
+              //Getting the name and surname of the users passed using their id numbers
+              const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
+              const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
+  
+              if(tempLogU.Action == 'C'){
+                tempLogU.Action = user1 + ' was added to the system by ' + user2;
+              }
+              else if(tempLogU.Action == 'D'){
+                tempLogU.Action = user1 + ' was removed from the system by ' + user2;
+              }
+  
+              this.allNotifications.push(tempLogU);
+              this.numberOfUserLogs += 1;
+              this.localNotificationNumber += 1;
             }
-            else if(tempLogU.Action == 'D'){
-              tempLogU.Action = user1 + ' was removed from the system by ' + user2;
-            }
-
-            this.allNotifications.push(tempLogU);
-            this.numberOfUserLogs += 1;
-            this.localNotificationNumber += 1;
-          }
+          }          
         }
       }
       else{
@@ -346,19 +378,19 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(id: string){
     for(var i =  0; i < this.allNotifications.length; i++){
-      if(this.allNotifications[i].ID != id){
+      if(this.allNotifications[i].ID == id){
         this.newNotifications.push(this.allNotifications[i]);
       }
     }
 
-    // this.userManagementService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
-    //   if(response.success == true){
-    //     this.loadNotifications();
-    //   }
-    //   else{
-    //     //Error handling
-    //   }
-    // });
+    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+      if(response.success == true){
+        this.loadNotifications();
+      }
+      else{
+        //Error handling
+      }
+    });
   }
 
 
