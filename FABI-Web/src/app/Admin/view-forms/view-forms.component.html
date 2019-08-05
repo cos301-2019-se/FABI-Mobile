@@ -123,6 +123,7 @@
             Deposit Forms
           </ng-template>
 
+          <div (click)="showProcessForm()"><i class="fas fa-spinner"></i></div>
           <div (click)="loadPreviousDepositForm()"><i class="fas fa-arrow-left"></i></div><div (click)="loadNextDepositForm()"><i class="fas fa-arrow-right"></i></div>
           <div id="depositForms">
             <h2>Deposit Forms</h2>
@@ -206,4 +207,68 @@
       </mat-tab-group>
     </div>
   </div>
+</div>
+
+<div #processFormShow id="processFormDiv">
+  <h2>Deposit Processed</h2>
+
+  <br/><br/>
+  <form id="processForm" [formGroup]="processForm" (submit)="processForm()">
+    <div class="row">
+      <div>
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="Status of Culture" matInput type="text" formControlName="statusOfCulture">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="Agar Slants" matInput type="text" formControlName="agarSlants">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="Water" matInput type="text" formControlName="water">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="Oil" matInput type="text" formControlName="oil">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="Room Temperature" matInput type="text" formControlName="roomTemperature">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="18C" matInput type="text" formControlName="c18">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="Freeze Dried" matInput type="text" formControlName="freezeDried">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="Freeze -80C" matInput type="text" formControlName="freeze">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="Date of Collection Validation" matInput type="text" formControlName="dateOfCollectionValidation">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="form_inputs" class="col">
+          <input matInput placeholder="Microscope Slides" matInput type="text" formControlName="microscopeSlides">
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
 </div>
