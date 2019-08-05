@@ -35,6 +35,9 @@
   - [Demo 3 Video Guide](https://drive.google.com/file/d/1_Xuhwb8hLuq2v_jcmQpYhO0TUQucjAog/view?usp=sharing)
   - [Functional Requirements](https://drive.google.com/open?id=1qVYf5kSegCpn1NUzlQ8V4w83CuUNhwQAAoZtRqEensA)
   
+  ### Demo 4
+  - [Demo 4 Notification Subsystem Document](https://drive.google.com/file/d/1CwZw80fKYmPhNCi4wZ1JSh69CRwKTt7v/view?usp=sharing)
+  
  ## API Documentation
   - [Authentication API Documentation](https://authentication-dot-api-fabi.appspot.com)
   - [Database Management API Documentation](https://database-management-dot-api-fabi.appspot.com)
