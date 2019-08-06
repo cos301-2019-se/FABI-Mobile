@@ -28,6 +28,7 @@ import { AuthenticationGuard } from '../_guards/authentication.guard';
 import { Role } from '../_interfaces/role';
 import { ReportingComponent } from './reporting/reporting.component';
 import { LoginComponent } from '../login/login.component';
+import { ViewFormsComponent } from './view-forms/view-forms.component';
 
 
 const routes: Routes = [
@@ -72,6 +73,10 @@ const routes: Routes = [
   {
     path: 'login', 
     component: LoginComponent
+  },
+  {
+    path: 'view-forms',
+    component: ViewFormsComponent
   }
   
 ];
