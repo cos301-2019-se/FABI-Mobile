@@ -313,7 +313,7 @@ export class AdminDashboardComponent implements OnInit {
             if(data[i].date == this.allLogs[j]){
               //A temporary instance of UserLogs that will be added to the allNotifications array
               var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-              
+      
               //Getting the name and surname of the users passed using their id numbers
               const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
               const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);

@@ -2,10 +2,10 @@
  * File Name: view-forms.component.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Admin\view-forms\view-forms.component.ts
  * Project Name: fabi-web
- * Created Date: Monday, August 8th 2019
+ * Created Date: Monday, August 5th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 8th 2019
+ * Last Modified: Monday, August 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -21,6 +21,8 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CultureCollectionAPIService, CMWDeposit, CMWRequest, CMWRevitalization } from '../../_services/culture-collection-api.service';
+
+import * as angular from "angular";
 
 @Component({
   selector: 'app-view-forms',
@@ -299,7 +301,7 @@ export class ViewFormsComponent implements OnInit {
    *  @memberof ViewFormsComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNextDepositForm(){
+  loadNextDepositForm(){    
     if(this.depositFormNumber != 0){
       if(this.depositFormNumber == this.depositForms.length - 1){
         this.depositFormNumber = 0;
@@ -339,6 +341,36 @@ export class ViewFormsComponent implements OnInit {
     this.donatedBy = tempDeposit.donatedBy;
     this.additionalNotes = tempDeposit.additionalNotes;
     this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
+
+    var app = angular.module('refresh_div1',[]).controller('refresh_control1', function($scope, $interval) {
+      $interval(function(){
+        this.loadUserDetailsDeposit("FABI", tempDeposit.userID);
+        $scope.cmwCultureNumberDeposit = tempDeposit.cmwCultureNumber;
+        $scope.genus = tempDeposit.genus;
+        $scope.epitheton = tempDeposit.epitheton;
+        $scope.personalCollectionNumber = tempDeposit.personalCollectionNumber;
+        $scope.internationalCollectionNumber = tempDeposit.internationalCollectionNumber;
+        $scope.herbariumNumber = tempDeposit.herbariumNumber;
+        $scope.otherFABICollections = tempDeposit.otherFABICollections;
+        $scope.name = tempDeposit.name;
+        $scope.typeStatus = tempDeposit.typeStatus;
+        $scope.host = tempDeposit.host;
+        $scope.vector = tempDeposit.vector;
+        $scope.substrate = tempDeposit.substrate;
+        $scope.continent = tempDeposit.continent;
+        $scope.country = tempDeposit.country;
+        $scope.region = tempDeposit.region;
+        $scope.locality = tempDeposit.locality;
+        $scope.gps = tempDeposit.gps;
+        $scope.collectedBy = tempDeposit.collectedBy;
+        $scope.dateCollected = tempDeposit.dateCollected;
+        $scope.isolatedBy = tempDeposit.isolatedBy;
+        $scope.identifiedBy = tempDeposit.identifiedBy;
+        $scope.donatedBy = tempDeposit.donatedBy;
+        $scope.additionalNotes = tempDeposit.additionalNotes;
+        $scope.dateSubmittedDeposit = tempDeposit.dateSubmitted;
+      }, 100);
+    });
   }
 
 
@@ -386,6 +418,36 @@ export class ViewFormsComponent implements OnInit {
     this.donatedBy = tempDeposit.donatedBy;
     this.additionalNotes = tempDeposit.additionalNotes;
     this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
+
+    var app = angular.module('refresh_div1',[]).controller('refresh_control1', function($scope, $interval) {
+      $interval(function(){
+        this.loadUserDetailsDeposit("FABI", tempDeposit.userID);
+        $scope.cmwCultureNumberDeposit = tempDeposit.cmwCultureNumber;
+        $scope.genus = tempDeposit.genus;
+        $scope.epitheton = tempDeposit.epitheton;
+        $scope.personalCollectionNumber = tempDeposit.personalCollectionNumber;
+        $scope.internationalCollectionNumber = tempDeposit.internationalCollectionNumber;
+        $scope.herbariumNumber = tempDeposit.herbariumNumber;
+        $scope.otherFABICollections = tempDeposit.otherFABICollections;
+        $scope.name = tempDeposit.name;
+        $scope.typeStatus = tempDeposit.typeStatus;
+        $scope.host = tempDeposit.host;
+        $scope.vector = tempDeposit.vector;
+        $scope.substrate = tempDeposit.substrate;
+        $scope.continent = tempDeposit.continent;
+        $scope.country = tempDeposit.country;
+        $scope.region = tempDeposit.region;
+        $scope.locality = tempDeposit.locality;
+        $scope.gps = tempDeposit.gps;
+        $scope.collectedBy = tempDeposit.collectedBy;
+        $scope.dateCollected = tempDeposit.dateCollected;
+        $scope.isolatedBy = tempDeposit.isolatedBy;
+        $scope.identifiedBy = tempDeposit.identifiedBy;
+        $scope.donatedBy = tempDeposit.donatedBy;
+        $scope.additionalNotes = tempDeposit.additionalNotes;
+        $scope.dateSubmittedDeposit = tempDeposit.dateSubmitted;
+      }, 100);
+    });
   }
 
 
@@ -418,6 +480,18 @@ export class ViewFormsComponent implements OnInit {
     this.dateRequestedRequest = tempRequest.dateRequested;
     this.notes = tempRequest.notes;
     this.dateSubmittedRequest = tempRequest.dateSubmitted;
+
+    var app = angular.module('refresh_div2',[]).controller('refresh_control2', function($scope, $interval) {
+      $interval(function(){
+        this.loadUserDetailsRequest("FABI", tempRequest.userID);
+        $scope.cmwCultureNumberRequest = tempRequest.cultureNumber;
+        $scope.taxonName = tempRequest.taxonName;
+        $scope.referenceNumberRequest = tempRequest.referenceNumber;
+        $scope.dateRequestedRequest = tempRequest.dateRequested;
+        $scope.notes = tempRequest.notes;
+        $scope.dateSubmittedRequest = tempRequest.dateSubmitted;
+      }, 100);
+    });
   }
 
 
@@ -447,6 +521,18 @@ export class ViewFormsComponent implements OnInit {
     this.dateRequestedRequest = tempRequest.dateRequested;
     this.notes = tempRequest.notes;
     this.dateSubmittedRequest = tempRequest.dateSubmitted;
+
+    var app = angular.module('refresh_div2',[]).controller('refresh_control2', function($scope, $interval) {
+      $interval(function(){
+        this.loadUserDetailsRequest("FABI", tempRequest.userID);
+        $scope.cmwCultureNumberRequest = tempRequest.cultureNumber;
+        $scope.taxonName = tempRequest.taxonName;
+        $scope.referenceNumberRequest = tempRequest.referenceNumber;
+        $scope.dateRequestedRequest = tempRequest.dateRequested;
+        $scope.notes = tempRequest.notes;
+        $scope.dateSubmittedRequest = tempRequest.dateSubmitted;
+      }, 100);
+    });
   }
 
 
@@ -482,6 +568,21 @@ export class ViewFormsComponent implements OnInit {
     this.sequenceDateSubmitted = tempRevitalization.sequenceDateSubmitted;
     this.dateReturned = tempRevitalization.dateReturned;
     this.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
+
+    var app = angular.module('refresh_div3',[]).controller('refresh_control3', function($scope, $interval) {
+      $interval(function(){
+        this.loadUserDetailsRevitalization("FABI", tempRevitalization.userID);
+        $scope.cmwCultureNumberRequest = tempRevitalization.cultureNumber;
+        $scope.currentName = tempRevitalization.currentName;
+        $scope.referenceNumberRevitalization = tempRevitalization.referenceNumber;
+        $scope.dateRequestedRevitalization = tempRevitalization.dateRequested;
+        $scope.nameBionumerics = tempRevitalization.nameBionumerics;
+        $scope.cultureCondition = tempRevitalization.cultureCondition;
+        $scope.sequenceDateSubmitted = tempRevitalization.sequenceDateSubmitted;
+        $scope.dateReturned = tempRevitalization.dateReturned;
+        $scope.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
+      }, 100);
+    });
   }
 
 
@@ -514,6 +615,21 @@ export class ViewFormsComponent implements OnInit {
     this.sequenceDateSubmitted = tempRevitalization.sequenceDateSubmitted;
     this.dateReturned = tempRevitalization.dateReturned;
     this.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
+
+    var app = angular.module('refresh_div3',[]).controller('refresh_control3', function($scope, $interval) {
+      $interval(function(){
+        this.loadUserDetailsRevitalization("FABI", tempRevitalization.userID);
+        $scope.cmwCultureNumberRequest = tempRevitalization.cultureNumber;
+        $scope.currentName = tempRevitalization.currentName;
+        $scope.referenceNumberRevitalization = tempRevitalization.referenceNumber;
+        $scope.dateRequestedRevitalization = tempRevitalization.dateRequested;
+        $scope.nameBionumerics = tempRevitalization.nameBionumerics;
+        $scope.cultureCondition = tempRevitalization.cultureCondition;
+        $scope.sequenceDateSubmitted = tempRevitalization.sequenceDateSubmitted;
+        $scope.dateReturned = tempRevitalization.dateReturned;
+        $scope.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
+      }, 100);
+    });
   }
 
 

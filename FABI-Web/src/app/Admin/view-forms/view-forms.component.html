@@ -124,20 +124,20 @@
           </ng-template>
 
           <div (click)="showProcessForm()"><i class="fas fa-spinner"></i></div>
-          <div (click)="loadPreviousDepositForm()"><i class="fas fa-arrow-left"></i></div><div (click)="loadNextDepositForm()"><i class="fas fa-arrow-right"></i></div>
+          <div class="arrowDiv" (click)="loadPreviousDepositForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv" (click)="loadNextDepositForm()"><i class="fas fa-arrow-right"></i></div>
           <div id="depositForms">
             <h2>Deposit Forms</h2>
 
-            <div id="individualDepositForm">
+            <div id="individualDepositForm" ng-app="refresh_div1" ng-controller="refresh_control1">
               <h3>User: </h3><p>{{userIDDeposit}}</p><br/>
               <h3>Date Submitted: </h3><p>{{dateSubmittedDeposit}}</p><br/>
               <h3>Culture Number: </h3><p>{{cultureNumberDeposit}}</p>
               <br/><br/><br/>
               <h3>Genus: </h3><p>{{genus}}</p><h3>Epitheton: </h3><p>{{epitheton}}</p><br/>
-              <h3>Personal Collection Number: </h3><p>{{personalCollectionNumber</p><br/>
-              <h3>International Collection Number: </h3><p>{{internationalCollectionNumber</p><br/>
+              <h3>Personal Collection Number: </h3><p>{{personalCollectionNumber}}</p><br/>
+              <h3>International Collection Number: </h3><p>{{internationalCollectionNumber}}</p><br/>
               <h3>Herbarium Number: </h3><p>{{herbariumNumber}}</p><br/>
-              <h3>Other FABI Collections: </h3><p>}}otherFABICollections}}</p>
+              <h3>Other FABI Collections: </h3><p>{{otherFABICollections}}</p>
               <br/><br/><br/>
               <h3>Culture Name: </h3><p>{{name}}</p><h3>Type Status:</h3><p>{{typeStatus}}</p><br/>
               <h3>Host: </h3><p>{{host}}</p><h3>Vector: </h3><p>{{vector}}</p><br/>
@@ -162,11 +162,11 @@
             Request Forms
           </ng-template>
           
-          <div (click)="loadPreviousRequestForm()"><i class="fas fa-arrow-left"></i></div><div (click)="loadNextRequestForm()"><i class="fas fa-arrow-right"></i></div>
+          <div class="arrowDiv" (click)="loadPreviousRequestForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv" (click)="loadNextRequestForm()"><i class="fas fa-arrow-right"></i></div>
           <div id="requestForms">
             <h2>Request Forms</h2>
 
-            <div id="individualRequestForm">
+            <div id="individualRequestForm" ng-app="refresh_div2" ng-controller="refresh_control2">
               <h3>User: </h3><p>{{userIDRequest}}</p><br/>
               <h3>Date Submitted: </h3><p>{{dateSubmittedRequest}}</p><br/>
               <h3>Culture Number: </h3><p>{{cultureNumberRequest}}</p>
@@ -186,11 +186,11 @@
             Revitalization Forms
           </ng-template>
 
-          <div (click)="loadPreviousRevitalizationForm()"><i class="fas fa-arrow-left"></i></div><div (click)="loadNextRevitalizationForm()"><i class="fas fa-arrow-right"></i></div>
+          <div class="arrowDiv" (click)="loadPreviousRevitalizationForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv" (click)="loadNextRevitalizationForm()"><i class="fas fa-arrow-right"></i></div>
           <div id="revitalizationForms">
             <h2>Revitalization Forms</h2>
 
-            <div id="individualRevitalizationForm">
+            <div id="individualRevitalizationForm" ng-app="refresh_div3" ng-controller="refresh_control3">
               <h3>User: </h3><p>{{userIDRevitalization}}</p><br/>
               <h3>Date Submitted: </h3><p>{{dateSubmittedRevitalization}}</p><br/>
               <h3>Culture Number: </h3><p>{{cultureNumberRevitalization}}</p>

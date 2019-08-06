@@ -57,7 +57,7 @@ import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.compo
 import { ReportingComponent } from './Admin/reporting/reporting.component';
 
 import { AgmCoreModule } from "@agm/core";
-import { ViewFormsComponent } from './view-forms/view-forms.component';
+import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
 
 @NgModule({
   declarations: [
