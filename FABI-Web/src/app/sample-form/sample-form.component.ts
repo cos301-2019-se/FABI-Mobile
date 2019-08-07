@@ -1,4 +1,3 @@
-// import { ClientFormData } from '../organization-api.service';
 import * as Interface from '../_interfaces/interfaces';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
@@ -9,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { DiagnosticClinicAPIService } from '../_services/diagnostic-clinic-api.service';
+import { MapsWindowComponent } from '../maps-window/maps-window.component';
 
 @Component({
   selector: 'app-sample-form',
@@ -24,6 +24,8 @@ export class SampleFormComponent implements OnInit {
   sent: boolean = false;                // to check if user is logged in
   errors: boolean = false;
   organizations: Object;            //array for Organization dropdown
+  plantationAddress: Interface.Address;
+  plantationLocation: Interface.Location;
 
   constructor(
     private authService: AuthenticationService, 
@@ -35,11 +37,11 @@ export class SampleFormComponent implements OnInit {
     ) {
       this.sampleForm = this.formBuilder.group({
 
-      organization: ['', Validators.required],
       sample_plant_species: ['', Validators.required],
       sample_num_samples: ['', Validators.required],
       sample_street: ['', Validators.required],
       sample_area: ['', Validators.required],
+      sample_city: ['', Validators.required],
       sample_farm: ['', Validators.required],
       sample_province: ['', Validators.required],
       sample_gps: ['', Validators.required],
@@ -183,7 +185,38 @@ export class SampleFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    let today = new Date();
+    this.sampleForm.patchValue( {
+      date_sample_sent: today
+    });
 
+  }
+
+  selectLocation() {
+    let mapRef = this.dialog.open(MapsWindowComponent, { height: '80%', width: '80%'});
+    
+    mapRef.afterClosed().subscribe((data) => {
+      console.log("--- Selected Location: " + JSON.stringify(data));
+
+      this.plantationAddress = data.address;
+      this.plantationLocation = data.location; 
+
+      this.sampleForm.patchValue( {
+        sample_street: this.plantationAddress.street,
+        sample_area: this.plantationAddress.area,
+        sample_city: this.plantationAddress.city,
+        sample_province: this.plantationAddress.province,
+        sample_gps: `${this.plantationLocation.latitude},${this.plantationLocation.longitude}`,
+      });
+
+      this.sampleForm.get('sample_street').disable();
+      this.sampleForm.get('sample_area').disable();
+      this.sampleForm.get('sample_city').disable();
+      this.sampleForm.get('sample_province').disable();
+      this.sampleForm.get('sample_gps').disable();
+      this.sampleForm.get('date_sample_sent').disable();
+  
+    });
   }
 
 }

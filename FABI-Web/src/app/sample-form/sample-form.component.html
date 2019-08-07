@@ -9,6 +9,7 @@
     </div>
     <div class="right">
       <h1>SUBMIT SAMPLE</h1>
+      <button (click)="selectLocation()">Google Maps</button>
 
       <!--Sample Submission Form-->
       <form id="sample_form" [formGroup]="sampleForm" (submit)="sendForm()">
@@ -40,19 +41,29 @@
               <br />
             </mat-form-field>
             <br />
+            <!--Plantation Details-->
+            <p>Not the correct location? Select on map:</p>
+            
+            <!-- <app-maps-window></app-maps-window> -->
             <label style="font-weight: bold;">Plantation Details:</label><br />
              <mat-form-field class="form-inputs">
               <input matInput id="sample_street" formControlName="sample_street" type="text" required>
-              <mat-placeholder class="placeholder">Estate/Street Address</mat-placeholder>
+              <mat-placeholder class="placeholder">Street Address</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
             <mat-form-field class="form-inputs">
               <input matInput id="sample_area" formControlName="sample_area" type="text" required>
-              <mat-placeholder class="placeholder">Area/City/Suburb</mat-placeholder>
+              <mat-placeholder class="placeholder">Area/Suburb</mat-placeholder>
               <br />
             </mat-form-field>
             <br />
+            <mat-form-field class="form-inputs">
+                <input matInput id="sample_city" formControlName="sample_city" type="text" required>
+                <mat-placeholder class="placeholder">City/Town</mat-placeholder>
+                <br />
+              </mat-form-field>
+              <br />
             <mat-form-field class="form-inputs">
               <input matInput id="sample_farm" formControlName="sample_farm" type="text" required>
               <mat-placeholder class="placeholder">Farm/Compartment/Orchard Name</mat-placeholder>

@@ -57,6 +57,9 @@ import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.compo
 import { ReportingComponent } from './Admin/reporting/reporting.component';
 
 import { AgmCoreModule } from "@agm/core";
+import { MapsWindowComponent } from './maps-window/maps-window.component';
+
+import { config } from "../environments/environment.prod";
 
 @NgModule({
   declarations: [
@@ -92,7 +95,8 @@ import { AgmCoreModule } from "@agm/core";
     SampleDivComponent,
     AdminProfileComponent,
     StaffProfileComponent,
-    ReportingComponent
+    ReportingComponent,
+    MapsWindowComponent
   ],
   entryComponents: [
     ConfirmComponent,
@@ -100,7 +104,8 @@ import { AgmCoreModule } from "@agm/core";
     StaffDivComponent,
     NotificationDivComponent,
     SampleDivComponent,
-    ErrorComponent
+    ErrorComponent,
+    MapsWindowComponent
   ],
   imports: [
     BrowserModule,
@@ -119,7 +124,8 @@ import { AgmCoreModule } from "@agm/core";
     LayoutModule,
     MatAutocompleteModule,
     AgmCoreModule.forRoot({
-      apiKey: ''
+      apiKey: config.APIKEy,
+      libraries: ["places"]
     })
   ],
   providers: [NotificationService],
