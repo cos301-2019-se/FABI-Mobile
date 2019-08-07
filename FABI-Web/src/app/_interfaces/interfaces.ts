@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 15th 2019
+ * Last Modified: Friday, August 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -135,4 +135,21 @@ export interface StaffInfo {
     conditions_weather_prior: string;
     conditions_other: string;
     conditions_additional: string;
+  }
+
+  export interface Location {
+    latitude: number,
+    longitude: number
+  }
+
+  export interface Address {
+    street_number?: number,
+    street: string,
+    estate?: string,
+    area?: string,
+    city: string,
+    province: string,
+    country: string,
+    postal_code?: string,
+    formatted_address: string
   }

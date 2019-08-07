@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Tuesday, July 30th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -89,6 +89,26 @@ export class StaffHandlerComponent implements OnInit {
   /** THe number of the notifications - @type {number} */   
   localNotificationNumber : number = 1;
 
+  add_validation_messages = {
+    'staff_email': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Please enter a valid email' }
+    ],
+    'staff_name': [
+      { type: 'required', message: 'Name is required' }
+    ],
+    'staff_surname': [
+      { type: 'required', message: 'Surname is required' }
+    ],
+    'staff_phone': [
+      { type: 'required', message: 'Phone No. is required' },
+      { type: 'pattern', message: 'Please enter a valid South African number' }
+    ],   
+    'staff_position': [
+      { type: 'required', message: 'Position is required' }
+    ],   
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
@@ -115,8 +135,14 @@ export class StaffHandlerComponent implements OnInit {
     this.addStaffForm = this.formBuilder.group({
       staff_name: ['', Validators.required],
       staff_surname: ['', Validators.required],
-      staff_email: ['', Validators.required],
-      staff_phone: ['', Validators.required],
+      staff_email: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
+      staff_phone: ['', Validators.compose([
+        Validators.required,
+        // Validators.pattern('')
+      ])],
       staff_position: ['', Validators.required]
     })
   }
