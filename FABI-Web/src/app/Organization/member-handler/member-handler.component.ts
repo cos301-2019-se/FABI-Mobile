@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Tuesday, July 30th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -67,6 +67,23 @@ export class MemberHandlerComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  add_validation_messages = {
+    'member_email': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Please enter a valid email' }
+    ],
+    'member_name': [
+      { type: 'required', message: 'Name is required' }
+    ],
+    'member_surname': [
+      { type: 'required', message: 'Surname is required' }
+    ],
+    'member_phone': [
+      { type: 'required', message: 'Phone No. is required' },
+      { type: 'pattern', message: 'Please enter a valid South African number' }
+    ] 
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
@@ -91,8 +108,14 @@ export class MemberHandlerComponent implements OnInit {
       member_name: ['', Validators.required],
       member_surname: ['', Validators.required],
       member_location: ['', Validators.required],
-      member_email: ['', Validators.required],
-      member_phone: ['', Validators.required]
+      member_email: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
+      member_phone: ['', Validators.compose([
+        Validators.required,
+        // Validators.pattern('')
+      ])]
 
     })
   }
