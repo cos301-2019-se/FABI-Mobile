@@ -60,7 +60,7 @@ import { AgmCoreModule } from "@agm/core";
 import { MapsWindowComponent } from './maps-window/maps-window.component';
 
 import { config } from "../environments/environment.prod";
-// BLAHHHH
+
 @NgModule({
   declarations: [
     AppComponent,
