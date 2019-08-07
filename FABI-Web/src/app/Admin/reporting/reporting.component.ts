@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 29th 2019
+ * Last Modified: Tuesday, July 30th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -135,8 +135,9 @@ export class ReportingComponent implements OnInit {
     private userManagementService: UserManagementAPIService,
     private renderer: Renderer2, 
     private authService: AuthenticationService, 
-    private router: Router
-    ) { }
+    private router: Router,
+    private cultureCollectionService: CultureCollectionAPIService
+  ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_USER_DETAILS

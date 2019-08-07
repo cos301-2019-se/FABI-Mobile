@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -16,7 +16,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService, CMWDeposit } from '../../_services/diagnostic-clinic-api.service';
@@ -98,7 +97,6 @@ export class SubmitCmwDepositComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService for making calls to the Diagnostic Clinic API Service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
-   * @param {DatePipe} datePipe Used to get the current date in a specific format
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,8 +106,7 @@ export class SubmitCmwDepositComponent implements OnInit {
     private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService, 
     private authService: AuthenticationService, 
-    private router: Router,
-    private datePipe: DatePipe
+    private router: Router
     ) { 
     this.cmwDepositForm = this.formBuilder.group({
       cmw_culture_number: '',
