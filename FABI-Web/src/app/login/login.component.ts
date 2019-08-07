@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Tuesday, July 30th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -54,6 +54,21 @@ export class LoginComponent implements OnInit {
   /** Selected organisation on dropdown. Used to adjust login form according to organisation selected - @type {string} */
   selectedOrg: string;
 
+  login_validation_messages = {
+    'organization': [
+      { type:  'required', message: 'Please select an Organization'}
+    ],
+    'email': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Please enter a valid email' }
+    ],
+    'password': [
+      { type: 'required', message: 'Password is required' },
+      // { type: 'minlength', message: 'Password must be at least 5 characters long' },
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+    ],
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -87,7 +102,10 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
-      login_email: ['', Validators.required],
+      login_email: ['',Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
       login_password: ['', Validators.required]
     })
   }
