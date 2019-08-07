@@ -4,8 +4,7 @@
 /dist
 /tmp
 /out-tsc
-/src/environments/environment.prod.ts
-/src/environments/environment.ts
+/src/environments
 
 # Only exists if Bazel was run
 /bazel-out
