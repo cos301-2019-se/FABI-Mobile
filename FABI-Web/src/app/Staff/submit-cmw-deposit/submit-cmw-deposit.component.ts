@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Monday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -16,9 +16,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService, CMWDeposit } from '../../_services/diagnostic-clinic-api.service';
+import { CultureCollectionAPIService, CMWDeposit } from '../../_services/culture-collection-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
 
@@ -39,8 +41,21 @@ export class SubmitCmwDepositComponent implements OnInit {
   /** Object array for holding the staff members -  @type {string[]} */                        
   staff: string[] = []; 
   /** Object array for holding the staff members -  @type {String[]} */
-  filteredOptions: Observable<string[]>;
-  control = new FormControl();
+  filteredOptions1: Observable<string[]>;
+  /** Object array for holding the staff members -  @type {String[]} */
+  filteredOptions2: Observable<string[]>;
+  /** Object array for holding the staff members -  @type {String[]} */
+  filteredOptions3: Observable<string[]>;
+  /** Object array for holding the staff members -  @type {String[]} */
+  filteredOptions4: Observable<string[]>;
+  /** The form control for the autocomplete of the collectedBy input -  @type {FormControl} */
+  collectedByControl = new FormControl();
+  /** The form control for the autocomplete of the isolatedBy input -  @type {FormControl} */
+  isolatedByControl = new FormControl();
+  /** The form control for the autocomplete of the identifiedBy input -  @type {FormControl} */
+  identifiedByControl = new FormControl();
+  /** The form control for the autocomplete of the donatedBy input -  @type {FormControl} */
+  donatedByControl = new FormControl();
 
   /** The cmw culture number of the form -  @type {string} */
   cmwCultureNumber: string;
@@ -78,8 +93,8 @@ export class SubmitCmwDepositComponent implements OnInit {
   gps: string;
   /** The collected by of the form -  @type {string} */
   collectedBy: string;
-  /** The date collected of the form -  @type {Date} */
-  dateCollected: Date;
+  /** The date collected of the form -  @type {string} */
+  dateCollected: string;
   /** The isolated by of the form -  @type {string} */
   isolatedBy: string;
   /** The identified by of the form -  @type {string} */
@@ -89,24 +104,48 @@ export class SubmitCmwDepositComponent implements OnInit {
   /** The additional notes of the form -  @type {string} */
   additionalNotes: string;
 
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
+  allLogs: string[] = []; 
+  
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean = true; 
+  /** The total number of User Logs - @type {number} */           
+  numberOfUserLogs: number = 0;
+  /** THe number of the notifications - @type {number} */   
+  localNotificationNumber : number = 1; 
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of SubmitCmwDepositComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
-   * @param {DiagnosticClinicAPIService} diagnosticClinicService for making calls to the Diagnostic Clinic API Service
+   * @param {CultureCollectionAPIService} cultureCollectionService for making calls to the Culture Collection API Service
+   * @param {NotificationLoggingAPIService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {FormBuilder} formBuilder Used to build the form from the HTML page
+   * @param {Router} router
+   * 
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    
   constructor(
     private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar,
     private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private cultureCollectionService: CultureCollectionAPIService, 
     private authService: AuthenticationService, 
-    private router: Router
+    private router: Router,
+    private notificationLoggingService: NotificationLoggingService
     ) { 
     this.cmwDepositForm = this.formBuilder.group({
       cmw_culture_number: '',
@@ -135,9 +174,66 @@ export class SubmitCmwDepositComponent implements OnInit {
     });
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_COLLECTED_BY 
+  /*** This function will set the 'collectedBy' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setCollectedBy(event$){
+    this.collectedBy = event$.option.value;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_ISOLATED_BY 
+  /*** This function will set the 'isolatedBy' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setIsolatedBy(event$){
+    this.isolatedBy = event$.option.value;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_IDENTIFIED_BY 
+  /*** This function will set the 'identifiedBy' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setIdentifiedBy(event$){
+    this.identifiedBy = event$.option.value;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SET_DONATED_BY 
+  /*** This function will set the 'donatedBy' variable according to the option selected in the mat-autocomplete element
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setDonatedBy(event$){
+    this.donatedBy = event$.option.value;
   }
 
 
@@ -275,7 +371,11 @@ export class SubmitCmwDepositComponent implements OnInit {
       this.collectedBy = this.cmwDepositForm.controls.collected_by.value;
     }
       
-    this.dateCollected = this.cmwDepositForm.controls.dateCollected.value;
+    var temp = (this.cmwDepositForm.controls.date_requested.value).toString();
+    var year = temp[0] + temp[1] + temp[2] + temp[3];
+    var month = temp[5] + temp[6];
+    var day = temp[8] + temp[9];
+    this.dateCollected = day + '/' + month + '/' + year;
 
     if(this.cmwDepositForm.controls.isolated_by.value == null || this.cmwDepositForm.controls.isolated_by.value == ""){
       this.isolatedBy = "";
@@ -308,25 +408,37 @@ export class SubmitCmwDepositComponent implements OnInit {
     var date = new Date();
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var deposit: CMWDeposit = {userID: localStorage.getItem('userPassword'),cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
+    var deposit: CMWDeposit = {userID: localStorage.getItem('userID'),cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
       internationalCollectionNumber: this.internationalCollectionNumber, herbariumNumber: this.herbariumNumber, otherFABICollections: this.otherFABICollections, name: this.name,
       typeStatus: this.typeStatus, host: this.host, vector: this.vector, substrate: this.substrate, continent: this.continent, country: this.country, region: this.region,
-      locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected.toDateString(), isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
+      locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected, isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
       donatedBy: this.donatedBy, additionalNotes: this.additionalNotes, dateSubmitted: currentDate}
 
-    this.diagnosticClinicService.submitCMWDepositForm(deposit).subscribe((response: any) => {
+    this.cultureCollectionService.submitCMWDepositForm(deposit).subscribe((response: any) => {
       if(response.success == true){
         //Successfully submitted deposit form
+
+        this.cmwDepositForm.reset();
+
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("CMW Deposit form successfully submitted.", "Dismiss", {
+          duration: 3000
+        });
       }
       else{
         //Error handling
+
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Could not submit CMW Deposit form. Please try again.", "Dismiss", {
+          duration: 3000
+        });
       }
     });
   }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                            GET_ALL_STAFF
+  //                                                      GET_ALL_STAFF
   /**
    *  This function will load of the FABI staff members and administrators into an array so that they can be selected when filling out
    *  the form to submit.
@@ -338,15 +450,231 @@ export class SubmitCmwDepositComponent implements OnInit {
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
       if(response.success == true){
         
-        for(var i = 0; i <= response.data.qs.admins.length; i++){
+        for(var i = 0; i < response.data.qs.admins.length; i++){
           this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
         }
 
-        for(var i = 0; i <= response.data.qs.admins.length; i++){
-          this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
+        for(var i = 0; i < response.data.qs.staff.length; i++){
+          this.staff.push(response.data.qs.staff[i].surname + ', ' + response.data.qs.staff[i].fname[0]);
         }
       }
     });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_LOGS
+  /**
+   *  This function will load all of the user's logs into a string array.
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadLogs(){
+    //Making a call to the notification logging service to return all logs belonging to the user
+    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+      if(response.success == true){
+        var data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          this.allLogs.push(data[i].id);
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_NOTIFICATIONS
+  /**
+   *  This function will load the staff member's notifications into the notification section on the HTML page
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadNotifications(){
+    //Loading all the logs beloning to the user
+    this.loadLogs();
+
+    //Making a call too the notification logging service to return all USER logs
+    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
+      if(response.success = true){
+        //Temporarily holds the data returned from the API call
+        const data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          for(var j = 0; j < this.allLogs.length; j++){
+            if(data[i].date == this.allLogs[j]){
+              //A temporary instance of UserLogs that will be added to the allNotifications array
+              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+              
+              //Getting the name and surname of the users passed using their id numbers
+              const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
+              const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
+  
+              if(tempLogU.Action == 'C'){
+                tempLogU.Action = user1 + ' was added to the system by ' + user2;
+              }
+              else if(tempLogU.Action == 'D'){
+                tempLogU.Action = user1 + ' was removed from the system by ' + user2;
+              }
+  
+              this.allNotifications.push(tempLogU);
+              this.numberOfUserLogs += 1;
+              this.localNotificationNumber += 1;
+            }
+          }          
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_USER_DETAILS
+  /**
+   *  This function will be called so that the information of a specific user can be fetched
+   *  @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
+    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
+      if(response.success == true){
+        //Temporarily holds the data returned from the API call
+        const data = response.data;
+
+        //Returns the users name and surname as a connected string
+        return data.fname + ' ' + data.surname;
+      } 
+      else{
+        //Error control
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       REMOVE_NOTIFICATIONS
+  /**
+   *  This function will remove a notification from the notification section on the HTML page.
+   * 
+   * @param {string} id                   //The id of the notification to be removed
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeNotification(id: string){
+    for(var i =  0; i < this.allNotifications.length; i++){
+      if(this.allNotifications[i].ID == id){
+        this.newNotifications.push(this.allNotifications[i]);
+      }
+    }
+
+    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+      if(response.success == true){
+        this.loadNotifications();
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                           TOGGLE_NOTIFICATIONS_TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET_DATE
+  /**
+   *  This function will put the string date provided into a more readable format for the notifications
+   * @param {string} date The date of the log
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getDate(date: string){
+    var tempDate = (date).split(' ');
+    var newDate = '';
+
+    newDate += tempDate[2];
+
+    if(tempDate[0] == 'Mon'){
+      newDate += ' Monday ';
+    }
+    else if(tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues'){
+      newDate += ' Tuesday ';
+    }
+    else if(tempDate[0] == 'Wed'){
+      newDate += ' Wednesday ';
+    }
+    else if(tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs'){
+      newDate += ' Thursday ';
+    }
+    else if(tempDate[0] == 'Fri'){
+      newDate += ' Friday ';
+    }
+    else if(tempDate[0] == 'Sat'){
+      newDate += ' Saturday ';
+    }
+    else if(tempDate[0] == 'Sun'){
+      newDate += ' Sunday ';
+    }
+
+    if(tempDate[1] == 'Jan'){
+      newDate += 'January';
+    }
+    else if(tempDate[1] == 'Feb'){
+      newDate += 'February';
+    }
+    else if(tempDate[1] == 'Mar'){
+      newDate += 'March';
+    }
+    else if(tempDate[1] == 'Apr'){
+      newDate += 'April';
+    }
+    else if(tempDate[1] == 'Jun'){
+      newDate += 'June';
+    }
+    else if(tempDate[1] == 'Jul'){
+      newDate += 'July';
+    }
+    else if(tempDate[1] == 'Aug'){
+      newDate += 'August';
+    }
+    else if(tempDate[1] == 'Sep' || tempDate[1] == 'Sept'){
+      newDate += 'September';
+    }
+    else if(tempDate[1] == 'Oct'){
+      newDate += 'October';
+    }
+    else if(tempDate[1] == 'Nov'){
+      newDate += 'November';
+    }
+    else if(tempDate[1] == 'Dec'){
+      newDate += 'December';
+    }
+
+    newDate += ' ' + tempDate[3];
+
+    return newDate;
   }
 
 
@@ -357,13 +685,30 @@ export class SubmitCmwDepositComponent implements OnInit {
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  private filter(value: string): string[] {
+  private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.staff.filter(option => option.toLowerCase().includes(filterValue));
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadNotifications() | 2. Call getAllStaff()
+   * 
+   * @memberof SubmitCmwDepositComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    this.filteredOptions = this.control.valueChanges.pipe(startWith(''), map(value => this.filter(value)));
+    //Calling the neccessary functions as the page loads
+    this.loadNotifications();
+    this.getAllStaff();
+    this.filteredOptions1 = this.collectedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
+    this.filteredOptions2 = this.identifiedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
+    this.filteredOptions3 = this.isolatedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
+    this.filteredOptions4 = this.donatedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
   }
 
 }

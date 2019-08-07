@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Monday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,6 +17,8 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolve
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
+import { DiagnosticClinicAPIService, Sample } from '../../_services/diagnostic-clinic-api.service';
+import { CultureCollectionAPIService, CMWDeposit, CMWRequest } from '../../_services/culture-collection-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Route, Router } from '@angular/router';
@@ -38,18 +40,34 @@ export class StaffDashboardComponent implements OnInit {
 
   /** Object array for holding all of the logs -  @type {any[]} */ 
   allNotifications: any[] = [];
-  /** Object array for holding all of the read logs -  @type {any[]} */ 
-  readNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
   
   /** Indicates if there are notifications to load - @type {boolean} */           
   notifications: boolean = true; 
   /** The total number of User Logs - @type {number} */           
   numberOfUserLogs: number = 0;
-  /** THe number of the notifications - @type {number} */   
-  localNotificationNumber : number = 1; 
+  /** The number of the notifications - @type {number} */   
+  localNotificationNumber : number = 1;
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
+  allLogs: string[] = []; 
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
+
+  /** Indicates whether there are samples to load or not - @type {boolean} */
+  submittedSamples: boolean = false;
+  /** Indicates whether there are deposit forms to load or not - @type {boolean} */
+  depositForms: boolean = false;
+  /** Indicates whether there are request forms to load or not - @type {boolean} */
+  requestForms: boolean = false;
+
+  /** Object array for holding the deposits associated with the user -  @type {CMWDeposit[]} */
+  deposits: CMWDeposit[] = [];
+  /** Object array for holding the requests associated with the user -  @type {CMWRequest[]} */
+  requests: CMWRequest[] = [];
+  /** Object array for holding the samples associated with the user -  @type {Sample[]} */
+  samples: Sample[] = [];
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,19 +76,35 @@ export class StaffDashboardComponent implements OnInit {
    * Creates an instance of StaffDashboardComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
-   * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API service
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
+   * 
    * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private authService: AuthenticationService, 
     private router: Router, 
-    private userManagementService: UserManagementAPIService, 
+    private userManagementService: UserManagementAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService, 
     private resolver: ComponentFactoryResolver, 
-    private notificationLoggingService: NotificationLoggingService
+    private notificationLoggingService: NotificationLoggingService,
+    private cultureCollectionService: CultureCollectionAPIService
     ) { }
+  
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
@@ -153,6 +187,31 @@ export class StaffDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_LOGS
+  /**
+   *  This function will load all of the user's logs into a string array.
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadLogs(){
+    //Making a call to the notification logging service to return all logs belonging to the user
+    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+      if(response.success == true){
+        var data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          this.allLogs.push(data[i].id);
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_NOTIFICATIONS
   /**
    *  This function will load the staff member's notifications into the notification section on the HTML page
@@ -161,70 +220,43 @@ export class StaffDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
-    //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
-    const storageNotifications = JSON.parse(localStorage.getItem('readNotifications'));
+    //Loading all the logs beloning to the user
+    this.loadLogs();
 
-    //Loading the 'USER' logs
-    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
+    //Making a call too the notification logging service to return all USER logs
+    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
+          for(var j = 0; j < this.allLogs.length; j++){
+            if(data[i].date == this.allLogs[j]){
+              //A temporary instance of UserLogs that will be added to the allNotifications array
+              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+              
+              //Getting the name and surname of the users passed using their id numbers
+              const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
+              const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
+  
+              if(tempLogU.Action == 'C'){
+                tempLogU.Action = user1 + ' was added to the system by ' + user2;
               }
-              else{
-                const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-                const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-                if(tempLog.Action == 'C'){
-                  tempLog.Action = user1 + ' was added to the system by ' + user2;
-                }
-                else if(tempLog.Action == 'D'){
-                  tempLog.Action = user1 + ' was removed from the system by ' + user2;
-                }
-                else if(tempLog.Action == 'U'){
-                  tempLog.Action = user1 + ' details where updated by ' + user2;
-                }
-
-                this.allNotifications.push(tempLog);
-                this.numberOfUserLogs += 1;
-                this.localNotificationNumber += 1;
+              else if(tempLogU.Action == 'D'){
+                tempLogU.Action = user1 + ' was removed from the system by ' + user2;
               }
+  
+              this.allNotifications.push(tempLogU);
+              this.numberOfUserLogs += 1;
+              this.localNotificationNumber += 1;
             }
-          }
-          else{
-            const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-            const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-            if(tempLog.Action == 'C'){
-              tempLog.Action = user1 + ' was added to the system by ' + user2;
-            }
-            else if(tempLog.Action == 'D'){
-              tempLog.Action = user1 + ' was removed from the system by ' + user2;
-            }
-            else if(tempLog.Action == 'U'){
-              tempLog.Action = user1 + ' details where updated by ' + user2;
-            }
-
-            this.allNotifications.push(tempLog);
-            this.numberOfUserLogs += 1;
-            this.localNotificationNumber += 1;
-          }
+          }          
         }
       }
       else{
         //Error handling
       }
     });
-
-    //Pushing the readNotifications array to local storage
-    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
   }
 
 
@@ -236,10 +268,13 @@ export class StaffDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
@@ -250,15 +285,30 @@ export class StaffDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                              REMOVE_NOTIFICATIONS
+  //                                                       REMOVE_NOTIFICATIONS
   /**
-   *  This function will remove a notification for the notification section when the user clicks on the 'exit'
-   *  button/icon associated with that notification
+   *  This function will remove a notification from the notification section on the HTML page.
    * 
+   * @param {string} id                   //The id of the notification to be removed
    * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeNotification(){}
+  removeNotification(id: string){
+    for(var i =  0; i < this.allNotifications.length; i++){
+      if(this.allNotifications[i].ID == id){
+        this.newNotifications.push(this.allNotifications[i]);
+      }
+    }
+
+    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+      if(response.success == true){
+        this.loadNotifications();
+      }
+      else{
+        //Error handling
+      }
+    });
+  } 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                           TOGGLE_NOTIFICATIONS_TAB
@@ -273,19 +323,111 @@ export class StaffDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_SAMPLES
+  /**
+   *  This function will load all the samples associated with the user into the HTML page.
+   *  @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadSamples() {
+    this.diagnosticClinicService.getSamplesForFABIStaff(localStorage.getItem('userID')).subscribe((response: any) => {
+      if(response.success == true){
+        this.submittedSamples = true;
+        var data = response.date.samples;
+
+        for(var i = 0; i < data.length; i++){
+          var tempSample: Sample = {userID: data[i].userID, orgName: data[i].orgName, status: data[i].status, referenceNumber: data[i].referenceNmber, data: data[i].data};
+          this.samples.push(tempSample);
+        }
+      }
+      else{ 
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_DEPOSIT_FORMS
+  /**
+   *  This function will load all the deposit forms associated with the user into the HTML page.
+   *  @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadDepositForms() {
+    this.cultureCollectionService.getAllDepositLogs().subscribe((response: any) => {
+      if(response.success == true){
+        var data = response.data.qs.forms;
+
+        for(var i = 0; i < data.length; i++){
+          var tempDeposit : CMWDeposit = {userID: data[i].userID, cmwCultureNumber: data[i].cmwCultureNumber, genus: data[i].genus, epitheton: data[i].epitheton, 
+            personalCollectionNumber: data[i].personalCollectionNumber, internationalCollectionNumber: data[i].internationalCollectionNumber, herbariumNumber: data[i].herbariumNumber,
+            otherFABICollections: data[i].otherFABICollections, name: data[i].name, typeStatus: data[i].typeStatus, host: data[i].host, 
+            vector: data[i].vector, substrate: data[i].substrate, continent: data[i].continent, country: data[i].country, region: data[i].region,
+            locality: data[i].locality, gps: data[i].gps, collectedBy: data[i].collectedBy, dateCollected: data[i].dateCollected, isolatedBy: data[i].isolatedBy,
+            identifiedBy: data[i].identifiedBy, donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted};
+          
+          if(tempDeposit.userID == localStorage.getItem('userID')){
+            this.depositForms = true;
+            this.deposits.push(tempDeposit);
+          }
+        }
+      }
+      else{ 
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_REQUEST_FORMS
+  /**
+   *  This function will load all the request forms associated with the user into the HTML page.
+   *  @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadRequestForms() {
+    this.cultureCollectionService.getAllRequestLogs().subscribe((response: any) => {
+      if(response.success == true){
+        var data = response.data.qs.forms;
+
+        for(var i = 0; i < data.length; i++){
+          var tempRequest : CMWRequest = {userID: data[i].userID, requestor: data[i].requestor, taxonName: data[i].taxonName, cultureNumber: data[i].cultureNumber,
+            dateRequested: data[i].dateRequested, referenceNumber: data[i].referenceNumber, notes: data[i].notes, dateSubmitted: data[i].dateSubmitted};
+          
+          if(tempRequest.userID == localStorage.getItem('userID')){
+            this.requestForms = true;
+            this.requests.push(tempRequest);
+          }
+        }
+      }
+      else{ 
+        //Error handling
+      }
+    });
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    NG_ON_INIT()  
   /**
    * This function is called when the page loads
    * 
-   * @description 1. Call loadAdmins() | 2. Call loadNotifications() 
+   * @description 1. Call loadNotifications() | 2. Call loadSamples() | 3. loadDepositForms() | 4. loadRequestForms()
    * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //All these functions will be called when the page loads
     this.loadNotifications();
+    this.loadSamples();
+    this.loadDepositForms();
+    this.loadRequestForms();
   }
 
 }
