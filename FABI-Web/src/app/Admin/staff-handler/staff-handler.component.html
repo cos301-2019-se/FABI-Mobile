@@ -120,12 +120,18 @@
               <div class="name-inputs">
                 <mat-form-field class="col">
                   <input matInput placeholder="Name" matInput type="text" formControlName="staff_name">
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_name">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_name').hasError(validation.type) && (addStaffForm.get('staff_name').dirty || addStaffForm.get('staff_name').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
 
                 <!--Surname Field-->
                 <mat-form-field class="col">
                   <input matInput placeholder="Surname" matInput type="text" formControlName="staff_surname">
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_surname">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_surname').hasError(validation.type) && (addStaffForm.get('staff_surname').dirty || addStaffForm.get('staff_surname').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
               </div>
@@ -134,12 +140,18 @@
               <div class="contact-inputs">
                 <mat-form-field class="col">
                   <input matInput placeholder="Email" matInput type="text" formControlName="staff_email">
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_email">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_email').hasError(validation.type) && (addStaffForm.get('staff_email').dirty || addStaffForm.get('staff_email').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
 
                 <!--Cellphone Number Field-->
                 <mat-form-field class="col">
                   <input matInput placeholder="Cellphone Number" matInput type="number" formControlName="staff_phone">
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_phone">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_phone').hasError(validation.type) && (addStaffForm.get('staff_phone').dirty || addStaffForm.get('staff_phone').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
               </div>
@@ -153,7 +165,9 @@
                       {{userType.Name}}
                     </mat-option>
                   </mat-select>
-                  <br />
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_position">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_position').hasError(validation.type) && (addStaffForm.get('staff_position').dirty || addStaffForm.get('staff_position').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
               </div>
 
