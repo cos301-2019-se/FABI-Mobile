@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -62,6 +62,11 @@ export class MemberHandlerComponent implements OnInit {
    /** Array of Member objects - @type {OrganisationMember[]} */
   orgMembers: Interface.OrganisationMember[];
 
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
@@ -88,11 +93,13 @@ export class MemberHandlerComponent implements OnInit {
   //                                                          CONSTRUCTOR
   /**
    * Creates an instance of MemberHandlerComponent.
-   * @param {AdminAPIService} service For calling the API service
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
    * @param {Router} router For navigating to other modules/components
+   * @param {MatDialog} dialog
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * 
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,21 +127,8 @@ export class MemberHandlerComponent implements OnInit {
     })
   }
 
-  sidenavToggle() {
-    if (document.getElementById("sidenav_div").style.width == "22%") {
-      document.getElementById("sidenav_div").style.width = "0";
-    }
-    else {
-      document.getElementById("sidenav_div").style.width = "22%";
-    }
-  }
-
-  closeNav() {
-    document.getElementById("sidenav_div").style.width = "0";
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
+  //                                                    TOGGLE_NOTIFICATIONS_TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -151,15 +145,13 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG_ON_INIT()
   /**
-   *  
-   *
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.viewMembers();
 
-    //--- Get the Organization's Details
+    //Get the Organization's Details
     this.userManagementService.getOrganizationDetails().subscribe((response: any) => {
       if (response.success == true && response.status == 200) {
         // ***********************************
@@ -180,7 +172,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          ADD MEMBER
+  //                                                          ADD_MEMBER
   /**
    * This function calls the *http* service to add a new Organization Member
    *
@@ -188,13 +180,10 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  addMember() {
-    
+  addMember() {    
     this.submitted = true;
 
     if (this.addMemberForm.invalid) {
-      console.log("------------ HERE -----------");
-
       return;
     }
 
@@ -238,7 +227,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SELECTED MEMBER
+  //                                                        SELECT_ORGANIZATION
   /**
    * This function sets the Member selected by the user in the table
    *
@@ -251,15 +240,14 @@ export class MemberHandlerComponent implements OnInit {
   }
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     REMOVE MEMBER PROMPT
+  //                                                     REMOVE_MEMBER_PROMPT
   /**
    * This function prompts the user to confirm if they wish to remove the selected Member
    *
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeMemberPrompt(member: Interface.OrganisationMember) {
-    
+  removeMemberPrompt(member: Interface.OrganisationMember) {    
     const memberDetails = member.fname + " " + member.surname + " " + member.email;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
@@ -279,13 +267,22 @@ export class MemberHandlerComponent implements OnInit {
     })
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                           REMOVE MEMBER   
+  //                                                           REMOVE_MEMBER   
   /**
    * This function calls the *http* service to remove the selected Organisation 
    *
@@ -293,7 +290,6 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMember() {
-
     this.userManagementService.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -326,18 +322,15 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            VIEW STAFF
+  //                                                            VIEW_MEMBERS
   /**
    * This function calls the *http* service to get all registered Organization Members
    *
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  viewMembers() {
-    
+  viewMembers() {    
     console.log("orgName: " + localStorage.getItem('orgName'));
-    console.log("--------- HELLO ----------");
-
     
     this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Monday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -71,8 +71,10 @@ export class DatabaseHandlerComponent implements OnInit {
 
   /** Object array for holding all of the logs -  @type {any[]} */ 
   allNotifications: any[] = [];
-  /** Object array for holding all of the read logs -  @type {any[]} */ 
-  readNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
+  allLogs: string[] = [];
 
   /** The total number of User Logs - @type {number} */           
   numberOfUserLogs: number = 0;
@@ -89,7 +91,9 @@ export class DatabaseHandlerComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  /** Holds the column headings to display in the HTML preview table - @type {string[]} */ 
   displayedColumns: string[];
+  /** The data source of the HTML table - @type {MatTableDataSource([])} */ 
   dataSource = new MatTableDataSource([]);
   fields: any[] = [];
 
@@ -111,6 +115,7 @@ export class DatabaseHandlerComponent implements OnInit {
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * 
    * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,6 +136,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /**
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
+   * 
    * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,10 +205,35 @@ export class DatabaseHandlerComponent implements OnInit {
     newDate += ' ' + tempDate[3];
 
     return newDate;
-  }  
+  } 
   
   
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_LOGS
+  /**
+   *  This function will load all of the user's logs into a string array.
+   * 
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadLogs(){
+    //Making a call to the notification logging service to return all logs belonging to the user
+    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+      if(response.success == true){
+        var data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          this.allLogs.push(data[i].id);
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+  
+  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       LOAD_NOTIFICATIONS
   /**
    *  This function will load the admin's notifications into the notification section on the HTML page
@@ -211,154 +242,37 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
-    //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
-    const storageNotifications = JSON.parse(localStorage.getItem('readNotifications'));
+    //Loading all the logs beloning to the user
+    this.loadLogs();
 
-    //Loading the 'USER' logs
-    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
-      if(response.success = true){
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
-              }
-              else{
-                const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-                const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-                if(tempLog.Action == 'C'){
-                  tempLog.Action = user1 + ' was added to the system by ' + user2;
-                }
-                else if(tempLog.Action == 'D'){
-                  tempLog.Action = user1 + ' was removed from the system by ' + user2;
-                }
-                else if(tempLog.Action == 'U'){
-                  tempLog.Action = user1 + ' details where updated by ' + user2;
-                }
-
-                this.allNotifications.push(tempLog);
-                this.numberOfUserLogs += 1;
-                this.localNotificationNumber += 1;
-              }
-            }
-          }
-          else{
-            const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-            const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-            if(tempLog.Action == 'C'){
-              tempLog.Action = user1 + ' was added to the system by ' + user2;
-            }
-            else if(tempLog.Action == 'D'){
-              tempLog.Action = user1 + ' was removed from the system by ' + user2;
-            }
-            else if(tempLog.Action == 'U'){
-              tempLog.Action = user1 + ' details where updated by ' + user2;
-            }
-
-            this.allNotifications.push(tempLog);
-            this.numberOfUserLogs += 1;
-            this.localNotificationNumber += 1;
-          }
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-
-
-    //Loading the 'DBML' logs
-    this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
-      if(response.success = true){
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          var tempLog: DatabaseManagementLogs = {Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
-              }
-              else{
-                const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-                if(tempLog.Action == 'C'){
-                  tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
-                }
-                else if(tempLog.Action == 'D'){
-                  tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
-                }
-                else if(tempLog.Action == 'U'){
-                  tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
-                }
-
-                this.allNotifications.push(tempLog);
-                this.numberOfUserLogs += 1;
-                this.localNotificationNumber += 1;
-              }
-            }
-          }
-          else{
-            const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-            if(tempLog.Action == 'C'){
-              tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
-            }
-            else if(tempLog.Action == 'D'){
-              tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
-            }
-            else if(tempLog.Action == 'U'){
-              tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
-            }
-
-            this.allNotifications.push(tempLog);
-            this.numberOfUserLogs += 1;
-            this.localNotificationNumber += 1;
-          }
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-
-
-    //Loading the 'ACCL' logs
+    //Making a call too the notification logging service to return all USER logs
     this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: AccessLogs = {Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
-          
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'ACCL' && storageNotifications[i].Date == tempLog.Date && 
-              storageNotifications.User == tempLog.User){
-                  this.readNotifications.push(tempLog);
-                }
-                else{
-                  //Access notifications
-                  this.allNotifications.push(tempLog);
-                  this.numberOfAccessLogs += 1;
-                  this.localNotificationNumber += 1;
-                }
+          for(var j = 0; j < this.allLogs.length; j++){
+            if(data[i].date == this.allLogs[j]){
+              //A temporary instance of UserLogs that will be added to the allNotifications array
+              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+              
+              //Getting the name and surname of the users passed using their id numbers
+              const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
+              const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
+  
+              if(tempLogU.Action == 'C'){
+                tempLogU.Action = user1 + ' was added to the system by ' + user2;
+              }
+              else if(tempLogU.Action == 'D'){
+                tempLogU.Action = user1 + ' was removed from the system by ' + user2;
+              }
+  
+              this.allNotifications.push(tempLogU);
+              this.numberOfUserLogs += 1;
+              this.localNotificationNumber += 1;
             }
-          }
-          else{
-            this.allNotifications.push(tempLog);
-            this.numberOfAccessLogs += 1;
-            this.localNotificationNumber += 1;
-          }
+          }          
         }
       }
       else{
@@ -366,8 +280,42 @@ export class DatabaseHandlerComponent implements OnInit {
       }
     });
 
-    //Pushing the readNotifications array to local storage
-    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
+    //Making a call too the notification logging service to return all DBML logs
+    this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
+      if(response.success == true){
+        //Temporarily holds the data returned from the API call
+        const data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          for(var j = 0; j < this.allLogs.length; j++){
+            if(data[i].date == this.allLogs[j]){
+              //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
+              var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
+
+              //Getting the name and surname of the users passed using their id numbers
+              const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
+
+              if(tempLogD.Action == 'C'){
+                tempLogD.Action = tempLogD.Details + ' was added to the system by ' + user1;
+              }
+              else if(tempLogD.Action == 'D'){
+                tempLogD.Action = tempLogD.Details + ' was removed from the system by ' + user1;
+              }
+              else if(tempLogD.Action == 'U'){
+                tempLogD.Action = tempLogD.Details + ' details where updated by ' + user1;
+              }
+
+              this.allNotifications.push(tempLogD);
+              this.numberOfUserLogs += 1;
+              this.localNotificationNumber += 1;
+            }
+          }
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
   }
 
 
@@ -379,10 +327,13 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
@@ -391,19 +342,53 @@ export class DatabaseHandlerComponent implements OnInit {
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       REMOVE_NOTIFICATIONS
+  /**
+   *  This function will remove a notification from the notification section on the HTML page.
+   * 
+   * @param {string} id                   //The id of the notification to be removed
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeNotification(id: string){
+    for(var i =  0; i < this.allNotifications.length; i++){
+      if(this.allNotifications[i].ID == id){
+        this.newNotifications.push(this.allNotifications[i]);
+      }
+    }
+
+    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+      if(response.success == true){
+        this.loadNotifications();
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+  
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadNotifications() 
+   * 
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.loadNotifications();
 
-    //-------- Load Databases for Drop Down --------
+    //Load Databases for Drop Down
     const user2 = this.authService.getCurrentUserValue;
     const user = this.authService.getCurrentSessionValue;
 
-
     console.log("///////// USER: " + JSON.stringify(user2));
-    // this.databases = user.databases;
     this.databases = user.user.databases;
-
-
   }
 
 
@@ -412,6 +397,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /**
    *  This function will be used to submit a .csv file so that it can be converted into a database for the user
    *  @param {any} input
+   * 
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -431,7 +417,8 @@ export class DatabaseHandlerComponent implements OnInit {
       let text = reader.result;
 
       console.log("porting data:");
-      this.jsonData = this.portCSV.convertToJSON(text); //converts file to JSON Object
+      //converts file to JSON Object
+      this.jsonData = this.portCSV.convertToJSON(text);
 
       var columnsIn = this.jsonData[0];
       for(var key in columnsIn){;
@@ -466,6 +453,7 @@ export class DatabaseHandlerComponent implements OnInit {
   //                                                        GET_CSV
   /**
    *  This function will be used to download the selected database in the format of a .csv file.
+   * 
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -509,6 +497,14 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        VIEW_DATABASE
+  /**
+   *  This function is used to load the selected database and display it in the HTML page
+   * 
+   *  @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public viewDatabase() {
     this.dbService.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
@@ -636,14 +632,20 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
 
 
- logout() {
-
-  this.authService.logoutUser();
-  this.router.navigate(['/login']);
-
-}
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
 
 }

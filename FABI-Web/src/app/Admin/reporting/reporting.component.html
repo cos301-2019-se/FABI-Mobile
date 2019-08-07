@@ -88,7 +88,7 @@
         <div class="box" *ngFor="let log of allNotifications">
           <div class="notification-heading">
             <h2>Notification {{log.ID}}</h2>
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
           </div>
 
           <div class="notification-content">
@@ -159,6 +159,8 @@
               </div>
               <button *ngIf='errorReport' (click)="downloadErrorReport()">Download Error Report</button>
 
+              <label>From (Submitted Date)</label><input matInput type="date" placeholder="Date From" #requestDateFrom1 *ngIf='requestReport' (change)="setDateFrom(submitted)"/><label>To (Submitted Date)</label><input matInput type="date" placeholder="Date To" #requestDateTo1 *ngIf='requestReport' (change)="setDateTo(submitted)"/>
+              <label>From (Requested Date)</label><input matInput type="date" placeholder="Date From" #requestDateFrom2 *ngIf='requestReport' (change)="setDateFrom(requested)"/><label>To (Requested Date)</label><input matInput type="date" placeholder="Date To" #requestDateTo2 *ngIf='requestReport' (change)="setDateTo(requested)"/>
               <div id="requestReport" *ngIf='requestReport' #requestReportPDF>
                 <h2 id="request_report">FABI System Request Report</h2>
                 <p>Date: {{date}}</p>
@@ -187,6 +189,8 @@
               </div>
               <button *ngIf='requestReport' (click)="downloadRequestReport()">Download Request Report</button>
 
+              <label>From (Submitted Date)</label><input matInput type="date" placeholder="Date From" #depositDateFrom1 *ngIf='depositReport' (change)="setDateFrom(submitted)"/><label>To (Submitted Date)</label><input matInput type="date" placeholder="Date To" #depositDateTo1 *ngIf='depositReport' (change)="setDateTo(submitted)"/>
+              <label>From (Collected Date)</label><input matInput type="date" placeholder="Date From" #depositDateFrom2 *ngIf='depositReport' (change)="setDateFrom(collected)"/><label>To (Collected Date)</label><input matInput type="date" placeholder="Date To" #depositDateTo2 *ngIf='depositReport' (change)="setDateTo(collected)"/>
               <div id="depositReport" *ngIf='depositReport' #depositReportPDF>
                 <h2 id="deposit_report">FABI System Deposit Report</h2>
                 <p>Date: {{date}}</p>
@@ -198,6 +202,7 @@
                       <th>CMW Culture Number</th>
                       <th>Culture Name</th>
                       <th>Collected By</th>
+                      <th>Date Collected</th>
                       <th>Isolated By</th>
                       <th>Identified By</th>
                       <th>Date Submitted</th>
@@ -215,6 +220,9 @@
               </div>
               <button *ngIf='depositReport' (click)="downloadDepositReport()">Download Deposit Report</button> 
               
+              <label>From (Submitted Date)</label><input matInput type="date" placeholder="Date From" #revitalizationDateFrom1 *ngIf='revitalizationReport' (change)="setDateFrom(submitted)"/><label>To (Submitted Date)</label><input matInput type="date" placeholder="Date To" #revitalizationDateTo1 *ngIf='revitalizationReport' (change)="setDateTo(submitted)"/>
+              <label>From (Requested Date)</label><input matInput type="date" placeholder="Date From" #revitalizationDateFrom2 *ngIf='revitalizationReport' (change)="setDateFrom(requested)"/><label>To (Requested Date)</label><input matInput type="date" placeholder="Date To" #revitalizationDateTo2 *ngIf='revitalizationReport' (change)="setDateTo(requested)"/>
+              <label>From (Returned Date)</label><input matInput type="date" placeholder="Date From" #revitalizationDateFrom3 *ngIf='revitalizationReport' (change)="setDateFrom(returned)"/><label>To (Returned Date)</label><input matInput type="date" placeholder="Date To" #revitalizationDateTo3 *ngIf='revitalizationReport' (change)="setDateTo(returned)"/>
               <div id="revitalizationReport" *ngIf='revitalizationReport' #revitalizationReportPDF>
                 <h2 id="revitalization_report">FABI System Revitalization Report</h2>
                 <p>Date: {{date}}</p>

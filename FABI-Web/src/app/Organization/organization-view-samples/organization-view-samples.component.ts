@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,6 +15,7 @@
 
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 //Include Material Components
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
@@ -48,13 +49,17 @@ export class OrganizationViewSamplesComponent implements OnInit {
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of OrganizationViewSamplesComponent.
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {MatDialog} dialog
+   * @param {Router} router
    * 
    * @memberof OrganizationViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private authService: AuthenticationService, 
-    private clinicService: DiagnosticClinicAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService,
     private dialog: MatDialog, 
     private router: Router
     ) { }
@@ -75,23 +80,46 @@ export class OrganizationViewSamplesComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call viewSamples()
+   * 
+   * @memberof OrganizationViewSamplesComponent
+   */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.viewSamples();
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof OrganizationViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
 
-  viewSamples() {
-    this.clinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
-      if (response.success == true && response.code == 200) {
 
-        console.log("---- RESPONSE: " + JSON.stringify(response));
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            VIEW_SAMPLES 
+  /**
+   * This function will be used to load all of the samples belonging to the organization into the HTML page
+   * 
+   * @memberof OrganizationViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  viewSamples() {
+    this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
+      if (response.success == true && response.code == 200) {
         
         Object.keys(response.data.samples[0]).forEach((column) => {
 

@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,7 +13,7 @@
  * <<license>>
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import * as Interface from "../../_interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -60,6 +60,11 @@ export class OrganizationProfileComponent implements OnInit {
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
 
+  /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
+  @ViewChild("passwordInput") passwordInput : ElementRef;
+  /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
+  @ViewChild("confirmInput") confirmInput : ElementRef;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -68,13 +73,16 @@ export class OrganizationProfileComponent implements OnInit {
    * 
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
+   * @param {FormBuilder} formBuilder Used to get the form elements from the HTML page
+   * 
    * @memberof OrganizationProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private authService: AuthenticationService, 
     private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
     private router: Router,
     private formBuilder: FormBuilder, 
     private userManagementService: UserManagementAPIService
@@ -99,18 +107,26 @@ export class OrganizationProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
+    //The id number of the user that is currently logged in
     this.id = localStorage.getItem('userID');
+    //The organization of the user that is currently logged in
     this.organization = localStorage.getItem('userOrganization');
+    //The password of the user that is currently logged in
     this.password = localStorage.getItem('userPassword');
+    //Setting the confirmPassword variable to have the same value as the user's current password
     this.confirmPassword = this.password;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Setting the first name of the user
         this.name = data.fname;
+        //Setting the surname of the user
         this.surname = data.surname;
+        //Setting the email of the user
         this.email = data.email;
       }
       else{
@@ -119,6 +135,15 @@ export class OrganizationProfileComponent implements OnInit {
     });
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
@@ -137,24 +162,29 @@ export class OrganizationProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        SAVE_CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
+   * 
    *  @memberof OrganizationProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
+    //Indicates if the details can be changed based on whether the passwords match or not
     var valid = true;
 
+    //Checking to make sure that the passwords are not empty
+    //Checking to make sure that the password and confirmed password match
     if(this.adminProfileForm.controls.admin_password.value != '' && 
     this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
       this.password = this.adminProfileForm.controls.admin_password.value;
     }
     else{
+      //Indicates that the changes cannot be saved
       valid = false;
 
       //POPUP MESSAGE
@@ -163,6 +193,7 @@ export class OrganizationProfileComponent implements OnInit {
       });
     }
 
+    //Indicates that the changes that the user has made to their profile details, can be changed
     if(valid == true){
       if(this.adminProfileForm.controls.admin_email.value == ''){
         this.email = this.email;
@@ -185,9 +216,12 @@ export class OrganizationProfileComponent implements OnInit {
         this.surname = this.adminProfileForm.controls.admin_surname.value;
       }   
       
+      //Making a call to the User Management API Service to save the user's changed profile details
       this.userManagementService.updateOrganizationMemberDetails(this.organization, this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
         if(response.success == true){
+          //Making sure that local storage now has the updated password stored
           localStorage.setItem('userPassword', this.password);
+          //Reloading the updated user's details
           this.loadAdminProfileDetails();
 
           //Display message to say that details were successfully saved
@@ -211,10 +245,54 @@ export class OrganizationProfileComponent implements OnInit {
     }
   }
 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            NG_ON_INIT()
+  //                                                        SHOW_PASSWORD
+  /**
+   *  This function will make the users password visible on request. 
+   * 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  showPassword(){
+    if(this.passwordInput.nativeElement.type === 'password'){
+      this.passwordInput.nativeElement.type = 'text';
+    }
+    else{
+      this.passwordInput.nativeElement.type = 'password';
+    }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SHOW_CONFIRMED_PASSWORD
+  /**
+   *  This function will make the users confirmed password visible on request. 
+   * 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  showConfirmedPassword(){
+    if(this.confirmInput.nativeElement.type === 'password'){
+      this.confirmInput.nativeElement.type = 'text';
+    }
+    else{
+      this.confirmInput.nativeElement.type = 'password';
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadAdminProfileDetails()
+   * 
+   * @memberof OrganizationProfileComponent
+   */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.loadAdminProfileDetails();
   }
 

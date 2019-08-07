@@ -57,6 +57,7 @@ import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.compo
 import { ReportingComponent } from './Admin/reporting/reporting.component';
 
 import { AgmCoreModule } from "@agm/core";
+import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
 import { MapsWindowComponent } from './maps-window/maps-window.component';
 
 import { config } from "../environments/environment.prod";
@@ -95,6 +96,7 @@ import { config } from "../environments/environment.prod";
     SampleDivComponent,
     AdminProfileComponent,
     StaffProfileComponent,
+    ViewFormsComponent
     ReportingComponent,
     MapsWindowComponent
   ],
