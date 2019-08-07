@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, July 30th 2019
+ * Last Modified: Monday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -44,9 +44,6 @@ import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLog
 })
 export class StaffHandlerComponent implements OnInit {
 
-  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove' ,'Action'];
-  dataSource = new MatTableDataSource([]);
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,12 +67,16 @@ export class StaffHandlerComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove' ,'Action'];
+  dataSource = new MatTableDataSource([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   /** Object array for holding all of the logs -  @type {any[]} */ 
   allNotifications: any[] = [];
-  /** Object array for holding all of the read logs -  @type {any[]} */ 
-  readNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
+  allLogs: string[] = [];
 
   /** The total number of User Logs - @type {number} */           
   numberOfUserLogs: number = 0;
@@ -160,12 +161,21 @@ export class StaffHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
 
+  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            NG_ON_INIT()
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call displayUserTypes() | 2. Call viewStaff() | 3. Call loadNotifications() 
+   * 
+   * @memberof StaffHandlerComponent
+   */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.displayUserTypes();
     this.viewStaff();
     this.loadNotifications();
@@ -174,8 +184,16 @@ export class StaffHandlerComponent implements OnInit {
     console.log("///////// USER: " + JSON.stringify(user2));
   }
 
-  logout() {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
@@ -256,6 +274,31 @@ export class StaffHandlerComponent implements OnInit {
     return newDate;
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD_LOGS
+  /**
+   *  This function will load all of the user's logs into a string array.
+   * 
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadLogs(){
+    //Making a call to the notification logging service to return all logs belonging to the user
+    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+      if(response.success == true){
+        var data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          this.allLogs.push(data[i].id);
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       LOAD_NOTIFICATIONS
   /**
@@ -265,154 +308,37 @@ export class StaffHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
-    //Need to fetch all notifications from local storage to make sure that notifications that have been read are not reloaded
-    const storageNotifications = JSON.parse(localStorage.getItem('readNotifications'));
+    //Loading all the logs beloning to the user
+    this.loadLogs();
 
-    //Loading the 'USER' logs
-    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
-      if(response.success = true){
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          var tempLog: UserLogs = {Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
-              }
-              else{
-                const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-                const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-                if(tempLog.Action == 'C'){
-                  tempLog.Action = user1 + ' was added to the system by ' + user2;
-                }
-                else if(tempLog.Action == 'D'){
-                  tempLog.Action = user1 + ' was removed from the system by ' + user2;
-                }
-                else if(tempLog.Action == 'U'){
-                  tempLog.Action = user1 + ' details where updated by ' + user2;
-                }
-
-                this.allNotifications.push(tempLog);
-                this.numberOfUserLogs += 1;
-                this.localNotificationNumber += 1;
-              }
-            }
-          }
-          else{
-            const user1 = this.loadUserDetails(tempLog.Organization2, tempLog.Details);
-            const user2 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-            if(tempLog.Action == 'C'){
-              tempLog.Action = user1 + ' was added to the system by ' + user2;
-            }
-            else if(tempLog.Action == 'D'){
-              tempLog.Action = user1 + ' was removed from the system by ' + user2;
-            }
-            else if(tempLog.Action == 'U'){
-              tempLog.Action = user1 + ' details where updated by ' + user2;
-            }
-
-            this.allNotifications.push(tempLog);
-            this.numberOfUserLogs += 1;
-            this.localNotificationNumber += 1;
-          }
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-
-
-    //Loading the 'DBML' logs
-    this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
-      if(response.success = true){
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          var tempLog: DatabaseManagementLogs = {Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-          
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'USER' && storageNotifications[i].Action == tempLog.Action && 
-                 storageNotifications[i].Date == tempLog.Date && storageNotifications.User == tempLog.User){
-                this.readNotifications.push(tempLog);
-              }
-              else{
-                const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-                if(tempLog.Action == 'C'){
-                  tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
-                }
-                else if(tempLog.Action == 'D'){
-                  tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
-                }
-                else if(tempLog.Action == 'U'){
-                  tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
-                }
-
-                this.allNotifications.push(tempLog);
-                this.numberOfUserLogs += 1;
-                this.localNotificationNumber += 1;
-              }
-            }
-          }
-          else{
-            const user1 = this.loadUserDetails(tempLog.Organization1, tempLog.User);
-
-            if(tempLog.Action == 'C'){
-              tempLog.Action = tempLog.Details + ' was added to the system by ' + user1;
-            }
-            else if(tempLog.Action == 'D'){
-              tempLog.Action = tempLog.Details + ' was removed from the system by ' + user1;
-            }
-            else if(tempLog.Action == 'U'){
-              tempLog.Action = tempLog.Details + ' details where updated by ' + user1;
-            }
-
-            this.allNotifications.push(tempLog);
-            this.numberOfUserLogs += 1;
-            this.localNotificationNumber += 1;
-          }
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-
-
-    //Loading the 'ACCL' logs
+    //Making a call too the notification logging service to return all USER logs
     this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
       if(response.success = true){
+        //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
         for(var i = 0; i < data.length; i++){
-          var tempLog: AccessLogs = {Type: 'ACCL', Action: 'Access', Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, ID: this.localNotificationNumber};
-          
-          if(storageNotifications != null && storageNotifications.length != 0){
-            for(var j = 0; j < storageNotifications.length; j++){
-              if(storageNotifications[j].Type == 'ACCL' && storageNotifications[i].Date == tempLog.Date && 
-              storageNotifications.User == tempLog.User){
-                  this.readNotifications.push(tempLog);
-                }
-                else{
-                  //Access notifications
-                  this.allNotifications.push(tempLog);
-                  this.numberOfAccessLogs += 1;
-                  this.localNotificationNumber += 1;
-                }
+          for(var j = 0; j < this.allLogs.length; j++){
+            if(data[i].date == this.allLogs[j]){
+              //A temporary instance of UserLogs that will be added to the allNotifications array
+              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
+              
+              //Getting the name and surname of the users passed using their id numbers
+              const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
+              const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
+  
+              if(tempLogU.Action == 'C'){
+                tempLogU.Action = user1 + ' was added to the system by ' + user2;
+              }
+              else if(tempLogU.Action == 'D'){
+                tempLogU.Action = user1 + ' was removed from the system by ' + user2;
+              }
+  
+              this.allNotifications.push(tempLogU);
+              this.numberOfUserLogs += 1;
+              this.localNotificationNumber += 1;
             }
-          }
-          else{
-            this.allNotifications.push(tempLog);
-            this.numberOfAccessLogs += 1;
-            this.localNotificationNumber += 1;
-          }
+          }          
         }
       }
       else{
@@ -420,8 +346,42 @@ export class StaffHandlerComponent implements OnInit {
       }
     });
 
-    //Pushing the readNotifications array to local storage
-    localStorage.setItem('readNotifications', JSON.stringify(this.readNotifications));
+    //Making a call too the notification logging service to return all DBML logs
+    this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
+      if(response.success == true){
+        //Temporarily holds the data returned from the API call
+        const data = response.data.content.data.Logs;
+
+        for(var i = 0; i < data.length; i++){
+          for(var j = 0; j < this.allLogs.length; j++){
+            if(data[i].date == this.allLogs[j]){
+              //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
+              var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
+
+              //Getting the name and surname of the users passed using their id numbers
+              const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
+
+              if(tempLogD.Action == 'C'){
+                tempLogD.Action = tempLogD.Details + ' was added to the system by ' + user1;
+              }
+              else if(tempLogD.Action == 'D'){
+                tempLogD.Action = tempLogD.Details + ' was removed from the system by ' + user1;
+              }
+              else if(tempLogD.Action == 'U'){
+                tempLogD.Action = tempLogD.Details + ' details where updated by ' + user1;
+              }
+
+              this.allNotifications.push(tempLogD);
+              this.numberOfUserLogs += 1;
+              this.localNotificationNumber += 1;
+            }
+          }
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
   }
 
 
@@ -433,10 +393,13 @@ export class StaffHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
+        //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Returns the users name and surname as a connected string
         return data.fname + ' ' + data.surname;
       } 
       else{
@@ -445,9 +408,35 @@ export class StaffHandlerComponent implements OnInit {
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       REMOVE_NOTIFICATIONS
+  /**
+   *  This function will remove a notification from the notification section on the HTML page.
+   * 
+   * @param {string} id                   //The id of the notification to be removed
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeNotification(id: string){
+    for(var i =  0; i < this.allNotifications.length; i++){
+      if(this.allNotifications[i].ID == id){
+        this.newNotifications.push(this.allNotifications[i]);
+      }
+    }
+
+    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+      if(response.success == true){
+        this.loadNotifications();
+      }
+      else{
+        //Error handling
+      }
+    });
+  } 
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          ADD STAFF MEMBER
+  //                                                          ADD_STAFF
   /**
    * This function calls the *user-management* service to add a Staff Member
    *
@@ -455,8 +444,7 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  addStaff()
-  {
+  addStaff(){
     this.submitted = true;
 
     if (this.addStaffForm.invalid) {
@@ -496,8 +484,9 @@ export class StaffHandlerComponent implements OnInit {
     });
   }
 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SELECTED STAFF MEMBER
+  //                                                        SELECTED_ORGANIZATION
   /**
    * This function sets the Staff Member selected by the user in the table
    *
@@ -511,15 +500,14 @@ export class StaffHandlerComponent implements OnInit {
   
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     REMOVE STAFF MEMBER PROMPT
+  //                                                     REMOVE_STAFF_MEMBER_PROMPT
   /**
    * This function prompts the user to confirm if they wish to remove the selected Staff Member
    *
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeStaffMemberPrompt(member: Interface.StaffInfo) {
-    
+  removeStaffMemberPrompt(member: Interface.StaffInfo) {    
     const staffDetails = member.fname + " " + member.surname + " " + member.email;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
@@ -541,7 +529,7 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                           REMOVE STAFF   
+  //                                                           REMOVE_STAFF_MEMBER   
   /**
    * This function calls the *user-management* service to remove the selected Staff Member 
    *
@@ -582,15 +570,14 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            VIEW STAFF
+  //                                                            VIEW_STAFF
   /**
    * This function calls the *user-management* service to get all registered FABI Staff
    *
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  viewStaff() {
-    
+  viewStaff() {    
     this.userManagementService.getAllStaffMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.staffMembers = response.data.qs.staff;
@@ -624,52 +611,5 @@ export class StaffHandlerComponent implements OnInit {
         "Name":"Staff"
       }
     ]
-
-
-    // if(this.selectedOrg == "FABI")
-    // {
-    //   this.userTypes = [
-    //     {
-    //       "ID":1,
-    //       "Name":"Admin"
-    //     },
-    //     {
-    //       "ID":2,
-    //       "Name":"Staff"
-    //     }
-    //   ]
-
-    // }
-    // else {
-    //   this.userTypes = [
-    //     {
-    //       "ID":1,
-    //       "Name":"Admin"
-    //     },
-    //     {
-    //       "ID":2,
-    //       "Name":"Member"
-    //     }
-    //   ]
-    // }
-
-    //-------- Load User Types for Drop Down --------
-    // this.service.getUserTypes(this.selectedOrg).subscribe((response: any) => {
-    //   if (response.success == true && response.status == 200) {
-    //     this.userTypes = response.data;
-
-    //   } else if (response.success == false) {
-    //     //POPUP MESSAGE
-    //     let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the User Types", message: response.message, retry: true } });
-    //     dialogRef.afterClosed().subscribe((result) => {
-    //       if (result == "Retry") {
-    //         this.displayUserTypes();
-    //       }
-    //     })
-    //   }
-    // });
-
   }
-
-
 }

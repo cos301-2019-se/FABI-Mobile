@@ -83,20 +83,20 @@
       <!--*********************************************************************
               DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
           *************************************************************************-->
-      <div *ngIf="allNotifications">
-        <div class="box" *ngFor="let log of allNotifications">
-          <div class="notification-heading">
-            <h2>Notification {{log.ID}}</h2>
-            <i class="fas fa-times"></i>
-          </div>
-
-          <div class="notification-content">
-            <p><b>Type:</b> {{log.Type}} notification</p>
-            <p><b>Action:</b> {{log.Action}}</p>
-            <p><b>Date:</b> {{log.Date}}</p>
+        <div *ngIf="allNotifications">
+          <div class="box" *ngFor="let log of allNotifications">
+            <div class="notification-heading">
+              <h2>Notification {{log.ID}}</h2>
+              <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
+            </div>
+  
+            <div class="notification-content">
+              <p><b>Type:</b> {{log.Type}} notification</p>
+              <p><b>Action:</b> {{log.Action}}</p>
+              <p><b>Date:</b> {{log.Date}}</p>
+            </div>
           </div>
         </div>
-      </div>
 
     </div>
     <div class="modal-footer"> </div>

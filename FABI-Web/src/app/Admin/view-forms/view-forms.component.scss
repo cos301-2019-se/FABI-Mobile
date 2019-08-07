@@ -12,13 +12,10 @@ html {
     color: #555;
 }
 
-#dashboard-content {
-    display: flex;
-    flex-direction: column;
-
-    height: 100vh;
-
-    background-color: #F7F9F9;
+.container-fluid {
+    padding: 0;
+    height: 100% !important;
+    max-height: 100vh;
 }
 
 /* ================================================ */
@@ -45,8 +42,7 @@ html {
     color: #ffffff;
 }
 
-.nav-item a,
-i {
+.nav-item a{
     font-size: 18px;
     color: #ffffff;
 }
@@ -56,15 +52,15 @@ i {
 }
 
 .nav-item i {
-    padding:5px;
+    padding: 5px;
 }
 
 .navbar-nav a:hover {
-   text-decoration: none;
+    text-decoration: none;
 }
 
 .dropdown-menu {
-    width:300px !important;
+    width: 200px !important;
 }
 
 .dropdown-toggle{
@@ -106,93 +102,6 @@ i {
     }
 }
 
-/* ================================================ */
-/* Statistics Section                               */
-/* ================================================ */
-.statistics-heading {
-    display: flex;
-    justify-content: center;
-
-    padding-top: 25px;
-
-    background-color: #F7F9F9;
-}
-
-.statistics-heading h1 {
-    color: #6B8E4E;
-    font-size: 34px;
-}
-
-#statistics-section {
-    padding: 0;
-}
-
-.statistics {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-
-    min-height: 25vh;
-
-    padding-top: 15px;
-    padding-bottom: 15px;
-
-    background-color: #F7F9F9;
-}
-
-.statistics .box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-    height: 100px;
-    width: 85%;
-
-    background-color: #ffffff;
-
-    margin: 15px;
-
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.20), 2px 2px 10px rgba(0, 0, 0, 0.12);
-    border-radius: 5px;
-}
-
-.statistics .box h2 {
-    font-family: 'Roboto', sans-serif;
-    color: #6B8E4E;
-    font-size: 24px;
-    margin-top: 0;
-    padding: 15px;
-}
-
-.statistics .box>i {
-    float: left;
-    color: #ffffff;
-    background-color: #6B8E4E;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 22px;
-}
-
-.statistics .box:hover {
-    transform: scale(1.025);
-    transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@media (min-width:425px) {
-    .statistics {
-        flex-direction: row;
-        padding: 15px;
-    }
-
-    .statistics .box {
-        width: 30%;
-
-    }
-}
 
 /* ================================================ */
 /* Slide Out Notifications Tab	                    */
@@ -207,6 +116,8 @@ i {
     transition-property: all;
     transition-duration: .5s;
     transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+    z-index: 3;
 }
 
 /* Display slideOut */
@@ -225,7 +136,9 @@ i {
     box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
     background: #8EBB67;
     color: white;
-    border-radius: 15px 0px 0px 15px
+    border-radius: 15px 0px 0px 15px;
+
+    z-index: 3;
 }
 
 .slideOutTab div {
@@ -276,11 +189,17 @@ div#slideOut.showSlideOut {
     }
 }
 
+@media (max-width:575px) {
+    .slideOutTab {
+        display: none;
+    }
+}
+
 @media (max-width:768px) {
 
-   div#slideOut.showSlideOut {
-       width: 80%;
-   }
+    div#slideOut.showSlideOut {
+        width: 80%;
+    }
 }
 
 /* ================================================ */
@@ -290,6 +209,8 @@ div#slideOut.showSlideOut {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    padding: 15px;
 }
 
 #notifications-section .box {
@@ -321,7 +242,7 @@ div#slideOut.showSlideOut {
 .notification-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;    
+    align-items: flex-start;
 
     width: 100%;
 
@@ -352,4 +273,104 @@ div#slideOut.showSlideOut {
 #notifications-section .box:hover {
     transform: scale(1.0125);
     transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ================================================ */
+/* Tab Menu Setup and Styling                       */
+/* ================================================ */
+.mat-ink-bar {
+    background-color: #6B8E4E !important;
+}
+
+mat-tab-group {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+mat-tab-group {
+    /deep/ .mat-tab-body-wrapper {
+        height: 100%;
+    }
+}
+
+mat-tab {
+    width: 100% !important;
+    height: 1000px !important;
+    padding-bottom: 50% !important;
+}
+
+// mat-icon {
+//     padding-right: 30px;
+// }
+
+.tab-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100% !important;
+    min-height: 100vh !important;
+    height: 100% !important;
+}
+
+.tab-content h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #6B8E4E;
+    font-size: 28px;
+
+    text-transform: uppercase;
+}
+
+.tab-content hr {
+    width: 250px;
+    height: 2px;
+    background-color: #6B8E4E;
+    border: 0;
+    margin-bottom: 25px;
+}
+
+#reports button{
+    position: relative;
+    margin-top: 0%;
+}
+
+@media (max-width:425px) {
+    .tab-content hr {
+        width: 150px;
+    }
+}
+
+.btn .btn-default {
+    background: #6B8E4E;
+    border: 3px solid #ffffff;
+    color: #ffffff;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 13px 30px;
+    text-transform: uppercase;
+
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border: 1px solid #6B8E4E;
+
+    display: block;
+    margin: 0 auto;
+
+}
+
+.arrowDiv{
+    width: 50px !important;
+    height: 50px !important;
+}
+
+#individualDepositForm, #individualRequestForm, #individualRevitalizationForm{
+    background-color: white;
+    width: 50% !important;
+    height: 90% !important;
+}
+
+#processFormDiv{
+    display: none;
 }

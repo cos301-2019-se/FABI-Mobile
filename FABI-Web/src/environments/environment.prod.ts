@@ -6,6 +6,8 @@ export const config = {
   loginURL: "***REMOVED***",
   databaseManagementURL: "***REMOVED***",
   userManagementURL: "***REMOVED***",
-  diagnosticClinicURL: "***REMOVED***",
+  cultureClinicURL: "***REMOVED***",
+  logsURL: "***REMOVED***"
   APIKEy: '***REMOVED***'
+  diagnosticClinicURL: "***REMOVED***",
 }
