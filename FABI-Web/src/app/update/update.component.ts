@@ -5,7 +5,7 @@
  * Created Date: Wednesday, June 26th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, July 17th 2019
+ * Last Modified: Sunday, July 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -23,8 +23,9 @@ import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { HttpService } from '../_services/http.service';
+import { AuthenticationService } from '../_services/authentication.service';
 import { ConfirmComponent } from "../confirm/confirm.component";
+import { UserManagementAPIService } from '../_services/user-management-api.service';
 
 @Component({
   selector: 'app-update',
@@ -40,8 +41,14 @@ export class UpdateComponent implements OnInit {
   updateProfileForm: FormGroup;          // Form Group for updating a product
 
   //constructor(@Inject(MAT_DIALOG_DATA) public data: any,  private formBuilder: FormBuilder, private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,  private formBuilder: FormBuilder, private service: HttpService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) 
-  { 
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,  
+    private formBuilder: FormBuilder, 
+    private authService: AuthenticationService, 
+    private userManagementService: UserManagementAPIService,
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router)  { 
     this.updateProfileForm = this.formBuilder.group({
       OrgName: ['', Validators.required],
       Name: ['', Validators.required],
@@ -53,7 +60,7 @@ export class UpdateComponent implements OnInit {
   ngOnInit() {
     
     //--- Get the Members's Details
-    this.service.getOrganizationMemberDetails().subscribe((response: any) => {
+    this.userManagementService.getOrganizationMemberDetails().subscribe((response: any) => {
       
       if (response.success == true && response.code == 200) {
         this.data.name = response.data.Member.fname;

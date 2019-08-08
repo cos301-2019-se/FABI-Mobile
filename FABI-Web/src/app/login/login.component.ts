@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,15 +14,15 @@
  */
 
 
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { HttpService } from '../_services/http.service';
+import { AuthenticationService } from '../_services/authentication.service';
+import { UserManagementAPIService } from "../_services/user-management-api.service";
 import { ErrorComponent } from '../_errors/error-component/error.component';
 import * as Interface from '../_interfaces/interfaces';
-import { first } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -54,12 +54,27 @@ export class LoginComponent implements OnInit {
   /** Selected organisation on dropdown. Used to adjust login form according to organisation selected - @type {string} */
   selectedOrg: string;
 
+  login_validation_messages = {
+    'organization': [
+      { type:  'required', message: 'Please select an Organization'}
+    ],
+    'email': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Please enter a valid email' }
+    ],
+    'password': [
+      { type: 'required', message: 'Password is required' },
+      // { type: 'minlength', message: 'Password must be at least 5 characters long' },
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+    ],
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of LoginComponent.
    * 
-   * @param {AdminAPIService} service For calling the API service
+   * @param {AdminAPIService} authService For calling the *authentication* API service
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
@@ -67,11 +82,30 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, 
-    private router: Router) {
+  constructor(
+    private authService: AuthenticationService, 
+    private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router, 
+    private toaster: ToastrService,
+    private userManagementServicee: UserManagementAPIService
+    ) {
+
+    // if(!this.previousUserData.email && this.previousUserData.email == null) {
+    //   var email = '';
+    // }
+
+    // if(!this.previousUserData.organization && this.previousUserData.organization == null) {
+    //   var organization = '';
+    // }
+
     this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
-      login_email: ['', Validators.required],
+      login_email: ['',Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
       login_password: ['', Validators.required]
     })
   }
@@ -80,7 +114,7 @@ export class LoginComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                              LOGIN
   /**
-   * This function calls the *http* service to authenticate the user's login details. If the user is authenticated, they're directed 
+   * This function calls the *authentication* service to authenticate the user's login details. If the user is authenticated, they're directed 
    * to their respective dashboard. If they're NOT authenticated, an appropriate error message is shown.
    * 
    * @returns If form input is invalid (eg. not filled out correctly etc.) 
@@ -107,7 +141,7 @@ export class LoginComponent implements OnInit {
     // User details to be passed to API
     const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
 
-    this.service.login(details).subscribe((response: any) => {
+    this.authService.login(details).subscribe((response: any) => {
 
       this.loading = false;
       console.log("----- RESPONSE 2: " + JSON.stringify(response));
@@ -129,7 +163,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userPassword', Lpassw);
 
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Successfully Logged In", "Dismiss", {
+        let snackBarRef = this.snackBar.open("Welcome", "Dismiss", {
           duration: 3000
         });
 
@@ -177,7 +211,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
     //-------- Load Organisation names for Drop Down --------
-    this.service.getAllOrganizations().subscribe((response: any) => {
+    this.userManagementServicee.getAllOrganizations().subscribe((response: any) => {
       
       if (response.success == true && response.code == 200) {
         console.log(response);

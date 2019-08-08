@@ -14,6 +14,8 @@ html {
 
 .container-fluid {
     padding: 0;
+    height: 100% !important;
+    max-height: 100vh;
 }
 
 /* ================================================ */
@@ -327,8 +329,6 @@ mat-icon {
     width: 100% !important;
     min-height: 100vh !important;
     height: 100% !important;
-
-    margin-top: 5%;
 }
 
 .tab-content h2 {
@@ -345,6 +345,11 @@ mat-icon {
     background-color: #6B8E4E;
     border: 0;
     margin-bottom: 25px;
+}
+
+#reports button{
+    position: relative;
+    margin-top: 0%;
 }
 
 @media (max-width:425px) {
@@ -428,6 +433,29 @@ mat-icon {
         flex-direction: row;
     }
 }
+
+// .btn .btn-default {
+//     background: #6B8E4E;
+//     border: 3px solid #ffffff;
+//     color: #ffffff;
+//     font-size: 10px;
+//     letter-spacing: 2px;
+//     padding: 13px 30px;
+//     text-transform: uppercase;
+
+//     border-radius: 50px;
+//     -moz-border-radius: 50px;
+//     -webkit-border-radius: 50px;
+//     border: 1px solid #6B8E4E;
+
+//     display: block;
+//     margin: 0 auto;
+
+// }
+
+// #add_new_organization_form .btn.btn-default:hover {
+//     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+// }
 
 .btn .btn-default {
     background: #6B8E4E;
@@ -521,163 +549,6 @@ mat-icon {
     padding: 0;
 }
 
-
-
-
-
-// /*-------------
-//     General
-// -------------*/
-
-// * {
-//     margin: 0;
-//     padding: 0;
-//     box-sizing: border-box;
-// }
-
-// html {
-//     font-family: 'Open Sans', sans-serif;
-//     color: #555;
-//     background-color: #E0E0E0;
-// }
-
-// .container {
-//     height: 100vh;
-//     display: flex;
-//     z-index: 0;
-// }
-
-// /*-------------
-//     Sidenav
-// -------------*/
-
-// .nav {
-//     width: 25%;
-
-//     display: flex;
-//     flex-direction: column;
-
-//     background-color: #6B8E4E;
-
-//     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
-
-//     z-index: 2;
-
-//     font-family: 'Roboto', sans-serif;
-
-// }
-
-// .top-nav {
-//     background-color: #6B8E4E;
-
-//     display: flex;
-//     flex-direction: column;
-// }
-
-// .top-nav h1 {
-//     font-size: 28px;
-//     margin: 40px 20px 20px 10%;
-//     text-decoration: none;
-//     color: #ffffff;
-// }
-
-// .bottom-nav {
-//     background-color: #6B8E4E;
-
-//     height: 100%;
-
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: flex-end;
-// }
-
-// .nav #menu i {
-//     font-size: 24px;
-//     margin: 20px 20px 20px 20%;
-//     text-decoration: none;
-//     color: #ffffff;
-// }
-
-// .top-nav a {
-//     font-size: 24px;
-//     margin: 20px 20px 20px 20%;
-//     text-decoration: none;
-//     color: #ffffff;
-// }
-
-// .bottom-nav a {
-//     font-size: 24px;
-//     margin: 20px 20px 20px 10%;
-//     text-decoration: none;
-//     color: #ffffff;
-// }
-
-// .nav a:hover {
-//     font-size: 26px;
-// }
-
-// a i {
-//     padding-right: 15px;
-// }
-
-// .nav #menu,
-// .nav #notification-bell {
-//     display: none;
-// }
-
-// @media (max-width: 1250px) {
-//     .nav {
-//         width: 40%;
-//     }
-
-//     .nav #notification-bell {
-//         display: block;
-//     }
-// }
-
-// @media (max-width: 1100px) {
-//     .container {
-//         flex-direction: column;
-//     }
-
-//     .nav {
-//         height: 10%;
-//         width: 100%;
-
-
-//         flex-direction: row;
-//         justify-content: flex-end;
-//         order: 0;
-
-//         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
-//     }
-
-//     .nav>* {
-//         display: none;
-//     }
-
-//     .nav #menu {
-//         display: block;
-//     }
-
-// }
-
-// /*-------------
-//     Content
-// -------------*/
-
-// .content {
-//     width: 100%;
-
-//     background-color: #E0E0E0;
-
-//     display: flex;
-//     flex-direction: column;
-//     align-items: flex-start;
-
-//     z-index: 1;
-// }
-
 #previewTable{
     width: 95%;
     padding-bottom: 30px;
@@ -720,7 +591,10 @@ tbody tr th{
     background: #555;
     border: 3px solid #555;
     color: white;
-    font-size: 12px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 13px 30px;
+    // margin-top: 34px;
     letter-spacing: 2px;
     padding: 13px 30px;
     margin-top: 34px;
@@ -734,21 +608,6 @@ tbody tr th{
 
 }
 
-// @media (max-width: 1250px) {
-//     .content {
-//         width: 100%;
-//     }
-// }
-
-// @media (max-width: 1100px) {
-
-//     .content {
-//         height: 100%;
-//         width: 100%;
-//     }
-
-// }
-
 @media (max-width: 500px) {
 
     .inputSpace{
@@ -756,35 +615,6 @@ tbody tr th{
         width: 45%;
     }
 }
-
-// @media (max-width: 400px) {
-//     .content {
-//         height: 70%;
-//     }
-// }
-
-// /*------------------
-//     Accent Banner
-// -------------------*/
-// .color-accent {
-//     background-color: #3C5148;
-//     width: 80%;
-//     height: 10%;
-
-//     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
-//     border-radius: 5px;
-
-//     z-index: 2;
-// }
-
-// .color-accent h1 {
-//     font-family: 'Roboto', sans-serif;
-//     color: #ffffff;
-//     font-size: 30px;
-//     text-transform: uppercase;
-
-//     margin: 40px 20px 20px 10%;
-// }
 
 // /*-----------------------
 //     Database Management
@@ -801,20 +631,44 @@ tbody tr th{
     z-index: 1;
 }
 
-#error_report{
+#error_report, #request_report, #deposit_report, #revitalization_report{
     font-family: 'Roboto', sans-serif;
     color: #6B8E4E;
     font-size: 28px;
 
     text-transform: uppercase;
-
-    margin-left: 44%;
+    text-align: center;
+    margin-top: 20px;
 }
 
-#errorReport{
+#errorReport, #requestReport, #depositReport, #revitalizationReport{
     background-color: white;
     padding-top: 20px;
     width: 80%;
     margin: auto;
-    height: 80%;
+    height: 90% !important;
+}
+
+#FABI_logo{
+    width: 30%;
+    height: 65%;
+    margin-bottom: 5px !important;
+    position: absolute;
+}
+
+#FABI_logo img{
+    width: 30% !important;
+    height: 30% !important;
+}
+
+#errorReport p, #requestReport p, #depositReport p, #revitalizationReport p{
+    text-align: center;
+    color: #555;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+#previewTableUserLogs, #previewTableDatabaseLogs, #previewTableAccessLogs, #previewTableErrorLogs,
+#userCollapse, #databaseCollapse, #accessCollapse, #errorCollapse{
+    display: none;
 }
