@@ -1,11 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MemberProfileComponent } from './member-profile.component';
-
 import { MaterialModule } from '../../materials';
-
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
+import { MatSnackBarModule, MatDialogModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('MemberProfileComponent', () => {
   let component: MemberProfileComponent;
@@ -15,7 +14,12 @@ describe('MemberProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MemberProfileComponent ],
       imports: [MaterialModule,
-      NoopAnimationsModule]
+      NoopAnimationsModule,
+      HttpClientTestingModule, 
+      MatSnackBarModule, 
+      MatDialogModule,
+      RouterTestingModule
+    ]
     })
     .compileComponents();
   }));

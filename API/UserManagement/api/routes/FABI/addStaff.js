@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
 const mail = require('../sendEmail');
+const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -18,12 +19,11 @@ router.post('/', addStaff);
  * @description  REQUEST DATA REQUIRED: Staff Details
  *  1. Check if all required data is received and that it is correct.
  *      - IF NOT: return Error Response
- *  2. Connect to DB.
+ *  2. Encrypt Password.
+ *  3. Connect to DB.
  *      - IF ERROR: return Error Response
- *  3. Encrypt Password.
- *  4. Add Organization to Organizations collection and create admin within admin collection int that organization
- *      - IF ERROR: return Error Response
- *  5. Send appropriate response message.
+ *  
+ *  4. Push to the database.
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
@@ -33,98 +33,143 @@ router.post('/', addStaff);
 // [START config]
 const db = admin.firestore();
 
+
 function addStaff(req, res)
 {
-// Store request data is qs
-    const salt = bcrypt.genSaltSync(10);
-    var pass = generatePassword(10);
-    const qs = {
-        fname: req.body.staff.name,
-        surname: req.body.staff.surname,
-        email: req.body.staff.email,
-        password: bcrypt.hashSync(pass, salt)
-    }
+    userTypes = ['SuperUser', 'ClinicAdmin', 'CultureAdmin', 'Staff'];
 
-// (1) Check if all required data is received and that it is correct.
+// (1)
     if (req.body.staff.name == undefined || req.body.staff.name == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User name expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User name expected"
         });
     }
-    if (req.body.staff.surname == undefined || req.body.staff.surname == '') {
+    else if (req.body.staff.surname == undefined || req.body.staff.surname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User surname expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User surname expected"
         });
     }
-    if (req.body.staff.email == undefined || req.body.staff.email == '') {
+    else if (req.body.staff.email == undefined || req.body.staff.email == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User email expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User email expected"
+            
         });
     }
-
-    // Check if valid email format   (************ CLIENT SIDE? ***************)
-    // var regEx = [A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/igm;
-    // "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"
-    // "^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-    // if(!regEx.test(qs.email)) {
-    //     res.setHeader('Content-Type', 'applicagion/problem+json');
-    //     res.setHeader('Content-Language', 'en');
-    //     res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-    //         success: false,
-    //         error: {
-    //             code: 400,
-    //             title: "BAD_REQUEST",
-    //             message: "User password expected"
-    //         }
-    //     });
-    // }
-
-
-// (2) Connect to DB
-
-    var docRef  = db.collection('Organizations').doc('FABI').collection('Staff').doc(qs.email);
-    docRef.set(qs).then(() => {
+    else if (req.body.databases == undefined || req.body.databases == '') {
         res.setHeader('Content-Type', 'application/problem+json');
-    res.setHeader('Content-Language', 'en');
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-        success: true,
-        data: {
-            code: 200,
-            title: "SUCCESS",
-            message: "FABI Staff Added",
-            content: {message : "Staff Added to FABI Organization",
-                orgName : req.body.orgName,
-                tempPassword : pass}
-        }
-    });
-    console.log("Staff Added to FABI");
-    mail('FABI Staff', pass);
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "Databases the user has access to required"
+        });
+    }
+    else if (req.body.userType == undefined || req.body.userType == '') {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User type of new user is required"
+        });
+    }
+    else if(!userTypes.includes(req.body.userType)) {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User type of new user is not supported"
+        });
+    }
+    else{
+// (2)
+const salt = bcrypt.genSaltSync(10);
+var pass = generatePassword(10);
+const qs = {
+    fname: req.body.staff.name,
+    surname: req.body.staff.surname,
+    email: req.body.staff.email,
+    password: bcrypt.hashSync(pass, salt),
+    databases : req.body.databases,
+    id : new Date().getTime().toString(),
+    userType: req.body.userType
+}
+
+var checkRef = db.collection('Organizations').doc('FABI').collection('Staff').where('email', '==', qs.email);
+
+checkRef.get().then(doc => {
+    if(!doc.empty)
+    {
+        res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+                success: false,
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "User email already exists"
+            });
+    }
+    else{
+        var docRef  = db.collection('Organizations').doc('FABI').collection('Staff').doc(qs.id);    
+
+    //(4)
+        docRef.set(qs).then(() => {
+            res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                success: true,
+                code: 200,
+                title: "SUCCESS",
+                message: "FABI Staff Added",
+                data: {
+                    orgName : req.body.orgName,
+                    tempPassword : pass
+                }
+            });
+
+            mail('FABI Staff - ' + qs.userType, pass);
+            log({
+                type: 'USER',
+                action: 'AddMemberToOrg',
+                details: '1563355277876',
+                user: qs.id,
+                org1: 'FABI',
+                org2: 'FABI',
+                action: '/addStaff'
+            });
+        });
+    }
 });
+// (3) 
+
+}
 
 }
 

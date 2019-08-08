@@ -33,11 +33,9 @@ function loginAdmin(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User email expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User email expected"
         });
     }
 
@@ -47,25 +45,21 @@ function loginAdmin(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User password expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User password expected"
         });
     }
 
-    if (req.body.userType == undefined || req.body.userType == '') {
+    if (req.body.orgName == undefined || req.body.orgName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(400).json({                                  // ******* RESPONSE STATUS? ************
             success: false,
-            error: {
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "User Type expected"
-            }
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User Type expected"
         });
     }
     
@@ -86,7 +80,7 @@ function loginAdmin(req, res)
       };
     
     try{
-        if(req.body.userType === 'admin')
+        if(req.body.orgName === 'FABI')
         {
             options.path = '/loginAdmin';
             request.post('https://authentication-dot-api-fabi.appspot.com/loginAdmin', options, (error, response, body) => {
@@ -102,55 +96,7 @@ function loginAdmin(req, res)
                 }
             })
         }
-        else if(req.body.userType === 'databaseAdmin')
-        {
-            options.path = '/loginDatabaseAdmin';
-            request.post('https://authentication-dot-api-fabi.appspot.com/loginDatabaseAdmin', options, (error, response, body) => {
-                if(error)
-                {
-                    console.log(error)
-                }
-                else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(response.statusCode).json(body);
-                }
-            })
-        }
-        else if(req.body.userType === 'fabiStaff')
-        {
-            options.path = '/loginFabiStaff';
-            request.post('https://authentication-dot-api-fabi.appspot.com/loginFabiStaff', options, (error, response, body) => {
-                if(error)
-                {
-                    console.log(error)
-                }
-                else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(response.statusCode).json(body);
-                }
-            })
-        }
-        else if(req.body.userType === 'orgAdmin')
-        {
-            options.path = '/loginOrgAdmin';
-            request.post('https://authentication-dot-api-fabi.appspot.com/loginOrgAdmin', options, (error, response, body) => {
-                if(error)
-                {
-                    console.log(error)
-                }
-                else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(response.statusCode).json(body);
-                }
-            })
-        }
-        else if(req.body.userType === 'orgMember')
+        else
         {
             options.path = '/loginOrgMember';
             request.post('https://authentication-dot-api-fabi.appspot.com/loginOrgMember', options, (error, response, body) => {
@@ -165,19 +111,6 @@ function loginAdmin(req, res)
                     res.status(response.statusCode).json(body);
                 }
             })
-        }
-        else{
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                error: {
-                    code: 400,
-                    title: "BAD_REQUEST",
-                    message: "User Type not supported"
-                }
-            });
         }
     }catch(err) {
         console.log(err);
