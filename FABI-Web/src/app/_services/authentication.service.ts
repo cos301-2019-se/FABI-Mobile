@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 29th 2019
+ * Last Modified: Thursday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -80,7 +80,6 @@ export class AuthenticationService {
 
   public get isLoggedIn(): any {
     if(localStorage.getItem('loggedIn')) {
-      console.log("---- LOGGEDIN: " + localStorage.getItem('loggedIn'));
       return JSON.parse(localStorage.getItem('loggedIn'));
     }
     return false;
@@ -125,7 +124,6 @@ export class AuthenticationService {
     return this.http.request<any>(method, url, options).pipe(map(response => {
 
       if (response && (response.token && response.token != '')) {
-        console.log("---- RESPONSE: " + JSON.stringify(response));
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
         this.currentUser = response.userDetails;
       }
