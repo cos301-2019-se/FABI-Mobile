@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 8th 2019
+ * Last Modified: Thursday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -156,7 +156,7 @@ export class NotificationLoggingService {
         json: true
     };
 
-        return this.http.request('POST', getAllLogsURL, options);
+    return this.http.request('POST', getAllLogsURL, options);
   }
 
 
@@ -186,7 +186,7 @@ export class NotificationLoggingService {
         json: true
     };
 
-        return this.http.request('POST', getAllLogsURL, options);
+    return this.http.request('POST', getAllLogsURL, options);
   }
 
 
@@ -216,7 +216,7 @@ export class NotificationLoggingService {
         json: true
     };
 
-        return this.http.request('POST', getAllLogsURL, options);
+    return this.http.request('POST', getAllLogsURL, options);
   }
 
 
@@ -251,35 +251,6 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_DIAGNOSTIC_CLINIC_LOGS 
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type 'DGCL'
-   *
-   * @returns API response @type any
-   * @memberof NotificationLoggingService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllDiagnosticClinicLogs() {
-    var tempLog : Logs = {type: 'DGCL', before: '', after: ''};
-    var data: POSTLog = {Log: tempLog};
-
-    const options = {
-        method: 'POST',
-        url: getAllLogsURL,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
-    };
-
-    return this.http.request('POST', getAllLogsURL, options);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         GET_USER_LOGS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
@@ -294,8 +265,6 @@ export class NotificationLoggingService {
     var data: POSTUser = {userID: id};
 
     const options = {
-        method: 'POST',
-        url: getUserLogsURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',

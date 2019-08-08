@@ -96,7 +96,7 @@ import { config } from "../environments/environment.prod";
     SampleDivComponent,
     AdminProfileComponent,
     StaffProfileComponent,
-    ViewFormsComponent
+    ViewFormsComponent,
     ReportingComponent,
     MapsWindowComponent
   ],

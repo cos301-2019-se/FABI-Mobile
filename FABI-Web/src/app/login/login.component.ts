@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Thursday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -144,7 +144,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(details).subscribe((response: any) => {
 
       this.loading = false;
-      console.log("----- RESPONSE 2: " + JSON.stringify(response));
       // API Request successful
       if (response.success == true && response.code == 200) {
 
@@ -214,11 +213,9 @@ export class LoginComponent implements OnInit {
     this.userManagementServicee.getAllOrganizations().subscribe((response: any) => {
       
       if (response.success == true && response.code == 200) {
-        console.log(response);
-        console.log(response.data);
         this.organizations = response.data.Organizations;
-
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the Organisations", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {

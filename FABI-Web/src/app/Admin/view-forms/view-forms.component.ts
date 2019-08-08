@@ -5,7 +5,7 @@
  * Created Date: Monday, August 5th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 6th 2019
+ * Last Modified: Thursday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -831,7 +831,7 @@ export class ViewFormsComponent implements OnInit {
     this.loadLogs();
 
     //Making a call too the notification logging service to return all USER logs
-    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
+    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
       if(response.success = true){
         //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
@@ -843,14 +843,21 @@ export class ViewFormsComponent implements OnInit {
               var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
               
               //Getting the name and surname of the users passed using their id numbers
-              const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
-              const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
-  
-              if(tempLogU.Action == 'C'){
-                tempLogU.Action = user1 + ' was added to the system by ' + user2;
+              const user1 = this.loadUserDetails(tempLogU.Organization1, tempLogU.Details);
+
+              if(tempLogU.Action == "/createOrganization"){
+                tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + user1;
               }
-              else if(tempLogU.Action == 'D'){
-                tempLogU.Action = user1 + ' was removed from the system by ' + user2;
+              else if(tempLogU.Action == "/addStaff"){
+                const user2 = this.loadUserDetails(tempLogU.Organization2, tempLogU.User);
+                tempLogU.Action = "New user, " + user2 + ", was added to the system by " + user1;
+              }
+              else if(tempLogU.Action == "/removeOrg"){
+                tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + user1;
+              }
+              else if(tempLogU.Action == "/removeStaff"){
+                const user2 = this.loadUserDetails(tempLogU.Organization2, tempLogU.User);
+                tempLogU.Action = "New user, " + user2 + ", was removed from the system by " + user1;
               }
   
               this.allNotifications.push(tempLogU);
@@ -879,14 +886,14 @@ export class ViewFormsComponent implements OnInit {
               //Getting the name and surname of the users passed using their id numbers
               const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
 
-              if(tempLogD.Action == 'C'){
-                tempLogD.Action = tempLogD.Details + ' was added to the system by ' + user1;
+              if(tempLogD.Action == "/createDatabase"){
+                tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + user1;
               }
-              else if(tempLogD.Action == 'D'){
-                tempLogD.Action = tempLogD.Details + ' was removed from the system by ' + user1;
+              else if(tempLogD.Action == "/porting"){
+                tempLogD.Action = tempLogD.Details + " was ported";
               }
-              else if(tempLogD.Action == 'U'){
-                tempLogD.Action = tempLogD.Details + ' details where updated by ' + user1;
+              else if(tempLogD.Action == "C"){
+                tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + user1;
               }
 
               this.allNotifications.push(tempLogD);
