@@ -1,3 +1,5 @@
+import { Component, Injectable } from '@angular/core';
+
 /**
  * File Name: porting.service.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\services\porting.service.ts
@@ -12,6 +14,10 @@
  * 
  * <<license>>
  */
+
+@Injectable({
+    providedIn: 'root'
+})
 
 export class Porting{
 
@@ -40,6 +46,9 @@ export class Porting{
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     convertToJSON(text){
+        if(text == ""){
+            return null;
+        }
         var lines = text.split("\n");
         var result = [];
         var headers = lines[0].split(";");
@@ -70,6 +79,9 @@ export class Porting{
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     extractDatabase(dbJSON , dbName:String){
         var CSVdata = "";
+        if(dbJSON == null){
+            return CSVdata;
+        }
         var headings = [];
 
         var columnsIn = dbJSON[0];
@@ -83,7 +95,7 @@ export class Porting{
         for(var i =0; i<dbJSON.length; i++){
             var columnsIn = dbJSON[i];
             for(var key in headings){
-                console.log(key);
+               // console.log(key);
                 if(dbJSON[i][ headings[key] ] != null){
                     CSVdata += dbJSON[i][ headings[key] ] +";";
                 }
@@ -95,7 +107,8 @@ export class Porting{
             CSVdata += "\r\n";
         }
 
-        console.log(CSVdata);
-        return CSVdata;        
+        //console.log(CSVdata);
+        return CSVdata;
+        
     }
 }

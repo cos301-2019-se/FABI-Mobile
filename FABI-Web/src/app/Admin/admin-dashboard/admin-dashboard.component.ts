@@ -35,9 +35,9 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 
 export class AdminDashboardComponent implements OnInit {
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          GLOBAL VARIABLES
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //Retriving an HTML element from the HTML page
+  @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
+  @ViewChild('staffContainer', {read: ViewContainerRef}) staffContainer;
   
   /** Contains the user stats that will be dynamically loaded in the HTML page - @type {string} */
   userStats: string;

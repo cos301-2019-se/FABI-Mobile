@@ -7,6 +7,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 
+
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -130,7 +131,9 @@ import { config } from "../environments/environment.prod";
       libraries: ["places"]
     })
   ],
-  providers: [NotificationService],
-  bootstrap: [AppComponent]
+  providers: [
+    NotificationService
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
