@@ -1,10 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { OrganizationDashboardComponent } from './organization-dashboard.component';
-
 import { MaterialModule } from '../../materials';
-
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 describe('OrganizationDashboardComponent', () => {
   let component: OrganizationDashboardComponent;
@@ -14,7 +12,9 @@ describe('OrganizationDashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ OrganizationDashboardComponent ],
       imports: [MaterialModule,
-        NoopAnimationsModule]
+        NoopAnimationsModule,
+        HttpClientTestingModule
+      ]
     })
     .compileComponents();
   }));

@@ -15,7 +15,6 @@ router.post('/', submitForm);
  * @summary submit a sample to the diagnostic clinic
  * @description  REQUEST DATA REQUIRED: all form data
  *
- * 1. 
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
@@ -26,9 +25,47 @@ const db = admin.firestore();
 
 function submitForm(req, res)
 {
-    refnum = refNumberGenerator();
-    sampleRef = db.collection('Diagnostic').doc('Samples').collection('Pending').doc(refnum);
+    if (req.body.userID == undefined || req.body.userID == '') {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "User ID is required"
+        });
+    }
+
+    else if (req.body.orgName == undefined || req.body.orgName == '') {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "No organization Name Submitted"
+        });
+    }
+
+    else if (req.body.data == undefined || req.body.data == '') {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 400,
+            title: "BAD_REQUEST",
+            message: "Data to be submitted missing"
+        });
+    }
+    else{
+
     
+    refnum = refNumberGenerator();
+    sampleRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(refnum);
+    req.body.status = 'submitted';
     sampleRef.set(req.body).then(()=>
     {
         res.setHeader('Content-Type', 'application/problem+json');
@@ -36,15 +73,15 @@ function submitForm(req, res)
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.status(200).json({                                  // ******* RESPONSE STATUS? ************
         success: true,
-        data: {
             code: 200,
             title: "SUCCESS",
-            message: "form submitted",
-            content: {message : "form succesfully submitted",
-                referenceNumber : refnum}
-        }
-    });
+            message : "form succesfully submitted",
+            data: {
+                referenceNumber : refnum
+            }
+        });
     })
+}
 }
 
 
