@@ -278,9 +278,9 @@ div#slideOut.showSlideOut {
 
 @media (max-width:768px) {
 
-    div#slideOut.showSlideOut {
-        width: 80%;
-    }
+   div#slideOut.showSlideOut {
+       width: 80%;
+   }
 }
 
 /* ================================================ */
@@ -290,8 +290,6 @@ div#slideOut.showSlideOut {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    padding: 15px;
 }
 
 #notifications-section .box {
@@ -323,7 +321,7 @@ div#slideOut.showSlideOut {
 .notification-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start;    
 
     width: 100%;
 

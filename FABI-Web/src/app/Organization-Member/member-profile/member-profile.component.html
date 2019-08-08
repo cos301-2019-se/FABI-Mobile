@@ -44,7 +44,7 @@
         </li>
 
         <li class="nav-item">
-          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          <a id="logout_menu_link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i>Logout</a>
         </li>
 
       </ul>
@@ -130,6 +130,19 @@
           </mat-form-field>
           <br />
 
+        </div>
+
+        <!-- Password Field-->
+        <div class="contact-inputs">
+          <mat-form-field class="form_inputs" class="col">
+            <input #passwordInput matInput placeholder="Password" matInput type="password" formControlName="member_password" value="{{password}}"><i class="fas fa-eye-slash" (click)="showPassword()"></i>
+          </mat-form-field>
+          <br />
+
+          <!-- Confirm Password-->
+          <mat-form-field class="form_inputs" class="col">
+            <input #confirmInput matInput placeholder="Confirm Password" matInput type="password" formControlName="member_confirm" value="{{confirmPassword}}"><i class="fas fa-eye-slash" (click)="showConfirmedPassword()"></i>
+          </mat-form-field>
         </div>
         <br />
 
