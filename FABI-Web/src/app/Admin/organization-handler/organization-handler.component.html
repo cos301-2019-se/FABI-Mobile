@@ -124,8 +124,10 @@
               <!--Organization Name Field-->
               <div class="organization-name">
                 <mat-form-field class="form_inputs" class="col">
-                  <input matInput placeholder="Organization Name" matInput type="text"
-                    formControlName="organization_name">
+                  <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name">
+                  <mat-error *ngFor="let validation of register_validation_messages.organization_name">
+                    <mat-error class="errors" *ngIf="registerOrgForm.get('organization_name').hasError(validation.type) && (registerOrgForm.get('organization_name').dirty || registerOrgForm.get('organization_name').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
               </div>
@@ -142,12 +144,18 @@
               <div class="admin-name-inputs">
                 <mat-form-field class="form_inputs" class="col">
                   <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name">
+                  <mat-error *ngFor="let validation of register_validation_messages.admin_name">
+                    <mat-error class="errors" *ngIf="registerOrgForm.get('admin_name').hasError(validation.type) && (registerOrgForm.get('admin_name').dirty || registerOrgForm.get('admin_name').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
 
                 <!--Admin Surname Field-->
                 <mat-form-field class="form_inputs" class="col">
                   <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
+                  <mat-error *ngFor="let validation of register_validation_messages.admin_surname">
+                    <mat-error class="errors" *ngIf="registerOrgForm.get('admin_surname').hasError(validation.type) && (registerOrgForm.get('admin_surname').dirty || registerOrgForm.get('admin_surname').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
               </div>
@@ -156,12 +164,18 @@
                 <div class="admin-contact-inputs">
                 <mat-form-field class="form_inputs" class="col">
                   <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email">
+                  <mat-error *ngFor="let validation of register_validation_messages.admin_email">
+                    <mat-error class="errors" *ngIf="registerOrgForm.get('admin_email').hasError(validation.type) && (registerOrgForm.get('admin_email').dirty || registerOrgForm.get('admin_email').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
 
                 <!--Admin Phone Number-->
                 <mat-form-field class="form_inputs" class="col">
                   <input matInput placeholder="Admin Phone Number" matInput type="number" formControlName="admin_phone">
+                  <mat-error *ngFor="let validation of register_validation_messages.admin_phone">
+                    <mat-error class="errors" *ngIf="registerOrgForm.get('admin_phone').hasError(validation.type) && (registerOrgForm.get('admin_phone').dirty || registerOrgForm.get('admin_phone').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
               </div>
 
