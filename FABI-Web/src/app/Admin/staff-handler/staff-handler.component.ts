@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 8th 2019
+ * Last Modified: Thursday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -34,6 +34,7 @@ import * as Interface from '../../_interfaces/interfaces';
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { DISABLED } from '@angular/forms/src/model';
 
 
 @Component({
@@ -144,7 +145,8 @@ export class StaffHandlerComponent implements OnInit {
         Validators.required,
         // Validators.pattern('')
       ])],
-      staff_position: ['', Validators.required]
+      staff_position: ['', Validators.required],
+      admin_type: ['', Validators.required]
     })
   }
 
@@ -179,11 +181,27 @@ export class StaffHandlerComponent implements OnInit {
     this.displayUserTypes();
     this.viewStaff();
     this.loadNotifications();
+    this.addStaffForm.get('admin_type').disable();
+    this.onChanges();
 
     const user2 = this.authService.getCurrentUserValue;
     console.log("///////// USER: " + JSON.stringify(user2));
   }
 
+  onChanges() {
+    this.addStaffForm.get('staff_position').valueChanges
+    .subscribe(selectedStaffPosition => {
+      console.log("---------- HERE HERE -----------");
+        if (selectedStaffPosition == 'Admin') {
+            this.addStaffForm.get('admin_type').enable();
+        } else {
+          this.addStaffForm.get('admin_type').reset();
+          this.addStaffForm.get('admin_type').disable();
+        }
+    });
+}
+
+  logout() {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 

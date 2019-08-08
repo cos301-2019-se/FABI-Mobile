@@ -171,6 +171,21 @@
                 </mat-form-field>
               </div>
 
+              <div class="position-inputs">
+                  <mat-form-field class="form-inputs" class="col">
+                    <mat-label>Admin Type</mat-label>
+                    <mat-select [(ngModel)]="selectedAdminType" id="admin_type" formControlName="admin_type">
+                      <mat-option>--</mat-option>
+                      <mat-option *ngFor="let adminType of adminTypea" [value]="adminType.Name">
+                        {{adminType.Name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of add_validation_messages.admin_type">
+                      <mat-error class="errors" *ngIf="addStaffForm.get('admin_type').hasError(validation.type) && (addStaffForm.get('admin_type').dirty || addStaffForm.get('admin_type').touched)">{{validation.message}}</mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
               <br />
               <p *ngIf="loading" class="errors">Adding Member...</p>
               <br />
@@ -178,6 +193,55 @@
                 <input type="submit" id="add_new_staff" class="btn btn-default" value="Add Staff Member" />
               </div>
             </div>
+
+            <h2>PRIVILEGES</h2>
+            <!--  PRIVILEGES -->
+            <div>
+              <!--  USER PRIVILEGES -->
+              <div>
+                <h3>USERS</h3>
+                <table>
+                  <tr>
+                    <th></th>
+                    <th> Add </th>
+                    <th>Delete </th>
+                    <th>Update</th>
+                    <th>View</th>
+                  </tr>
+                  <tr>
+                    <td>
+                        <label>FABI Admin:</label>
+                    </td>
+                    <td> 
+                      <input type="checkbox" name="fabi_admin_privileges" value="add">
+                    </td>
+                    <td> 
+                      <input type="checkbox" name="fabi_admin_privileges" value="delete">
+                    </td>
+                    <td> 
+                      <input type="checkbox" name="fabi_admin_privileges" value="update">
+                    </td>
+                    <td> 
+                      <input type="checkbox" name="fabi_admin_privileges" value="view" >
+                    </td>
+                </tr>
+
+                </table>
+
+              </div>
+
+              <!--  DATABASE PRIVILEGES -->
+              <div>
+              </div>
+
+              <!--  CLINIC PRIVILEGES -->
+              <div>
+              </div>
+
+
+            </div>
+          
+          
           </form>
 
         </div>
