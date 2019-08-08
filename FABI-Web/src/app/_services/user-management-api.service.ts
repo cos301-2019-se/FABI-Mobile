@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 8th 2019
+ * Last Modified: Thursday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -373,38 +373,6 @@ export class UserManagementAPIService {
     };
 
     return this.http.request<any>(method, getAllOrganizationsURL, options);
-
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ALL_USER_TYPES 
-  /**
-   * Method that sends a request to the API to get the user types associated with a specific organisation.
-   *
-   * @returns API response
-   * @memberof UserManagementAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getUserTypes(orgName: string) {
-
-    const getUserTypesURL = '';
-    const method = 'POST';
-
-    const postData = {
-      "orgName": orgName
-    }
-
-    const options = {
-      headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: postData,
-      json: true
-    };
-
-    return this.http.request<any>('POST', 'https://login-dot-api-fabi.appspot.com/getUserTypes', options);
 
   }
 
