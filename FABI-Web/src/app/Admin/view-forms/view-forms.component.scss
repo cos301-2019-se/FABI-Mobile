@@ -285,6 +285,7 @@ div#slideOut.showSlideOut {
 mat-tab-group {
     width: 100% !important;
     height: 100% !important;
+    background-color: lightgray;
 }
 
 mat-tab-group {
@@ -361,14 +362,49 @@ mat-tab {
 }
 
 .arrowDiv{
-    width: 50px !important;
-    height: 50px !important;
+    display: inline;
+    padding-bottom: 20px;
+}
+
+.leftArrow{
+    margin-left: 16%;
+}
+
+.rightArrow{
+    margin-left: 64%;
+}
+
+.spinner{
+    position: absolute;
+    margin-left: 40%;
+    padding-bottom: 20px;
+}
+
+#depositForms h2{
+    margin: auto;
 }
 
 #individualDepositForm, #individualRequestForm, #individualRevitalizationForm{
     background-color: white;
-    width: 50% !important;
+    width: 70% !important;
     height: 90% !important;
+    padding: 10px;
+
+    margin: auto;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.20), 2px 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+h3{
+    font-size: 16px;
+    display: inline;
+}
+
+p{
+    display: inline;
+}
+
+.right{
+    margin-left: 40px;
 }
 
 #processFormDiv{

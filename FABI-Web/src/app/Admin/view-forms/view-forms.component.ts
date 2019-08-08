@@ -13,7 +13,7 @@
  * <<license>>
  */
 
-import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
@@ -21,8 +21,6 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CultureCollectionAPIService, CMWDeposit, CMWRequest, CMWRevitalization } from '../../_services/culture-collection-api.service';
-
-import * as angular from "angular";
 
 @Component({
   selector: 'app-view-forms',
@@ -181,7 +179,8 @@ export class ViewFormsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthenticationService, 
     private router: Router,
-    private cultureCollectionService: CultureCollectionAPIService
+    private cultureCollectionService: CultureCollectionAPIService,
+    private ref: ChangeDetectorRef
   ) { 
     this.processForm = this.formBuilder.group({
       statusOfCulture: '',
@@ -342,35 +341,14 @@ export class ViewFormsComponent implements OnInit {
     this.additionalNotes = tempDeposit.additionalNotes;
     this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
 
-    var app = angular.module('refresh_div1',[]).controller('refresh_control1', function($scope, $interval) {
-      $interval(function(){
-        this.loadUserDetailsDeposit("FABI", tempDeposit.userID);
-        $scope.cmwCultureNumberDeposit = tempDeposit.cmwCultureNumber;
-        $scope.genus = tempDeposit.genus;
-        $scope.epitheton = tempDeposit.epitheton;
-        $scope.personalCollectionNumber = tempDeposit.personalCollectionNumber;
-        $scope.internationalCollectionNumber = tempDeposit.internationalCollectionNumber;
-        $scope.herbariumNumber = tempDeposit.herbariumNumber;
-        $scope.otherFABICollections = tempDeposit.otherFABICollections;
-        $scope.name = tempDeposit.name;
-        $scope.typeStatus = tempDeposit.typeStatus;
-        $scope.host = tempDeposit.host;
-        $scope.vector = tempDeposit.vector;
-        $scope.substrate = tempDeposit.substrate;
-        $scope.continent = tempDeposit.continent;
-        $scope.country = tempDeposit.country;
-        $scope.region = tempDeposit.region;
-        $scope.locality = tempDeposit.locality;
-        $scope.gps = tempDeposit.gps;
-        $scope.collectedBy = tempDeposit.collectedBy;
-        $scope.dateCollected = tempDeposit.dateCollected;
-        $scope.isolatedBy = tempDeposit.isolatedBy;
-        $scope.identifiedBy = tempDeposit.identifiedBy;
-        $scope.donatedBy = tempDeposit.donatedBy;
-        $scope.additionalNotes = tempDeposit.additionalNotes;
-        $scope.dateSubmittedDeposit = tempDeposit.dateSubmitted;
-      }, 100);
-    });
+    if(this.depositFormNumber == 0){
+      this.depositFormNumber += 1;
+    }
+
+    this.ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 100);
   }
 
 
@@ -419,35 +397,14 @@ export class ViewFormsComponent implements OnInit {
     this.additionalNotes = tempDeposit.additionalNotes;
     this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
 
-    var app = angular.module('refresh_div1',[]).controller('refresh_control1', function($scope, $interval) {
-      $interval(function(){
-        this.loadUserDetailsDeposit("FABI", tempDeposit.userID);
-        $scope.cmwCultureNumberDeposit = tempDeposit.cmwCultureNumber;
-        $scope.genus = tempDeposit.genus;
-        $scope.epitheton = tempDeposit.epitheton;
-        $scope.personalCollectionNumber = tempDeposit.personalCollectionNumber;
-        $scope.internationalCollectionNumber = tempDeposit.internationalCollectionNumber;
-        $scope.herbariumNumber = tempDeposit.herbariumNumber;
-        $scope.otherFABICollections = tempDeposit.otherFABICollections;
-        $scope.name = tempDeposit.name;
-        $scope.typeStatus = tempDeposit.typeStatus;
-        $scope.host = tempDeposit.host;
-        $scope.vector = tempDeposit.vector;
-        $scope.substrate = tempDeposit.substrate;
-        $scope.continent = tempDeposit.continent;
-        $scope.country = tempDeposit.country;
-        $scope.region = tempDeposit.region;
-        $scope.locality = tempDeposit.locality;
-        $scope.gps = tempDeposit.gps;
-        $scope.collectedBy = tempDeposit.collectedBy;
-        $scope.dateCollected = tempDeposit.dateCollected;
-        $scope.isolatedBy = tempDeposit.isolatedBy;
-        $scope.identifiedBy = tempDeposit.identifiedBy;
-        $scope.donatedBy = tempDeposit.donatedBy;
-        $scope.additionalNotes = tempDeposit.additionalNotes;
-        $scope.dateSubmittedDeposit = tempDeposit.dateSubmitted;
-      }, 100);
-    });
+    if(this.depositFormNumber == this.depositForms.length){
+      this.depositFormNumber -= 1;
+    }
+
+    this.ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 100);
   }
 
 
@@ -481,17 +438,14 @@ export class ViewFormsComponent implements OnInit {
     this.notes = tempRequest.notes;
     this.dateSubmittedRequest = tempRequest.dateSubmitted;
 
-    var app = angular.module('refresh_div2',[]).controller('refresh_control2', function($scope, $interval) {
-      $interval(function(){
-        this.loadUserDetailsRequest("FABI", tempRequest.userID);
-        $scope.cmwCultureNumberRequest = tempRequest.cultureNumber;
-        $scope.taxonName = tempRequest.taxonName;
-        $scope.referenceNumberRequest = tempRequest.referenceNumber;
-        $scope.dateRequestedRequest = tempRequest.dateRequested;
-        $scope.notes = tempRequest.notes;
-        $scope.dateSubmittedRequest = tempRequest.dateSubmitted;
-      }, 100);
-    });
+    if(this.requestFormNumber == 0){
+      this.requestFormNumber += 1;
+    }
+
+    this.ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 100);
   }
 
 
@@ -522,17 +476,14 @@ export class ViewFormsComponent implements OnInit {
     this.notes = tempRequest.notes;
     this.dateSubmittedRequest = tempRequest.dateSubmitted;
 
-    var app = angular.module('refresh_div2',[]).controller('refresh_control2', function($scope, $interval) {
-      $interval(function(){
-        this.loadUserDetailsRequest("FABI", tempRequest.userID);
-        $scope.cmwCultureNumberRequest = tempRequest.cultureNumber;
-        $scope.taxonName = tempRequest.taxonName;
-        $scope.referenceNumberRequest = tempRequest.referenceNumber;
-        $scope.dateRequestedRequest = tempRequest.dateRequested;
-        $scope.notes = tempRequest.notes;
-        $scope.dateSubmittedRequest = tempRequest.dateSubmitted;
-      }, 100);
-    });
+    if(this.requestFormNumber == this.requestForms.length){
+      this.requestFormNumber -= 1;
+    }
+
+    this.ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 100);
   }
 
 
@@ -569,20 +520,14 @@ export class ViewFormsComponent implements OnInit {
     this.dateReturned = tempRevitalization.dateReturned;
     this.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
 
-    var app = angular.module('refresh_div3',[]).controller('refresh_control3', function($scope, $interval) {
-      $interval(function(){
-        this.loadUserDetailsRevitalization("FABI", tempRevitalization.userID);
-        $scope.cmwCultureNumberRequest = tempRevitalization.cultureNumber;
-        $scope.currentName = tempRevitalization.currentName;
-        $scope.referenceNumberRevitalization = tempRevitalization.referenceNumber;
-        $scope.dateRequestedRevitalization = tempRevitalization.dateRequested;
-        $scope.nameBionumerics = tempRevitalization.nameBionumerics;
-        $scope.cultureCondition = tempRevitalization.cultureCondition;
-        $scope.sequenceDateSubmitted = tempRevitalization.sequenceDateSubmitted;
-        $scope.dateReturned = tempRevitalization.dateReturned;
-        $scope.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
-      }, 100);
-    });
+    if(this.revitalizationFormNumber == 0){
+      this.revitalizationFormNumber += 1;
+    }
+
+    this.ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 100);
   }
 
 
@@ -616,20 +561,14 @@ export class ViewFormsComponent implements OnInit {
     this.dateReturned = tempRevitalization.dateReturned;
     this.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
 
-    var app = angular.module('refresh_div3',[]).controller('refresh_control3', function($scope, $interval) {
-      $interval(function(){
-        this.loadUserDetailsRevitalization("FABI", tempRevitalization.userID);
-        $scope.cmwCultureNumberRequest = tempRevitalization.cultureNumber;
-        $scope.currentName = tempRevitalization.currentName;
-        $scope.referenceNumberRevitalization = tempRevitalization.referenceNumber;
-        $scope.dateRequestedRevitalization = tempRevitalization.dateRequested;
-        $scope.nameBionumerics = tempRevitalization.nameBionumerics;
-        $scope.cultureCondition = tempRevitalization.cultureCondition;
-        $scope.sequenceDateSubmitted = tempRevitalization.sequenceDateSubmitted;
-        $scope.dateReturned = tempRevitalization.dateReturned;
-        $scope.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
-      }, 100);
-    });
+    if(this.revitalizationFormNumber == this.revitalizationForms.length){
+      this.revitalizationFormNumber -= 1;
+    }
+
+    this.ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 100);
   }
 
 
@@ -734,12 +673,7 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   showProcessForm(){
-    if(this.processFormShow.nativeElement.style.display === 'none'){
-      this.processFormShow.nativeElement.style.display = 'block';
-    }
-    else{
-      this.processFormShow.nativeElement.style.display = 'none';
-    }
+    this.renderer.setStyle(this.processFormShow.nativeElement, 'display', 'block');
   }
 
 
