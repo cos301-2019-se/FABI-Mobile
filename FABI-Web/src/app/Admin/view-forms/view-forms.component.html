@@ -123,36 +123,39 @@
             Deposit Forms
           </ng-template>
 
-          <div (click)="showProcessForm()"><i class="fas fa-spinner"></i></div>
-          <div class="arrowDiv" (click)="loadPreviousDepositForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv" (click)="loadNextDepositForm()"><i class="fas fa-arrow-right"></i></div>
           <div id="depositForms">
+            <br/><br/>
             <h2>Deposit Forms</h2>
 
+            <br/><br/>
+            <button (click)="showProcessForm()" class="btn btn-default spinner">Process Form</button>
+            <div class="arrowDiv leftArrow" (click)="loadPreviousDepositForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv rightArrow" (click)="loadNextDepositForm()"><i class="fas fa-arrow-right"></i></div>
             <div id="individualDepositForm" ng-app="refresh_div1" ng-controller="refresh_control1">
               <h3>User: </h3><p>{{userIDDeposit}}</p><br/>
               <h3>Date Submitted: </h3><p>{{dateSubmittedDeposit}}</p><br/>
               <h3>Culture Number: </h3><p>{{cultureNumberDeposit}}</p>
-              <br/><br/><br/>
-              <h3>Genus: </h3><p>{{genus}}</p><h3>Epitheton: </h3><p>{{epitheton}}</p><br/>
+              <br/><br/>
+              <h3>Genus: </h3><p>{{genus}}</p><h3 class="right">Epitheton: </h3><p>{{epitheton}}</p><br/>
               <h3>Personal Collection Number: </h3><p>{{personalCollectionNumber}}</p><br/>
               <h3>International Collection Number: </h3><p>{{internationalCollectionNumber}}</p><br/>
               <h3>Herbarium Number: </h3><p>{{herbariumNumber}}</p><br/>
               <h3>Other FABI Collections: </h3><p>{{otherFABICollections}}</p>
-              <br/><br/><br/>
-              <h3>Culture Name: </h3><p>{{name}}</p><h3>Type Status:</h3><p>{{typeStatus}}</p><br/>
-              <h3>Host: </h3><p>{{host}}</p><h3>Vector: </h3><p>{{vector}}</p><br/>
+              <br/><br/>
+              <h3>Culture Name: </h3><p>{{name}}</p><h3 class="right">Type Status:</h3><p>{{typeStatus}}</p><br/>
+              <h3>Host: </h3><p>{{host}}</p><h3 class="right">Vector: </h3><p>{{vector}}</p><br/>
               <h3>Substrate: </h3><p>{{substrate}}</p>
               <br/><br/><br/>
-              <h3>Continent: </h3><p>{{continent}}</p><h3>Country: </h3><p>{{country}}</p><br/>
-              <h3>Region: </h3><p>{{region}}</p><h3>Locality: </h3><p>{{locality}}</p><br/>
+              <h3>Continent: </h3><p>{{continent}}</p><h3 class="right">Country: </h3><p>{{country}}</p><br/>
+              <h3>Region: </h3><p>{{region}}</p><h3 class="right">Locality: </h3><p>{{locality}}</p><br/>
               <h3>GPS: </h3><p>{{gps}}</p>
-              <br/><br/><br/>
-              <h3>Collected By: </h3><p>{{collectedBy}}</p><h3>Date Collected:</h3><p>{{dateCollected}}</p><br/>
-              <h3>Isolated By: </h3><p>{{isolatedBy}}</p><h3>Identified By: </h3><p>{{identifiedBy}}</p><br/>
+              <br/><br/>
+              <h3>Collected By: </h3><p>{{collectedBy}}</p><h3 class="right">Date Collected:</h3><p>{{dateCollected}}</p><br/>
+              <h3>Isolated By: </h3><p>{{isolatedBy}}</p><h3 class="right">Identified By: </h3><p>{{identifiedBy}}</p><br/>
               <h3>Donated By: </h3><p>{{donatedBy}}</p><br/>
               <h3>Additional Notes: </h3><p>{{additionalNotes}}</p>
             </div>
           </div>
+          <br/><br/><br/>
         </mat-tab>
 
         <!--Request Form Tab Option-->
@@ -162,10 +165,12 @@
             Request Forms
           </ng-template>
           
-          <div class="arrowDiv" (click)="loadPreviousRequestForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv" (click)="loadNextRequestForm()"><i class="fas fa-arrow-right"></i></div>
           <div id="requestForms">
+              <br/><br/>
             <h2>Request Forms</h2>
 
+            <br/><br/>
+            <div class="arrowDiv leftArrow" (click)="loadPreviousRequestForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv rightArrow" (click)="loadNextRequestForm()"><i class="fas fa-arrow-right"></i></div>
             <div id="individualRequestForm" ng-app="refresh_div2" ng-controller="refresh_control2">
               <h3>User: </h3><p>{{userIDRequest}}</p><br/>
               <h3>Date Submitted: </h3><p>{{dateSubmittedRequest}}</p><br/>
@@ -177,6 +182,7 @@
               <h3>Notes: </h3><p>{{notes}}</p>
             </div>
           </div>
+          <br/><br/><br/>
         </mat-tab>
 
         <!--Revitalization Form Tab Option-->
@@ -186,10 +192,12 @@
             Revitalization Forms
           </ng-template>
 
-          <div class="arrowDiv" (click)="loadPreviousRevitalizationForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv" (click)="loadNextRevitalizationForm()"><i class="fas fa-arrow-right"></i></div>
           <div id="revitalizationForms">
+              <br/><br/>
             <h2>Revitalization Forms</h2>
 
+            <br/><br/>
+            <div class="arrowDiv leftArrow" (click)="loadPreviousRevitalizationForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv rightArrow" (click)="loadNextRevitalizationForm()"><i class="fas fa-arrow-right"></i></div>
             <div id="individualRevitalizationForm" ng-app="refresh_div3" ng-controller="refresh_control3">
               <h3>User: </h3><p>{{userIDRevitalization}}</p><br/>
               <h3>Date Submitted: </h3><p>{{dateSubmittedRevitalization}}</p><br/>
@@ -202,6 +210,15 @@
               <h3>Date Requested: </h3><p>{{dateRequestedRevitalization}}</p><h3>Date Returned:</h3><p>{{dateReturned}}</p>
             </div>
           </div>
+          <br/><br/><br/>
+        </mat-tab>
+
+        <!--Processed Forms Tab Option-->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="fas fa-chart-pie" style="color:darkgray;padding:5px;"></i>
+            Processed Forms
+          </ng-template>
         </mat-tab>
 
       </mat-tab-group>
