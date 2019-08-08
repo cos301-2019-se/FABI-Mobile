@@ -40,11 +40,11 @@
   
  ## API Documentation
   - [Authentication API Documentation](https://authentication-dot-api-fabi.appspot.com)
-  - [Database Management API Documentation](***REMOVED***)
-  - [Diagnostic Clinic API Documentation](***REMOVED***)
-  - [Login API Documentation](***REMOVED***)
-  - [User Management API Documentation](***REMOVED***)
-  - [Logging API Documentation](***REMOVED***)
+  - [Database Management API Documentation](https://database-management-dot-api-fabi.appspot.com)
+  - [Diagnostic Clinic API Documentation](https://diagnostic-clinic-dot-api-fabi.appspot.com)
+  - [Login API Documentation](https://login-dot-api-fabi.appspot.com)
+  - [User Management API Documentation](https://user-management-dot-api-fabi.appspot.com)
+  - [Logging API Documentation](https://logging-dot-api-fabi.appspot.com)
   - [Culture Collection Management Documentation](https://documenter.getpostman.com/view/7030417/SVYjUhyh)
   
  ## Project Management

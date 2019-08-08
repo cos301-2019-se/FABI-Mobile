@@ -1888,7 +1888,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   login(details: Interface.LoginInfo) {
 
-    let url &#x3D; &quot;***REMOVED***/login&quot;; // Http Request URL
+    let url &#x3D; &quot;https://login-dot-api-fabi.appspot.com/login&quot;; // Http Request URL
     let method &#x3D; &#x27;POST&#x27;;  // Http Request Method
 
     const postData &#x3D; details; // Data to send as JSON
@@ -1928,7 +1928,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllOrganizations() {
 
-    const getAllOrganizationsURL &#x3D; &#x27;***REMOVED***/getAllOrganizations&#x27;;
+    const getAllOrganizationsURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/getAllOrganizations&#x27;;
     const method &#x3D; &#x27;POST&#x27;;
 
     const options &#x3D; {
@@ -1942,7 +1942,7 @@ export class HttpService {
       json: true
     };
 
-    return this.http.request&lt;any&gt;(&quot;POST&quot;, &#x27;***REMOVED***/getAllOrganizations&#x27;, options);
+    return this.http.request&lt;any&gt;(&quot;POST&quot;, &#x27;https://user-management-dot-api-fabi.appspot.com/getAllOrganizations&#x27;, options);
 
   }
 
@@ -1975,7 +1975,7 @@ export class HttpService {
       json: true
     };
 
-    return this.http.request&lt;any&gt;(&#x27;POST&#x27;, &#x27;***REMOVED***/getUserTypes&#x27;, options);
+    return this.http.request&lt;any&gt;(&#x27;POST&#x27;, &#x27;https://login-dot-api-fabi.appspot.com/getUserTypes&#x27;, options);
 
   }
 
@@ -1991,7 +1991,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   porting(dbname: String, jsonObject: Object) {
-    const portingURL &#x3D; &#x27;***REMOVED***/porting&#x27;;
+    const portingURL &#x3D; &#x27;https://database-management-dot-api-fabi.appspot.com/porting&#x27;;
     const method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2011,7 +2011,7 @@ export class HttpService {
       json: true
     };
 
-    return this.http.request&lt;any&gt;(&#x27;POST&#x27;, &#x27;***REMOVED***/porting&#x27;, options);
+    return this.http.request&lt;any&gt;(&#x27;POST&#x27;, &#x27;https://database-management-dot-api-fabi.appspot.com/porting&#x27;, options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2025,7 +2025,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   reversePorting(databaseName: String) {
-    const portingURL &#x3D; &#x27;***REMOVED***/retrieveDatabase&#x27;;
+    const portingURL &#x3D; &#x27;https://database-management-dot-api-fabi.appspot.com/retrieveDatabase&#x27;;
     const method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2043,7 +2043,7 @@ export class HttpService {
       json: true
     };
 
-    return this.http.request&lt;any&gt;(&#x27;POST&#x27;, &#x27;***REMOVED***/retrieveDatabase&#x27;, options);
+    return this.http.request&lt;any&gt;(&#x27;POST&#x27;, &#x27;https://database-management-dot-api-fabi.appspot.com/retrieveDatabase&#x27;, options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2057,7 +2057,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   createOrganization(orgInfo: Interface.Organisation) {
-    let createOrganizationURL &#x3D; &#x27;***REMOVED***/createOrganization&#x27;;
+    let createOrganizationURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/createOrganization&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; orgInfo;
@@ -2090,7 +2090,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganization(orgInfo: Interface.Organisation) {
 
-    let removeOrganizationURL &#x3D; &#x27;***REMOVED***/removeOrg&#x27;;
+    let removeOrganizationURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/removeOrg&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; orgInfo;
@@ -2125,7 +2125,7 @@ export class HttpService {
     if (staffInfo.position &#x3D;&#x3D; &quot;Admin&quot;)
       return this.addFABIAdmin(staffInfo);
 
-    let addStaffMemberURL &#x3D; &#x27;***REMOVED***/addStaff&#x27;;
+    let addStaffMemberURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/addStaff&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2157,7 +2157,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
 
-    let removeStaffMemberURL &#x3D; &#x27;***REMOVED***/removeStaff&#x27;;
+    let removeStaffMemberURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/removeStaff&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; staffInfo;
@@ -2188,7 +2188,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaffMembers() {
 
-    let getStaffMembersURL &#x3D; &#x27;***REMOVED***/getAllStaff&#x27;;
+    let getStaffMembersURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/getAllStaff&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const options &#x3D; {
@@ -2217,7 +2217,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addFABIAdmin(staffInfo: Interface.StaffInfo) {
-    let addFABIAdminURL &#x3D; &#x27;***REMOVED***/addFabiAdmin&#x27;;
+    let addFABIAdminURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/addFabiAdmin&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2253,7 +2253,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addOrgMember(orgInfo: Interface.Organisation, memberInfo: Interface.OrganisationMember) {
 
-    let addMemberURL &#x3D; &#x27;***REMOVED***/addMemberToOrg&#x27;;
+    let addMemberURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/addMemberToOrg&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     console.log(&quot;orgName: &quot; + orgInfo.orgName);
@@ -2290,7 +2290,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
 
-    let removeMemberURL &#x3D; &#x27;***REMOVED***/removeMember&#x27;;
+    let removeMemberURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/removeMember&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2328,7 +2328,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData) {
-    let submitSampleURL &#x3D; &#x27;***REMOVED***/submitSample&#x27;;
+    let submitSampleURL &#x3D; &#x27;https://diagnostic-clinic-dot-api-fabi.appspot.com/submitSample&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2364,7 +2364,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveAllSamples() {
-    let retrieveAllOrgSamples &#x3D; &#x27;***REMOVED***/retrieveAllOrgSamples&#x27;;
+    let retrieveAllOrgSamples &#x3D; &#x27;https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2397,7 +2397,7 @@ export class HttpService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveMemberSamples() {
-    let retrieveAllMemberSamples &#x3D; &#x27;***REMOVED***/retrieveSamplesForMember&#x27;;
+    let retrieveAllMemberSamples &#x3D; &#x27;https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveSamplesForMember&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2430,7 +2430,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationDetails() {
 
-    let getOrganizationDetails &#x3D; &#x27;***REMOVED***/getOrgDetails&#x27;;
+    let getOrganizationDetails &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/getOrgDetails&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2465,7 +2465,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationMemberDetails() {
 
-    let getOrganizationMemberDetails &#x3D; &#x27;***REMOVED***/getOrgMember&#x27;;
+    let getOrganizationMemberDetails &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/getOrgMember&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2500,7 +2500,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllOrganizationMembers() {
 
-    let getAllOrganizationsMembersURL &#x3D; &#x27;***REMOVED***/getAllOrgMembers&#x27;;
+    let getAllOrganizationsMembersURL &#x3D; &#x27;https://user-management-dot-api-fabi.appspot.com/getAllOrgMembers&#x27;;
     let method &#x3D; &#x27;POST&#x27;;
 
     const postData &#x3D; {
@@ -2536,7 +2536,7 @@ export class HttpService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveDatabase(database: string) {
 
-      let retrieveDatabaseURL &#x3D; &#x27;***REMOVED***/retrieveDatabase&#x27;;
+      let retrieveDatabaseURL &#x3D; &#x27;https://database-management-dot-api-fabi.appspot.com/retrieveDatabase&#x27;;
       let method &#x3D; &#x27;POST&#x27;;
 
       const postData &#x3D; {
