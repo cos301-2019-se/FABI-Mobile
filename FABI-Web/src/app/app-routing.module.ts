@@ -13,6 +13,9 @@ import { AuthenticationGuard } from './_guards/authentication.guard';
 import { UpdateComponent } from './update/update.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 import { ReportingComponent } from './Admin/reporting/reporting.component';
+import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
+import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
+import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 
 const routes: Routes = [
   {
@@ -65,6 +68,18 @@ const routes: Routes = [
   {
     path: 'reporting',
     component: ReportingComponent
+  },
+  {
+    path: 'submit-cmw-request',
+    component: SubmitCmwRequestComponent
+  },
+  {
+    path: 'submit-cmw-deposit',
+    component: SubmitCmwDepositComponent
+  },
+  {
+    path: 'submit-cmw-revitalization',
+    component: SubmitCmwRevitalizationComponent
   }
 
 ];

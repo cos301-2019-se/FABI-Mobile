@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule} from './materials';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 
@@ -13,7 +14,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 
-import {ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
@@ -40,8 +41,6 @@ import { MemberViewSamplesComponent } from './Organization-Member/member-view-sa
 import { SplashComponent } from './splash/splash.component';
 import { StaffDashboardComponent } from './Staff/staff-dashboard/staff-dashboard.component';
 import { StaffSubmitSampleComponent } from './Staff/staff-submit-sample/staff-submit-sample.component';
-import { SubmitCbsRequestComponent } from './Staff/submit-cbs-request/submit-cbs-request.component';
-import { SubmitCbsDepositComponent } from './Staff/submit-cbs-deposit/submit-cbs-deposit.component';
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
@@ -57,6 +56,12 @@ import { SampleDivComponent } from './Dynamic-Components/sample-div/sample-div.c
 import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
 import { StaffProfileComponent } from './Staff/staff-profile/staff-profile.component';
 import { ReportingComponent } from './Admin/reporting/reporting.component';
+
+import { AgmCoreModule } from "@agm/core";
+import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
+import { MapsWindowComponent } from './maps-window/maps-window.component';
+
+import { config } from "../environments/environment.prod";
 
 @NgModule({
   declarations: [
@@ -81,8 +86,6 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     SplashComponent,
     StaffDashboardComponent,
     StaffSubmitSampleComponent,
-    SubmitCbsRequestComponent,
-    SubmitCbsDepositComponent,
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
@@ -94,7 +97,9 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     SampleDivComponent,
     AdminProfileComponent,
     StaffProfileComponent,
-    ReportingComponent
+    ViewFormsComponent
+    ReportingComponent,
+    MapsWindowComponent
   ],
   entryComponents: [
     ConfirmComponent,
@@ -102,7 +107,8 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     StaffDivComponent,
     NotificationDivComponent,
     SampleDivComponent,
-    ErrorComponent
+    ErrorComponent,
+    MapsWindowComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +124,12 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ErrorsModule,
-    LayoutModule
+    LayoutModule,
+    MatAutocompleteModule,
+    AgmCoreModule.forRoot({
+      apiKey: config.APIKEy,
+      libraries: ["places"]
+    })
   ],
   providers: [
     NotificationService

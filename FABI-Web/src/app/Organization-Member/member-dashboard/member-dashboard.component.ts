@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Thursday, August 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 
 import { SampleDivComponent } from '../../Dynamic-Components/sample-div/sample-div.component';
 import { DiagnosticClinicAPIService, Sample, Species } from '../../_services/diagnostic-clinic-api.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'app-member-dashboard',
@@ -59,10 +60,17 @@ export class MemberDashboardComponent implements OnInit {
    * Creates an instance of MemberDashboardComponent.
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private resolver: ComponentFactoryResolver, private diagnosticClinicService: DiagnosticClinicAPIService) { }
+  constructor(
+    private authService: AuthenticationService, 
+    private router: Router, 
+    private resolver: ComponentFactoryResolver, 
+    private diagnosticClinicService: DiagnosticClinicAPIService
+    ) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,13 +87,13 @@ export class MemberDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfMemberSamples(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.diagnosticClinicService.getAllSamplesForMember(this.memberID).subscribe((response: any) => {
+    this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
       if(response.success == true){
         //Populating the arrays with the returned data
         var tempSamples = response.data.samples;
         for(var i = 0; i < tempSamples.length; i++){
           var tempSpecies: Species = {species: tempSamples[i].data.species};
-          var tempSample: Sample = {userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, data: tempSpecies};
+          var tempSample: Sample = {userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, referenceNumber: tempSamples[i].referenceNumber, data: tempSpecies};
           this.memberSamples.push(tempSample);
         }
 
@@ -118,6 +126,11 @@ export class MemberDashboardComponent implements OnInit {
         sampleDivRef.instance.Details = '';
       }
     });
+  }
+
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
  
@@ -154,12 +167,12 @@ export class MemberDashboardComponent implements OnInit {
    *  If set to true, a class is added which ensures that the notifications tab is displayed. 
    *  If set to flase, a class is removed which hides the notifications tab.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    NG_ON_INIT()  

@@ -30,11 +30,6 @@
             <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW
               Revitalization Form</a>
             <br />
-            <a id="submit_CBS_request" routerLink="/submit-cbs-request"><i class="fab fa-wpforms"></i>CBS Request
-              Form</a>
-            <br />
-            <a id="submit_CBS_deposit" routerLink="/submit-cbs-deposit"><i class="fab fa-wpforms"></i>CBS Deposit
-              Form</a>
           </div>
         </li>
 
@@ -60,7 +55,7 @@
         </li>
 
         <li class="nav-item">
-          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          <a id="logout_menu_link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i>Logout</a>
         </li>
 
       </ul>
@@ -90,7 +85,7 @@
         <div class="box" *ngFor="let log of allNotifications">
           <div class="notification-heading">
             <h2>Notification {{log.ID}}</h2>
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
           </div>
 
           <div class="notification-content">
@@ -108,8 +103,7 @@
   </div>
 </div>
 
-<div class="container-fluid" id="dashboard-content">
-  <!--Statistics Section -->
+<!-- <div class="container-fluid" id="dashboard-content">
   <section class="statistics-heading">
     <h1>Statistics</h1>
   </section>
@@ -118,13 +112,71 @@
 
       <div class="box">
         <i class="fas fa-vial"></i>
-        <h2>CMW Report</h2>
+        <h2 [innerHTML]="requestStats"></h2>
       </div>
 
       <div class="box">
         <i class="fas fa-stethoscope"></i>
-        <h2>CBS Report</h2>
+        <h2 [innerHTML]="depositStats"></h2>
       </div>
     </section>
   </div>
+</div> -->
+
+<div class="container-fluid" id="dahsboard-content">
+  <section class="samples-heading">
+    <h1>Submitted Samples</h1>
+  </section>
+  <div class="samples-section">
+    <section>
+      <h2 *ngIf="!submittedSamples">You currently have no samples</h2>
+      <div *ngIf="submittedSamples">
+        <div class="box" *ngFor="let sample of samples">      
+          <div>
+            <p><b>Reference Number:</b> {{sample.referenceNumber}}</p>
+            <p><b>Processing Stage:</b> {{sample.status}}</p>
+            <p><b>Date Submitted:</b> {{sample.dateSubmitted}}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section>
+    <h1>CMW Deposit Forms</h1>
+  </section>
+  <div class="deposit-section">
+    <section>
+        <h2 *ngIf="!depositForms">You currently have no deposit forms</h2>
+        <div *ngIf="depositForms">
+          <div class="box" *ngFor="let deposit of deposits">      
+            <div>
+              <p><b>Culture Number:</b> {{deposit.cultureNumber}}</p>
+              <p><b>Culture Name:</b> {{deposit.name}}</p>
+              <p><b>Date Submitted:</b> {{deposit.dateSubmitted}}</p>
+            </div>
+          </div>
+        </div>
+    </section>
+  </div>
+
+  <section>
+      <h1>CMW Request Forms</h1>
+    </section>
+    <div class="request-section">
+      <section>
+          <h2 *ngIf="!requestForms">You currently have no request forms</h2>
+          <div *ngIf="requestForms">
+            <div class="box" *ngFor="let request of requests">      
+              <div>
+                <p><b>Culture Number:</b> {{request.cultureNumber}}</p>
+                <p><b>Culture Name:</b> {{request.taxonName}}</p>
+                <p><b>Reference Number:</b> {{request.referenceNumber}}</p>
+                <p><b>Date Requested:</b> {{request.dateRequested}}</p>
+                <p><b>Date Submitted:</b> {{request.dateSubmitted}}</p>
+              </div>
+            </div>
+          </div>
+      </section>
+    </div>
 </div>

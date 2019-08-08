@@ -1,0 +1,39 @@
+
+<h1 mat-dialog-title>Where do you work?</h1>
+<mat-dialog-content>
+    <div>
+      <label>Search</label>
+      <input type="text" (keydown.enter)="$event.preventDefault()" placeholder="Search Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+    </div>
+
+    <div>
+      <p>Map Type:</p>
+      <button style="box-shadow: 'isSatellite';" (click)="changeMapType()">Satellite</button>
+    </div>
+
+    <agm-map
+      [latitude]="location.latitude"
+      [longitude]="location.longitude"
+      [zoom]="zoom"
+      [mapTypeId]="map_type"
+      (mapClick)="selectLocation($event)"
+    >
+        <agm-marker
+          [latitude]="location.latitude"
+          [longitude]="location.longitude"
+          [opacity]="alpha"
+          [markerDraggable]="true"
+          (dragEnd)="selectLocation($event)"
+        >
+          <agm-info-window>
+            <h5>{{infoTitle}}</h5>
+            <p *ngIf="address.formatted_address != null">{{address.formatted_address}}</p>
+          </agm-info-window>
+        </agm-marker>
+    </agm-map>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-button cdkFocusInitial (click)="select()">Confirm</button>
+</mat-dialog-actions>
