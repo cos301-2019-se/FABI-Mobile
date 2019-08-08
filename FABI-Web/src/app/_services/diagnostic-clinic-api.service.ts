@@ -2,10 +2,10 @@
  * File Name: diagnostic-clinic-api.service.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\services/diagnostic-clinic-api.service.ts
  * Project Name: fabi-web
- * Created Date: Saturday, Juky 6th 2019
+ * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 8th 2019
+ * Last Modified: Thursday, August 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,33 +15,35 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import { registerContentQuery } from '@angular/core/src/render3';
-import { StaticInjector } from '@angular/core/src/di/injector';
-import { BehaviorSubject } from 'rxjs';
+import { AuthenticationService } from "./authentication.service";
+import * as Interface from "../_interfaces/interfaces";
 
 import { POSTOrganization } from './user-management-api.service';
 
+import { config } from "../../environments/environment.prod";
+
 //Globals variables used to hold the API call urls
-const getAllSamplesURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllSamples';
-const getAllSamplesForMemberURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveSamplesForMember';
-const getOrganizationSamplesURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples';
+const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
+const getAllSamplesForMemberURL = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
+const getStaffMembersSamplesURL = `${config.diagnosticClinicURL}/getStaffMembersSamples`;
+const getOrganizationSamplesURL = `${config.diagnosticClinicURL}/retrieveAllOrgSamples`;
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
-    userID: string;
+    userID: string;                         //The user id of the user to be submitted
 }
 
 //Object for defining the samples received from the API call
 export interface Sample{
-    userID: string;
-    orgName: string;
-    status: string;
-    data: Species;
+    userID: string;                         //The id of the user who submitted the sample
+    orgName: string;                        //The organization that the user belongs to
+    status: string;                         //The status of the sample
+    referenceNumber: string;                //The reference number that was generated for the sample
+    data: Species;                          //The data within the sample which is the species
 }
 
 export interface Species{
-    species: string;
+    species: string;                        //The species of a sample
 }
 
 @Injectable({
@@ -59,7 +61,7 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   constructor(private http: HttpClient) { }
+   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,67 +75,37 @@ export class DiagnosticClinicAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    getAllSamples(){
-        const options = {
-            method: 'POST',
-            url: getAllSamplesURL,
-            headers: {
-            'cache-control': 'no-cache',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-            },
-            json: true
-        };
-
-        return this.http.request('POST', getAllSamplesURL, options);
-   }
-
-
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                   GET_ALL_ORGANIZATION_SAMPLES 
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the samples belonging to the specified organization
-   *
-   * @returns API response @type any
-   * @memberof DiagnosticClinicAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllOrganizationSamples(organization:string){
-    // var data: POSTOrganization = { orgName: organization };
-    var data: POSTOrganization = { orgName: 'testOrg3'};
-
+    const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
+    const method = "POST";
+    
     const options = {
-        method: 'POST',
-        url: getOrganizationSamplesURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
         },
-        body: data,
         json: true
     };
 
-    return this.http.request('POST', getOrganizationSamplesURL, options);
-}
+    return this.http.request('POST', getAllSamplesURL, options);
+   }
 
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ALL_SAMPLES_FOR_MEMBER 
+  //                                                     GET_SAMPLES_FOR_FABI_STAFF 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
-   *    all the samples that correspond to a specific organization member
+   *    all the samples corresponding to a specific user.
    *
+   * @param {string} id The id number of the user whose samples need to be fetched.
    * @returns API response @type any
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllSamplesForMember(id: string){
-    var data: POSTMember = {userID: id};
+  getSamplesForFABIStaff(id: string){
+    const data : POSTMember = {userID: id};
 
     const options = {
-        method: 'POST',
-        url: getAllSamplesForMemberURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
@@ -144,5 +116,105 @@ export class DiagnosticClinicAPIService {
     };
 
     return this.http.request('POST', getAllSamplesForMemberURL, options);
-}
+   }
+
+     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    RETREIVE_ALL_SAMPLES
+  /**
+   * Method that sends a request to the API to retreive all Samples
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveAllOrganizationSamples() {
+    let retrieveAllOrgSamples = `${config.diagnosticClinicURL}/retrieveAllOrgSamples`;
+    let method = 'POST';
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, retrieveAllOrgSamples, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    RETREIVE_ALL_SAMPLES_FOR_MEMBER
+  /**
+   * Method that sends a request to the API to retreive all Samples for a member
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveMemberSamples() {
+    let retrieveAllMemberSamples = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
+    let method = 'POST';
+
+    const postData = {
+      "userID": this.authService.getCurrentSessionValue.user.ID
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, retrieveAllMemberSamples, options);
+  }
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT_SAMPLE_FORM
+  /**
+   * Method that send a request to the API to submit a specifc Sample Form
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @param {Interface.ClientFormData} formDetails
+   * @returns
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData) {
+    let submitSampleURL = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/submitSample';
+    let method = 'POST';
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
+      "data": formDetails
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, submitSampleURL, options);
+  }
+  
 }

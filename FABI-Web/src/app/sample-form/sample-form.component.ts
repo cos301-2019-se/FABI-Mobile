@@ -1,13 +1,14 @@
-// import { ClientFormData } from '../organization-api.service';
 import * as Interface from '../_interfaces/interfaces';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HttpService } from '../_services/http.service';
+import { AuthenticationService } from '../_services/authentication.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../_errors/error-component/error.component';
 import { Router } from '@angular/router';
+import { DiagnosticClinicAPIService } from '../_services/diagnostic-clinic-api.service';
+import { MapsWindowComponent } from '../maps-window/maps-window.component';
 
 @Component({
   selector: 'app-sample-form',
@@ -23,68 +24,29 @@ export class SampleFormComponent implements OnInit {
   sent: boolean = false;                // to check if user is logged in
   errors: boolean = false;
   organizations: Object;            //array for Organization dropdown
+  plantationAddress: Interface.Address;
+  plantationLocation: Interface.Location;
 
-  // sampleForm = new FormGroup({
-  //   sample_form_name: new FormControl(),
-  //   sample_form_company: new FormControl(),
-  //   sample_form_address: new FormControl(),
-  //   sample_form_contact: new FormControl(),
-  //   sample_form_email: new FormControl(),
-  //   sample_form_tree_species: new FormControl(),
-  //   sample_form_number_samples: new FormControl(),
-  //   sample_form_location1: new FormControl(),
-  //   sample_form_location2: new FormControl(),
-  //   sample_form_compartment: new FormControl(),
-  //   sample_form_gps: new FormControl(),
-  //   sample_form_date_collection: new FormControl(),
-  //   sample_form_date_sent: new FormControl(),
-  //   sample_type_soil: new FormControl(),
-  //   sample_type_stems: new FormControl(),
-  //   sample_type_roots: new FormControl(),
-  //   sample_type_twigs: new FormControl(),
-  //   sample_type_leaves: new FormControl(),
-  //   sample_type_seedlings: new FormControl(),
-  //   sample_type_media: new FormControl(),
-  //   sample_type_water: new FormControl(),
-  //   symptom_wilt: new FormControl(),
-  //   symptom_stunting: new FormControl(),
-  //   symptom_leafspot: new FormControl(),
-  //   symptom_rootrot: new FormControl(),
-  //   symptom_dieback: new FormControl(),
-  //   symptom_cankers: new FormControl(),
-  //   symptom_death: new FormControl(),
-  //   symptom_wood: new FormControl(),
-  //   symptom_other: new FormControl(),
-  //   distribution_localized: new FormControl(),
-  //   distributed_scattered: new FormControl(),
-  //   distributed_general: new FormControl(),
-  //   conditions_affected: new FormControl(),
-  //   conditions_problem_noticed: new FormControl(),
-  //   conditions_date_planted: new FormControl(),
-  //   conditions_weather_disturbances: new FormControl(),
-  //   conditions_weather_prior: new FormControl(),
-  //   conditions_others: new FormControl(),
-  //   conditions_additional: new FormControl(),
-  //   landowner: new FormControl(),
-  //   landowner_signature: new FormControl()
+  constructor(
+    private authService: AuthenticationService, 
+    private clinicService: DiagnosticClinicAPIService,
+    private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router
+    ) {
+      this.sampleForm = this.formBuilder.group({
 
-  // });
-
-  // api: APIconnectionService;
-
-  constructor(private service: HttpService, private adminServce: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
-    this.sampleForm = this.formBuilder.group({
-
-      organization: ['', Validators.required],
-      sample_form_tree_species: ['', Validators.required],
-      sample_form_number_samples: ['', Validators.required],
-      sample_form_location1: ['', Validators.required],
-      sample_form_location2: ['', Validators.required],
-      sample_form_compartment: ['', Validators.required],
-
-      sample_form_gps: ['', Validators.required],
-      sample_form_date_collection: ['', Validators.required],
-      sample_form_date_sent: ['', Validators.required],
+      sample_plant_species: ['', Validators.required],
+      sample_num_samples: ['', Validators.required],
+      sample_street: ['', Validators.required],
+      sample_area: ['', Validators.required],
+      sample_city: ['', Validators.required],
+      sample_farm: ['', Validators.required],
+      sample_province: ['', Validators.required],
+      sample_gps: ['', Validators.required],
+      date_sample_collected: ['', Validators.required],
+      date_sample_sent: ['', Validators.required],
 
       sample_type_soil: ['', Validators.required],
       sample_type_stems: ['', Validators.required],
@@ -94,6 +56,10 @@ export class SampleFormComponent implements OnInit {
       sample_type_seedlings: ['', Validators.required],
       sample_type_media: ['', Validators.required],
       sample_type_water: ['', Validators.required],
+      sample_type_insect: ['', Validators.required],
+      sample_type_nuts: ['', Validators.required],
+      sample_type_other: [''],
+
 
       symptom_wilt: ['', Validators.required],
       symptom_stunting: ['', Validators.required],
@@ -103,11 +69,15 @@ export class SampleFormComponent implements OnInit {
       symptom_cankers: ['', Validators.required],
       symptom_death: ['', Validators.required],
       symptom_wood: ['', Validators.required],
-      symptom_other: ['', Validators.required],
+      symptom_other: [''],
 
       distribution_localized: ['', Validators.required],
       distributed_scattered: ['', Validators.required],
       distributed_general: ['', Validators.required],
+      distributed_clumps: ['', Validators.required],
+      distributed_na: ['', Validators.required],
+      distributed_other: [''],
+      percentage_plants_affected: ['', Validators.required],
 
       conditions_affected: ['', Validators.required],
       conditions_problem_noticed: ['', Validators.required],
@@ -173,10 +143,10 @@ export class SampleFormComponent implements OnInit {
       conditions_additional : this.sampleForm.controls.conditions_additional.value,
     };
 
-    const orgDetails: Interface.Organisation = { orgName: this.service.currentSessionValue.user.organisation };
+    const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
 
 
-    this.service.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
+    this.clinicService.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
       console.log("HERE");
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -215,7 +185,38 @@ export class SampleFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    let today = new Date();
+    this.sampleForm.patchValue( {
+      date_sample_sent: today
+    });
 
+  }
+
+  selectLocation() {
+    let mapRef = this.dialog.open(MapsWindowComponent, { height: '80%', width: '80%'});
+    
+    mapRef.afterClosed().subscribe((data) => {
+      console.log("--- Selected Location: " + JSON.stringify(data));
+
+      this.plantationAddress = data.address;
+      this.plantationLocation = data.location; 
+
+      this.sampleForm.patchValue( {
+        sample_street: this.plantationAddress.street,
+        sample_area: this.plantationAddress.area,
+        sample_city: this.plantationAddress.city,
+        sample_province: this.plantationAddress.province,
+        sample_gps: `${this.plantationLocation.latitude},${this.plantationLocation.longitude}`,
+      });
+
+      this.sampleForm.get('sample_street').disable();
+      this.sampleForm.get('sample_area').disable();
+      this.sampleForm.get('sample_city').disable();
+      this.sampleForm.get('sample_province').disable();
+      this.sampleForm.get('sample_gps').disable();
+      this.sampleForm.get('date_sample_sent').disable();
+  
+    });
   }
 
 }

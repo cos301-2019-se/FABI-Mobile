@@ -79,7 +79,7 @@
         <div class="box" *ngFor="let log of allNotifications">
           <div class="notification-heading">
             <h2>Notification {{log.ID}}</h2>
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
           </div>
 
           <div class="notification-content">
@@ -137,6 +137,19 @@
           <!--Admin User Type-->
           <mat-form-field class="form_inputs" class="col">
             <input matInput placeholder="User Type" matInput type="text" formControlName="admin_type" value="{{userType}}" disabled>
+          </mat-form-field>
+        </div>
+
+        <!--Admin Password Field-->
+        <div class="admin-contact-inputs">
+          <mat-form-field class="form_inputs hiddenPassword" class="col">
+            <input #passwordInput matInput placeholder="Password" matInput type="password" formControlName="admin_password" value="{{password}}"><i class="fas fa-eye-slash" (click)="showPassword()"></i>
+          </mat-form-field>
+          <br />
+
+          <!--Admin Confirm Password-->
+          <mat-form-field class="form_inputs hiddenPassword" class="col">
+            <input #confirmInput matInput placeholder="Confirm Password" matInput type="password" formControlName="admin_confirm" value="{{confirmPassword}}"><i class="fas fa-eye-slash" (click)="showConfirmedPassword()"></i>
           </mat-form-field>
         </div>
         <br />

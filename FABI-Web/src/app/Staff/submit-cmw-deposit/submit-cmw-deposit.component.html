@@ -1,55 +1,275 @@
-<div class="container">
+<!--Bootstrap Navbar-->
+<div class="container-fluid" id="nav-section">
+  <nav class="navbar navbar-expand-xl">
+    <a class="navbar-brand" href="#">Staff Dashboard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      <i class="fas fa-bars"></i>
+    </button>
 
-  <!--Nav Section-->
-  <div class="nav">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
 
-    <section class="top-nav">
-      <h1>CMW Deposit Form</h1>
-      <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
-      <a id="submit_CMW_request" routerLink="/submit-cmw-request"><i class="fab fa-wpforms"></i>CMW Request
-        Form</a>
-      <a id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><i class="fab fa-wpforms"></i>CMW Deposit
-        Form</a>
-      <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW
-        Revitalization Form</a>
-      <a id="submit_CBS_request" routerLink="/submit-cbs-request"><i class="fab fa-wpforms"></i>CBS Request
-        Form</a>
-      <a id="submit_CBS_deposit" routerLink="/submit-cbs-deposit"><i class="fab fa-wpforms"></i>CBS Deposit
-        Form</a>
-      <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
-      <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
-      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>
-    </section>
+        <li class="nav-item active">
+          <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
+        </li>
 
-    <section class="bottom-nav">
-      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
-    </section>
-    <a href="" id="menu"><i class="fas fa-bars"></i></a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fab fa-wpforms"></i>Culture Collection Forms
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="submit_CMW_request" routerLink="/submit-cmw-request"><i class="fab fa-wpforms"></i>CMW Request
+              Form</a>
+            <br />
+            <a id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><i class="fab fa-wpforms"></i>CMW Deposit
+              Form</a>
+            <br />
+            <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW
+              Revitalization Form</a>
+            <br />
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+        </li>
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="profile_menu_link" routerLink="/staff-profile"><i class="fas fa-user-circle"></i>Profile</a>
+            <br />
+            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        </li>
+
+        <li class="nav-item">
+          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div> 
+
+<!--SlideOut -->
+<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
+  <!--Tab-->
+  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
+    <div>
+      <p>Notifications</p>
+    </div>
+  </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Staff Notifications</h4>
+    </div>
+    <div class="modal-body" id="notifications-section">
+
+      <h2 *ngIf="!notifications">No notifications</h2>
+      <!--*********************************************************************
+          DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
+      *************************************************************************-->
+      <div *ngIf="allNotifications">
+        <div class="box" *ngFor="let log of allNotifications">
+          <div class="notification-heading">
+            <h2>Notification {{log.ID}}</h2>
+            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
+          </div>
+
+          <div class="notification-content">
+            <p><b>Type:</b> {{log.Type}} notification</p>
+            <p><b>Action:</b> {{log.Action}}</p>
+            <p><b>Date:</b> {{log.Date}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer"> </div>
+  </div>
+</div>
+
+<!--CMW Deposit Form Content-->
+<div class="content">
+  <div class="color-accent">
+    <h1>CMW Deposit Form</h1>
   </div>
 
-  <!--CMW Deposit Form Content-->
-  <div class="content">
-    <div class="color-accent">
-      <h1>CMW Deposit Form</h1>
-    </div>
-
-    <div class="cmw-deposit">
-      <form class="example-form">
-
+  <div class="cmw-deposit">
+    <form class="example-form" [formGroup]="cmwDepositForm" (submit)="submitCMWDepositForm()">
+      <div>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Culture Type">
+          <input matInput placeholder="CMW Culture Number" type="text" formControlName="cmw_culture_number">
         </mat-form-field>
         <br />
 
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Genus" type="text" formControlName="genus">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
 
-        <button id="submit_cmw_deposit" class="btn btn-default" routerLink="/fabi-internal-dashboard">Submit</button>
-      </form>
-    </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Epitheton" type="text" formControlName="epitheton">
+        </mat-form-field>
+        <br />
 
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Personal Collection Number" type="text" formControlName="personal_collection_number">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
 
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="International Collection Number" type="text" formControlName="international_collection_number">
+        </mat-form-field>
+        <br />
 
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Herbarium Number" type="text" formControlName="herbarium_number">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Other FABI Collections" type="text" formControlName="other_FABI_collections">
+      </mat-form-field>
+      <br />
+
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Synonym or Original Name" type="text" formControlName="name">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Type Status" type="text" formControlName="type_status">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Host" type="text" formControlName="host">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Vector" type="text" formControlName="vector">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Substrate" type="text" formControlName="substrate">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Continent" type="text" formControlName="continent">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Country" type="text" formControlName="country">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Region" type="text" formControlName="region">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Locality" type="text" formControlName="locality">
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="GPS" type="text" formControlName="gps">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput [(ngModel)]="collectedBy" placeholder="Collected By (Surname, Initials)" type="text" [formControl]="collectedByControl" formControlName="collected_by" [matAutocomplete]="autoCollectedBy">
+          <mat-autocomplete #autoCollectedBy="matAutocomplete" (optionSelected)="setCollectedBy($event)">
+            <mat-option *ngFor="let option of filteredOptions1 | async" [value]="option">{{option}}</mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Date Collected (dd/mm/yyyy)" type="date" formControlName="date_collected">
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <div>
+        <mat-form-field class="example-full-width">
+          <input matInput [(ngModel)]="isolatedBy" placeholder="Isolated By (Surname, Initials)" type="text" [formControl]="isolatedByControl" formControlName="isolated_by" [matAutocomplete]="autoIsolatedBy">
+          <mat-autocomplete #autoIsolatedBy="matAutocomplete" (optionSelected)="setIsolatedBy($event)">
+            <mat-option *ngFor="let option of filteredOptions3 | async" [value]="option">{{option}}</mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <br />
+
+        <mat-form-field class="example-full-width">
+          <input matInput [(ngModel)]="identifiedBy" placeholder="Identified By (Surname, Initials)" type="text" [formControl]="identifiedByControl" formControlName="identified_by" [matAutocomplete]="autoIdentifiedBy">
+          <mat-autocomplete #autoIdentifiedBy="matAutocomplete" (optionSelected)="setIdentifiedBy($event)">
+            <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option">{{option}}</mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <br />
+      </div>
+      <br/>
+
+      <mat-form-field class="example-full-width">
+        <input matInput [(ngModel)]="donatedBy" placeholder="Donated By (Surname, Initials)" type="text" [formControl]="donatedByControl" formControlName="donated_by" [matAutocomplete]="autoDonatedBy">
+        <mat-autocomplete #autoDonatedBy="matAutocomplete" (optionSelected)="setDonatedBy($event)">
+          <mat-option *ngFor="let option of filteredOptions4 | async" [value]="option">{{option}}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <br />  
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Additional Notes" type="text" formControlName="additional_notes">
+      </mat-form-field>
+      <br />
+
+      <button id="submit_cmw_deposit" class="btn btn-default">Submit</button>
+    </form>
   </div>
 
-</div>
+
+
+</div> 
