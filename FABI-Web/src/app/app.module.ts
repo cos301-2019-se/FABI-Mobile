@@ -58,6 +58,9 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
 
 import { AgmCoreModule } from "@agm/core";
 import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
+import { MapsWindowComponent } from './maps-window/maps-window.component';
+
+import { config } from "../environments/environment.prod";
 
 @NgModule({
   declarations: [
@@ -93,8 +96,9 @@ import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
     SampleDivComponent,
     AdminProfileComponent,
     StaffProfileComponent,
-    ReportingComponent,
     ViewFormsComponent
+    ReportingComponent,
+    MapsWindowComponent
   ],
   entryComponents: [
     ConfirmComponent,
@@ -102,7 +106,8 @@ import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
     StaffDivComponent,
     NotificationDivComponent,
     SampleDivComponent,
-    ErrorComponent
+    ErrorComponent,
+    MapsWindowComponent
   ],
   imports: [
     BrowserModule,
@@ -121,7 +126,8 @@ import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
     LayoutModule,
     MatAutocompleteModule,
     AgmCoreModule.forRoot({
-      apiKey: ''
+      apiKey: config.APIKEy,
+      libraries: ["places"]
     })
   ],
   providers: [NotificationService],

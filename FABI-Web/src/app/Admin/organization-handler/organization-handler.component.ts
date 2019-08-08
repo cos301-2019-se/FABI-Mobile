@@ -86,6 +86,26 @@ export class OrganizationHandlerComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  register_validation_messages = {
+    'organization_name': [
+      { type: 'required', message: 'Organization name is required' },
+    ],
+    'admin_email': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Please enter a valid email' }
+    ],
+    'admin_name': [
+      { type: 'required', message: 'Name is required' }
+    ],
+    'admin_surname': [
+      { type: 'required', message: 'Surname is required' }
+    ],
+    'admin_phone': [
+      { type: 'required', message: 'Phone No. is required' },
+      { type: 'pattern', message: 'Please enter a valid South African number' }
+    ],   
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
@@ -114,10 +134,16 @@ export class OrganizationHandlerComponent implements OnInit {
       organization_location: ['', Validators.required],
       admin_name: ['', Validators.required],
       admin_surname: ['', Validators.required],
-      admin_email: ['', Validators.required],
-      admin_phone: ['', Validators.required]
+      admin_email: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
+      admin_phone: ['', Validators.compose([
+        Validators.required,
+        // Validators.pattern('')
+      ])]
     })
-  }
+  }	
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
