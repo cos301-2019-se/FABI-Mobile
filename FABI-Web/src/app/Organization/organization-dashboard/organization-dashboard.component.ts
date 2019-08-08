@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService, Sample, Species } from '../../_services/diagnostic-clinic-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -72,10 +73,19 @@ export class OrganizationDashboardComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
+   * 
    * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private userManagementService: UserManagementAPIService, private diagnosticClinicService: DiagnosticClinicAPIService, private resolver: ComponentFactoryResolver) { }
+  constructor(
+    private authService: AuthenticationService, 
+    private router: Router, 
+    private userManagementService: UserManagementAPIService, 
+    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private resolver: ComponentFactoryResolver
+    ) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +100,7 @@ export class OrganizationDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfOrganizationMembers(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllOrganizationMembers(this.organizationName).subscribe((response: any) => {
+    this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
       if(response.success == true){
           //Populating the arrays with the returned data
           this.organizationMembers = response.data.members;
@@ -110,6 +120,20 @@ export class OrganizationDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof OrganizationDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                            GET_NUMBER_OF_ORGANIZATION_SAMPLES
   /**
    *  This function will use an API service to get all the samples of an organization. These samples will be read into the
@@ -121,7 +145,7 @@ export class OrganizationDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfOrganizationSamples(){
     //Subscribing to the DiagnosticClinicAPIService to get a list containing all the samples belonging to the organization
-    this.diagnosticClinicService.getAllOrganizationSamples(this.organizationName).subscribe((response: any) => {
+    this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
       if(response.success == true){
         var tempSamples = response.data.samples;
         this.numberOfOrganizationSamples = tempSamples.length;
@@ -178,12 +202,12 @@ export class OrganizationDashboardComponent implements OnInit {
    *  If set to true, a class is added which ensures that the notifications tab is displayed. 
    *  If set to flase, a class is removed which hides the notifications tab.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
- }
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    NG_ON_INIT()  
@@ -196,6 +220,7 @@ export class OrganizationDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.getNumberOfOrganizationMembers();
     this.getNumberOfOrganizationSamples();
     this.getNumberOfCompletedOrganizationSamples();

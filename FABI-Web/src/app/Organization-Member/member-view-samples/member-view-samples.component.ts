@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, July 19th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,10 +15,13 @@
 
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
 //Include Material Components
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { HttpService } from 'src/app/_services/http.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
+import { Router } from '@angular/router';
+import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
 
 @Component({
   selector: 'app-member-view-samples',
@@ -28,14 +31,13 @@ import { ErrorComponent } from 'src/app/_errors/error-component/error.component'
 })
 export class MemberViewSamplesComponent implements OnInit {
 
-  displayedColumns: string[];
-  dataSource = new MatTableDataSource([]);
-  fields: any[] = [];
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  displayedColumns: string[];
+  dataSource = new MatTableDataSource([]);
+  fields: any[] = [];
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
@@ -44,11 +46,20 @@ export class MemberViewSamplesComponent implements OnInit {
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of MemberViewSamplesComponent.
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {MatDialog} dialog
+   * @param {Router} router
    * 
    * @memberof MemberViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private dialog: MatDialog) { }
+  constructor(
+    private authService: AuthenticationService, 
+    private diagnosticClinicService: DiagnosticClinicAPIService,
+    private dialog: MatDialog, 
+    private router: Router
+    ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                           TOGGLE_NOTIFICATIONS_TAB
@@ -65,15 +76,47 @@ export class MemberViewSamplesComponent implements OnInit {
     this.toggle_status = !this.toggle_status; 
   }
 
+  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+  //                                                    NG_ON_INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call viewSamples()
+   * 
+   * @memberof MemberViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    //Calling the neccessary functions as the page loads
     this.viewSamples();
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof MemberViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            VIEW_SAMPLES 
+  /**
+   * This function will be used to display all the samples associated with the user in the HTML page
+   * 
+   * @memberof MemberViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
-    this.service.retrieveMemberSamples().subscribe((response: any) => {
+    this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
 
         console.log("---- RESPONSE: " + JSON.stringify(response));

@@ -48,7 +48,7 @@
         </li>
 
         <li class="nav-item">
-          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          <a id="logout_menu_link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i>Logout</a>
         </li>
 
       </ul>
@@ -133,6 +133,19 @@
             <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email" value="{{email}}">
           </mat-form-field>
           <br />
+        </div>
+
+        <!--Admin Password Field-->
+        <div class="admin-contact-inputs">
+          <mat-form-field class="form_inputs" class="col">
+            <input #passwordInput matInput placeholder="Password" matInput type="password" formControlName="admin_password" value="{{password}}"><i class="fas fa-eye-slash" (click)="showPassword()"></i>
+          </mat-form-field>
+          <br />
+
+          <!--Admin Confirm Password-->
+          <mat-form-field class="form_inputs" class="col">
+            <input #confirmInput matInput placeholder="Confirm Password" matInput type="password" formControlName="admin_confirm" value="{{confirmPassword}}"><i class="fas fa-eye-slash" (click)="showConfirmedPassword()"></i>
+          </mat-form-field>
         </div>
         <br />
 
