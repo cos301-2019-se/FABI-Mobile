@@ -5,7 +5,7 @@
  * Created Date: Tuesday, June 25th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 15th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -18,7 +18,7 @@ import { Component, OnInit } from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HttpService } from '../_services/http.service';
+import { UserManagementAPIService } from "../_services/user-management-api.service";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -65,7 +65,13 @@ export class HomeComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(
+    private userManagementService: UserManagementAPIService, 
+    private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router
+    ) {
     this.registerOrgForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
       organization_location: ['', Validators.required],
@@ -82,12 +88,29 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.displayLocationInfo(position);
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  displayLocationInfo(position) {
+    const lng = position.coords.longitude;
+    const lat = position.coords.latitude;
+
+    console.log(`longitude: ${ lng } | latitude: ${ lat }`);
+    console.log(`Position: ${position}`);
+    console.log(`Coords: ${JSON.stringify(position.coord)}`);
+
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       REGISTER ORGANIZATION
   /**
-   * This function calls the *http* service to create a new Organisation.
+   * This function calls the *user-management* service to create a new Organisation.
    *
    * @returns
    * @memberof OrganizationHandlerComponent
@@ -114,7 +137,7 @@ export class HomeComponent implements OnInit {
     const admin_details: Interface.OrganisationAdmin = { name: LadminName, surname: LadminSurname, email: LadminEmail };
     const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };
 
-    this.service.createOrganization(org_details).subscribe((response: any) => {
+    this.userManagementService.createOrganization(org_details).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, July 19th 2019
+ * Last Modified: Thursday, August 1st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -28,8 +28,9 @@ import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
-import { HttpService } from '../../_services/http.service';
+import { AuthenticationService } from '../../_services/authentication.service';
 import { ConfirmComponent } from "../../confirm/confirm.component";
+import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 
 
 @Component({
@@ -61,49 +62,73 @@ export class MemberHandlerComponent implements OnInit {
    /** Array of Member objects - @type {OrganisationMember[]} */
   orgMembers: Interface.OrganisationMember[];
 
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  add_validation_messages = {
+    'member_email': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Please enter a valid email' }
+    ],
+    'member_name': [
+      { type: 'required', message: 'Name is required' }
+    ],
+    'member_surname': [
+      { type: 'required', message: 'Surname is required' }
+    ],
+    'member_phone': [
+      { type: 'required', message: 'Phone No. is required' },
+      { type: 'pattern', message: 'Please enter a valid South African number' }
+    ] 
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
    * Creates an instance of MemberHandlerComponent.
-   * @param {AdminAPIService} service For calling the API service
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
    * @param {Router} router For navigating to other modules/components
+   * @param {MatDialog} dialog
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * 
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private service: HttpService, private adminService: HttpService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+  constructor(
+    private authService: AuthenticationService, 
+    private userManagementService: UserManagementAPIService,
+    private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router
+    ) {
     this.addMemberForm = this.formBuilder.group({
       member_name: ['', Validators.required],
       member_surname: ['', Validators.required],
       member_location: ['', Validators.required],
-      member_email: ['', Validators.required],
-      member_phone: ['', Validators.required]
+      member_email: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
+      member_phone: ['', Validators.compose([
+        Validators.required,
+        // Validators.pattern('')
+      ])]
 
     })
   }
 
-  sidenavToggle() {
-    if (document.getElementById("sidenav_div").style.width == "22%") {
-      document.getElementById("sidenav_div").style.width = "0";
-    }
-    else {
-      document.getElementById("sidenav_div").style.width = "22%";
-    }
-  }
-
-  closeNav() {
-    document.getElementById("sidenav_div").style.width = "0";
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
+  //                                                    TOGGLE_NOTIFICATIONS_TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -120,16 +145,14 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG_ON_INIT()
   /**
-   *  
-   *
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.viewMembers();
 
-    //--- Get the Organization's Details
-    this.service.getOrganizationDetails().subscribe((response: any) => {
+    //Get the Organization's Details
+    this.userManagementService.getOrganizationDetails().subscribe((response: any) => {
       if (response.success == true && response.status == 200) {
         // ***********************************
         // POLPULATE FIELDS BASED ALREADY KNOWN INFORMATION
@@ -149,7 +172,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          ADD MEMBER
+  //                                                          ADD_MEMBER
   /**
    * This function calls the *http* service to add a new Organization Member
    *
@@ -157,13 +180,10 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  addMember() {
-    
+  addMember() {    
     this.submitted = true;
 
     if (this.addMemberForm.invalid) {
-      console.log("------------ HERE -----------");
-
       return;
     }
 
@@ -177,12 +197,12 @@ export class MemberHandlerComponent implements OnInit {
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
-    const user = this.service.currentSessionValue;
+    const user = this.authService.getCurrentSessionValue;
     const org_details: Interface.Organisation = { orgName: user.user.organisation };
     const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
 
-    this.service.addOrgMember(org_details, member_details).subscribe((response: any) => {
+    this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
 
       console.log("////// RESPONSE: " + response);
 
@@ -207,7 +227,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SELECTED MEMBER
+  //                                                        SELECT_ORGANIZATION
   /**
    * This function sets the Member selected by the user in the table
    *
@@ -220,15 +240,14 @@ export class MemberHandlerComponent implements OnInit {
   }
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     REMOVE MEMBER PROMPT
+  //                                                     REMOVE_MEMBER_PROMPT
   /**
    * This function prompts the user to confirm if they wish to remove the selected Member
    *
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeMemberPrompt(member: Interface.OrganisationMember) {
-    
+  removeMemberPrompt(member: Interface.OrganisationMember) {    
     const memberDetails = member.fname + " " + member.surname + " " + member.email;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
@@ -248,8 +267,22 @@ export class MemberHandlerComponent implements OnInit {
     })
   }
 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                           REMOVE MEMBER   
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                           REMOVE_MEMBER   
   /**
    * This function calls the *http* service to remove the selected Organisation 
    *
@@ -257,8 +290,7 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMember() {
-
-    this.service.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
+    this.userManagementService.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Member Removed", "Dismiss", {
@@ -290,20 +322,17 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            VIEW STAFF
+  //                                                            VIEW_MEMBERS
   /**
    * This function calls the *http* service to get all registered Organization Members
    *
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  viewMembers() {
-    
+  viewMembers() {    
     console.log("orgName: " + localStorage.getItem('orgName'));
-    console.log("--------- HELLO ----------");
-
     
-    this.service.getAllOrganizationMembers().subscribe((response: any) => {
+    this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.orgMembers = response.data.members;
         this.dataSource = new MatTableDataSource(this.orgMembers);

@@ -115,8 +115,6 @@ i {
     transition-property: all;
     transition-duration: .5s;
     transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-
-    z-index:3;
 }
 
 /* Display slideOut */
@@ -135,9 +133,7 @@ i {
     box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
     background: #8EBB67;
     color: white;
-    border-radius: 15px 0px 0px 15px;
-
-    z-index: 3;
+    border-radius: 15px 0px 0px 15px
 }
 
 .slideOutTab div {
@@ -188,17 +184,11 @@ div#slideOut.showSlideOut {
     }
 }
 
-@media (max-width:575px){
-    .slideOutTab{
-        display: none;
-    }
-}
-
 @media (max-width:768px) {
 
-    div#slideOut.showSlideOut {
-        width: 80%;
-    }
+   div#slideOut.showSlideOut {
+       width: 80%;
+   }
 }
 
 /* ================================================ */
@@ -208,8 +198,6 @@ div#slideOut.showSlideOut {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    padding: 15px;
 }
 
 #notifications-section .box {
@@ -241,7 +229,7 @@ div#slideOut.showSlideOut {
 .notification-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start;    
 
     width: 100%;
 

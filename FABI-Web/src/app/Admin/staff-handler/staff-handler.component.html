@@ -82,7 +82,7 @@
         <div class="box" *ngFor="let log of allNotifications">
           <div class="notification-heading">
             <h2>Notification {{log.ID}}</h2>
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
           </div>
 
           <div class="notification-content">
@@ -120,12 +120,18 @@
               <div class="name-inputs">
                 <mat-form-field class="col">
                   <input matInput placeholder="Name" matInput type="text" formControlName="staff_name">
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_name">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_name').hasError(validation.type) && (addStaffForm.get('staff_name').dirty || addStaffForm.get('staff_name').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
 
                 <!--Surname Field-->
                 <mat-form-field class="col">
                   <input matInput placeholder="Surname" matInput type="text" formControlName="staff_surname">
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_surname">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_surname').hasError(validation.type) && (addStaffForm.get('staff_surname').dirty || addStaffForm.get('staff_surname').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
               </div>
@@ -134,12 +140,18 @@
               <div class="contact-inputs">
                 <mat-form-field class="col">
                   <input matInput placeholder="Email" matInput type="text" formControlName="staff_email">
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_email">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_email').hasError(validation.type) && (addStaffForm.get('staff_email').dirty || addStaffForm.get('staff_email').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
 
                 <!--Cellphone Number Field-->
                 <mat-form-field class="col">
                   <input matInput placeholder="Cellphone Number" matInput type="number" formControlName="staff_phone">
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_phone">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_phone').hasError(validation.type) && (addStaffForm.get('staff_phone').dirty || addStaffForm.get('staff_phone').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
                 <br />
               </div>
@@ -153,9 +165,26 @@
                       {{userType.Name}}
                     </mat-option>
                   </mat-select>
-                  <br />
+                  <mat-error *ngFor="let validation of add_validation_messages.staff_position">
+                    <mat-error class="errors" *ngIf="addStaffForm.get('staff_position').hasError(validation.type) && (addStaffForm.get('staff_position').dirty || addStaffForm.get('staff_position').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
                 </mat-form-field>
               </div>
+
+              <div class="position-inputs">
+                  <mat-form-field class="form-inputs" class="col">
+                    <mat-label>Admin Type</mat-label>
+                    <mat-select [(ngModel)]="selectedAdminType" id="admin_type" formControlName="admin_type">
+                      <mat-option>--</mat-option>
+                      <mat-option *ngFor="let adminType of adminTypea" [value]="adminType.Name">
+                        {{adminType.Name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of add_validation_messages.admin_type">
+                      <mat-error class="errors" *ngIf="addStaffForm.get('admin_type').hasError(validation.type) && (addStaffForm.get('admin_type').dirty || addStaffForm.get('admin_type').touched)">{{validation.message}}</mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
 
               <br />
               <p *ngIf="loading" class="errors">Adding Member...</p>
@@ -164,6 +193,55 @@
                 <input type="submit" id="add_new_staff" class="btn btn-default" value="Add Staff Member" />
               </div>
             </div>
+
+            <h2>PRIVILEGES</h2>
+            <!--  PRIVILEGES -->
+            <div>
+              <!--  USER PRIVILEGES -->
+              <div>
+                <h3>USERS</h3>
+                <table>
+                  <tr>
+                    <th></th>
+                    <th> Add </th>
+                    <th>Delete </th>
+                    <th>Update</th>
+                    <th>View</th>
+                  </tr>
+                  <tr>
+                    <td>
+                        <label>FABI Admin:</label>
+                    </td>
+                    <td> 
+                      <input type="checkbox" name="fabi_admin_privileges" value="add">
+                    </td>
+                    <td> 
+                      <input type="checkbox" name="fabi_admin_privileges" value="delete">
+                    </td>
+                    <td> 
+                      <input type="checkbox" name="fabi_admin_privileges" value="update">
+                    </td>
+                    <td> 
+                      <input type="checkbox" name="fabi_admin_privileges" value="view" >
+                    </td>
+                </tr>
+
+                </table>
+
+              </div>
+
+              <!--  DATABASE PRIVILEGES -->
+              <div>
+              </div>
+
+              <!--  CLINIC PRIVILEGES -->
+              <div>
+              </div>
+
+
+            </div>
+          
+          
           </form>
 
         </div>

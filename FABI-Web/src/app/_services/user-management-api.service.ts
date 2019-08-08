@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, July 18th 2019
+ * Last Modified: Monday, August 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,12 +13,13 @@
  * <<license>>
  */
 
-import { Injectable } from '@angular/core';
+import * as core from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { registerContentQuery } from '@angular/core/src/render3';
-import { StaticInjector } from '@angular/core/src/di/injector';
-import { BehaviorSubject } from 'rxjs';
+import * as Interface from "../_interfaces/interfaces";
+import { AuthenticationService } from "./authentication.service";
+
+import { config } from "../../environments/environment.prod";
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,12 +27,12 @@ import { BehaviorSubject } from 'rxjs';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Globals variables used to hold the API call urls
-const getAllFABIMembersURL = 'https://user-management-dot-api-fabi.appspot.com/getAllFabiMembers';
-const getAllFABIAdminsURL = 'https://user-management-dot-api-fabi.appspot.com/getAllFabiAdmins';
-const getAllOrganizationMembers = 'https://user-management-dot-api-fabi.appspot.com/getAllOrgMembers';
-const getUserDetailsURL = 'https://user-management-dot-api-fabi.appspot.com/getUserDetails';
-const updateStaffMemberDetailsURL = 'https://user-management-dot-api-fabi.appspot.com/updateStaffMember';
-const updateOrganizationMemberDetailsURL = 'https://user-management-dot-api-fabi.appspot.com/updateOrgMember';
+const getAllFABIMembersURL = `${config.userManagementURL}/getAllFabiMembers`;
+const getAllFABIAdminsURL = `${config.userManagementURL}/getAllFabiAdmins`;
+const getAllOrganizationMembers = `${config.userManagementURL}/getAllOrgMembers`;
+const getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;
+const updateStaffMemberDetailsURL = `${config.userManagementURL}/updateStaffMember`;
+const updateOrganizationMemberDetailsURL = `${config.userManagementURL}/updateOrgMember`;
 
 //Object for defining how a member of FABI is structured
 export interface Member {
@@ -56,6 +57,7 @@ export interface UpdateMember{
     fname: string;          //The name of the FABI member
     surname: string;        //The surname of the FABI member
     email: string;          //The email of the FABI member
+    password: string;       //The password of the FABI member
 }
 
 //Object for defning the JSOn object to be sent when the details of a FABI member are updated
@@ -69,6 +71,7 @@ export interface UpdateOrganization{
     fname: string;          //The name of the organization member
     surname: string;        //The surname of the organization member
     email: string;          //The email of the organization member
+    password: string;       //The password of the organization member
 }
 
 //Object for defning the JSOn object to be sent when the details of an organization member are updated
@@ -78,7 +81,7 @@ export interface POSTUpdateOrganization{
     fields: UpdateMember;       //The fields to be updated
 }
 
-@Injectable({
+@core.Injectable({
     providedIn: 'root'
 })
 
@@ -93,7 +96,7 @@ export class UserManagementAPIService {
    * @memberof UserManagementAPIService
    */
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   constructor(private http: HttpClient) { }
+   constructor(private http: HttpClient, private authService: AuthenticationService) { }s
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,36 +151,6 @@ export class UserManagementAPIService {
     }
 
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                 GET_ALL_ORGANIZATION_MEMBERS 
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the Members of an Organization
-   *
-   * @returns API response @type any
-   * @param {string} organization Name of the organization
-   * @memberof UserManagementAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    getAllOrganizationMembers(organization: string) {
-        var data: POSTOrganization = { orgName: organization };
-
-        const options = {
-            method: 'POST',
-            url: getAllOrganizationMembers,
-            headers: {
-            'cache-control': 'no-cache',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-            },
-            body: data,
-            json: true
-        };
-
-        return this.http.request('POST', getAllOrganizationMembers, options);        
-    }
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            GET_USER_DETAILS 
   /**
@@ -221,8 +194,8 @@ export class UserManagementAPIService {
    * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  updateFABIMemberDetails(mail: string, name: string, lname: string, idNo: string) {
-    var member: UpdateMember = { fname: name, surname: lname, email: mail};
+  updateFABIMemberDetails(mail: string, name: string, lname: string, idNo: string, pass: string) {
+    var member: UpdateMember = { fname: name, surname: lname, email: mail, password: pass};
     var data: POSTUpdateMember = { id: idNo, fields: member};
 
     const options = {
@@ -255,8 +228,8 @@ export class UserManagementAPIService {
    * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  updateOrganizationMemberDetails(organization: string, mail: string, name: string, lname: string, idNo: string) {
-    var member: UpdateOrganization = { fname: name, surname: lname, email: mail};
+  updateOrganizationMemberDetails(organization: string, mail: string, name: string, lname: string, idNo: string, pass: string) {
+    var member: UpdateOrganization = { fname: name, surname: lname, email: mail, password: pass};
     var data: POSTUpdateOrganization = { orgName: organization, id: idNo, fields: member};
 
     const options = {
@@ -273,4 +246,428 @@ export class UserManagementAPIService {
 
     return this.http.request('POST', updateOrganizationMemberDetailsURL, options);        
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET_ORGANIZATION
+  /**
+   * Function that send a request to retrieve an Organisations' details using their ID
+   *
+   * @returns
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getOrganizationDetails() {
+
+    let getOrganizationDetails = `${config.userManagementURL}/getOrgDetails`;
+    let method = 'POST';
+
+    const postData = {
+      // "ID": localStorage.getItem('ID')
+      "orgName": this.authService.getCurrentSessionValue.user.organisation
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, getOrganizationDetails, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET_ORGANIZATION_MEMBER
+  /**
+   * Function that send a request to retrieve an Organisations Member's details using their ID
+   *
+   * @returns
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getOrganizationMemberDetails() {
+
+    let getOrganizationMemberDetails = `${config.userManagementURL}/getOrgMember`;
+    let method = 'POST';
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, getOrganizationMemberDetails, options);
+  }
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET_ALL_ORGANISATION_MEMBERS
+  /**
+   * Method that sends a request to the API to get the details of all the organisations' members.
+   *
+   * @returns API response
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllOrganizationMembers() {
+
+    let getAllOrganizationsMembersURL = `${config.userManagementURL}/getAllOrgMembers`;
+    let method = 'POST';
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation
+    }
+
+    console.log("postData: " + postData);
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, getAllOrganizationsMembersURL, options);
+
+  }
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET_ALL_ORGANISATIONS 
+  /**
+   * Method that sends a request to the API to get the details of all the organisations.
+   *
+   * @returns API response
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllOrganizations() {
+
+    const getAllOrganizationsURL = `${config.userManagementURL}/getAllOrganizations`;
+    const method = 'POST';
+
+    const options = {
+      headers: new HttpHeaders({
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      }),
+      json: true
+    };
+
+    return this.http.request<any>(method, getAllOrganizationsURL, options);
+
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET_ALL_USER_TYPES 
+  /**
+   * Method that sends a request to the API to get the user types associated with a specific organisation.
+   *
+   * @returns API response
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getUserTypes(orgName: string) {
+
+    const getUserTypesURL = '';
+    const method = 'POST';
+
+    const postData = {
+      "orgName": orgName
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>('POST', 'https://login-dot-api-fabi.appspot.com/getUserTypes', options);
+
+  }
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                   CREATE/ADD_NEW_ORGANISATION
+  /**
+   * Method that sends a request to the API to create a new Organisation 
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  createOrganization(orgInfo: Interface.Organisation) {
+    let createOrganizationURL = `${config.userManagementURL}/createOrganization`;
+    let method = 'POST';
+
+    const postData = orgInfo;
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, createOrganizationURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     REMOVE_AN_ORGANISATION
+  /**
+   * Method that sends a request to the API to remove (deregister) an Organisation
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeOrganization(orgInfo: Interface.Organisation) {
+
+    let removeOrganizationURL = `${config.userManagementURL}/removeOrg`;
+    let method = 'POST';
+
+    const postData = orgInfo;
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, removeOrganizationURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    ADD_NEW_FABI_STAFF_MEMBER
+  /**
+   * Method that sends a request to the API to add a new FABI Staff Member to the database
+   *
+   * @param {Interface.StaffInfo} staffInfo
+   * @returns
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  addStaffMember(staffInfo: Interface.StaffInfo) {
+
+    if (staffInfo.position == "Admin")
+      return this.addFABIAdmin(staffInfo);
+
+    let addStaffMemberURL = `${config.userManagementURL}/addStaff`;
+    let method = 'POST';
+
+    const postData = {
+      "staff": staffInfo
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, addStaffMemberURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    REMOVE_FABI_STAFF_MEMBER 
+  /**
+   * Method that sends a request to the API to remove a FABI Staff Member
+   *
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
+
+    let removeStaffMemberURL = `${config.userManagementURL}/removeStaff`;
+    let method = 'POST';
+
+    const postData = staffInfo;
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, removeStaffMemberURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET_ALL_FABI_STAFF 
+  /**
+   * Method that sends a request to the API to get all FABI Staff Members
+   *
+   * @returns
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllStaffMembers() {
+
+    let getStaffMembersURL = `${config.userManagementURL}/getAllStaff`;
+    let method = 'POST';
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      json: true
+    };
+
+    return this.http.request<any>(method, getStaffMembersURL, options);
+
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      ADD_NEW_FABI_ADMIN
+  /**
+   * Method that send a request to the API to add a new FABI Admin to the database
+   *
+   * @param {Interface.StaffInfo} staffInfo
+   * @returns
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  addFABIAdmin(staffInfo: Interface.StaffInfo) {
+    let addFABIAdminURL = `${config.userManagementURL}/addFabiAdmin`;
+    let method = 'POST';
+
+    const postData = {
+      "admin": staffInfo
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, addFABIAdminURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  ADD_A_NEW_ORGANISATION_MEMBER
+  /**
+   * Method that sends a request to the API to add a new Member to a specific Organisation
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @param {Interface.OrganisationMember} memberInfo
+   * @returns
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  addOrgMember(orgInfo: Interface.Organisation, memberInfo: Interface.OrganisationMember) {
+
+    let addMemberURL = `${config.userManagementURL}/addMemberToOrg`;
+    let method = 'POST';
+
+    console.log("orgName: " + orgInfo.orgName);
+    const postData = {
+      "orgName": orgInfo.orgName,
+      "member": memberInfo,
+      "userType": "Member"
+    }
+
+    console.log("//// POST: " + JSON.stringify(postData));
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, addMemberURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    REMOVE_ORGANIZATION_MEMBER
+  /**
+   * Method that sends a request to the API to remove an Organizations Member
+   *
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
+
+    let removeMemberURL = `${config.userManagementURL}/removeMember`;
+    let method = 'POST';
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "id": memberInfo.ID
+    }
+
+    console.log("//// POST: " + JSON.stringify(postData))
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, removeMemberURL, options);
+  }  
 }
