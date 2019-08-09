@@ -453,7 +453,6 @@ export class DatabaseHandlerComponent implements OnInit {
     reader.onload = () => {
       let text = reader.result;
 
-      console.log("porting data:");
       //converts file to JSON Object
       this.jsonData = this.portCSV.convertToJSON(text);
 
@@ -484,34 +483,6 @@ export class DatabaseHandlerComponent implements OnInit {
     }
 
     this.preview = true;
-    this.dbService.porting(this.dbname, this.jsonData).subscribe((response:any) => {
-      this.loading = false;
-      if(response.success == true && response.code == 200) {
-        //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
-          duration: 3000
-        });
-      }else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        });
-      }   
-    }, (err: HttpErrorResponse) => {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        })
-        console.log("ERROR:" + err.message);
-    });
-
-    reader.readAsText(input.files[0]);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -573,16 +544,11 @@ export class DatabaseHandlerComponent implements OnInit {
   public viewDatabase() {
     this.dbService.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
-        
-        console.log("---- RESPONSE: " + JSON.stringify(response));
-
         Object.keys(response.data.docs[0]).forEach((column) => {
-
           let obj = {
             'name': column
           }
           this.fields.push(obj);
-
         });
 
         this.displayedColumns= this.fields.map(field => field.name);
