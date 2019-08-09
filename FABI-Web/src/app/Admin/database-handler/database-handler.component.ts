@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 8th 2019
+ * Last Modified: Friday, August 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -447,35 +447,6 @@ export class DatabaseHandlerComponent implements OnInit {
     }
 
     this.preview = true;
-      this.service.porting(dbname, this.jsonData).subscribe((response:any) => {
-        this.loading = false;
-        if(response.success == true && response.code == 200) {
-          //POPUP MESSAGE
-          let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
-            duration: 3000
-          });
-        } else if (response.success == false) {
-
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          })
-        }    
-      }, (err: HttpErrorResponse) => {
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          })
-          console.log("ERROR:" + err.message);
-      });
-    };
-    reader.readAsText(input.files[0]);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
