@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 8th 2019
+ * Last Modified: Friday, August 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -79,6 +79,11 @@ export class AdminProfileComponent implements OnInit {
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
   @ViewChild("confirmInput") confirmInput : ElementRef;
+
+  /** The name and surname of a user concatenated as a string - @type {string} */   
+  user1: string;
+  /** The name and surname of a user concatenated as a string - @type {string} */   
+  user2: string;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -282,21 +287,21 @@ export class AdminProfileComponent implements OnInit {
               var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
               
               //Getting the name and surname of the users passed using their id numbers
-              const user1 = this.loadUserDetails(tempLogU.Organization1, tempLogU.Details);
+              this.loadUserDetails1(tempLogU.Organization1, tempLogU.Details);
               
               if(tempLogU.Action == "/createOrganization"){
-                tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + user1;
+                tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/addStaff"){
-                const user2 = this.loadUserDetails(tempLogU.Organization2, tempLogU.User);
-                tempLogU.Action = "New user, " + user2 + ", was added to the system by " + user1;
+                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeOrg"){
-                tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + user1;
+                tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeStaff"){
-                const user2 = this.loadUserDetails(tempLogU.Organization2, tempLogU.User);
-                tempLogU.Action = "New user, " + user2 + ", was removed from the system by " + user1;
+                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
               }
   
               this.allNotifications.push(tempLogU);
@@ -324,16 +329,16 @@ export class AdminProfileComponent implements OnInit {
               var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
               //Getting the name and surname of the users passed using their id numbers
-              const user1 = this.loadUserDetails(tempLogD.Organization1, tempLogD.User);
+              this.loadUserDetails1(tempLogD.Organization1, tempLogD.User);
 
               if(tempLogD.Action == "/createDatabase"){
-                tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + user1;
+                tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
               }
               else if(tempLogD.Action == "/porting"){
                 tempLogD.Action = tempLogD.Details + " was ported";
               }
               else if(tempLogD.Action == "C"){
-                tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + user1;
+                tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
               }
 
               this.allNotifications.push(tempLogD);
@@ -351,14 +356,14 @@ export class AdminProfileComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS
+  //                                                  LOAD_USER_DETAILS1
   /**
    *  This function will be called so that the information of a specific user can be fetched
    * 
    *  @memberof AdminProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails(userOrganization: string, userID: string) {
+  loadUserDetails1(userOrganization: string, userID: string) {
     //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
@@ -366,7 +371,31 @@ export class AdminProfileComponent implements OnInit {
         const data = response.data;
 
         //Returns the users name and surname as a connected string
-        return data.fname + ' ' + data.surname;
+        this.user1 = data.fname + ' ' + data.surname;
+      } 
+      else{
+        //Error control
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_USER_DETAILS2
+  /**
+   *  This function will be called so that the information of a specific user can be fetched
+   * 
+   *  @memberof AdminProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadUserDetails2(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
+    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
+      if(response.success == true){
+        //Temporarily holds the data returned from the API call
+        const data = response.data;
+
+        //Returns the users name and surname as a connected string
+        this.user2 = data.fname + ' ' + data.surname;
       } 
       else{
         //Error control
