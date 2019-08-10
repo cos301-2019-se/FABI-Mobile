@@ -3,14 +3,12 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs');
+const admin = require('firebase-admin');
+admin.initializeApp({
+    credential: admin.credential.applicationDefault()
+});
 
-const authenticatePublicUserRoute = require('./api/routes/authenticatePublicUser');
 const displayHTML = require('./api/routes/displayHTML');
-const addPublicUserRoute = require('./api/routes/addPublicUser');
-const getLogsRoute = require('./api/routes/getLogs');
-const gererateReferenceNumberRoute = require('./api/routes/generateReferenceNumber');
-const submitFormRoute = require('./api/routes/submitForm');
-
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -18,13 +16,19 @@ app.use(bodyParser.json());
 //Prevent CORS violation
 app.use(cors());
 
-//Send any requests with authenticateNFC to the correct route
-app.use('/authenticatePublicUser', authenticatePublicUserRoute);
-app.use('/',displayHTML);
-app.use('/addPublicUser',addPublicUserRoute);
-app.use('/getLogs',getLogsRoute);
-app.use('/generateReferenceNumber',gererateReferenceNumberRoute);
-app.use('/submitForm',submitFormRoute);
+const revitalizationRoute = require('./api/routes/submitCMWRevitalizationForm');
+const requestRoute = require('./api/routes/submitCMWRequestForm');
+const depositRoute = require('./api/routes/submitSMWDepositForm');
+const getDepositRoute = require('./api/routes/getAllDepositForms');
+const getRequestRoute = require('./api/routes/getAllRequestForms');
+const getRevitalizationRoute = require('./api/routes/getAllRevitalizationForms');
+
+app.use('/submitCMWRevitalizationForm', revitalizationRoute);
+app.use('/submitCMWDepositForm', depositRoute);
+app.use('/submitCMWRequestForm', requestRoute);
+app.use('/getAllDepositForms', getDepositRoute);
+app.use('/getAllRequestForms', getRequestRoute);
+app.use('/getAllRevitalizationForms', getRevitalizationRoute);
 
 
 //Error handling when url doesn't exist
