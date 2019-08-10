@@ -1,0 +1,132 @@
+<!--Bootstrap Navbar-->
+<div class="container-fluid" id="nav-section">
+  <nav class="navbar navbar-expand-xl">
+    <a class="navbar-brand" href="#">Member Samples</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item active">
+          <a id="dashboard_menu_link" routerLink="/member-dashboard"><i class="fas fa-home"></i>Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-vials"></i>Samples
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a id="view_samples" routerLink="/member-view-samples"><i class="fas fa-vials"></i>View Samples</a>
+              <br/>
+              <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
+            <br/>
+            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        </li>
+
+        <li class="nav-item">
+          <a id="logout_menu_link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div>
+  
+  <!--SlideOut -->
+  <div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
+    <!--Tab-->
+    <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
+      <div>
+        <p>Notifications</p>
+      </div>
+    </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Member Notifications</h4>
+      </div>
+      <div class="modal-body" id="notifications-section">
+  
+        <h2 *ngIf="!notifications">No notifications</h2>
+        <!--*********************************************************************
+                    DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
+                *************************************************************************-->
+        <div class="box">
+          <div class="notification-heading">
+            <h2>Notification {{Number}}</h2>
+            <i class="fas fa-times"></i>
+          </div>
+  
+          <div class="notification-content">
+            <p><b>Type:</b> {{Type}} notification</p>
+            <p><b>Action:</b> {{Action}}</p>
+            <p><b>Date:</b> {{Date}}</p>
+            <p><b>Details:</b> {{Details}}</p>
+          </div>
+        </div>
+  
+        <div #notificationContainer></div>
+  
+      </div>
+      <div class="modal-footer"> </div>
+    </div>
+  </div>
+  
+  <!--Organization Profile Content-->
+  <div class="container-fluid">
+  
+    <div class="organization-samples">
+  
+      <h2>Member Samples</h2>
+      <hr />
+  
+      <div class="organization-sample-table">
+        <!--Search Filter for the Table-->
+        <div class="search-field">
+          <mat-form-field>
+            <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />
+            <mat-placeholder class="placeholder">Search Sample</mat-placeholder>
+            <br />
+          </mat-form-field>
+        </div>
+  
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info" *ngIf="dataSource">
+  
+          <ng-container *ngFor="let field of fields" matColumnDef="{{field.name}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{field.name}}</th>
+            <td mat-cell *matCellDef="let element"> {{element[field.name]}} </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+  
+        <!--Pagination Setup-->
+        <!-- <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons *ngIf="dataSource"></mat-paginator> -->
+      </div>
+  
+  
+    </div>
+  
+  
+  
+  </div>

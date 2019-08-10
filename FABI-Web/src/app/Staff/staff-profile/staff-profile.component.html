@@ -1,0 +1,209 @@
+<!--Bootstrap Navbar-->
+<div class="container-fluid" id="nav-section">
+  <nav class="navbar navbar-expand-xl">
+    <a class="navbar-brand" href="#">Staff Profile</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item active">
+          <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fab fa-wpforms"></i>Culture Collection Forms
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="submit_CMW_request" routerLink="/submit-cmw-request"><i class="fab fa-wpforms"></i>CMW Request
+              Form</a>
+            <br />
+            <a id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><i class="fab fa-wpforms"></i>CMW Deposit
+              Form</a>
+            <br />
+            <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW
+              Revitalization Form</a>
+            <br />
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+        </li>
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="profile_menu_link" routerLink="/staff-profile"><i class="fas fa-user-circle"></i>Profile</a>
+            <br />
+            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
+        </li>
+
+        <li class="nav-item">
+          <a id="logout_menu_link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<!--SlideOut -->
+<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
+  <!--Tab-->
+  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
+    <div>
+      <p>Notifications</p>
+    </div>
+  </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Staff Notifications</h4>
+    </div>
+    <div class="modal-body" id="notifications-section">
+
+      <h2 *ngIf="!notifications">No notifications</h2>
+      <!--*********************************************************************
+                DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
+            *************************************************************************-->
+      <div *ngIf="allNotifications">
+        <div class="box" *ngFor="let log of allNotifications">
+          <div class="notification-heading">
+            <h2>Notification {{log.ID}}</h2>
+            <i class="fas fa-times"></i>
+          </div>
+
+          <div class="notification-content">
+            <p><b>Type:</b> {{log.Type}} notification</p>
+            <p><b>Action:</b> {{log.Action}}</p>
+            <p><b>Date:</b> {{log.Date}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer"> </div>
+  </div>
+</div>
+
+<!--SlideOut -->
+<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
+  <!--Tab-->
+  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
+    <div>
+      <p>Notifications</p>
+    </div>
+  </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Admin Notifications</h4>
+    </div>
+    <div class="modal-body" id="notifications-section">
+
+      <h2 *ngIf="!notifications">No notifications</h2>
+      <!--*********************************************************************
+            DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
+        *************************************************************************-->
+      <div *ngIf="allNotifications">
+        <div class="box" *ngFor="let log of allNotifications">
+          <div class="notification-heading">
+            <h2>Notification {{log.ID}}</h2>
+            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
+          </div>
+
+          <div class="notification-content">
+            <p><b>Type:</b> {{log.Type}} notification</p>
+            <p><b>Action:</b> {{log.Action}}</p>
+            <p><b>Date:</b> {{log.Date}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div #notificationContainer></div>
+
+    </div>
+    <div class="modal-footer"> </div>
+  </div>
+</div>
+
+<!--Organization Profile Content-->
+<div class="container-fluid">
+
+  <div class="organization-profile">
+
+    <h2>Staff Profile</h2>
+    <hr />
+
+    <form id="add_new_organization_form" [formGroup]="staffProfileForm" (submit)="saveChanges()">
+      <div class="row">
+        <!--Organization Name Field-->
+        <div class="organization-name">
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name" value="{{organization}}" disabled>
+          </mat-form-field>
+          <br />
+        </div>
+
+        <!-- Name Field-->
+        <div class="admin-name-inputs">
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Name" matInput type="text" formControlName="staff_name" value="{{name}}">
+          </mat-form-field>
+          <br />
+
+          <!-- Surname Field-->
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Surname" matInput type="text" formControlName="staff_surname" value="{{surname}}">
+          </mat-form-field>
+          <br />
+        </div>
+
+        <!-- Email Field-->
+        <div class="admin-contact-inputs">
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="Email Address" matInput type="text" formControlName="staff_email" value="{{email}}">
+          </mat-form-field>
+          <br />
+
+          <!-- User Type-->
+          <mat-form-field class="form_inputs" class="col">
+            <input matInput placeholder="User Type" matInput type="text" formControlName="staff_type" value="{{userType}}" disabled>
+          </mat-form-field>
+        </div>
+
+        <!-- Password Field-->
+        <div class="admin-contact-inputs">
+          <mat-form-field class="form_inputs" class="col">
+            <input #passwordInput matInput placeholder="Password" matInput type="password" formControlName="staff_password" value="{{password}}"><i class="fas fa-eye-slash" (click)="showPassword()"></i>
+          </mat-form-field>
+          <br />
+
+          <!-- Confirm Password-->
+          <mat-form-field class="form_inputs" class="col">
+            <input #confirmInput matInput placeholder="Confirm Password" matInput type="password" formControlName="staff_confirm" value="{{confirmPassword}}"><i class="fas fa-eye-slash" (click)="showConfirmedPassword()"></i>
+          </mat-form-field>
+        </div>
+        <br />
+
+        <div class="submit-input">
+          <button type="submit" id="save" class="btn btn-default">Save Information</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

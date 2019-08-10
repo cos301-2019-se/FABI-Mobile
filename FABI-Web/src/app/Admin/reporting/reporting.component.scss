@@ -1,0 +1,674 @@
+/* ================================================ */
+/* General Setup                                    */
+/* ================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Open Sans', sans-serif;
+    color: #555;
+}
+
+.container-fluid {
+    padding: 0;
+    height: 100% !important;
+    max-height: 100vh;
+}
+
+/* ================================================ */
+/* Navbar Setup and Styling                         */
+/* ================================================ */
+#nav-section {
+    padding: 0;
+}
+
+.navbar {
+    min-height: 100px !important;
+
+    padding: 25px;
+
+    background-color: #6B8E4E;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.30), 0 1px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 2px;
+}
+
+.navbar-brand {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 28px;
+    color: #ffffff;
+}
+
+.nav-item a,
+i {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.navbar-nav>a {
+    color: #ffffff;
+}
+
+.nav-item i {
+    padding: 5px;
+}
+
+.navbar-nav a:hover {
+    text-decoration: none;
+}
+
+.dropdown-menu {
+    width: 200px !important;
+}
+
+.dropdown-toggle{
+    padding:0;
+}
+
+.dropdown-menu a {
+    color: #6B8E4E !important;
+}
+
+.dropdown-menu a:hover {
+    text-decoration: none;
+}
+
+.dropdown-menu i {
+    font-size: 18px;
+    color: #6B8E4E;
+}
+
+.navbar .navbar-toggle .navbar-toggler-icon {
+    color: #ffffff;
+}
+
+@media(max-width:375px) {
+    .navbar {
+        min-height: 50px !important;
+
+        padding: 15px;
+    }
+
+    .navbar-brand {
+        font-size: 18px;
+    }
+}
+
+@media (min-width:1200px) {
+    .nav-item i {
+        margin-left: 35px;
+    }
+}
+
+
+/* ================================================ */
+/* Slide Out Notifications Tab	                    */
+/* ================================================ */
+#slideOut {
+    position: fixed;
+    width: 300px;
+    height: 800px;
+    top: 30px;
+    right: -300px;
+    /* Animation  */
+    transition-property: all;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+    z-index: 3;
+}
+
+/* Display slideOut */
+.showSlideOut {
+    right: 0px !important;
+}
+
+/* Tab */
+.slideOutTab {
+    margin-top: 35vh;
+    position: absolute;
+    left: -40px;
+    height: 200px;
+    width: 40px;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    background: #8EBB67;
+    color: white;
+    border-radius: 15px 0px 0px 15px;
+
+    z-index: 3;
+}
+
+.slideOutTab div {
+    text-align: center;
+    position: relative;
+    right: 70px;
+    top: 90px;
+    background: #8EBB67;
+    width: 180px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    writing-mode: lr-tb;
+}
+
+div#slideOut.showSlideOut {
+    width: 30%;
+}
+
+.modal-body {
+    height: 100vh;
+
+    background-color: #F7F9F9;
+
+    overflow: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: center;
+
+    background-color: #8EBB67;
+}
+
+.modal-title {
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    font-size: 20px;
+
+    padding: 15px;
+}
+
+
+@media (max-width:375px) {
+
+    div#slideOut.showSlideOut {
+        width: 80%;
+    }
+}
+
+@media (max-width:575px) {
+    .slideOutTab {
+        display: none;
+    }
+}
+
+@media (max-width:768px) {
+
+    div#slideOut.showSlideOut {
+        width: 80%;
+    }
+}
+
+/* ================================================ */
+/* Notifications Section Setup and Styling          */
+/* ================================================ */
+#notifications-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 15px;
+}
+
+#notifications-section .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    height: auto;
+    width: 95%;
+
+    background-color: #ffffff;
+
+    margin: 10px;
+
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.20), 2px 2px 10px rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+}
+
+.notification-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.notification-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    width: 100%;
+
+    padding-left: 15px;
+    padding-bottom: 15px;
+
+}
+
+#notifications-section .box h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #6B8E4E;
+    font-size: 24px;
+    margin-top: 0;
+    padding: 15px;
+}
+
+#notifications-section .box>i {
+    float: left;
+    color: #ffffff;
+    background-color: #6B8E4E;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 22px;
+}
+
+#notifications-section .box:hover {
+    transform: scale(1.0125);
+    transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+/* ================================================ */
+/* Organization Management Setup and Styling        */
+/* ================================================ */
+.organization {
+    display: flex;
+    background-color: #eceaea;
+    width: 100%;
+    height: 100%;
+
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+
+    z-index: 0;
+}
+
+/* ================================================ */
+/* Tab Menu Setup and Styling                       */
+/* ================================================ */
+.mat-ink-bar {
+    background-color: #6B8E4E !important;
+}
+
+mat-tab-group {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+mat-tab-group {
+    /deep/ .mat-tab-body-wrapper {
+        height: 100%;
+    }
+}
+
+mat-tab {
+    width: 100% !important;
+    height: 1000px !important;
+    padding-bottom: 50% !important;
+}
+
+mat-icon {
+    padding-right: 30px;
+}
+
+.tab-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100% !important;
+    min-height: 100vh !important;
+    height: 100% !important;
+}
+
+.tab-content h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #6B8E4E;
+    font-size: 28px;
+
+    text-transform: uppercase;
+}
+
+.tab-content hr {
+    width: 250px;
+    height: 2px;
+    background-color: #6B8E4E;
+    border: 0;
+    margin-bottom: 25px;
+}
+
+#reports button{
+    position: relative;
+    margin-top: 0%;
+}
+
+@media (max-width:425px) {
+    .tab-content hr {
+        width: 150px;
+    }
+}
+
+/* ================================================ */
+/* Add Staff Member Form Setup and Styling          */
+/* ================================================ */
+#add_new_organization_form {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+#add_new_organization_form .row {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.organization-inputs {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.admin-name-inputs {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.admin-contact-inputs {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.position-inputs {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.submit-input {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+@media(min-width:576px) {
+    #add_new_organization_form {
+        width: 50%;
+    }
+
+    .organization-name {
+        width: 50%;
+    }
+
+    .organization-location {
+        width: 50%;
+    }
+
+    .organization-inputs {
+        flex-direction: row;
+    }
+
+    .admin-name-inputs {
+        flex-direction: row;
+    }
+
+    .admin-contact-inputs {
+        flex-direction: row;
+    }
+}
+
+// .btn .btn-default {
+//     background: #6B8E4E;
+//     border: 3px solid #ffffff;
+//     color: #ffffff;
+//     font-size: 10px;
+//     letter-spacing: 2px;
+//     padding: 13px 30px;
+//     text-transform: uppercase;
+
+//     border-radius: 50px;
+//     -moz-border-radius: 50px;
+//     -webkit-border-radius: 50px;
+//     border: 1px solid #6B8E4E;
+
+//     display: block;
+//     margin: 0 auto;
+
+// }
+
+// #add_new_organization_form .btn.btn-default:hover {
+//     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+// }
+
+.btn .btn-default {
+    background: #6B8E4E;
+    border: 3px solid #ffffff;
+    color: #ffffff;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 13px 30px;
+    text-transform: uppercase;
+
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border: 1px solid #6B8E4E;
+
+    display: block;
+    margin: 0 auto;
+
+}
+
+#add_new_organization_form .btn.btn-default:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* ================================================ */
+/* View Organizations Tab Setup and Styling         */
+/* ================================================ */
+.organization-table {
+    width: 70%;
+    height: 100%;
+}
+
+@media (max-width:768px) {
+    .organization-table {
+        width: 80%;
+    }
+}
+
+.organization-table table {
+    width: 100%;
+}
+
+.organization-table table .btn.btn-danger {
+    background: transparent;
+    border: 2px solid darkred;
+    color: darkred;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 7px 10px;
+    text-transform: uppercase;
+
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border: 1px solid darkred;
+
+    display: block;
+    margin: 0 auto;
+
+}
+
+.organization-table table .btn:hover {
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+/* ================================================ */
+/* Form Setup and Styling                           */
+/* ================================================ */
+.mat-form-field.mat-focused {
+    .mat-form-field-label {
+        color: #6B8E4E;
+    }
+
+    .mat-form-field-ripple {
+        background-color: #6B8E4E;
+    }
+
+    .mat-form-field-required-marker {
+        color: #6B8E4E;
+    }
+
+    .mat-input-element {
+        color: #6B8E4E;
+    }
+}
+
+.form-inputs {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#previewTable{
+    width: 95%;
+    padding-bottom: 30px;
+}
+
+.tableHeading{
+    background-color: #6B8E4E;
+    color: white;
+    padding: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: Arial;
+}
+
+th{
+    border-bottom: 1.6px solid #ddd;
+}
+
+tr th{
+    width: 25%;
+}
+
+table{
+    text-align: left;
+    width: 90%;
+}
+
+tbody tr th{
+    color: #555;
+    font-weight: normal;
+}
+
+#previewTableErrorLogs{
+    padding-bottom: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.btn.btn-default {
+    background: #555;
+    border: 3px solid #555;
+    color: white;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 13px 30px;
+    // margin-top: 34px;
+    letter-spacing: 2px;
+    padding: 13px 30px;
+    margin-top: 34px;
+    margin-left: 2rem;
+    text-transform: uppercase;
+
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 1px solid #555;
+
+}
+
+@media (max-width: 500px) {
+
+    .inputSpace{
+        height: 28px;
+        width: 45%;
+    }
+}
+
+// /*-----------------------
+//     Database Management
+// -------------------------*/
+.system-reporting {
+    display: flex;
+    background-color: #eceaea;
+    width: 100%;
+    height: 100%;
+
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+
+    z-index: 1;
+}
+
+#error_report, #request_report, #deposit_report, #revitalization_report{
+    font-family: 'Roboto', sans-serif;
+    color: #6B8E4E;
+    font-size: 28px;
+
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#errorReport, #requestReport, #depositReport, #revitalizationReport{
+    background-color: white;
+    padding-top: 20px;
+    width: 80%;
+    margin: auto;
+    height: 90% !important;
+}
+
+#FABI_logo{
+    width: 30%;
+    height: 65%;
+    margin-bottom: 5px !important;
+    position: absolute;
+}
+
+#FABI_logo img{
+    width: 30% !important;
+    height: 30% !important;
+}
+
+#errorReport p, #requestReport p, #depositReport p, #revitalizationReport p{
+    text-align: center;
+    color: #555;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+#previewTableUserLogs, #previewTableDatabaseLogs, #previewTableAccessLogs, #previewTableErrorLogs,
+#userCollapse, #databaseCollapse, #accessCollapse, #errorCollapse{
+    display: none;
+}
