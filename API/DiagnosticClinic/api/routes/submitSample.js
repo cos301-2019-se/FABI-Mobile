@@ -64,6 +64,7 @@ function submitForm(req, res)
 
     
     refnum = refNumberGenerator();
+    req.body.referenceNumber = refnum;
     sampleRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(refnum);
     req.body.status = 'submitted';
     sampleRef.set(req.body).then(()=>
