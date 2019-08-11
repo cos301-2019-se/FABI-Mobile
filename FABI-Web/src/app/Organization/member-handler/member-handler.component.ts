@@ -15,7 +15,7 @@
 
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';
+import { ViewEncapsulation } from '@angular/core';
 
 //Include Material Components
 import { MatPaginator, MatTableDataSource } from '@angular/material';
@@ -41,7 +41,7 @@ import { UserManagementAPIService } from 'src/app/_services/user-management-api.
 })
 export class MemberHandlerComponent implements OnInit {
 
-  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove' ,'Action' ];
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove', 'Action'];
   dataSource = new MatTableDataSource([]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,18 +59,48 @@ export class MemberHandlerComponent implements OnInit {
   selectedMember: Interface.OrganisationMember;
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
-   /** Array of Member objects - @type {OrganisationMember[]} */
+  /** Array of Member objects - @type {OrganisationMember[]} */
   orgMembers: Interface.OrganisationMember[];
 
-  /** Object array for holding all of the logs -  @type {any[]} */ 
+  /** Object array for holding all of the logs -  @type {any[]} */
   allNotifications: any[] = [];
-  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */
   newNotifications: any[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
+  helpTab: boolean = false;
+  /** The staff member's email address -  @type {string} */
+  email: string = '';
+  /** The staff member's organization -  @type {string} */
+  organization: string = '';
+  /** The staff member's id -  @type {string} */
+  id: string = '';
+  /** The staff member's name -  @type {string} */
+  name: string = '';
+  /** The staff member's surname -  @type {string} */
+  surname: string = '';
+  /** The staff member's user type -  @type {string} */
+  userType: string = '';
+  /** The staff member's password -  @type {string} */
+  password: string = '';
+  /** The staff member's confirmed password -  @type {string} */
+  confirmPassword: string = '';
+
+  /** The form to display the admin member's details -  @type {FormGroup} */
+  adminProfileForm: FormGroup;
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  private toggle_status: boolean = false;
 
   add_validation_messages = {
     'member_email': [
@@ -86,7 +116,7 @@ export class MemberHandlerComponent implements OnInit {
     'member_phone': [
       { type: 'required', message: 'Phone No. is required' },
       { type: 'pattern', message: 'Please enter a valid South African number' }
-    ] 
+    ]
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,13 +134,13 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     private userManagementService: UserManagementAPIService,
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private router: Router
-    ) {
+  ) {
     this.addMemberForm = this.formBuilder.group({
       member_name: ['', Validators.required],
       member_surname: ['', Validators.required],
@@ -124,7 +154,18 @@ export class MemberHandlerComponent implements OnInit {
         // Validators.pattern('')
       ])]
 
-    })
+    }),
+
+      this.adminProfileForm = this.formBuilder.group({
+        organization_name: '',
+        admin_name: '',
+        admin_surname: '',
+        admin_email: '',
+        admin_type: '',
+        admin_password: '',
+        admin_confirm: ''
+      });
+
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,9 +179,9 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
- }
+  toggleNotificaitonsTab() {
+    this.toggle_status = !this.toggle_status;
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG_ON_INIT()
@@ -180,7 +221,7 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  addMember() {    
+  addMember() {
     this.submitted = true;
 
     if (this.addMemberForm.invalid) {
@@ -190,7 +231,7 @@ export class MemberHandlerComponent implements OnInit {
     this.valid = true;
     this.loading = true;
 
-    
+
     // const LmemberLocation = this.addMemberForm.controls.member_location.value;
     const LmemberName = this.addMemberForm.controls.member_name.value;
     const LmemberSurname = this.addMemberForm.controls.member_surname.value;
@@ -207,7 +248,7 @@ export class MemberHandlerComponent implements OnInit {
       console.log("////// RESPONSE: " + response);
 
       this.loading = false;
-      
+
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Member Added", "Dismiss", {
@@ -239,7 +280,7 @@ export class MemberHandlerComponent implements OnInit {
     this.selectedMember = member;
   }
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                     REMOVE_MEMBER_PROMPT
   /**
    * This function prompts the user to confirm if they wish to remove the selected Member
@@ -247,7 +288,7 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeMemberPrompt(member: Interface.OrganisationMember) {    
+  removeMemberPrompt(member: Interface.OrganisationMember) {
     const memberDetails = member.fname + " " + member.surname + " " + member.email;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
@@ -318,7 +359,7 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
-      this.viewMembers();
+    this.viewMembers();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,9 +370,9 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  viewMembers() {    
+  viewMembers() {
     console.log("orgName: " + localStorage.getItem('orgName'));
-    
+
     this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.orgMembers = response.data.members;
@@ -348,6 +389,194 @@ export class MemberHandlerComponent implements OnInit {
         })
       }
     });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE NOTIFICATIONS 
+  /**
+   * This function will toggle the display of the notifications side panel
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificationsTab() {
+    this.notificationsTab = !this.notificationsTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE PROFILE 
+  /**
+   * This function will toggle the display of the profile side panel
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleProfileTab() {
+    this.profileTab = !this.profileTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_ADMIN_PROFILE_DETAILS
+  /**
+   *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadAdminProfileDetails() {
+    //The id number of the user that is currently logged in
+    this.id = localStorage.getItem('userID');
+    //The organization of the user that is currently logged in
+    this.organization = localStorage.getItem('userOrganization');
+    //The password of the user that is currently logged in
+    this.password = localStorage.getItem('userPassword');
+    //Setting the confirmPassword variable to have the same value as the user's current password
+    this.confirmPassword = this.password;
+
+    //Subscribing to the UserManagementAPIService to get all the staff members details
+    this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
+      if (response.success == true) {
+        //Temporarily holds the data returned from the API call
+        const data = response.data;
+
+        //Setting the user type of the user
+        this.userType = data.userType;
+        //Setting the first name of the user
+        this.name = data.fname;
+        //Setting the surname of the user
+        this.surname = data.surname;
+        //Setting the email of the user
+        this.email = data.email;
+
+        console.log(this.userType);
+      }
+      else {
+        //Error handling
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SAVE_CHANGES
+  /**
+   *  This function will send the details to the API to save the changed details to the system.
+   *  @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  saveChanges() {
+    //Indicates if the details can be changed based on whether the passwords match or not
+    var valid = true;
+
+    //Checking to make sure that the passwords are not empty
+    //Checking to make sure that the password and confirmed password match
+    if (this.adminProfileForm.controls.admin_password.value != '' &&
+      this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value) {
+      this.password = this.adminProfileForm.controls.admin_password.value;
+    }
+    else {
+      //Indicates that the changes cannot be saved
+      valid = false;
+
+      //POPUP MESSAGE
+      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
+        duration: 3000
+      });
+    }
+
+    //Indicates that the changes that the user has made to their profile details, can be changed
+    if (valid == true) {
+      if (this.adminProfileForm.controls.admin_email.value == '') {
+        this.email = this.email;
+      }
+      else {
+        this.email = this.adminProfileForm.controls.admin_email.value;
+      }
+
+      if (this.adminProfileForm.controls.admin_name.value == '') {
+        this.name = this.name;
+      }
+      else {
+        this.name = this.adminProfileForm.controls.admin_name.value;
+      }
+
+      if (this.adminProfileForm.controls.admin_surname.value == '') {
+        this.surname == this.surname;
+      }
+      else {
+        this.surname = this.adminProfileForm.controls.admin_surname.value;
+      }
+
+      if (this.adminProfileForm.controls.admin_password.value == '') {
+        this.password == this.password;
+      }
+      else {
+        this.password = this.adminProfileForm.controls.admin_password.value;
+      }
+
+      //Making a call to the User Management API Service to save the user's changed profile details
+      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
+        if (response.success == true) {
+          //Making sure that local storage now has the updated password stored
+          localStorage.setItem('userPassword', this.password);
+          //Reloading the updated user's details
+          this.loadAdminProfileDetails();
+
+          //Display message to say that details were successfully saved
+          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+        else {
+          //Error handling
+          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+      });
+    }
+    else {
+      //Error handling
+      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
+        duration: 3000
+      });
+    }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            DISPLAY PROFILE SAVE BUTTON 
+  /**
+   * This function will display the save button option if any details in the profile have been altered
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayProfileSaveBtn() {
+    this.saveBtn = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            DISPLAY PASSWORD CONFIRM INPUT 
+  /**
+   * This function will display the confirm password input field in the user's password was altered
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayConfirmPasswordInput() {
+    this.confirmPasswordInput = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE HELP 
+  /**
+   * This function will toggle the display of the help side panel
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleHelpTab() {
+    this.helpTab = !this.helpTab;
   }
 
 }
