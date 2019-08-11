@@ -14,13 +14,13 @@
   
     border: 1px solid #72b555;
   
-    border-radius: 15px;
+    border-radius: 5px;
   
     padding: 10px;
   
     width: auto;
   
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   
     transition: all 0.5s;
   }
@@ -46,7 +46,7 @@
     min-height: 100vh;
     height: auto; 
     
-    background-color: #F7F7F7;  
+    background-color: #FCFCFC;  
   }
   
   /* Sidenav Section
@@ -139,9 +139,9 @@
       width: 15vh;
       height: auto;  
       
-      background-color: #72B555;
+      background: linear-gradient(to right, #76b852, #8dc26f);
       
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
     }
   }
   
@@ -212,7 +212,7 @@
   }
   
   div nav.navbar.navbar-dark.bg-dark {  
-    background-color: #72b555 !important;
+    background: linear-gradient(to right, #76b852, #8dc26f) !important;
   
     height: 10vh !important;
   }
@@ -344,7 +344,7 @@
     
     border-left: 5px solid #72B555;
     
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   }
   
   .log-tables h5 {
@@ -362,14 +362,14 @@
      ========================================================================== */
   
   #notifications {
-    display: none;
+    display: flex;
     flex-direction: column;
   
     position: absolute;
     top: 0;
     right: 0;
   
-    background-color: #E1E1E1;
+    background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
     height: auto;
@@ -378,7 +378,7 @@
   
     padding: 50px 15px 15px 15px;
   
-    box-shadow: -2px 0px 5px 0px rgba(0,0,0,0.17);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   }
   
   #notifications h3 {
@@ -418,13 +418,15 @@
   
     margin: 15px;
   
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   
     transition: all 0.2s;
   }
   
   .notification-item:hover {
-    background-color: rgba(114, 181, 85, 0.8);
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    border: none;
   
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   
@@ -475,14 +477,14 @@
      ========================================================================== */
   
   #profile {
-    display: none;
+    display: flex;
     flex-direction: column;
   
     position: absolute;
     top: 0;
     right: 0;
   
-    background-color: #E1E1E1;
+    background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
     height: auto;
@@ -491,7 +493,7 @@
   
     padding: 50px 15px 15px 15px;
   
-    box-shadow: -2px 0px 5px 0px rgba(0,0,0,0.17);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   }
   
   #profile h3 {
@@ -521,7 +523,7 @@
   
     border-radius: 5px;
   
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   
     transition: all 0.2s;
   }
@@ -600,14 +602,14 @@
      ========================================================================== */
   
   #help {
-    display: none;
+    display: flex;
     flex-direction: column;
   
     position: absolute;
     top: 0;
     right: 0;
   
-    background-color: #E1E1E1;
+    background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
     height: auto;
@@ -616,7 +618,7 @@
   
     padding: 50px 15px 15px 15px;
   
-    box-shadow: -2px 0px 5px 0px rgba(0,0,0,0.17);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   }
   
   #help h3 {
@@ -655,8 +657,9 @@
     height: 15vh;
   
     margin: 15px;
+    padding: 15px;
   
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   
     transition: all 0.2s;
   }
@@ -666,7 +669,9 @@
   }
   
   .help-item:hover {
-    background-color: rgba(114, 181, 85, 0.8);
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    border: none;
   
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   
@@ -710,7 +715,7 @@
   
     margin: 10px;
   
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
   }
   
   #help .help-items .help-item .help-icon i {
@@ -734,54 +739,6 @@
 // /*-----------------------
 //     Database Management
 // -------------------------*/
-.system-reporting {
-    display: flex;
-    background-color: #eceaea;
-    width: 100%;
-    height: 100%;
-
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
-    border-radius: 5px;
-
-    z-index: 1;
-}
-
-#error_report, #request_report, #deposit_report, #revitalization_report{
-    font-family: 'Roboto', sans-serif;
-    color: #6B8E4E;
-    font-size: 28px;
-
-    text-transform: uppercase;
-    text-align: center;
-    margin-top: 20px;
-}
-
-#errorReport, #requestReport, #depositReport, #revitalizationReport{
-    background-color: white;
-    padding-top: 20px;
-    width: 80%;
-    margin: auto;
-    height: 90% !important;
-}
-
-#FABI_logo{
-    width: 30%;
-    height: 65%;
-    margin-bottom: 5px !important;
-    position: absolute;
-}
-
-#FABI_logo img{
-    width: 30% !important;
-    height: 30% !important;
-}
-
-#errorReport p, #requestReport p, #depositReport p, #revitalizationReport p{
-    text-align: center;
-    color: #555;
-    font-size: 20px;
-    margin-top: 5px;
-}
 
 #previewTableUserLogs, #previewTableDatabaseLogs, #previewTableAccessLogs, #previewTableErrorLogs,
 #userCollapse, #databaseCollapse, #accessCollapse, #errorCollapse{

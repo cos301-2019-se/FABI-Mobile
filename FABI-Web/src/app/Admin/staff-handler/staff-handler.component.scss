@@ -460,7 +460,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     width: 95%;
 }
 
-.btn.btn-default.view {
+.btn.btn-default-view {
     color: #72b555;
     font-family: "Montserrat", sans-serif;
 
@@ -480,7 +480,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transition: all 0.5s;
 }
 
-.btn.btn-default.view:hover {
+.btn.btn-default-view:hover {
     color: #fff;
 
     background-color: rgba(114, 181, 85, 0.95);
@@ -490,7 +490,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transform: scale(1.025);
 }
 
-.btn.btn-default.delete {
+.btn.btn-default-delete {
     color: #8b2323;
     font-family: "Montserrat", sans-serif;
 
@@ -510,7 +510,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transition: all 0.5s;
 }
 
-.btn.btn-default.delete:hover {
+.btn.btn-default-delete:hover {
     color: #fff;
 
     background-color: rgba(139, 35, 35, 0.95);
@@ -631,7 +631,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     justify-content: center;
 }
 
-.btn.btn-default.edit {
+.btn.btn-default-edit {
     color: #6b746f;
     font-family: "Montserrat", sans-serif;
 
@@ -651,7 +651,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transition: all 0.5s;
 }
 
-.btn.btn-default.edit:hover {
+.btn.btn-default-edit:hover {
     color: #fff;
 
     background-color: rgba(107, 116, 111, 0.95);
@@ -661,7 +661,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transform: scale(1.025);
 }
 
-.btn.btn-default.save {
+
+.btn.btn-default-save {
     color: #72b555;
     font-family: "Montserrat", sans-serif;
 
@@ -681,7 +682,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transition: all 0.5s;
 }
 
-.btn.btn-default.save:hover {
+.btn.btn-default-save:hover {
     color: #fff;
 
     background-color: rgba(114, 181, 85, 0.95);
@@ -691,7 +692,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transform: scale(1.025);
 }
 
-.btn.btn-default.confirm {
+.btn.btn-default-confirm {
     color: #72b555;
     font-family: "Montserrat", sans-serif;
 
@@ -711,7 +712,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transition: all 0.5s;
 }
 
-.btn.btn-default.confirm:hover {
+.btn.btn-default-confirm:hover {
     color: #fff;
 
     background-color: rgba(114, 181, 85, 0.95);
@@ -721,7 +722,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transform: scale(1.025);
 }
 
-.btn.btn-default.cancel {
+.btn.btn-default-cancel {
     color: #8b2323;
     font-family: "Montserrat", sans-serif;
 
@@ -741,7 +742,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transition: all 0.5s;
 }
 
-.btn.btn-default.cancel:hover {
+.btn.btn-default-cancel:hover {
     color: #fff;
 
     background-color: rgba(139, 35, 35, 0.95);
@@ -807,7 +808,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     border-radius: 5px;
 
     width: 95%;
-    height: 15vh;
+    height: 20vh;
 
     margin: 15px;
 
@@ -817,7 +818,9 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 }
 
 .notification-item:hover {
-    background-color: rgba(114, 181, 85, 0.8);
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    border: none;
 
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
@@ -850,6 +853,10 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     padding: 0 10px 0 0;
     margin: 0;
+}
+
+.notification-content {
+    padding: 15px;
 }
 
 /*Responsive Media Query for Notifications Section*/
