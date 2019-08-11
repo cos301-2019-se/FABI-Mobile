@@ -1,26 +1,23 @@
-<div class="container">
-  <section class="login">
-    <div class="background-image"></div>
-    <div class="left">
-      
-      <div id="main_div_login">
-        <div class="col-lg-6 col-md-12 col-sm-12" id="login_information">
-          <h1>WE ARE EXCITED TO WELCOME YOU</h1>
-          <br />
-          <br />
-          <br />
-          <br />
-          <h3>Why do you need to signup?</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique, est at faucibus sodales, nisi
-            est molestie est, eu rhoncus magna dolor at sem. </p>
-        </div>
-      </div>
+<div class="background-image"></div>
+<div class="container-fluid">
+  <div id="login-card">
+    <div id="left">
+      <h1>WE ARE EXCITED TO WELCOME YOU</h1>
+      <br/>
+      <h3>Why do you need to signup?</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique, est at faucibus sodales, nisi
+        est molestie est, eu rhoncus magna dolor at sem. </p>
     </div>
-        <div class="col-lg-6 col-md-12 col-sm-12" id="login_div" class="right">
-          <h1>LOGIN</h1>
+    <div id="right">
+      <div id="close-icon">
+        <!--Close Icon-->
+        <i class="fas fa-times"></i>
+      </div>
 
-          <!--Login Form-->
-          <form id="login_submit" [formGroup]="loginForm" (submit)="login()">
+      <!--Form Heading-->
+      <h1>LOGIN</h1>
+      <!--Login Form-->
+      <form id="login_submit" [formGroup]="loginForm" (submit)="login()">
 
         <div class="row">
           <!--Dropdown for Organization selection and Error Handling-->
@@ -60,21 +57,6 @@
                 <mat-error class="errors" *ngIf="submitted && loginForm.get('login_password').hasError(validation.type)">{{validation.message}}</mat-error>
               </mat-error>
             </mat-form-field>
-              
-            </mat-form-field>
-            <div *ngIf="submitted && loginForm.controls.login_password.errors" class="errors">
-              <div *ngIf="loginForm.controls.login_password.errors.required">Please enter your password</div>
-            </div>
-
-            <br />
-            <p *ngIf="loading" class="errors">Logging In...</p>
-
-            <!--Submit-->
-            <input type="submit" id="continue" class="btn btn-default" value="Login" />
-          </form>
-        </div>
-  </section>
-
           </div>
 
           <!--Loggin in loader-->
