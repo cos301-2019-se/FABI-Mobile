@@ -3,22 +3,33 @@
 
   <!-- Sidenav -->
   <div class="sidenav">
+
+    <!-- Top Sidenav Link -->
     <div class="top-nav-items">
-      <i class="fas fa-user-circle" onclick="showProfile()"></i>
-      <p onclick="showProfile()">Tap to view profile</p>
+      <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+      <p (click)="toggleProfileTab()">Tap to view profile</p>
       <br />
+
       <div class="nav-links">
-        <a class="nav-link" href="#"><i class="fas fa-address-card"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-building"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-database"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-stethoscope"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i></a>
+        <a class="nav-link active" routerLink="/admin-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/staff-handler"><i class="fas fa-address-card"></i></a>
+        <a class="nav-link" routerLink="/organization-handler"><i class="fas fa-building"></i></a>
+        <a class="nav-link" routerLink="/database-handler"><i class="fas fa-database"></i></a>
+        <a class="nav-link" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i></a>
+        <a class="nav-link" routerLink="/reporting"><i class="fas fa-chart-bar"></i></a>
+        <a class="nav-link" routerLink="/view-forms"><i class="fas fa-clipboard"></i></a>
       </div>
+
     </div>
+    <!-- / Top Sidenav Link -->
+
+    <!-- Bottom Sidenav Link -->
     <div class="bottom-nav-items">
-      <a class="nav-link" onclick="showHelp()"><i class="fas fa-question"></i></a>
-      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
     </div>
+    <!-- / Bottom Sidenav Link -->
+
   </div>
   <!-- / Sidenav -->
 
@@ -28,27 +39,25 @@
       <div class="bg-dark p-4">
         <h1 class="brand">ADMIN DASHBOARD</h1>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
           <!-- Navbar Items -->
-          <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Staff Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Database Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Organization Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Diagnostic Clinic Handler</a>
-          </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">Reports and Logs <span class="sr-only">(current)</span></a>
+            <a class="nav-link" routerLink="/admin-dashboard">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="showHelp()">Help</a>
+            <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/database-handler">Database Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Logout</a>
@@ -66,13 +75,13 @@
       <!-- / Menu Button -->
 
       <!-- Navbar Title -->
-      <h5>REPORTS</h5>
+      <h5>HOME</h5>
       <!-- / Navbar Title -->
 
       <!-- Notification Icons -->
       <div class="notifications-icon">
-        <i class="fas fa-user-circle" onclick="showProfile()"></i>
-        <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+        <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
         <i class="far fa-bell" id="no-new-notifications"></i>
       </div>
       <!-- /Notification Icons -->
@@ -88,7 +97,7 @@
       <!-- Content Heading -->
       <div class="content-heading">
         <h2>Reports and Logs</h2>
-        <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
         <i class="far fa-bell" id="no-new-notifications"></i>
       </div>
       <!-- / Content Heading -->
@@ -103,7 +112,7 @@
       <div class="report-table table-responsive" id="errorReport" #errorReportPDF>
 
         <h5> FABI System Error Report - Date: {{date}}</h5>
-        <button *ngIf='errorReport' (click)="downloadErrorReport()">Download Error Report</button>
+        <button class="btn btn-default" *ngIf='errorReport' (click)="downloadErrorReport()">Download Error Report</button>
 
         <table class="table table-hover" *ngIf="errorLogs" id="previewTableErrorLogs">
           <thead>
@@ -127,7 +136,7 @@
       <div class="report-table table-responsive" id="requestReport" #requestReportPDF>
 
         <h5> FABI System Request Report - Date: {{date}}</h5>
-        <button *ngIf='requestReport' (click)="downloadRequestReport()">Download Request Report</button>
+        <button class="btn btn-default" *ngIf='requestReport' (click)="downloadRequestReport()">Download Request Report</button>
 
         <table class="table table-hover" *ngIf="requestLogs" id="previewTableRequestLogs">
           <thead>
@@ -208,12 +217,6 @@
       <!-- / FABI System Revitalization Report Table -->
 
 
-
-
-
-
-
-
       <!-- User Log Table Table -->
       <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
 
@@ -276,8 +279,7 @@
         </div>
         <h3 *ngIf="!accessLogs">There are currrently no access logs to display</h3>
 
-        <table class="table table-hover" *ngIf="accessLogs" id="previewTableAccessLogs"
-          #accessLogsTable>
+        <table class="table table-hover" *ngIf="accessLogs" id="previewTableAccessLogs" #accessLogsTable>
           <thead>
             <tr>
               <th scope="col">Details of access</th>
@@ -298,227 +300,251 @@
       <!-- Error Log Table Table -->
       <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
 
-          <h5> Error Log Table - Date: {{date}}</h5>
-          <div #errorAdd (click)="expandErrorLogTable()"><i class="fas fa-plus-circle"></i></div><div #errorCollapse (click)="collapseErrorLogTable()" id="errorCollapse"><i class="fas fa-minus-circle"></i></div>
-            <h3 *ngIf="!errorLogs">There are currrently no error logs to display</h3>
-  
-          <table class="table table-hover" *ngIf="errorLogs" id="previewTableErrorLogs" #errorLogsTable>
-            <thead>
-              <tr>
-                  <th scope="col">Error status code</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Details of error</th>
-                  <th scope="col">User performing action</th>
-              </tr>
-            </thead>
-            <tbody *ngIf='requestReport'>
-                <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray; let i = index">
-                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                  </tr>
-            </tbody>
-          </table>
+        <h5> Error Log Table - Date: {{date}}</h5>
+        <div #errorAdd (click)="expandErrorLogTable()"><i class="fas fa-plus-circle"></i></div>
+        <div #errorCollapse (click)="collapseErrorLogTable()" id="errorCollapse"><i class="fas fa-minus-circle"></i>
         </div>
-        <!-- / Error Log Table Table -->
+        <h3 *ngIf="!errorLogs">There are currrently no error logs to display</h3>
+
+        <table class="table table-hover" *ngIf="errorLogs" id="previewTableErrorLogs" #errorLogsTable>
+          <thead>
+            <tr>
+              <th scope="col">Error status code</th>
+              <th scope="col">Date</th>
+              <th scope="col">Details of error</th>
+              <th scope="col">User performing action</th>
+            </tr>
+          </thead>
+          <tbody *ngIf='requestReport'>
+            <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray; let i = index">
+              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Error Log Table Table -->
 
 
     </div>
     <!-- / Log Tables -->
+
+
+    <!-- Notification Section -->
+    <div id="notifications" *ngIf="notificationsTab">
+      <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
+      <br />
+      <h3>NOTIFICATIONS</h3>
+      <h5 *ngIf="!notifications">No notifications</h5>
+
+      <!-- Notification Items -->
+      <div class="notification-items" *ngIf="allNotifications">
+
+        <!-- Notification Item -->
+        <div class="notification-item" *ngFor="let log of allNotifications">
+          <div class="notification-action">
+            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
+          </div>
+          <div class="notification-heading">
+            <h6><b>{{log.Type}} notification</b></h6>
+          </div>
+          <div class="notification-content">
+            <p><b>Action:</b> {{log.Action}}</p>
+            <p><b>Date:</b> {{log.Date}}</p>
+          </div>
+        </div>
+        <!-- Notification Item -->
+
+      </div>
+      <!-- Notification Items -->
+
+      <!-- See More Icon -->
+      <div class="see-more">
+        <i class="fas fa-ellipsis-h"></i>
+      </div>
+      <!-- / See More Icon -->
+
+    </div>
+    <!-- / Notification Section -->
+
+    <!-- Profile Section -->
+    <div id="profile" *ngIf="profileTab">
+      <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
+      <br />
+      <h3>PROFILE</h3>
+
+      <!-- Profile Details -->
+      <div class="profile-details">
+        <div class="profile-icon">
+          <i class="fas fa-user-circle"></i>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="form">
+          <form class="profile-form needs-validation" novalidate [formGroup]="adminProfileForm"
+            (submit)="saveChanges()">
+            <div class="form-row align-items-center">
+
+              <!-- Name -->
+              <div class="form-group">
+                <label for="admin_name">Name</label>
+                <input type="text" class="form-control" id="admin_name" placeholder="Enter name"
+                  (change)="displayProfileSaveBtn()" formControlName="admin_name" value="{{name}}" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Name -->
+
+              <!-- Surname -->
+              <div class="form-group">
+                <label for="admin_surname">Surname</label>
+                <input type="text" class="form-control" id="admin_surname" placeholder="Enter surname"
+                  (change)="displayProfileSaveBtn()" formControlName="admin_surname" value="{{surname}}" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Surname -->
+
+              <!-- Email -->
+              <div class="form-group">
+                <label for="admin_email">Email address</label>
+                <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
+                  placeholder="Enter email" (change)="displayProfileSaveBtn()" formControlName="admin_email"
+                  value="{{email}}" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Email -->
+
+              <!-- User Type -->
+              <div class="form-group">
+                <label for="admin_type">User Type</label>
+                <input type="text" class="form-control" id="admin_type" (change)="displayProfileSaveBtn()"
+                  formControlName="admin_type" value="{{userType}}" disabled>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / User Type -->
+
+              <!-- Password -->
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input #passwordInput type="password" class="form-control" id="password" placeholder="Password"
+                  (change)="displayConfirmPasswordInput()" formControlName="admin_password" value="{{password}}"
+                  required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Password -->
+
+              <!-- ConfirmPassword -->
+              <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
+                <label for="confirm-password">Confirm Password</label>
+                <input #confirmInput type="password" class="form-control" placeholder="Password"
+                  (change)="displayProfileSaveBtn()" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- /Confirm Password -->
+
+              <!-- Save Profile Changes Button -->
+              <button type="submit" class="btn btn-default" id="save-btn" *ngIf="saveBtn">Save</button>
+              <!-- / Save Profile Changes Button -->
+
+            </div>
+
+          </form>
+        </div>
+        <!-- / Profile Form -->
+
+      </div>
+
+    </div>
+    <!-- / Profile Section -->
+
+    <!-- Help Section -->
+    <div id="help" *ngIf="helpTab">
+      <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
+      <br />
+      <h3>HELP</h3>
+      <!-- Help Items -->
+      <div class="help-items">
+
+        <!-- Help Item -->
+        <div class="help-item">
+          <div class="help-icon">
+            <i class="fas fa-address-card"></i>
+          </div>
+          <div class="help-heading">
+            <h6>Staff</h6>
+          </div>
+          <div class="help-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </div>
+        <!-- / Help Item -->
+
+        <!-- Help Item -->
+        <div class="help-item">
+          <div class="help-icon">
+            <i class="fas fa-building"></i>
+          </div>
+          <div class="help-heading">
+            <h6>Organization</h6>
+          </div>
+          <div class="help-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </div>
+        <!-- / Help Item -->
+
+        <!-- Help Item -->
+        <div class="help-item">
+          <div class="help-icon">
+            <i class="fas fa-database"></i>
+          </div>
+          <div class="help-heading">
+            <h6>Databases</h6>
+          </div>
+          <div class="help-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </div>
+        <!-- / Help Item -->
+
+        <!-- Help Item -->
+        <div class="help-item">
+          <div class="help-icon">
+            <i class="fas fa-stethoscope"></i>
+          </div>
+          <div class="help-heading">
+            <h6>Diagnostic Clinic</h6>
+          </div>
+          <div class="help-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </div>
+        <!-- / Help Item -->
+
+      </div>
+      <!-- Help Items -->
+
+    </div>
+    <!-- / Help Section -->
+
   </div>
   <!-- / Dashboard Content -->
 
-  <!-- Notification Section -->
-  <div id="notifications">
-    <i class="fas fa-arrow-left" onclick="hideNotifications()"></i>
-    <br />
-    <h3>NOTIFICATIONS</h3>
-    <!-- Notification Items -->
-    <div class="notification-items">
-
-      <!-- Notification Item -->
-      <div class="notification-item">
-        <div class="notification-action">
-          <i class="fas fa-times"></i>
-        </div>
-        <div class="notification-heading">
-          <h6>Diagnostic Clinic</h6>
-        </div>
-        <div class="notification-content">
-          <h6>Example notification</h6>
-        </div>
-      </div>
-      <!-- Notification Item -->
-
-      <!-- Notification Item -->
-      <div class="notification-item">
-        <div class="notification-action">
-          <i class="fas fa-times"></i>
-        </div>
-        <div class="notification-heading">
-          <h6>Diagnostic Clinic</h6>
-        </div>
-        <div class="notification-content">
-          <h6>Example notification</h6>
-        </div>
-      </div>
-      <!-- Notification Item -->
-
-      <!-- Notification Item -->
-      <div class="notification-item">
-        <div class="notification-action">
-          <i class="fas fa-times"></i>
-        </div>
-        <div class="notification-heading">
-          <h6>Diagnostic Clinic</h6>
-        </div>
-        <div class="notification-content">
-          <h6>Example notification</h6>
-        </div>
-      </div>
-      <!-- Notification Item -->
-
-    </div>
-    <!-- Notification Items -->
-    <div class="see-more">
-      <i class="fas fa-ellipsis-h"></i>
-    </div>
-    <!-- / Notification Section -->
-  </div>
-
-  <!-- Profile Section -->
-  <div id="profile">
-    <i class="fas fa-arrow-left" onclick="hideProfile()"></i>
-    <br />
-    <h3>PROFILE</h3>
-    <!-- Profile Details -->
-    <div class="profile-details">
-      <div class="profile-icon">
-        <i class="fas fa-user-circle"></i>
-      </div>
-
-      <div class="form">
-        <form class="profile-form needs-validation" novalidate>
-          <div class="form-row align-items-center">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" placeholder="Enter name" onchange="displaySaveButton()"
-                required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="surname">Surname</label>
-              <input type="text" class="form-control" id="surname" placeholder="Enter surname"
-                onchange="displaySaveButton()" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
-                onchange="displaySaveButton()" required>
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Password"
-                onchange="changedPassword()" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <div class="form-group" id="confirm-password">
-              <label for="confirm-password">Confirm Password</label>
-              <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()"
-                required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <button type="submit" class="btn btn-default" id="save-btn">Save</button>
-          </div>
-          <!-- / Sign up -->
-        </form>
-      </div>
-
-    </div>
-
-  </div>
-  <!-- / Profile Section -->
-
-  <!-- Help Section -->
-  <div id="help">
-    <i class="fas fa-arrow-left" onclick="hideHelp()"></i>
-    <br />
-    <h3>HELP</h3>
-    <!-- Help Items -->
-    <div class="help-items">
-
-      <!-- Help Item -->
-      <div class="help-item">
-        <div class="help-icon">
-          <i class="fas fa-address-card"></i>
-        </div>
-        <div class="help-heading">
-          <h6>Staff</h6>
-        </div>
-        <div class="help-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-      <!-- / Help Item -->
-
-      <!-- Help Item -->
-      <div class="help-item">
-        <div class="help-icon">
-          <i class="fas fa-building"></i>
-        </div>
-        <div class="help-heading">
-          <h6>Organization</h6>
-        </div>
-        <div class="help-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-      <!-- / Help Item -->
-
-      <!-- Help Item -->
-      <div class="help-item">
-        <div class="help-icon">
-          <i class="fas fa-database"></i>
-        </div>
-        <div class="help-heading">
-          <h6>Databases</h6>
-        </div>
-        <div class="help-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-      <!-- / Help Item -->
-
-      <!-- Help Item -->
-      <div class="help-item">
-        <div class="help-icon">
-          <i class="fas fa-stethoscope"></i>
-        </div>
-        <div class="help-heading">
-          <h6>Diagnostic Clinic</h6>
-        </div>
-        <div class="help-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-      <!-- / Help Item -->
-
-    </div>
-    <!-- Help Items -->
-
-  </div>
-  <!-- / Help Section -->
+  <!-- Up Icon -->
+  <!-- <div id="scroll-to-top">
+    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
+  </div> -->
+  <!-- / Up Icon -->
 
 </div>
 <!-- / Dashboard -->
