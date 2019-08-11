@@ -59,6 +59,9 @@ export class StaffHandlerComponent implements OnInit {
   selectedStaff: Interface.StaffInfo;
   /** Array of Staff Member objects - @type {StaffInfo[]} */
   staffMembers: Interface.StaffInfo[];
+  /** The number of the staff members - @type {number} */   
+  numberOfStaffMembers : number = 0;
+
   /** Array of User Type objects for form dropdown - @type {UserType[]} */
   userTypes: Interface.UserType[];
   /** Selected user type on dropdown - @type {string} */
@@ -751,6 +754,10 @@ getAdminTypes() {
         this.staffMembers = response.data.qs.staff;
         this.dataSource = new MatTableDataSource(this.staffMembers);
         this.dataSource.paginator = this.paginator;
+
+        //Set number of staff members for statistics 
+        this.numberOfStaffMembers = this.staffMembers.length;
+        
 
       } else if (response.success == false) {
         //POPUP MESSAGE
