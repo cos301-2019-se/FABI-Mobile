@@ -117,7 +117,7 @@
               <h5>Total Organizations</h5>
             </div>
             <div class="statistic-box-info">
-              XXX
+              {{organizations.length}}
             </div>
           </div>
         </div>
@@ -168,13 +168,13 @@
           </thead>
 
           <tbody>
-            <tr *ngFor="let member of organizations">
-              <td>{{member.orgName}}</td>
+            <tr *ngFor="let organization of organizations">
+              <td>{{organization.orgName}}</td>
               <td class="table-action">
                 <button class="btn btn-default view" data-toggle="modal" data-target="#viewModal"
-                  [id]="member.email">View</button>
+                  [id]="organization.email" (click)="selectOrganisation(organization)">View</button>
                 <button class="btn btn-default delete" data-toggle="modal" data-target="#confirmDeleteModal"
-                  [id]="member.email" (click)="removeStaffMemberPrompt(element)">Delete</button>
+                  [id]="organization.email" (click)="selectOrganisation(organization)" >Delete</button> <!--(click)="removeOrganizationPrompt(organization)-->
               </td>
             </tr>
           </tbody>
@@ -219,19 +219,25 @@
             <form class="view-form">
               <div class="form-row align-items-center">
                 <div class="form-group">
+                    <label for="name">Organization Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter organization name"
+                      onchange="displaySaveButton()" disabled="disabled" [value]="selectedOrg.orgName">
+                  </div>
+                    <label>Admin Details:</label>
+                <div class="form-group">
                   <label for="name">Name</label>
                   <input type="text" class="form-control" id="name" placeholder="Enter name"
-                    onchange="displaySaveButton()" disabled="disabled">
+                    onchange="displaySaveButton()" disabled="disabled" [value]="selectedOrg.admin.fname">
                 </div>
                 <div class="form-group">
                   <label for="surname">Surname</label>
                   <input type="text" class="form-control" id="surname" placeholder="Enter surname"
-                    onchange="displaySaveButton()" disabled="disabled">
+                    onchange="displaySaveButton()" disabled="disabled" [value]="selectedOrg.admin.surname">
                 </div>
                 <div class="form-group">
                   <label for="email">Email address</label>
                   <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                    placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled">
+                    placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled" [value]="selectedOrg.admin.email">
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                     else.</small>
                 </div>
@@ -376,7 +382,7 @@
         <div class="modal-body">
           <p>Everything related to this member of staff will be permantely deleted</p>
           <div class="confirm-actions">
-            <button type="button" class="btn btn-default confirm">Confirm</button>
+            <button type="button" class="btn btn-default confirm" (click)="removeOrg()">Confirm</button>
             <button type="button" class="btn btn-default cancel">Cancel</button>
           </div>
         </div>

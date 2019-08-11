@@ -662,7 +662,7 @@ getAdminTypes() {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  selectOrganisation(staffMem: Interface.StaffInfo) {
+  selectStaffMember(staffMem: Interface.StaffInfo) {
     this.selectedStaff = staffMem;
   }
   
