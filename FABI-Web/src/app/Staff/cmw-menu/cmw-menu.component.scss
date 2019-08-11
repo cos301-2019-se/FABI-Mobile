@@ -14,13 +14,13 @@
   
     border: 1px solid #72b555;
   
-    border-radius: 5px;
+    border-radius: 15px;
   
     padding: 10px;
   
     width: auto;
   
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   
     transition: all 0.5s;
   }
@@ -28,57 +28,12 @@
   .btn.btn-default:hover {
     color: #fff;
   
-    background: linear-gradient(to right, #76b852, #8dc26f);
-    
-    border: none;
+    background-color: rgba(114, 181, 85, 0.95);
   
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   
     transform: scale(1.025);
   }
-  
-  .section-divider {
-    width: 80%;
-    height: 0.5vh;
-    
-    margin-left:40px;
-    
-    background: linear-gradient(to right, #76b852, #8dc26f);
-  }
-  
-  #scroll-to-top  {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background-color: #989C94;
-  
-    border-radius: 50%;
-  
-    height: 50px;
-    width: 50px;
-  
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
-    
-    position: fixed;
-    
-    right: 25px;
-    bottom: 25px;
-    
-    transition: all 0.5s;
-    
-    animation: jump 1s infinite;
-  }
-  
-  #scroll-to-top:hover {
-    transform: scale(1.05);
-  }
-  
-  #scroll-to-top i {
-    color: #fff;
-    font-size: 20px;
-  }
-  
-  @keyframes jump { 0% { bottom: 10px; } 50% { bottom: 15px; } 100% { bottom: 10px; } }
   
   /* Dashboard Section
      ========================================================================== */
@@ -90,7 +45,7 @@
     width: 100%;
     height: 100vh auto; 
     
-    background-color: #FCFCFC;  
+    background-color: #F7F7F7;  
   }
   
   /* Sidenav Section
@@ -129,8 +84,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
-    width: 100%;
   }
   
   .nav-links i {
@@ -146,16 +99,6 @@
     transform: scale(1.25);
     
     opacity: 0.8;
-  }
-  
-  .nav-links a.nav-link {
-    width: 100%;
-  }
-  
-  .nav-links a.nav-link.active {
-    background-color: rgba(255, 255, 255, 0.1);
-    
-    border-left: 5px solid #FFF;
   }
   
   .bottom-nav-items {
@@ -185,16 +128,6 @@
     opacity: 0.8;
   }
   
-  .bottom-nav-items a.nav-link {
-    width: 100%;
-  }
-  
-  .bottom-nav-items a.nav-link.active {
-    background-color: rgba(255, 255, 255, 0.1);
-    
-    border-left: 5px solid #FFF;
-  }
-  
   @media (min-width: 768px) {
     .sidenav {
       display: flex;
@@ -205,9 +138,9 @@
       width: 15vh;
       height: auto;  
       
-      background: linear-gradient(to right, #76b852, #8dc26f);
+      background-color: #72B555;
       
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
     }
   }
   
@@ -278,9 +211,7 @@
   }
   
   div nav.navbar.navbar-dark.bg-dark {  
-    background: linear-gradient(to right, #76b852, #8dc26f);
-    
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    background-color: #72b555 !important;
   
     height: 10vh !important;
   }
@@ -379,7 +310,7 @@
       
       color: #6B746F;
       
-      font-size: 28px;
+      font-size: 24px;
       
       padding: 25px;
       margin: 0;
@@ -424,15 +355,13 @@
     margin: 15px;
     padding: 5px;
   
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
   
     transition: all 0.2s;
   }
   
   .menu-item:hover {
-    background: linear-gradient(to right, #76b852, #8dc26f);
-    
-    border: none;
+    background-color: rgba(114, 181, 85, 0.8);
   
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   
@@ -454,7 +383,7 @@
     height: 45px;
     width: 45px;
   
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
   }
   
   .menu-icon i {
@@ -479,8 +408,57 @@
     }
   }
   
-  /* Staff Tables Subsection */
-  .staff-tables {  
+  /* Staff Handler View Staff Modal Section
+     ========================================================================== */
+  
+  .modal-header {
+    background-color: #6aa84f;
+  
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  .modal-header i {
+    color: #fff;
+  }
+  
+  .modal-body {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .btn.btn-default.submit {
+    color: #72b555;
+    font-family: "Montserrat", sans-serif;
+  
+    background-color: transparent;
+  
+    border: 1px solid #72b555;
+  
+    border-radius: 5px;
+  
+    padding: 5px;
+    margin: 5px;
+  
+    width: 50%;
+  
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  
+    transition: all 0.5s;
+  }
+  
+  .btn.btn-default.submit:hover {
+    color: #fff;
+  
+    background-color: rgba(114, 181, 85, 0.95);
+  
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  
+    transform: scale(1.025);
+  }
+  
+  /* CMW Collection Tables Subsection */
+  .cmw-collection-tables {  
     display: flex; 
     flex-direction: column;
     justify-content: center;
@@ -490,15 +468,10 @@
     height: auto; 
     
     padding: 15px;
-    margin-top: 15px;
+    margin-top: 30px;
   }
   
-  .staff-tables h5 {
-    font-family: "Montserrat", sans-serif;
-    color: #6AA84F;
-  }
-  
-  .dashboard-table {  
+  .request-table {  
     width: 95%;
     height:50%; 
     
@@ -509,7 +482,40 @@
     
     border-left: 5px solid #72B555;
     
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+  }
+  
+  .deposit-table {  
+    width: 95%;
+    height:50%; 
+    
+    padding: 15px;
+    margin: 15px 0 15px 0;
+    
+    background-color: #fff;
+    
+    border-left: 5px solid #72B555;
+    
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+  }
+  
+  .revitalization-table {  
+    width: 95%;
+    height:50%; 
+    
+    padding: 15px;
+    margin: 15px 0 15px 0;
+    
+    background-color: #fff;
+    
+    border-left: 5px solid #72B555;
+    
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+  }
+  
+  .cmw-collection-tables h5 {
+    font-family: "Montserrat", sans-serif;
+    color: #6AA84F;
   }
   
   .table {
@@ -522,14 +528,14 @@
      ========================================================================== */
   
   #notifications {
-    display: flex;
+    display: none;
     flex-direction: column;
   
     position: absolute;
     top: 0;
     right: 0;
   
-    background-color: #F7F7F7;
+    background-color: #E1E1E1;
     width: 100%;
     min-height: 100vh;
     height: auto;
@@ -538,7 +544,7 @@
   
     padding: 50px 15px 15px 15px;
   
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: -2px 0px 5px 0px rgba(0,0,0,0.17);
   }
   
   #notifications h3 {
@@ -578,15 +584,13 @@
   
     margin: 15px;
   
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
   
     transition: all 0.2s;
   }
   
   .notification-item:hover {
-    background: linear-gradient(to right, #76b852, #8dc26f);
-    
-    border: none;
+    background-color: rgba(114, 181, 85, 0.8);
   
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   
@@ -637,14 +641,14 @@
      ========================================================================== */
   
   #profile {
-    display: flex;
+    display: none;
     flex-direction: column;
   
     position: absolute;
     top: 0;
     right: 0;
   
-    background-color: #F7F7F7;
+    background-color: #E1E1E1;
     width: 100%;
     min-height: 100vh;
     height: auto;
@@ -653,7 +657,7 @@
   
     padding: 50px 15px 15px 15px;
   
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: -2px 0px 5px 0px rgba(0,0,0,0.17);
   }
   
   #profile h3 {
@@ -683,7 +687,7 @@
   
     border-radius: 5px;
   
-   box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
   
     transition: all 0.2s;
   }
@@ -762,14 +766,14 @@
      ========================================================================== */
   
   #help {
-    display: flex;
+    display: none;
     flex-direction: column;
   
     position: absolute;
     top: 0;
     right: 0;
   
-    background-color: #F7F7F7;
+    background-color: #E1E1E1;
     width: 100%;
     min-height: 100vh;
     height: auto;
@@ -778,7 +782,7 @@
   
     padding: 50px 15px 15px 15px;
   
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: -2px 0px 5px 0px rgba(0,0,0,0.17);
   }
   
   #help h3 {
@@ -818,7 +822,7 @@
   
     margin: 15px;
   
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
   
     transition: all 0.2s;
   }
@@ -828,9 +832,7 @@
   }
   
   .help-item:hover {
-    background: linear-gradient(to right, #76b852, #8dc26f);
-    
-    border: none;
+    background-color: rgba(114, 181, 85, 0.8);
   
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   
@@ -874,7 +876,7 @@
   
     margin: 10px;
   
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
   }
   
   #help .help-items .help-item .help-icon i {

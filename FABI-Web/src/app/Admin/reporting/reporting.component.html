@@ -1,357 +1,524 @@
-<!--Bootstrap Navbar-->
-<div class="container-fluid" id="nav-section">
-  <nav class="navbar navbar-expand-xl">
-    <a class="navbar-brand" href="#">System Reports</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      <i class="fas fa-bars"></i>
-    </button>
+<!-- Dashboard -->
+<div class="dashboard">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item active">
-          <a id="dashboard_menu_link" routerLink="/admin-dashboard"><i class="fas fa-home"></i>Home</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-tasks"></i>Handlers
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="user_management" routerLink="/staff-handler"><i class="fas fa-id-card"></i>Staff</a>
-            <br />
-            <a id="organization_management" routerLink="/organization-handler"><i
-                class="fas fa-building"></i>Organizations</a>
-            <br />
-            <a id="diagnostic_clinic_management" routerLink="/clinic-handler"><i
-                class="fas fa-stethoscope"></i>Clinic</a>
-            <br />
-            <a id="database_management" routerLink="/database-handler"><i class="fas fa-database"></i>Database
-            </a>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a id="reporting" routerLink="/reporting"><i class="fas fa-chart-pie"></i>Reporting</a>
-        </li>
-
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user"></i>Account
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="profile_menu_link" routerLink="/admin-profile"><i class="fas fa-user-circle"></i>Profile</a>
-            <br />
-            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-        </li>
-
-        <li class="nav-item">
-          <a id="logout_menu_link" (click)="logout()" style="color:#ffffff;"><i
-              class="fas fa-sign-out-alt"></i>Logout</a>
-        </li>
-
-      </ul>
+  <!-- Sidenav -->
+  <div class="sidenav">
+    <div class="top-nav-items">
+      <i class="fas fa-user-circle" onclick="showProfile()"></i>
+      <p onclick="showProfile()">Tap to view profile</p>
+      <br />
+      <div class="nav-links">
+        <a class="nav-link" href="#"><i class="fas fa-address-card"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-building"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-database"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-stethoscope"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i></a>
+      </div>
     </div>
-  </nav>
-</div>
-
-
-<!--SlideOut -->
-<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
-  <!--Tab-->
-  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
-    <div>
-      <p>Notifications</p>
+    <div class="bottom-nav-items">
+      <a class="nav-link" onclick="showHelp()"><i class="fas fa-question"></i></a>
+      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </div>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">Admin Notifications</h4>
+  <!-- / Sidenav -->
+
+  <!-- Navbar -->
+  <div class="pos-f-t">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <h1 class="brand">ADMIN DASHBOARD</h1>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <!-- Navbar Items -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Staff Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Database Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Organization Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Diagnostic Clinic Handler</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Reports and Logs <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showHelp()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Logout</a>
+          </li>
+          <!-- / Navbar Items -->
+        </ul>
+      </div>
     </div>
-    <div class="modal-body" id="notifications-section">
+    <nav class="navbar navbar-dark bg-dark">
+      <!-- Menu Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- / Menu Button -->
 
-      <h2 *ngIf="!notifications">No notifications</h2>
-      <!--*********************************************************************
-              DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
-          *************************************************************************-->
-      <div *ngIf="allNotifications">
-        <div class="box" *ngFor="let log of allNotifications">
-          <div class="notification-heading">
-            <h2>Notification {{log.ID}}</h2>
-            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
-          </div>
+      <!-- Navbar Title -->
+      <h5>REPORTS</h5>
+      <!-- / Navbar Title -->
 
-          <div class="notification-content">
-            <p><b>Type:</b> {{log.Type}} notification</p>
-            <p><b>Action:</b> {{log.Action}}</p>
-            <p><b>Date:</b> {{log.Date}}</p>
-          </div>
+      <!-- Notification Icons -->
+      <div class="notifications-icon">
+        <i class="fas fa-user-circle" onclick="showProfile()"></i>
+        <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- /Notification Icons -->
+    </nav>
+  </div>
+  <!-- / Navbar-->
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <!-- Primary Content -->
+    <div class="primary-content">
+
+      <!-- Content Heading -->
+      <div class="content-heading">
+        <h2>Reports and Logs</h2>
+        <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- / Content Heading -->
+
+    </div>
+    <!-- / Primary Content -->
+
+    <!-- Log Tables -->
+    <div class="log-tables" id="reports" ng-app="portApp" ngController="previewCtrl">
+
+      <!-- FABI System Error Report Table -->
+      <div class="report-table table-responsive" id="errorReport" #errorReportPDF>
+
+        <h5> FABI System Error Report - Date: {{date}}</h5>
+        <button *ngIf='errorReport' (click)="downloadErrorReport()">Download Error Report</button>
+
+        <table class="table table-hover" *ngIf="errorLogs" id="previewTableErrorLogs">
+          <thead>
+            <tr>
+              <th scope="col">Error status code</th>
+              <th scope="col">Date</th>
+              <th scope="col">Details of error</th>
+              <th scope="col">User performing action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray; let i = index">
+              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / FABI System Error Report Table -->
+
+      <!-- FABI System Request Report Table -->
+      <div class="report-table table-responsive" id="requestReport" #requestReportPDF>
+
+        <h5> FABI System Request Report - Date: {{date}}</h5>
+        <button *ngIf='requestReport' (click)="downloadRequestReport()">Download Request Report</button>
+
+        <table class="table table-hover" *ngIf="requestLogs" id="previewTableRequestLogs">
+          <thead>
+            <tr>
+              <th scope="col">Person</th>
+              <th scope="col">Requestor</th>
+              <th scope="col">CMW Culture Number</th>
+              <th scope="col">Taxon Name</th>
+              <th scope="col">Reference Number</th>
+              <th scope="col">Date Requested</th>
+              <th scope="col">Date Submitted</th>
+            </tr>
+          </thead>
+          <tbody *ngIf='requestReport'>
+            <tr class="tableRow" scope="row" *ngFor="let row of requestLogsArray; let i = index">
+              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / FABI System Request Report Table -->
+
+      <!-- FABI System Deposit Report Table -->
+      <div class="report-table table-responsive" *ngIf='depositReport' #depositReportPDF>
+
+        <h5> FABI System Deposit Report - Date: {{date}}</h5>
+        <button *ngIf='depositReport' (click)="downloadDepositReport()">Download Deposit Report</button>
+
+        <table class="table table-hover" *ngIf="depositLogs" id="previewTableDepositLogs">
+          <thead>
+            <tr>
+              <th scope="col">Person</th>
+              <th scope="col">CMW Culture Number</th>
+              <th scope="col">Culture Name</th>
+              <th scope="col">Collected By</th>
+              <th scope="col">Date Collected</th>
+              <th scope="col">Isolated By</th>
+              <th scope="col">Identified By</th>
+              <th scope="col">Date Submitted</th>
+            </tr>
+          </thead>
+          <tbody *ngIf='requestReport'>
+            <tr class="tableRow" scope="row" *ngFor="let row of depositLogsArray; let i = index">
+              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / FABI System Deposit Report Table -->
+
+      <!-- FABI System Revitalization Report Table -->
+      <div class="report-table table-responsive" *ngIf='revitalizationReport' #revitalizationReportPDF>
+
+        <h5> FABI System Revitalization Report - Date: {{date}}</h5>
+        <button *ngIf='revitalizationReport' (click)="downloadRevitalizationReport()">Download Revitalization
+          Report</button>
+
+        <table class="table table-hover" *ngIf="revitalizationLogs" id="previewTableRevitalizationLogs">
+          <thead>
+            <tr>
+              <th scope="col">Person</th>
+              <th scope="col">Requestor</th>
+              <th scope="col">CMW Culture Number</th>
+              <th scope="col">Culture Name</th>
+              <th scope="col">Reference Number</th>
+              <th scope="col">Date Requested</th>
+              <th scope="col">Date Returned</th>
+              <th scope="col">Date Submitted</th>
+            </tr>
+          </thead>
+          <tbody *ngIf='requestReport'>
+            <tr class="tableRow" scope="row" *ngFor="let row of revitalizationLogsArray; let i = index">
+              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / FABI System Revitalization Report Table -->
+
+
+
+
+
+
+
+
+      <!-- User Log Table Table -->
+      <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
+
+        <h5> User Log Table - Date: {{date}}</h5>
+        <div #userAdd (click)="expandUserLogTable()"><i class="fas fa-plus-circle"></i></div>
+        <div #userCollapse (click)="collapseUserLogTable()" id="userCollapse"><i class="fas fa-minus-circle"></i></div>
+        <h3 *ngIf="!userLogs">There are currrently no user logs to display</h3>
+
+        <table class="table table-hover" *ngIf="userLogs" id="previewTableUserLogs" #userLogsTable>
+          <thead>
+            <tr>
+              <th scope="col">Action performed</th>
+              <th scope="col">Date</th>
+              <th scope="col">User performing action</th>
+              <th scope="col">Other users involved</th>
+            </tr>
+          </thead>
+          <tbody *ngIf='requestReport'>
+            <tr class="tableRow" scope="row" *ngFor="let row of userLogsArray; let i = index">
+              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / User Log Table Table -->
+
+      <!-- Database Management Log Table Table -->
+      <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
+
+        <h5> Database Management Log Table - Date: {{date}}</h5>
+        <div #databaseAdd (click)="expandDatabaseLogTable()"><i class="fas fa-plus-circle"></i></div>
+        <div #databaseCollapse (click)="collapseDatabaseLogTable()" id="databaseCollapse"><i
+            class="fas fa-minus-circle"></i></div>
+        <h3 *ngIf="!databaseLogs">There are currrently no database management logs to display</h3>
+
+        <table class="table table-hover" *ngIf="databaseLogs" id="previewTableDatabaseLogs" #databaseLogsTable>
+          <thead>
+            <tr>
+              <th scope="col">Action performed</th>
+              <th scope="col">Date</th>
+              <th scope="col">User performing action</th>
+              <th scope="col">Other users involved</th>
+            </tr>
+          </thead>
+          <tbody *ngIf='requestReport'>
+            <tr class="tableRow" scope="row" *ngFor="let row of databaseLogsArray; let i = index">
+              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Database Management Log Table Table -->
+
+      <!-- Access Log Table Table Table -->
+      <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
+
+        <h5> Access Log Table Table - Date: {{date}}</h5>
+        <div #accessAdd (click)="expandAccessLogTable()"><i class="fas fa-plus-circle"></i></div>
+        <div #accessCollapse (click)="collapseAccessLogTable()" id="accessCollapse"><i class="fas fa-minus-circle"></i>
         </div>
+        <h3 *ngIf="!accessLogs">There are currrently no access logs to display</h3>
+
+        <table class="table table-hover" *ngIf="accessLogs" id="previewTableAccessLogs"
+          #accessLogsTable>
+          <thead>
+            <tr>
+              <th scope="col">Details of access</th>
+              <th scope="col">Date</th>
+              <th scope="col">User performing action</th>
+              <th scope="col">More information(if any)</th>
+            </tr>
+          </thead>
+          <tbody *ngIf='requestReport'>
+            <tr class="tableRow" scope="row" *ngFor="let row of accessLogsArray; let i = index">
+              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Access Log Table Table Table -->
+
+      <!-- Error Log Table Table -->
+      <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
+
+          <h5> Error Log Table - Date: {{date}}</h5>
+          <div #errorAdd (click)="expandErrorLogTable()"><i class="fas fa-plus-circle"></i></div><div #errorCollapse (click)="collapseErrorLogTable()" id="errorCollapse"><i class="fas fa-minus-circle"></i></div>
+            <h3 *ngIf="!errorLogs">There are currrently no error logs to display</h3>
+  
+          <table class="table table-hover" *ngIf="errorLogs" id="previewTableErrorLogs" #errorLogsTable>
+            <thead>
+              <tr>
+                  <th scope="col">Error status code</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Details of error</th>
+                  <th scope="col">User performing action</th>
+              </tr>
+            </thead>
+            <tbody *ngIf='requestReport'>
+                <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray; let i = index">
+                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                  </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- / Error Log Table Table -->
+
+
+    </div>
+    <!-- / Log Tables -->
+  </div>
+  <!-- / Dashboard Content -->
+
+  <!-- Notification Section -->
+  <div id="notifications">
+    <i class="fas fa-arrow-left" onclick="hideNotifications()"></i>
+    <br />
+    <h3>NOTIFICATIONS</h3>
+    <!-- Notification Items -->
+    <div class="notification-items">
+
+      <!-- Notification Item -->
+      <div class="notification-item">
+        <div class="notification-action">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="notification-heading">
+          <h6>Diagnostic Clinic</h6>
+        </div>
+        <div class="notification-content">
+          <h6>Example notification</h6>
+        </div>
+      </div>
+      <!-- Notification Item -->
+
+      <!-- Notification Item -->
+      <div class="notification-item">
+        <div class="notification-action">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="notification-heading">
+          <h6>Diagnostic Clinic</h6>
+        </div>
+        <div class="notification-content">
+          <h6>Example notification</h6>
+        </div>
+      </div>
+      <!-- Notification Item -->
+
+      <!-- Notification Item -->
+      <div class="notification-item">
+        <div class="notification-action">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="notification-heading">
+          <h6>Diagnostic Clinic</h6>
+        </div>
+        <div class="notification-content">
+          <h6>Example notification</h6>
+        </div>
+      </div>
+      <!-- Notification Item -->
+
+    </div>
+    <!-- Notification Items -->
+    <div class="see-more">
+      <i class="fas fa-ellipsis-h"></i>
+    </div>
+    <!-- / Notification Section -->
+  </div>
+
+  <!-- Profile Section -->
+  <div id="profile">
+    <i class="fas fa-arrow-left" onclick="hideProfile()"></i>
+    <br />
+    <h3>PROFILE</h3>
+    <!-- Profile Details -->
+    <div class="profile-details">
+      <div class="profile-icon">
+        <i class="fas fa-user-circle"></i>
+      </div>
+
+      <div class="form">
+        <form class="profile-form needs-validation" novalidate>
+          <div class="form-row align-items-center">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter name" onchange="displaySaveButton()"
+                required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="surname">Surname</label>
+              <input type="text" class="form-control" id="surname" placeholder="Enter surname"
+                onchange="displaySaveButton()" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
+                onchange="displaySaveButton()" required>
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password"
+                onchange="changedPassword()" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="form-group" id="confirm-password">
+              <label for="confirm-password">Confirm Password</label>
+              <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()"
+                required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <button type="submit" class="btn btn-default" id="save-btn">Save</button>
+          </div>
+          <!-- / Sign up -->
+        </form>
       </div>
 
     </div>
-    <div class="modal-footer"> </div>
+
   </div>
-</div>
+  <!-- / Profile Section -->
 
-<!--Organization Handler Content-->
-<div class="container-fluid">
+  <!-- Help Section -->
+  <div id="help">
+    <i class="fas fa-arrow-left" onclick="hideHelp()"></i>
+    <br />
+    <h3>HELP</h3>
+    <!-- Help Items -->
+    <div class="help-items">
 
-  <!--Database Handler Content-->
-  <div class="content">
-    <!-- <div class="color-accent">
-        <h1>Database Management</h1>
-      </div> -->
+      <!-- Help Item -->
+      <div class="help-item">
+        <div class="help-icon">
+          <i class="fas fa-address-card"></i>
+        </div>
+        <div class="help-heading">
+          <h6>Staff</h6>
+        </div>
+        <div class="help-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <!-- / Help Item -->
 
-    <div class="system-reporting">
-      <!--Tab Menu-->
-      <mat-tab-group animationDuration="1000ms">
+      <!-- Help Item -->
+      <div class="help-item">
+        <div class="help-icon">
+          <i class="fas fa-building"></i>
+        </div>
+        <div class="help-heading">
+          <h6>Organization</h6>
+        </div>
+        <div class="help-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <!-- / Help Item -->
 
-        <!--Reporting Tab Option-->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <i class="fas fa-chart-pie" style="color:darkgray;padding:5px;"></i>
-            Reporting
-          </ng-template>
+      <!-- Help Item -->
+      <div class="help-item">
+        <div class="help-icon">
+          <i class="fas fa-database"></i>
+        </div>
+        <div class="help-heading">
+          <h6>Databases</h6>
+        </div>
+        <div class="help-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <!-- / Help Item -->
 
-          <br/>
-          <div class="tab-content" id="reports" ng-app="portApp" ngController="previewCtrl">
-              <button class="btn btn-default" (click)="generateRequestReport()">Generate Request Report</button>
-              <button class="btn btn-default" (click)="generateDepositReport()">Generate Deposit Report</button>
-              <button class="btn btn-default" (click)="generateRevitalizationReport()">Generate Revitalization Report</button>
-              <button class="btn btn-default" (click)="generateSampleSubmissionReport()">Generate Sample Submission Report</button>
-              <button class="btn btn-default" (click)="generateErrorReport()">Generate Error Report</button>
+      <!-- Help Item -->
+      <div class="help-item">
+        <div class="help-icon">
+          <i class="fas fa-stethoscope"></i>
+        </div>
+        <div class="help-heading">
+          <h6>Diagnostic Clinic</h6>
+        </div>
+        <div class="help-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <!-- / Help Item -->
 
-              <br/><br/><br/><br/>
-              <!-- <h3 *ngIf="!errorReport">There are currently no system errors</h3> -->
-              <div id="errorReport" *ngIf='errorReport' #errorReportPDF>
-                <h2 id="error_report">FABI System Error Report</h2>
-                <p>Date: {{date}}</p>
-                <br/><br/><br/>
-                <table *ngIf="errorLogs" id="previewTableErrorLogs">
-                  <thead>
-                    <tr>
-                      <th>Error status code</th>
-                      <th>Date</th>
-                      <th>Details of error</th>
-                      <th>User performing action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="tableRow" *ngFor="let row of errorLogsArray; let i = index">
-                      <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                    </tr>
-                  </tbody>
-                </table>
-                <br /><br />
-                <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
-                <br/><br/>
-              </div>
-              <button *ngIf='errorReport' (click)="downloadErrorReport()">Download Error Report</button>
-
-              <label>From (Submitted Date)</label><input matInput type="date" placeholder="Date From" #requestDateFrom1 *ngIf='requestReport' (change)="setDateFrom(submitted)"/><label>To (Submitted Date)</label><input matInput type="date" placeholder="Date To" #requestDateTo1 *ngIf='requestReport' (change)="setDateTo(submitted)"/>
-              <label>From (Requested Date)</label><input matInput type="date" placeholder="Date From" #requestDateFrom2 *ngIf='requestReport' (change)="setDateFrom(requested)"/><label>To (Requested Date)</label><input matInput type="date" placeholder="Date To" #requestDateTo2 *ngIf='requestReport' (change)="setDateTo(requested)"/>
-              <div id="requestReport" *ngIf='requestReport' #requestReportPDF>
-                <h2 id="request_report">FABI System Request Report</h2>
-                <p>Date: {{date}}</p>
-                <br/><br/><br/>
-                <table *ngIf="requestLogs" id="previewTableRequestLogs">
-                  <thead>
-                    <tr>
-                      <th>Person</th>
-                      <th>Requestor</th>
-                      <th>CMW Culture Number</th>
-                      <th>Taxon Name</th>
-                      <th>Reference Number</th>
-                      <th>Date Requested</th>
-                      <th>Date Submitted</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="tableRow" *ngFor="let row of requestLogsArray; let i = index">
-                      <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                    </tr>
-                  </tbody>
-                </table>
-                <br /><br />
-                <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
-                <br/><br/>
-              </div>
-              <button *ngIf='requestReport' (click)="downloadRequestReport()">Download Request Report</button>
-
-              <label>From (Submitted Date)</label><input matInput type="date" placeholder="Date From" #depositDateFrom1 *ngIf='depositReport' (change)="setDateFrom(submitted)"/><label>To (Submitted Date)</label><input matInput type="date" placeholder="Date To" #depositDateTo1 *ngIf='depositReport' (change)="setDateTo(submitted)"/>
-              <label>From (Collected Date)</label><input matInput type="date" placeholder="Date From" #depositDateFrom2 *ngIf='depositReport' (change)="setDateFrom(collected)"/><label>To (Collected Date)</label><input matInput type="date" placeholder="Date To" #depositDateTo2 *ngIf='depositReport' (change)="setDateTo(collected)"/>
-              <div id="depositReport" *ngIf='depositReport' #depositReportPDF>
-                <h2 id="deposit_report">FABI System Deposit Report</h2>
-                <p>Date: {{date}}</p>
-                <br/><br/><br/>
-                <table *ngIf="depositLogs" id="previewTableDepositLogs">
-                  <thead>
-                    <tr>
-                      <th>Person</th>
-                      <th>CMW Culture Number</th>
-                      <th>Culture Name</th>
-                      <th>Collected By</th>
-                      <th>Date Collected</th>
-                      <th>Isolated By</th>
-                      <th>Identified By</th>
-                      <th>Date Submitted</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="tableRow" *ngFor="let row of depositLogsArray; let i = index">
-                      <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                    </tr>
-                  </tbody>
-                </table>
-                <br /><br />
-                <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
-                <br/><br/>
-              </div>
-              <button *ngIf='depositReport' (click)="downloadDepositReport()">Download Deposit Report</button> 
-              
-              <label>From (Submitted Date)</label><input matInput type="date" placeholder="Date From" #revitalizationDateFrom1 *ngIf='revitalizationReport' (change)="setDateFrom(submitted)"/><label>To (Submitted Date)</label><input matInput type="date" placeholder="Date To" #revitalizationDateTo1 *ngIf='revitalizationReport' (change)="setDateTo(submitted)"/>
-              <label>From (Requested Date)</label><input matInput type="date" placeholder="Date From" #revitalizationDateFrom2 *ngIf='revitalizationReport' (change)="setDateFrom(requested)"/><label>To (Requested Date)</label><input matInput type="date" placeholder="Date To" #revitalizationDateTo2 *ngIf='revitalizationReport' (change)="setDateTo(requested)"/>
-              <label>From (Returned Date)</label><input matInput type="date" placeholder="Date From" #revitalizationDateFrom3 *ngIf='revitalizationReport' (change)="setDateFrom(returned)"/><label>To (Returned Date)</label><input matInput type="date" placeholder="Date To" #revitalizationDateTo3 *ngIf='revitalizationReport' (change)="setDateTo(returned)"/>
-              <div id="revitalizationReport" *ngIf='revitalizationReport' #revitalizationReportPDF>
-                <h2 id="revitalization_report">FABI System Revitalization Report</h2>
-                <p>Date: {{date}}</p>
-                <br/><br/><br/>
-                <table *ngIf="revitalizationLogs" id="previewTableRevitalizationLogs">
-                  <thead>
-                    <tr>
-                      <th>Person</th>
-                      <th>Requestor</th>
-                      <th>CMW Culture Number</th>
-                      <th>Culture Name</th>
-                      <th>Reference Number</th>
-                      <th>Date Requested</th>
-                      <th>Date Returned</th>
-                      <th>Date Submitted</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="tableRow" *ngFor="let row of revitalizationLogsArray; let i = index">
-                      <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                    </tr>
-                  </tbody>
-                </table>
-                <br /><br />
-                <div id="FABI_logo"><img src="../../assets/images/fabi-logo.png"><img src="../../assets/images/TPCP.jpg"></div>
-                <br/><br/>
-              </div>
-              <button *ngIf='revitalizationReport' (click)="downloadRevitalizationReport()">Download Revitalization Report</button>
-          </div>
-        </mat-tab>
-
-        <!--Logs Tab Option-->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <i class="fas fa-file" style="color:darkgray;padding:5px;"></i>
-            Logs
-          </ng-template>
-
-          <div class="tab-content" id="logs" ng-app="portApp" ngController="previewCtrl">
-            <h2>User Log Table</h2><div #userAdd (click)="expandUserLogTable()"><i class="fas fa-plus-circle"></i></div><div #userCollapse (click)="collapseUserLogTable()" id="userCollapse"><i class="fas fa-minus-circle"></i></div>
-            <h3 *ngIf="!userLogs">There are currrently no user logs to display</h3>
-            <br />
-
-            <table *ngIf="userLogs" id="previewTableUserLogs" #userLogsTable>
-              <thead>
-                <tr>
-                  <th>Action performed</th>
-                  <th>Date</th>
-                  <th>User performing action</th>
-                  <th>Other users involved</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="tableRow" *ngFor="let row of userLogsArray; let i = index">
-                  <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                </tr>
-              </tbody>
-            </table>
-            <br /><br /><br />
-
-            <h2>Database Management Log Table</h2><div #databaseAdd (click)="expandDatabaseLogTable()"><i class="fas fa-plus-circle"></i></div><div #databaseCollapse (click)="collapseDatabaseLogTable()" id="databaseCollapse"><i class="fas fa-minus-circle"></i></div>
-            <h3 *ngIf="!databaseLogs">There are currrently no database management logs to display</h3>
-            <br />
-
-            <table *ngIf="databaseLogs" id="previewTableDatabaseLogs" #databaseLogsTable>
-              <thead>
-                <tr>
-                  <th>Action performed</th>
-                  <th>Date</th>
-                  <th>User performing action</th>
-                  <th>Database involved</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="tableRow" *ngFor="let row of databaseLogsArray; let i = index">
-                  <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                </tr>
-              </tbody>
-            </table>
-            <br /><br /><br />
-
-            <h2>Access Log Table</h2><div #accessAdd (click)="expandAccessLogTable()"><i class="fas fa-plus-circle"></i></div><div #accessCollapse (click)="collapseAccessLogTable()" id="accessCollapse"><i class="fas fa-minus-circle"></i></div>
-            <h3 *ngIf="!accessLogs">There are currrently no access logs to display</h3>
-            <br />
-
-            <table *ngIf="accessLogs" id="previewTableAccessLogs" #accessLogsTable>
-              <thead>
-                <tr>
-                  <th>Details of access</th>
-                  <th>Date</th>
-                  <th>User performing action</th>
-                  <th>More information(if any)</th>
-                </tr>
-              </thead>
-              <tbody class="collapsible">
-                <tr class="tableRow" *ngFor="let row of accessLogsArray; let i = index">
-                  <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                </tr>
-              </tbody>
-            </table>
-            <br /><br /><br />
-
-            <h2>Error Log Table</h2><div #errorAdd (click)="expandErrorLogTable()"><i class="fas fa-plus-circle"></i></div><div #errorCollapse (click)="collapseErrorLogTable()" id="errorCollapse"><i class="fas fa-minus-circle"></i></div>
-            <h3 *ngIf="!errorLogs">There are currrently no error logs to display</h3>
-            <br />
-
-            <table *ngIf="errorLogs" id="previewTableErrorLogs" #errorLogsTable>
-              <thead>
-                <tr>
-                  <th>Error status code</th>
-                  <th>Date</th>
-                  <th>Details of error</th>
-                  <th>User performing action</th>
-                </tr>
-              </thead>
-              <tbody class="collapsible">
-                <tr class="tableRow" *ngFor="let row of errorLogsArray; let i = index">
-                  <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-                </tr>
-              </tbody>
-            </table>
-            <br /><br /><br /><br />
-          </div>
-        </mat-tab>
-
-      </mat-tab-group>
     </div>
+    <!-- Help Items -->
+
   </div>
-
-
+  <!-- / Help Section -->
 
 </div>
+<!-- / Dashboard -->

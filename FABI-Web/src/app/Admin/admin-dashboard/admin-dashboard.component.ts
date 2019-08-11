@@ -21,6 +21,8 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
@@ -83,12 +85,45 @@ export class AdminDashboardComponent implements OnInit {
   localNotificationNumber : number = 1;    
   
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  helpTab: boolean = false;
 
   /** The name and surname of a user concatenated as a string - @type {string} */   
   user1: string;
   /** The name and surname of a user concatenated as a string - @type {string} */   
   user2: string;
+
+  /** The staff member's email address -  @type {string} */
+  email: string = '';
+  /** The staff member's organization -  @type {string} */
+  organization: string = '';
+  /** The staff member's id -  @type {string} */
+  id: string = '';
+  /** The staff member's name -  @type {string} */
+  name: string = '';
+  /** The staff member's surname -  @type {string} */
+  surname: string = '';
+  /** The staff member's user type -  @type {string} */
+  userType: string = '';
+  /** The staff member's password -  @type {string} */
+  password: string = '';
+  /** The staff member's confirmed password -  @type {string} */
+  confirmPassword: string = '';
+
+  /** The form to display the admin member's details -  @type {FormGroup} */
+  adminProfileForm: FormGroup;
+
+  /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
+  @ViewChild("passwordInput") passwordInput : ElementRef;
+  /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
+  @ViewChild("confirmInput") confirmInput : ElementRef;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -113,8 +148,20 @@ export class AdminDashboardComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService, 
     private resolver: ComponentFactoryResolver, 
     private authService: AuthenticationService, 
-    private router: Router
-    ) { }
+    private router: Router,
+    private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar, 
+    ) { 
+      this.adminProfileForm = this.formBuilder.group({
+        organization_name: '',
+        admin_name: '',
+        admin_surname: '',
+        admin_email: '',
+        admin_type: '',
+        admin_password: '',
+        admin_confirm: ''
+      });
+    }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -464,21 +511,6 @@ export class AdminDashboardComponent implements OnInit {
     });
   } 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
- }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    NG_ON_INIT  
@@ -495,6 +527,7 @@ export class AdminDashboardComponent implements OnInit {
     this.loadNotifications();
     this.getNumberOfFABIMembers();
     this.getNumberOfFABISamples();
+    this.loadAdminProfileDetails();
 
     let user = this.authService.getCurrentUserValue;
     
@@ -513,4 +546,201 @@ export class AdminDashboardComponent implements OnInit {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE NOTIFICATIONS 
+  /**
+   * This function will toggle the display of the notifications side panel
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificationsTab(){ 
+    this.notificationsTab = !this.notificationsTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE PROFILE 
+  /**
+   * This function will toggle the display of the profile side panel
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleProfileTab() {
+    this.profileTab = !this.profileTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_ADMIN_PROFILE_DETAILS
+  /**
+   *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadAdminProfileDetails(){
+    //The id number of the user that is currently logged in
+    this.id = localStorage.getItem('userID');
+    //The organization of the user that is currently logged in
+    this.organization = localStorage.getItem('userOrganization');
+    //The password of the user that is currently logged in
+    this.password = localStorage.getItem('userPassword');
+    //Setting the confirmPassword variable to have the same value as the user's current password
+    this.confirmPassword = this.password;
+
+    //Subscribing to the UserManagementAPIService to get all the staff members details
+    this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
+      if(response.success == true){
+        //Temporarily holds the data returned from the API call
+        const data = response.data;
+
+        //Setting the user type of the user
+        this.userType = data.userType;
+        //Setting the first name of the user
+        this.name = data.fname;
+        //Setting the surname of the user
+        this.surname = data.surname;
+        //Setting the email of the user
+        this.email = data.email;
+
+        console.log(this.userType);
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SAVE_CHANGES
+  /**
+   *  This function will send the details to the API to save the changed details to the system.
+   *  @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  saveChanges(){
+    //Indicates if the details can be changed based on whether the passwords match or not
+    var valid = true;
+
+    //Checking to make sure that the passwords are not empty
+    //Checking to make sure that the password and confirmed password match
+    if(this.adminProfileForm.controls.admin_password.value != '' && 
+    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
+      this.password = this.adminProfileForm.controls.admin_password.value;
+    }
+    else{
+      //Indicates that the changes cannot be saved
+      valid = false;
+
+      //POPUP MESSAGE
+      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
+        duration: 3000
+      });
+    }
+
+    //Indicates that the changes that the user has made to their profile details, can be changed
+    if(valid == true){
+      if(this.adminProfileForm.controls.admin_email.value == ''){
+        this.email = this.email;
+      }
+      else{
+        this.email = this.adminProfileForm.controls.admin_email.value;
+      }
+
+      if(this.adminProfileForm.controls.admin_name.value == ''){
+        this.name = this.name;
+      }
+      else{
+        this.name = this.adminProfileForm.controls.admin_name.value;
+      }
+
+      if(this.adminProfileForm.controls.admin_surname.value == ''){
+        this.surname == this.surname;
+      }
+      else{
+        this.surname = this.adminProfileForm.controls.admin_surname.value;
+      }  
+      
+      if(this.adminProfileForm.controls.admin_password.value == ''){
+        this.password == this.password;
+      }
+      else{
+        this.password = this.adminProfileForm.controls.admin_password.value;
+      }
+      
+      //Making a call to the User Management API Service to save the user's changed profile details
+      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
+        if(response.success == true){
+          //Making sure that local storage now has the updated password stored
+          localStorage.setItem('userPassword', this.password);
+          //Reloading the updated user's details
+          this.loadAdminProfileDetails();
+
+          //Display message to say that details were successfully saved
+          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+        else{
+          //Error handling
+          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+      });
+    }
+    else{
+      //Error handling
+      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
+        duration: 3000
+      });
+    }
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            DISPLAY PROFILE SAVE BUTTON 
+  /**
+   * This function will display the save button option if any details in the profile have been altered
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayProfileSaveBtn() {
+    this.saveBtn = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            DISPLAY PASSWORD CONFIRM INPUT 
+  /**
+   * This function will display the confirm password input field in the user's password was altered
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayConfirmPasswordInput() {
+    this.confirmPasswordInput = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE HELP 
+  /**
+   * This function will toggle the display of the help side panel
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleHelpTab() {
+    this.helpTab = !this.helpTab;
+  }
+
+
+
+
+
+
+
+
+
 }
