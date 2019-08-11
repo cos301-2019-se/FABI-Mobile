@@ -1,243 +1,498 @@
-<!--Bootstrap Navbar-->
-<div class="container-fluid" id="nav-section">
-  <nav class="navbar navbar-expand-xl">
-    <a class="navbar-brand" href="#">Member Handler</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      <i class="fas fa-bars"></i>
-    </button>
+<!-- Dashboard -->
+<div class="dashboard">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item active">
-          <a id="dashboard_menu_link" routerLink="/organization-dashboard"><i class="fas fa-home"></i>Home</a>
-        </li>
-
-        <li class="nav-item">
-          <a id="guest_management" routerLink="/member-handler"><i class="fas fa-users"></i>Members</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-vials"></i>Samples
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="view_samples" routerLink="/organization-view-samples"><i class="fas fa-vials"></i>View Samples</a>
-            <br/>
-            <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
-          </div>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user"></i>Account
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="profile" routerLink="/organization-profile"><i class="fas fa-user-circle"></i>Profile</a>
-            <br/>
-            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-        </li>
-
-        <li class="nav-item">
-          <a id="logout_menu_link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i>Logout</a>
-        </li>
-
-      </ul>
+  <!-- Sidenav -->
+  <div class="sidenav">
+    <div class="top-nav-items">
+      <i class="fas fa-user-circle" onclick="showProfile()"></i>
+      <p onclick="showProfile()">Tap to view profile</p>
+      <br />
+      <div class="nav-links">
+        <a class="nav-link" href="#"><i class="fas fa-user-friends"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-vial"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
+      </div>
     </div>
-  </nav>
-</div>
-
-
-<!--SlideOut -->
-<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
-  <!--Tab-->
-  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
-    <div>
-      <p>Notifications</p>
+    <div class="bottom-nav-items">
+      <a class="nav-link" onclick="showHelp()"><i class="fas fa-question"></i></a>
+      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </div>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">Organization Notifications</h4>
+  <!-- / Sidenav -->
+
+  <!-- Navbar -->
+  <div class="pos-f-t">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <h1 class="brand">ORGANIZATION DASHBOARD</h1>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <!-- Navbar Items -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Samples</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Member Handler <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showHelp()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Logout</a>
+          </li>
+          <!-- / Navbar Items -->
+        </ul>
+      </div>
     </div>
-    <div class="modal-body" id="notifications-section">
+    <nav class="navbar navbar-dark bg-dark">
+      <!-- Menu Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- / Menu Button -->
 
-      <h2 *ngIf="!notifications">No notifications</h2>
-      <!--*********************************************************************
-            DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
-        *************************************************************************-->
-      <div class="box">
-        <div class="notification-heading">
-          <h2>Notification {{Number}}</h2>
-          <i class="fas fa-times" (click)="removeNotification(LogID)"></i>
-        </div>
+      <!-- Navbar Title -->
+      <h5>MEMBERS</h5>
+      <!-- / Navbar Title -->
 
-        <div class="notification-content">
-          <p><b>Type:</b> {{Type}} notification</p>
-          <p><b>Action:</b> {{Action}}</p>
-          <p><b>Date:</b> {{Date}}</p>
-          <p><b>Details:</b> {{Details}}</p>
+      <!-- Notification Icons -->
+      <div class="notifications-icon">
+        <i class="fas fa-user-circle" onclick="showProfile()"></i>
+        <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- /Notification Icons -->
+    </nav>
+  </div>
+  <!-- / Navbar-->
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <!-- Primary Content -->
+    <div class="primary-content">
+
+      <!-- Content Heading -->
+      <div class="content-heading">
+        <h2>Member Management</h2>
+        <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- / Content Heading -->
+
+    </div>
+    <!-- / Primary Content -->
+
+    <!-- Member Tables -->
+    <div class="member-tables">
+      <div class="input-group search-table">
+        <div class="input-group-prepend ">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
         </div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+          aria-describedby="basic-addon1">
       </div>
 
-      <div #notificationContainer></div>
-
-    </div>
-    <div class="modal-footer"> </div>
-  </div>
-</div>
-
-<!--Member Handler Content-->
-<div class="container-fluid">
-
-  <div class="member-management">
-    <!--Tab Menu-->
-    <mat-tab-group animationDuration="1000ms">
-
-      <!--Add Tab Option-->
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>person_add</mat-icon>
-          Add Member
-        </ng-template>
-        <div class="tab-content">
-          <h2>Add Member</h2>
-          <br />
-
-          <form id="add_new_member_form" [formGroup]="addMemberForm" (submit)="addMember()">
-            <div class="row">
-              <!--Name Field-->
-              <div class="name-inputs">
-                <mat-form-field class="form_inputs" class="col">
-                  <input matInput placeholder="Name" matInput type="text" formControlName="member_name">
-                  <mat-error *ngFor="let validation of add_validation_messages.member_name">
-                    <mat-error class="errors" *ngIf="addMemberForm.get('member_name').hasError(validation.type) && (addMemberForm.get('member_name').dirty || addMemberForm.get('member_name').touched)">{{validation.message}}</mat-error>
-                  </mat-error>
-                </mat-form-field>
-                <br />
-
-                <!--Surname Field-->
-                <mat-form-field class="form_inputs" class="col">
-                  <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname">
-                  <mat-error *ngFor="let validation of add_validation_messages.member_surname">
-                    <mat-error class="errors" *ngIf="addMemberForm.get('member_surname').hasError(validation.type) && (addMemberForm.get('member_surname').dirty || addMemberForm.get('member_surname').touched)">{{validation.message}}</mat-error>
-                  </mat-error>
-                </mat-form-field>
-                <br />
-              </div>
-
-              <!--Email Field-->
-              <div class="contact-inputs">
-                <mat-form-field class="form_inputs" class="col">
-                  <input matInput placeholder="Email Address" matInput type="text" formControlName="member_email">
-                  <mat-error *ngFor="let validation of add_validation_messages.member_email">
-                    <mat-error class="errors" *ngIf="addMemberForm.get('member_email').hasError(validation.type) && (addMemberForm.get('member_email').dirty || addMemberForm.get('member_email').touched)">{{validation.message}}</mat-error>
-                  </mat-error>
-                </mat-form-field>
-                <br />
-
-                <!--Phone Number-->
-                <mat-form-field class="form_inputs" class="col">
-                  <input matInput placeholder="Phone Number" matInput type="number" formControlName="member_phone">
-                  <mat-error *ngFor="let validation of add_validation_messages.member_phone">
-                    <mat-error class="errors" *ngIf="addMemberForm.get('member_phone').hasError(validation.type) && (addMemberForm.get('member_phone').dirty || addMemberForm.get('member_phone').touched)">{{validation.message}}</mat-error>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-
-              <!--Location Field-->
-              <div class="location-input" class="col">
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Location" matInput type="text" formControlName="member_location">
-                </mat-form-field>
-                <br />
-              </div>
-
-              <br />
-              <p *ngIf="loading" class="errors">Adding Member...</p>
-              <br />
-              <div class="submit-input">
-                <input type="submit" id="add_member" class="btn btn-default" value="Add Member" />
-              </div>
-            </div>
-          </form>
-
+        <!-- Member Table -->
+        <div class="member-table table-responsive">
+          <h5> Member Table </h5>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Emaol</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let member of orgMembers">
+                <td>{{member.fname}} </td>
+                <td>{{member.surname}}</td>
+                <td>{{member.email}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </mat-tab>
+        <!-- / Member Table -->
+  
+      </div>
+      <!-- / Member Tables -->
 
-      <!--View Tab Option-->
-      <mat-tab (click)="viewMembers()">
-        <ng-template mat-tab-label>
-          <mat-icon>people</mat-icon>
-          View Members
-        </ng-template>
-        <div class="tab-content">
-          <h2>View Members</h2>
-          <br />
-          <!--Table of all members-->
-          <div class="member-table">
-            <!--Search Filter for the Table-->
-            <div class="search-field">
-              <mat-form-field>
-                <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />
-                <mat-placeholder class="placeholder">Search Member</mat-placeholder>
-                <br />
-              </mat-form-field>
-            </div>
-            <br />
+    <!-- Handler Actions -->
+    <div class="handler-actions">
+      <!-- Action Item -->
+      <div class="action-item" data-toggle="modal" data-target="#addModal">
+        <div class="action-icon">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <div class="action-heading">
+          <h6>Add Member</h6>
+        </div>
+      </div>
+      <!-- / Action Item -->
+    </div>
+    <!-- /Handler Actions -->
 
-            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info" *ngIf="dataSource">
+  </div>
+  <!-- / Dashboard Content -->
 
-              <!-- First Name Column -->
-              <ng-container matColumnDef="First Name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.fname}} </td>
-              </ng-container>
-
-              <!-- Surname Column -->
-              <ng-container matColumnDef="Surname">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Surname </th>
-                <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
-              </ng-container>
-
-              <!-- Email Column -->
-              <ng-container matColumnDef="Email">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-              </ng-container>
-
-              <!-- Action Column -->
-              <ng-container matColumnDef="Action">
-                <th mat-header-cell *matHeaderCellDef> Action </th>
-                <td mat-cell *matCellDef="let element"><button [id]="element.email"
-                    class="btn btn-default">Update</button></td>
-              </ng-container>
-
-              <!-- Remove Column -->
-              <ng-container matColumnDef="Remove">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-                <td mat-cell *matCellDef="let element" (click)="removeMemberPrompt(element)"><button [id]="element.email"
-                  class="btn btn-danger">Remove</button></td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-
-            <!--Pagination Setup-->
-            <!-- <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons *ngIf="dataSource"></mat-paginator> -->
+  <!-- View Staff Modal Section -->
+  <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewModalTitle">View Staff Member</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form">
+            <form class="view-form">
+              <div class="form-row align-items-center">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name" placeholder="Enter name"
+                    onchange="displaySaveButton()" disabled="disabled">
+                </div>
+                <div class="form-group">
+                  <label for="surname">Surname</label>
+                  <input type="text" class="form-control" id="surname" placeholder="Enter surname"
+                    onchange="displaySaveButton()" disabled="disabled">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                    placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Password"
+                    onchange="changedPassword()" disabled="disabled">
+                </div>
+                <div class="form-group" id="confirm-password">
+                  <label for="confirm-password">Confirm Password</label>
+                  <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()"
+                    disabled="disabled">
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-      </mat-tab>
-    </mat-tab-group>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default edit" onclick="editStaffProfile()">Edit</button>
+          <button type="button" class="btn btn-default save" onclick="saveStaffProfileChanges()">Save changes</button>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- / View Staff Modal Section -->
+
+  <!-- Add Staff Modal Section -->
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <!-- Modal Header-->
+        <div class="modal-header">
+          <h5 class="modal-title" id="addModalTitle">Add Staff Member</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <!-- / Modal Header-->
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div class="form">
+
+            <!-- Add Staff Form -->
+            <form id="add_new_member_form" class="needs-validation" novalidate [formGroup]="addMemberForm" (submit)="addMember()">
+              <div class="row">
+
+                <!-- Organization Name -->
+                <div class="form-group">
+                    <label for="organization_name">Organization Name</label>
+                    <input type="text" class="form-control" id="organization_name" placeholder="Organization Name"
+                      (change)="displayProfileSaveBtn()" formControlName="organization_name" value="{{organization}}" disabled>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Organization Name -->
+
+                <!-- Name -->
+                <div class="form-group">
+                  <label for="member_name">Name</label>
+                  <input type="text" class="form-control" id="member_name" placeholder="Enter name"
+                    formControlName="member_name" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Name -->
+
+                <!-- Surname -->
+                <div class="form-group">
+                  <label for="member_surname">Surname</label>
+                  <input type="text" class="form-control" id="member_surname" placeholder="Enter surname"
+                    formControlName="member_surname" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Surname -->
+
+                <!-- Email -->
+                <div class="form-group">
+                  <label for="member_email">Email address</label>
+                  <input type="email" class="form-control" id="member_email" aria-describedby="emailHelp"
+                    placeholder="Enter email" formControlName="member_email" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Email -->
+
+                <!-- Phone -->
+                <div class="form-group">
+                  <label for="member_phone">Phone</label>
+                  <input type="text" class="form-control" id="member_phone" placeholder="Enter phone"
+                    formControlName="member_phone" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Phone -->
+
+                <!-- Location -->
+                <div class="form-group">
+                    <label for="member_location">Location</label>
+                    <input type="text" class="form-control" id="member_location" placeholder="Enter Location"
+                      formControlName="member_location" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Location -->
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-default save">Add Member</button>
+                <!-- / Submit -->
+
+              </div>
+            </form>
+            <!-- / Add Staff Form -->
+
+          </div>
+        </div>
+        <!-- / Modal Body -->
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+
+      </div>
+      <!-- /Modal Footer -->
+
+    </div>
+  </div>
+  <!-- / Add Staff Modal Section -->
+
+  <!-- Delete Staff Confirm Modal Section -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalTitle">Are you sure?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Everything related to this member of staff will be permantely deleted</p>
+          <div class="confirm-actions">
+            <button type="button" class="btn btn-default confirm">Confirm</button>
+            <button type="button" class="btn btn-default cancel">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Delete Staff Confirm Modal Section -->
+
+  <!-- Notification Section -->
+  <div id="notifications">
+    <i class="fas fa-arrow-left" onclick="hideNotifications()"></i>
+    <br />
+    <h3>NOTIFICATIONS</h3>
+    <!-- Notification Items -->
+    <div class="notification-items">
+
+      <!-- Notification Item -->
+      <div class="notification-item">
+        <div class="notification-action">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="notification-heading">
+          <h6>Diagnostic Clinic</h6>
+        </div>
+        <div class="notification-content">
+          <h6>Example notification</h6>
+        </div>
+      </div>
+      <!-- Notification Item -->
+
+      <!-- Notification Item -->
+      <div class="notification-item">
+        <div class="notification-action">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="notification-heading">
+          <h6>Diagnostic Clinic</h6>
+        </div>
+        <div class="notification-content">
+          <h6>Example notification</h6>
+        </div>
+      </div>
+      <!-- Notification Item -->
+
+      <!-- Notification Item -->
+      <div class="notification-item">
+        <div class="notification-action">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="notification-heading">
+          <h6>Diagnostic Clinic</h6>
+        </div>
+        <div class="notification-content">
+          <h6>Example notification</h6>
+        </div>
+      </div>
+      <!-- Notification Item -->
+
+    </div>
+    <!-- Notification Items -->
+    <div class="see-more">
+      <i class="fas fa-ellipsis-h"></i>
+    </div>
+    <!-- / Notification Section -->
+  </div>
+
+  <!-- Profile Section -->
+  <div id="profile">
+    <i class="fas fa-arrow-left" onclick="hideProfile()"></i>
+    <br />
+    <h3>PROFILE</h3>
+    <!-- Profile Details -->
+    <div class="profile-details">
+      <div class="profile-icon">
+        <i class="fas fa-user-circle"></i>
+      </div>
+
+      <div class="form">
+        <form class="profile-form needs-validation" novalidate>
+          <div class="form-row align-items-center">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter name" onchange="displaySaveButton()"
+                required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="surname">Surname</label>
+              <input type="text" class="form-control" id="surname" placeholder="Enter surname"
+                onchange="displaySaveButton()" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
+                onchange="displaySaveButton()" required>
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password"
+                onchange="changedPassword()" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <div class="form-group" id="confirm-password">
+              <label for="confirm-password">Confirm Password</label>
+              <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()"
+                required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <button type="submit" class="btn btn-default" id="save-btn">Save</button>
+          </div>
+          <!-- / Sign up -->
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- / Profile Section -->
+
+  <!-- Help Section -->
+  <div id="help">
+    <i class="fas fa-arrow-left" onclick="hideHelp()"></i>
+    <br />
+    <h3>HELP</h3>
+    <!-- Help Items -->
+    <div class="help-items">
+
+      <!-- Help Item -->
+      <div class="help-item">
+        <div class="help-icon">
+          <i class="fas fa-user-friends"></i>
+        </div>
+        <div class="help-heading">
+          <h6>Members</h6>
+        </div>
+        <div class="help-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <!-- / Help Item -->
+
+      <!-- Help Item -->
+      <div class="help-item">
+        <div class="help-icon">
+          <i class="fas fa-vial"></i>
+        </div>
+        <div class="help-heading">
+          <h6>Samples</h6>
+        </div>
+        <div class="help-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <!-- / Help Item -->
+
+    </div>
+    <!-- Help Items -->
+
+  </div>
+  <!-- / Help Section -->
+
 </div>
+<!-- / Dashboard -->

@@ -1400,6 +1400,8 @@ export class ReportingComponent implements OnInit {
     var currentDate = new Date();
     this.date = ('0' + currentDate.getDate()).slice(-2) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
     this.loadAllLogs();
+
+    this.generateRequestReport();
   }
 
 
