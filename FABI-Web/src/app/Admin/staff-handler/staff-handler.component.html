@@ -163,9 +163,9 @@
               <td>{{staff.surname}}</td>
               <td>{{staff.email}}</td>
               <td class="table-action">
-                <button class="btn btn-default view" data-toggle="modal" data-target="#viewModal" [id]="staff.email">View</button>
+                <button class="btn btn-default view" data-toggle="modal" data-target="#viewModal" [id]="staff.email" (click)="selectStaffMember(staff)">View</button>
                 <button class="btn btn-default delete" data-toggle="modal"
-                  data-target="#confirmDeleteModal" [id]="staff.email" (click)="removeStaffMemberPrompt(element)">Delete</button>
+                  data-target="#confirmDeleteModal" [id]="staff.email" (click)="selectStaffMember(staff)">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -213,7 +213,7 @@
                 <div class="form-group">
                   <label for="name">Name</label>
                   <input type="text" class="form-control" id="name" placeholder="Enter name"
-                    onchange="displaySaveButton()" disabled="disabled" required>
+                    onchange="displaySaveButton()" disabled="disabled" [value]="selectedStaff.name" required>
                   <div class="valid-feedback">
                     Looks good!
                   </div>
@@ -221,7 +221,7 @@
                 <div class="form-group">
                   <label for="surname">Surname</label>
                   <input type="text" class="form-control" id="surname" placeholder="Enter surname"
-                    onchange="displaySaveButton()" disabled="disabled" required>
+                    onchange="displaySaveButton()" disabled="disabled" [value]="selectedStaff.surname" required>
                   <div class="valid-feedback">
                     Looks good!
                   </div>
@@ -229,7 +229,7 @@
                 <div class="form-group">
                   <label for="email">Email address</label>
                   <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                    placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled" required>
+                    placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled" [value]="selectedStaff.email" required>
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                     else.</small>
                   <div class="valid-feedback">
@@ -336,15 +336,14 @@
 
                 <!-- Staff Position Drop Down -->
                 <div class="form-group">
-                  <label for="staff_position">Staff Position</label>
+                  <label for="staff_position">Admin?</label>
                   <select class="form-control form-control-sm" [(ngModel)]="selectedUserType" id="staff_position"
                     formControlName="staff_position" required>
                     <option value="" selected>
-                      Please select a position
+                      Please indicate whether this member is an Admin
                     </option>
-                    <option *ngFor="let userType of userTypes" [value]="userType.Name">
-                      {{userType.Name}}
-                    </option>
+                    <option  value="Yes"> Yes </option>
+                    <option  value="No"> No </option>
                   </select>
                   <div class="valid-feedback">
                     Looks good!
@@ -360,8 +359,8 @@
                     <option value="" selected>
                       Please select an admin type
                     </option>
-                    <option *ngFor="let adminType of adminTypea" [value]="adminType.Name">
-                      {{adminType.Name}}
+                    <option *ngFor="let adminType of adminTypes" [value]="adminType">
+                      {{adminType}}
                     </option>
                   </select>
                   <div class="valid-feedback">
@@ -372,11 +371,11 @@
 
                 <!-- User Privileges Table -->
                 <div class="privileges-table table-responsive">
-                  <h5> User Privileges </h5>
+                  <h5> User Database Privileges </h5>
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">User</th>
+                        <th scope="col">Database</th>
                         <th scope="col">Add</th>
                         <th scope="col">Delete</th>
                         <th scope="col">Update</th>
@@ -384,23 +383,21 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <label>FABI Admin:</label>
-                        </td>
-                        <td>
-                          <input type="checkbox" name="fabi_admin_privileges" value="add">
-                        </td>
-                        <td>
-                          <input type="checkbox" name="fabi_admin_privileges" value="delete">
-                        </td>
-                        <td>
-                          <input type="checkbox" name="fabi_admin_privileges" value="update">
-                        </td>
-                        <td>
-                          <input type="checkbox" name="fabi_admin_privileges" value="view">
-                        </td>
-                      </tr>
+                      <tr *ngFor="let dbName of databaseNames">
+                        <td>{{dbName}}</td>
+                        <td> 
+                            <input type="checkbox" name="{{dbName}}" value="add">
+                          </td>
+                          <td> 
+                            <input type="checkbox" name="{{dbName}}" value="delete">
+                          </td>
+                          <td> 
+                            <input type="checkbox" name="{{dbName}}" value="update">
+                          </td>
+                          <td> 
+                            <input type="checkbox" name="{{dbName}}" value="view" >
+                          </td>
+                     </tr>
                     </tbody>
                   </table>
                 </div>
@@ -444,7 +441,7 @@
         <div class="modal-body">
           <p>Everything related to this member of staff will be permantely deleted</p>
           <div class="confirm-actions">
-            <button type="button" class="btn btn-default confirm">Confirm</button>
+            <button type="button" class="btn btn-default confirm" (click)="removeStaffMember()" >Confirm</button>
             <button type="button" class="btn btn-default cancel">Cancel</button>
           </div>
         </div>
