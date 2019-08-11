@@ -1,91 +1,75 @@
-<div class="container">
-  <section class="login">
-    <div class="background-image"></div>
-    <div class="left">
-      
-      <div id="main_div_login">
-        <div class="col-lg-6 col-md-12 col-sm-12" id="login_information">
-          <h1>WE ARE EXCITED TO WELCOME YOU</h1>
-          <br />
-          <br />
-          <br />
-          <br />
-          <h3>Why do you need to signup?</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique, est at faucibus sodales, nisi
-            est molestie est, eu rhoncus magna dolor at sem. </p>
+<!-- Login -->
+<div class="login">
+  
+  <!-- Login Heading -->
+  <div class="banner"></div>
+  <div class="heading">
+    <h5> Welcome Back,</h5>
+    <h1>Log In!</h1>
+  </div>
+  <!-- / Login Heading -->
+
+  <div class="login-form">
+
+    <!-- Login Form -->
+    <form class="needs-validation" id="login_form" [formGroup]="login_form" (submit)="login()" novalidate>
+
+      <!-- Organization Drop Down -->
+      <div class="form-group">
+        <label for="organization">Organization</label>
+        <select class="form-control form-control-sm" [(ngModel)]="selectedOrg" id="organization" formControlName="organization"
+          required>
+          <option value="" selected>
+            Please select an organization
+          </option>
+          <option *ngFor="let organization of organizations" [value]="organization.orgName">
+            {{organization.orgName}}
+          </option>
+        </select>
+        <div class="valid-feedback">
+          Looks good!
         </div>
       </div>
-    </div>
-        <div class="col-lg-6 col-md-12 col-sm-12" id="login_div" class="right">
-          <h1>LOGIN</h1>
+      <!-- /Organization Drop Down -->
 
-          <!--Login Form-->
-          <form id="login_submit" [formGroup]="loginForm" (submit)="login()">
-
-        <div class="row">
-          <!--Dropdown for Organization selection and Error Handling-->
-          <div class="form-group col-12">
-            <mat-form-field>
-              <mat-label>Organization</mat-label>
-              <mat-select [(ngModel)]="selectedOrg" id="organization" formControlName="organization">
-                <mat-option>--</mat-option>
-                <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
-                  {{organization.orgName}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngFor="let validation of login_validation_messages.organization">
-                <mat-error class="errors" *ngIf="submitted && loginForm.get('organization').hasError(validation.type)" >{{validation.message}}</mat-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <!--Email Address Input and Error Handling-->
-          <div class="form-group col-12">
-            <mat-form-field>
-              <input matInput id="login_email" formControlName="login_email" type="email" required>
-              <mat-placeholder class="placeholder">johndoe@gmail.com</mat-placeholder>
-              <mat-error *ngFor="let validation of login_validation_messages.email">
-                <mat-error class="errors" *ngIf="submitted && loginForm.get('login_email').hasError('required')">{{validation.message}}</mat-error>
-                <mat-error class="errors" *ngIf="loginForm.get('login_email').hasError('pattern') && (loginForm.get('login_email').dirty || loginForm.get('login_email').touched)">{{validation.message}}</mat-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <!--Password Input and Error Handling-->
-          <div class="form-group col-12">
-            <mat-form-field>
-              <input matInput id="login_password" formControlName="login_password" type="password" required>
-              <mat-placeholder class="placeholder">Enter your password</mat-placeholder>
-              <mat-error *ngFor="let validation of login_validation_messages.password">
-                <mat-error class="errors" *ngIf="submitted && loginForm.get('login_password').hasError(validation.type)">{{validation.message}}</mat-error>
-              </mat-error>
-            </mat-form-field>
-              
-            </mat-form-field>
-            <div *ngIf="submitted && loginForm.controls.login_password.errors" class="errors">
-              <div *ngIf="loginForm.controls.login_password.errors.required">Please enter your password</div>
-            </div>
-
-            <br />
-            <p *ngIf="loading" class="errors">Logging In...</p>
-
-            <!--Submit-->
-            <input type="submit" id="continue" class="btn btn-default" value="Login" />
-          </form>
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control form-control-sm" id="email" formControlName="email" aria-describedby="emailHelp"
+          placeholder="Enter email" required>
+        <div class="valid-feedback">
+          Looks good!
         </div>
-  </section>
+      </div>
+      <!-- / Email -->
 
-          </div>
-
-          <!--Loggin in loader-->
-          <p *ngIf="loading" class="errors">Logging In...</p>
-
-
-          <!--Submit-->
-          <input type="submit" class="btn btn-default" value="LOGIN" />
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control form-control-sm" id="password" formControlName="password" placeholder="Password"
+          required>
+        <div class="valid-feedback">
+          Looks good!
         </div>
-      </form>
+        <a href="#" class="forgot-password">Forgot password?</a>
+      </div>
+      <!-- / Password -->
 
-    </div>
+      <!-- Login Button -->
+      <div class="login-action">
+        <button type="submit" id="login" class="btn btn-default">Login</button>
+      </div>
+      <!-- / Login Button -->
+
+    </form>
+    <!-- / Login Form -->
   </div>
+
+  <!-- Sign up -->
+  <div class="sign-up">
+    <a href="#">Not a member? Signup here</a>
+  </div>
+  <!-- / Sign up -->
+
 </div>
+<!-- / Login -->

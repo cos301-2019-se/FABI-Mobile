@@ -1,15 +1,16 @@
 /* ==========================================================================
-   LOGIN PAGE STYLING
+   SIGN UP PAGE STYLING
    ========================================================================== */
 
 
 /* General Styling
    ========================================================================== */
 
-/* Login Styling
+
+/* Sign up Styling
    ========================================================================== */
 
-.login {
+.sign-up {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -18,7 +19,7 @@
     width: 100%;
     min-height: 100vh;
     height: auto;
-    
+
     background-color: #FCFCFC;
 
     position: absolute;
@@ -49,7 +50,7 @@
 /* Width Responsiveness */
 @media (min-width:768px) and (max-width:1199px) {
     .banner {
-        height: 80vh;
+        height: 85vh;
         transform: skewY(-9deg);
     }
 }
@@ -65,7 +66,7 @@
 }
 
 
-/* Login Heading Styling
+/* Sign up Heading Styling
     ========================================================================== */
 .heading {
     width: 100%;
@@ -86,6 +87,12 @@
 }
 
 /* Width Responsiveness */
+@media (min-width:768px) and (max-width:1023px) {
+    .heading {
+        width: 50%;
+    }
+}
+
 @media (min-width:1024px) {
     .heading {
         width: 100%;
@@ -109,7 +116,7 @@
 /* Form Styling
     ========================================================================== */
 
-.login-form {
+.sign-up-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -119,7 +126,7 @@
     min-height: 50vh;
     height: auto;
 
-    margin-top: 80px;
+    margin-top: 150px;
 
     z-index: 0;
 
@@ -129,8 +136,8 @@
 
 /* Width Responsiveness */
 @media (min-width:768px) and (max-width:1023px) {
-    .login-form {
-        margin-top: -250px;
+    .sign-up-form {
+        margin-top: 0;
     }
 }
 
@@ -140,7 +147,7 @@ form {
     align-items: center;
 }
 
-.login-form .form-group {
+.sign-up-form .form-group {
     width: 100%;
 }
 
@@ -216,18 +223,26 @@ a.forgot-password:hover {
         color: #FFF;
     }
 
-    .sign-up a {
+    .login a {
         color: #FFF;
     }
 
-    .sign-up a:hover {
+    .login a:hover {
         color: #FFF;
     }
 }
 
-.login-action {
+.sign-up-action {
     width: 100%;
 }
+
+/* Width Responsiveness */
+@media (min-width:768px) and (max-width:1023px) {
+    .sign-up-action {
+        margin-top: 50px;
+    }
+}
+
 
 /* Form Button Styling */
 .btn.btn-default {
@@ -261,8 +276,9 @@ a.forgot-password:hover {
     transform: scale(1.025);
 }
 
+
 /* Width Responsiveness */
-@media (min-width:768px) {
+@media (min-width:1023px) {
     .btn.btn-default {
         color: #FFF;
 
@@ -281,10 +297,10 @@ a.forgot-password:hover {
 }
 
 
-/* Not a Member - Sign Up Styling
+/* Already a Member - Login Styling
     ========================================================================== */
 
-.sign-up {
+.login {
     display: flex;
     justify-content: center;
     align-items: center;

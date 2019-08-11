@@ -62,6 +62,8 @@ import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
 import { MapsWindowComponent } from './maps-window/maps-window.component';
 
 import { config } from "../environments/environment.prod";
+import { SignUpRequestComponent } from './sign-up-request/sign-up-request.component';
+import { CmwMenuComponent } from './Staff/cmw-menu/cmw-menu.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +101,9 @@ import { config } from "../environments/environment.prod";
     StaffProfileComponent,
     ViewFormsComponent,
     ReportingComponent,
-    MapsWindowComponent
+    MapsWindowComponent,
+    SignUpRequestComponent,
+    CmwMenuComponent
   ],
   entryComponents: [
     ConfirmComponent,
