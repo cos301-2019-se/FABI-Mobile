@@ -62,6 +62,8 @@ export class OrganizationHandlerComponent implements OnInit {
   selectedOrg: Interface.Organisation = {orgName: "", admin: {fname: "", surname: "", email: ""}};
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
+  /** The total number of Organization - @type {number} */           
+  numberOfOrganizations: number = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -675,7 +677,10 @@ export class OrganizationHandlerComponent implements OnInit {
     this.userManagementService.getAllOrganizations().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
-        console.log(this.organizations);
+        
+        //Store the total number of organizations for the statistics 
+        this.numberOfOrganizations = this.organizations.length;
+        
         this.dataSource = new MatTableDataSource(this.organizations);
         this.dataSource.paginator = this.paginator;
 
