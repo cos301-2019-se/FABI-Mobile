@@ -201,8 +201,7 @@ export class StaffHandlerComponent implements OnInit {
       admin_type: '',
       admin_password: '',
       admin_confirm: ''
-    }), 
-    )  { 
+    })
 
     const formControls = this.privileges.map(control => new FormControl(false));
 
@@ -224,7 +223,7 @@ export class StaffHandlerComponent implements OnInit {
       database_privileges: new FormArray(formControls),
 
     })
-  }
+  };
 
 
   
@@ -624,9 +623,9 @@ getAdminTypes() {
 
       var boxes = document.getElementsByName(`${name}`);
         for(var i = 0; i < document.getElementsByName(`${name}`).length; i++) {
-          if(boxes[i].checked = true) {
+          // if(boxes[i].checked = true) {
 
-          }
+          // }
         }
       
     }); 

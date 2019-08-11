@@ -417,48 +417,8 @@
           </div>
         </div>
         <!-- / Modal Body -->
-            <h2>PRIVILEGES</h2>
-            <!--  PRIVILEGES -->
-            <div>
-              <!--  USER PRIVILEGES -->
-              <!-- <div>
-
-                
-              
-
-                 <h3>USERS</h3>
-                <table>
-                  <tr>
-                    <th></th>
-                    <th> Add </th>
-                    <th>Delete </th>
-                    <th>Update</th>
-                    <th>View</th>
-                  </tr>
-                  <tr >
-                    <td><label>FABI Admin: </label></td>
-                    <td formArrayName="fabi_admin_privileges" *ngFor="let privilege of addStaffForm.controls.fabi_admin_privileges.controls; let i = index">
-                      <input type="checkbox" [formControlName]="i" value="privilege[i].value">
-                    </td>
-                  </tr>
-
-                  <tr >
-                    <td><label>FABI Staff:</label></td>
-                    <td formArrayName="fabi_admin_privileges" *ngFor="let privilege of addStaffForm.controls.fabi_admin_privileges.controls; let i = index">
-                      <input type="checkbox" [formControlName]="i" value="privilege[i].value">
-                    </td>
-                  </tr>
-
-                  <tr >
-                    <td><label>Organization Members:</label></td>
-                    <td formArrayName="fabi_admin_privileges" *ngFor="let privilege of addStaffForm.controls.fabi_admin_privileges.controls; let i = index">
-                      <input type="checkbox" [formControlName]="i" value="privilege[i].value">
-                    </td>
-                  </tr>
-                </table> 
 
       </div>
-              </div> -->
 
       <!-- Modal Footer -->
       <div class="modal-footer">
@@ -565,33 +525,6 @@
                 (change)="displayProfileSaveBtn()" formControlName="admin_surname" value="{{surname}}" required>
               <div class="valid-feedback">
                 Looks good!
-              <!--  DATABASE PRIVILEGES -->
-              <div>
-                  <h3>DATABASES</h3>
-                  <table >
-                    <tr>
-                      <th></th>
-                      <th>Add Data</th>
-                      <th>Delete Data</th>
-                      <th>Update Data</th>
-                      <th>View Data</th>
-                    </tr>
-                    <tr *ngFor="let dbName of databaseNames">
-                        <td>{{dbName}}</td>
-                        <td> 
-                            <input type="checkbox" name="{{dbName}}" value="add">
-                          </td>
-                          <td> 
-                            <input type="checkbox" name="{{dbName}}" value="delete">
-                          </td>
-                          <td> 
-                            <input type="checkbox" name="{{dbName}}" value="update">
-                          </td>
-                          <td> 
-                            <input type="checkbox" name="{{dbName}}" value="view" >
-                          </td>
-                     </tr>
-                  </table>
               </div>
             </div>
             <!-- / Surname -->
@@ -607,47 +540,6 @@
               </div>
             </div>
             <!-- / Email -->
-              <!--  CLINIC PRIVILEGES -->
-              <!-- <div>
-              <h3>CLINIC</h3>
-                  <table id="databasesTable">
-                    <tr>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <td>
-                          <label>Submit CMW Deposit Form</label>
-                      </td>
-                      <td>
-                          <input type="checkbox" name="clinic_privileges" value="submit_cmw_deposit">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                          <label>Submit CMW Request Form</label>
-                      </td>
-                      <td>
-                          <input type="checkbox" name="clinic_privileges" value="submit_cmw_request">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                          <label>Submit CMW Revitalization Form</label>
-                      </td>
-                      <td>
-                          <input type="checkbox" name="clinic_privileges" value="submit_cmw_revitalization">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                          <label>Generate CMW Report</label>
-                      </td>
-                      <td>
-                          <input type="checkbox" name="clinic_privileges" value="generate_cmw_report">
-                      </td>
-                    </tr>
-                  </table>
 
             <!-- User Type -->
             <div class="form-group">
@@ -670,10 +562,6 @@
               </div>
             </div>
             <!-- / Password -->
-            </div> -->
-          
-          
-          </form>
 
             <!-- ConfirmPassword -->
             <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
