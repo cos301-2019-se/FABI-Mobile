@@ -158,12 +158,11 @@
 
               <div class="position-inputs">
                 <mat-form-field class="form-inputs" class="col">
-                  <mat-label>Staff Position</mat-label>
-                  <mat-select [(ngModel)]="selectedUserType" id="staff_position" formControlName="staff_position">
+                  <mat-label>Admin</mat-label>
+                  <mat-select [(value)]="selectedUserType" id="staff_position" formControlName="staff_position">
                     <mat-option>--</mat-option>
-                    <mat-option *ngFor="let userType of userTypes" [value]="userType.Name">
-                      {{userType.Name}}
-                    </mat-option>
+                    <mat-option value="Yes">Yes</mat-option>
+                    <mat-option value="No">No</mat-option>
                   </mat-select>
                   <mat-error *ngFor="let validation of add_validation_messages.staff_position">
                     <mat-error class="errors" *ngIf="addStaffForm.get('staff_position').hasError(validation.type) && (addStaffForm.get('staff_position').dirty || addStaffForm.get('staff_position').touched)">{{validation.message}}</mat-error>
@@ -174,10 +173,10 @@
               <div class="position-inputs">
                   <mat-form-field class="form-inputs" class="col">
                     <mat-label>Admin Type</mat-label>
-                    <mat-select [(ngModel)]="selectedAdminType" id="admin_type" formControlName="admin_type">
+                    <mat-select [(ngModel)]="selectedAdminType" id="admin_type" formControlName="admin_type" >
                       <mat-option>--</mat-option>
-                      <mat-option *ngFor="let adminType of adminTypea" [value]="adminType.Name">
-                        {{adminType.Name}}
+                      <mat-option *ngFor="let adminType of adminTypes" [value]="adminType" (select)="selectAdminType()" >
+                        {{adminType}}
                       </mat-option>
                     </mat-select>
                     <mat-error *ngFor="let validation of add_validation_messages.admin_type">
@@ -198,8 +197,12 @@
             <!--  PRIVILEGES -->
             <div>
               <!--  USER PRIVILEGES -->
-              <div>
-                <h3>USERS</h3>
+              <!-- <div>
+
+                
+              
+
+                 <h3>USERS</h3>
                 <table>
                   <tr>
                     <th></th>
@@ -208,38 +211,102 @@
                     <th>Update</th>
                     <th>View</th>
                   </tr>
-                  <tr>
-                    <td>
-                        <label>FABI Admin:</label>
+                  <tr >
+                    <td><label>FABI Admin: </label></td>
+                    <td formArrayName="fabi_admin_privileges" *ngFor="let privilege of addStaffForm.controls.fabi_admin_privileges.controls; let i = index">
+                      <input type="checkbox" [formControlName]="i" value="privilege[i].value">
                     </td>
-                    <td> 
-                      <input type="checkbox" name="fabi_admin_privileges" value="add">
-                    </td>
-                    <td> 
-                      <input type="checkbox" name="fabi_admin_privileges" value="delete">
-                    </td>
-                    <td> 
-                      <input type="checkbox" name="fabi_admin_privileges" value="update">
-                    </td>
-                    <td> 
-                      <input type="checkbox" name="fabi_admin_privileges" value="view" >
-                    </td>
-                </tr>
+                  </tr>
 
-                </table>
+                  <tr >
+                    <td><label>FABI Staff:</label></td>
+                    <td formArrayName="fabi_admin_privileges" *ngFor="let privilege of addStaffForm.controls.fabi_admin_privileges.controls; let i = index">
+                      <input type="checkbox" [formControlName]="i" value="privilege[i].value">
+                    </td>
+                  </tr>
 
-              </div>
+                  <tr >
+                    <td><label>Organization Members:</label></td>
+                    <td formArrayName="fabi_admin_privileges" *ngFor="let privilege of addStaffForm.controls.fabi_admin_privileges.controls; let i = index">
+                      <input type="checkbox" [formControlName]="i" value="privilege[i].value">
+                    </td>
+                  </tr>
+                </table> 
+
+              </div> -->
 
               <!--  DATABASE PRIVILEGES -->
               <div>
+                  <h3>DATABASES</h3>
+                  <table >
+                    <tr>
+                      <th></th>
+                      <th>Add Data</th>
+                      <th>Delete Data</th>
+                      <th>Update Data</th>
+                      <th>View Data</th>
+                    </tr>
+                    <tr *ngFor="let dbName of databaseNames">
+                        <td>{{dbName}}</td>
+                        <td> 
+                            <input type="checkbox" name="{{dbName}}" value="add">
+                          </td>
+                          <td> 
+                            <input type="checkbox" name="{{dbName}}" value="delete">
+                          </td>
+                          <td> 
+                            <input type="checkbox" name="{{dbName}}" value="update">
+                          </td>
+                          <td> 
+                            <input type="checkbox" name="{{dbName}}" value="view" >
+                          </td>
+                     </tr>
+                  </table>
               </div>
 
               <!--  CLINIC PRIVILEGES -->
-              <div>
-              </div>
+              <!-- <div>
+              <h3>CLINIC</h3>
+                  <table id="databasesTable">
+                    <tr>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                    <tr>
+                      <td>
+                          <label>Submit CMW Deposit Form</label>
+                      </td>
+                      <td>
+                          <input type="checkbox" name="clinic_privileges" value="submit_cmw_deposit">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <label>Submit CMW Request Form</label>
+                      </td>
+                      <td>
+                          <input type="checkbox" name="clinic_privileges" value="submit_cmw_request">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <label>Submit CMW Revitalization Form</label>
+                      </td>
+                      <td>
+                          <input type="checkbox" name="clinic_privileges" value="submit_cmw_revitalization">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <label>Generate CMW Report</label>
+                      </td>
+                      <td>
+                          <input type="checkbox" name="clinic_privileges" value="generate_cmw_report">
+                      </td>
+                    </tr>
+                  </table>
 
-
-            </div>
+            </div> -->
           
           
           </form>
