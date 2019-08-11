@@ -38,7 +38,9 @@ export class LoginComponent implements OnInit {
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /** Object for defining the login form -  @type {FormGroup} */
-  loginForm: FormGroup;
+  login_form: FormGroup;
+  /** Object for storing all forms that require validation-  @type {HTMLCollectionOf<Element>} */
+  forms: HTMLCollectionOf<Element> = null;
   /** To check if form has been submitted - @type {boolean} */
   submitted: boolean = false;
   /** To check if form has been submitted correctly - @type {boolean} */
@@ -100,13 +102,13 @@ export class LoginComponent implements OnInit {
     //   var organization = '';
     // }
 
-    this.loginForm = this.formBuilder.group({
+    this.login_form = this.formBuilder.group({
       organization: ['', Validators.required],
-      login_email: ['',Validators.compose([
+      email: ['',Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
-      login_password: ['', Validators.required]
+      password: ['', Validators.required]
     })
   }
 
@@ -126,7 +128,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
 
     // Check if form input is valid 
-    if (this.loginForm.invalid) {
+    if (this.login_form.invalid) {
       return;
     }
 
@@ -134,9 +136,9 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     // Get form details
-    const Lemail = this.loginForm.controls.login_email.value;
-    const Lpassw = this.loginForm.controls.login_password.value;
-    const Lorg = this.loginForm.controls.organization.value;
+    const Lemail = this.login_form.controls.email.value;
+    const Lpassw = this.login_form.controls.password.value;
+    const Lorg = this.login_form.controls.organization.value;
 
     // User details to be passed to API
     const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
@@ -226,6 +228,24 @@ export class LoginComponent implements OnInit {
       }
     });
 
-  }
+    //-------- Form Validation --------
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    this.forms = document.getElementsByClassName("needs-validation");
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(this.forms, function(form) {
+      form.addEventListener(
+        "submit",
+        function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+    
+  }  
 
 }
