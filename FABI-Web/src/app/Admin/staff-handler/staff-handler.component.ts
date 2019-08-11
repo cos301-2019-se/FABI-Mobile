@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 9th 2019
+ * Last Modified: Sunday, August 11th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -18,7 +18,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {ViewEncapsulation} from '@angular/core';
 
 import { AuthenticationService } from '../../_services/authentication.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
@@ -34,7 +34,6 @@ import * as Interface from '../../_interfaces/interfaces';
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
-import { DISABLED } from '@angular/forms/src/model';
 
 
 @Component({
@@ -91,6 +90,34 @@ export class StaffHandlerComponent implements OnInit {
   /** THe number of the notifications - @type {number} */   
   localNotificationNumber : number = 1;
 
+  adminTypes: any[];
+
+  databaseNames: any[];
+
+  privileges: any = [
+    {
+      name: "Add",
+      value: "add",
+      selected: false
+    },
+    {
+      name: "Delete",
+      value: "delete",
+      selected: false
+    },
+    {
+      name: "Update",
+      value: "update",
+      selected: false
+    },
+    {
+      name: "View",
+      value: "view",
+      selected: false
+    }
+  ];
+  
+
   add_validation_messages = {
     'staff_email': [
       { type: 'required', message: 'Email is required' },
@@ -139,6 +166,9 @@ export class StaffHandlerComponent implements OnInit {
     private userManagementService: UserManagementAPIService, 
     private notificationLoggingService: NotificationLoggingService
     )  { 
+
+    const formControls = this.privileges.map(control => new FormControl(false));
+
     this.addStaffForm = this.formBuilder.group({
       staff_name: ['', Validators.required],
       staff_surname: ['', Validators.required],
@@ -151,7 +181,11 @@ export class StaffHandlerComponent implements OnInit {
         // Validators.pattern('')
       ])],
       staff_position: ['', Validators.required],
-      admin_type: ['', Validators.required]
+      admin_type: ['', Validators.required],
+      fabi_admin_privileges: new FormArray(formControls),
+      fabi_staff_privileges: new FormArray(formControls),
+      database_privileges: new FormArray(formControls),
+
     })
   }
 
@@ -186,7 +220,11 @@ export class StaffHandlerComponent implements OnInit {
     this.displayUserTypes();
     this.viewStaff();
     this.loadNotifications();
+
     this.addStaffForm.get('admin_type').disable();
+    
+    this.getAdminTypes();
+    this.getDBNames();
     this.onChanges();
 
     const user2 = this.authService.getCurrentUserValue;
@@ -196,14 +234,55 @@ export class StaffHandlerComponent implements OnInit {
   onChanges() {
     this.addStaffForm.get('staff_position').valueChanges
     .subscribe(selectedStaffPosition => {
-      console.log("---------- HERE HERE -----------");
-        if (selectedStaffPosition == 'Admin') {
+      
+        if (selectedStaffPosition == 'Yes') {
+          console.log("---------- HERE HERE -----------");
             this.addStaffForm.get('admin_type').enable();
         } else {
           this.addStaffForm.get('admin_type').reset();
           this.addStaffForm.get('admin_type').disable();
         }
     });
+}
+
+getDBNames() {
+  this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
+    if (response.success == true && response.code == 200) {
+      console.log(response);
+      this.databaseNames = response.data.docs;
+
+      // this.databaseNames.forEach(name => {
+      //   document.getElementById("databasesTable").innerHTML = `<tr> <td>${name}</td> <td><input type="checkbox" name="${name}" value="add"></td> <td><input type="checkbox" name="${name}" value="delete"></td> <td><input type="checkbox" name="${name}" value="update"></td>  <td><input type="checkbox" name="${name}" value="view"></td> </tr>`;
+        
+      // });
+      
+    } else if (response.success == false) {
+      //POPUP MESSAGE
+      let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Database Names", message: response.message, retry: true } });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result == "Retry") {
+          this.getDBNames();
+        }
+      })
+    }
+  });
+}
+
+getAdminTypes() {
+  this.userManagementService.getFABIAdminTypes().subscribe( (response:any) => {
+    if (response.success == true && response.code == 200) {
+      this.adminTypes = response.data.adminTypes;
+      this.onChanges();
+    } else if (response.success == false) {
+      //POPUP MESSAGE
+      let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Admin Types", message: response.message, retry: true } });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result == "Retry") {
+          this.getAdminTypes();
+        }
+      })
+    }
+  });
 }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -510,9 +589,21 @@ export class StaffHandlerComponent implements OnInit {
     const LstaffSurname = this.addStaffForm.controls.staff_surname.value;
     const LstaffEmail = this.addStaffForm.controls.staff_email.value;
     const LstaffPhone = this.addStaffForm.controls.staff_phone.value;
-    const LstaffPosition = this.addStaffForm.controls.staff_position.value;
+    const LstaffPosition = this.addStaffForm.controls.admin_type.value;
 
     const staff_details: Interface.StaffInfo = { name: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition};
+
+    var databsePrivileges : Interface.DatabasePrivilege[];
+    this.databaseNames.forEach(name => {
+
+      var boxes = document.getElementsByName(`${name}`);
+        for(var i = 0; i < document.getElementsByName(`${name}`).length; i++) {
+          if(boxes[i].checked = true) {
+
+          }
+        }
+      
+    }); 
 
     this.userManagementService.addStaffMember(staff_details).subscribe((response: any) => {
       
@@ -560,7 +651,7 @@ export class StaffHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeStaffMemberPrompt(member: Interface.StaffInfo) {    
-    const staffDetails = member.fname + " " + member.surname + " " + member.email;
+    const staffDetails = member.name + " " + member.surname + " " + member.email;
 
     let dialogRef = this.dialog.open(ConfirmComponent, {
       data: {

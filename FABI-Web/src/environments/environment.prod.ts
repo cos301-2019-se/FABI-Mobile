@@ -8,6 +8,7 @@ export const config = {
   userManagementURL: "***REMOVED***",
   cultureClinicURL: "***REMOVED***",
   logsURL: "***REMOVED***",
-  APIKEy: '***REMOVED***',
   diagnosticClinicURL: "***REMOVED***",
+  
+  APIKEy: '***REMOVED***'
 }
