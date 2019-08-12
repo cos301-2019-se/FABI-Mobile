@@ -158,12 +158,16 @@ export class ViewFormsComponent implements OnInit {
 
   /** Holds the input element (processFormShow) from the HTML page - @type {ElementRef} */
   @ViewChild("processFormShow") processFormShow : ElementRef;
+  /** Holds the input element (associatedDepositForm) from the HTML page - @type {ElementRef} */
+  @ViewChild("associatedDepositForm") associatedDepositForm : ElementRef;
 
   /** The name and surname of a user concatenated as a string - @type {string} */   
   user1: string;
   /** The name and surname of a user concatenated as a string - @type {string} */   
   user2: string;
 
+  /** The user id in the deposit process form - @type {string} */   
+  userIDProcessed: string;
   /** The status of the culture in the deposit process form - @type {string} */   
   statusOfCulture: string;
   /** The agar slants in the deposit process form - @type {string} */   
@@ -184,8 +188,10 @@ export class ViewFormsComponent implements OnInit {
   dateOfCollectionValidation: string;
   /** The microscope slide in the deposit process form - @type {string} */   
   microscopeSlides: string;
-  /** The date subitted in the deposit process form - @type {string} */   
+  /** The date submitted in the deposit process form - @type {string} */   
   dateSubmittedProcessedForm: string;
+  /** The culture number in the deposit process form - @type {string} */   
+  cmwCultureNumberProcessed: string;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -351,7 +357,7 @@ export class ViewFormsComponent implements OnInit {
         }
 
         this.processedFormNumber = 0;
-        // this.loadNextRevitalizationForm();
+        this.loadNextProcessedForm();
       }
       else{
         //Error handling
@@ -640,6 +646,101 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_NEXT_PROCESSED_FORM
+  /**
+   *  This function will be used to load the individual processed forms
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadNextProcessedForm(){
+    if(this.processedFormNumber != 0){
+      if(this.processedFormNumber == this.processedForms.length - 1){
+        this.processedFormNumber = 0;
+      }
+      else if(this.processedFormNumber == this.processedForms.length){
+        this.processedFormNumber = 0;
+      }
+      else{
+        this.processedFormNumber += 1;
+      }
+    }
+
+    var tempProcessed = this.processedForms[this.processedFormNumber];
+
+    this.loadUserDetailsProcessed("FABI", tempProcessed.userID);
+    this.statusOfCulture = tempProcessed.statusOfCulture;
+    this.agarSlants = tempProcessed.agarSlants;
+    this.water = tempProcessed.water;
+    this.oil = tempProcessed.oil;
+    this.roomTemperature = tempProcessed.roomTemperature;
+    this.c18 = tempProcessed.c18;
+    this.freezeDried = tempProcessed.freezeDried;
+    this.freeze = tempProcessed.freeze;
+    this.dateOfCollectionValidation = tempProcessed.dateOfCollectionValidation;
+    this.microscopeSlides = tempProcessed.microscopeSlides;
+    this.dateSubmittedProcessedForm = tempProcessed.dateSubmittedProcessedForm;
+    this.cmwCultureNumberProcessed = tempProcessed.cultureCollectionNumber;
+
+    if(this.processedFormNumber == 0){
+      this.processedFormNumber += 1;
+    }
+
+    this.ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 100);
+
+    this.loadNextDepositForm();
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_PREVIOUS_PROCESSED_FORM
+  /**
+   *  This function will be used to load the individual processed forms
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadPreviousProcessedForm(){
+    if(this.processedFormNumber != this.processedForms.length){
+      if(this.processedFormNumber == 0){
+        this.processedFormNumber = this.processedForms.length - 1;
+      }
+      else{
+        this.processedFormNumber -= 1;
+      }
+    }
+
+    var tempProcessed = this.processedForms[this.processedFormNumber];
+
+    this.loadUserDetailsProcessed("FABI", tempProcessed.userID);
+    this.statusOfCulture = tempProcessed.statusOfCulture;
+    this.agarSlants = tempProcessed.agarSlants;
+    this.water = tempProcessed.water;
+    this.oil = tempProcessed.oil;
+    this.roomTemperature = tempProcessed.roomTemperature;
+    this.c18 = tempProcessed.c18;
+    this.freezeDried = tempProcessed.freezeDried;
+    this.freeze = tempProcessed.freeze;
+    this.dateOfCollectionValidation = tempProcessed.dateOfCollectionValidation;
+    this.microscopeSlides = tempProcessed.microscopeSlides;
+    this.dateSubmittedProcessedForm = tempProcessed.dateSubmittedProcessedForm;
+    this.cmwCultureNumberProcessed = tempProcessed.cultureCollectionNumber;
+
+    if(this.processedFormNumber == this.processedForms.length){
+      this.processedFormNumber -= 1;
+    }
+
+    this.ref.detach();
+    setInterval(() => {
+      this.ref.detectChanges();
+    }, 100);
+
+    this.loadPreviousDepositForm();
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_USER_DETAILS_DEPOSIT
   /**
    *  This function will be called so that the information of a specific user can be fetched
@@ -709,6 +810,30 @@ export class ViewFormsComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  LOAD_USER_DETAILS_PROCESSED
+  /**
+   *  This function will be called so that the information of a specific user can be fetched
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadUserDetailsProcessed(userOrganization: string, userID: string) {
+    //Making a call to the User Management API Service to retrieve a specific users details
+    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
+      if(response.success == true){
+        //Temporarily holds the data returned from the API call
+        const data = response.data;
+
+        //Returns the users name and surname as a connected string
+        this.userIDProcessed = data.fname + ' ' + data.surname;
+      } 
+      else{
+        //Error control
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_USER_DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
@@ -741,6 +866,30 @@ export class ViewFormsComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   showProcessForm(){
     this.renderer.setStyle(this.processFormShow.nativeElement, 'display', 'block');
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  VIEW_ASSOCIATED_DEPOSIT_FORM
+  /**
+   *  This function will be called so that the deposit form associated with the process form on the screen, can be displayed.
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  viewAssociatedDepositForm(){
+    this.renderer.setStyle(this.associatedDepositForm.nativeElement, 'display', 'block');
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  HIDE_ASSOCIATED_DEPOSIT_FORM
+  /**
+   *  This function will be called so that the deposit form associated with the process form on the screen, can be hidden.
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  hideAssociatedDepositForm(){
+    this.renderer.setStyle(this.associatedDepositForm.nativeElement, 'display', 'none');
   }
 
 
@@ -1182,7 +1331,7 @@ export class ViewFormsComponent implements OnInit {
    * This function is called when the page loads
    * 
    * @description 1. Call loadNotifications() | 2. Call loadDepositForms() | 3. Call getAllRequestForms() |
-   *              4. Call getAllRevitalizationForms()
+   *              4. Call getAllRevitalizationForms() | 5. Call getAllProcessedForm()
    * 
    * @memberof ViewFormsComponent
    */
@@ -1193,6 +1342,7 @@ export class ViewFormsComponent implements OnInit {
     this.getAllDepositForms();
     this.getAllRequestForms();
     this.getAllRevitalizationForms();
+    this.getAllProcessedForms();
   }
 
 
