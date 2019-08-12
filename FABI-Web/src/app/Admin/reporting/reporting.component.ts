@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 9th 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -190,6 +190,8 @@ export class ReportingComponent implements OnInit {
   helpTab: boolean = false;
 
   /** The name and surname of a user concatenated as a string - @type {string} */   
+  user: string;
+  /** The name and surname of a user concatenated as a string - @type {string} */   
   user1: string;
   /** The name and surname of a user concatenated as a string - @type {string} */   
   user2: string;
@@ -215,7 +217,7 @@ export class ReportingComponent implements OnInit {
   adminProfileForm: FormGroup;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                             CONSTRUCTOR
+  //                                                       CONSTRUCTOR
   /**
    * Creates an instance of ReportingComponent.
    * 
@@ -251,69 +253,31 @@ export class ReportingComponent implements OnInit {
     }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS
+  //                                                  LOAD USER DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails(userOrganization: string, userID: string) {
+  loadUserDetails(userOrganization: string, userID: string, type: string) {
     //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        //Returns the users name and surname as a connected string
-        return data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS1
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   * 
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails1(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        this.user1 = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS2
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   * 
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails2(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        this.user2 = data.fname + ' ' + data.surname;
+        if(type == 'user1'){
+          //Sets the users name and surname as a connected string
+          this.user1 = data.fname + ' ' + data.surname;
+        }
+        else if(type == 'user2'){
+          //Sets the users name and surname as a connected string
+          this.user2 = data.fname + ' ' + data.surname;
+        }
+        else if(type == 'none'){
+          //Returns the users name and surname as a connected string
+          this.user = data.fname + ' ' + data.surname;
+        }
       } 
       else{
         //Error control
@@ -323,7 +287,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_ALL_LOGS
+  //                                                  LOAD ALL LOGS
   /**
    *  This function will be called so that all the logs can be fetched and inserted into a table
    *  on the HTML page.
@@ -355,8 +319,10 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          tempArray.push(this.loadUserDetails(data[i].org2, data[i].details));
-          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+          this.loadUserDetails(data[i].org2, data[i].details, 'none');
+          tempArray.push(this.user);
+          this.loadUserDetails(data[i].org1, data[i].user, 'none');
+          tempArray.push(this.user);
 
           this.userLogsArray.push(tempArray);
         }
@@ -391,7 +357,8 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+          this.loadUserDetails(data[i].org1, data[i].user, 'none');
+          tempArray.push(this.user);
 
           tempArray.push(data[i].details);
 
@@ -417,7 +384,8 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+          this.loadUserDetails(data[i].org1, data[i].user, 'none');
+          tempArray.push(this.user);
 
           tempArray.push(data[i].moreInfo);
 
@@ -444,7 +412,8 @@ export class ReportingComponent implements OnInit {
           tempArray.push(data[i].details);
 
           //Fetch user information
-          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+          this.loadUserDetails(data[i].org1, data[i].user, 'none');
+          tempArray.push(this.user);
 
           this.errorLogsArray.push(tempArray);
         }
@@ -477,7 +446,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  GENERATE_ERROR_REPORT
+  //                                                  GENERATE ERROR REPORT
   /**
    *  This function will be used to generate the error report and display it on screen
    *  @memberof ReportingComponent
@@ -501,7 +470,8 @@ export class ReportingComponent implements OnInit {
           tempArray.push(data[i].details);
 
           //Fetch user information
-          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+          this.loadUserDetails(data[i].org1, data[i].user, 'none');
+          tempArray.push(this.user);
 
           this.errorLogsArray.push(tempArray);
         }
@@ -514,7 +484,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  DOWNLOAD_ERROR_REPORT
+  //                                                  DOWNLOAD ERROR REPORT
   /**
    *  This function will be used to download the error report that is displayed on screen as a PDF document.
    *  @memberof ReportingComponent
@@ -538,7 +508,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  GENERATE_REQUEST_REPORT
+  //                                                  GENERATE REQUEST REPORT
   /**
    *  This function will be used to generate the request report and display it on screen
    *  @memberof ReportingComponent
@@ -561,7 +531,8 @@ export class ReportingComponent implements OnInit {
             if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
               
-              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              this.loadUserDetails('FABI', data[j].userID, 'none');
+              tempArray.push(this.user);
               tempArray.push(data[j].requestor);
               tempArray.push(data[j].cultureNumber);
               tempArray.push(data[j].taxonName);
@@ -581,8 +552,9 @@ export class ReportingComponent implements OnInit {
 
                 if(day >= dayFrom){
                   var tempArray: any = [];
-              
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  
+                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  tempArray.push(this.user);
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].taxonName);
@@ -602,8 +574,9 @@ export class ReportingComponent implements OnInit {
 
                 if(day <= dayTo){
                   var tempArray: any = [];
-              
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  
+                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  tempArray.push(this.user);
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].taxonName);
@@ -617,8 +590,9 @@ export class ReportingComponent implements OnInit {
 
               if(month >= monthFrom && month <= monthTo){
                 var tempArray: any = [];
-              
-                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                
+                this.loadUserDetails('FABI', data[j].userID, 'none');
+                tempArray.push(this.user);
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
                 tempArray.push(data[j].taxonName);
@@ -635,7 +609,8 @@ export class ReportingComponent implements OnInit {
           for(var i = 0; i < data.length; i++){
             var tempArray: any = [];
             
-            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
+            this.loadUserDetails('FABI', data[i].userID, 'none');
+            tempArray.push(this.user);
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
             tempArray.push(data[i].taxonName);
@@ -659,7 +634,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  DOWNLOAD_REQUEST_REPORT
+  //                                                  DOWNLOAD REQUEST REPORT
   /**
    *  This function will be used to download the request report that is displayed on screen as a PDF document.
    *  @memberof ReportingComponent
@@ -683,7 +658,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  GENERATEE_DEPOSIT_REPORT
+  //                                                  GENERATE DEPOSIT REPORT
   /**
    *  This function will be used to generate the deposit report and display it on screen
    *  @memberof ReportingComponent
@@ -706,7 +681,8 @@ export class ReportingComponent implements OnInit {
             if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
               
-              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              this.loadUserDetails('FABI', data[j].userID, 'none');
+              tempArray.push(this.user);
               tempArray.push(data[j].cmwCultureNumber);
               tempArray.push(data[j].name);
               tempArray.push(data[j].collectedBy);
@@ -727,8 +703,9 @@ export class ReportingComponent implements OnInit {
 
                 if(day >= dayFrom){
                   var tempArray: any = [];
-              
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  
+                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  tempArray.push(this.user);
                   tempArray.push(data[j].cmwCultureNumber);
                   tempArray.push(data[j].name);
                   tempArray.push(data[j].collectedBy);
@@ -749,8 +726,9 @@ export class ReportingComponent implements OnInit {
 
                 if(day <= dayTo){
                   var tempArray: any = [];
-              
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  
+                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  tempArray.push(this.user);
                   tempArray.push(data[j].cmwCultureNumber);
                   tempArray.push(data[j].name);
                   tempArray.push(data[j].collectedBy);
@@ -765,8 +743,9 @@ export class ReportingComponent implements OnInit {
 
               if(month >= monthFrom && month <= monthTo){
                 var tempArray: any = [];
-              
-                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                
+                this.loadUserDetails('FABI', data[j].userID, 'none');
+                tempArray.push(this.user);
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
                 tempArray.push(data[j].taxonName);
@@ -783,7 +762,8 @@ export class ReportingComponent implements OnInit {
           for(var i = 0; i < data.length; i++){
             var tempArray: any = [];
             
-            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
+            this.loadUserDetails('FABI', data[i].userID, 'none');
+            tempArray.push(this.user);
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
             tempArray.push(data[i].taxonName);
@@ -807,7 +787,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  DOWNLOAD_DEPOSIT_REPORT
+  //                                                  DOWNLOAD DEPOSIT REPORT
   /**
    *  This function will be used to download the deposit report that is displayed on screen as a PDF document.
    *  @memberof ReportingComponent
@@ -831,7 +811,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  GENERATE_REVITALIZATION_REPORT
+  //                                                  GENERATE REVITALIZATION REPORT
   /**
    *  This function will be used to generate the revitalization report and display it on screen
    *  @memberof ReportingComponent
@@ -854,7 +834,8 @@ export class ReportingComponent implements OnInit {
             if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
               
-              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              this.loadUserDetails('FABI', data[j].userID, 'none');
+              tempArray.push(this.user);
               tempArray.push(data[j].requestor);
               tempArray.push(data[j].cultureNumber);
               tempArray.push(data[j].currentName);
@@ -875,8 +856,9 @@ export class ReportingComponent implements OnInit {
 
                 if(day >= dayFrom){
                   var tempArray: any = [];
-              
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  
+                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  tempArray.push(this.user);
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].currentName);
@@ -897,8 +879,9 @@ export class ReportingComponent implements OnInit {
 
                 if(day <= dayTo){
                   var tempArray: any = [];
-              
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  
+                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  tempArray.push(this.user);
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].currentName);
@@ -913,8 +896,9 @@ export class ReportingComponent implements OnInit {
 
               if(month >= monthFrom && month <= monthTo){
                 var tempArray: any = [];
-              
-                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                
+                this.loadUserDetails('FABI', data[j].userID, 'none');
+                tempArray.push(this.user);
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
                 tempArray.push(data[j].currentName);
@@ -932,7 +916,8 @@ export class ReportingComponent implements OnInit {
           for(var i = 0; i < data.length; i++){
             var tempArray: any = [];
             
-            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
+            this.loadUserDetails('FABI', data[i].userID, 'none');
+            tempArray.push(this.user);
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
             tempArray.push(data[i].currentName);
@@ -957,7 +942,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  DOWNLOAD_REVITALIZATION_REPORT
+  //                                                  DOWNLOAD REVITALIZATION REPORT
   /**
    *  This function will be used to download the revitalization report that is displayed on screen as a PDF document.
    *  @memberof ReportingComponent
@@ -981,7 +966,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_DATE
+  //                                                        GET DATE
   /**
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
@@ -1056,7 +1041,7 @@ export class ReportingComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
+  //                                                    TOGGLE NOTIFICATIONS TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -1072,7 +1057,7 @@ export class ReportingComponent implements OnInit {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  EXPAND_USER_LOG_TABLE
+  //                                                      EXPAND USER LOG TABLE
   /**
    *  This function will be used to expand the table containing the user logs on depand.
    *  @memberof ReportingComponent
@@ -1086,7 +1071,7 @@ export class ReportingComponent implements OnInit {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  EXPAND_DATABASE_LOG_TABLE
+  //                                                  EXPAND DATABASE LOG TABLE
   /**
    *  This function will be used to expand the table containing the database logs on depand.
    *  @memberof ReportingComponent
@@ -1099,7 +1084,7 @@ export class ReportingComponent implements OnInit {
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  EXPAND_ACCESS_LOG_TABLE
+  //                                                  EXPAND ACCESS LOG TABLE
   /**
    *  This function will be used to expand the table containing the access logs on depand.
    *  @memberof ReportingComponent
@@ -1113,7 +1098,7 @@ export class ReportingComponent implements OnInit {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  EXPAND_ERROR_LOG_TABLE
+  //                                                  EXPAND ERROR LOG TABLE
   /**
    *  This function will be used to expand the table containing the error logs on depand.
    *  @memberof ReportingComponent
@@ -1127,7 +1112,7 @@ export class ReportingComponent implements OnInit {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  COLLAPSE_USER_LOG_TABLE
+  //                                                  COLLAPSE USER LOG TABLE
   /**
    *  This function will be used to collapse the table containing the user logs on depand.
    *  @memberof ReportingComponent
@@ -1141,7 +1126,7 @@ export class ReportingComponent implements OnInit {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  COLLAPSE_DATABASE_LOG_TABLE
+  //                                                  COLLAPSE DATABASE LOG TABLE
   /**
    *  This function will be used to collapse the table containing the database logs on depand.
    *  @memberof ReportingComponent
@@ -1155,7 +1140,7 @@ export class ReportingComponent implements OnInit {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  COLLAPSE_ACCESS_LOG_TABLE
+  //                                                  COLLAPSE ACCESS LOG TABLE
   /**
    *  This function will be used to collapse the table containing the access logs on depand.
    *  @memberof ReportingComponent
@@ -1169,7 +1154,7 @@ export class ReportingComponent implements OnInit {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  COLLAPSE_ERROR_LOG_TABLE
+  //                                                  COLLAPSE ERROR LOG TABLE
   /**
    *  This function will be used to collapse the table containing the error logs on depand.
    *  @memberof ReportingComponent
@@ -1183,7 +1168,7 @@ export class ReportingComponent implements OnInit {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  SET_DATE_FROM
+  //                                                        SET DATE FROM
   /**
    *  This function will set the starting date for the logs on the reporting page.
    * @param {string} type The type of the date (Requested or Submitted) 
@@ -1233,7 +1218,7 @@ export class ReportingComponent implements OnInit {
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  SET_DATE_TO
+  //                                                        SET DATE TO
   /**
    *  This function will set the ending date for the logs on the reporting page.
    * @param {string} type The type of the date (Requested or Submitted) 
@@ -1293,7 +1278,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_LOGS
+  //                                                       LOAD LOGS
   /**
    *  This function will load all of the user's logs into a string array.
    * 
@@ -1301,8 +1286,11 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
     //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.content.data.Logs;
 
@@ -1318,7 +1306,7 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_NOTIFICATIONS
+  //                                                       LOAD NOTIFICATIONS
   /**
    *  This function will load the admin's notifications into the notification section on the HTML page
    * 
@@ -1342,20 +1330,20 @@ export class ReportingComponent implements OnInit {
               var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
               
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails1(tempLogU.Organization1, tempLogU.Details);
+              this.loadUserDetails(tempLogU.Organization1, tempLogU.Details, 'user1');
 
               if(tempLogU.Action == "/createOrganization"){
                 tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/addStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeOrg"){
                 tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
               }
   
@@ -1384,7 +1372,7 @@ export class ReportingComponent implements OnInit {
               var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails1(tempLogD.Organization1, tempLogD.User);
+              this.loadUserDetails(tempLogD.Organization1, tempLogD.User, 'user1');
 
               if(tempLogD.Action == "/createDatabase"){
                 tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
@@ -1410,7 +1398,7 @@ export class ReportingComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REMOVE_NOTIFICATIONS
+  //                                                       REMOVE NOTIFICATIONS
   /**
    *  This function will remove a notification from the notification section on the HTML page.
    * 
@@ -1425,7 +1413,10 @@ export class ReportingComponent implements OnInit {
       }
     }
 
-    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
+    this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
         this.loadNotifications();
       }
@@ -1436,7 +1427,7 @@ export class ReportingComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
+  //                                                            NG ON INIT  
   /**
    * This function is called when the page loads
    * 
@@ -1472,11 +1463,11 @@ export class ReportingComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE NOTIFICATIONS 
+  //                                                       TOGGLE NOTIFICATIONS 
   /**
    * This function will toggle the display of the notifications side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificationsTab(){ 
@@ -1488,7 +1479,7 @@ export class ReportingComponent implements OnInit {
   /**
    * This function will toggle the display of the profile side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProfileTab() {
@@ -1496,22 +1487,20 @@ export class ReportingComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_ADMIN_PROFILE_DETAILS
+  //                                                    LOAD ADMIN PROFILE DETAILS
   /**
    *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
     //The id number of the user that is currently logged in
-    this.id = localStorage.getItem('userID');
+    this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
-    this.organization = localStorage.getItem('userOrganization');
-    //The password of the user that is currently logged in
-    this.password = localStorage.getItem('userPassword');
-    //Setting the confirmPassword variable to have the same value as the user's current password
-    this.confirmPassword = this.password;
+    this.organization = tempUser.user.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -1537,10 +1526,10 @@ export class ReportingComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SAVE_CHANGES
+  //                                                        SAVE CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof AdminDashboardComponent
+   *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
@@ -1596,8 +1585,9 @@ export class ReportingComponent implements OnInit {
       //Making a call to the User Management API Service to save the user's changed profile details
       this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
         if(response.success == true){
-          //Making sure that local storage now has the updated password stored
-          localStorage.setItem('userPassword', this.password);
+          //Making sure that local storage now has the updated user information
+          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
+
           //Reloading the updated user's details
           this.loadAdminProfileDetails();
 
@@ -1624,11 +1614,11 @@ export class ReportingComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PROFILE SAVE BUTTON 
+  //                                                      DISPLAY PROFILE SAVE BUTTON 
   /**
    * This function will display the save button option if any details in the profile have been altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayProfileSaveBtn() {
@@ -1636,11 +1626,11 @@ export class ReportingComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PASSWORD CONFIRM INPUT 
+  //                                                    DISPLAY PASSWORD CONFIRM INPUT 
   /**
    * This function will display the confirm password input field in the user's password was altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayConfirmPasswordInput() {
@@ -1652,7 +1642,7 @@ export class ReportingComponent implements OnInit {
   /**
    * This function will toggle the display of the help side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {

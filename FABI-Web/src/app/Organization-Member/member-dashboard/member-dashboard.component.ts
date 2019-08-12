@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 2nd 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -82,7 +82,7 @@ export class MemberDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                            GET_NUMBER_OF_MEMBER_SAMPLES
+  //                                                GET NUMBER OF MEMBER SAMPLES
   /**
    *  This function will use an API service to get all the samples of a member. These samples will be read into the
    *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
@@ -143,7 +143,7 @@ export class MemberDashboardComponent implements OnInit {
 
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                            GET_NUMBER_OF_COMPLETED_MEMBER_SAMPLES
+  //                                                GET NUMBER OF COMPLETED MEMBER SAMPLES
   /**
    *  This function will use an API service to get all the completed (processed) samples of a member. These 
    *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
@@ -158,7 +158,7 @@ export class MemberDashboardComponent implements OnInit {
 
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_NOTIFICATIONS
+  //                                                        LOAD NOTIFICATIONS
   /**
    *  This function will load the organization member's notifications into the notification section on the HTML page
    * 
@@ -169,7 +169,7 @@ export class MemberDashboardComponent implements OnInit {
 
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
+  //                                                          NG ON INIT()  
   /**
    * This function is called when the page loads
    * 
@@ -185,11 +185,11 @@ export class MemberDashboardComponent implements OnInit {
   }
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE NOTIFICATIONS 
+  //                                                         TOGGLE NOTIFICATIONS 
   /**
    * This function will toggle the display of the notifications side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificationsTab(){ 
@@ -197,27 +197,23 @@ export class MemberDashboardComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE PROFILE 
+  //                                                           TOGGLE PROFILE 
   /**
    * This function will toggle the display of the profile side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProfileTab() {
     this.profileTab = !this.profileTab;
-  }
-
-  
-
-  
+  }  
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PROFILE SAVE BUTTON 
+  //                                                       DISPLAY PROFILE SAVE BUTTON 
   /**
    * This function will display the save button option if any details in the profile have been altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayProfileSaveBtn() {
@@ -225,11 +221,11 @@ export class MemberDashboardComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PASSWORD CONFIRM INPUT 
+  //                                                      DISPLAY PASSWORD CONFIRM INPUT 
   /**
    * This function will display the confirm password input field in the user's password was altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayConfirmPasswordInput() {
@@ -241,7 +237,7 @@ export class MemberDashboardComponent implements OnInit {
   /**
    * This function will toggle the display of the help side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {

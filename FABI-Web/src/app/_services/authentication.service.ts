@@ -40,7 +40,7 @@ export class AuthenticationService {
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       SET SESSION VARIABLES 
-  /* 
+  /** 
    *
    * @param {string} tokenDetails
    * @param {*} user
@@ -49,7 +49,6 @@ export class AuthenticationService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   setSessionVariables(tokenDetails: string, user: any, org: string) {
-
     let usersDetails = {
       'ID': user.id,
       'organisation': org,
@@ -86,6 +85,12 @@ export class AuthenticationService {
     return false;
   }
 
+  public setCurrentUserValues(name: string, surname: string, email: string): any {
+    this.currentUser.name = name;
+    this.currentUser.surname = surname;
+    this.currentUser.email = email;
+  }
+
   logoutUser() {
     localStorage.removeItem('sessionDetails');
     localStorage.setItem('loggedIn', JSON.stringify(false));
@@ -105,7 +110,6 @@ export class AuthenticationService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   login(details: Interface.LoginInfo) {
-
     let url = `${config.loginURL}/login`; // Http Request URL
     let method = 'POST';  // Http Request Method
 
@@ -134,7 +138,6 @@ export class AuthenticationService {
   }
 
   temporaryLoginSuperUser() {
-
     const Lemail = "johndoe@gmail.com";
     const Lpassw = "Tr7hs8BjuX";
     const Lorg = "FABI";
@@ -159,7 +162,6 @@ export class AuthenticationService {
     };
 
     return this.http.request<any>(method, url, options).pipe(map(response => {
-
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
         this.currentUser = response.userDetails;

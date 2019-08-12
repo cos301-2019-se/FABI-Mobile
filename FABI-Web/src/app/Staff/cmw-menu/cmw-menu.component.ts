@@ -1,3 +1,18 @@
+/**
+ * File Name: cmw-menu.component.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Staff\cmw-menu\cmw-menu.component.ts
+ * Project Name: fabi-web
+ * Created Date: Monday, August 12th 2019
+ * Author: Team Nova - novacapstone@gmail.com
+ * -----
+ * Last Modified: Monday, August 12th 2019
+ * Modified By: Team Nova
+ * -----
+ * Copyright (c) 2019 University of Pretoria
+ * 
+ * <<license>>
+ */
+
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
@@ -80,16 +95,19 @@ export class CmwMenuComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_LOGS
+  //                                                              LOAD LOGS
   /**
    *  This function will load all of the user's logs into a string array.
    * 
-   * @memberof StaffDashboardComponent
+   * @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
     //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.content.data.Logs;
 
@@ -104,11 +122,11 @@ export class CmwMenuComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_DATE
+  //                                                        GET DATE
   /**
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
-   * @memberof StaffDashboardComponent
+   * @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getDate(date: string){
@@ -180,11 +198,11 @@ export class CmwMenuComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_NOTIFICATIONS
+  //                                                      LOAD NOTIFICATIONS
   /**
    *  This function will load the staff member's notifications into the notification section on the HTML page
    * 
-   * @memberof StaffDashboardComponent
+   * @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
@@ -204,24 +222,24 @@ export class CmwMenuComponent implements OnInit {
               var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
               
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails1(tempLogU.Organization1, tempLogU.Details);
+              this.loadUserDetails(tempLogU.Organization1, tempLogU.Details, 'user1');
               
               if(tempLogU.Action == "/createOrganization"){
                 tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/addStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "C"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeOrg"){
                 tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
               }
   
@@ -239,22 +257,28 @@ export class CmwMenuComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS1
+  //                                                     LOAD USER DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
    * 
-   *  @memberof StaffDashboardComponent
+   *  @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails1(userOrganization: string, userID: string) {
+  loadUserDetails(userOrganization: string, userID: string, type: string) {
     //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        //Returns the users name and surname as a connected string
-        this.user1 = data.fname + ' ' + data.surname;
+        if(type == 'user1'){
+          //Sets the users name and surname as a connected string
+          this.user1 = data.fname + ' ' + data.surname;
+        }
+        else if(type == 'user2'){
+          //Sets the users name and surname as a connected string
+          this.user2 = data.fname + ' ' + data.surname;
+        }
       } 
       else{
         //Error control
@@ -263,37 +287,12 @@ export class CmwMenuComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS2
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   * 
-   *  @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails2(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        this.user2 = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REMOVE_NOTIFICATIONS
+  //                                                       REMOVE NOTIFICATIONS
   /**
    *  This function will remove a notification from the notification section on the HTML page.
    * 
    * @param {string} id                   //The id of the notification to be removed
-   * @memberof StaffDashboardComponent
+   * @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(id: string){
@@ -303,7 +302,10 @@ export class CmwMenuComponent implements OnInit {
       }
     }
 
-    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
+    this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
         this.loadNotifications();
       }
@@ -318,7 +320,7 @@ export class CmwMenuComponent implements OnInit {
   /**
    * This function will toggle the display of the notifications side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificationsTab(){ 
@@ -330,7 +332,7 @@ export class CmwMenuComponent implements OnInit {
   /**
    * This function will toggle the display of the profile side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProfileTab() {
@@ -339,11 +341,11 @@ export class CmwMenuComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PROFILE SAVE BUTTON 
+  //                                                        DISPLAY PROFILE SAVE BUTTON 
   /**
    * This function will display the save button option if any details in the profile have been altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayProfileSaveBtn() {
@@ -351,11 +353,11 @@ export class CmwMenuComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PASSWORD CONFIRM INPUT 
+  //                                                      DISPLAY PASSWORD CONFIRM INPUT 
   /**
    * This function will display the confirm password input field in the user's password was altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayConfirmPasswordInput() {
@@ -367,7 +369,7 @@ export class CmwMenuComponent implements OnInit {
   /**
    * This function will toggle the display of the help side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof CmwMenuComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
