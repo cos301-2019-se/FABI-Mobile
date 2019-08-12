@@ -110,7 +110,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllFABIMembers() {
-
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "orgName": this.authService.getCurrentSessionValue.user.organisation
@@ -143,7 +142,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllFABIAdmins() {
-
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "orgName": this.authService.getCurrentSessionValue.user.organisation
@@ -271,7 +269,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationDetails() {
-
     let getOrganizationDetails = `${config.userManagementURL}/getOrgDetails`;
     let method = 'POST';
 
@@ -304,7 +301,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getOrganizationMemberDetails() {
-
     let getOrganizationMemberDetails = `${config.userManagementURL}/getOrgMember`;
     let method = 'POST';
 
@@ -339,7 +335,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllOrganizationMembers() {
-
     let getAllOrganizationsMembersURL = `${config.userManagementURL}/getAllOrgMembers`;
     let method = 'POST';
 
@@ -374,7 +369,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllOrganizations() {
-
     const getAllOrganizationsURL = `${config.userManagementURL}/getAllOrganizations`;
     const method = 'POST';
 
@@ -408,7 +402,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getUserTypes(orgName: string) {
-
     const getUserTypesURL = '';
     const method = 'POST';
 
@@ -475,7 +468,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganization(orgInfo: Interface.Organisation) {
-
     let removeOrganizationURL = `${config.userManagementURL}/removeOrg`;
     let method = 'POST';
 
@@ -506,7 +498,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addStaffMember(staffInfo: Interface.StaffInfo) {
-
     if (staffInfo.position == "Admin")
       return this.addFABIAdmin(staffInfo);
 
@@ -541,7 +532,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
-
     let removeStaffMemberURL = `${config.userManagementURL}/removeStaff`;
     let method = 'POST';
 
@@ -571,7 +561,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaffMembers() {
-
     let getStaffMembersURL = `${config.userManagementURL}/getAllStaff`;
     let method = 'POST';
 
@@ -641,7 +630,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addOrgMember(orgInfo: Interface.Organisation, memberInfo: Interface.OrganisationMember) {
-
     let addMemberURL = `${config.userManagementURL}/addMemberToOrg`;
     let method = 'POST';
 
@@ -678,7 +666,6 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
-
     let removeMemberURL = `${config.userManagementURL}/removeMember`;
     let method = 'POST';
 
@@ -705,7 +692,6 @@ export class UserManagementAPIService {
 
 
   getFABIAdminTypes() {
-
     let getAdminTypesURL = `${config.userManagementURL}/getAdminTypes`;
     let method = 'POST';
 
@@ -725,11 +711,9 @@ export class UserManagementAPIService {
     };
 
     return this.http.request<any>(method, getAdminTypesURL, options);
-
   }
 
   getDatabaseNames() {
-
     let getDBNamesURL = `${config.databaseManagementURL}/getDBNames`;
     let method = 'POST';
 
@@ -749,9 +733,5 @@ export class UserManagementAPIService {
     };
 
     return this.http.request<any>(method, getDBNamesURL, options);
-
-  }
-
-
-  
+  }  
 }

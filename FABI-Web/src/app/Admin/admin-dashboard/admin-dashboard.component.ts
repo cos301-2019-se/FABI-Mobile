@@ -333,8 +333,11 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
     //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.content.data.Logs;
 
@@ -507,7 +510,10 @@ export class AdminDashboardComponent implements OnInit {
       }
     }
 
-    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
+    this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
         this.loadNotifications();
       }
@@ -546,11 +552,6 @@ export class AdminDashboardComponent implements OnInit {
           //POPUP MESSAGE
         }
         // ELSE user Authorised:
-
-        //Setting local storage to hold the users details
-        localStorage.setItem('userID', response.userDetails.id);
-        localStorage.setItem('userOrganization', Lorg);
-        localStorage.setItem('userPassword', Lpassw);
         
 
       } else if (response.success == false) {
@@ -617,14 +618,13 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
     //The id number of the user that is currently logged in
-    this.id = localStorage.getItem('userID');
+    this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
-    this.organization = localStorage.getItem('userOrganization');
-    //The password of the user that is currently logged in
-    this.password = localStorage.getItem('userPassword');
-    //Setting the confirmPassword variable to have the same value as the user's current password
-    this.confirmPassword = this.password;
+    this.organization = tempUser.user.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -771,14 +771,4 @@ export class AdminDashboardComponent implements OnInit {
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
   }
-
-
-
-
-
-
-
-
-
-
 }
