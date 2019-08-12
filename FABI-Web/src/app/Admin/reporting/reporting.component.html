@@ -1,93 +1,93 @@
 <!-- Dashboard -->
 <div class="dashboard">
 
-  <!-- Sidenav -->
-  <div class="sidenav">
-
-    <!-- Top Sidenav Link -->
-    <div class="top-nav-items">
-      <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
-      <p (click)="toggleProfileTab()">Tap to view profile</p>
-      <br />
-
-      <div class="nav-links">
-        <a class="nav-link active" routerLink="/admin-dashboard"><i class="fas fa-home"></i></a>
-        <a class="nav-link" routerLink="/staff-handler"><i class="fas fa-address-card"></i></a>
-        <a class="nav-link" routerLink="/organization-handler"><i class="fas fa-building"></i></a>
-        <a class="nav-link" routerLink="/database-handler"><i class="fas fa-database"></i></a>
-        <a class="nav-link" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i></a>
-        <a class="nav-link" routerLink="/reporting"><i class="fas fa-chart-bar"></i></a>
-        <a class="nav-link" routerLink="/view-forms"><i class="fas fa-clipboard"></i></a>
-      </div>
-
-    </div>
-    <!-- / Top Sidenav Link -->
-
-    <!-- Bottom Sidenav Link -->
-    <div class="bottom-nav-items">
-      <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
-      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
-    </div>
-    <!-- / Bottom Sidenav Link -->
-
-  </div>
-  <!-- / Sidenav -->
-
-  <!-- Navbar -->
-  <div class="pos-f-t">
-    <div class="collapse" id="navbarToggleExternalContent">
-      <div class="bg-dark p-4">
-        <h1 class="brand">ADMIN DASHBOARD</h1>
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-          <!-- Navbar Items -->
-          <li class="nav-item active">
-            <a class="nav-link" routerLink="/admin-dashboard">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/database-handler">Database Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
-          </li>
-          <!-- / Navbar Items -->
-        </ul>
-      </div>
-    </div>
-    <nav class="navbar navbar-dark bg-dark">
-      <!-- Menu Button -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
-        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!-- / Menu Button -->
-
-      <!-- Navbar Title -->
-      <h5>HOME</h5>
-      <!-- / Navbar Title -->
-
-      <!-- Notification Icons -->
-      <div class="notifications-icon">
+    <!-- Sidenav -->
+    <div class="sidenav">
+  
+      <!-- Top Sidenav Link -->
+      <div class="top-nav-items">
         <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
-        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
-        <i class="far fa-bell" id="no-new-notifications"></i>
+        <p (click)="toggleProfileTab()">Tap to view profile</p>
+        <br />
+  
+        <div class="nav-links">
+          <a class="nav-link" routerLink="/admin-dashboard"><i class="fas fa-home"></i></a>
+          <a class="nav-link" routerLink="/staff-handler"><i class="fas fa-address-card"></i></a>
+          <a class="nav-link" routerLink="/organization-handler"><i class="fas fa-building"></i></a>
+          <a class="nav-link" routerLink="/database-handler"><i class="fas fa-database"></i></a>
+          <a class="nav-link" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i></a>
+          <a class="nav-link active" routerLink="/reporting"><i class="fas fa-chart-bar"></i></a>
+          <a class="nav-link" routerLink="/view-forms"><i class="fas fa-clipboard"></i></a>
+        </div>
+  
       </div>
-      <!-- /Notification Icons -->
-    </nav>
-  </div>
-  <!-- / Navbar-->
+      <!-- / Top Sidenav Link -->
+  
+      <!-- Bottom Sidenav Link -->
+      <div class="bottom-nav-items">
+        <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
+        <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+      </div>
+      <!-- / Bottom Sidenav Link -->
+  
+    </div>
+    <!-- / Sidenav -->
+  
+    <!-- Navbar -->
+    <div class="pos-f-t">
+      <div class="collapse" id="navbarToggleExternalContent">
+        <div class="bg-dark p-4">
+          <h1 class="brand">ADMIN DASHBOARD</h1>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+  
+            <!-- Navbar Items -->
+            <li class="nav-item active">
+              <a class="nav-link" routerLink="/admin-dashboard">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/database-handler">Database Handler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Logout</a>
+            </li>
+            <!-- / Navbar Items -->
+          </ul>
+        </div>
+      </div>
+      <nav class="navbar navbar-dark bg-dark">
+        <!-- Menu Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- / Menu Button -->
+  
+        <!-- Navbar Title -->
+        <h5>HOME</h5>
+        <!-- / Navbar Title -->
+  
+        <!-- Notification Icons -->
+        <div class="notifications-icon">
+          <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+          <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
+          <i class="far fa-bell" id="no-new-notifications"></i>
+        </div>
+        <!-- /Notification Icons -->
+      </nav>
+    </div>
+    <!-- / Navbar-->
 
   <!-- Dashboard Content -->
   <div class="dashboard-content">
@@ -104,6 +104,10 @@
 
     </div>
     <!-- / Primary Content -->
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+    <!-- / Section Divider -->
 
     <!-- Log Tables -->
     <div class="log-tables" id="reports" ng-app="portApp" ngController="previewCtrl">
@@ -220,9 +224,12 @@
       <!-- User Log Table Table -->
       <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
 
-        <h5> User Log Table - Date: {{date}}</h5>
-        <div #userAdd (click)="expandUserLogTable()"><i class="fas fa-plus-circle"></i></div>
-        <div #userCollapse (click)="collapseUserLogTable()" id="userCollapse"><i class="fas fa-minus-circle"></i></div>
+        <h5> 
+          User Log Table - Date: {{date}}
+          <div #userAdd (click)="expandUserLogTable()"><i class="fas fa-plus-circle"></i></div>
+          <div #userCollapse (click)="collapseUserLogTable()" id="userCollapse"><i class="fas fa-minus-circle"></i></div>
+        </h5>
+        
         <h3 *ngIf="!userLogs">There are currrently no user logs to display</h3>
 
         <table class="table table-hover" *ngIf="userLogs" id="previewTableUserLogs" #userLogsTable>
@@ -246,10 +253,13 @@
       <!-- Database Management Log Table Table -->
       <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
 
-        <h5> Database Management Log Table - Date: {{date}}</h5>
-        <div #databaseAdd (click)="expandDatabaseLogTable()"><i class="fas fa-plus-circle"></i></div>
+        <h5> 
+          Database Management Log Table - Date: {{date}}
+          <div #databaseAdd (click)="expandDatabaseLogTable()"><i class="fas fa-plus-circle"></i></div>
         <div #databaseCollapse (click)="collapseDatabaseLogTable()" id="databaseCollapse"><i
             class="fas fa-minus-circle"></i></div>
+        </h5>
+        
         <h3 *ngIf="!databaseLogs">There are currrently no database management logs to display</h3>
 
         <table class="table table-hover" *ngIf="databaseLogs" id="previewTableDatabaseLogs" #databaseLogsTable>
@@ -273,10 +283,13 @@
       <!-- Access Log Table Table Table -->
       <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
 
-        <h5> Access Log Table Table - Date: {{date}}</h5>
-        <div #accessAdd (click)="expandAccessLogTable()"><i class="fas fa-plus-circle"></i></div>
+        <h5> 
+          Access Log Table Table - Date: {{date}}
+          <div #accessAdd (click)="expandAccessLogTable()"><i class="fas fa-plus-circle"></i></div>
         <div #accessCollapse (click)="collapseAccessLogTable()" id="accessCollapse"><i class="fas fa-minus-circle"></i>
         </div>
+        </h5>
+        
         <h3 *ngIf="!accessLogs">There are currrently no access logs to display</h3>
 
         <table class="table table-hover" *ngIf="accessLogs" id="previewTableAccessLogs" #accessLogsTable>
@@ -300,10 +313,13 @@
       <!-- Error Log Table Table -->
       <div class="report-table table-responsive" id="logs" ng-app="portApp" ngController="previewCtrl">
 
-        <h5> Error Log Table - Date: {{date}}</h5>
-        <div #errorAdd (click)="expandErrorLogTable()"><i class="fas fa-plus-circle"></i></div>
-        <div #errorCollapse (click)="collapseErrorLogTable()" id="errorCollapse"><i class="fas fa-minus-circle"></i>
-        </div>
+        <h5> 
+          Error Log Table - Date: {{date}}
+          <div #errorAdd (click)="expandErrorLogTable()"><i class="fas fa-plus-circle"></i></div>
+          <div #errorCollapse (click)="collapseErrorLogTable()" id="errorCollapse"><i class="fas fa-minus-circle"></i>
+          </div>
+        </h5>
+        
         <h3 *ngIf="!errorLogs">There are currrently no error logs to display</h3>
 
         <table class="table table-hover" *ngIf="errorLogs" id="previewTableErrorLogs" #errorLogsTable>
