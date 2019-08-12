@@ -40,8 +40,7 @@ export class AuthenticationService {
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       SET SESSION VARIABLES 
-  /**
-   *
+  /* 
    *
    * @param {string} tokenDetails
    * @param {*} user

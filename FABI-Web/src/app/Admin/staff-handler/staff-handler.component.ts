@@ -196,8 +196,7 @@ export class StaffHandlerComponent implements OnInit {
     private router: Router, 
     private userManagementService: UserManagementAPIService, 
     private notificationLoggingService: NotificationLoggingService
-    )  {
-      
+    )  {      
       this.adminProfileForm = this.formBuilder.group({
       organization_name: '',
       admin_name: '',
@@ -272,47 +271,47 @@ export class StaffHandlerComponent implements OnInit {
           this.addStaffForm.get('admin_type').disable();
         }
     });
-}
+  }
 
-getDBNames() {
-  this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
-    if (response.success == true && response.code == 200) {
-      console.log(response);
-      this.databaseNames = response.data.docs;
+  getDBNames() {
+    this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
+      if (response.success == true && response.code == 200) {
+        console.log(response);
+        this.databaseNames = response.data.docs;
 
-      // this.databaseNames.forEach(name => {
-      //   document.getElementById("databasesTable").innerHTML = `<tr> <td>${name}</td> <td><input type="checkbox" name="${name}" value="add"></td> <td><input type="checkbox" name="${name}" value="delete"></td> <td><input type="checkbox" name="${name}" value="update"></td>  <td><input type="checkbox" name="${name}" value="view"></td> </tr>`;
+        // this.databaseNames.forEach(name => {
+        //   document.getElementById("databasesTable").innerHTML = `<tr> <td>${name}</td> <td><input type="checkbox" name="${name}" value="add"></td> <td><input type="checkbox" name="${name}" value="delete"></td> <td><input type="checkbox" name="${name}" value="update"></td>  <td><input type="checkbox" name="${name}" value="view"></td> </tr>`;
+          
+        // });
         
-      // });
-      
-    } else if (response.success == false) {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Database Names", message: response.message, retry: true } });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result == "Retry") {
-          this.getDBNames();
-        }
-      })
-    }
-  });
-}
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Database Names", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.getDBNames();
+          }
+        })
+      }
+    });
+  }
 
-getAdminTypes() {
-  this.userManagementService.getFABIAdminTypes().subscribe( (response:any) => {
-    if (response.success == true && response.code == 200) {
-      this.adminTypes = response.data.adminTypes;
-      this.onChanges();
-    } else if (response.success == false) {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Admin Types", message: response.message, retry: true } });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result == "Retry") {
-          this.getAdminTypes();
-        }
-      })
-    }
-  });
-}
+  getAdminTypes() {
+    this.userManagementService.getFABIAdminTypes().subscribe( (response:any) => {
+      if (response.success == true && response.code == 200) {
+        this.adminTypes = response.data.adminTypes;
+        this.onChanges();
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Admin Types", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.getAdminTypes();
+          }
+        })
+      }
+    });
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 
@@ -625,13 +624,11 @@ getAdminTypes() {
     var databasePrivileges : Interface.DatabasePrivilege[];
 
     this.databaseNames.forEach(name => {
-
       var temp : Interface.DatabasePrivilege;
 
       var boxes: NodeListOf<HTMLElement> = document.getElementsByName(`${name}`);
 
         for(var i = 0; i < document.getElementsByName(`${name}`).length; i++) {
-
           var box = boxes[i] as HTMLInputElement;
           if(box.checked = true) {
             console.log("---VALUE: " + box[i].value);
@@ -648,8 +645,7 @@ getAdminTypes() {
 
     console.log("---- DB Privilege: " + databasePrivileges);
 
-    this.userManagementService.addStaffMember(staff_details).subscribe((response: any) => {
-      
+    this.userManagementService.addStaffMember(staff_details).subscribe((response: any) => {      
       this.loading = false;
 
       if (response.success == true && response.code == 200) {
@@ -723,7 +719,6 @@ getAdminTypes() {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeStaffMember() {
-
     this.userManagementService.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -752,7 +747,7 @@ getAdminTypes() {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
-      this.viewStaff();
+    this.viewStaff();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -790,7 +785,6 @@ getAdminTypes() {
   //    USER TYPES -> TO BE FETCHED FROM DB IN THE FUTURE
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayUserTypes() {
-
     this.userTypes = [
       {
         "ID":1,
