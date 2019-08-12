@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 2nd 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -65,7 +65,7 @@ export class DiagnosticClinicAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_ALL_SAMPLES 
+  //                                                        GET ALL SAMPLES 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the samples that FABI is currently processing
@@ -92,7 +92,7 @@ export class DiagnosticClinicAPIService {
 
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     GET_SAMPLES_FOR_FABI_STAFF 
+  //                                                     GET SAMPLES FOR FABI STAFF 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the samples corresponding to a specific user.
@@ -119,7 +119,7 @@ export class DiagnosticClinicAPIService {
    }
 
      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    RETREIVE_ALL_SAMPLES
+  //                                                    RETREIVE ALL SAMPLES
   /**
    * Method that sends a request to the API to retreive all Samples
    *
@@ -151,7 +151,7 @@ export class DiagnosticClinicAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    RETREIVE_ALL_SAMPLES_FOR_MEMBER
+  //                                                    RETREIVE ALL SAMPLES FOR MEMBER
   /**
    * Method that sends a request to the API to retreive all Samples for a member
    *
@@ -183,7 +183,7 @@ export class DiagnosticClinicAPIService {
   }
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT_SAMPLE_FORM
+  //                                                        SUBMIT SAMPLE FORM
   /**
    * Method that send a request to the API to submit a specifc Sample Form
    *

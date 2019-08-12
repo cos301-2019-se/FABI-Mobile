@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -169,7 +169,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    TOGGLE_NOTIFICATIONS_TAB
+  //                                                    TOGGLE NOTIFICATIONS TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -184,7 +184,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            NG_ON_INIT()
+  //                                                            NG ON INIT()
   /**
    * @memberof MemberHandlerComponent
    */
@@ -213,7 +213,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          ADD_MEMBER
+  //                                                          ADD MEMBER
   /**
    * This function calls the *http* service to add a new Organization Member
    *
@@ -231,7 +231,6 @@ export class MemberHandlerComponent implements OnInit {
     this.valid = true;
     this.loading = true;
 
-
     // const LmemberLocation = this.addMemberForm.controls.member_location.value;
     const LmemberName = this.addMemberForm.controls.member_name.value;
     const LmemberSurname = this.addMemberForm.controls.member_surname.value;
@@ -244,9 +243,6 @@ export class MemberHandlerComponent implements OnInit {
 
 
     this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
-
-      console.log("////// RESPONSE: " + response);
-
       this.loading = false;
 
       if (response.success == true && response.code == 200) {
@@ -255,7 +251,8 @@ export class MemberHandlerComponent implements OnInit {
           duration: 6000
         });
         this.refreshDataSource();
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Adding Member", message: response.message } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -268,7 +265,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SELECT_ORGANIZATION
+  //                                                        SELECT ORGANIZATION
   /**
    * This function sets the Member selected by the user in the table
    *
@@ -281,7 +278,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     REMOVE_MEMBER_PROMPT
+  //                                                     REMOVE MEMBER PROMPT
   /**
    * This function prompts the user to confirm if they wish to remove the selected Member
    *
@@ -300,6 +297,7 @@ export class MemberHandlerComponent implements OnInit {
         confirm: "Remove"
       }
     });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result == "Confirm") {
         this.selectedMember = member;
@@ -323,7 +321,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                           REMOVE_MEMBER   
+  //                                                           REMOVE MEMBER   
   /**
    * This function calls the *http* service to remove the selected Organisation 
    *
@@ -338,7 +336,8 @@ export class MemberHandlerComponent implements OnInit {
           duration: 3000
         });
         this.refreshDataSource();
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -363,7 +362,7 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            VIEW_MEMBERS
+  //                                                            VIEW MEMBERS
   /**
    * This function calls the *http* service to get all registered Organization Members
    *
@@ -371,15 +370,14 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewMembers() {
-    console.log("orgName: " + localStorage.getItem('orgName'));
-
     this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.orgMembers = response.data.members;
         this.dataSource = new MatTableDataSource(this.orgMembers);
         this.dataSource.paginator = this.paginator;
 
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Members", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -396,7 +394,7 @@ export class MemberHandlerComponent implements OnInit {
   /**
    * This function will toggle the display of the notifications side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificationsTab() {
@@ -404,11 +402,11 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE PROFILE 
+  //                                                         TOGGLE PROFILE 
   /**
    * This function will toggle the display of the profile side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProfileTab() {
@@ -416,22 +414,20 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_ADMIN_PROFILE_DETAILS
+  //                                                  LOAD ADMIN PROFILE DETAILS
   /**
    *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails() {
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
     //The id number of the user that is currently logged in
-    this.id = localStorage.getItem('userID');
+    this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
-    this.organization = localStorage.getItem('userOrganization');
-    //The password of the user that is currently logged in
-    this.password = localStorage.getItem('userPassword');
-    //Setting the confirmPassword variable to have the same value as the user's current password
-    this.confirmPassword = this.password;
+    this.organization = tempUser.user.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -447,8 +443,6 @@ export class MemberHandlerComponent implements OnInit {
         this.surname = data.surname;
         //Setting the email of the user
         this.email = data.email;
-
-        console.log(this.userType);
       }
       else {
         //Error handling
@@ -457,10 +451,10 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SAVE_CHANGES
+  //                                                        SAVE CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof AdminDashboardComponent
+   *  @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges() {
@@ -516,8 +510,9 @@ export class MemberHandlerComponent implements OnInit {
       //Making a call to the User Management API Service to save the user's changed profile details
       this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
         if (response.success == true) {
-          //Making sure that local storage now has the updated password stored
-          localStorage.setItem('userPassword', this.password);
+          //Making sure that local storage now has the updated user information
+          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
+
           //Reloading the updated user's details
           this.loadAdminProfileDetails();
 
@@ -544,11 +539,11 @@ export class MemberHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PROFILE SAVE BUTTON 
+  //                                                        DISPLAY PROFILE SAVE BUTTON 
   /**
    * This function will display the save button option if any details in the profile have been altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayProfileSaveBtn() {
@@ -556,11 +551,11 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PASSWORD CONFIRM INPUT 
+  //                                                       DISPLAY PASSWORD CONFIRM INPUT 
   /**
    * This function will display the confirm password input field in the user's password was altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayConfirmPasswordInput() {
@@ -572,7 +567,7 @@ export class MemberHandlerComponent implements OnInit {
   /**
    * This function will toggle the display of the help side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {

@@ -238,7 +238,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  GET_ALL_DEPOSIT_FROMS
+  //                                                  GET ALL DEPOSIT FROMS
   /**
    *  This function will be used to load all of the deposit forms into the HTML page
    *  @memberof ViewFormsComponent
@@ -275,7 +275,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  GET_ALL_REQUEST_FROMS
+  //                                                  GET ALL REQUEST FROMS
   /**
    *  This function will be used to load all of the request forms into the HTML page
    *  @memberof ViewFormsComponent
@@ -304,7 +304,7 @@ export class ViewFormsComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  GET_ALL_REVITALIZATION_FROMS
+  //                                                  GET ALL REVITALIZATION FROMS
   /**
    *  This function will be used to load all of the revitalization forms into the HTML page
    *  @memberof ViewFormsComponent
@@ -335,7 +335,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  GET_ALL_PROCESSED_FROMS
+  //                                                  GET ALL PROCESSED FROMS
   /**
    *  This function will be used to load all of the processed forms into the HTML page
    *  @memberof ViewFormsComponent
@@ -367,7 +367,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_NEXT_DEPOSIT_FORM
+  //                                                  LOAD NEXT DEPOSIT FORM
   /**
    *  This function will be used to load the individual deposit forms
    *  @memberof ViewFormsComponent
@@ -426,7 +426,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_PREVIOUS_DEPOSIT_FORM
+  //                                                  LOAD PREVIOUS DEPOSIT FORM
   /**
    *  This function will be used to load the individual deposit forms
    *  @memberof ViewFormsComponent
@@ -482,7 +482,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_NEXT_REQUEST_FORM
+  //                                                        LOAD NEXT REQUEST FORM
   /**
    *  This function will be used to load the individual request forms
    *  @memberof ViewFormsComponent
@@ -523,7 +523,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_PREVIOUS_REQUEST_FORM
+  //                                                    LOAD PREVIOUS REQUEST FORM
   /**
    *  This function will be used to load the individual request forms
    *  @memberof ViewFormsComponent
@@ -561,7 +561,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_NEXT_REVITALIZATION_FORM
+  //                                                    LOAD NEXT REVITALIZATION FORM
   /**
    *  This function will be used to load the individual revitalization forms
    *  @memberof ViewFormsComponent
@@ -605,7 +605,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_PREVIOUS_REVITALIZATION_FORM
+  //                                                    LOAD PREVIOUS REVITALIZATION FORM
   /**
    *  This function will be used to load the individual revitalization forms
    *  @memberof ViewFormsComponent
@@ -646,7 +646,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_NEXT_PROCESSED_FORM
+  //                                                          LOAD NEXT PROCESSED FORM
   /**
    *  This function will be used to load the individual processed forms
    *  @memberof ViewFormsComponent
@@ -695,7 +695,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_PREVIOUS_PROCESSED_FORM
+  //                                                    LOAD PREVIOUS PROCESSED FORM
   /**
    *  This function will be used to load the individual processed forms
    *  @memberof ViewFormsComponent
@@ -741,7 +741,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS_DEPOSIT
+  //                                                   LOAD USER DETAILS DEPOSIT
   /**
    *  This function will be called so that the information of a specific user can be fetched
    *  @memberof ViewFormsComponent
@@ -764,7 +764,7 @@ export class ViewFormsComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS_REQUEST
+  //                                                    LOAD USER DETAILS REQUEST
   /**
    *  This function will be called so that the information of a specific user can be fetched
    *  @memberof ViewFormsComponent
@@ -787,7 +787,7 @@ export class ViewFormsComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS_REVITALIZATION
+  //                                                  LOAD USER DETAILS REVITALIZATION
   /**
    *  This function will be called so that the information of a specific user can be fetched
    *  @memberof ViewFormsComponent
@@ -810,7 +810,7 @@ export class ViewFormsComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS_PROCESSED
+  //                                                  LOAD USER DETAILS PROCESSED
   /**
    *  This function will be called so that the information of a specific user can be fetched
    *  @memberof ViewFormsComponent
@@ -834,31 +834,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   *  @memberof ViewFormsComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        return data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  SHOW_PROCESS_FORM
+  //                                                        SHOW PROCESS FORM
   /**
    *  This function will be called so that the process form can be displayed
    *  @memberof ViewFormsComponent
@@ -870,7 +846,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  VIEW_ASSOCIATED_DEPOSIT_FORM
+  //                                                  VIEW ASSOCIATED DEPOSIT FORM
   /**
    *  This function will be called so that the deposit form associated with the process form on the screen, can be displayed.
    *  @memberof ViewFormsComponent
@@ -882,7 +858,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  HIDE_ASSOCIATED_DEPOSIT_FORM
+  //                                                  HIDE ASSOCIATED DEPOSIT FORM
   /**
    *  This function will be called so that the deposit form associated with the process form on the screen, can be hidden.
    *  @memberof ViewFormsComponent
@@ -894,7 +870,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  PROCESS_DEPOSIT_FORM
+  //                                                        PROCESS DEPOSIT FORM
   /**
    *  This function will be called so that a deposit form can be processed and its status updated
    *  @memberof ViewFormsComponent
@@ -919,7 +895,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_DATE
+  //                                                              GET DATE
   /**
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
@@ -994,7 +970,7 @@ export class ViewFormsComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
+  //                                                        TOGGLE NOTIFICATIONS TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -1010,7 +986,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_LOGS
+  //                                                            LOAD LOGS
   /**
    *  This function will load all of the user's logs into a string array.
    * 
@@ -1018,8 +994,11 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
     //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.content.data.Logs;
 
@@ -1035,7 +1014,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_NOTIFICATIONS
+  //                                                       LOAD NOTIFICATIONS
   /**
    *  This function will load the admin's notifications into the notification section on the HTML page
    * 
@@ -1059,20 +1038,20 @@ export class ViewFormsComponent implements OnInit {
               var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
               
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails1(tempLogU.Organization1, tempLogU.Details);
+              this.loadUserDetails(tempLogU.Organization1, tempLogU.Details, 'user1');
 
               if(tempLogU.Action == "/createOrganization"){
                 tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/addStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeOrg"){
                 tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
               }
   
@@ -1100,7 +1079,7 @@ export class ViewFormsComponent implements OnInit {
               var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails1(tempLogD.Organization1, tempLogD.User);
+              this.loadUserDetails(tempLogD.Organization1, tempLogD.User, 'user1');
 
               if(tempLogD.Action == "/createDatabase"){
                 tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
@@ -1126,46 +1105,28 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS1
+  //                                                      LOAD USER DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
    * 
    *  @memberof ViewFormsComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails1(userOrganization: string, userID: string) {
+  loadUserDetails(userOrganization: string, userID: string) {
     //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        //Returns the users name and surname as a connected string
-        this.user1 = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS2
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   * 
-   *  @memberof ViewFormsComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails2(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        this.user2 = data.fname + ' ' + data.surname;
+        if(type == 'user1'){
+          //Sets the users name and surname as a connected string
+          this.user1 = data.fname + ' ' + data.surname;
+        }
+        else if(type == 'user2'){
+          //Sets the users name and surname as a connected string
+          this.user2 = data.fname + ' ' + data.surname;
+        }
       } 
       else{
         //Error control
@@ -1175,7 +1136,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REMOVE_NOTIFICATIONS
+  //                                                       REMOVE NOTIFICATIONS
   /**
    *  This function will remove a notification from the notification section on the HTML page.
    * 
@@ -1190,7 +1151,10 @@ export class ViewFormsComponent implements OnInit {
       }
     }
 
-    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
+    this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
         this.loadNotifications();
       }
@@ -1202,7 +1166,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    PROCESS_DEPOSIT_PROCESSED_FORM 
+  //                                                    PROCESS DEPOSIT PROCESSED FORM 
   /**
    * This function is used to submit details about a deposit form that has been processed.
    * 
@@ -1283,14 +1247,16 @@ export class ViewFormsComponent implements OnInit {
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
     this.dateSubmittedProcessedForm = currentDate;
 
-    var tempProcessedForm: ProcessedForm = {userID: localStorage.getItem('userID'), statusOfCulture: this.statusOfCulture, agarSlants: this.agarSlants, water: this.water,
+    var tempUser = this.authService.getCurrentUserValue();
+
+    var tempProcessedForm: ProcessedForm = {userID: tempUser.user.ID, statusOfCulture: this.statusOfCulture, agarSlants: this.agarSlants, water: this.water,
       oil: this.oil, roomTemperature: this.roomTemperature, c18: this.c18, freezeDried: this.freezeDried, freeze: this.freeze,
       dateOfCollectionValidation: this.dateOfCollectionValidation, microscopeSlides: this.microscopeSlides, dateSubmittedProcessedForm: this.dateSubmittedProcessedForm,
       cultureCollectionNumber: this.cmwCultureNumberDeposit};
 
     this.cultureCollectionService.submitProcessedForm(tempProcessedForm).subscribe((response: any) => {
       if(response.success == true){
-        var tempUpdate: UpdateDepositForm = {userID: localStorage.getItem('userID'), status: 'processed', formID: ''};
+        var tempUpdate: UpdateDepositForm = {userID: tempUser.user.ID, status: 'processed', formID: ''};
 
         this.cultureCollectionService.updateDepositFormStatus(tempUpdate).subscribe((response: any) => {
           if(response.success == true){
@@ -1326,7 +1292,7 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
+  //                                                      NG ON INIT  
   /**
    * This function is called when the page loads
    * 

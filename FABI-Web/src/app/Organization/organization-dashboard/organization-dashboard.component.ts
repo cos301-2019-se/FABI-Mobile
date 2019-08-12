@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -138,7 +138,7 @@ export class OrganizationDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                            GET_NUMBER_OF_ORGANIZATION_MEMBERS
+  //                                            GET NUMBER OF ORGANIZATION MEMBERS
   /**
    *  This function will use an API service to get all the members of an organization. These members will be read into the
    *  'members' Object. The function does not receive any parameters but it will populate a 'heading' element on the
@@ -183,7 +183,7 @@ export class OrganizationDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                            GET_NUMBER_OF_ORGANIZATION_SAMPLES
+  //                                            GET NUMBER OF ORGANIZATION SAMPLES
   /**
    *  This function will use an API service to get all the samples of an organization. These samples will be read into the
    *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
@@ -209,7 +209,7 @@ export class OrganizationDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                           GET_NUMBER_OF_COMPLETED ORGANIZATION SAMPLES
+//                                           GET NUMBER OF COMPLETED ORGANIZATION SAMPLES
   /**
    *  This function will use an API service to get all the completed (processed) samples of an organization. These 
    *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
@@ -222,7 +222,7 @@ export class OrganizationDashboardComponent implements OnInit {
 
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_NOTIFICATIONS
+  //                                                  LOAD NOTIFICATIONS
   /**
    *  This function will load the organization's notifications into the notification section on the HTML page
    * 
@@ -233,7 +233,7 @@ export class OrganizationDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                              REMOVE_NOTIFICATIONS
+  //                                              REMOVE NOTIFICATIONS
   /**
    *  This function will remove a notification for the notification section when the user clicks on the 'exit'
    *  button/icon associated with that notification
@@ -244,7 +244,7 @@ export class OrganizationDashboardComponent implements OnInit {
   removeNotification(){}
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
+  //                                                    NG ON INIT()  
   /**
    * This function is called when the page loads
    * 
@@ -262,11 +262,11 @@ export class OrganizationDashboardComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE NOTIFICATIONS 
+  //                                                        TOGGLE NOTIFICATIONS 
   /**
    * This function will toggle the display of the notifications side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificationsTab(){ 
@@ -274,11 +274,11 @@ export class OrganizationDashboardComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE PROFILE 
+  //                                                          TOGGLE PROFILE 
   /**
    * This function will toggle the display of the profile side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProfileTab() {
@@ -286,51 +286,45 @@ export class OrganizationDashboardComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_ADMIN_PROFILE_DETAILS
+  //                                                  LOAD ADMIN PROFILE DETAILS
   /**
    *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
-    // //The id number of the user that is currently logged in
-    // this.id = localStorage.getItem('userID');
-    // //The organization of the user that is currently logged in
-    // this.organization = localStorage.getItem('userOrganization');
-    // //The password of the user that is currently logged in
-    // this.password = localStorage.getItem('userPassword');
-    // //Setting the confirmPassword variable to have the same value as the user's current password
-    // this.confirmPassword = this.password;
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+    //The id number of the user that is currently logged in
+    this.id = tempUser.user.ID;
+    //The organization of the user that is currently logged in
+    this.organization = tempUser.user.organisation;
 
-    // //Subscribing to the UserManagementAPIService to get all the staff members details
-    // this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-    //   if(response.success == true){
-    //     //Temporarily holds the data returned from the API call
-    //     const data = response.data;
+    //Subscribing to the UserManagementAPIService to get all the staff members details
+    this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
+      if(response.success == true){
+        //Temporarily holds the data returned from the API call
+        const data = response.data;
 
-    //     //Setting the user type of the user
-    //     this.userType = data.userType;
-    //     //Setting the first name of the user
-    //     this.name = data.fname;
-    //     //Setting the surname of the user
-    //     this.surname = data.surname;
-    //     //Setting the email of the user
-    //     this.email = data.email;
-
-    //     console.log(this.userType);
-    //   }
-    //   else{
-    //     //Error handling
-    //   }
-    // });
+        //Setting the first name of the user
+        this.name = data.fname;
+        //Setting the surname of the user
+        this.surname = data.surname;
+        //Setting the email of the user
+        this.email = data.email;
+      }
+      else{
+        //Error handling
+      }
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SAVE_CHANGES
+  //                                                        SAVE CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof AdminDashboardComponent
+   *  @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
@@ -386,8 +380,9 @@ export class OrganizationDashboardComponent implements OnInit {
       //Making a call to the User Management API Service to save the user's changed profile details
       this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
         if(response.success == true){
-          //Making sure that local storage now has the updated password stored
-          localStorage.setItem('userPassword', this.password);
+          //Making sure that local storage now has the updated user information
+          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
+
           //Reloading the updated user's details
           this.loadAdminProfileDetails();
 
@@ -414,11 +409,11 @@ export class OrganizationDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PROFILE SAVE BUTTON 
+  //                                                          DISPLAY PROFILE SAVE BUTTON 
   /**
    * This function will display the save button option if any details in the profile have been altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayProfileSaveBtn() {
@@ -426,11 +421,11 @@ export class OrganizationDashboardComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PASSWORD CONFIRM INPUT 
+  //                                                         DISPLAY PASSWORD CONFIRM INPUT 
   /**
    * This function will display the confirm password input field in the user's password was altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayConfirmPasswordInput() {
@@ -438,11 +433,11 @@ export class OrganizationDashboardComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE HELP 
+  //                                                                TOGGLE HELP 
   /**
    * This function will toggle the display of the help side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {

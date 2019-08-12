@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 8th 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -131,7 +131,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_USER_LOGS
+  //                                                       GET ALL USER LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'USER'
@@ -161,7 +161,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_DATABASE_MANAGEMENT_LOGS 
+  //                                                 GET ALL DATABASE MANAGEMENT LOGS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'DBML'
@@ -191,7 +191,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_ACCESS_LOGS 
+  //                                                         GET ALL ACCESS LOGS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'ACCL'
@@ -221,7 +221,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_ERROR_LOGS
+  //                                                          GET ALL ERROR LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'ERRL'
@@ -251,7 +251,7 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_USER_LOGS 
+  //                                                         GET USER LOGS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs for a specific user.
@@ -278,7 +278,7 @@ export class NotificationLoggingService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    UPDATE_FABI_MEMBER_NOTIFICATIONS
+  //                                                    UPDATE FABI MEMBER NOTIFICATIONS
   /**
    * Method that sends a request to the API to update the notifications associated with a specific user.
    * @param {string} id The ID of the user whose notifications need to be updated

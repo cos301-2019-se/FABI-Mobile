@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -62,7 +62,7 @@ export class MemberViewSamplesComponent implements OnInit {
     ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
+  //                                                  TOGGLE NOTIFICATIONS TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -78,7 +78,7 @@ export class MemberViewSamplesComponent implements OnInit {
 
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
+  //                                                            NG ON INIT  
   /**
    * This function is called when the page loads
    * 
@@ -108,7 +108,7 @@ export class MemberViewSamplesComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            VIEW_SAMPLES 
+  //                                                            VIEW SAMPLES 
   /**
    * This function will be used to display all the samples associated with the user in the HTML page
    * 
@@ -117,10 +117,7 @@ export class MemberViewSamplesComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
     this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
-      if (response.success == true && response.code == 200) {
-
-        console.log("---- RESPONSE: " + JSON.stringify(response));
-        
+      if (response.success == true && response.code == 200) {        
         Object.keys(response.data.samples[0]).forEach((column) => {
 
           let obj = {
@@ -133,7 +130,8 @@ export class MemberViewSamplesComponent implements OnInit {
         this.displayedColumns= this.fields.map(field => field.name);
         this.dataSource = new MatTableDataSource(response.data.samples);
         
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Getting Samples", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {

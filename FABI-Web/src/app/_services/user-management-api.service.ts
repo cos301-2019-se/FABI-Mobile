@@ -100,7 +100,7 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     GET_ALL_FABI_MEMBERS 
+  //                                                     GET ALL FABI MEMBERS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the FABI members
@@ -132,7 +132,7 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ALL_FABI_ADMINS 
+  //                                                    GET ALL FABI ADMINS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the FABI administrators
@@ -164,7 +164,7 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            GET_USER_DETAILS 
+  //                                                            GET USER DETAILS 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the Members of an Organization
@@ -194,7 +194,7 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         UPDATE_FABI_MEMBER_DETAILS 
+  //                                                         UPDATE FABI MEMBER DETAILS 
   /**
    *    This function is used to send updated FABI staff details to the database
    *
@@ -227,7 +227,7 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      UPDATE_ORGANIZATION_MEMBER_DETAILS 
+  //                                                      UPDATE ORGANIZATION MEMBER DETAILS 
   /**
    *    This function is used to send updated organization member details to the database
    *
@@ -260,7 +260,7 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ORGANIZATION
+  //                                                          GET ORGANIZATION
   /**
    * Function that send a request to retrieve an Organisations' details using their ID
    *
@@ -292,7 +292,7 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ORGANIZATION_MEMBER
+  //                                                    GET ORGANIZATION MEMBER
   /**
    * Function that send a request to retrieve an Organisations Member's details using their ID
    *
@@ -326,7 +326,7 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ALL_ORGANISATION_MEMBERS
+  //                                                    GET ALL ORGANISATION MEMBERS
   /**
    * Method that sends a request to the API to get the details of all the organisations' members.
    *
@@ -360,7 +360,7 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ALL_ORGANISATIONS 
+  //                                                    GET ALL ORGANISATIONS 
   /**
    * Method that sends a request to the API to get the details of all the organisations.
    *
@@ -393,7 +393,7 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ALL_USER_TYPES 
+  //                                                    GET ALL USER TYPES 
   /**
    * Method that sends a request to the API to get the user types associated with a specific organisation.
    *
@@ -427,7 +427,7 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                   CREATE/ADD_NEW_ORGANISATION
+  //                                                   CREATE NEW ORGANISATION
   /**
    * Method that sends a request to the API to create a new Organisation 
    *
@@ -458,7 +458,7 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     REMOVE_AN_ORGANISATION
+  //                                                     REMOVE AN ORGANISATION
   /**
    * Method that sends a request to the API to remove (deregister) an Organisation
    *
@@ -488,7 +488,7 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    ADD_NEW_FABI_STAFF_MEMBER
+  //                                                    ADD NEW FABI STAFF MEMBER
   /**
    * Method that sends a request to the API to add a new FABI Staff Member to the database
    *
@@ -524,7 +524,7 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    REMOVE_FABI_STAFF_MEMBER 
+  //                                                    REMOVE FABI STAFF MEMBER 
   /**
    * Method that sends a request to the API to remove a FABI Staff Member
    *
@@ -552,7 +552,7 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_ALL_FABI_STAFF 
+  //                                                        GET ALL FABI STAFF 
   /**
    * Method that sends a request to the API to get all FABI Staff Members
    *
@@ -585,7 +585,7 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      ADD_NEW_FABI_ADMIN
+  //                                                      ADD NEW FABI ADMIN
   /**
    * Method that send a request to the API to add a new FABI Admin to the database
    *
@@ -619,7 +619,7 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  ADD_A_NEW_ORGANISATION_MEMBER
+  //                                                  ADD A NEW ORGANISATION MEMBER
   /**
    * Method that sends a request to the API to add a new Member to a specific Organisation
    *
@@ -658,7 +658,7 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    REMOVE_ORGANIZATION_MEMBER
+  //                                                    REMOVE ORGANIZATION MEMBER
   /**
    * Method that sends a request to the API to remove an Organizations Member
    *
@@ -690,7 +690,14 @@ export class UserManagementAPIService {
     return this.http.request<any>(method, removeMemberURL, options);
   }
 
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET FABI ADMIN TYPES
+  /**
+   * This method is used to get all FABI admin types
+   *
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getFABIAdminTypes() {
     let getAdminTypesURL = `${config.userManagementURL}/getAdminTypes`;
     let method = 'POST';
@@ -713,6 +720,15 @@ export class UserManagementAPIService {
     return this.http.request<any>(method, getAdminTypesURL, options);
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET DATABASE NAMES
+  /**
+   * This method is used to get all the database names from the database
+   *
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getDatabaseNames() {
     let getDBNamesURL = `${config.databaseManagementURL}/getDBNames`;
     let method = 'POST';

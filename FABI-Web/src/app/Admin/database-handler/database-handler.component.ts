@@ -63,8 +63,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /** Indicates if the database has been ported or not - @type {boolean} */
   ported: boolean = false;
 
-  jsonData: any;
-  
+  jsonData: any;  
 
   /** Holds the div element (rpDBname) from the HTML page - @type {ElementRef} */
   @ViewChild("rpDBname") rPort : ElementRef;
@@ -176,7 +175,7 @@ export class DatabaseHandlerComponent implements OnInit {
   
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_DATE
+  //                                                        GET DATE
   /**
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
@@ -253,7 +252,7 @@ export class DatabaseHandlerComponent implements OnInit {
   
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_LOGS
+  //                                                       LOAD LOGS
   /**
    *  This function will load all of the user's logs into a string array.
    * 
@@ -261,8 +260,11 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
     //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.content.data.Logs;
 
@@ -278,7 +280,7 @@ export class DatabaseHandlerComponent implements OnInit {
   
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_NOTIFICATIONS
+  //                                                       LOAD NOTIFICATIONS
   /**
    *  This function will load the admin's notifications into the notification section on the HTML page
    * 
@@ -302,20 +304,20 @@ export class DatabaseHandlerComponent implements OnInit {
               var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
               
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails1(tempLogU.Organization1, tempLogU.Details);
+              this.loadUserDetails(tempLogU.Organization1, tempLogU.Details, 'user1');
               
               if(tempLogU.Action == "/createOrganization"){
                 tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/addStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeOrg"){
                 tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
               }
   
@@ -344,7 +346,7 @@ export class DatabaseHandlerComponent implements OnInit {
               var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails1(tempLogD.Organization1, tempLogD.User);
+              this.loadUserDetails(tempLogD.Organization1, tempLogD.User, 'user1');
 
               if(tempLogD.Action == "/createDatabase"){
                 tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
@@ -371,22 +373,28 @@ export class DatabaseHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS1
+  //                                                  LOAD USER DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
    * 
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails1(userOrganization: string, userID: string) {
+  loadUserDetails(userOrganization: string, userID: string, type: string) {
     //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        //Returns the users name and surname as a connected string
-        this.user1 = data.fname + ' ' + data.surname;
+        if(type == 'user1'){
+          //Sets the users name and surname as a connected string
+          this.user1 = data.fname + ' ' + data.surname;
+        }
+        else if(type == 'user2'){
+          //Sets the users name and surname as a connected string
+          this.user2 = data.fname + ' ' + data.surname;
+        }
       } 
       else{
         //Error control
@@ -395,31 +403,7 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS2
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   * 
-   *  @memberof DatabaseHandlerComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails2(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        this.user2 = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REMOVE_NOTIFICATIONS
+  //                                                       REMOVE NOTIFICATIONS
   /**
    *  This function will remove a notification from the notification section on the HTML page.
    * 
@@ -434,7 +418,10 @@ export class DatabaseHandlerComponent implements OnInit {
       }
     }
 
-    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
+    this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
         this.loadNotifications();
       }
@@ -446,7 +433,7 @@ export class DatabaseHandlerComponent implements OnInit {
   
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
+  //                                                          NG ON INIT  
   /**
    * This function is called when the page loads
    * 
@@ -469,7 +456,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  SUBMIT_CSV
+  //                                                          SUBMIT CSV
   /**
    *  This function will be used to submit a .csv file so that it can be converted into a database for the user
    *  @param {any} input
@@ -525,7 +512,7 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_CSV
+  //                                                        GET CSV
   /**
    *  This function will be used to download the selected database in the format of a .csv file.
    * 
@@ -573,7 +560,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        VIEW_DATABASE
+  //                                                        VIEW DATABASE
   /**
    *  This function is used to load the selected database and display it in the HTML page
    * 
@@ -630,7 +617,7 @@ export class DatabaseHandlerComponent implements OnInit {
   
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  SUBMIT_DATABASE
+  //                                                  SUBMIT DATABASE
   /**
    *  This function will be used to submit the file chosen for porting and create a database using the .csv file, if the user 
    *  selects that the database preview table shown in correct.
@@ -677,7 +664,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  REMOVE_PREVIEW
+  //                                                        REMOVE PREVIEW
   /**
    *  This function will be used to hide the preview table and stop the processing of the .csv file submitted into a database, if
    *  the user selects that the database shown in the preview table is not in the correct format.
@@ -703,11 +690,11 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE NOTIFICATIONS 
+  //                                                       TOGGLE NOTIFICATIONS 
   /**
    * This function will toggle the display of the notifications side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificationsTab(){ 
@@ -715,11 +702,11 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE PROFILE 
+  //                                                         TOGGLE PROFILE 
   /**
    * This function will toggle the display of the profile side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProfileTab() {
@@ -727,22 +714,20 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_ADMIN_PROFILE_DETAILS
+  //                                                  LOAD ADMIN PROFILE DETAILS
   /**
    *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
     //The id number of the user that is currently logged in
-    this.id = localStorage.getItem('userID');
+    this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
-    this.organization = localStorage.getItem('userOrganization');
-    //The password of the user that is currently logged in
-    this.password = localStorage.getItem('userPassword');
-    //Setting the confirmPassword variable to have the same value as the user's current password
-    this.confirmPassword = this.password;
+    this.organization = tempUser.user.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -758,8 +743,6 @@ export class DatabaseHandlerComponent implements OnInit {
         this.surname = data.surname;
         //Setting the email of the user
         this.email = data.email;
-
-        console.log(this.userType);
       }
       else{
         //Error handling
@@ -768,10 +751,10 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SAVE_CHANGES
+  //                                                        SAVE CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof AdminDashboardComponent
+   *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
@@ -827,8 +810,9 @@ export class DatabaseHandlerComponent implements OnInit {
       //Making a call to the User Management API Service to save the user's changed profile details
       this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
         if(response.success == true){
-          //Making sure that local storage now has the updated password stored
-          localStorage.setItem('userPassword', this.password);
+          //Making sure that local storage now has the updated user information
+          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
+          
           //Reloading the updated user's details
           this.loadAdminProfileDetails();
 
@@ -855,11 +839,11 @@ export class DatabaseHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PROFILE SAVE BUTTON 
+  //                                                   DISPLAY PROFILE SAVE BUTTON 
   /**
    * This function will display the save button option if any details in the profile have been altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayProfileSaveBtn() {
@@ -867,11 +851,11 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PASSWORD CONFIRM INPUT 
+  //                                                DISPLAY PASSWORD CONFIRM INPUT 
   /**
    * This function will display the confirm password input field in the user's password was altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayConfirmPasswordInput() {
@@ -883,7 +867,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /**
    * This function will toggle the display of the help side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {

@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -102,7 +102,7 @@ export class MemberProfileComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
+  //                                                      TOGGLE NOTIFICATIONS TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -118,7 +118,7 @@ export class MemberProfileComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            LOGOUT 
+  //                                                              LOGOUT 
   /**
    * This function will log the user out of the web application and clear the authentication data stored in the local storage
    * 
@@ -131,7 +131,7 @@ export class MemberProfileComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_MEMBER_PROFILE_DETAILS
+  //                                                  LOAD MEMBER PROFILE DETAILS
   /**
    *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
@@ -139,14 +139,12 @@ export class MemberProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadMemberProfileDetails(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
     //The id number of the user that is currently logged in
-    this.id = localStorage.getItem('userID');
+    this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
-    this.organization = localStorage.getItem('userOrganization');
-    //The password of the user that is currently logged in
-    this.password = localStorage.getItem('userPassword');
-    //Setting the confirmPassword variable to have the same value as the user's current password
-    this.confirmPassword = this.password;
+    this.organization = tempUser.user.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -168,7 +166,7 @@ export class MemberProfileComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            SAVE_CHANGES
+  //                                                            SAVE CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
    * 
@@ -221,8 +219,9 @@ export class MemberProfileComponent implements OnInit {
       //Making a call to the User Management API Service to save the user's changed profile details
       this.userManagementService.updateOrganizationMemberDetails(this.organization, this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
         if(response.success == true){
-          //Making sure that local storage now has the updated password stored
-          localStorage.setItem('userPassword', this.password);
+          //Making sure that local storage now has the updated user information
+          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
+
           //Reloading the updated user's details
           this.loadMemberProfileDetails();
 
@@ -249,7 +248,7 @@ export class MemberProfileComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SHOW_PASSWORD
+  //                                                          SHOW PASSWORD
   /**
    *  This function will make the users password visible on request. 
    * @memberof MemberProfileComponent
@@ -266,7 +265,7 @@ export class MemberProfileComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SHOW_CONFIRMED_PASSWORD
+  //                                                        SHOW CONFIRMED PASSWORD
   /**
    *  This function will make the users confirmed password visible on request. 
    * @memberof MemberProfileComponent
@@ -282,7 +281,7 @@ export class MemberProfileComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
+  //                                                          NG ON INIT  
   /**
    * This function is called when the page loads
    * 

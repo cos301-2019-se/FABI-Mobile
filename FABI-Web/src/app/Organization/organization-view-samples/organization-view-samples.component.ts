@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -65,7 +65,7 @@ export class OrganizationViewSamplesComponent implements OnInit {
     ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
+  //                                                    TOGGLE NOTIFICATIONS TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -80,7 +80,7 @@ export class OrganizationViewSamplesComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
+  //                                                           NG ON INIT  
   /**
    * This function is called when the page loads
    * 
@@ -110,7 +110,7 @@ export class OrganizationViewSamplesComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            VIEW_SAMPLES 
+  //                                                            VIEW SAMPLES 
   /**
    * This function will be used to load all of the samples belonging to the organization into the HTML page
    * 
