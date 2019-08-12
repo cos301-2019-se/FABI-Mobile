@@ -130,7 +130,13 @@
 
     <!-- Staff Tables -->
     <div class="staff-tables">
-
+      <div class="input-group search-table">
+        <div class="input-group-prepend ">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+        </div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+          aria-describedby="basic-addon1">
+      </div>
       <!-- Staff Table -->
       <div class="staff-handler-table table-responsive">
         <h5> Staff List </h5>
@@ -150,9 +156,10 @@
               <td>{{staff.surname}}</td>
               <td>{{staff.email}}</td>
               <td class="table-action">
-                <button class="btn btn-default view" data-toggle="modal" data-target="#viewModal" [id]="staff.email" (click)="selectStaffMember(staff)">View</button>
-                <button class="btn btn-default delete" data-toggle="modal"
-                  data-target="#confirmDeleteModal" [id]="staff.email" (click)="selectStaffMember(staff)">Delete</button>
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal" [id]="staff.email"
+                  (click)="selectStaffMember(staff)">View</button>
+                <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal"
+                  [id]="staff.email" (click)="selectStaffMember(staff)">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -216,7 +223,8 @@
                 <div class="form-group">
                   <label for="email">Email address</label>
                   <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                    placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled" [value]="selectedStaff.email" required>
+                    placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled"
+                    [value]="selectedStaff.email" required>
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                     else.</small>
                   <div class="valid-feedback">
@@ -328,8 +336,8 @@
                     <option value="" selected>
                       Please indicate whether this member is an Admin
                     </option>
-                    <option  value="Yes"> Yes </option>
-                    <option  value="No"> No </option>
+                    <option value="Yes"> Yes </option>
+                    <option value="No"> No </option>
                   </select>
                   <div class="valid-feedback">
                     Looks good!
@@ -371,19 +379,19 @@
                     <tbody>
                       <tr *ngFor="let dbName of databaseNames">
                         <td>{{dbName}}</td>
-                        <td> 
-                            <input type="checkbox" name="{{dbName}}" value="create">
-                          </td>
-                          <td> 
-                            <input type="checkbox" name="{{dbName}}" value="delete">
-                          </td>
-                          <td> 
-                            <input type="checkbox" name="{{dbName}}" value="update">
-                          </td>
-                          <td> 
-                            <input type="checkbox" name="{{dbName}}" value="retrieve" >
-                          </td>
-                     </tr>
+                        <td>
+                          <input type="checkbox" name="{{dbName}}" value="add">
+                        </td>
+                        <td>
+                          <input type="checkbox" name="{{dbName}}" value="delete">
+                        </td>
+                        <td>
+                          <input type="checkbox" name="{{dbName}}" value="update">
+                        </td>
+                        <td>
+                          <input type="checkbox" name="{{dbName}}" value="view">
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div> -->
@@ -427,8 +435,8 @@
         <div class="modal-body">
           <p>Everything related to this member of staff will be permantely deleted</p>
           <div class="confirm-actions">
-            <button type="button" class="btn btn-default confirm" (click)="removeStaffMember()" >Confirm</button>
-            <button type="button" class="btn btn-default cancel">Cancel</button>
+            <button type="button" class="btn btn-default-confirm" (click)="removeStaffMember()">Confirm</button>
+            <button type="button" class="btn btn-default-cancel">Cancel</button>
           </div>
         </div>
       </div>
