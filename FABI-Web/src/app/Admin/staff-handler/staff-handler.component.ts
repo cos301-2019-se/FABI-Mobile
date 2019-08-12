@@ -243,6 +243,8 @@ export class StaffHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     //Calling the neccessary functions as the page loads
+    this.authService.temporaryLoginSuperUser();
+    
     this.displayUserTypes();
     this.viewStaff();
     this.loadNotifications();
