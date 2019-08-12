@@ -134,7 +134,7 @@ export class CultureCollectionAPIService {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_REQUEST_LOGS
+  //                                                         GET ALL REQUEST LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'REQUEST'
@@ -158,7 +158,7 @@ export class CultureCollectionAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_DEPOSIT_LOGS
+  //                                                         GET ALL DEPOSIT LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'DEPOSIT'
@@ -183,7 +183,7 @@ export class CultureCollectionAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_REVITALIZATION_LOGS
+  //                                                         GET ALL REVITALIZATION LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'REVITALIZATION'
@@ -206,7 +206,7 @@ export class CultureCollectionAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_PROCESSED_LOGS
+  //                                                         GET ALL PROCESSED LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'PROCESSED'
@@ -230,7 +230,7 @@ export class CultureCollectionAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT_CMW_DEPOSIT_FORM 
+  //                                                      SUBMIT CMW DEPOSIT FORM 
   /**
    *    This function sends a POST request to the server to submit a CMW deposit form and save it to the
    *    database.
@@ -258,7 +258,7 @@ export class CultureCollectionAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT_CMW_REQUEST_FORM 
+  //                                                    SUBMIT CMW REQUEST FORM 
   /**
    *    This function sends a POST request to the server to submit a CMW request form and save it to the
    *    database.
@@ -284,7 +284,7 @@ export class CultureCollectionAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT_CMW_REVITALIZATION_FORM 
+  //                                                    SUBMIT CMW REVITALIZATION FORM 
   /**
    *    This function sends a POST request to the server to submit a CMW revitalization form and save it to the
    *    database.
@@ -312,7 +312,7 @@ export class CultureCollectionAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    SUBMIT_PROCESSED_FORM 
+  //                                                    SUBMIT PROCESSED FORM 
   /**
    *    This function sends a POST request to the server to submit a process form for a deposit form and save it to the
    *    database.
@@ -340,7 +340,7 @@ export class CultureCollectionAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    UPDATE_DEPOSIT_FORM_STATUS 
+  //                                                    UPDATE DEPOSIT FORM STATUS 
   /**
    *    This function is used to update the status of a deposit form to 'processed'.
    *

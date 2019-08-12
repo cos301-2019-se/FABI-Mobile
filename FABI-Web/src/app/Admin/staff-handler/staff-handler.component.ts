@@ -231,7 +231,7 @@ export class StaffHandlerComponent implements OnInit {
 
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
+  //                                                          NG ON INIT  
   /**
    * This function is called when the page loads
    * 
@@ -254,20 +254,16 @@ export class StaffHandlerComponent implements OnInit {
     this.getDBNames();
     this.onChanges();
 
-    this.loadAdminProfileDetails();
-    
+    this.loadAdminProfileDetails();    
 
     const user2 = this.authService.getCurrentUserValue;
-    console.log("///////// USER: " + JSON.stringify(user2));
   }
 
   onChanges() {
     this.addStaffForm.get('staff_position').valueChanges
-    .subscribe(selectedStaffPosition => {
-      
+    .subscribe(selectedStaffPosition => {      
         if (selectedStaffPosition == 'Yes') {
-          console.log("---------- HERE HERE -----------");
-            this.addStaffForm.get('admin_type').enable();
+          this.addStaffForm.get('admin_type').enable();
         } else {
           this.addStaffForm.get('admin_type').reset();
           this.addStaffForm.get('admin_type').disable();
@@ -286,7 +282,8 @@ export class StaffHandlerComponent implements OnInit {
           
         // });
         
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Database Names", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -303,7 +300,8 @@ export class StaffHandlerComponent implements OnInit {
       if (response.success == true && response.code == 200) {
         this.adminTypes = response.data.adminTypes;
         this.onChanges();
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Admin Types", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -330,7 +328,7 @@ export class StaffHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_DATE
+  //                                                        GET DATE
   /**
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
@@ -406,7 +404,7 @@ export class StaffHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_LOGS
+  //                                                       LOAD LOGS
   /**
    *  This function will load all of the user's logs into a string array.
    * 
@@ -414,8 +412,11 @@ export class StaffHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
     //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.content.data.Logs;
 
@@ -430,7 +431,7 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_NOTIFICATIONS
+  //                                                       LOAD NOTIFICATIONS
   /**
    *  This function will load the admin's notifications into the notification section on the HTML page
    * 
@@ -454,20 +455,20 @@ export class StaffHandlerComponent implements OnInit {
               var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
               
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails1(tempLogU.Organization1, tempLogU.Details);
+              this.loadUserDetails(tempLogU.Organization1, tempLogU.Details, 'user1');
 
               if(tempLogU.Action == "/createOrganization"){
                 tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/addStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeOrg"){
                 tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
               }
               else if(tempLogU.Action == "/removeStaff"){
-                this.loadUserDetails2(tempLogU.Organization2, tempLogU.User);
+                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
               }
   
@@ -496,7 +497,7 @@ export class StaffHandlerComponent implements OnInit {
               var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
 
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails1(tempLogD.Organization1, tempLogD.User);
+              this.loadUserDetails(tempLogD.Organization1, tempLogD.User, 'user1');
 
               if(tempLogD.Action == "/createDatabase"){
                 tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
@@ -523,22 +524,28 @@ export class StaffHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS1
+  //                                                        LOAD USER DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
    * 
    *  @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails1(userOrganization: string, userID: string) {
+  loadUserDetails(userOrganization: string, userID: string, type: string) {
     //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        //Returns the users name and surname as a connected string
-        this.user1 = data.fname + ' ' + data.surname;
+        if(type == 'user1'){
+          //Sets the users name and surname as a connected string
+          this.user1 = data.fname + ' ' + data.surname;
+        }
+        else if(type == 'user2'){
+          //Sets the users name and surname as a connected string
+          this.user2 = data.fname + ' ' + data.surname;
+        }
       } 
       else{
         //Error control
@@ -546,36 +553,14 @@ export class StaffHandlerComponent implements OnInit {
     });
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS2
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   * 
-   *  @memberof StaffHandlerComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails2(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
 
-        //Returns the users name and surname as a connected string
-        this.user2 = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REMOVE_NOTIFICATIONS
+  //                                                       REMOVE NOTIFICATIONS
   /**
    *  This function will remove a notification from the notification section on the HTML page.
    * 
    * @param {string} id                   //The id of the notification to be removed
-   * @memberof AdminDashboardComponent
+   * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(id: string){
@@ -585,7 +570,10 @@ export class StaffHandlerComponent implements OnInit {
       }
     }
 
-    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
+
+    this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
         this.loadNotifications();
       }
@@ -597,7 +585,7 @@ export class StaffHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          ADD_STAFF
+  //                                                          ADD STAFF
   /**
    * This function calls the *user-management* service to add a Staff Member
    *
@@ -609,7 +597,6 @@ export class StaffHandlerComponent implements OnInit {
     this.submitted = true;
 
     if (this.addStaffForm.invalid) {
-      console.log("------ INVALID -------");
       return;
     }
 
@@ -645,8 +632,6 @@ export class StaffHandlerComponent implements OnInit {
       
     }); 
 
-    console.log("---- DB Privilege: " + databasePrivileges);
-
     this.userManagementService.addStaffMember(staff_details).subscribe((response: any) => {      
       this.loading = false;
 
@@ -656,7 +641,8 @@ export class StaffHandlerComponent implements OnInit {
           duration: 6000
         });
         this.refreshDataSource();
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Adding Staff Member", message: response.message, retry: true }});
         dialogRef.afterClosed().subscribe((result) => {
@@ -670,7 +656,7 @@ export class StaffHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SELECTED_ORGANIZATION
+  //                                                        SELECTED ORGANIZATION
   /**
    * This function sets the Staff Member selected by the user in the table
    *
@@ -684,7 +670,7 @@ export class StaffHandlerComponent implements OnInit {
   
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     REMOVE_STAFF_MEMBER_PROMPT
+  //                                                     REMOVE STAFF MEMBER PROMPT
   /**
    * This function prompts the user to confirm if they wish to remove the selected Staff Member
    *
@@ -703,6 +689,7 @@ export class StaffHandlerComponent implements OnInit {
         confirm: "Remove"
       }
     });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result == "Confirm") {
         this.selectedStaff = member;
@@ -713,7 +700,7 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                           REMOVE_STAFF_MEMBER   
+  //                                                           REMOVE STAFF MEMBER   
   /**
    * This function calls the *user-management* service to remove the selected Staff Member 
    *
@@ -728,7 +715,8 @@ export class StaffHandlerComponent implements OnInit {
           duration: 3000
         });
         this.refreshDataSource();
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -741,7 +729,7 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            REFRESH
+  //                                                                REFRESH
   /**
    * This function refreshes the Datasource (in most cases, the table that has changed)
    *
@@ -753,7 +741,7 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            VIEW_STAFF
+  //                                                              VIEW STAFF
   /**
    * This function calls the *user-management* service to get all registered FABI Staff
    *
@@ -771,7 +759,8 @@ export class StaffHandlerComponent implements OnInit {
         this.numberOfStaffMembers = this.staffMembers.length;
         
 
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Staff", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -804,7 +793,7 @@ export class StaffHandlerComponent implements OnInit {
   /**
    * This function will toggle the display of the notifications side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificationsTab(){ 
@@ -816,7 +805,7 @@ export class StaffHandlerComponent implements OnInit {
   /**
    * This function will toggle the display of the profile side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProfileTab() {
@@ -824,22 +813,20 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_ADMIN_PROFILE_DETAILS
+  //                                                    LOAD ADMIN PROFILE DETAILS
   /**
    *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
+    //Getting the user's details from local storage
+    var tempUser = this.authService.getCurrentUserValue;
     //The id number of the user that is currently logged in
-    this.id = localStorage.getItem('userID');
+    this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
-    this.organization = localStorage.getItem('userOrganization');
-    //The password of the user that is currently logged in
-    this.password = localStorage.getItem('userPassword');
-    //Setting the confirmPassword variable to have the same value as the user's current password
-    this.confirmPassword = this.password;
+    this.organization = tempUser.user.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -865,10 +852,10 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SAVE_CHANGES
+  //                                                        SAVE CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof AdminDashboardComponent
+   *  @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
@@ -924,8 +911,9 @@ export class StaffHandlerComponent implements OnInit {
       //Making a call to the User Management API Service to save the user's changed profile details
       this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
         if(response.success == true){
-          //Making sure that local storage now has the updated password stored
-          localStorage.setItem('userPassword', this.password);
+          //Making sure that local storage now has the updated user information
+          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
+
           //Reloading the updated user's details
           this.loadAdminProfileDetails();
 
@@ -952,11 +940,11 @@ export class StaffHandlerComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PROFILE SAVE BUTTON 
+  //                                                      DISPLAY PROFILE SAVE BUTTON 
   /**
    * This function will display the save button option if any details in the profile have been altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayProfileSaveBtn() {
@@ -964,11 +952,11 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            DISPLAY PASSWORD CONFIRM INPUT 
+  //                                                     DISPLAY PASSWORD CONFIRM INPUT 
   /**
    * This function will display the confirm password input field in the user's password was altered
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayConfirmPasswordInput() {
@@ -980,7 +968,7 @@ export class StaffHandlerComponent implements OnInit {
   /**
    * This function will toggle the display of the help side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
