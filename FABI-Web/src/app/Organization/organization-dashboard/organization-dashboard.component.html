@@ -4,8 +4,8 @@
   <!-- Sidenav -->
   <div class="sidenav">
     <div class="top-nav-items">
-      <i class="fas fa-user-circle" onclick="showProfile()"></i>
-      <p onclick="showProfile()">Tap to view profile</p>
+      <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+      <p (click)="toggleProfileTab()">Tap to view profile</p>
       <br />
       <div class="nav-links">
         <a class="nav-link active" href="#"><i class="fas fa-home"></i></a>
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="bottom-nav-items">
-      <a class="nav-link" onclick="showHelp()"><i class="fas fa-question"></i></a>
+      <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
       <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </div>
@@ -38,7 +38,7 @@
             <a class="nav-link" href="#">Member Handler</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="showHelp()">Help</a>
+            <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Logout</a>
@@ -61,8 +61,8 @@
 
       <!-- Notification Icons -->
       <div class="notifications-icon">
-        <i class="fas fa-user-circle" onclick="showProfile()"></i>
-        <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+        <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
         <i class="far fa-bell" id="no-new-notifications"></i>
       </div>
       <!-- /Notification Icons -->
@@ -78,10 +78,14 @@
       <!-- Content Heading -->
       <div class="content-heading">
         <h2>Dashbaord</h2>
-        <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
         <i class="far fa-bell" id="no-new-notifications"></i>
       </div>
       <!-- / Content Heading -->
+
+      <!-- Section Divider -->
+      <div class="section-divider"></div>
+      <!-- / Section Divider -->
 
       <!-- Statistics -->
       <div class="statistics">
@@ -356,8 +360,8 @@
         <!-- / Profile Section -->
 
   <!-- Help Section -->
-  <div id="help">
-    <i class="fas fa-arrow-left" onclick="hideHelp()"></i>
+  <div id="help" *ngIf="helpTab">
+    <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
     <br />
     <h3>HELP</h3>
     <!-- Help Items -->
