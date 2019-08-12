@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 9th 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -28,6 +28,8 @@ import { Member, UserManagementAPIService } from '../../_services/user-managemen
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+
+import * as Interface from '../../_interfaces/interfaces';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -120,6 +122,8 @@ export class AdminDashboardComponent implements OnInit {
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
 
+  currentUser: any;
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
@@ -161,6 +165,8 @@ export class AdminDashboardComponent implements OnInit {
         admin_password: '',
         admin_confirm: ''
       });
+
+      this.currentUser = this.authService.getCurrentSessionValue.user;
     }
 
 
@@ -523,6 +529,37 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() { 
+    const Lemail = "johndoe@gmail.com";
+    const Lpassw = "Tr7hs8BjuX";
+    const Lorg = "FABI";
+
+    // User details to be passed to API
+    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
+
+    this.authService.login(details).subscribe((response: any) => {
+      // API Request successful
+      if (response.success == true && response.code == 200) {
+
+        
+        // User NOT Authorised
+        if (response.title != "AUTHORIZED") {
+          //POPUP MESSAGE
+        }
+        // ELSE user Authorised:
+
+        //Setting local storage to hold the users details
+        localStorage.setItem('userID', response.userDetails.id);
+        localStorage.setItem('userOrganization', Lorg);
+        localStorage.setItem('userPassword', Lpassw);
+        
+
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        console.log("---LOGIN ERROR : " + response.message);
+
+      }
+    });
+    
     //Calling the neccessary functions as the page loads
     this.loadNotifications();
     this.getNumberOfFABIMembers();
@@ -734,6 +771,7 @@ export class AdminDashboardComponent implements OnInit {
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
   }
+
 
 
 
