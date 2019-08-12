@@ -560,6 +560,8 @@ export class AdminDashboardComponent implements OnInit {
 
       }
     });
+  
+    this.authService.temporaryLoginSuperUser();
     
     //Calling the neccessary functions as the page loads
     this.loadNotifications();
