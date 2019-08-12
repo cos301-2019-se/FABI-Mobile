@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 11th 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -54,6 +54,8 @@ export class AuthenticationService {
     let usersDetails = {
       'ID': user.id,
       'organisation': org,
+      'name' : user.fname,
+      'surname': user.surname,
       'email': user.email,
       'permission': user.userType,
       //REMOVE ASAP:

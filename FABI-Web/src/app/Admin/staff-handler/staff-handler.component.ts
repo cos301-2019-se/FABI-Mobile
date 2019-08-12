@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 11th 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -196,7 +196,9 @@ export class StaffHandlerComponent implements OnInit {
     private router: Router, 
     private userManagementService: UserManagementAPIService, 
     private notificationLoggingService: NotificationLoggingService
-    )  {this.adminProfileForm = this.formBuilder.group({
+    )  {
+      
+      this.adminProfileForm = this.formBuilder.group({
       organization_name: '',
       admin_name: '',
       admin_surname: '',
@@ -219,11 +221,10 @@ export class StaffHandlerComponent implements OnInit {
         Validators.required,
         // Validators.pattern('')
       ])],
-      staff_position: ['', Validators.required],
-      admin_type: ['', Validators.required],
-      fabi_admin_privileges: new FormArray(formControls),
-      fabi_staff_privileges: new FormArray(formControls),
-      database_privileges: new FormArray(formControls),
+
+      // fabi_admin_privileges: new FormArray(formControls),
+      // fabi_staff_privileges: new FormArray(formControls),
+      // database_privileges: new FormArray(formControls),
 
     })
   };
@@ -607,6 +608,7 @@ getAdminTypes() {
     this.submitted = true;
 
     if (this.addStaffForm.invalid) {
+      console.log("------ INVALID -------");
       return;
     }
 
@@ -618,20 +620,33 @@ getAdminTypes() {
     const LstaffEmail = this.addStaffForm.controls.staff_email.value;
     const LstaffPhone = this.addStaffForm.controls.staff_phone.value;
     const LstaffPosition = this.addStaffForm.controls.admin_type.value;
-
     const staff_details: Interface.StaffInfo = { name: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition};
 
-    var databsePrivileges : Interface.DatabasePrivilege[];
+    var databasePrivileges : Interface.DatabasePrivilege[];
+
     this.databaseNames.forEach(name => {
 
-      var boxes = document.getElementsByName(`${name}`);
-        for(var i = 0; i < document.getElementsByName(`${name}`).length; i++) {
-          // if(boxes[i].checked = true) {
+      var temp : Interface.DatabasePrivilege;
 
-          // }
+      var boxes: NodeListOf<HTMLElement> = document.getElementsByName(`${name}`);
+
+        for(var i = 0; i < document.getElementsByName(`${name}`).length; i++) {
+
+          var box = boxes[i] as HTMLInputElement;
+          if(box.checked = true) {
+            console.log("---VALUE: " + box[i].value);
+            temp.privileges.push(box[i].value);
+          }
+        }
+
+        if(temp.privileges[0] != null) {
+          temp.name = name;
+          databasePrivileges.push(temp);
         }
       
     }); 
+
+    console.log("---- DB Privilege: " + databasePrivileges);
 
     this.userManagementService.addStaffMember(staff_details).subscribe((response: any) => {
       
