@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 11th 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -751,4 +751,7 @@ export class UserManagementAPIService {
     return this.http.request<any>(method, getDBNamesURL, options);
 
   }
+
+
+  
 }
