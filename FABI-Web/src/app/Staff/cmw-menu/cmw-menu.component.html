@@ -4,10 +4,11 @@
     <!-- Sidenav -->
     <div class="sidenav">
       <div class="top-nav-items">
-        <i class="fas fa-user-circle" onclick="showProfile()"></i>
-        <p onclick="showProfile()">Tap to view profile</p>
-        <br/>
+        <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+        <p (click)="toggleProfileTab()">Tap to view profile</p>
+        <br />
         <div class="nav-links">
+          <a class="nav-link active" href="#"><i class="fas fa-home"></i></a>
           <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
           <a class="nav-link" href="#"><i class="fas fa-vial"></i></a>
           <a class="nav-link" href="#"><i class="fas fa-vials"></i></a>
@@ -15,7 +16,7 @@
         </div>
       </div>
       <div class="bottom-nav-items">
-        <a class="nav-link" onclick="showHelp()"><i class="fas fa-question"></i></a>
+        <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
         <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
       </div>
     </div>
@@ -28,17 +29,17 @@
           <h1 class="brand">STAFF DASHBOARD</h1>
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <!-- Navbar Items -->
-            <li class="nav-item">
-              <a class="nav-link" href="#">Home</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Samples</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">CMW Culture Collection <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+              <a class="nav-link" href="#">CMW Culture Collection</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="showHelp()">Help</a>
+              <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Logout</a>
@@ -49,523 +50,964 @@
       </div>
       <nav class="navbar navbar-dark bg-dark">
         <!-- Menu Button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
         <!-- / Menu Button -->
   
         <!-- Navbar Title -->
-        <h5>CMW</h5>
+        <h5>HOME</h5>
         <!-- / Navbar Title -->
   
         <!-- Notification Icons -->
         <div class="notifications-icon">
-          <i class="fas fa-user-circle" onclick="showProfile()"></i>
-          <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+          <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+          <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
           <i class="far fa-bell" id="no-new-notifications"></i>
         </div>
         <!-- /Notification Icons -->
       </nav>
     </div>
     <!-- / Navbar-->
-  
-    <!-- Dashboard Content -->
-    <div class="dashboard-content">
-      <!-- Primary Content -->
-      <div class="primary-content">
-  
-        <!-- Content Heading -->
-        <div class="content-heading">
-          <h2>CMW Culture Collection</h2>
-          <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
-          <i class="far fa-bell" id="no-new-notifications"></i>
-        </div>
-        <!-- / Content Heading -->
-  
-        <!-- Handler Shortcuts -->
-        <div class="handler-shortcuts">
-  
-          <!-- Menu Shortcut Row -->
-          <div class="menu-row">
-  
-            <!-- Menu Item -->
-            <div class="menu-item" data-toggle="modal" data-target="#cmwRequestForm">
-              <div class="menu-icon">
-                <i class="fas fa-file-upload"></i>
-              </div>
-              <div class="menu-heading">
-                <h6>Submit Request Form</h6>
-              </div>
-            </div>
-            <!-- / Menu Item -->
-  
-            <!-- Menu Item -->
-            <div class="menu-item" data-toggle="modal" data-target="#cmwDepositForm">
-              <div class="menu-icon">
-                <i class="fas fa-file-upload"></i>
-              </div>
-              <div class="menu-heading">
-                <h6>Submit Deposit Form</h6>
-              </div>
-            </div>
-            <!-- / Menu Item -->
-  
-          </div>
-          <!-- / Menu Shortcut Row -->
-  
-          <!-- Menu Shortcut Row -->
-          <div class="menu-row">
-  
-            <!-- Menu Item -->
-            <div class="menu-item" data-toggle="modal" data-target="#cmwRevitalizationForm">
-              <div class="menu-icon">
-                <i class="fas fa-file-upload"></i>
-              </div>
-              <div class="menu-heading">
-                <h6>Submit Revitalization Form</h6>
-              </div>
-            </div>
-            <!-- / Menu Item -->
-  
-            <!-- Menu Item -->
-            <div class="menu-item">
-              <div class="menu-icon">
-                <i class="fas fa-print"></i>
-              </div>
-              <div class="menu-heading">
-                <h6>Print Collection List</h6>
-              </div>
-            </div>
-            <!-- / Menu Item -->
-  
-          </div>
-          <!-- / Menu Shortcut Row -->
-  
-        </div>
-        <!-- / Handler Shortcuts -->
-  
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <!-- Primary Content -->
+    <div class="primary-content">
+
+      <!-- Content Heading -->
+      <div class="content-heading">
+        <h2>CMW Culture Collection</h2>
+        <i class="fas fa-bell" id="new-notifications" onclick="showNotifications()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
       </div>
-      <!-- / Primary Content -->
-      
-        <!-- CMW Request Section -->
-    <div class="modal fade" id="cmwRequestForm" tabindex="-1" role="dialog" aria-labelledby="cmwRequestFormTitle" aria-hidden="true">
+      <!-- / Content Heading -->
+
+      <!-- Section Divider -->
+      <div class="section-divider"></div>
+      <!-- / Section Divider -->
+
+      <!-- Handler Shortcuts -->
+      <div class="handler-shortcuts">
+
+        <!-- Menu Shortcut Row -->
+        <div class="menu-row">
+
+          <!-- Menu Item -->
+          <div class="menu-item" data-toggle="modal" data-target="#cmwRequestForm">
+            <div class="menu-icon">
+              <i class="fas fa-file-upload"></i>
+            </div>
+            <div class="menu-heading">
+              <h6>Submit Request Form</h6>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+          <!-- Menu Item -->
+          <div class="menu-item" data-toggle="modal" data-target="#cmwDepositForm">
+            <div class="menu-icon">
+              <i class="fas fa-file-upload"></i>
+            </div>
+            <div class="menu-heading">
+              <h6>Submit Deposit Form</h6>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+        </div>
+        <!-- / Menu Shortcut Row -->
+
+        <!-- Menu Shortcut Row -->
+        <div class="menu-row">
+
+          <!-- Menu Item -->
+          <div class="menu-item" data-toggle="modal" data-target="#cmwRevitalizationForm">
+            <div class="menu-icon">
+              <i class="fas fa-file-upload"></i>
+            </div>
+            <div class="menu-heading">
+              <h6>Submit Revitalization Form</h6>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+          <!-- Menu Item -->
+          <div class="menu-item">
+            <div class="menu-icon">
+              <i class="fas fa-print"></i>
+            </div>
+            <div class="menu-heading">
+              <h6>Print Collection List</h6>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+        </div>
+        <!-- / Menu Shortcut Row -->
+
+      </div>
+      <!-- / Handler Shortcuts -->
+
+    </div>
+    <!-- / Primary Content -->
+
+    <!-- CMW Request Section -->
+    <div class="modal fade" id="cmwRequestForm" tabindex="-1" role="dialog" aria-labelledby="cmwRequestFormTitle"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="cmwRequestFormTitle">CMW Request Form</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"><i class="fas fa-times"></i></span>
-          </button>
+              <span aria-hidden="true"><i class="fas fa-times"></i></span>
+            </button>
           </div>
           <div class="modal-body">
             <div class="form">
-              <form class="view-form">
-                <div class="form-row align-items-center">
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name" onchange="displaySaveButton()" disabled="disabled">
-                  </div>
-                  <div class="form-group">
-                    <label for="surname">Surname</label>
-                    <input type="text" class="form-control" id="surname" placeholder="Enter surname" onchange="displaySaveButton()" disabled="disabled">
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                  </div>
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" onchange="changedPassword()" disabled="disabled">
-                  </div>
-                  <div class="form-group" id="confirm-password">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()" disabled="disabled">
+              <form class="view-form needs-validation" novalidate [formGroup]="cmwRequestForm"
+                (submit)="submitCMWRequestForm()">
+
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="requestor" placeholder="Requestor (Surname, Initials)" type="text"
+                    [formControl]="requestorControl" formControlName="requestor" [matAutocomplete]="autoRequestor">
+                  <mat-autocomplete #autoRequestor="matAutocomplete" (optionSelected)="setRequestor($event)">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+                <!-- Taxon Name -->
+                <div class="form-group">
+                  <label for="taxon_name">Taxon Name</label>
+                  <input type="text" class="form-control form-control-sm" id="taxon_name" formControlName="taxon_name"
+                    placeholder="Taxon name" required>
+                  <div class="valid-feedback">
+                    Looks good!
                   </div>
                 </div>
+                <!-- / Taxon Name -->
+
+                <!-- Culture Number -->
+                <div class="form-group">
+                  <label for="culture_number">Culture Number</label>
+                  <input type="text" class="form-control form-control-sm" id="culture_number"
+                    formControlName="culture_number" placeholder="Culture number" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Culture Number -->
+
+                <!-- Date Requested -->
+                <div class="form-group">
+                  <label for="date_requested">Date Requested</label>
+                  <input type="date" class="form-control form-control-sm" id="date_requested"
+                    formControlName="date_requested" placeholder="Date requested" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Date Requested -->
+
+                <!-- Reference Number -->
+                <div class="form-group">
+                  <label for="reference_number">Reference Number</label>
+                  <input type="text" class="form-control form-control-sm" id="reference_number"
+                    formControlName="reference_number" placeholder="Reference number" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Reference Number -->
+
+                <!-- Notes -->
+                <div class="form-group">
+                  <label for="notes">Notes</label>
+                  <input type="text" class="form-control form-control-sm" id="notes" formControlName="notes"
+                    placeholder="Notes" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Notes -->
+
+                <button type="button" class="btn btn-default-submit" onclick="saveStaffProfileChanges()">Submit</button>
               </form>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default submit" onclick="saveStaffProfileChanges()">Submit</button>
+
           </div>
         </div>
       </div>
     </div>
     <!-- / CMW Request  Modal Section -->
-      
-      <!-- CMW Deposit Section -->
-    <div class="modal fade" id="cmwDepositForm" tabindex="-1" role="dialog" aria-labelledby="cmwDepositFormTitle" aria-hidden="true">
+
+    <!-- CMW Deposit Section -->
+    <div class="modal fade" id="cmwDepositForm" tabindex="-1" role="dialog" aria-labelledby="cmwDepositFormTitle"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="cmwDepositFormTitle">CMW Deposit Form</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"><i class="fas fa-times"></i></span>
-          </button>
+              <span aria-hidden="true"><i class="fas fa-times"></i></span>
+            </button>
           </div>
           <div class="modal-body">
             <div class="form">
-              <form class="view-form">
-                <div class="form-row align-items-center">
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name" onchange="displaySaveButton()" disabled="disabled">
-                  </div>
-                  <div class="form-group">
-                    <label for="surname">Surname</label>
-                    <input type="text" class="form-control" id="surname" placeholder="Enter surname" onchange="displaySaveButton()" disabled="disabled">
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                  </div>
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" onchange="changedPassword()" disabled="disabled">
-                  </div>
-                  <div class="form-group" id="confirm-password">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()" disabled="disabled">
+
+              <form class="view-form needs-validation" novalidate [formGroup]="cmwDepositForm"
+                (submit)="submitCMWDepositForm()">
+
+                <!-- CMW Culture Number -->
+                <div class="form-group">
+                  <label for="cmw_culture_number">CMW Culture Number</label>
+                  <input type="text" class="form-control form-control-sm" id="cmw_culture_number"
+                    formControlName="cmw_culture_number" placeholder="CMW culture number" required>
+                  <div class="valid-feedback">
+                    Looks good!
                   </div>
                 </div>
+                <!-- / CMW Culture Number -->
+
+
+                <!-- Genus-->
+                <div class="form-group">
+                  <label for="genus">Genus</label>
+                  <input type="text" class="form-control form-control-sm" id="genus" formControlName="genus"
+                    placeholder="Genus" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Genus -->
+
+                <!-- Epitheton -->
+                <div class="form-group">
+                  <label for="epitheton">Epitheton</label>
+                  <input type="text" class="form-control form-control-sm" id="epitheton" formControlName="epitheton"
+                    placeholder="epitheton" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Epitheton -->
+
+                <!-- Personal Collection Number-->
+                <div class="form-group">
+                  <label for="personal_collection_number">Personal Collection Number</label>
+                  <input type="text" class="form-control form-control-sm" id="personal_collection_number"
+                    formControlName="personal_collection_number" placeholder="Personal Collection Number" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Personal Collection Number -->
+
+
+                <!-- International Collection Number -->
+                <div class="form-group">
+                  <label for="international_collection_number">International Collection Number</label>
+                  <input type="text" class="form-control form-control-sm" id="international_collection_number"
+                    formControlName="international_collection_number" placeholder="International Collection Number"
+                    required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / International Collection Number -->
+
+
+                <!-- Herbarium Number -->
+                <div class="form-group">
+                  <label for="herbarium_number">Herbarium Number</label>
+                  <input type="text" class="form-control form-control-sm" id="herbarium_number"
+                    formControlName="herbarium_number" placeholder="Herbarium Number" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Herbarium Number -->
+
+
+                <!-- Other FABI Collections -->
+                <div class="form-group">
+                  <label for="other_FABI_collections">Other FABI Collections</label>
+                  <input type="text" class="form-control form-control-sm" id="other_FABI_collections"
+                    formControlName="other_FABI_collections" placeholder="Other FABI Collections" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Other FABI Collections -->
+
+
+                <!-- Synonym or Original Name -->
+                <div class="form-group">
+                  <label for="name">Synonym or Original Name</label>
+                  <input type="text" class="form-control form-control-sm" id="name" formControlName="name"
+                    placeholder="Synonym or Original Name" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Synonym or Original Name -->
+
+
+                <!-- Type Status -->
+                <div class="form-group">
+                  <label for="type_status">Type Status</label>
+                  <input type="text" class="form-control form-control-sm" id="type_status" formControlName="type_status"
+                    placeholder="Type Status" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Type Status -->
+
+
+                <!-- Synonym or Original Name -->
+                <div class="form-group">
+                  <label for="name">Synonym or Original Name</label>
+                  <input type="text" class="form-control form-control-sm" id="name" formControlName="name"
+                    placeholder="Synonym or Original Name" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Synonym or Original Name -->
+
+
+
+
+                <!-- Host -->
+                <div class="form-group">
+                  <label for="host">Host</label>
+                  <input type="text" class="form-control form-control-sm" id="host" formControlName="host"
+                    placeholder="Host" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Host -->
+
+                <!-- Vector -->
+                <div class="form-group">
+                  <label for="vector">Vector</label>
+                  <input type="text" class="form-control form-control-sm" id="vector" formControlName="vector"
+                    placeholder="Vector" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Vector -->
+
+                <!-- Substrate -->
+                <div class="form-group">
+                  <label for="substrate">Substrate</label>
+                  <input type="text" class="form-control form-control-sm" id="substrate" formControlName="substrate"
+                    placeholder="Substrate" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Substrate -->
+
+
+
+
+
+                <!-- Continent -->
+                <div class="form-group">
+                  <label for="continent">Continent</label>
+                  <input type="text" class="form-control form-control-sm" id="continent" formControlName="continent"
+                    placeholder="Continent" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Continent -->
+
+
+                <!-- Country -->
+                <div class="form-group">
+                  <label for="country">Country</label>
+                  <input type="text" class="form-control form-control-sm" id="country" formControlName="country"
+                    placeholder="Country" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Country -->
+
+
+
+
+                <!-- Region -->
+                <div class="form-group">
+                  <label for="region">Region</label>
+                  <input type="text" class="form-control form-control-sm" id="region" formControlName="region"
+                    placeholder="Region" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Region -->
+
+
+
+
+                <!-- Locality -->
+                <div class="form-group">
+                  <label for="locality">Locality</label>
+                  <input type="text" class="form-control form-control-sm" id="locality" formControlName="locality"
+                    placeholder="Locality" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Locality -->
+
+
+
+
+                <!-- GPS -->
+                <div class="form-group">
+                  <label for="gps">GPS</label>
+                  <input type="text" class="form-control form-control-sm" id="gps" formControlName="gps"
+                    placeholder="GPS" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / GPS -->
+
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="collectedBy" placeholder="Collected By (Surname, Initials)" type="text"
+                    [formControl]="collectedByControl" formControlName="collected_by"
+                    [matAutocomplete]="autoCollectedBy">
+                  <mat-autocomplete #autoCollectedBy="matAutocomplete" (optionSelected)="setCollectedBy($event)">
+                    <mat-option *ngFor="let option of filteredOptions1 | async" [value]="option">{{option}}</mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+
+                <!-- Date Collected -->
+                <div class="form-group">
+                  <label for="date_collected">Date Collected</label>
+                  <input type="date" class="form-control form-control-sm" id="date_collected"
+                    formControlName="date_collected" placeholder="Date Collected" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Date Collected -->
+
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="isolatedBy" placeholder="Isolated By (Surname, Initials)" type="text"
+                    [formControl]="isolatedByControl" formControlName="isolated_by" [matAutocomplete]="autoIsolatedBy">
+                  <mat-autocomplete #autoIsolatedBy="matAutocomplete" (optionSelected)="setIsolatedBy($event)">
+                    <mat-option *ngFor="let option of filteredOptions3 | async" [value]="option">{{option}}</mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <br />
+
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="identifiedBy" placeholder="Identified By (Surname, Initials)" type="text"
+                    [formControl]="identifiedByControl" formControlName="identified_by"
+                    [matAutocomplete]="autoIdentifiedBy">
+                  <mat-autocomplete #autoIdentifiedBy="matAutocomplete" (optionSelected)="setIdentifiedBy($event)">
+                    <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option">{{option}}</mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <br />
+
+                <mat-form-field class="example-full-width">
+                  <input matInput [(ngModel)]="donatedBy" placeholder="Donated By (Surname, Initials)" type="text"
+                    [formControl]="donatedByControl" formControlName="donated_by" [matAutocomplete]="autoDonatedBy">
+                  <mat-autocomplete #autoDonatedBy="matAutocomplete" (optionSelected)="setDonatedBy($event)">
+                    <mat-option *ngFor="let option of filteredOptions4 | async" [value]="option">{{option}}</mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <br />
+
+                <!-- Additional Notes -->
+                <div class="form-group">
+                  <label for="additional_notes">Additional Notes</label>
+                  <input type="text" class="form-control form-control-sm" id="additional_notes"
+                    formControlName="additional_notes" placeholder="Additional Notes" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Additional Notes -->
+
+
+
+                <button type="button" class="btn btn-default-submit" onclick="saveStaffProfileChanges()">Submit</button>
               </form>
+
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default submit" onclick="saveStaffProfileChanges()">Submit</button>
+
           </div>
         </div>
       </div>
     </div>
     <!-- / CMW Deposit Modal Section -->
-      
-      <!-- CMW Revitalization Modal Section -->
-    <div class="modal fade" id="cmwRevitalizationForm" tabindex="-1" role="dialog" aria-labelledby="cmwRevitalizationFormTitle" aria-hidden="true">
+
+    <!-- CMW Revitalization Modal Section -->
+    <div class="modal fade" id="cmwRevitalizationForm" tabindex="-1" role="dialog"
+      aria-labelledby="cmwRevitalizationFormTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="cmwRevitalizationFormTitle">CMW Revitalization Form</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"><i class="fas fa-times"></i></span>
-          </button>
+              <span aria-hidden="true"><i class="fas fa-times"></i></span>
+            </button>
           </div>
           <div class="modal-body">
             <div class="form">
-              <form class="view-form">
-                <div class="form-row align-items-center">
+              <form class="view-form needs-validation" novalidate [formGroup]="cmwRevitalizationForm"
+                (submit)="submitCMWRevitaalizationForm()">
+
+                <!-- Requester -->
+                <div>
+                  <mat-form-field class="example-full-width">
+                    <input matInput [(ngModel)]="requestor" placeholder="Requester (Surname, Initials)" type="text"
+                      [formControl]="requestorControl" formControlName="requestor" [matAutocomplete]="autoRequestor">
+                    <mat-autocomplete #autoRequestor="matAutocomplete" (optionSelected)="setRequestor($event)">
+                      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <br />
+
+                  <!-- Current Name -->
                   <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter name" onchange="displaySaveButton()" disabled="disabled">
+                    <label for="current_name">Current Name</label>
+                    <input type="text" class="form-control form-control-sm" id="current_name"
+                      formControlName="current_name" placeholder="Current Name" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="surname">Surname</label>
-                    <input type="text" class="form-control" id="surname" placeholder="Enter surname" onchange="displaySaveButton()" disabled="disabled">
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                  </div>
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" onchange="changedPassword()" disabled="disabled">
-                  </div>
-                  <div class="form-group" id="confirm-password">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()" disabled="disabled">
+                  <!-- / Current Name -->
+
+                  <br />
+                </div>
+                <br />
+                <!-- / Requester -->
+
+                <!-- Name as in Bionumerics -->
+                <div class="form-group">
+                  <label for="name_bionumerics">Name as in Bionumerics</label>
+                  <input type="text" class="form-control form-control-sm" id="name_bionumerics"
+                    formControlName="name_bionumerics" placeholder="Name as in Bionumerics" required>
+                  <div class="valid-feedback">
+                    Looks good!
                   </div>
                 </div>
+                <!-- / Name as in Bionumerics -->
+
+                <!-- Culture Number -->
+                <div class="form-group">
+                  <label for="culture_number">Culture Number</label>
+                  <input type="text" class="form-control form-control-sm" id="culture_number"
+                    formControlName="culture_number" placeholder="Culture Number" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+    
+
+                <!-- Condition of the Culture -->
+                <div class="form-group">
+                  <label for="culture_condition">Condition of the Culture</label>
+                  <input type="text" class="form-control form-control-sm" id="culture_condition"
+                    formControlName="culture_condition" placeholder="Condition of the Culture" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Condition of the Culture -->
+
+
+                <!-- Sequence Data Submitted -->
+                <div class="form-group">
+                  <label for="sequence_data_submitted">Sequence Data Submitted</label>
+                  <input type="text" class="form-control form-control-sm" id="sequence_data_submitted"
+                    formControlName="sequence_data_submitted" placeholder="Sequence Data Submitted" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Sequence Data Submitted -->
+
+                <!-- Reference Number -->
+                <div class="form-group">
+                  <label for="reference_number">Reference Number</label>
+                  <input type="text" class="form-control form-control-sm" id="reference_number"
+                    formControlName="reference_number" placeholder="Reference Number" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Reference Number -->
+
+
+                <!-- Date Requested -->
+                <div class="form-group">
+                  <label for="date_requested">Date Requested</label>
+                  <input type="date" class="form-control form-control-sm" id="date_requested"
+                    formControlName="date_requested" placeholder="Date Requested" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Date Requested -->
+
+                <!-- Date Returned -->
+                <div class="form-group">
+                  <label for="date_returned">Date Returned</label>
+                  <input type="date" class="form-control form-control-sm" id="date_returned"
+                    formControlName="date_returned" placeholder="Date Returned" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Date Returned -->
+
+                <button type="button" class="btn btn-default-submit" onclick="saveStaffProfileChanges()">Submit</button>
               </form>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default submit" onclick="saveStaffProfileChanges()">Submit</button>
+            
           </div>
         </div>
       </div>
     </div>
     <!-- / CMW Revitalization Modal Section -->
-  
-  
-      <!-- CMW Collection Tables -->
-      <div class="cmw-collection-tables">
-  
-        <!-- Request Table -->
-        <div class="request-table table-responsive">
-          <h5> Request Table </h5>
-          
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- / Request Table -->
-  
-        <!-- Deposit Table -->
-        <div class="deposit-table table-responsive">
-          <h5> Deposit Table </h5>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- / Deposit Table -->
-        
-         <!-- Revitalization Table -->
-        <div class="revitalization-table table-responsive">
-          <h5> Revitalization Table </h5>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- / Revitalization Table -->
-  
+
+
+    <!-- CMW Collection Tables -->
+    <div class="cmw-collection-tables">
+
+      <!-- Request Table -->
+      <div class="request-table table-responsive">
+        <h5> Request Table </h5>
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <!-- / CMW Collection Tables -->
+      <!-- / Request Table -->
+
+      <!-- Deposit Table -->
+      <div class="deposit-table table-responsive">
+        <h5> Deposit Table </h5>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Deposit Table -->
+
+      <!-- Revitalization Table -->
+      <div class="revitalization-table table-responsive">
+        <h5> Revitalization Table </h5>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Revitalization Table -->
+
     </div>
-    <!-- / Dashboard Content -->
-  
-    <!-- Notification Section -->
-    <div id="notifications">
-      <i class="fas fa-arrow-left" onclick="hideNotifications()"></i>
-      <br/>
-      <h3>NOTIFICATIONS</h3>
-      <!-- Notification Items -->
-      <div class="notification-items">
-  
-        <!-- Notification Item -->
-        <div class="notification-item">
-          <div class="notification-action">
-            <i class="fas fa-times"></i>
-          </div>
-          <div class="notification-heading">
-            <h6>Diagnostic Clinic</h6>
-          </div>
-          <div class="notification-content">
-            <h6>Example notification</h6>
-          </div>
-        </div>
-        <!-- Notification Item -->
-  
-        <!-- Notification Item -->
-        <div class="notification-item">
-          <div class="notification-action">
-            <i class="fas fa-times"></i>
-          </div>
-          <div class="notification-heading">
-            <h6>Diagnostic Clinic</h6>
-          </div>
-          <div class="notification-content">
-            <h6>Example notification</h6>
-          </div>
-        </div>
-        <!-- Notification Item -->
-  
-        <!-- Notification Item -->
-        <div class="notification-item">
-          <div class="notification-action">
-            <i class="fas fa-times"></i>
-          </div>
-          <div class="notification-heading">
-            <h6>Diagnostic Clinic</h6>
-          </div>
-          <div class="notification-content">
-            <h6>Example notification</h6>
-          </div>
-        </div>
-        <!-- Notification Item -->
-  
-      </div>
-      <!-- Notification Items -->
-      <div class="see-more">
-        <i class="fas fa-ellipsis-h"></i>
-      </div>
-      <!-- / Notification Section -->
-    </div>
-  
-    <!-- Profile Section -->
-    <div id="profile">
-      <i class="fas fa-arrow-left" onclick="hideProfile()"></i>
-      <br/>
-      <h3>PROFILE</h3>
-      <!-- Profile Details -->
-      <div class="profile-details">
-        <div class="profile-icon">
-          <i class="fas fa-user-circle"></i>
-        </div>
-  
-        <div class="form">
-          <form class="profile-form needs-validation" novalidate>
-              <div class="form-row align-items-center">
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Enter name" onchange="displaySaveButton()" required>
-                  <div class="valid-feedback">
-            Looks good!
-          </div>
-                </div>
-                <div class="form-group">
-                  <label for="surname">Surname</label>
-                  <input type="text" class="form-control" id="surname" placeholder="Enter surname" onchange="displaySaveButton()" required>
-                  <div class="valid-feedback">
-            Looks good!
-          </div>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email address</label>
-                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" onchange="displaySaveButton()" required>
-                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                  <div class="valid-feedback">
-            Looks good!
-          </div>
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" placeholder="Password" onchange="changedPassword()" required>
-                  <div class="valid-feedback">
-            Looks good!
-          </div>
-                </div>
-                <div class="form-group" id="confirm-password">
-                  <label for="confirm-password">Confirm Password</label>
-                  <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()" required>
-                  <div class="valid-feedback">
-            Looks good!
-          </div>
-                </div>
-                <button type="submit" class="btn btn-default" id="save-btn">Save</button>
-              </div>
-              <!-- / Sign up -->
-            </form>
-        </div>
-  
-      </div>
-  
-    </div>
-    <!-- / Profile Section -->
-  
-    <!-- Help Section -->
-    <div id="help">
-      <i class="fas fa-arrow-left" onclick="hideHelp()"></i>
-      <br/>
-      <h3>HELP</h3>
-      <!-- Help Items -->
-      <div class="help-items">
-  
-        <!-- Help Item -->
-        <div class="help-item">
-          <div class="help-icon">
-            <i class="fas fa-vial"></i>
-          </div>
-          <div class="help-heading">
-            <h6>Samples</h6>
-          </div>
-          <div class="help-content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- / Help Item -->
-  
-        <!-- Help Item -->
-        <div class="help-item">
-          <div class="help-icon">
-            <i class="fas fa-plus-circle"></i>
-          </div>
-          <div class="help-heading">
-            <h6>Data Gatherer</h6>
-          </div>
-          <div class="help-content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- / Help Item -->
-  
-      </div>
-      <!-- Help Items -->
-  
-    </div>
-    <!-- / Help Section -->
-  
+    <!-- / CMW Collection Tables -->
   </div>
-  <!-- / Dashboard -->
+  <!-- / Dashboard Content -->
+
+  <!-- Notification Section -->
+  <div id="notifications" *ngIf="notificationsTab">
+    <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
+    <br />
+    <h3>NOTIFICATIONS</h3>
+    <h5 *ngIf="!notifications">No notifications</h5>
+
+    <!-- Notification Items -->
+    <div class="notification-items" *ngIf="allNotifications">
+
+      <!-- Notification Item -->
+      <div class="notification-item" *ngFor="let log of allNotifications">
+        <div class="notification-action">
+          <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
+        </div>
+        <div class="notification-heading">
+          <h6><b>{{log.Type}} notification</b></h6>
+        </div>
+        <div class="notification-content">
+          <p><b>Action:</b> {{log.Action}}</p>
+          <p><b>Date:</b> {{log.Date}}</p>
+        </div>
+      </div>
+      <!-- Notification Item -->
+
+    </div>
+    <!-- Notification Items -->
+
+    <!-- See More Icon -->
+    <div class="see-more">
+      <i class="fas fa-ellipsis-h"></i>
+    </div>
+    <!-- / See More Icon -->
+
+  </div>
+  <!-- / Notification Section -->
+
+  <!-- Profile Section -->
+  <div id="profile" *ngIf="profileTab">
+    <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
+    <br />
+    <h3>PROFILE</h3>
+
+    <!-- Profile Details -->
+    <div class="profile-details">
+      <div class="profile-icon">
+        <i class="fas fa-user-circle"></i>
+      </div>
+
+      <!-- Profile Form -->
+      <div class="form">
+        <form class="profile-form needs-validation" novalidate [formGroup]="staffProfileForm" (submit)="saveChanges()">
+          <div class="form-row align-items-center">
+
+            <!-- Organization -->
+            <div class="form-group">
+              <label for="organization_name">Organization Name</label>
+              <input type="text" class="form-control" id="organization_name" placeholder="Enter name"
+                (change)="displayProfileSaveBtn()" formControlName="organization_name" value="{{organization}}"
+                disabled>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <!-- / Organization -->
+
+            <!-- Name -->
+            <div class="form-group">
+              <label for="staff_name">Name</label>
+              <input type="text" class="form-control" id="staff_name" placeholder="Enter name"
+                (change)="displayProfileSaveBtn()" formControlName="staff_name" value="{{name}}" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <!-- / Name -->
+
+            <!-- Surname -->
+            <div class="form-group">
+              <label for="staff_surname">Surname</label>
+              <input type="text" class="form-control" id="staff_surname" placeholder="Enter surname"
+                (change)="displayProfileSaveBtn()" formControlName="staff_surname" value="{{surname}}" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <!-- / Surname -->
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="admin_email">Email address</label>
+              <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
+                placeholder="Enter email" (change)="displayProfileSaveBtn()" formControlName="admin_email"
+                value="{{email}}" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <!-- / Email -->
+
+            <!-- User Type -->
+            <div class="form-group">
+              <label for="staff_type">User Type</label>
+              <input type="text" class="form-control" id="staff_type" (change)="displayProfileSaveBtn()"
+                formControlName="staff_type" value="{{userType}}" disabled>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <!-- / User Type -->
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="staff_password">Password</label>
+              <input #passwordInput type="password" class="form-control" id="password" placeholder="Password"
+                (change)="displayConfirmPasswordInput()" formControlName="staff_password" value="{{password}}" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <!-- / Password -->
+
+            <!-- ConfirmPassword -->
+            <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
+              <label for="staff_confirm">Confirm Password</label>
+              <input #confirmInput type="password" class="form-control" formControlName="staff_confirm"
+                placeholder="Password" (change)="displayProfileSaveBtn()" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            <!-- /Confirm Password -->
+
+            <!-- Save Profile Changes Button -->
+            <button type="submit" class="btn btn-default" id="save-btn" *ngIf="saveBtn">Save</button>
+            <!-- / Save Profile Changes Button -->
+
+          </div>
+
+        </form>
+      </div>
+      <!-- / Profile Form -->
+
+    </div>
+
+  </div>
+  <!-- / Profile Section -->
+
+  <!-- Help Section -->
+  <div id="help" *ngIf="helpTab">
+    <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
+    <br />
+    <h3>HELP</h3>
+    <!-- Help Items -->
+    <div class="help-items">
+
+      <!-- Help Item -->
+      <div class="help-item">
+        <div class="help-icon">
+          <i class="fas fa-vial"></i>
+        </div>
+        <div class="help-heading">
+          <h6>Samples</h6>
+        </div>
+        <div class="help-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <!-- / Help Item -->
+
+      <!-- Help Item -->
+      <div class="help-item">
+        <div class="help-icon">
+          <i class="fas fa-plus-circle"></i>
+        </div>
+        <div class="help-heading">
+          <h6>Data Gatherer</h6>
+        </div>
+        <div class="help-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <!-- / Help Item -->
+
+    </div>
+    <!-- Help Items -->
+
+  </div>
+  <!-- / Help Section -->
+
+  <!-- Up Icon -->
+  <!-- <div id="scroll-to-top">
+    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
+  </div> -->
+  <!-- / Up Icon -->
+
+</div>
+<!-- / Dashboard -->

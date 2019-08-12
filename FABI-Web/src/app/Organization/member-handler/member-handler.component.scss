@@ -35,6 +35,15 @@
   transform: scale(1.025);
 }
 
+.section-divider {
+  width: 80%;
+  height: 0.5vh;
+
+  margin-left: 40px;
+
+  background: linear-gradient(to right, #76b852, #8dc26f);
+}
+
 /* Dashboard Section
    ========================================================================== */
 .dashboard {
