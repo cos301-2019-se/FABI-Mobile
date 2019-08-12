@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 11th 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -462,39 +462,7 @@ export class DatabaseHandlerComponent implements OnInit {
     this.loadAdminProfileDetails();
 
     //Load Databases for Drop Down
-    const Lemail = "johndoe@gmail.com";
-    const Lpassw = "Tr7hs8BjuX";
-    const Lorg = "FABI";
 
-    // User details to be passed to API
-    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
-
-    this.authService.login(details).subscribe((response: any) => {
-
-      this.loading = false;
-      // API Request successful
-      if (response.success == true && response.code == 200) {
-
-        
-        // User NOT Authorised
-        if (response.title != "AUTHORIZED") {
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: response.data.title, message: response.data.message, retry: false } });
-          return;
-        }
-        // ELSE user Authorised:
-
-        //Setting local storage to hold the users details
-        localStorage.setItem('userID', response.userDetails.id);
-        localStorage.setItem('userOrganization', Lorg);
-        localStorage.setItem('userPassword', Lpassw);
-        
-
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-
-      }
-    });
     const user = this.authService.getCurrentSessionValue;
     this.databases = user.user.databases;
   }
