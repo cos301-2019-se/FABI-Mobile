@@ -384,7 +384,8 @@ mat-tab {
     margin: auto;
 }
 
-#individualDepositForm, #individualRequestForm, #individualRevitalizationForm{
+.individualDepositForm, #individualRequestForm, 
+#individualRevitalizationForm, #individualProcessedForm{
     background-color: white;
     width: 70% !important;
     height: 90% !important;
@@ -407,6 +408,6 @@ p{
     margin-left: 40px;
 }
 
-#processFormDiv{
+#processFormDiv, #associatedDepositForm{
     display: none;
 }
