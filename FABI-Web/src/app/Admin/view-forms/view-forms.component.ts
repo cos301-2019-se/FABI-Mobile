@@ -5,7 +5,7 @@
  * Created Date: Monday, August 5th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 9th 2019
+ * Last Modified: Monday, August 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,13 +14,13 @@
  */
 
 import { Component, OnInit, Renderer2, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CultureCollectionAPIService, CMWDeposit, CMWRequest, CMWRevitalization } from '../../_services/culture-collection-api.service';
+import { CultureCollectionAPIService, CMWDeposit, CMWRequest, CMWRevitalization, ProcessedForm, UpdateDepositForm } from '../../_services/culture-collection-api.service';
 
 @Component({
   selector: 'app-view-forms',
@@ -141,13 +141,17 @@ export class ViewFormsComponent implements OnInit {
   requestFormNumber: number = 0; 
   /** The number of the revitalization form currently displayed - @type {number} */
   revitalizationFormNumber: number = 0;  
+  /** The number of the processed form currently displayed - @type {number} */
+  processedFormNumber: number = 0; 
 
   /** An array holding all of the deposit forms - @type {CMWDeposit[]} */
   depositForms: CMWDeposit[] = [];
   /** An array holding all of the request forms - @type {CMWRequest[]} */
   requestForms: CMWRequest[] = []; 
   /** An array holding all of the revitalization forms - @type {CMWRevitalization[]} */
-  revitalizationForms: CMWRevitalization[] = [];  
+  revitalizationForms: CMWRevitalization[] = []; 
+  /** An array holding all of the processed forms - @type {ProcessedForm[]} */
+  processedForms: ProcessedForm[] = []; 
 
   /** The form to get the process form details -  @type {FormGroup} */
   processForm: FormGroup;
@@ -160,6 +164,29 @@ export class ViewFormsComponent implements OnInit {
   /** The name and surname of a user concatenated as a string - @type {string} */   
   user2: string;
 
+  /** The status of the culture in the deposit process form - @type {string} */   
+  statusOfCulture: string;
+  /** The agar slants in the deposit process form - @type {string} */   
+  agarSlants: string;
+  /** The water in the deposit process form - @type {string} */   
+  water: string;
+  /** The oil in the deposit process form - @type {string} */   
+  oil: string;
+  /** The room temperature in the deposit process form - @type {string} */   
+  roomTemperature: string;
+  /** The c18 in the deposit process form - @type {string} */   
+  c18: string;
+  /** The freeze dried in the deposit process form - @type {string} */   
+  freezeDried: string;
+  /** The freeze in the deposit process form - @type {string} */   
+  freeze: string;
+  /** The date of the collection validation in the deposit process form - @type {string} */   
+  dateOfCollectionValidation: string;
+  /** The microscope slide in the deposit process form - @type {string} */   
+  microscopeSlides: string;
+  /** The date subitted in the deposit process form - @type {string} */   
+  dateSubmittedProcessedForm: string;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -171,6 +198,7 @@ export class ViewFormsComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
    * @param {AuthenticationService} authService Used for all authentication and session control
    * @param {Router} router
+   * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {FormBuilder} formBuilder Used to get the form elements from the HTML page
    * @param {Renderer2} renderer Used for creating the PDF documents to download
    * 
@@ -180,6 +208,7 @@ export class ViewFormsComponent implements OnInit {
   constructor(
     private notificationLoggingService: NotificationLoggingService, 
     private userManagementService: UserManagementAPIService,
+    private snackBar: MatSnackBar,
     private renderer: Renderer2, 
     private formBuilder: FormBuilder,
     private authService: AuthenticationService, 
@@ -297,6 +326,39 @@ export class ViewFormsComponent implements OnInit {
       }
     });
   }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  GET_ALL_PROCESSED_FROMS
+  /**
+   *  This function will be used to load all of the processed forms into the HTML page
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllProcessedForms(){
+    //Making a call to the culture collection api service to load all of the processed forms
+    this.cultureCollectionService.getAllProcessedLogs().subscribe((response: any) => {
+      if(response.success == true){
+        var data = response.data.qs.forms;
+
+        for(var i = 0; i < data.length; i++){
+          var tempProcessed: ProcessedForm = {userID: data[i].userID, statusOfCulture: data[i].statusOfCulture, agarSlants: data[i].agarSlants,
+            water: data[i].water, oil: data[i].oil, roomTemperature: data[i].roomTemperature, c18: data[i].c18, freezeDried: data[i].freezeDried,
+            freeze: data[i].freeze, dateOfCollectionValidation: data[i].dateOfCollectionValidation, microscopeSlides: data[i].microscopeSlides,
+            dateSubmittedProcessedForm: data[i].dateSubmittedProcessedForm, cultureCollectionNumber: data[i].cultureCollectionNumber};
+
+          this.processedForms.push(tempProcessed);
+        }
+
+        this.processedFormNumber = 0;
+        // this.loadNextRevitalizationForm();
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD_NEXT_DEPOSIT_FORM
@@ -988,6 +1050,131 @@ export class ViewFormsComponent implements OnInit {
       }
     });
   }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    PROCESS_DEPOSIT_PROCESSED_FORM 
+  /**
+   * This function is used to submit details about a deposit form that has been processed.
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  processDepositProcessedForm(){
+    if(this.processForm.controls.statusOfCulture.value == "" || this.processForm.controls.statusOfCulture.value == null){
+      this.statusOfCulture = "";
+    }
+    else{
+      this.statusOfCulture = this.processForm.controls.statusOfCulture.value;
+    }
+
+    if(this.processForm.controls.agarSlants.value == "" || this.processForm.controls.agarSlants.value == null){
+      this.agarSlants = "";
+    }
+    else{
+      this.agarSlants = this.processForm.controls.agarSlants.value;
+    }
+
+    if(this.processForm.controls.water.value == "" || this.processForm.controls.water.value == null){
+      this.water = "";
+    }
+    else{
+      this.water = this.processForm.controls.water.value;
+    }
+
+    if(this.processForm.controls.oil.value == "" || this.processForm.controls.oil.value == null){
+      this.oil = "";
+    }
+    else{
+      this.oil = this.processForm.controls.oil.value;
+    }
+
+    if(this.processForm.controls.roomTemperature.value == "" || this.processForm.controls.roomTemperature.value == null){
+      this.roomTemperature = "";
+    }
+    else{
+      this.roomTemperature = this.processForm.controls.roomTemperature.value;
+    }
+
+    if(this.processForm.controls.c18.value == "" || this.processForm.controls.c18.value == null){
+      this.c18 = "";
+    }
+    else{
+      this.c18 = this.processForm.controls.c18.value;
+    }
+
+    if(this.processForm.controls.freezeDried.value == "" || this.processForm.controls.freezeDried.value == null){
+      this.freezeDried = "";
+    }
+    else{
+      this.freezeDried = this.processForm.controls.freezeDried.value;
+    }
+
+    if(this.processForm.controls.freeze.value == "" || this.processForm.controls.freeze.value == null){
+      this.freeze = "";
+    }
+    else{
+      this.freeze = this.processForm.controls.freeze.value;
+    }
+
+    var temp = (this.processForm.controls.dateOfCollectionValidation.value).toString();
+    var year = temp[0] + temp[1] + temp[2] + temp[3];
+    var month = temp[5] + temp[6];
+    var day = temp[8] + temp[9];
+    this.dateOfCollectionValidation = day + '/' + month + '/' + year;
+
+    if(this.processForm.controls.microscopeSlides.value == "" || this.processForm.controls.microscopeSlides.value == null){
+      this.microscopeSlides = "";
+    }
+    else{
+      this.microscopeSlides = this.processForm.controls.microscopeSlides.value;
+    }
+
+    var date = new Date();
+    var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    this.dateSubmittedProcessedForm = currentDate;
+
+    var tempProcessedForm: ProcessedForm = {userID: localStorage.getItem('userID'), statusOfCulture: this.statusOfCulture, agarSlants: this.agarSlants, water: this.water,
+      oil: this.oil, roomTemperature: this.roomTemperature, c18: this.c18, freezeDried: this.freezeDried, freeze: this.freeze,
+      dateOfCollectionValidation: this.dateOfCollectionValidation, microscopeSlides: this.microscopeSlides, dateSubmittedProcessedForm: this.dateSubmittedProcessedForm,
+      cultureCollectionNumber: this.cmwCultureNumberDeposit};
+
+    this.cultureCollectionService.submitProcessedForm(tempProcessedForm).subscribe((response: any) => {
+      if(response.success == true){
+        var tempUpdate: UpdateDepositForm = {userID: localStorage.getItem('userID'), status: 'processed', formID: ''};
+
+        this.cultureCollectionService.updateDepositFormStatus(tempUpdate).subscribe((response: any) => {
+          if(response.success == true){
+            //Successfully submitted process form
+            this.processForm.reset();
+
+            //POPUP MESSAGE
+            let snackBarRef = this.snackBar.open("CMW Deposit process form successfully submitted.", "Dismiss", {
+              duration: 3000
+            });
+          }
+          else{
+            //Error handling
+
+            //POPUP MESSAGE
+            let snackBarRef = this.snackBar.open("Could not submit CMW Deposit process form. Please try again.", "Dismiss", {
+              duration: 3000
+            });
+          }
+        });
+      }
+      else{
+        //Error handling
+
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Could not submit CMW Deposit process form. Please try again.", "Dismiss", {
+          duration: 3000
+        });
+      }
+    });
+
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    NG_ON_INIT  
