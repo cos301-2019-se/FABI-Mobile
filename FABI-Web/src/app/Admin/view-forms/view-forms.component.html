@@ -130,7 +130,7 @@
             <br/><br/>
             <button (click)="showProcessForm()" class="btn btn-default spinner">Process Form</button>
             <div class="arrowDiv leftArrow" (click)="loadPreviousDepositForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv rightArrow" (click)="loadNextDepositForm()"><i class="fas fa-arrow-right"></i></div>
-            <div id="individualDepositForm" ng-app="refresh_div1" ng-controller="refresh_control1">
+            <div class="individualDepositForm" ng-app="refresh_div1" ng-controller="refresh_control1">
               <h3>User: </h3><p>{{userIDDeposit}}</p><br/>
               <h3>Date Submitted: </h3><p>{{dateSubmittedDeposit}}</p><br/>
               <h3>Culture Number: </h3><p>{{cultureNumberDeposit}}</p>
@@ -219,6 +219,57 @@
             <i class="fas fa-chart-pie" style="color:darkgray;padding:5px;"></i>
             Processed Forms
           </ng-template>
+
+          <div id="processedForms">
+            <br/><br/>
+          <h2>Processed Forms</h2>
+
+          <br/><br/>
+          <div class="arrowDiv leftArrow" (click)="loadPreviousProcessedForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv rightArrow" (click)="loadNextProcessedForm()"><i class="fas fa-arrow-right"></i></div>
+          <div id="individualProcessedForm" ng-app="refresh_div4" ng-controller="refresh_control4">
+            <h3>User: </h3><p>{{userIDProcessed}}</p><br/>
+            <h3>Date Submitted: </h3><p>{{dateSubmittedProcessedForm}}</p><br/>
+            <h3>Culture Number: </h3><p>{{cmwCultureNumberProcessed}}</p>
+            <br/><br/><br/>
+            <h3>Status of Culture: </h3><p>{{statusOfCulture}}</p><h3>Agar Slants:</h3><p>{{agarSlants}}</p><br/>
+            <h3>Water: </h3><p>{{water}}</p><h3>Oil: </h3><p>{{oil}}</p><br/>
+            <h3>Room Temperature: </h3><p>{{roomTemperature}}</p><h3>18 C: </h3><p>{{c18}}</p><br/>
+            <h3>Freeze Dried: </h3><p>{{freezeDried}}</p><h3>Freeze: </h3><p>{{freeze}}</p><br/>
+            <h3>Microscope Slides: </h3><p>{{microscopeSlides}}</p>
+            <br/><br/><br/>
+            <h3>Date of Collection Validation: </h3><p>{{dateOfCollectionValidation}}</p><h3>Date Returned:</h3><p>{{dateReturned}}</p><br/>
+          </div>
+        </div>
+
+        <button (click)="viewAssociatedDepositForm()" class="btn btn-default">View Associated Deposit Form</button>
+        <div id="associatedDepositForm">
+          <div class="arrowDiv leftArrow" (click)="loadPreviousDepositForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv rightArrow" (click)="loadNextDepositForm()"><i class="fas fa-arrow-right"></i></div>
+          <div class="individualDepositForm" ng-app="refresh_div1" ng-controller="refresh_control1">
+            <h3>User: </h3><p>{{userIDDeposit}}</p><br/>
+            <h3>Date Submitted: </h3><p>{{dateSubmittedDeposit}}</p><br/>
+            <h3>Culture Number: </h3><p>{{cultureNumberDeposit}}</p>
+            <br/><br/>
+            <h3>Genus: </h3><p>{{genus}}</p><h3 class="right">Epitheton: </h3><p>{{epitheton}}</p><br/>
+            <h3>Personal Collection Number: </h3><p>{{personalCollectionNumber}}</p><br/>
+            <h3>International Collection Number: </h3><p>{{internationalCollectionNumber}}</p><br/>
+            <h3>Herbarium Number: </h3><p>{{herbariumNumber}}</p><br/>
+            <h3>Other FABI Collections: </h3><p>{{otherFABICollections}}</p>
+            <br/><br/>
+            <h3>Culture Name: </h3><p>{{name}}</p><h3 class="right">Type Status:</h3><p>{{typeStatus}}</p><br/>
+            <h3>Host: </h3><p>{{host}}</p><h3 class="right">Vector: </h3><p>{{vector}}</p><br/>
+            <h3>Substrate: </h3><p>{{substrate}}</p>
+            <br/><br/><br/>
+            <h3>Continent: </h3><p>{{continent}}</p><h3 class="right">Country: </h3><p>{{country}}</p><br/>
+            <h3>Region: </h3><p>{{region}}</p><h3 class="right">Locality: </h3><p>{{locality}}</p><br/>
+            <h3>GPS: </h3><p>{{gps}}</p>
+            <br/><br/>
+            <h3>Collected By: </h3><p>{{collectedBy}}</p><h3 class="right">Date Collected:</h3><p>{{dateCollected}}</p><br/>
+            <h3>Isolated By: </h3><p>{{isolatedBy}}</p><h3 class="right">Identified By: </h3><p>{{identifiedBy}}</p><br/>
+            <h3>Donated By: </h3><p>{{donatedBy}}</p><br/>
+            <h3>Additional Notes: </h3><p>{{additionalNotes}}</p>
+          </div>
+        </div>
+        <br/><br/><br/>
         </mat-tab>
 
       </mat-tab-group>
@@ -230,7 +281,7 @@
   <h2>Deposit Processed</h2>
 
   <br/><br/>
-  <form id="processForm" [formGroup]="processForm" (submit)="processForm()">
+  <form id="processForm" [formGroup]="processForm" (submit)="processDepositProcessedForm()">
     <div class="row">
       <div>
         <mat-form-field class="form_inputs" class="col">
@@ -278,7 +329,7 @@
 
       <div>
         <mat-form-field class="form_inputs" class="col">
-          <input matInput placeholder="Date of Collection Validation" matInput type="text" formControlName="dateOfCollectionValidation">
+          <input matInput placeholder="Date of Collection Validation" matInput type="date" formControlName="dateOfCollectionValidation">
         </mat-form-field>
         <br />
 
