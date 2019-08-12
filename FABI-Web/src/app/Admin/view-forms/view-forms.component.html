@@ -219,6 +219,26 @@
             <i class="fas fa-chart-pie" style="color:darkgray;padding:5px;"></i>
             Processed Forms
           </ng-template>
+
+          <div id="revitalizationForms">
+            <br/><br/>
+          <h2>Revitalization Forms</h2>
+
+          <br/><br/>
+          <div class="arrowDiv leftArrow" (click)="loadPreviousRevitalizationForm()"><i class="fas fa-arrow-left"></i></div><div class="arrowDiv rightArrow" (click)="loadNextRevitalizationForm()"><i class="fas fa-arrow-right"></i></div>
+          <div id="individualRevitalizationForm" ng-app="refresh_div3" ng-controller="refresh_control3">
+            <h3>User: </h3><p>{{userIDRevitalization}}</p><br/>
+            <h3>Date Submitted: </h3><p>{{dateSubmittedRevitalization}}</p><br/>
+            <h3>Culture Number: </h3><p>{{cultureNumberRevitalization}}</p>
+            <br/><br/><br/>
+            <h3>Culture Name: </h3><p>{{currentName}}</p><h3>Name Bionumerics:</h3><p>{{nameBionumerics}}</p><br/>
+            <h3>Culture Condition: </h3><p>{{cultureCondition}}</p><h3>Sequence Date Submitted: </h3><p>{{sequenceDateSubmitted}}</p><br/>
+            <h3>Reference Number: </h3><p>{{referenceNumberRevitalization}}</p>
+            <br/><br/><br/>
+            <h3>Date Requested: </h3><p>{{dateRequestedRevitalization}}</p><h3>Date Returned:</h3><p>{{dateReturned}}</p>
+          </div>
+        </div>
+        <br/><br/><br/>
         </mat-tab>
 
       </mat-tab-group>
@@ -230,7 +250,7 @@
   <h2>Deposit Processed</h2>
 
   <br/><br/>
-  <form id="processForm" [formGroup]="processForm" (submit)="processForm()">
+  <form id="processForm" [formGroup]="processForm" (submit)="processDepositProcessedForm()">
     <div class="row">
       <div>
         <mat-form-field class="form_inputs" class="col">
@@ -278,7 +298,7 @@
 
       <div>
         <mat-form-field class="form_inputs" class="col">
-          <input matInput placeholder="Date of Collection Validation" matInput type="text" formControlName="dateOfCollectionValidation">
+          <input matInput placeholder="Date of Collection Validation" matInput type="date" formControlName="dateOfCollectionValidation">
         </mat-form-field>
         <br />
 
