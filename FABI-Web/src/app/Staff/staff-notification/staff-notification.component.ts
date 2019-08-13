@@ -215,26 +215,42 @@ export class StaffNotificationComponent implements OnInit {
               
               if(tempLogU.Action == "/createOrganization"){
                 tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
+                
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "/addStaff"){
                 this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "C"){
                 this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "/removeOrg"){
                 tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "/removeStaff"){
                 this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
-  
-              this.allNotifications.push(tempLogU);
-              this.numberOfUserLogs += 1;
-              this.localNotificationNumber += 1;
             }
           }          
         }
@@ -285,15 +301,11 @@ export class StaffNotificationComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(id: string){
-    for(var i =  0; i < this.allNotifications.length; i++){
-      if(this.allNotifications[i].ID == id){
-        this.newNotifications.push(this.allNotifications[i]);
-      }
-    }
+    this.newNotifications.push(id);
 
     this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
-        this.loadNotifications();
+        
       }
       else{
         //Error handling
