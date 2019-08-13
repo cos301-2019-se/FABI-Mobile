@@ -133,7 +133,7 @@
             <tr *ngFor="let database of databases">
               <td>{{database.name}}</td>
               <td class="table-action">
-                <button class="btn btn-default view" data-toggle="modal" data-target="#viewModal"
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
                   [id]="database">View</button>
               </td>
             </tr>
@@ -197,7 +197,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default save" onclick="saveStaffProfileChanges()">Upload</button>
+          <button type="button" class="btn btn-default-save" onclick="saveStaffProfileChanges()">Upload</button>
         </div>
       </div>
     </div>
@@ -233,7 +233,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default save">Download Database</button>
+          <button type="button" class="btn btn-default-save">Download Database</button>
         </div>
       </div>
     </div>
@@ -254,8 +254,8 @@
         <div class="modal-body">
           <p>Everything related to this member of staff will be permantely deleted</p>
           <div class="confirm-actions">
-            <button type="button" class="btn btn-default confirm">Confirm</button>
-            <button type="button" class="btn btn-default cancel">Cancel</button>
+            <button type="button" class="btn btn-default-confirm">Confirm</button>
+            <button type="button" class="btn btn-default-cancel">Cancel</button>
           </div>
         </div>
       </div>
