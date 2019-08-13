@@ -97,6 +97,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 .navbar-nav .nav-item.active a {
     background-color: rgba(255, 255, 255, 0.1);
 
+    color: #fff;
+
     border-radius: 15px;
 
     padding: 10px;
@@ -107,6 +109,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 .navbar-nav a.nav-link:hover {
     background-color: rgba(255, 255, 255, 0.05);
+
+    color: #fff;
 
     border-radius: 15px;
 
@@ -148,6 +152,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     opacity: 0.5;
 
     margin-top: 2px;
+    padding: 0 5px 0 5px;
 }
 
 .nav-links {
@@ -227,7 +232,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
         justify-content: space-between;
         align-items: stretch;
 
-        width: 15vh;
+        width: 20vh;
         height: auto;
 
         background: linear-gradient(to right, #76b852, #8dc26f);
@@ -513,7 +518,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     width: 100%;
     min-height: 100vh;
-    height: auto;
+    height: 100%;
 }
 
 /* Primary Content Section
@@ -806,7 +811,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
-    height: 100%;
+    height: auto;
 
     float: right;
 
@@ -903,7 +908,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 @media (min-width: 395px) {
     #notifications {
-        width: 45vh;
+        width: 60vh;
     }
 }
 
@@ -949,13 +954,14 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 .profile-details {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     width: 100%;
-    height: 75vh;
+    min-height: 90vh;
+    height: auto;
 
-    margin-top: 10vh;
+    margin: 10vh 0 5vh 0;
 
     background-color: transparent;
 
@@ -989,16 +995,9 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     font-size: 76px;
 }
 
-.profile-action {
-    display: flex;
-    justify-content: flex-end;
-
-    width: 80%;
-}
-
 @media (min-width: 395px) {
     #profile {
-        width: 45vh;
+        width: 60vh;
     }
 }
 
@@ -1020,34 +1019,54 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     }
 }
 
+@media (min-height: 803px){
+    .profile-icon {
+        top: -5vh;
+    }   
+}
+
 /* Profile Form */
-.form {
+.profile-details .form {
     display: flex;
     justify-content: center;
     align-items: center;
 
     width: 80%;
-    height: 100%;
+    min-height: 90vh;
+    height: auto;
+
 }
 
-.form-row {
+.profile-details .form .form-row {
     display: flex;
     justify-content: center;
 
-    height: 100%;
+    min-height: 90vh;
+    height: auto;
 }
 
-.form-group {
+.profile-details .form  .form-group {
     width: 100%;
-}
-
-#save-btn {
-    display: none;
-    width: 50%;
 }
 
 #confirm-password {
     display: none;
+}
+
+/* Profile Actions */
+.profile-actions {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+
+@media (min-width: 375px) {
+    .profile-actions {
+        flex-direction: row;
+    }
 }
 
 
@@ -1066,7 +1085,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
-    height: 100%;
+    height: auto;
 
     float: right;
 
@@ -1108,7 +1127,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     border-radius: 5px;
 
     width: 90%;
-    min-height: 15vh;
+    min-height: 20vh;
     height: auto;
 
     margin: 15px;
@@ -1124,6 +1143,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 }
 
 .help-item:hover {
+    height: 100%;
+
     background: linear-gradient(to right, #76b852, #8dc26f);
 
     border: none;
@@ -1186,7 +1207,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 @media (min-width: 395px) {
     #help {
-        width: 45vh;
+        width: 60vh;
     }
 }
 
