@@ -95,6 +95,36 @@ export class StaffDashboardComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService,
     private cultureCollectionService: CultureCollectionAPIService
     ) { }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      NG ON INIT()  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadNotifications() | 2. Call loadSamples() | 3. loadDepositForms() | 4. loadRequestForms()
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginStaff().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.loadSamples();
+      this.loadDepositForms();
+      this.loadRequestForms();
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // // Set current user logged in
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+     //Calling the neccessary functions as the page loads
+    //  this.loadSamples();
+    //  this.loadDepositForms();
+    //  this.loadRequestForms();
+
+  }
   
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +164,7 @@ export class StaffDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadSamples() {
-    this.diagnosticClinicService.getSamplesForFABIStaff(this.currentUser.user.ID).subscribe((response: any) => {
+    this.diagnosticClinicService.getSamplesForFABIStaff(this.currentUser.ID).subscribe((response: any) => {
       if(response.success == true){
         this.submittedSamples = true;
         var data = response.date.samples;
@@ -200,7 +230,7 @@ export class StaffDashboardComponent implements OnInit {
           var tempRequest : CMWRequest = {userID: data[i].userID, requestor: data[i].requestor, taxonName: data[i].taxonName, cultureNumber: data[i].cultureNumber,
             dateRequested: data[i].dateRequested, referenceNumber: data[i].referenceNumber, notes: data[i].notes, dateSubmitted: data[i].dateSubmitted};
 
-          if(tempRequest.userID == this.currentUser.user.ID){
+          if(tempRequest.userID == this.currentUser.ID){
             this.requestForms = true;
             this.requests.push(tempRequest);
           }
@@ -212,24 +242,6 @@ export class StaffDashboardComponent implements OnInit {
     });
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      NG ON INIT()  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Call loadNotifications() | 2. Call loadSamples() | 3. loadDepositForms() | 4. loadRequestForms()
-   * @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    this.currentUser = this.authService.getCurrentSessionValue.user;
-    
-    //All these functions will be called when the page loads
-    this.loadSamples();
-    this.loadDepositForms();
-    this.loadRequestForms();
-  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                      TOGGLE NOTIFICATIONS 

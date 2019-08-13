@@ -20,6 +20,7 @@ import * as Interface from "../_interfaces/interfaces";
 import { AuthenticationService } from "./authentication.service";
 
 import { config } from "../../environments/environment.prod";
+import { map } from 'rxjs/operators';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +72,6 @@ export interface UpdateOrganization {
   fname: string;          //The name of the organization member
   surname: string;        //The surname of the organization member
   email: string;          //The email of the organization member
-  password: string;       //The password of the organization member
 }
 
 //Object for defning the JSOn object to be sent when the details of an organization member are updated
@@ -233,7 +233,12 @@ export class UserManagementAPIService {
       json: true
     };
 
-    return this.http.request('POST', updateStaffMemberDetailsURL, options);
+    return this.http.request('POST', updateStaffMemberDetailsURL, options).pipe(map((response : any) => {
+      if (response && (response.data && response.data != '')) {
+        this.authService.updateSessionVariables(response.data);
+      }
+      return response;
+    }));
   }
 
 
@@ -251,9 +256,22 @@ export class UserManagementAPIService {
    * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  updateOrganizationMemberDetails(organization: string, mail: string, name: string, lname: string, idNo: string, pass: string) {
-    var member: UpdateOrganization = { fname: name, surname: lname, email: mail, password: pass };
-    var data: POSTUpdateOrganization = { orgName: organization, id: idNo, fields: member };
+  updateOrganizationMemberDetails(mail: string, name: string, lname: string) {
+
+
+    var member: UpdateOrganization = { 
+      fname: name, 
+      surname: lname, 
+      email: mail
+    };
+
+    var data: POSTUpdateOrganization = { 
+      orgName: this.authService.getCurrentSessionValue.user.organization,
+      id: this.authService.getCurrentSessionValue.user.ID, 
+      fields: member 
+    };
+
+    let orgName = this.authService.getCurrentSessionValue.user.organization;
 
     const options = {
       method: 'POST',
@@ -267,7 +285,12 @@ export class UserManagementAPIService {
       json: true
     };
 
-    return this.http.request('POST', updateOrganizationMemberDetailsURL, options);
+    return this.http.request('POST', updateOrganizationMemberDetailsURL, options).pipe(map((response : any) => {
+      if (response && (response.data && response.data != '')) {
+        this.authService.updateSessionVariables(response.data);
+      }
+      return response;
+    }));
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

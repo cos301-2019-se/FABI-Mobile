@@ -70,6 +70,27 @@ export class AuthenticationService {
     this.currentSessionSubject.next(sess);
   }
 
+  updateSessionVariables(user: any) {
+    let usersDetails = {
+      'ID': user.id,
+      'organisation': this.getCurrentSessionValue.user.organisation,
+      'name' : user.fname,
+      'surname': user.surname,
+      'email': user.email,
+      'permission': user.userType,
+      //REMOVE ASAP:
+      'databases': user.databases
+    }
+
+    let sess = {
+      'token': this.getCurrentSessionValue.token,
+      'user': usersDetails
+    }
+
+    localStorage.setItem('sessionDetails', JSON.stringify(sess));
+    this.currentSessionSubject.next(sess);
+  }
+
   public get getCurrentSessionValue(): any {
     return this.currentSessionSubject.value;
   }
@@ -138,12 +159,114 @@ export class AuthenticationService {
   }
 
   temporaryLoginSuperUser() {
-
-    console.log("----- IN TEMP -----");
-
-
+    
     const Lemail = "johnsmith@gmail.com";
     const Lpassw = "ERVIw62TBl";
+    const Lorg = "FABI";
+
+    // User details to be passed to API
+    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
+
+    let url = `${config.loginURL}/login`; // Http Request URL
+    let method = 'POST';  // Http Request Method
+
+    const postData = details; // Data to send as JSON
+
+    const options = {
+      headers: new HttpHeaders({
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      }),
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, url, options).pipe(map(response => {
+      if (response && (response.token && response.token != '')) {
+        this.setSessionVariables(response.token, response.userDetails, details.orgName);
+        this.currentUser = response.userDetails;
+      }
+      return response;
+    }));
+
+  }
+
+  temporaryLoginOrganisation() {
+    
+    const Lemail = "samjones@gmail.com";
+    const Lpassw = "Q61hoZ19v0";
+    const Lorg = "Organization1";
+
+    // User details to be passed to API
+    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
+
+    let url = `${config.loginURL}/login`; // Http Request URL
+    let method = 'POST';  // Http Request Method
+
+    const postData = details; // Data to send as JSON
+
+    const options = {
+      headers: new HttpHeaders({
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      }),
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, url, options).pipe(map(response => {
+      if (response && (response.token && response.token != '')) {
+        this.setSessionVariables(response.token, response.userDetails, details.orgName);
+        this.currentUser = response.userDetails;
+      }
+      return response;
+    }));
+
+  }
+
+  temporaryLoginOrganisationMember() {
+    
+    const Lemail = "tomjones@gmail.com";
+    const Lpassw = "fmvubzMUfG";
+    const Lorg = "Organization1";
+
+    // User details to be passed to API
+    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
+
+    let url = `${config.loginURL}/login`; // Http Request URL
+    let method = 'POST';  // Http Request Method
+
+    const postData = details; // Data to send as JSON
+
+    const options = {
+      headers: new HttpHeaders({
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      }),
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, url, options).pipe(map(response => {
+      if (response && (response.token && response.token != '')) {
+        this.setSessionVariables(response.token, response.userDetails, details.orgName);
+        this.currentUser = response.userDetails;
+      }
+      return response;
+    }));
+
+  }
+
+  temporaryLoginStaff() {
+    
+    const Lemail = "huckfinn@gmail.com";
+    const Lpassw = "ppaXfIUF2H";
     const Lorg = "FABI";
 
     // User details to be passed to API

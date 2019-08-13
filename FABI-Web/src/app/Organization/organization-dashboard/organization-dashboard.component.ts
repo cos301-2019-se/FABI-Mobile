@@ -148,9 +148,9 @@ export class OrganizationDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
+    
      //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+     this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.getNumberOfOrganizationMembers();
       this.getNumberOfOrganizationSamples();
