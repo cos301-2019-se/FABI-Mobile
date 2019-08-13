@@ -39,26 +39,6 @@ import * as Interface from '../../_interfaces/interfaces';
 })
 export class AdminNotificationComponent implements OnInit {
 
-  /** Contains the user stats that will be dynamically loaded in the HTML page - @type {string} */
-  userStats: string;
-  /** Contains the sample stats that will be dynamically loaded in the HTML page - @type {string} */
-  sampleStats: string;
-
-  /** Object array for holding the administrators -  @type {Member[]} */
-  admins: Member[] = []; 
-  /** Object array for holding the staff members -  @type {Member[]} */                        
-  staff: Member[] = [];  
-  /** Object array for holding the database administrators -  @type {Member[]} */                        
-  databaseAdmins: Member[] = [];   
-  /** Object array for holding the culture curators -  @type {Member[]} */              
-  cultureCurators: Member[] = []; 
-  /** Object array for holding the diagnostic clinic administrators -  @type {Member[]} */               
-  diagnosticClinicAdmins: Member[] = []; 
-  /** Object array for holding all of FABI's samples -  @type {Object[]} */        
-  samples: Object[] = [];  
-  /** Object array for holding all of FABI's completed samples -  @type {Object[]} */                      
-  completedSamples: Object[] = [];  
-
   /** Object array for holding all of the logs -  @type {any[]} */ 
   allNotifications: any[] = [];
   /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
@@ -98,28 +78,25 @@ export class AdminNotificationComponent implements OnInit {
   /** The name and surname of a user concatenated as a string - @type {string} */   
   user2: string;
 
-  /** The staff member's email address -  @type {string} */
-  email: string = '';
-  /** The staff member's organization -  @type {string} */
-  organization: string = '';
-  /** The staff member's id -  @type {string} */
-  id: string = '';
-  /** The staff member's name -  @type {string} */
-  name: string = '';
-  /** The staff member's surname -  @type {string} */
-  surname: string = '';
-  /** The staff member's user type -  @type {string} */
-  userType: string = '';
-  /** The staff member's password -  @type {string} */
-  password: string = '';
-  /** The staff member's confirmed password -  @type {string} */
-  confirmPassword: string = '';
-
-  /** The form to display the admin member's details -  @type {FormGroup} */
-  adminProfileForm: FormGroup;
-
+  /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of AdminNotificationComponent.
+   * 
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {DomSanitizer} sanitizer
+   * @param {ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     public sanitizer: DomSanitizer, 
     private userManagementService: UserManagementAPIService,
@@ -130,12 +107,10 @@ export class AdminNotificationComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder, 
     private snackBar: MatSnackBar 
-  ) { 
-    
-  }
+  ) {}
+
 
   ngOnInit() {
-
     this.currentUser = this.authService.getCurrentSessionValue.user;
     this.loadNotifications();
   }
@@ -225,7 +200,6 @@ export class AdminNotificationComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
-
     //Making a call to the notification logging service to return all logs belonging to the user
     this.notificationLoggingService.getUserLogs(this.currentUser.ID).subscribe((response: any) => {
       if(response.success == true){
@@ -269,23 +243,35 @@ export class AdminNotificationComponent implements OnInit {
               this.loadUserDetails(tempLogU.Organization1, tempLogU.Details, 'user1');
 
               if(tempLogU.Action == "/createOrganization"){
-                tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
+                tempLogU.Action = "New organization " + tempLogU.Organization2 + " was added to the system by " + this.user1;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "/addStaff"){
                 this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "/removeOrg"){
-                tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
+                tempLogU.Action = "Organization " + tempLogU.Organization2 + " was removed from the system by " + this.user1;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "/removeStaff"){
                 this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
                 tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
-  
-              this.allNotifications.push(tempLogU);
-              this.numberOfUserLogs += 1;
-              this.localNotificationNumber += 1;
             }
           }         
         }
@@ -312,17 +298,25 @@ export class AdminNotificationComponent implements OnInit {
 
               if(tempLogD.Action == "/createDatabase"){
                 tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
+
+                this.allNotifications.push(tempLogD);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
-              else if(tempLogD.Action == "/porting"){
+              else if(tempLogD.Action == "/porting" || tempLogD.Action == "/addDoc"){
                 tempLogD.Action = tempLogD.Details + " was ported";
+
+                this.allNotifications.push(tempLogD);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
               }
               else if(tempLogD.Action == "C"){
                 tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
-              }
 
-              this.allNotifications.push(tempLogD);
-              this.numberOfUserLogs += 1;
-              this.localNotificationNumber += 1;
+                this.allNotifications.push(tempLogD);
+                this.numberOfUserLogs += 1;
+                this.localNotificationNumber += 1;
+              }
             }
           }
         }
