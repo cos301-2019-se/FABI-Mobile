@@ -130,11 +130,20 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    this.currentUser = this.authService.getCurrentSessionValue.user;
-    
-    //Calling the neccessary functions as the page loads
-    this.getNumberOfFABIMembers();
-    this.getNumberOfFABISamples();  
+
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.getNumberOfFABIMembers();
+      this.getNumberOfFABISamples();
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // // Set current user logged in
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    // //Calling the neccessary functions as the page loads
+    // this.getNumberOfFABIMembers();
+    // this.getNumberOfFABISamples();
   }
 
 
@@ -214,6 +223,7 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfCompletedFABISamples(){}
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 
