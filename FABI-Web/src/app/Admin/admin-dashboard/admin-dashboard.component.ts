@@ -170,8 +170,32 @@ export class AdminDashboardComponent implements OnInit {
         admin_confirm: ''
       });
 
-      this.currentUser = this.authService.getCurrentSessionValue;
+      
     }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadNotifications() | 2. Call getNumberOfFABISamples() | 3. Call getNumberOfFABIMembers()
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    console.log("------- CURRENT USER : " + JSON.stringify(this.currentUser));
+
+      // this.authService.temporaryLoginSuperUser();
+      
+      //Calling the neccessary functions as the page loads
+    this.loadNotifications();
+    this.getNumberOfFABIMembers();
+    this.getNumberOfFABISamples();
+    
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -341,7 +365,7 @@ export class AdminDashboardComponent implements OnInit {
     var tempUser = this.authService.getCurrentSessionValue;
 
     //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(this.currentUser.ID).subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.content.data.Logs;
 
@@ -529,7 +553,6 @@ export class AdminDashboardComponent implements OnInit {
 
     let user = this.authService.getCurrentSessionValue.user;
   }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 

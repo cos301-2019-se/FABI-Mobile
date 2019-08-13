@@ -1,3 +1,29 @@
-<p>
-  admin-notification works!
-</p>
+<h3>NOTIFICATIONS</h3>
+<h5 *ngIf="!notifications">No notifications</h5>
+
+<!-- Notification Items -->
+<div class="notification-items" *ngIf="allNotifications">
+
+  <!-- Notification Item -->
+  <div class="notification-item" *ngFor="let log of allNotifications">
+    <div class="notification-action">
+      <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
+    </div>
+    <div class="notification-heading">
+      <h6><b>{{log.Type}} notification</b></h6>
+    </div>
+    <div class="notification-content">
+      <p><b>Action:</b> {{log.Action}}</p>
+      <p><b>Date:</b> {{log.Date}}</p>
+    </div>
+  </div>
+  <!-- Notification Item -->
+
+</div>
+<!-- Notification Items -->
+
+<!-- See More Icon -->
+<div class="see-more">
+  <i class="fas fa-ellipsis-h"></i>
+</div>
+<!-- / See More Icon -->
