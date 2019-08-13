@@ -64,6 +64,8 @@ export class StaffProfileComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
+  isEditingProfile: boolean = false;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -89,14 +91,40 @@ export class StaffProfileComponent implements OnInit {
     private router: Router
     ) { 
       this.staffProfileForm = this.formBuilder.group({
-      organization_name: '',
       staff_name: '',
       staff_surname: '',
       staff_email: '',
-      staff_type: '',
-      staff_password: '',
-      staff_confirm: ''
+      staff_type: ''
     });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadStaffProfileDetails() | 2. Call loadNotifications() 
+   * 
+   * @memberof StaffProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginStaff().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.loadStaffProfileDetails();
+    });
+
+    this.staffProfileForm.get('staff_name').disable();
+    this.staffProfileForm.get('staff_surname').disable();
+    this.staffProfileForm.get('staff_email').disable();
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // // Set current user logged in
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    //Calling the neccessary functions as the page loads
+    // this.loadStaffProfileDetails();
   }
 
 
@@ -123,9 +151,9 @@ export class StaffProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadStaffProfileDetails(){
     //The id number of the user that is currently logged in
-    this.id = this.currentUser.user.ID;
+    this.id = this.currentUser.ID;
     //The organization of the user that is currently logged in
-    this.organization = this.currentUser.user.organisation;
+    this.organization = this.currentUser.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -133,14 +161,13 @@ export class StaffProfileComponent implements OnInit {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        //Setting the user type of the user
-        this.userType = data.userType;
-        //Setting the first name of the user
-        this.name = data.fname;
-        //Setting the surname of the user
-        this.surname = data.surname;
-        //Setting the email of the user
-        this.email = data.email;
+        // Fill the form inputs with the user's details
+        this.staffProfileForm.setValue( {
+          staff_name: data.fname,
+          staff_surname: data.surname,
+          staff_email: data.email,
+          staff_type: data.userType
+        });
       }
       else{
         //Error handling
@@ -156,76 +183,35 @@ export class StaffProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-    //Indicates if the details can be changed based on whether the passwords match or not
-    var valid = true;
-
-    //Checking to make sure that the passwords are not empty
-    //Checking to make sure that the password and confirmed password match
-    if(this.staffProfileForm.controls.admin_password.value != '' && 
-    this.staffProfileForm.controls.admin_password.value == this.staffProfileForm.controls.admin_confirm.value){
-      this.password = this.staffProfileForm.controls.admin_password.value;
-    }
-    else{
-      //Indicates that the changes cannot be saved
-      valid = false;
-
-      //POPUP MESSAGE
-      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-        duration: 3000
-      });
+    
+    // Check if form input is valid 
+    if (this.staffProfileForm.invalid) {
+      return;
     }
 
-    //Indicates that the changes that the user has made to their profile details, can be changed
-    if(valid == true){
-      if(this.staffProfileForm.controls.staff_email.value == ''){
-        this.email = this.email;
+    var Uemail = this.staffProfileForm.controls.staff_email.value;
+    var Uname = this.staffProfileForm.controls.staff_name.value;
+    var Usurname = this.staffProfileForm.controls.staff_surname.value;
+
+    //Making a call to the User Management API Service to save the user's changed profile details
+    this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname).subscribe((response: any) => {
+      if(response.success == true){
+
+        //Reloading the updated user's details
+        this.loadStaffProfileDetails();
+
+        //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+          duration: 3000
+        });
       }
       else{
-        this.email = this.staffProfileForm.controls.staff_email.value;
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+          duration: 3000
+        });
       }
-
-      if(this.staffProfileForm.controls.staff_name.value == ''){
-        this.name = this.name;
-      }
-      else{
-        this.name = this.staffProfileForm.controls.staff_name.value;
-      }
-
-      if(this.staffProfileForm.controls.staff_surname.value == ''){
-        this.surname == this.surname;
-      }
-      else{
-        this.surname = this.staffProfileForm.controls.staff_surname.value;
-      }
-
-      //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname).subscribe((response: any) => {
-        if(response.success == true){
-          //Making sure that local storage now has the updated user information
-          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
-
-          //Reloading the updated user's details
-          this.loadStaffProfileDetails();
-
-          //Display message to say that details were successfully saved
-          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-        else{
-          //Error handling
-          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-      });
-    }
-    else{
-      //Error handling
-      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-        duration: 3000
-      });
-    }
+    });
   }
 
 
@@ -279,22 +265,19 @@ export class StaffProfileComponent implements OnInit {
     this.toggle_status = !this.toggle_status; 
   }
 
+  editProfileToggle() {
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          NG ON INIT  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Call loadStaffProfileDetails() | 2. Call loadNotifications() 
-   * 
-   * @memberof StaffProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    this.currentUser = this.authService.getCurrentSessionValue.user;
+    if(this.isEditingProfile) {
+      this.staffProfileForm.get('staff_name').enable();
+      this.staffProfileForm.get('staff_surname').enable();
+      this.staffProfileForm.get('staff_email').enable();
+    } else {
+      this.staffProfileForm.get('staff_name').enable();
+      this.staffProfileForm.get('staff_surname').enable();
+      this.staffProfileForm.get('staff_email').enable();
+    }
     
-    //Calling the neccessary functions as the page loads
-    this.loadStaffProfileDetails();
   }
+
 
 }

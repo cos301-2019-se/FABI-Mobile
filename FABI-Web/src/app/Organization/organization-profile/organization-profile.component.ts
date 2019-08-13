@@ -60,6 +60,10 @@ export class OrganizationProfileComponent implements OnInit {
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
 
+  currentUser: any
+
+  isEditingProfile: boolean = false;
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
@@ -88,13 +92,41 @@ export class OrganizationProfileComponent implements OnInit {
     private userManagementService: UserManagementAPIService
     ) { 
     this.adminProfileForm = this.formBuilder.group({
-      organization_name: '',
-      admin_name: '',
-      admin_surname: '',
-      admin_email: '',
-      admin_password: '',
-      admin_confirm: ''
+      organization_name: ['', Validators.required],
+      admin_name: ['', Validators.required],
+      admin_surname: ['', Validators.required],
+      admin_email: ['', Validators.required]
     });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadAdminProfileDetails()
+   * 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.loadAdminProfileDetails();
+    });
+
+    this.adminProfileForm.get('organization_name').disable();
+    this.adminProfileForm.get('admin_name').disable();
+    this.adminProfileForm.get('admin_surname').disable();
+    this.adminProfileForm.get('admin_email').disable();
+
+    //******** TO BE USED IN PRODUCTION: ********
+    //Calling the neccessary functions as the page loads
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    // this.loadAdminProfileDetails();
   }
 
 
@@ -107,25 +139,26 @@ export class OrganizationProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
-    //The id number of the user that is currently logged in
-    this.id = tempUser.user.ID;
-    //The organization of the user that is currently logged in
-    this.organization = tempUser.user.organisation;
+    
+     //The id number of the user that is currently logged in
+     this.id = this.currentUser.ID;
+     //The organization of the user that is currently logged in
+     this.organization = this.currentUser.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
+        console.log("DATA: " + JSON.stringify(data));
 
-        //Setting the first name of the user
-        this.name = data.fname;
-        //Setting the surname of the user
-        this.surname = data.surname;
-        //Setting the email of the user
-        this.email = data.email;
+        // Fill the form inputs with the user's details
+        this.adminProfileForm.setValue( {
+          admin_name: data.fname,
+          admin_surname: data.surname,
+          admin_email: data.email,
+          organization_name: this.currentUser.organisation
+        });
       }
       else{
         //Error handling
@@ -172,76 +205,35 @@ export class OrganizationProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-    //Indicates if the details can be changed based on whether the passwords match or not
-    var valid = true;
-
-    //Checking to make sure that the passwords are not empty
-    //Checking to make sure that the password and confirmed password match
-    if(this.adminProfileForm.controls.admin_password.value != '' && 
-    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
-      this.password = this.adminProfileForm.controls.admin_password.value;
-    }
-    else{
-      //Indicates that the changes cannot be saved
-      valid = false;
-
-      //POPUP MESSAGE
-      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-        duration: 3000
-      });
+    
+    // Check if form input is valid 
+    if (this.adminProfileForm.invalid) {
+      return;
     }
 
-    //Indicates that the changes that the user has made to their profile details, can be changed
-    if(valid == true){
-      if(this.adminProfileForm.controls.admin_email.value == ''){
-        this.email = this.email;
-      }
-      else{
-        this.email = this.adminProfileForm.controls.admin_email.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_name.value == ''){
-        this.name = this.name;
-      }
-      else{
-        this.name = this.adminProfileForm.controls.admin_name.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_surname.value == ''){
-        this.surname == this.surname;
-      }
-      else{
-        this.surname = this.adminProfileForm.controls.admin_surname.value;
-      }   
+    var Uemail = this.adminProfileForm.controls.admin_email.value;
+    var Uname = this.adminProfileForm.controls.admin_name.value;
+    var Usurname = this.adminProfileForm.controls.admin_surname.value;
       
-      //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateOrganizationMemberDetails(this.organization, this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
-        if(response.success == true){
-          //Making sure that local storage now has the updated user information
-          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
+    //Making a call to the User Management API Service to save the user's changed profile details
+    this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
+      if(response.success == true){
 
-          //Reloading the updated user's details
-          this.loadAdminProfileDetails();
+        //Reloading the updated user's details
+        this.loadAdminProfileDetails();
 
-          //Display message to say that details were successfully saved
-          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-        else{
-          //Error handling
-          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-      });
-    }
-    else{
-      //Error handling
-      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-        duration: 3000
-      });
-    }
+        //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+          duration: 3000
+        });
+      }
+      else{
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+          duration: 3000
+        });
+      }
+    });
   }
 
 
@@ -280,19 +272,20 @@ export class OrganizationProfileComponent implements OnInit {
     }
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          NG ON INIT  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Call loadAdminProfileDetails()
-   * 
-   * @memberof OrganizationProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    //Calling the neccessary functions as the page loads
-    this.loadAdminProfileDetails();
+  editProfileToggle() {
+
+    if(this.isEditingProfile) {
+      this.adminProfileForm.get('admin_name').enable();
+      this.adminProfileForm.get('admin_surname').enable();
+      this.adminProfileForm.get('admin_email').enable();
+    } else {
+      this.adminProfileForm.get('admin_name').enable();
+      this.adminProfileForm.get('admin_surname').enable();
+      this.adminProfileForm.get('admin_email').enable();
+    }
+    
   }
+
+  
 
 }
