@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Tuesday, August 13th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -175,6 +175,7 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getUserDetails(organization: string, idNo: string) {
+    
     var data: POSTMember = { orgName: organization, id: idNo };
 
     const options = {
@@ -372,10 +373,10 @@ export class UserManagementAPIService {
     const getAllOrganizationsURL = `${config.userManagementURL}/getAllOrganizations`;
     const method = 'POST';
 
-    const postData = {
-      "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
-    }
+    // const postData = {
+    //   "id": this.authService.getCurrentSessionValue.user.ID,
+    //   "orgName": this.authService.getCurrentSessionValue.user.organisation
+    // }
     
     const options = {
       headers: new HttpHeaders({
@@ -384,7 +385,7 @@ export class UserManagementAPIService {
         "Access-Control-Allow-Origin": "*",
         'Accept': 'application/json'
       }),
-      body: postData,
+      // body: postData,
       json: true
     };
 

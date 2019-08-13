@@ -11,8 +11,6 @@
 
   <div class="login-form">
 
-      <button (click)="selectLocation()" class="btn btn-default">Google Maps</button>
-
       
     <!-- Login Form -->
     <form class="needs-validation" iid="sample_form" [formGroup]="sampleForm" (submit)="sendForm()" novalidate>
@@ -79,6 +77,7 @@
               <p>Not the correct location? Select on map:</p>
              
               <!-- <app-maps-window></app-maps-window> -->
+              <button type="button" (click)="selectLocation()" class="btn btn-default">Google Maps</button>
 
               <!-- Street Address -->
               <div class="form-group">

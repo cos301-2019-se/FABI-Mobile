@@ -240,9 +240,12 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 
 /* ==========================================================================
-   DEFAULT BUTTON STYLING [GENERAL]
+   BUTTON STYLING [GENERAL]
    ========================================================================== */
 
+
+/* Default Button 
+     ========================================================================== */
    .btn.btn-default {
     color: #72b555;
     font-family: "Montserrat", sans-serif;
@@ -268,6 +271,211 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     background: linear-gradient(to right, #76b852, #8dc26f);
 
     border: none;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+
+
+/* View Button 
+     ========================================================================== */
+.btn.btn-default-view {
+    color: #72b555;
+    font-family: "Montserrat", sans-serif;
+
+    background-color: transparent;
+
+    border: 1px solid #72b555;
+
+    border-radius: 5px;
+
+    padding: 5px;
+    margin: 5px;
+
+    width: 50%;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.5s;
+}
+
+.btn.btn-default-view:hover {
+    color: #fff;
+
+    background-color: rgba(114, 181, 85, 0.95);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+
+
+/* Delete Button 
+     ========================================================================== */
+.btn.btn-default-delete {
+    color: #8b2323;
+    font-family: "Montserrat", sans-serif;
+
+    background-color: transparent;
+
+    border: 1px solid #8b2323;
+
+    border-radius: 5px;
+
+    padding: 5px;
+    margin: 5px;
+
+    width: 50%;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.5s;
+}
+
+.btn.btn-default-delete:hover {
+    color: #fff;
+
+    background-color: rgba(139, 35, 35, 0.95);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+
+
+/* Edit Button 
+     ========================================================================== */
+
+.btn.btn-default-edit {
+    color: #6b746f;
+    font-family: "Montserrat", sans-serif;
+
+    background-color: transparent;
+
+    border: 1px solid #6b746f;
+
+    border-radius: 5px;
+
+    padding: 5px;
+    margin: 5px;
+
+    width: 50%;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.5s;
+}
+
+.btn.btn-default-edit:hover {
+    color: #fff;
+
+    background-color: rgba(107, 116, 111, 0.95);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+
+
+/* Save Button 
+     ========================================================================== */
+
+.btn.btn-default-save {
+    color: #72b555;
+    font-family: "Montserrat", sans-serif;
+
+    background-color: transparent;
+
+    border: 1px solid #72b555;
+
+    border-radius: 5px;
+
+    padding: 5px;
+    margin: 5px;
+
+    width: 50%;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.5s;
+}
+
+.btn.btn-default-save:hover {
+    color: #fff;
+
+    background-color: rgba(114, 181, 85, 0.95);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+
+/* Confirm Button 
+     ========================================================================== */
+.btn.btn-default-confirm {
+    color: #72b555;
+    font-family: "Montserrat", sans-serif;
+
+    background-color: transparent;
+
+    border: 1px solid #72b555;
+
+    border-radius: 5px;
+
+    padding: 5px;
+    margin: 5px;
+
+    width: 50%;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.5s;
+}
+
+.btn.btn-default-confirm:hover {
+    color: #fff;
+
+    background-color: rgba(114, 181, 85, 0.95);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+
+/* Cancel Button 
+     ========================================================================== */
+
+.btn.btn-default-cancel {
+    color: #8b2323;
+    font-family: "Montserrat", sans-serif;
+
+    background-color: transparent;
+
+    border: 1px solid #8b2323;
+
+    border-radius: 5px;
+
+    padding: 5px;
+    margin: 5px;
+
+    width: 50%;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.5s;
+}
+
+.btn.btn-default-cancel:hover {
+    color: #fff;
+
+    background-color: rgba(139, 35, 35, 0.95);
 
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
@@ -580,7 +788,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
-    height: auto;
+    height: 100%;
 
     float: right;
 
@@ -917,8 +1125,6 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     height: 50px;
     width: 50px;
-    
-    margin-top: 5px;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
@@ -926,6 +1132,10 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 #help .help-items .help-item .help-icon i {
     color: #fff !important;
     font-size: 20px;
+}
+
+.help-heading {
+    margin-top: 10px;
 }
 
 .help-heading h6 {
@@ -987,4 +1197,83 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     100% {
         bottom: 10px;
     }
+}
+
+/* ==========================================================================
+   PRIMARY HANDLER ACTIONS [GENERAL]
+   ========================================================================== */
+.handler-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 15vh;
+}
+
+.action-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background-color: #fff;
+
+    border-left: 5px solid #72b555;
+
+    border-radius: 5px;
+
+    width: 80%;
+    height: 10vh;
+
+    padding-bottom: 5px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.2s;
+}
+
+.action-item:hover {
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    border: none;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+.action-item:hover>.action-heading h6 {
+    color: #fff;
+}
+
+.action-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #72b555;
+
+    border-radius: 50%;
+
+    height: 40px;
+    width: 40px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.action-icon i {
+    color: #fff;
+    font-size: 18px;
+}
+
+.action-heading h6 {
+    color: #72b555;
+    font-size: 18px;
+    font-family: "Montserrat", sans-serif;
+
+    padding: 0 10px 0 0;
+    margin: 5px 0 0 0;
 }
