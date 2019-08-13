@@ -6,7 +6,985 @@
 
 @import "../node_modules/ngx-toastr/toastr.css";
 
-a:hover {
-    text-decoration: none;
-    color:#ffffff;
- }
+/* ==========================================================================
+   TOP NAV STYLING [GENERAL]
+   ========================================================================== */
+
+/* Navbar Heading Styling */
+.pos-f-t {
+    display: block;
+}
+
+@media (min-width: 767px) {
+
+    .pos-f-t {
+        display: none;
+    }
+}
+
+.navbar h5 {
+    color: #F7F7F7;
+    font-family: "Montserrat", sans-serif;
+
+    margin: 0;
+}
+
+/* Notification Icon Styling */
+.notifications-icon {
+    color: #F7F7F7;
+    font-size: 30px;
+
+    padding-right: 25px;
+}
+
+.notifications-icon i {
+    transition: all 0.5s;
+}
+
+.notifications-icon i:hover {
+    transform: scale(1.25);
+
+    opacity: 0.8;
+}
+
+.notifications-icon #no-new-notifications {
+    display: none;
+}
+
+.notifications-icon .fas.fa-user-circle {
+    padding-right: 30px;
+}
+
+/* Navbar Styling */
+
+.navbar-nav {
+    position: block;
+    z-index: 1001;
+}
+
+.navbar-nav>li {
+    z-index: 1001;
+}
+
+div.pos-f-t {
+    height: 10vh !important;
+}
+
+div nav.navbar.navbar-dark.bg-dark {
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    height: 10vh !important;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+div#navbarToggleExternalContent div.bg-dark.p-4 {
+    background-color: #72b555 !important;
+
+    position: relative;
+}
+
+.brand {
+    font-family: "Montserrat", sans-serif;
+    color: #fff;
+}
+
+.navbar-nav .nav-item a {
+    font-family: "Roboto", sans-serif;
+    color: #fff;
+
+    margin-top: 7px;
+}
+
+.navbar-nav .nav-item.active a {
+    background-color: rgba(255, 255, 255, 0.1);
+
+    border-radius: 15px;
+
+    padding: 10px;
+    margin: 0 0 0 -10px;
+
+    width: 100%;
+}
+
+.navbar-nav a.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+
+    border-radius: 15px;
+
+    padding: 10px;
+    margin: 0 0 0 -10px;
+
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   SIDE NAV STYLING [GENERAL]
+   ========================================================================== */
+.sidenav {
+    display: none;
+}
+
+.top-nav-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    text-align: center;
+
+    width: 100%;
+    height: 50%;
+
+    margin-top: 50px;
+}
+
+.top-nav-items .fas.fa-user-circle {
+    color: #F7F7F7;
+    font-size: 60px;
+}
+
+.top-nav-items p {
+    color: #F7F7F7;
+    opacity: 0.5;
+
+    margin-top: 2px;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+}
+
+.nav-links i {
+    color: #F7F7F7;
+    font-size: 28px;
+
+    margin: 10px;
+
+    transition: all 0.5s;
+}
+
+.nav-links i:hover {
+    transform: scale(1.25);
+
+    opacity: 0.8;
+}
+
+.nav-links a.nav-link {
+    width: 100%;
+}
+
+.nav-links a.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+
+    border-left: 5px solid #FFF;
+}
+
+.bottom-nav-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    text-align: center;
+
+    width: 100%;
+    height: 50%;
+}
+
+.bottom-nav-items i {
+    color: #FFF;
+    font-size: 28px;
+
+    margin: 10px;
+
+    transition: all 0.5s;
+}
+
+.bottom-nav-items i:hover {
+    transform: scale(1.25);
+
+    opacity: 0.8;
+}
+
+.bottom-nav-items a.nav-link {
+    width: 100%;
+}
+
+.bottom-nav-items a.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+
+    border-left: 5px solid #FFF;
+}
+
+@media (min-width: 768px) {
+    .sidenav {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+
+        width: 15vh;
+        height: auto;
+
+        background: linear-gradient(to right, #76b852, #8dc26f);
+
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+}
+
+
+/* ==========================================================================
+   DEFAULT BUTTON STYLING [GENERAL]
+   ========================================================================== */
+
+   .btn.btn-default {
+    color: #72b555;
+    font-family: "Montserrat", sans-serif;
+
+    background-color: transparent;
+
+    border: 1px solid #72b555;
+
+    border-radius: 5px;
+
+    padding: 10px;
+
+    width: auto;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.5s;
+}
+
+.btn.btn-default:hover {
+    color: #fff;
+
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    border: none;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+
+/* ==========================================================================
+   DASHBOARD STYLING [GENERAL]
+   ========================================================================== */
+
+/* Dashboard Section
+     ========================================================================== */
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+
+    background-color: #FCFCFC;
+}
+
+
+@media (min-width: 767px) {
+    .dashboard {
+        flex-direction: row;
+    }
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+}
+
+/* Primary Content Section
+     ========================================================================== */
+.primary-content {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: auto;
+}
+
+/* Dashbord Heading */
+.content-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: 10vh;
+
+    padding: 0 15px 0 15px;
+    margin: 25px 0 0 0;
+}
+
+.content-heading h2 {
+    font-family: "Montserrat", sans-serif;
+    color: #6B746F;
+
+    padding: 25px;
+    margin: 0;
+}
+
+/* Notification Icons */
+.content-heading #new-notifications {
+    display: none;
+}
+
+.content-heading #no-new-notifications {
+    display: none;
+}
+
+@media (min-width: 767px) {
+    .content-heading #new-notifications {
+        display: block;
+
+        color: #6B746F;
+
+        font-size: 28px;
+
+        padding: 25px;
+        margin: 0;
+    }
+}
+
+/* Section Divider
+     ========================================================================== */
+.section-divider {
+    width: 80%;
+    height: 0.5vh;
+
+    margin-left: 40px;
+
+    background: linear-gradient(to right, #76b852, #8dc26f);
+}
+
+/* Statistic Section
+     ========================================================================== */
+.statistics {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    min-height: 20vh;
+    height: auto;
+
+    padding: 25px 15px 15px 15px;
+}
+
+.statistic-box {
+    display: none;
+}
+
+.overview-statistic-box {
+    display: flex;
+    align-items: center;
+
+    width: 90%;
+    min-height: 10vh;
+    height: auto;
+
+    margin: 15px;
+    padding-left: 15px;
+
+    border-left: 2px solid #72B555;
+}
+
+.statistic-box-content {
+    margin-left: 15px;
+}
+
+.statistic-box-heading {
+    font-family: "Montserrat", sans-serif;
+    color: #72B555;
+}
+
+.statistic-box-content {
+    margin-left: 15px;
+}
+
+.statistic-box-heading {
+    font-family: "Montserrat", sans-serif;
+    color: #72B555;
+}
+
+.statistic-box-info {
+    font-family: "Roboto", sans-serif;
+}
+
+@media (min-width: 568px) {
+    .overview-statistic-box {
+        display: none;
+    }
+
+    .statistic-box {
+        display: flex;
+        align-items: center;
+
+        width: 90%;
+        height: 10vh;
+
+        margin: 15px;
+        padding-left: 15px;
+
+        border-left: 2px solid #72B555;
+    }
+}
+
+@media (min-width: 568px) {
+    .statistics {
+        flex-direction: row;
+    }
+}
+
+/* Shortcut Menu Section
+     ========================================================================== */
+.handler-shortcuts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+
+    padding: 15px;
+}
+
+.menu-row {
+    width: 100%;
+    height: auto;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background-color: #FFF;
+
+    border-left: 5px solid #72B555;
+
+    border-radius: 5px;
+
+    width: 95%;
+    height: 15vh;
+
+    margin: 15px;
+    padding: 5px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.2s;
+}
+
+.menu-item:hover {
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    border: none;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+.menu-item:hover>.menu-heading h6 {
+    color: #fff;
+}
+
+.menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #72B555;
+
+    border-radius: 50%;
+
+    height: 45px;
+    width: 45px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.menu-icon i {
+    color: #fff;
+    font-size: 18px;
+}
+
+.menu-heading h6 {
+    color: #444444;
+    font-size: 18px;
+    font-family: "Montserrat", sans-serif;
+
+    padding-top: 5px;
+    margin: 0;
+}
+
+@media (min-width: 767px) {
+    .handler-shortcuts {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Dashboard Table Section
+     ========================================================================== */
+.dashboard-table {
+    width: 95%;
+    height: 50%;
+
+    padding: 15px;
+    margin: 15px 0 15px 0;
+
+    background-color: #fff;
+
+    border-left: 5px solid #72B555;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ==========================================================================
+   NOTIFICATION TAB STYLING [GENERAL]
+   ========================================================================== */
+
+#notifications {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    background-color: #F7F7F7;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+
+    float: right;
+
+    padding: 50px 15px 15px 15px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+#notifications h3 {
+    font-family: "Montserrat", sans-serif;
+    color: #6B746F;
+}
+
+#notifications i {
+    color: #6B746F;
+    font-size: 28px;
+}
+
+.notification-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+}
+
+.notification-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #FFF;
+
+    border-left: 5px solid #72B555;
+
+    border-radius: 5px;
+
+    width: 95%;
+    height: 20vh;
+
+    margin: 15px;
+    padding: 15px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.2s;
+}
+
+.notification-item:hover {
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    border: none;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+.notification-item:hover>.notication-action i {
+    color: #fff !important;
+}
+
+.notification-item:hover>.notification-heading h6 {
+    color: #fff;
+}
+
+.notification-action {
+    display: flex;
+    justify-content: flex-end;
+
+    width: 80%;
+}
+
+.notification-action i {
+    font-size: 18px !important;
+}
+
+.notification-heading h6 {
+    color: #72B555;
+    font-size: 18px;
+    font-family: "Montserrat", sans-serif;
+
+    padding: 0 10px 0 0;
+    margin: 0;
+}
+
+@media (min-width: 395px) {
+    #notifications {
+        width: 45vh;
+    }
+}
+
+.see-more {
+    display: flex;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   PROFILE TAB STYLING [GENERAL]
+   ========================================================================== */
+
+#profile {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    background-color: #F7F7F7;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+
+    float: right;
+
+    padding: 50px 15px 15px 15px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+#profile h3 {
+    font-family: "Montserrat", sans-serif;
+    color: #6B746F;
+}
+
+#profile i {
+    color: #6B746F;
+    font-size: 28px;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 75vh;
+
+    margin-top: 5vh;
+
+    background-color: transparent;
+
+    border: 1px solid #72B555;
+
+    border-radius: 5px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.2s;
+}
+
+.profile-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 15vh;
+
+    background-color: transparent;
+
+    border-radius: 50%;
+
+    height: 100px;
+    width: 100px;
+}
+
+#profile .profile-icon i {
+    color: #72B555;
+    font-size: 95px;
+}
+
+.profile-action {
+    display: flex;
+    justify-content: flex-end;
+
+    width: 80%;
+}
+
+@media (min-width: 395px) {
+    #profile {
+        width: 45vh;
+    }
+}
+
+/* Profile Form */
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 80%;
+    height: 100%;
+}
+
+.form-row {
+    display: flex;
+    justify-content: center;
+
+    height: 100%;
+}
+
+.form-group {
+    width: 100%;
+}
+
+#save-btn {
+    display: none;
+    width: 50%;
+}
+
+#confirm-password {
+    display: none;
+}
+
+
+/* ==========================================================================
+   HELP TAB STYLING [GENERAL]
+   ========================================================================== */
+
+#help {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    background-color: #F7F7F7;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+
+    float: right;
+
+    padding: 50px 15px 15px 15px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+#help h3 {
+    font-family: "Montserrat", sans-serif;
+    color: #6B746F;
+}
+
+#help i {
+    color: #6B746F;
+    font-size: 28px;
+}
+
+.help-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+}
+
+.help-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #FFF;
+
+    border-left: 5px solid #72B555;
+
+    border-radius: 5px;
+
+    width: 90%;
+    height: 15vh;
+
+    margin: 15px;
+    padding: 15px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.2s;
+}
+
+.help-content {
+    display: none;
+}
+
+.help-item:hover {
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    border: none;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+.help-item:hover>.help-icon {
+    display: none;
+}
+
+.help-item:hover>.help-heading {
+    display: none;
+}
+
+.help-item:hover>.help-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 5px;
+
+    color: #fff;
+    font-family: "Roboto", sans-serif;
+}
+
+.help-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #72b555;
+
+    border-radius: 50%;
+
+    height: 50px;
+    width: 50px;
+    
+    margin-top: 5px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+#help .help-items .help-item .help-icon i {
+    color: #fff !important;
+    font-size: 20px;
+}
+
+.help-heading h6 {
+    color: #72b555;
+}
+
+@media (min-width: 395px) {
+    #help {
+        width: 45vh;
+    }
+}
+
+
+/* ==========================================================================
+   SCROLL TO TOP ICON STYLING [GENERAL]
+   ========================================================================== */
+
+#scroll-to-top {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #989C94;
+
+    border-radius: 50%;
+
+    height: 50px;
+    width: 50px;
+
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    transition: all 0.5s;
+
+    animation: jump 1s infinite;
+}
+
+#scroll-to-top:hover {
+    transform: scale(1.05);
+}
+
+#scroll-to-top i {
+    color: #fff;
+    font-size: 20px;
+}
+
+@keyframes jump {
+    0% {
+        bottom: 10px;
+    }
+
+    50% {
+        bottom: 15px;
+    }
+
+    100% {
+        bottom: 10px;
+    }
+}
