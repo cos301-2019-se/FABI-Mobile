@@ -109,10 +109,9 @@ export class AdminNotificationComponent implements OnInit {
     private snackBar: MatSnackBar 
   ) {}
 
-
+  ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
-      console.log("---- RESPONSE: " + response);
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.loadNotifications();
     });
