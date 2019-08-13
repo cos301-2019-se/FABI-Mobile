@@ -7,7 +7,7 @@
     <!-- Top Sidenav Link -->
     <div class="top-nav-items">
       <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
-      <p (click)="toggleProfileTab()">Tap to view profile</p>
+      <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
 
       <div class="nav-links">
@@ -60,7 +60,7 @@
             <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -116,9 +116,9 @@
               <h5>Overview Statistics</h5>
             </div>
             <div class="statistic-box-info">
-              <p #admin_samples_stats id="admin_samples_stats" [innerHTML]="sampleStats">Number of Samples: </p>
+              <p #admin_samples_stats id="admin_samples_stats" >Number of Samples: {{sampleStats}}</p>
               <p #admin_completed_samples_stats id="admin_completed_samples_stats">Completed Samples: 75%</p>
-              <p #admin_user_stats id="admin_users_stats" [innerHTML]="userStats">Number of Users: </p>
+              <p #admin_user_stats id="admin_users_stats">Number of Users: {{userStats}}</p>
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
               <h5>Number of Samples</h5>
             </div>
             <div class="statistic-box-info">
-              <p #admin_samples_stats id="admin_samples_stats" [innerHTML]="sampleStats"></p>
+              <p #admin_samples_stats id="admin_samples_stats">{{sampleStats}}</p>
             </div>
           </div>
         </div>
@@ -157,7 +157,7 @@
               <h5>Number of Users</h5>
             </div>
             <div class="statistic-box-info">
-              <p #admin_user_stats id="admin_users_stats" [innerHTML]="userStats"></p>
+              <p #admin_user_stats id="admin_users_stats">{{userStats}}</p>
             </div>
           </div>
         </div>
