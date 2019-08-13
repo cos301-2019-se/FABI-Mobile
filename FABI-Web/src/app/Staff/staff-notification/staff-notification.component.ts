@@ -82,7 +82,15 @@ export class StaffNotificationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentUser = this.authService.getCurrentSessionValue.user;
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginStaff().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // // Set current user logged in
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +179,7 @@ export class StaffNotificationComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
     //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(this.currentUser.user.ID).subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(this.currentUser.ID).subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.content.data.Logs;
 
@@ -303,7 +311,7 @@ export class StaffNotificationComponent implements OnInit {
   removeNotification(id: string){
     this.newNotifications.push(id);
 
-    this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.user.ID, this.newNotifications).subscribe((response: any) => {
+    this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
         
       }
