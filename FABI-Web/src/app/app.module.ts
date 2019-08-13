@@ -64,6 +64,10 @@ import { MapsWindowComponent } from './maps-window/maps-window.component';
 import { config } from "../environments/environment.prod";
 import { SignUpRequestComponent } from './sign-up-request/sign-up-request.component';
 import { CmwMenuComponent } from './Staff/cmw-menu/cmw-menu.component';
+import { AdminNotificationComponent } from './admin-notification/admin-notification.component';
+import { StaffNotificationComponent } from './staff-notification/staff-notification.component';
+import { OrganizationNotificationComponent } from './organization-notification/organization-notification.component';
+import { MemberNotificationComponent } from './member-notification/member-notification.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +107,11 @@ import { CmwMenuComponent } from './Staff/cmw-menu/cmw-menu.component';
     ReportingComponent,
     MapsWindowComponent,
     SignUpRequestComponent,
-    CmwMenuComponent
+    CmwMenuComponent,
+    AdminNotificationComponent,
+    StaffNotificationComponent,
+    OrganizationNotificationComponent,
+    MemberNotificationComponent
   ],
   entryComponents: [
     ConfirmComponent,
