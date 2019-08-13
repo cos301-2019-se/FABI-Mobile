@@ -61,8 +61,7 @@
     position: block;
 }
 
-.navbar-nav>li {
-}
+.navbar-nav>li {}
 
 div.pos-f-t {
     height: 10vh !important;
@@ -249,7 +248,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 /* Default Button 
      ========================================================================== */
-   .btn.btn-default {
+.btn.btn-default {
     color: #72b555;
     font-family: "Montserrat", sans-serif;
 
@@ -456,12 +455,12 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
      ========================================================================== */
 
 .btn.btn-default-cancel {
-    color: #8b2323;
+    color: #6b746f;
     font-family: "Montserrat", sans-serif;
 
     background-color: transparent;
 
-    border: 1px solid #8b2323;
+    border: 1px solid #6b746f;
 
     border-radius: 5px;
 
@@ -478,7 +477,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 .btn.btn-default-cancel:hover {
     color: #fff;
 
-    background-color: rgba(139, 35, 35, 0.95);
+    background-color: rgba(107, 116, 111, 0.95);
 
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
@@ -688,6 +687,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     align-items: center;
 
     width: 100%;
+    min-height: 25vh;
     height: auto;
 
     padding: 15px;
@@ -826,7 +826,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 #notifications i {
     color: #6B746F;
-    font-size: 28px;            
+    font-size: 28px;
 }
 
 .notification-items {
@@ -1000,17 +1000,17 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     }
 }
 
-@media (min-height: 670px){
-    .profile-details {    
+@media (min-height: 670px) {
+    .profile-details {
         margin-top: 7vh;
     }
-    
+
     .profile-icon {
         height: 100px;
         width: 100px;
 
         top: -7.5vh;
-    }   
+    }
 
     #profile .profile-icon i {
         color: #72B555;
@@ -1018,10 +1018,10 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     }
 }
 
-@media (min-height: 803px){
+@media (min-height: 803px) {
     .profile-icon {
         top: -5vh;
-    }   
+    }
 }
 
 /* Profile Form */
@@ -1044,7 +1044,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     height: auto;
 }
 
-.profile-details .form  .form-group {
+.profile-details .form .form-group {
     width: 100%;
 }
 
@@ -1054,7 +1054,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 /* Profile Actions */
 .profile-actions {
-    display: flex; 
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -1262,8 +1262,11 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 }
 
 /* ==========================================================================
-   PRIMARY HANDLER ACTIONS [GENERAL]
+   HANDLER STYLING [GENERAL]
    ========================================================================== */
+
+/* Handler Actions
+     ========================================================================== */
 .handler-actions {
     display: flex;
     flex-direction: column;
@@ -1271,7 +1274,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     align-items: center;
 
     width: 100%;
-    height: 15vh;
+    min-height: 25vh;
+    height: auto;
 }
 
 .action-item {
@@ -1289,7 +1293,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     border-radius: 5px;
 
     width: 80%;
-    height: 10vh;
+    min-height: 15vh;
+    height: auto;
 
     padding-bottom: 5px;
 
@@ -1341,9 +1346,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 }
 
 
-/* ==========================================================================
-   HANDLER TABLES ACTIONS [GENERAL]
-   ========================================================================== */
+/* Handler Tables
+     ========================================================================== */
 
 .table-information {
     display: flex;
@@ -1352,16 +1356,80 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     width: 100%;
 }
 
-.table-information h6{
+.table-information h6 {
     display: inline-block;
 
 }
 
-.table-information i{
+.table-information i {
     display: inline-block;
 
     color: #72b555;
     font-size: 20px;
 
     margin-left: 25px;
+}
+
+/* Handler Modals
+     ========================================================================== */
+
+.modal-header {
+    background: linear-gradient(to right, #76b852, #8dc26f);
+
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+}
+
+.modal-header i {
+    color: #fff;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-body .form {
+    width: 80%;
+}
+
+.modal-body .row {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-body .row .form-group {
+    width: 100%;
+}
+
+/* View Modal */
+
+.view-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 80%;
+}
+
+.view-fields .form-group {
+    width: 100%;
+}
+
+/* Confirm Delete Modal */
+#confirmDeleteModal .modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    text-align: center;
+}
+
+#confirmDeleteModal .modal-body p {
+    font-family: "Roboto", sans-serif;
+}
+
+.confirm-actions {
+    display: flex;
+    justify-content: center;
 }

@@ -67,9 +67,6 @@ export class StaffHandlerComponent implements OnInit {
   /** Selected user type on dropdown - @type {string} */
   selectedUserType: string;
 
-  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove' ,'Action'];
-  dataSource = new MatTableDataSource([]);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   adminTypes: any[];
 
@@ -451,8 +448,6 @@ export class StaffHandlerComponent implements OnInit {
     this.userManagementService.getAllStaffMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.staffMembers = response.data.qs.staff;
-        this.dataSource = new MatTableDataSource(this.staffMembers);
-        this.dataSource.paginator = this.paginator;
 
         //Set number of staff members for statistics 
         this.numberOfStaffMembers = this.staffMembers.length;

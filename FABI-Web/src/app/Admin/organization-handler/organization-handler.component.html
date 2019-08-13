@@ -7,7 +7,7 @@
     <!-- Top Sidenav Link -->
     <div class="top-nav-items">
       <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
-      <p (click)="toggleProfileTab()">Tap to view profile</p>
+      <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
 
       <div class="nav-links">
@@ -61,7 +61,7 @@
             <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -111,6 +111,20 @@
       <div class="statistics">
 
         <!-- Statistic Box -->
+        <div class="overview-statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Overview Statistics</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p>Total Organizations: {{organizations.length}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Statistic Box -->
+
+
+        <!-- Statistic Box -->
         <div class="statistic-box">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
@@ -128,7 +142,6 @@
 
     </div>
     <!-- / Primary Content -->
-
 
 
     <!-- Organization Tables -->
@@ -161,7 +174,8 @@
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
                   [id]="organization.email" (click)="selectOrganisation(organization)">View</button>
                 <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal"
-                  [id]="organization.email" (click)="selectOrganisation(organization)" >Delete</button> <!--(click)="removeOrganizationPrompt(organization)-->
+                  [id]="organization.email" (click)="selectOrganisation(organization)">Delete</button>
+                <!--(click)="removeOrganizationPrompt(organization)-->
               </td>
             </tr>
           </tbody>
@@ -202,48 +216,56 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="form">
-            <form class="view-form">
-              <div class="form-row align-items-center">
-                <div class="form-group">
-                    <label for="name">Organization Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter organization name"
-                      onchange="displaySaveButton()" disabled="disabled" [value]="selectedOrg.orgName">
-                  </div>
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Enter name"
-                    onchange="displaySaveButton()" disabled="disabled" [value]="selectedOrg.admin.fname">
-                </div>
-                <div class="form-group">
-                  <label for="surname">Surname</label>
-                  <input type="text" class="form-control" id="surname" placeholder="Enter surname"
-                    onchange="displaySaveButton()" disabled="disabled" [value]="selectedOrg.admin.surname">
-                </div>
-                <div class="form-group">
-                  <label for="email">Email address</label>
-                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                    placeholder="Enter email" onchange="displaySaveButton()" disabled="disabled" [value]="selectedOrg.admin.email">
-                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                    else.</small>
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" placeholder="Password"
-                    onchange="changedPassword()" disabled="disabled">
-                </div>
-                <div class="form-group" id="confirm-password">
-                  <label for="confirm-password">Confirm Password</label>
-                  <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()"
-                    disabled="disabled">
-                </div>
-              </div>
-            </form>
+
+          <div class="view-fields">
+
+            <!-- OrganizationName -->
+            <div class="form-group">
+              <label for="name">Organization Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter organization name" disabled [value]="selectedOrg.orgName">
+            </div>
+            <!-- /Organization Name -->
+
+            <!-- Name -->
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter name"
+                disabled [value]="selectedOrg.admin.fname">
+            </div>
+            <!-- /Name -->
+
+            <!-- Surname -->
+            <div class="form-group">
+              <label for="surname">Surname</label>
+              <input type="text" class="form-control" id="surname" placeholder="Enter surname"
+                disabled [value]="selectedOrg.admin.surname">
+            </div>
+            <!-- /Surname -->
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
+                disabled [value]="selectedOrg.admin.email">
+
+            </div>
+            <!-- /Email -->
+
+            <!-- Phone -->
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="text" class="form-control" id="phone" placeholder="Enter phone"
+                disabled [value]="selectedOrg.admin.phone">
+            </div>
+            <!-- /Phone -->
+
+            <!-- Delete Action -->
+            <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+            <!-- /Delete Action -->
+
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default-edit" onclick="editStaffProfile()">Edit</button>
-          <button type="button" class="btn btn-default-save" onclick="saveStaffProfileChanges()">Save changes</button>
+
+
         </div>
       </div>
     </div>
@@ -262,91 +284,92 @@
         </div>
         <!-- Modal Body -->
         <div class="modal-body">
-            <div class="form">
-  
-              <!-- Add Organization Form -->
-              <form id="add_new_organization_form" [formGroup]="registerOrgForm" (submit)="registerOrg()" class="needs-validation" novalidate>
-                <div class="row">
-      
-  
-                  <!-- Name -->
-                  <div class="form-group">
-                    <label for="organization_name">Organization Name</label>
-                    <input type="text" class="form-control" id="organization_name" placeholder="Enter organization name"
-                      formControlName="organization_name" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Name -->
-  
-                  <!-- Location -->
-                  <div class="form-group">
-                    <label for="organization_location">Organization Location</label>
-                    <input type="text" class="form-control" id="organization_location" placeholder="Enter organization location"
-                      formControlName="organization_location" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Location -->
+          <div class="form">
 
-                  <!-- Admin Name -->
-                  <div class="form-group">
-                      <label for="admin_name">Admin Name</label>
-                      <input type="text" class="form-control" id="admin_name" placeholder="Enter admin name"
-                        formControlName="admin_name" required>
-                      <div class="valid-feedback">
-                        Looks good!
-                      </div>
-                    </div>
-                    <!-- / Admin Name -->
-    
-                    <!-- Admin Surname -->
-                  <div class="form-group">
-                      <label for="admin_surname">Admin Surname</label>
-                      <input type="text" class="form-control" id="admin_surname" placeholder="Enter admin surname"
-                        formControlName="admin_surname" required>
-                      <div class="valid-feedback">
-                        Looks good!
-                      </div>
-                    </div>
-                    <!-- / Admin Surname -->
+            <!-- Add Organization Form -->
+            <form id="add_new_organization_form" [formGroup]="registerOrgForm" (submit)="registerOrg()"
+              class="needs-validation" novalidate>
+              <div class="row">
 
-                  <!-- Email -->
-                  <div class="form-group">
-                    <label for="admin_email">Email address</label>
-                    <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-                      placeholder="Enter email" formControlName="admin_email" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
+
+                <!-- Name -->
+                <div class="form-group">
+                  <label for="organization_name">Organization Name</label>
+                  <input type="text" class="form-control" id="organization_name" placeholder="Enter organization name"
+                    formControlName="organization_name" required>
+                  <div class="valid-feedback">
+                    Looks good!
                   </div>
-                  <!-- / Email -->
-  
-                  <!-- Phone -->
-                  <div class="form-group">
-                    <label for="admin_phone">Phone</label>
-                    <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone"
-                      formControlName="admin_phone" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Phone -->
-  
-  
-                  <!-- Submit -->
-                  <button type="submit" class="btn btn-default-save">Add Organization</button>
-                  <!-- / Submit -->
-  
                 </div>
-              </form>
-              <!-- / Add Organization Form -->
-  
-            </div>
+                <!-- / Name -->
+
+                <!-- Location -->
+                <div class="form-group">
+                  <label for="organization_location">Organization Location</label>
+                  <input type="text" class="form-control" id="organization_location"
+                    placeholder="Enter organization location" formControlName="organization_location" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Location -->
+
+                <!-- Admin Name -->
+                <div class="form-group">
+                  <label for="admin_name">Admin Name</label>
+                  <input type="text" class="form-control" id="admin_name" placeholder="Enter admin name"
+                    formControlName="admin_name" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Admin Name -->
+
+                <!-- Admin Surname -->
+                <div class="form-group">
+                  <label for="admin_surname">Admin Surname</label>
+                  <input type="text" class="form-control" id="admin_surname" placeholder="Enter admin surname"
+                    formControlName="admin_surname" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Admin Surname -->
+
+                <!-- Email -->
+                <div class="form-group">
+                  <label for="admin_email">Email address</label>
+                  <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
+                    placeholder="Enter email" formControlName="admin_email" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Email -->
+
+                <!-- Phone -->
+                <div class="form-group">
+                  <label for="admin_phone">Phone</label>
+                  <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone"
+                    formControlName="admin_phone" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Phone -->
+
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-default-save">Add Organization</button>
+                <!-- / Submit -->
+
+              </div>
+            </form>
+            <!-- / Add Organization Form -->
+
           </div>
-          <!-- / Modal Body -->
+        </div>
+        <!-- / Modal Body -->
         <div class="modal-footer">
         </div>
       </div>
@@ -366,7 +389,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Everything related to this member of staff will be permantely deleted</p>
+          <p>Everything related to this organization will be permantely deleted</p>
           <div class="confirm-actions">
             <button type="button" class="btn btn-default-confirm" (click)="removeOrg()">Confirm</button>
             <button type="button" class="btn btn-default-cancel">Cancel</button>
@@ -381,130 +404,18 @@
   <div id="notifications" *ngIf="notificationsTab">
     <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
     <br />
-    <h3>NOTIFICATIONS</h3>
-    <h5 *ngIf="!notifications">No notifications</h5>
+    
+    <app-admin-notification></app-admin-notification>
 
-    <!-- Notification Items -->
-    <div class="notification-items" *ngIf="allNotifications">
-
-      <!-- Notification Item -->
-      <div class="notification-item" *ngFor="let log of allNotifications">
-        <div class="notification-action">
-          <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
-        </div>
-        <div class="notification-heading">
-          <h6><b>{{log.Type}} notification</b></h6>
-        </div>
-        <div class="notification-content">
-          <p><b>Action:</b> {{log.Action}}</p>
-          <p><b>Date:</b> {{log.Date}}</p>
-        </div>
-      </div>
-      <!-- Notification Item -->
-
-    </div>
-    <!-- Notification Items -->
-    <div class="see-more">
-      <i class="fas fa-ellipsis-h"></i>
-    </div>
-    <!-- / Notification Section -->
   </div>
+  <!-- / Notification Section -->
 
   <!-- Profile Section -->
   <div id="profile" *ngIf="profileTab">
     <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
     <br />
-    <h3>PROFILE</h3>
-
-    <!-- Profile Details -->
-    <div class="profile-details">
-      <div class="profile-icon">
-        <i class="fas fa-user-circle"></i>
-      </div>
-
-      <!-- Profile Form -->
-      <div class="form">
-        <form class="profile-form needs-validation" novalidate [formGroup]="adminProfileForm" (submit)="saveChanges()">
-          <div class="form-row align-items-center">
-
-            <!-- Name -->
-            <div class="form-group">
-              <label for="admin_name">Name</label>
-              <input type="text" class="form-control" id="admin_name" placeholder="Enter name"
-                (change)="displayProfileSaveBtn()" formControlName="admin_name" value="{{name}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Name -->
-
-            <!-- Surname -->
-            <div class="form-group">
-              <label for="admin_surname">Surname</label>
-              <input type="text" class="form-control" id="admin_surname" placeholder="Enter surname"
-                (change)="displayProfileSaveBtn()" formControlName="admin_surname" value="{{surname}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Surname -->
-
-            <!-- Email -->
-            <div class="form-group">
-              <label for="admin_email">Email address</label>
-              <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-                placeholder="Enter email" (change)="displayProfileSaveBtn()" formControlName="admin_email"
-                value="{{email}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Email -->
-
-            <!-- User Type -->
-            <div class="form-group">
-              <label for="admin_type">User Type</label>
-              <input type="text" class="form-control" id="admin_type" (change)="displayProfileSaveBtn()"
-                formControlName="admin_type" value="{{userType}}" disabled>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / User Type -->
-
-            <!-- Password -->
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input #passwordInput type="password" class="form-control" id="password" placeholder="Password"
-                (change)="displayConfirmPasswordInput()" formControlName="admin_password" value="{{password}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Password -->
-
-            <!-- ConfirmPassword -->
-            <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
-              <label for="confirm-password">Confirm Password</label>
-              <input #confirmInput type="password" class="form-control" placeholder="Password"
-                (change)="displayProfileSaveBtn()" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- /Confirm Password -->
-
-            <!-- Save Profile Changes Button -->
-            <button type="submit" class="btn btn-default" id="save-btn" *ngIf="saveBtn">Save</button>
-            <!-- / Save Profile Changes Button -->
-
-          </div>
-
-        </form>
-      </div>
-      <!-- / Profile Form -->
-
-    </div>
+    
+    <app-admin-profile></app-admin-profile>
 
   </div>
   <!-- / Profile Section -->
