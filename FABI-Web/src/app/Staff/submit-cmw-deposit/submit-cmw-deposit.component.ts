@@ -414,7 +414,7 @@ export class SubmitCmwDepositComponent implements OnInit {
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue();
+    var tempUser = this.authService.getCurrentSessionValue;
 
     var deposit: CMWDeposit = {userID: tempUser.user.ID,cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
       internationalCollectionNumber: this.internationalCollectionNumber, herbariumNumber: this.herbariumNumber, otherFABICollections: this.otherFABICollections, name: this.name,
@@ -479,7 +479,7 @@ export class SubmitCmwDepositComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue();
+    var tempUser = this.authService.getCurrentSessionValue;
 
     //Making a call to the notification logging service to return all logs belonging to the user
     this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
@@ -604,7 +604,7 @@ export class SubmitCmwDepositComponent implements OnInit {
     }
 
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue();
+    var tempUser = this.authService.getCurrentSessionValue;
 
     this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
