@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Tuesday, August 13th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -224,7 +224,7 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue();
 
     var revitalization: CMWRevitalization = {userID: tempUser.user.ID, requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
       cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested,
@@ -286,7 +286,7 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue();
 
     //Making a call to the notification logging service to return all logs belonging to the user
     this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
@@ -411,7 +411,7 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     }
 
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue();
 
     this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){

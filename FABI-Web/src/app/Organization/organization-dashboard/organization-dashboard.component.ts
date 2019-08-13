@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Tuesday, August 13th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -295,7 +295,7 @@ export class OrganizationDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue();
     //The id number of the user that is currently logged in
     this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
