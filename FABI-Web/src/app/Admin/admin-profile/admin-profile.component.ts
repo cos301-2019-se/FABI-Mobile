@@ -65,6 +65,8 @@ export class AdminProfileComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
+  currentUser: any;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -111,10 +113,19 @@ export class AdminProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    this.currentUser = this.authService.getCurrentSessionValue.user;
 
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+      console.log("---- RESPONSE: " + response);
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.loadAdminProfileDetails();
+      this.loadNotifications();
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
     //Calling the neccessary functions as the page loads
-    this.loadAdminProfileDetails();
+    // this.loadAdminProfileDetails();
+    // this.loadNotifications();
   }
   
 
