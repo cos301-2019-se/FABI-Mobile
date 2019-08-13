@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Tuesday, August 13th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -212,7 +212,7 @@ export class StaffDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue();
 
     //Making a call to the notification logging service to return all logs belonging to the user
     this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
@@ -337,7 +337,7 @@ export class StaffDashboardComponent implements OnInit {
     }
 
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue();
 
     this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
@@ -374,7 +374,7 @@ export class StaffDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadSamples() {
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue();
 
     this.diagnosticClinicService.getSamplesForFABIStaff(tempUser.user.ID).subscribe((response: any) => {
       if(response.success == true){
@@ -443,7 +443,7 @@ export class StaffDashboardComponent implements OnInit {
             dateRequested: data[i].dateRequested, referenceNumber: data[i].referenceNumber, notes: data[i].notes, dateSubmitted: data[i].dateSubmitted};
           
           //Getting the user's details from local storage
-          var tempUser = this.authService.getCurrentUserValue;
+          var tempUser = this.authService.getCurrentSessionValue();
 
           if(tempRequest.userID == tempUser.user.ID){
             this.requestForms = true;
