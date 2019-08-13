@@ -695,7 +695,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 .menu-row {
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 .menu-item {
@@ -775,7 +775,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     .handler-shortcuts {
         flex-direction: row;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
     }
 }
 
@@ -794,7 +794,6 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
-
 
 /* ==========================================================================
    NOTIFICATION TAB STYLING [GENERAL]
@@ -1339,4 +1338,30 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     padding: 0 10px 0 0;
     margin: 5px 0 0 0;
+}
+
+
+/* ==========================================================================
+   HANDLER TABLES ACTIONS [GENERAL]
+   ========================================================================== */
+
+.table-information {
+    display: flex;
+    align-content: center;
+
+    width: 100%;
+}
+
+.table-information h6{
+    display: inline-block;
+
+}
+
+.table-information i{
+    display: inline-block;
+
+    color: #72b555;
+    font-size: 20px;
+
+    margin-left: 25px;
 }
