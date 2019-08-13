@@ -1,3 +1,18 @@
+/**
+ * File Name: sample-form.component.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\sample-form\sample-form.component.ts
+ * Project Name: fabi-web
+ * Created Date: Sunday, June 23rd 2019
+ * Author: Team Nova - novacapstone@gmail.com
+ * -----
+ * Last Modified: Tuesday, August 13th 2019
+ * Modified By: Team Nova
+ * -----
+ * Copyright (c) 2019 University of Pretoria
+ * 
+ * <<license>>
+ */
+
 import * as Interface from '../_interfaces/interfaces';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
@@ -18,6 +33,10 @@ import { MapsWindowComponent } from '../maps-window/maps-window.component';
 })
 export class SampleFormComponent implements OnInit {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   sampleForm: FormGroup;             // FormGroup object to reference add user type form
   submitted: boolean = false;       // if form has been submitted
   success: boolean = false;         // if form was succesfully filled out
@@ -27,6 +46,22 @@ export class SampleFormComponent implements OnInit {
   plantationAddress: Interface.Address;
   plantationLocation: Interface.Location;
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of SampleFormComponent.
+   * 
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {DiagnosticClinicAPIService} clinicService Used for making calls to the Diagnostic Clinic API Service
+   * @param {FormBuilder} formBuilder Used to build the HTML form
+   * @param {MatSnackBar} snackBar Used to create pop-up notifications for the user
+   * @param {MatDialog} dialog Used to create pop-up notifications for the user
+   * @param {Router} router
+   * 
+   * @memberof SampleFormComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private authService: AuthenticationService, 
     private clinicService: DiagnosticClinicAPIService,
@@ -60,7 +95,6 @@ export class SampleFormComponent implements OnInit {
       sample_type_nuts: ['', Validators.required],
       sample_type_other: [''],
 
-
       symptom_wilt: ['', Validators.required],
       symptom_stunting: ['', Validators.required],
       symptom_leafspot: ['', Validators.required],
@@ -89,18 +123,19 @@ export class SampleFormComponent implements OnInit {
     })
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      SEND FORM
+  /**
+   *  This function will be used to submit the sample form to the API service so that it can be stored in the database.
+   * 
+   * @memberof SampleFormComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   sendForm() {
-    // this.submitted = true;
-
-    // if (this.sampleForm.invalid) {
-    //   this.errors = true;
-    //   return;
-    // }
-
     this.success = true;
 
     const formDetails: Interface.ClientFormData = {
-
       tree_species : this.sampleForm.controls.sample_form_tree_species.value,
       number_samples : this.sampleForm.controls.sample_form_number_samples.value,
       location1 : this.sampleForm.controls.sample_form_location1.value,
@@ -145,18 +180,14 @@ export class SampleFormComponent implements OnInit {
 
     const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
 
-
     this.clinicService.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
-      console.log("HERE");
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Submitted Form", "Dismiss", {
           duration: 3000
         });
-
-        console.log("Reference Number : " + response.data.referenceNumber);
-
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Submit Form", message: response.message } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -178,8 +209,7 @@ export class SampleFormComponent implements OnInit {
         //Take out when authenication is working - Just for test/demp purposes
         //this.router.navigate(['sample-form']);
         //
-      })
-      console.log("ERROR:" + err.message);
+      });
     })
 
   }
@@ -189,15 +219,21 @@ export class SampleFormComponent implements OnInit {
     this.sampleForm.patchValue( {
       date_sample_sent: today
     });
-
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SELECT LOCATION
+  /**
+   *  This function is used to get the location of where the user took the sample.
+   * 
+   * @memberof SampleFormComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectLocation() {
     let mapRef = this.dialog.open(MapsWindowComponent, { height: '80%', width: '80%'});
     
     mapRef.afterClosed().subscribe((data) => {
-      console.log("--- Selected Location: " + JSON.stringify(data));
-
       this.plantationAddress = data.address;
       this.plantationLocation = data.location; 
 
@@ -214,9 +250,7 @@ export class SampleFormComponent implements OnInit {
       this.sampleForm.get('sample_city').disable();
       this.sampleForm.get('sample_province').disable();
       this.sampleForm.get('sample_gps').disable();
-      this.sampleForm.get('date_sample_sent').disable();
-  
+      this.sampleForm.get('date_sample_sent').disable();  
     });
   }
-
 }
