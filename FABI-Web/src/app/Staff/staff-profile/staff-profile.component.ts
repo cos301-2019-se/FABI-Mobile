@@ -53,9 +53,6 @@ export class StaffProfileComponent implements OnInit {
   /** The form to display the staff member's details -  @type {FormGroup} */
   staffProfileForm: FormGroup;
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
-
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
@@ -248,21 +245,6 @@ export class StaffProfileComponent implements OnInit {
     else{
       this.confirmInput.nativeElement.type = 'password';
     }
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  TOGGLE NOTIFICATIONS TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof StaffProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
   }
 
   editProfileToggle() {

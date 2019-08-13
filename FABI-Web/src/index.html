@@ -39,10 +39,11 @@
     
     function searchFunction() {
 
+      console.log("GOING HERE ATKEAST ");
       var input, filter, table, tr, td, i;
-      input = document.getElementById("search");
+      input = document.getElementById("search-table");
       filter = input.value.toUpperCase();
-      table = document.getElementById("info");
+      table = document.getElementById("table");
       tr = table.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
