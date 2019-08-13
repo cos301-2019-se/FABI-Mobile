@@ -30,14 +30,12 @@ router.post('/', addOrganization);
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
-/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // [START config]
 const db = admin.firestore();
 
-function addOrganization(req, res)
-{
-
+function addOrganization(req, res){
 
 // (1) 
     if (req.body.admin.name == undefined || req.body.admin.name == '') {
