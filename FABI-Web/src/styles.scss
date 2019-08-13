@@ -878,6 +878,10 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     margin: 0;
 }
 
+.notification-content p {
+    padding: 0;
+}
+
 @media (min-width: 395px) {
     #notifications {
         width: 45vh;
