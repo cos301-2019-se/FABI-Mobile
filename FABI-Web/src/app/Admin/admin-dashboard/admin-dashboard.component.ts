@@ -166,7 +166,7 @@ export class AdminDashboardComponent implements OnInit {
         admin_confirm: ''
       });
 
-      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.currentUser = this.authService.getCurrentSessionValue;
     }
 
 
@@ -334,7 +334,7 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue;
 
     //Making a call to the notification logging service to return all logs belonging to the user
     this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
@@ -492,7 +492,7 @@ export class AdminDashboardComponent implements OnInit {
     }
 
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue;
 
     this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
@@ -515,42 +515,15 @@ export class AdminDashboardComponent implements OnInit {
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() { 
-    const Lemail = "johndoe@gmail.com";
-    const Lpassw = "Tr7hs8BjuX";
-    const Lorg = "FABI";
-
-    // User details to be passed to API
-    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
-
-    this.authService.login(details).subscribe((response: any) => {
-      // API Request successful
-      if (response.success == true && response.code == 200) {
-
-        
-        // User NOT Authorised
-        if (response.title != "AUTHORIZED") {
-          //POPUP MESSAGE
-        }
-        // ELSE user Authorised:
-        
-
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        console.log("---LOGIN ERROR : " + response.message);
-
-      }
-    });
-  
+  ngOnInit() {  
     this.authService.temporaryLoginSuperUser();
     
     //Calling the neccessary functions as the page loads
     this.loadNotifications();
     this.getNumberOfFABIMembers();
     this.getNumberOfFABISamples();
-    this.loadAdminProfileDetails();
 
-    let user = this.authService.getCurrentUserValue;
+    let user = this.authService.getCurrentSessionValue;
     
   }
 
@@ -591,131 +564,6 @@ export class AdminDashboardComponent implements OnInit {
   toggleProfileTab() {
     this.profileTab = !this.profileTab;
   }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD ADMIN PROFILE DETAILS
-  /**
-   *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadAdminProfileDetails(){
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
-    //The id number of the user that is currently logged in
-    this.id = tempUser.user.ID;
-    //The organization of the user that is currently logged in
-    this.organization = tempUser.user.organisation;
-
-    //Subscribing to the UserManagementAPIService to get all the staff members details
-    this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Setting the user type of the user
-        this.userType = data.userType;
-        //Setting the first name of the user
-        this.name = data.fname;
-        //Setting the surname of the user
-        this.surname = data.surname;
-        //Setting the email of the user
-        this.email = data.email;
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SAVE CHANGES
-  /**
-   *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
-    //Indicates if the details can be changed based on whether the passwords match or not
-    var valid = true;
-
-    //Checking to make sure that the passwords are not empty
-    //Checking to make sure that the password and confirmed password match
-    if(this.adminProfileForm.controls.admin_password.value != '' && 
-    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
-      this.password = this.adminProfileForm.controls.admin_password.value;
-    }
-    else{
-      //Indicates that the changes cannot be saved
-      valid = false;
-
-      //POPUP MESSAGE
-      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-        duration: 3000
-      });
-    }
-
-    //Indicates that the changes that the user has made to their profile details, can be changed
-    if(valid == true){
-      if(this.adminProfileForm.controls.admin_email.value == ''){
-        this.email = this.email;
-      }
-      else{
-        this.email = this.adminProfileForm.controls.admin_email.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_name.value == ''){
-        this.name = this.name;
-      }
-      else{
-        this.name = this.adminProfileForm.controls.admin_name.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_surname.value == ''){
-        this.surname == this.surname;
-      }
-      else{
-        this.surname = this.adminProfileForm.controls.admin_surname.value;
-      }  
-      
-      if(this.adminProfileForm.controls.admin_password.value == ''){
-        this.password == this.password;
-      }
-      else{
-        this.password = this.adminProfileForm.controls.admin_password.value;
-      }
-      
-      //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
-        if(response.success == true){
-          //Making sure that local storage now has the updated user information
-          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
-
-          //Reloading the updated user's details
-          this.loadAdminProfileDetails();
-
-          //Display message to say that details were successfully saved
-          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-        else{
-          //Error handling
-          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-      });
-    }
-    else{
-      //Error handling
-      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-        duration: 3000
-      });
-    }
-  }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                      DISPLAY PROFILE SAVE BUTTON 

@@ -1,291 +1,606 @@
-<div class="container">
-  <section class="sample-submission">
-    <div class="background-image"></div>
-    <div class="left">
-      <h1>DIAGNOSTIC CLINIC</h1>
-      <h3>What do we do?</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique, est at faucibus sodales, nisi
-        est molestie est, eu rhoncus magna dolor at sem. </p>
-    </div>
-    <div class="right">
-      <h1>SUBMIT SAMPLE</h1>
-      <button (click)="selectLocation()">Google Maps</button>
+<!-- Login -->
+<div class="login">
 
-      <!--Sample Submission Form-->
-      <form id="sample_form" [formGroup]="sampleForm" (submit)="sendForm()">
+  <!-- Login Heading -->
+  <div class="banner"></div>
+  <div class="heading">
+    <h5></h5>
+    <h1>Submit Sample</h1>
+  </div>
+  <!-- / Login Heading -->
 
-        <mat-accordion>
+  <div class="login-form">
 
-           <!--Sample Details-->
-           <mat-expansion-panel class="sample-info">
-            <mat-expansion-panel-header>
+      <button (click)="selectLocation()" class="btn btn-default">Google Maps</button>
 
-              <mat-panel-title>
+      
+    <!-- Login Form -->
+    <form class="needs-validation" iid="sample_form" [formGroup]="sampleForm" (submit)="sendForm()" novalidate>
+
+      <!-- Form Accordion -->
+      <div id="accordion">
+
+        <!--Sample Details-->
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                aria-controls="collapseOne">
                 Sample Details
-              </mat-panel-title>
-              <mat-panel-description>
+              </button>
+            </h5>
+          </div>
 
-                Enter general details about the sample
-              </mat-panel-description>
-            </mat-expansion-panel-header>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
 
-            <mat-form-field class="form-inputs">
-              <input matInput id="sample_plant_species" formControlName="sample_plant_species" type="text" required>
-              <mat-placeholder class="placeholder">Plant species or common name</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput id="sample_num_samples" formControlName="sample_num_samples" type="text" required>
-              <mat-placeholder class="placeholder">Number of samples</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <!--Plantation Details-->
-            <p>Not the correct location? Select on map:</p>
-            
-            <!-- <app-maps-window></app-maps-window> -->
-            <label style="font-weight: bold;">Plantation Details:</label><br />
-             <mat-form-field class="form-inputs">
-              <input matInput id="sample_street" formControlName="sample_street" type="text" required>
-              <mat-placeholder class="placeholder">Street Address</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput id="sample_area" formControlName="sample_area" type="text" required>
-              <mat-placeholder class="placeholder">Area/Suburb</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-                <input matInput id="sample_city" formControlName="sample_city" type="text" required>
-                <mat-placeholder class="placeholder">City/Town</mat-placeholder>
+              <!-- Plant species or common name -->
+              <div class="form-group">
+                <label for="sample_plant_species">Plant species or common name</label>
+                <input type="text" class="form-control form-control-sm" id="sample_plant_species"
+                  formControlName="sample_plant_species" placeholder="Plant species or common name" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Plant species or common name -->
+
+
+              <!-- Number of samples -->
+              <div class="form-group">
+                <label for="sample_num_samples">Number of samples</label>
+                <input type="text" class="form-control form-control-sm" id="sample_num_samples"
+                  formControlName="sample_num_samples" placeholder="Number of samples" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Number of samples -->
+
+            </div>
+          </div>
+        </div>
+        <!-- / Sample Details-->
+
+        <!--Plantation Details-->
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                aria-controls="collapseOne">
+                Plantation Details
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+
+              <p>Not the correct location? Select on map:</p>
+             
+              <!-- <app-maps-window></app-maps-window> -->
+
+              <!-- Street Address -->
+              <div class="form-group">
+                <label for="sample_street">Street Address</label>
+                <input type="text" class="form-control form-control-sm" id="sample_street"
+                  formControlName="sample_street" placeholder="Street Address" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Street Address -->
+
+              <!-- Area/Suburb -->
+              <div class="form-group">
+                <label for="sample_area">Area/Suburb</label>
+                <input type="text" class="form-control form-control-sm" id="sample_area" formControlName="sample_area"
+                  placeholder="Area/Suburb" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Area/Suburb -->
+
+              <!-- City/Town -->
+              <div class="form-group">
+                <label for="sample_city">City/Town</label>
+                <input type="text" class="form-control form-control-sm" id="sample_city" formControlName="sample_city"
+                  placeholder="City/Town" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / City/Town -->
+
+              <!-- Farm/Compartment/Orchard Name -->
+              <div class="form-group">
+                <label for="sample_farm">Farm/Compartment/Orchard Name</label>
+                <input type="text" class="form-control form-control-sm" id="sample_farm" formControlName="sample_farm"
+                  placeholder="Farm/Compartment/Orchard Name" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Farm/Compartment/Orchard Name -->
+
+              <!-- Province -->
+              <div class="form-group">
+                <label for="sample_province">Province</label>
+                <input type="text" class="form-control form-control-sm" id="sample_province"
+                  formControlName="sample_province" placeholder="Province" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Province -->
+
+              <!-- GPS Coordinates -->
+              <div class="form-group">
+                <label for="sample_gpsGPS Coordinates">GPS Coordinates</label>
+                <input type="text" class="form-control form-control-sm" id="sample_gpsGPS Coordinates"
+                  formControlName="sample_gpsGPS Coordinates" placeholder="GPS Coordinates" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / GPS Coordinates -->
+
+              <mat-form-field class="form-inputs">
+                <input matInput [matDatepicker]="date_sample_collected" id="date_sample_collected"
+                  formControlName="date_sample_collected" type="datetime" placeholder="Date of sample collection"
+                  required>
+                <mat-datepicker-toggle matSuffix [for]="date_sample_collected"></mat-datepicker-toggle>
+                <mat-datepicker #data_sample_collected></mat-datepicker>
                 <br />
               </mat-form-field>
               <br />
-            <mat-form-field class="form-inputs">
-              <input matInput id="sample_farm" formControlName="sample_farm" type="text" required>
-              <mat-placeholder class="placeholder">Farm/Compartment/Orchard Name</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput id="sample_province" formControlName="sample_province" type="text" required>
-              <mat-placeholder class="placeholder">Province</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput id="sample_gps" formControlName="sample_gps" type="text" required>
-              <mat-placeholder class="placeholder">GPS Coordinates</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput [matDatepicker]="date_sample_collected" id="date_sample_collected"
-                formControlName="date_sample_collected" type="datetime"
-                placeholder="Date of sample collection" required>
-              <mat-datepicker-toggle matSuffix [for]="date_sample_collected"></mat-datepicker-toggle>
-              <mat-datepicker #data_sample_collected></mat-datepicker>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput [matDatepicker]="date_sample_sent" id="date_sample_sent"
-                formControlName="date_sample_sent" type="datetime"
-                placeholder="Date sample sent" required>
-              <mat-datepicker-toggle matSuffix [for]="date_sample_sent"></mat-datepicker-toggle>
-              <mat-datepicker #data_sample_collected></mat-datepicker>
-              <br />
-            </mat-form-field>
-          </mat-expansion-panel> 
+              <mat-form-field class="form-inputs">
+                <input matInput [matDatepicker]="date_sample_sent" id="date_sample_sent"
+                  formControlName="date_sample_sent" type="datetime" placeholder="Date sample sent" required>
+                <mat-datepicker-toggle matSuffix [for]="date_sample_sent"></mat-datepicker-toggle>
+                <mat-datepicker #data_sample_collected></mat-datepicker>
+                <br />
+              </mat-form-field>
 
+            </div>
+          </div>
+        </div>
+        <!-- / Plantation Details-->
 
-          <!--Type of Sample-->
-          <mat-expansion-panel class="type-info">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
+        <!--Type of Sample-->
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                aria-controls="collapseOne">
                 Type of Sample
-              </mat-panel-title>
+              </button>
+            </h5>
+          </div>
 
-              <mat-panel-description>
-                Enter the type of sample
-              </mat-panel-description>
-            </mat-expansion-panel-header>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
 
-            <mat-checkbox id="sample_type_soil" formControlName="sample_type_soil">Soil</mat-checkbox><br />
-            <mat-checkbox id="sample_type_stems" formControlName="sample_type_stems">Stems</mat-checkbox><br />
-            <mat-checkbox id="sample_type_roots" formControlName="sample_type_roots">Roots</mat-checkbox><br />
-            <mat-checkbox id="sample_type_twigs" formControlName="sample_type_twigs">Twigs/Branches</mat-checkbox>
-            <br />
-            <mat-checkbox id="sample_type_leaves" formControlName="sample_type_leaves">Leaves/Needles</mat-checkbox>
-            <br />
-            <mat-checkbox id="sample_type_seedlings" formControlName="sample_type_seedlings">Seedlings/Cuttings
-            </mat-checkbox><br />
-            <mat-checkbox id="sample_type_media" formControlName="sample_type_media">Media Plates</mat-checkbox><br />
-            <mat-checkbox id="sample_type_water" formControlName="sample_type_water">Water</mat-checkbox><br />
-            <mat-checkbox id="sample_type_insect" formControlName="sample_type_insect">Insect Specimens</mat-checkbox><br />
-            <mat-checkbox id="sample_type_nuts" formControlName="sample_type_nuts">Nuts</mat-checkbox><br />
-            <mat-form-field>
-              <input matInput id="sample_type_other" formControlName="sample_type_other" type="text">
-              <mat-placeholder class="placeholder">Other</mat-placeholder>
-              <br />
-            </mat-form-field>
+              <!-- Soil -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_soil"
+                  formControlName="sample_type_soil">
+                <label class="form-check-label" for="sample_type_soil">Soil</label>
+              </div>
+              <!-- / Soil -->
 
-          </mat-expansion-panel>
+              <!-- Stems -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_stems"
+                  formControlName="sample_type_stems">
+                <label class="form-check-label" for="sample_type_stems">Stems</label>
+              </div>
+              <!-- / Stems -->
 
+              <!-- Roots -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_roots"
+                  formControlName="sample_type_roots">
+                <label class="form-check-label" for="sample_type_roots">Roots</label>
+              </div>
+              <!-- / Roots -->
 
-          <!--Symptoms-->
-          <mat-expansion-panel class="symptom-info">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
+              <!-- Twigs/Branches -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_twigs"
+                  formControlName="sample_type_twigs">
+                <label class="form-check-label" for="sample_type_twigs">Twigs/Branches</label>
+              </div>
+              <!-- / Twigs/Branches -->
+
+              <!-- Leaves/Needles -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_leaves"
+                  formControlName="sample_type_leaves">
+                <label class="form-check-label" for="sample_type_leaves">Leaves/Needles</label>
+              </div>
+              <!-- / Leaves/Needles -->
+
+              <!-- Seedlings/Cuttings -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_seedlings"
+                  formControlName="sample_type_seedlings">
+                <label class="form-check-label" for="sample_type_seedlings">Seedlings/Cuttings</label>
+              </div>
+              <!-- / Seedlings/Cuttings -->
+
+              <!-- Media Plates -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_media"
+                  formControlName="sample_type_media">
+                <label class="form-check-label" for="sample_type_media">Media Plates</label>
+              </div>
+              <!-- / Media Plates -->
+
+              <!-- Water -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_water"
+                  formControlName="sample_type_water">
+                <label class="form-check-label" for="sample_type_water">Water</label>
+              </div>
+              <!-- / Water -->
+
+              <!-- Insect Specimens -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_insect"
+                  formControlName="sample_type_insect">
+                <label class="form-check-label" for="sample_type_insect">Insect Specimens</label>
+              </div>
+              <!-- / Insect Specimens -->
+
+              <!-- Nuts -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="sample_type_nuts"
+                  formControlName="sample_type_nuts">
+                <label class="form-check-label" for="sample_type_nuts">Nuts</label>
+              </div>
+              <!-- / Nuts -->
+
+              <!-- Other -->
+              <div class="form-group">
+                <label for="sample_type_other">Other</label>
+                <input type="text" class="form-control form-control-sm" id="sample_type_other"
+                  formControlName="sample_type_other" placeholder="Other" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Other -->
+
+            </div>
+          </div>
+        </div>
+        <!-- / Type of Sample-->
+
+        <!--Symptoms-->
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                aria-controls="collapseOne">
                 Symptoms
-              </mat-panel-title>
+              </button>
+            </h5>
+          </div>
 
-              <mat-panel-description>
-                Enter details about the symptoms
-              </mat-panel-description>
-            </mat-expansion-panel-header>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
 
-            <mat-checkbox id="symptom_wilt" formControlName="symptom_wilt">Wilt</mat-checkbox><br />
-            <mat-checkbox id="symptom_stunting" formControlName="symptom_stunting">Stunting</mat-checkbox><br />
-            <mat-checkbox id="symptom_leafspot" formControlName="symptom_leafspot">Leaf Spot</mat-checkbox><br />
-            <mat-checkbox id="symptom_rootrot" formControlName="symptom_rootrot">Root rot</mat-checkbox><br />
-            <mat-checkbox id="symptom_dieback" formControlName="symptom_dieback">Die-Back</mat-checkbox><br />
-            <mat-checkbox id="symptom_cankers" formControlName="symptom_cankers">Cankers</mat-checkbox><br />
-            <mat-checkbox id="symptom_death" formControlName="symptom_death">Death</mat-checkbox><br />
-            <mat-checkbox id="symptom_wood" formControlName="symptom_wood">Wood borer
-              damage/holes/tunnels/frass(sawdust)</mat-checkbox><br />
+              <!-- Wilt -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="symptom_wilt" formControlName="symptom_wilt">
+                <label class="form-check-label" for="symptom_wilt">Wilt</label>
+              </div>
+              <!-- / Wilt -->
 
-            <mat-form-field>
-              <input matInput id="symptom_other" formControlName="symptom_other" type="text">
-              <mat-placeholder class="placeholder">Other</mat-placeholder>
-              <br />
-            </mat-form-field>
+              <!-- Stunting -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="symptom_stunting"
+                  formControlName="symptom_stunting">
+                <label class="form-check-label" for="symptom_stunting">Stunting</label>
+              </div>
+              <!-- / Stunting -->
 
-          </mat-expansion-panel>
+              <!-- Leaf Spot -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="symptom_leafspot"
+                  formControlName="symptom_leafspot">
+                <label class="form-check-label" for="symptom_leafspot">Leaf Spot</label>
+              </div>
+              <!-- / Leaf Spot -->
 
-          <!--Distribution Info-->
-          <mat-expansion-panel class="distribution-info">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
+              <!-- Root rot -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="symptom_rootrot" formControlName="symptom_rootrot">
+                <label class="form-check-label" for="symptom_rootrot">Root rot</label>
+              </div>
+              <!-- / Root rot -->
+
+              <!-- Die-Back -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="symptom_dieback" formControlName="symptom_dieback">
+                <label class="form-check-label" for="symptom_dieback">Die-Back</label>
+              </div>
+              <!-- / Die-Back -->
+
+              <!-- Cankers -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="symptom_cankers" formControlName="symptom_cankers">
+                <label class="form-check-label" for="symptom_cankers">Cankers</label>
+              </div>
+              <!-- / Cankers -->
+
+              <!-- Death -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="symptom_death" formControlName="symptom_death">
+                <label class="form-check-label" for="symptom_death">Death</label>
+              </div>
+              <!-- / Death -->
+
+              <!-- Wood borer -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="symptom_wood" formControlName="symptom_wood">
+                <label class="form-check-label" for="symptom_wood">Wood borer
+                  damage/holes/tunnels/frass(sawdust)</label>
+              </div>
+              <!-- / Wood borer -->
+
+              <!-- Other -->
+              <div class="form-group">
+                <label for="symptom_other">Other</label>
+                <input type="text" class="form-control form-control-sm" id="symptom_other"
+                  formControlName="symptom_other" placeholder="Other" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Other -->
+
+            </div>
+          </div>
+        </div>
+        <!-- / Symptoms-->
+
+        <!--Distribution-->
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                aria-controls="collapseOne">
                 Distribution
-              </mat-panel-title>
+              </button>
+            </h5>
+          </div>
 
-              <mat-panel-description>
-                Enter details about the distribution
-              </mat-panel-description>
-            </mat-expansion-panel-header>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
 
-            <mat-checkbox id="distribution_localized" formControlName="distribution_localized">Localized (Single
-              Plant)</mat-checkbox><br />
-            <mat-checkbox id="distributed_scattered" formControlName="distributed_scattered">Scattered Plants
-            </mat-checkbox><br />
-            <mat-checkbox id="distributed_general" formControlName="distributed_general">General (Widely )</mat-checkbox>
-            <br />
-            <mat-checkbox id="distributed_clumps" formControlName="distributed_clumps">Clumps</mat-checkbox>
-            <br />
-            <mat-checkbox id="distributed_na" formControlName="distributed_na">Not Applicable</mat-checkbox>
-            <br />
-            <mat-form-field>
-              <input matInput id="distibuted_other" formControlName="distributed_other" type="text" required>
-              <mat-placeholder class="placeholder">Other</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <label style="font-weight: bold;">Estimate of the percentage of plants affected:</label><br />
-            <label for="isolated">
-              <input type="radio" id="isolated" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="isolated"> Isolated Cases
-            </label> <br />
-            <label for="less_ten">
-                <input type="radio" id="less_ten" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="less_ten"> < 10%
-            </label> <br />
-            <label for="ten_to_twentyfive">
-                <input type="radio" id="ten_to_twentyfive" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="ten_to_twentyfive"> 10% - 25%
-            </label> <br />
-            <label for="twentyfive_to_fifty">
-                <input type="radio" id="twentyfive_to_fifty" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="twentyfive_to_fifty"> 25% - 50%
-            </label> <br />
-            <label for="greater_fifty">
-                <input type="radio" id="greater_fifty" formControlName="percentage_plants_affected" name="percentage_plants_affected" value="greater_fifty"> > 50%
-            </label> <br />
+              <!-- Localized (Single Plant) -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="distribution_localized"
+                  formControlName="distribution_localized">
+                <label class="form-check-label" for="distribution_localized">Localized (Single
+                  Plant)</label>
+              </div>
+              <!-- / Localized (Single Plant) -->
 
-          </mat-expansion-panel>
+              <!-- Scattered Plants -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="distributed_scattered"
+                  formControlName="distributed_scattered">
+                <label class="form-check-label" for="distributed_scattered">Scattered Plants</label>
+              </div>
+              <!-- / Scattered Plants -->
 
-          <!--Conditions Info-->
-          <mat-expansion-panel class="condition-info">
-            <mat-expansion-panel-header>
+              <!-- General (Widely) -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="distributed_general"
+                  formControlName="distributed_general">
+                <label class="form-check-label" for="distributed_general">General (Widely)</label>
+              </div>
+              <!-- / General (Widely) -->
 
-              <mat-panel-title>
-                Conditions
-              </mat-panel-title>
-              <mat-panel-description>
-                Enter details about the weather and planting conditions
-              </mat-panel-description>
-            </mat-expansion-panel-header>
+              <!-- Clumps -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="distributed_clumps"
+                  formControlName="distributed_clumps">
+                <label class="form-check-label" for="distributed_clumps">Clumps</label>
+              </div>distributed_clumps
+              <!-- / Clumps -->
 
-            <mat-form-field class="form-inputs">
-              <input matInput id="conditions_affected" formControlName="conditions_affected" type="text" required>
-              <mat-placeholder class="placeholder">% of plants affected</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput [matDatepicker]="conditions_problem_noticed" id="conditions_problem_noticed"
-                formControlName="conditions_problem_noticed" type="datetime"
-                placeholder="Date problem was first noticed" required>
-              <mat-datepicker-toggle matSuffix [for]="conditions_problem_noticed"></mat-datepicker-toggle>
-              <mat-datepicker #conditions_problem_noticed></mat-datepicker>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput [matDatepicker]="conditions_date_planted" id="conditions_date_planted"
-                formControlName="conditions_date_planted" type="datetime" placeholder="Date plants were planted"
-                required>
-              <mat-datepicker-toggle matSuffix [for]="conditions_date_planted"></mat-datepicker-toggle>
-              <mat-datepicker #conditions_date_planted></mat-datepicker>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput id="conditions_weather_disturbances" formControlName="conditions_weather_disturbances"
-                type="text" required>
-              <mat-placeholder class="placeholder">Unusual weather disturbances</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput id="conditions_weather_prior" formControlName="conditions_weather_prior" type="text"
-                required>
-              <mat-placeholder class="placeholder">Weather conditions prior to symptom development</mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput id="conditions_others" formControlName="conditions_others" type="text" required>
-              <mat-placeholder class="placeholder">Other tree species in the environment that display similar
-                symptoms?
-              </mat-placeholder>
-              <br />
-            </mat-form-field>
-            <br />
-            <mat-form-field class="form-inputs">
-              <input matInput id="conditions_additional" formControlName="conditions_additional" type="text" required>
-              <mat-placeholder class="placeholder">Additional information (Please include any information about
-                planting
-                conditions, fungicide use, herbicide user, changes to fertigation, routine disruptions ...)
-              </mat-placeholder>
-              <br />
-            </mat-form-field>
-          </mat-expansion-panel>
+              <!-- Not Applicable -->
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="distributed_na" formControlName="distributed_na">
+                <label class="form-check-label" for="distributed_na">Not Applicable</label>
+              </div>
+              <!-- / Not Applicable -->
 
-        </mat-accordion>
-        <br />
-        <br />
-        <p *ngIf="errors"> There is information missing</p>
-        <input id="sample_form_submit" type="submit" class="btn btn-default" value="Submit" />
-      </form>
-    </div>
-  </section>
+              <!-- Other -->
+              <div class="form-group">
+                <label for="distributed_other">Other</label>
+                <input type="text" class="form-control form-control-sm" id="distributed_other"
+                  formControlName="distributed_other" placeholder="Other" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Other -->
+
+              <label style="font-weight: bold;">Estimate of the percentage of plants affected:</label><br />
+
+              <!-- Percentage_plants_affected -->
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="percentage_plants_affected" id="isolated"
+                  value="isolated">
+                <label class="form-check-label" for="percentage_plants_affected">
+                  Isolated Cases
+                </label>
+              </div>
+              <!-- / Percentage_plants_affected -->
+
+              <!-- Percentage_plants_affected -->
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="percentage_plants_affected" id="less_ten"
+                  value="less_ten">
+                <label class="form-check-label" for="percentage_plants_affected">
+                  Less than 10%
+                </label>
+              </div>
+              <!-- / Percentage_plants_affected -->
+
+
+              <!-- Percentage_plants_affected -->
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="percentage_plants_affected" id="ten_to_twentyfive"
+                  value="ten_to_twentyfive">
+                <label class="form-check-label" for="percentage_plants_affected">
+                  10% - 25%
+                </label>
+              </div>
+              <!-- / Percentage_plants_affected -->
+
+              <!-- Percentage_plants_affected -->
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="percentage_plants_affected" id="twentyfive_to_fifty"
+                    value="twentyfive_to_fifty">
+                  <label class="form-check-label" for="percentage_plants_affected">
+                    25% - 50%
+                  </label>
+                </div>
+                <!-- / Percentage_plants_affected -->
+
+              <!-- Percentage_plants_affected -->
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="percentage_plants_affected" id="greater_fifty" value="greater_fifty">
+                  <label class="form-check-label" for="percentage_plants_affected">
+                      Greater than 50%
+                  </label>
+                </div>
+                <!-- / Percentage_plants_affected -->
+
+            </div>
+          </div>
+        </div>
+        <!-- / Distribution-->
+
+        <!--Conditions-->
+        <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                  aria-controls="collapseOne">
+                  Conditions
+                </button>
+              </h5>
+            </div>
+  
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+  
+                <!-- % of plants affected -->
+                <div class="form-group">
+                  <label for="conditions_affected">% of plants affected</label>
+                  <input type="text" class="form-control form-control-sm" id="conditions_affected"
+                    formControlName="conditions_affected" placeholder="% of plants affected" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / % of plants affected -->
+  
+  
+                <!-- Date when first noticed -->
+                <div class="form-group">
+                  <label for="conditions_problem_noticed">Date when first noticed</label>
+                  <input type="date" class="form-control form-control-sm" id="conditions_problem_noticed"
+                    formControlName="conditions_problem_noticed" placeholder="Date when first noticed" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <!-- / Date when first noticed -->
+
+                <!-- Date when planted -->
+                <div class="form-group">
+                    <label for="conditions_date_planted">Date when planted</label>
+                    <input type="date" class="form-control form-control-sm" id="conditions_date_planted"
+                      formControlName="conditions_date_planted" placeholder="Date when planted" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Date when planted -->
+
+                  <!-- Unusual weather disturbances -->
+                <div class="form-group">
+                    <label for="conditions_weather_disturbances">Unusual weather disturbances</label>
+                    <input type="text" class="form-control form-control-sm" id="conditions_weather_disturbances"
+                      formControlName="conditions_weather_disturbances" placeholder="Unusual weather disturbances" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Unusual weather disturbances -->
+
+                  <!-- Weather conditions prior to symptom development -->
+                <div class="form-group">
+                    <label for="conditions_weather_prior">Weather conditions prior to symptom development</label>
+                    <input type="text" class="form-control form-control-sm" id="conditions_weather_prior"
+                      formControlName="conditions_weather_prior" placeholder="Weather conditions prior to symptom development" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Weather conditions prior to symptom development -->
+
+                  <!-- Other tree species in the environment that display similar
+                  symptoms? -->
+                <div class="form-group">
+                    <label for="conditions_others">Other tree species in the environment that display similar
+                  symptoms?</label>
+                    <input type="text" class="form-control form-control-sm" id="conditions_others"
+                      formControlName="conditions_others" placeholder="Other tree species in the environment that display similar symptoms?" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Other tree species in the environment that display similar
+                  symptoms? -->
+
+                  <!-- Addition Information -->
+                <div class="form-group">
+                    <label for="conditions_additional"> Addition Information </label>
+                    <input type="text" class="form-control form-control-sm" id="conditions_additional"
+                      formControlName="conditions_additional" placeholder="Additional information" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Addition Information -->
+  
+              </div>
+            </div>
+          </div>
+          <!-- / Conditions-->
+
+      </div>
+      <!-- / Form Accordion -->
+
+      <!-- Login Button -->
+      <div class="login-action">
+        <button type="submit" id="sample_form_submit" class="btn btn-default">Submit Sample</button>
+      </div>
+      <!-- / Login Button -->
+
+    </form>
+    <!-- / Login Form -->
+  </div>
+
 </div>
+<!-- / Login -->
