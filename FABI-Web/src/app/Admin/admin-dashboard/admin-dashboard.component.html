@@ -178,7 +178,9 @@
               <i class="fas fa-address-card"></i>
             </div>
             <div class="menu-heading">
-              <a routerLink="/staff-handler"><h6>Staff Handler</h6></a>
+              <a routerLink="/staff-handler">
+                <h6>Staff Handler</h6>
+              </a>
             </div>
           </div>
           <!-- / Menu Item -->
@@ -189,7 +191,9 @@
               <i class="fas fa-building"></i>
             </div>
             <div class="menu-heading">
-              <a routerLink="/organization-handler"><h6>Organization Handler</h6></a>
+              <a routerLink="/organization-handler">
+                <h6>Organization Handler</h6>
+              </a>
             </div>
           </div>
           <!-- / Menu Item -->
@@ -206,7 +210,9 @@
               <i class="fas fa-database"></i>
             </div>
             <div class="menu-heading">
-              <a routerLink="/database-handler"><h6 >Database Handler</h6></a>
+              <a routerLink="/database-handler">
+                <h6>Database Handler</h6>
+              </a>
             </div>
           </div>
           <!-- / Menu Item -->
@@ -217,7 +223,9 @@
               <i class="fas fa-stethoscope"></i>
             </div>
             <div class="menu-heading">
-              <a routerLink="/clinic-handler"><h6 >Diagnostic Clinic Handler</h6></a>
+              <a routerLink="/clinic-handler">
+                <h6>Diagnostic Clinic Handler</h6>
+              </a>
             </div>
           </div>
           <!-- / Menu Item -->
@@ -286,41 +294,17 @@
     <div id="notifications" *ngIf="notificationsTab">
       <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
       <br />
-      <h3>NOTIFICATIONS</h3>
-      <h5 *ngIf="!notifications">No notifications</h5>
 
-      <!-- Notification Items -->
-      <div class="notification-items" *ngIf="allNotifications">       
-
-        <!-- Notification Item -->
-        <div class="notification-item" *ngFor="let log of allNotifications">
-          <div class="notification-action">
-            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
-          </div>
-          <div class="notification-heading">
-            <h6><b>{{log.Type}} notification</b></h6>
-          </div>
-          <div class="notification-content">
-            <p><b>Action:</b> {{log.Action}}</p>
-            <p><b>Date:</b> {{log.Date}}</p>
-          </div>
-        </div>
-        <!-- Notification Item -->
-
-      </div>
-      <!-- Notification Items -->
-
-      <!-- See More Icon -->
-      <div class="see-more">
-        <i class="fas fa-ellipsis-h"></i>
-      </div>
-      <!-- / See More Icon -->
+      <app-admin-notification></app-admin-notification>
 
     </div>
     <!-- / Notification Section -->
 
     <!-- Profile Section -->
     <div id="profile" *ngIf="profileTab">
+      <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
+      <br />
+
       <app-admin-profile></app-admin-profile>
     </div>
     <!-- / Profile Section -->
@@ -330,6 +314,7 @@
       <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
       <br />
       <h3>HELP</h3>
+
       <!-- Help Items -->
       <div class="help-items">
 
