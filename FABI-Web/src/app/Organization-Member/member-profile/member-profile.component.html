@@ -1,159 +1,94 @@
-<!--Bootstrap Navbar-->
-<div class="container-fluid" id="nav-section">
-  <nav class="navbar navbar-expand-xl">
-    <a class="navbar-brand" href="#">Member Profile</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      <i class="fas fa-bars"></i>
-    </button>
+<h3>PROFILE</h3>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item active">
-          <a id="dashboard_menu_link" routerLink="/member-dashboard"><i class="fas fa-home"></i>Home</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-vials"></i>Samples
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a id="view_samples" routerLink="/member-view-samples"><i class="fas fa-vials"></i>View Samples</a>
-              <br/>
-              <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
-          </div>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user"></i>Account
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
-            <br/>
-            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-        </li>
-
-        <li class="nav-item">
-          <a id="logout_menu_link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i>Logout</a>
-        </li>
-
-      </ul>
-    </div>
-  </nav>
-</div>
-
-<!--SlideOut -->
-<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
-  <!--Tab-->
-  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
-    <div>
-      <p>Notifications</p>
-    </div>
+<!-- Profile Details -->
+<div class="profile-details">
+  <div class="profile-icon">
+    <i class="fas fa-user-circle"></i>
   </div>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">Member Notifications</h4>
-    </div>
-    <div class="modal-body" id="notifications-section">
 
-      <h2 *ngIf="!notifications">No notifications</h2>
-      <!--*********************************************************************
-                  DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
-              *************************************************************************-->
-      <div class="box">
-        <div class="notification-heading">
-          <h2>Notification {{Number}}</h2>
-          <i class="fas fa-times"></i>
-        </div>
+  <!-- Profile Form -->
+  <div class="form">
+    <form class="profile-form needs-validation" novalidate [formGroup]="adminProfileForm" (submit)="saveChanges()">
+      <div class="form-row align-items-center">
 
-        <div class="notification-content">
-          <p><b>Type:</b> {{Type}} notification</p>
-          <p><b>Action:</b> {{Action}}</p>
-          <p><b>Date:</b> {{Date}}</p>
-          <p><b>Details:</b> {{Details}}</p>
+        <!-- Name -->
+        <div class="form-group">
+          <label for="admin_name">Name</label>
+          <input type="text" class="form-control" id="admin_name" placeholder="Enter name"
+            (change)="displayProfileSaveBtn()" formControlName="admin_name" value="{{name}}" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
         </div>
+        <!-- / Name -->
+
+        <!-- Surname -->
+        <div class="form-group">
+          <label for="admin_surname">Surname</label>
+          <input type="text" class="form-control" id="admin_surname" placeholder="Enter surname"
+            (change)="displayProfileSaveBtn()" formControlName="admin_surname" value="{{surname}}" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- / Surname -->
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="admin_email">Email address</label>
+          <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
+            placeholder="Enter email" (change)="displayProfileSaveBtn()" formControlName="admin_email" value="{{email}}"
+            required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- / Email -->
+
+        <!-- User Type -->
+        <div class="form-group">
+          <label for="admin_type">User Type</label>
+          <input type="text" class="form-control" id="admin_type" (change)="displayProfileSaveBtn()"
+            formControlName="admin_type" value="{{userType}}" disabled>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- / User Type -->
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input #passwordInput type="password" class="form-control" id="password" placeholder="Password"
+            (change)="displayConfirmPasswordInput()" formControlName="admin_password" value="{{password}}" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- / Password -->
+
+        <!-- ConfirmPassword -->
+        <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
+          <label for="confirm-password">Confirm Password</label>
+          <input #confirmInput type="password" class="form-control" placeholder="Password"
+            (change)="displayProfileSaveBtn()" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- /Confirm Password -->
+
+        <!-- Profile Actions -->
+        <div class="profile-actions">
+          <button type="button" class="btn btn-default-edit">Edit</button>
+          <button type="submit" class="btn btn-default-save">Save Changes</button>
+        </div>
+        <!-- / Profile Actions -->
+
       </div>
 
-      <div #notificationContainer></div>
-
-    </div>
-    <div class="modal-footer"> </div>
-  </div>
-</div>
-
-<!--Organization Profile Content-->
-<div class="container-fluid">
-
-  <div class="member-profile">
-
-    <h2>Member Profile</h2>
-    <hr />
-
-    <form id="member_profile_form" [formGroup]="memberProfileForm" (submit)="saveChanges()">
-      <div class="row">
-        <!--Organization Name Field-->
-        <div class="organization-name">
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Organization Name" formControlName="organization_name" value="{{organization}}" disabled>
-          </mat-form-field>
-          <br />
-        </div>
-
-        <!--Name Field-->
-        <div class="name-inputs">
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Name" formControlName="member_name" value="{{name}}">
-          </mat-form-field>
-          <br />
-
-          <!--Surname Field-->
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname" value={{surname}}>
-          </mat-form-field>
-          <br />
-        </div>
-
-        <!--Email Field-->
-        <div class="contact-inputs">
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Email" formControlName="member_email" value="{{email}}">
-          </mat-form-field>
-          <br />
-
-        </div>
-
-        <!-- Password Field-->
-        <div class="contact-inputs">
-          <mat-form-field class="form_inputs" class="col">
-            <input #passwordInput matInput placeholder="Password" matInput type="password" formControlName="member_password" value="{{password}}"><i class="fas fa-eye-slash" (click)="showPassword()"></i>
-          </mat-form-field>
-          <br />
-
-          <!-- Confirm Password-->
-          <mat-form-field class="form_inputs" class="col">
-            <input #confirmInput matInput placeholder="Confirm Password" matInput type="password" formControlName="member_confirm" value="{{confirmPassword}}"><i class="fas fa-eye-slash" (click)="showConfirmedPassword()"></i>
-          </mat-form-field>
-        </div>
-        <br />
-
-        <div class="submit-input">
-          <button type="submit" id="save" class="btn btn-default">Save Information</button>
-        </div>
-      </div>
     </form>
-
   </div>
-
-
+  <!-- / Profile Form -->
 
 </div>
