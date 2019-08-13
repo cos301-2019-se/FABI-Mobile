@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { StaffDashboardComponent } from './staff-dashboard/staff-dashboard.component';
 
-import { SampleFormComponent } from '../sample-form/sample-form.component';
+import { StaffSubmitSampleComponent } from './staff-submit-sample/staff-submit-sample.component';
+import { CmwMenuComponent } from './cmw-menu/cmw-menu.component';
 
 import { SubmitCmwRequestComponent } from './submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './submit-cmw-deposit/submit-cmw-deposit.component';
@@ -25,8 +26,14 @@ const routes: Routes = [
     data: {roles: [Role.Staff] }
   },
   {
-    path: 'submit-sample', 
-    component: SampleFormComponent,
+    path: 'staff-submit-sample', 
+    component: StaffSubmitSampleComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'cmw-menu', 
+    component: CmwMenuComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.Staff] }
   },

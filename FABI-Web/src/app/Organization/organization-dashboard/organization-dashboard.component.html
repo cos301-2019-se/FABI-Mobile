@@ -5,18 +5,18 @@
   <div class="sidenav">
     <div class="top-nav-items">
       <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
-      <p (click)="toggleProfileTab()">Tap to view profile</p>
+      <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
       <div class="nav-links">
-        <a class="nav-link active" href="#"><i class="fas fa-home"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-user-friends"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-vial"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
+        <a class="nav-link active" routerLink="/organization-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/member-handler"><i class="fas fa-user-friends"></i></a>
+        <a class="nav-link" routerLink="/organization-submit-sample"><i class="fas fa-vial"></i></a>
+        <a class="nav-link" routerLink="/organization-view-samples"><i class="fas fa-search"></i></a>
       </div>
     </div>
     <div class="bottom-nav-items">
       <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
-      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </div>
   <!-- / Sidenav -->
@@ -29,19 +29,19 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <!-- Navbar Items -->
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" routerLink="/organization-dashboard">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Samples</a>
+            <a class="nav-link" routerLink="/organization-view-samples">Samples</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Member Handler</a>
+            <a class="nav-link" routerLink="/member-handler">Member Handler</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -97,9 +97,9 @@
               <h5>Overview Statistics</h5>
             </div>
             <div class="statistic-box-info">
-              <p id="organization_users_stats" [innerHTML]="memberStats">Number of Members: </p>
+              <p id="organization_users_stats">Number of Members: {{memberStats}}</p>
               <p id="organization_completed_samples_stats">Completed Samples: 75%</p>
-              <p id="organization_samples_stats" [innerHTML]="sampleStats">Number of Samples: </p>
+              <p id="organization_samples_stats">Number of Samples: {{sampleStats}}</p>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
               <h5>Number of Samples</h5>
             </div>
             <div class="statistic-box-info">
-              <p id="organization_users_stats" [innerHTML]="memberStats"></p>
+              <p id="organization_users_stats">{{memberStats}}</p>
             </div>
           </div>
         </div>
@@ -138,7 +138,7 @@
               <h5>Number of Samples</h5>
             </div>
             <div class="statistic-box-info">
-              <p id="organization_samples_stats" [innerHTML]="sampleStats"></p>
+              <p id="organization_samples_stats">{{sampleStats}}</p>
             </div>
           </div>
         </div>
@@ -207,7 +207,15 @@
       <!-- Member Table -->
       <div class="member-table table-responsive">
         <h5> Member Table </h5>
-        <table class="table table-hover">
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!organizationMembers">
+            <h6>There are currently no members</h6>
+            <i class="fas fa-plus-circle" routerLink="/member-handler"></i>
+          </div>
+          <!-- / Extra Table Information -->
+
+        <table class="table table-hover" *ngIf="organizationMembers">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -235,35 +243,8 @@
   <div id="notifications" *ngIf="notificationsTab">
     <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
     <br />
-    <h3>NOTIFICATIONS</h3>
-    <h5 *ngIf="!notifications">No notifications</h5>
-
-    <!-- Notification Items -->
-    <div class="notification-items" *ngIf="allNotifications">
-
-      <!-- Notification Item -->
-      <div class="notification-item" *ngFor="let log of allNotifications">
-        <div class="notification-action">
-          <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
-        </div>
-        <div class="notification-heading">
-          <h6><b>{{log.Type}} notification</b></h6>
-        </div>
-        <div class="notification-content">
-          <p><b>Action:</b> {{log.Action}}</p>
-          <p><b>Date:</b> {{log.Date}}</p>
-        </div>
-      </div>
-      <!-- Notification Item -->
-
-    </div>
-    <!-- Notification Items -->
-
-    <!-- See More Icon -->
-    <div class="see-more">
-      <i class="fas fa-ellipsis-h"></i>
-    </div>
-    <!-- / See More Icon -->
+    
+    <app-organization-notification></app-organization-notification>
 
   </div>
   <!-- / Notification Section -->
@@ -272,89 +253,8 @@
       <div id="profile" *ngIf="profileTab">
           <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
           <br />
-          <h3>PROFILE</h3>
-    
-          <!-- Profile Details -->
-          <div class="profile-details">
-            <div class="profile-icon">
-              <i class="fas fa-user-circle"></i>
-            </div>
-    
-            <!-- Profile Form -->
-            <div class="form">
-              <form class="profile-form needs-validation" novalidate [formGroup]="adminProfileForm" (submit)="saveChanges()">
-                <div class="form-row align-items-center">
-
-    
-                  <!-- Name -->
-                  <div class="form-group">
-                    <label for="admin_name">Admin Name</label>
-                    <input type="text" class="form-control" id="admin_name" placeholder="Admin name"
-                      (change)="displayProfileSaveBtn()" formControlName="admin_name" value="{{name}}"required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Name -->
-    
-                  <!-- Surname -->
-                  <div class="form-group">
-                    <label for="admin_surname">Surname</label>
-                    <input type="text" class="form-control" id="admin_surname" placeholder="Admin surname"
-                      (change)="displayProfileSaveBtn()" formControlName="admin_surname" value="{{surname}}" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Surname -->
-    
-                  <!-- Email -->
-                  <div class="form-group">
-                    <label for="admin_email">Email address</label>
-                    <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-                      placeholder="Enter email" (change)="displayProfileSaveBtn()" formControlName="admin_email"
-                      value="{{email}}" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Email -->
-    
-    
-                  <!-- Password -->
-                  <div class="form-group">
-                    <label for="admin_confirm">Password</label>
-                    <input #passwordInput type="password" class="form-control" id="admin_confirm" placeholder="Password"
-                      (change)="displayConfirmPasswordInput()" formControlName="admin_password" value="{{password}}"
-                      required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Password -->
-    
-                  <!-- ConfirmPassword -->
-                  <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input #confirmInput type="password" class="form-control" placeholder="Password"
-                      (change)="displayProfileSaveBtn()" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- /Confirm Password -->
-    
-                  <!-- Save Profile Changes Button -->
-                  <button type="submit" class="btn btn-default" id="save-btn" *ngIf="saveBtn">Save</button>
-                  <!-- / Save Profile Changes Button -->
-    
-                </div>
-    
-              </form>
-            </div>
-            <!-- / Profile Form -->
-    
-          </div>
+              
+          <app-organization-profile></app-organization-profile>
     
         </div>
         <!-- / Profile Section -->

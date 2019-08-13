@@ -1,103 +1,105 @@
 <h3>PROFILE</h3>
 
-    <!-- Profile Details -->
-    <div class="profile-details">
-      <div class="profile-icon">
-        <i class="fas fa-user-circle"></i>
-      </div>
+<!-- Profile Details -->
+<div class="profile-details">
+  <div class="profile-icon">
+    <i class="fas fa-user-circle"></i>
+  </div>
 
-      <!-- Profile Form -->
-      <div class="form">
-        <form class="profile-form needs-validation" novalidate [formGroup]="staffProfileForm" (submit)="saveChanges()">
-          <div class="form-row align-items-center">
+  <!-- Profile Form -->
+  <div class="form">
+    <form class="profile-form needs-validation" novalidate [formGroup]="staffProfileForm" (submit)="saveChanges()">
+      <div class="form-row align-items-center">
 
-            <!-- Organization -->
-            <div class="form-group">
-              <label for="organization_name">Organization Name</label>
-              <input type="text" class="form-control" id="organization_name" placeholder="Enter name"
-                (change)="displayProfileSaveBtn()" formControlName="organization_name" value="{{organization}}"
-                disabled>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Organization -->
-
-            <!-- Name -->
-            <div class="form-group">
-              <label for="staff_name">Name</label>
-              <input type="text" class="form-control" id="staff_name" placeholder="Enter name"
-                (change)="displayProfileSaveBtn()" formControlName="staff_name" value="{{name}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Name -->
-
-            <!-- Surname -->
-            <div class="form-group">
-              <label for="staff_surname">Surname</label>
-              <input type="text" class="form-control" id="staff_surname" placeholder="Enter surname"
-                (change)="displayProfileSaveBtn()" formControlName="staff_surname" value="{{surname}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Surname -->
-
-            <!-- Email -->
-            <div class="form-group">
-              <label for="admin_email">Email address</label>
-              <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-                placeholder="Enter email" (change)="displayProfileSaveBtn()" formControlName="admin_email"
-                value="{{email}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Email -->
-
-            <!-- User Type -->
-            <div class="form-group">
-              <label for="staff_type">User Type</label>
-              <input type="text" class="form-control" id="staff_type" (change)="displayProfileSaveBtn()"
-                formControlName="staff_type" value="{{userType}}" disabled>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / User Type -->
-
-            <!-- Password -->
-            <div class="form-group">
-              <label for="staff_password">Password</label>
-              <input #passwordInput type="password" class="form-control" id="password" placeholder="Password"
-                (change)="displayConfirmPasswordInput()" formControlName="staff_password" value="{{password}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Password -->
-
-            <!-- ConfirmPassword -->
-            <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
-              <label for="staff_confirm">Confirm Password</label>
-              <input #confirmInput type="password" class="form-control" formControlName="staff_confirm" placeholder="Password"
-                (change)="displayProfileSaveBtn()" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- /Confirm Password -->
-
-            <!-- Save Profile Changes Button -->
-            <button type="submit" class="btn btn-default" id="save-btn" *ngIf="saveBtn">Save</button>
-            <!-- / Save Profile Changes Button -->
-
+        <!-- Organization -->
+        <div class="form-group">
+          <label for="organization_name">Organization Name</label>
+          <input type="text" class="form-control" id="organization_name" placeholder="Enter name"
+            (change)="displayProfileSaveBtn()" formControlName="organization_name" value="{{organization}}" disabled>
+          <div class="valid-feedback">
+            Looks good!
           </div>
+        </div>
+        <!-- / Organization -->
 
-        </form>
+        <!-- Name -->
+        <div class="form-group">
+          <label for="staff_name">Name</label>
+          <input type="text" class="form-control" id="staff_name" placeholder="Enter name"
+            (change)="displayProfileSaveBtn()" formControlName="staff_name" value="{{name}}" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- / Name -->
+
+        <!-- Surname -->
+        <div class="form-group">
+          <label for="staff_surname">Surname</label>
+          <input type="text" class="form-control" id="staff_surname" placeholder="Enter surname"
+            (change)="displayProfileSaveBtn()" formControlName="staff_surname" value="{{surname}}" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- / Surname -->
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="admin_email">Email address</label>
+          <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
+            placeholder="Enter email" (change)="displayProfileSaveBtn()" formControlName="admin_email" value="{{email}}"
+            required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- / Email -->
+
+        <!-- User Type -->
+        <div class="form-group">
+          <label for="staff_type">User Type</label>
+          <input type="text" class="form-control" id="staff_type" (change)="displayProfileSaveBtn()"
+            formControlName="staff_type" value="{{userType}}" disabled>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- / User Type -->
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="staff_password">Password</label>
+          <input #passwordInput type="password" class="form-control" id="password" placeholder="Password"
+            (change)="displayConfirmPasswordInput()" formControlName="staff_password" value="{{password}}" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- / Password -->
+
+        <!-- ConfirmPassword -->
+        <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
+          <label for="staff_confirm">Confirm Password</label>
+          <input #confirmInput type="password" class="form-control" formControlName="staff_confirm"
+            placeholder="Password" (change)="displayProfileSaveBtn()" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <!-- /Confirm Password -->
+
+        <!-- Profile Actions -->
+        <div class="profile-actions">
+          <button type="button" class="btn btn-default-edit">Edit</button>
+          <button type="submit" class="btn btn-default-save">Save Changes</button>
+        </div>
+        <!-- / Profile Actions -->
+
       </div>
-      <!-- / Profile Form -->
 
-    </div>
+    </form>
+  </div>
+  <!-- / Profile Form -->
+
+</div>
