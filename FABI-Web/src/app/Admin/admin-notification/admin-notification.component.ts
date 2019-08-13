@@ -110,9 +110,16 @@ export class AdminNotificationComponent implements OnInit {
   ) {}
 
 
-  ngOnInit() {
-    this.currentUser = this.authService.getCurrentSessionValue.user;
-    this.loadNotifications();
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+      console.log("---- RESPONSE: " + response);
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.loadNotifications();
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    // this.loadNotifications();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

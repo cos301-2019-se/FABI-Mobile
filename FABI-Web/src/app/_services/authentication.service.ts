@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Tuesday, August 13th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -138,6 +138,10 @@ export class AuthenticationService {
   }
 
   temporaryLoginSuperUser() {
+
+    console.log("----- IN TEMP -----");
+
+
     const Lemail = "johndoe@gmail.com";
     const Lpassw = "Tr7hs8BjuX";
     const Lorg = "FABI";
