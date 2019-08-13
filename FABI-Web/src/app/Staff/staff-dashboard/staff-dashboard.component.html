@@ -79,7 +79,7 @@
       <!-- Content Heading -->
       <div class="content-heading">
         <h2>Staff Dashbaord</h2>
-        <i class="fas fa-bell" id="new-notifications" toggleNotificationsTab></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
         <i class="far fa-bell" id="no-new-notifications"></i>
       </div>
       <!-- / Content Heading -->
@@ -212,35 +212,8 @@
   <div id="notifications" *ngIf="notificationsTab">
     <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
     <br />
-    <h3>NOTIFICATIONS</h3>
-    <h5 *ngIf="!notifications">No notifications</h5>
-
-    <!-- Notification Items -->
-    <div class="notification-items" *ngIf="allNotifications">
-
-      <!-- Notification Item -->
-      <div class="notification-item" *ngFor="let log of allNotifications">
-        <div class="notification-action">
-          <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
-        </div>
-        <div class="notification-heading">
-          <h6><b>{{log.Type}} notification</b></h6>
-        </div>
-        <div class="notification-content">
-          <p><b>Action:</b> {{log.Action}}</p>
-          <p><b>Date:</b> {{log.Date}}</p>
-        </div>
-      </div>
-      <!-- Notification Item -->
-
-    </div>
-    <!-- Notification Items -->
-
-    <!-- See More Icon -->
-    <div class="see-more">
-      <i class="fas fa-ellipsis-h"></i>
-    </div>
-    <!-- / See More Icon -->
+    
+    <app-staff-notification></app-staff-notification>
 
   </div>
   <!-- / Notification Section -->
@@ -249,109 +222,8 @@
   <div id="profile" *ngIf="profileTab">
     <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
     <br />
-    <h3>PROFILE</h3>
-
-    <!-- Profile Details -->
-    <div class="profile-details">
-      <div class="profile-icon">
-        <i class="fas fa-user-circle"></i>
-      </div>
-
-      <!-- Profile Form -->
-      <div class="form">
-        <form class="profile-form needs-validation" novalidate [formGroup]="staffProfileForm" (submit)="saveChanges()">
-          <div class="form-row align-items-center">
-
-            <!-- Organization -->
-            <div class="form-group">
-              <label for="organization_name">Organization Name</label>
-              <input type="text" class="form-control" id="organization_name" placeholder="Enter name"
-                (change)="displayProfileSaveBtn()" formControlName="organization_name" value="{{organization}}"
-                disabled>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Organization -->
-
-            <!-- Name -->
-            <div class="form-group">
-              <label for="staff_name">Name</label>
-              <input type="text" class="form-control" id="staff_name" placeholder="Enter name"
-                (change)="displayProfileSaveBtn()" formControlName="staff_name" value="{{name}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Name -->
-
-            <!-- Surname -->
-            <div class="form-group">
-              <label for="staff_surname">Surname</label>
-              <input type="text" class="form-control" id="staff_surname" placeholder="Enter surname"
-                (change)="displayProfileSaveBtn()" formControlName="staff_surname" value="{{surname}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Surname -->
-
-            <!-- Email -->
-            <div class="form-group">
-              <label for="admin_email">Email address</label>
-              <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-                placeholder="Enter email" (change)="displayProfileSaveBtn()" formControlName="admin_email"
-                value="{{email}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Email -->
-
-            <!-- User Type -->
-            <div class="form-group">
-              <label for="staff_type">User Type</label>
-              <input type="text" class="form-control" id="staff_type" (change)="displayProfileSaveBtn()"
-                formControlName="staff_type" value="{{userType}}" disabled>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / User Type -->
-
-            <!-- Password -->
-            <div class="form-group">
-              <label for="staff_password">Password</label>
-              <input #passwordInput type="password" class="form-control" id="password" placeholder="Password"
-                (change)="displayConfirmPasswordInput()" formControlName="staff_password" value="{{password}}" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- / Password -->
-
-            <!-- ConfirmPassword -->
-            <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
-              <label for="staff_confirm">Confirm Password</label>
-              <input #confirmInput type="password" class="form-control" formControlName="staff_confirm" placeholder="Password"
-                (change)="displayProfileSaveBtn()" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-            </div>
-            <!-- /Confirm Password -->
-
-            <!-- Save Profile Changes Button -->
-            <button type="submit" class="btn btn-default" id="save-btn" *ngIf="saveBtn">Save</button>
-            <!-- / Save Profile Changes Button -->
-
-          </div>
-
-        </form>
-      </div>
-      <!-- / Profile Form -->
-
-    </div>
+    
+    <app-staff-profile></app-staff-profile>
 
   </div>
   <!-- / Profile Section -->
