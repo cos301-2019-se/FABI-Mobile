@@ -140,7 +140,7 @@ export class MemberProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadMemberProfileDetails(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue();
+    var tempUser = this.authService.getCurrentSessionValue;
     //The id number of the user that is currently logged in
     this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
