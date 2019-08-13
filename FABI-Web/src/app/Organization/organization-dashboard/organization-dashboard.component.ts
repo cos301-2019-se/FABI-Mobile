@@ -98,6 +98,7 @@ export class OrganizationDashboardComponent implements OnInit {
   /** Indicates if the help tab is hidden/shown - @type {boolean} */  
   helpTab: boolean = false;
 
+  currentUser: any
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -135,6 +136,37 @@ export class OrganizationDashboardComponent implements OnInit {
       });
       
     }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG ON INIT()  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call getNumberOfOrganizationMembers() | 2. Call getNumberOfOrganizationSamples() |
+   *              3. Call getNumberOfCompletedOrganizationSamples() | 4. Call loadNotifications() 
+   * @memberof OrganizationDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+
+     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.getNumberOfOrganizationMembers();
+      this.getNumberOfOrganizationSamples();
+      this.getNumberOfCompletedOrganizationSamples();
+      this.loadNotifications();
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // // Set current user logged in
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+     //Calling the neccessary functions as the page loads
+    //  this.getNumberOfOrganizationMembers();
+    //  this.getNumberOfOrganizationSamples();
+    //  this.getNumberOfCompletedOrganizationSamples();
+    //  this.loadNotifications();
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -243,23 +275,6 @@ export class OrganizationDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(){}
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG ON INIT()  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Call getNumberOfOrganizationMembers() | 2. Call getNumberOfOrganizationSamples() |
-   *              3. Call getNumberOfCompletedOrganizationSamples() | 4. Call loadNotifications() 
-   * @memberof OrganizationDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    //Calling the neccessary functions as the page loads
-    this.getNumberOfOrganizationMembers();
-    this.getNumberOfOrganizationSamples();
-    this.getNumberOfCompletedOrganizationSamples();
-    this.loadNotifications();
-  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        TOGGLE NOTIFICATIONS 
@@ -294,15 +309,15 @@ export class OrganizationDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
-    //The id number of the user that is currently logged in
-    this.id = tempUser.user.ID;
-    //The organization of the user that is currently logged in
-    this.organization = tempUser.user.organisation;
+    // //Getting the user's details from local storage
+    // var tempUser = this.authService.getCurrentSessionValue;
+    // //The id number of the user that is currently logged in
+    // this.id = tempUser.user.ID;
+    // //The organization of the user that is currently logged in
+    // this.organization = tempUser.user.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
-    this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
+    this.userManagementService.getUserDetails(this.currentUser.organisation, this.currentUser.ID).subscribe((response: any) => {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
@@ -378,7 +393,7 @@ export class OrganizationDashboardComponent implements OnInit {
       }
       
       //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
+      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname).subscribe((response: any) => {
         if(response.success == true){
           //Making sure that local storage now has the updated user information
           this.authService.setCurrentUserValues(this.name, this.surname, this.email);

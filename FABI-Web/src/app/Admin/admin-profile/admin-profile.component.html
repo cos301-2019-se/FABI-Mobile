@@ -15,7 +15,7 @@
         <div class="form-group">
           <label for="admin_name">Name</label>
           <input type="text" class="form-control" id="admin_name" placeholder="Enter name"
-            (change)="displayProfileSaveBtn()" formControlName="admin_name" value="{{name}}" required>
+             formControlName="admin_name" required >
           <div class="valid-feedback">
             Looks good!
           </div>
@@ -26,7 +26,7 @@
         <div class="form-group">
           <label for="admin_surname">Surname</label>
           <input type="text" class="form-control" id="admin_surname" placeholder="Enter surname"
-            (change)="displayProfileSaveBtn()" formControlName="admin_surname" value="{{surname}}" required>
+             formControlName="admin_surname"  required>
           <div class="valid-feedback">
             Looks good!
           </div>
@@ -37,7 +37,7 @@
         <div class="form-group">
           <label for="admin_email">Email address</label>
           <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-            placeholder="Enter email" (change)="displayProfileSaveBtn()" formControlName="admin_email" value="{{email}}"
+            placeholder="Enter email" formControlName="admin_email"
             required>
           <div class="valid-feedback">
             Looks good!
@@ -48,40 +48,18 @@
         <!-- User Type -->
         <div class="form-group">
           <label for="admin_type">User Type</label>
-          <input type="text" class="form-control" id="admin_type" (change)="displayProfileSaveBtn()"
-            formControlName="admin_type" value="{{userType}}" disabled>
+          <input type="text" class="form-control" id="admin_type"
+            formControlName="admin_type" disabled >
           <div class="valid-feedback">
             Looks good!
           </div>
         </div>
         <!-- / User Type -->
 
-        <!-- Password -->
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input #passwordInput type="password" class="form-control" id="password" placeholder="Password"
-            (change)="displayConfirmPasswordInput()" formControlName="admin_password" value="{{password}}" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <!-- / Password -->
-
-        <!-- ConfirmPassword -->
-        <div class="form-group" id="confirm-password" *ngIf="confirmPasswordInput">
-          <label for="confirm-password">Confirm Password</label>
-          <input #confirmInput type="password" class="form-control" placeholder="Password"
-            (change)="displayProfileSaveBtn()" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <!-- /Confirm Password -->
-
         <!-- Profile Actions -->
         <div class="profile-actions">
-          <button type="button" class="btn btn-default-edit">Edit</button>
-          <button type="submit" class="btn btn-default-save">Save Changes</button>
+          <button type="button" class="btn btn-default-edit" (click)="editProfileToggle()">Edit</button>
+          <button type="submit" class="btn btn-default-save" [hidden]="!adminProfileForm.dirty" (click)="saveChanges()">Save Changes</button>
       </div>
         <!-- / Profile Actions -->
 

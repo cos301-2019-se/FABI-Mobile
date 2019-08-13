@@ -57,11 +57,11 @@ export interface UpdateMember {
   fname: string;          //The name of the FABI member
   surname: string;        //The surname of the FABI member
   email: string;          //The email of the FABI member
-  password: string;       //The password of the FABI member
 }
 
 //Object for defning the JSOn object to be sent when the details of a FABI member are updated
 export interface POSTUpdateMember {
+  orgName: string,
   id: string;                 //The ID number of the FABI member to be updated
   fields: UpdateMember;       //The fields to the updated
 }
@@ -207,9 +207,19 @@ export class UserManagementAPIService {
    * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  updateFABIMemberDetails(mail: string, name: string, lname: string, idNo: string, pass: string) {
-    var member: UpdateMember = { fname: name, surname: lname, email: mail, password: pass };
-    var data: POSTUpdateMember = { id: idNo, fields: member };
+  updateFABIMemberDetails(mail: string, name: string, lname: string) {
+
+    var member: UpdateMember = { 
+      fname: name, 
+      surname: lname, 
+      email: mail
+    };
+
+    var data: POSTUpdateMember = { 
+      orgName: this.authService.getCurrentSessionValue.user.organization,
+      id: this.authService.getCurrentSessionValue.user.ID, 
+      fields: member 
+    };
 
     const options = {
       method: 'POST',
