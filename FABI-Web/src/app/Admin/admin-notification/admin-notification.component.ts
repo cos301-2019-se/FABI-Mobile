@@ -443,7 +443,7 @@ export class AdminNotificationComponent implements OnInit {
     this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
         
-      }
+        }
       else{
         //Error handling
       }

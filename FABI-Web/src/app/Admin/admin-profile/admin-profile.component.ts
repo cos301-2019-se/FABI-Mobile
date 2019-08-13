@@ -20,6 +20,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
+import { DISABLED } from '@angular/forms/src/model';
 
 @Component({
   selector: 'app-admin-profile',
@@ -65,6 +66,8 @@ export class AdminProfileComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
+  isEditingProfile: boolean = false;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -90,13 +93,10 @@ export class AdminProfileComponent implements OnInit {
     private router: Router
     ) { 
     this.adminProfileForm = this.formBuilder.group({
-      organization_name: '',
-      admin_name: '',
-      admin_surname: '',
-      admin_email: '',
-      admin_type: '',
-      admin_password: '',
-      admin_confirm: ''
+      admin_name: ['', Validators.required],
+      admin_surname: ['', Validators.required],
+      admin_email: ['', Validators.required],
+      admin_type: ['', Validators.required]
     });
   }
 
@@ -117,6 +117,10 @@ export class AdminProfileComponent implements OnInit {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.loadAdminProfileDetails();
     });
+
+    this.adminProfileForm.get('admin_name').disable();
+    this.adminProfileForm.get('admin_surname').disable();
+    this.adminProfileForm.get('admin_email').disable();
 
     //******** TO BE USED IN PRODUCTION: ********
     //Calling the neccessary functions as the page loads
@@ -158,14 +162,13 @@ export class AdminProfileComponent implements OnInit {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        //Setting the user type of the user
-        this.userType = data.userType;
-        //Setting the first name of the user
-        this.name = data.fname;
-        //Setting the surname of the user
-        this.surname = data.surname;
-        //Setting the email of the user
-        this.email = data.email;
+        // Fill the form inputs with the user's details
+        this.adminProfileForm.setValue( {
+          admin_name: data.fname,
+          admin_surname: data.surname,
+          admin_email: data.email,
+          admin_type: data.userType
+        });
       }
       else{
         //Error handling
@@ -181,83 +184,36 @@ export class AdminProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-    //Indicates if the details can be changed based on whether the passwords match or not
-    var valid = true;
 
-    //Checking to make sure that the passwords are not empty
-    //Checking to make sure that the password and confirmed password match
-    if(this.adminProfileForm.controls.admin_password.value != '' && 
-    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
-      this.password = this.adminProfileForm.controls.admin_password.value;
+    // Check if form input is valid 
+    if (this.adminProfileForm.invalid) {
+      return;
     }
-    else{
-      //Indicates that the changes cannot be saved
-      valid = false;
-
-      //POPUP MESSAGE
-      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-        duration: 3000
-      });
-    }
-
-    //Indicates that the changes that the user has made to their profile details, can be changed
-    if(valid == true){
-      if(this.adminProfileForm.controls.admin_email.value == ''){
-        this.email = this.email;
-      }
-      else{
-        this.email = this.adminProfileForm.controls.admin_email.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_name.value == ''){
-        this.name = this.name;
-      }
-      else{
-        this.name = this.adminProfileForm.controls.admin_name.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_surname.value == ''){
-        this.surname == this.surname;
-      }
-      else{
-        this.surname = this.adminProfileForm.controls.admin_surname.value;
-      }  
       
-      if(this.adminProfileForm.controls.admin_password.value == ''){
-        this.password == this.password;
+    var Uemail = this.adminProfileForm.controls.admin_email.value;
+    var Uname = this.adminProfileForm.controls.admin_name.value;
+    var Usurname = this.adminProfileForm.controls.admin_surname.value;
+
+    //Making a call to the User Management API Service to save the user's changed profile details
+    this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
+      if(response.success == true){
+        
+         //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+          duration: 3000
+        });
+
+        //Reloading the updated user's details
+        this.loadAdminProfileDetails();
+
       }
       else{
-        this.password = this.adminProfileForm.controls.admin_password.value;
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+          duration: 3000
+        });
       }
-      
-      //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
-        if(response.success == true){
-          //Making sure that local storage now has the updated user information
-          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
-
-          //Reloading the updated user's details
-          this.loadAdminProfileDetails();
-
-          //Display message to say that details were successfully saved
-          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-        else{
-          //Error handling
-          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-      });
-    }
-    else{
-      //Error handling
-      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-        duration: 3000
-      });
-    }
+    });
   }
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,6 +227,20 @@ export class AdminProfileComponent implements OnInit {
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
+  }
+
+  editProfileToggle() {
+
+    if(this.isEditingProfile) {
+      this.adminProfileForm.get('admin_name').enable();
+      this.adminProfileForm.get('admin_surname').enable();
+      this.adminProfileForm.get('admin_email').enable();
+    } else {
+      this.adminProfileForm.get('admin_name').enable();
+      this.adminProfileForm.get('admin_surname').enable();
+      this.adminProfileForm.get('admin_email').enable();
+    }
+    
   }
 
 }
