@@ -5,19 +5,19 @@
   <div class="sidenav">
     <div class="top-nav-items">
       <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
-      <p (click)="toggleProfileTab()">Tap to view profile</p>
+      <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
       <div class="nav-links">
-        <a class="nav-link active" href="#"><i class="fas fa-home"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-vial"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-vials"></i></a>
-        <a class="nav-link" href="#"> <i class="fas fa-plus-circle"></i></a>
+        <a class="nav-link active" routerLink="/staff-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/staff-view-samples"><i class="fas fa-search"></i></a>
+        <a class="nav-link" routerLink="staff-submit-sample"><i class="fas fa-vial"></i></a>
+        <a class="nav-link" routerLink="/cmw-menu"><i class="fas fa-vials"></i></a>
+        <a class="nav-link" routerLink="/"> <i class="fas fa-plus-circle"></i></a>
       </div>
     </div>
     <div class="bottom-nav-items">
       <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
-      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </div>
   <!-- / Sidenav -->
@@ -30,19 +30,19 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <!-- Navbar Items -->
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" routerLink="/staff-dashboard">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Samples</a>
+            <a class="nav-link" routerLink="/staff-view-samples">Samples</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">CMW Culture Collection</a>
+            <a class="nav-link" routerLink="/cmw-menu">CMW Culture Collection</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -159,8 +159,15 @@
       <!-- Samples Table -->
       <div class="dashboard-table table-responsive">
         <h5> Samples </h5>
-        <h6 *ngIf="!submittedSamples">You currently have no samples</h6>
-        <table class="table table-hover">
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!submittedSamples">
+          <h6>You currently have no samples</h6>
+          <i class="fas fa-plus-circle"></i>
+        </div>
+        <!-- / Extra Table Information -->
+
+        <table class="table table-hover" *ngIf="submittedSamples">
           <thead>
             <tr>
               <th scope="col">Reference Number</th>
@@ -183,8 +190,16 @@
       <!-- Deposits Table -->
       <div class="dashboard-table table-responsive">
         <h5> Deposits Table </h5>
-        <h6 *ngIf="!depositForms">You currently have no deposit forms</h6>
-        <table class="table table-hover">
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!depositForms">
+          <h6>You currently have no deposits</h6>
+          <i class="fas fa-plus-circle"></i>
+        </div>
+        <!-- / Extra Table Information -->
+
+
+        <table class="table table-hover" *ngIf="depositForms">
           <thead>
             <tr>
               <th scope="col">Culture Number</th>
@@ -212,7 +227,7 @@
   <div id="notifications" *ngIf="notificationsTab">
     <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
     <br />
-    
+
     <app-staff-notification></app-staff-notification>
 
   </div>
@@ -222,7 +237,7 @@
   <div id="profile" *ngIf="profileTab">
     <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
     <br />
-    
+
     <app-staff-profile></app-staff-profile>
 
   </div>
