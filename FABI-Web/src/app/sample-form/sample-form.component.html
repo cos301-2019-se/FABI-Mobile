@@ -9,7 +9,6 @@
     </div>
     <div class="right">
       <h1>SUBMIT SAMPLE</h1>
-      <button (click)="selectLocation()">Google Maps</button>
 
       <!--Sample Submission Form-->
       <form id="sample_form" [formGroup]="sampleForm" (submit)="sendForm()">
@@ -43,6 +42,7 @@
             <br />
             <!--Plantation Details-->
             <p>Not the correct location? Select on map:</p>
+            <button type="button" (click)="selectLocation()">Google Maps</button><br/>
             
             <!-- <app-maps-window></app-maps-window> -->
             <label style="font-weight: bold;">Plantation Details:</label><br />
