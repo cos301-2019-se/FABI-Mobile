@@ -534,27 +534,6 @@ export class AdminDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         NG ON INIT  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Call loadNotifications() | 2. Call getNumberOfFABISamples() | 3. Call getNumberOfFABIMembers()
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {  
-    this.authService.temporaryLoginSuperUser();
-    
-    //Calling the neccessary functions as the page loads
-    this.loadNotifications();
-    this.getNumberOfFABIMembers();
-    this.getNumberOfFABISamples();
-
-    let user = this.authService.getCurrentSessionValue.user;
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 
   /**
    * This function will log the user out of the web application and clear the authentication data stored in the local storage
