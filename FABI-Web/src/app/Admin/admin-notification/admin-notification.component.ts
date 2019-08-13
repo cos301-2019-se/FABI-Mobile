@@ -129,12 +129,13 @@ export class AdminNotificationComponent implements OnInit {
     private authService: AuthenticationService, 
     private router: Router,
     private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
+    private snackBar: MatSnackBar 
   ) { 
     
   }
 
   ngOnInit() {
+    this.loadNotifications();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
