@@ -142,8 +142,8 @@ export class AuthenticationService {
     console.log("----- IN TEMP -----");
 
 
-    const Lemail = "johndoe@gmail.com";
-    const Lpassw = "Tr7hs8BjuX";
+    const Lemail = "johnsmith@gmail.com";
+    const Lpassw = "ERVIw62TBl";
     const Lorg = "FABI";
 
     // User details to be passed to API

@@ -199,7 +199,7 @@ export class StaffProfileComponent implements OnInit {
       }
 
       //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
+      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname).subscribe((response: any) => {
         if(response.success == true){
           //Making sure that local storage now has the updated user information
           this.authService.setCurrentUserValues(this.name, this.surname, this.email);
