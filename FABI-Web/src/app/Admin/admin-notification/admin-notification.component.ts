@@ -1,8 +1,8 @@
 /**
- * File Name: admin-dashboard.component.ts
- * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Admin\admin-dashboard\admin-dashboard.component.ts
+ * File Name: admin-notification.component.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\NEW\FABI-Mobile\FABI-Web\src\app\Admin\admin-notification\admin-notification.component.ts
  * Project Name: fabi-web
- * Created Date: Sunday, June 23rd 2019
+ * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
  * Last Modified: Tuesday, August 13th 2019
@@ -12,6 +12,7 @@
  * 
  * <<license>>
  */
+
 
 import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
   ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
@@ -32,21 +33,12 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import * as Interface from '../../_interfaces/interfaces';
 
 @Component({
-  selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.scss']
+  selector: 'app-admin-notification',
+  templateUrl: './admin-notification.component.html',
+  styleUrls: ['./admin-notification.component.scss']
 })
+export class AdminNotificationComponent implements OnInit {
 
-export class AdminDashboardComponent implements OnInit {
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          GLOBAL VARIABLES
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  //Retriving an HTML element from the HTML page
-  @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
-  @ViewChild('staffContainer', {read: ViewContainerRef}) staffContainer;
-  
   /** Contains the user stats that will be dynamically loaded in the HTML page - @type {string} */
   userStats: string;
   /** Contains the sample stats that will be dynamically loaded in the HTML page - @type {string} */
@@ -128,27 +120,6 @@ export class AdminDashboardComponent implements OnInit {
 
   currentUser: any;
 
-  /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput : ElementRef;
-  /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput : ElementRef;
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                             CONSTRUCTOR
-  /**
-   * Creates an instance of AdminDashboardComponent.
-   * 
-   * @param {UserManagementAPIService} userManagementService For calling the User Management API service
-   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
-   * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
-   * @param {DomSanitizer} sanitizer
-   * @param {ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
-   * @param {AuthenticationService} authService Used for all authentication and session control
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     public sanitizer: DomSanitizer, 
     private userManagementService: UserManagementAPIService,
@@ -159,98 +130,12 @@ export class AdminDashboardComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder, 
     private snackBar: MatSnackBar, 
-    ) { 
-      this.adminProfileForm = this.formBuilder.group({
-        organization_name: '',
-        admin_name: '',
-        admin_surname: '',
-        admin_email: '',
-        admin_type: '',
-        admin_password: '',
-        admin_confirm: ''
-      });
-
-      this.currentUser = this.authService.getCurrentSessionValue;
-    }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                              GET NUMBER OF FABI MEMBERS
-  /**
-   *  This function will use an API service to get all the members of FABI. These members will be read into the
-   *  'members' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-   *  HTML page with the number of members belonging to FABI. This function will also use API calls to populate
-   *  the admins object.
-   * 
-   *  This function will also dynamically create elements and load them with information about the adminstrators
-   *  and other FABI staff members. These dynamic elements will be loaded into the HTML page
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfFABIMembers(){
-    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
-      if(response.success == true){
-        //Temporary array to hold the array of admins retuned from the API call
-        this.admins = response.data.qs.admins;
-        //Temporary array to hold the array of staff returned from the API call
-        this.staff = response.data.qs.staff;
-
-        this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
-        this.userStats = this.numberOfFABIMembers.toString();
-      }
-      else{
-        //The FABI members could not be retrieved
-        this.numberOfFABIMembers = 0;
-        this.userStats = this.numberOfFABIMembers.toString();
-
-        //TODO: Show error message
-      }
-    });
+  ) { 
+    
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                GET NUMBER OF FABI SAMPLES
-  /**
-   *  This function will use an API service to get all the samples of FABI. These samples will be read into the
-   *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-   *  HTML page with the number of samples belonging to FABI.
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfFABISamples(){
-    //Subscribing to the DiagnosticClinicAPIService to get a list containing all of FABI's samples
-    this.diagnosticClinicService.getAllSamples().subscribe((response: any) => {
-      if(response.success == true){
-        //Populating the sample array with the returned data
-        this.samples = response.data.samples;
-
-        this.numberOfSamples = this.samples.length;
-        this.sampleStats = this.numberOfSamples.toString();
-      }
-      else{
-        //The FABI members could not be retrieved
-        this.sampleStats = '0';
-      }
-    });
+  ngOnInit() {
   }
-
- 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                         GET NUMBER OF COMPLETED FABI SAMPLES
-  /**
-   *  This function will use an API service to get all the completed (processed) samples of FABI. These 
-   *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
-   *  populate a 'heading' element on the HTML page with the percentage of completed samples belonging to FABI.
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfCompletedFABISamples(){}
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        GET DATE
@@ -258,7 +143,7 @@ export class AdminDashboardComponent implements OnInit {
    *  This function will put the string date provided into a more readable format for the notifications
    * @param {string} date The date of the log
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getDate(date: string){
@@ -333,12 +218,12 @@ export class AdminDashboardComponent implements OnInit {
   /**
    *  This function will load all of the user's logs into a string array.
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
+    var tempUser = this.authService.getCurrentSessionValue();
 
     //Making a call to the notification logging service to return all logs belonging to the user
     this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
@@ -360,7 +245,7 @@ export class AdminDashboardComponent implements OnInit {
   /**
    *  This function will load the admin's notifications into the notification section on the HTML page
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){
@@ -453,7 +338,7 @@ export class AdminDashboardComponent implements OnInit {
   /**
    *  This function will be called so that the information of a specific user can be fetched
    * 
-   *  @memberof AdminDashboardComponent
+   *  @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string, type: string) {
@@ -485,7 +370,7 @@ export class AdminDashboardComponent implements OnInit {
    * 
    * @param {string} id                   //The id of the notification to be removed
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeNotification(id: string){
@@ -496,7 +381,7 @@ export class AdminDashboardComponent implements OnInit {
     }
 
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
+    var tempUser = this.authService.getCurrentUserValue;
 
     this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
@@ -508,224 +393,16 @@ export class AdminDashboardComponent implements OnInit {
     });
   } 
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         NG ON INIT  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Call loadNotifications() | 2. Call getNumberOfFABISamples() | 3. Call getNumberOfFABIMembers()
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {  
-    this.authService.temporaryLoginSuperUser();
-    
-    //Calling the neccessary functions as the page loads
-    this.loadNotifications();
-    this.getNumberOfFABIMembers();
-    this.getNumberOfFABISamples();
-
-    let user = this.authService.getCurrentSessionValue.user;
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            LOGOUT 
-  /**
-   * This function will log the user out of the web application and clear the authentication data stored in the local storage
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  logout() {
-    this.authService.logoutUser();
-    this.router.navigate(['/login']);
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                      TOGGLE NOTIFICATIONS 
   /**
    * This function will toggle the display of the notifications side panel
    * 
-   * @memberof AdminDashboardComponent
+   * @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificationsTab(){ 
     this.notificationsTab = !this.notificationsTab;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         TOGGLE PROFILE 
-  /**
-   * This function will toggle the display of the profile side panel
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleProfileTab() {
-    this.profileTab = !this.profileTab;
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD ADMIN PROFILE DETAILS
-  /**
-   *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadAdminProfileDetails(){
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
-    //The id number of the user that is currently logged in
-    this.id = tempUser.user.ID;
-    //The organization of the user that is currently logged in
-    this.organization = tempUser.user.organisation;
-
-    //Subscribing to the UserManagementAPIService to get all the staff members details
-    this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Setting the user type of the user
-        this.userType = data.userType;
-        //Setting the first name of the user
-        this.name = data.fname;
-        //Setting the surname of the user
-        this.surname = data.surname;
-        //Setting the email of the user
-        this.email = data.email;
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SAVE CHANGES
-  /**
-   *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
-    //Indicates if the details can be changed based on whether the passwords match or not
-    var valid = true;
-
-    //Checking to make sure that the passwords are not empty
-    //Checking to make sure that the password and confirmed password match
-    if(this.adminProfileForm.controls.admin_password.value != '' && 
-    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
-      this.password = this.adminProfileForm.controls.admin_password.value;
-    }
-    else{
-      //Indicates that the changes cannot be saved
-      valid = false;
-
-      //POPUP MESSAGE
-      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-        duration: 3000
-      });
-    }
-
-    //Indicates that the changes that the user has made to their profile details, can be changed
-    if(valid == true){
-      if(this.adminProfileForm.controls.admin_email.value == ''){
-        this.email = this.email;
-      }
-      else{
-        this.email = this.adminProfileForm.controls.admin_email.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_name.value == ''){
-        this.name = this.name;
-      }
-      else{
-        this.name = this.adminProfileForm.controls.admin_name.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_surname.value == ''){
-        this.surname == this.surname;
-      }
-      else{
-        this.surname = this.adminProfileForm.controls.admin_surname.value;
-      }  
-      
-      if(this.adminProfileForm.controls.admin_password.value == ''){
-        this.password == this.password;
-      }
-      else{
-        this.password = this.adminProfileForm.controls.admin_password.value;
-      }
-      
-      //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
-        if(response.success == true){
-          //Making sure that local storage now has the updated user information
-          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
-
-          //Reloading the updated user's details
-          this.loadAdminProfileDetails();
-
-          //Display message to say that details were successfully saved
-          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-        else{
-          //Error handling
-          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-      });
-    }
-    else{
-      //Error handling
-      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-        duration: 3000
-      });
-    }
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      DISPLAY PROFILE SAVE BUTTON 
-  /**
-   * This function will display the save button option if any details in the profile have been altered
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  displayProfileSaveBtn() {
-    this.saveBtn = true;
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                   DISPLAY PASSWORD CONFIRM INPUT 
-  /**
-   * This function will display the confirm password input field in the user's password was altered
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  displayConfirmPasswordInput() {
-    this.confirmPasswordInput = true;
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            TOGGLE HELP 
-  /**
-   * This function will toggle the display of the help side panel
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleHelpTab() {
-    this.helpTab = !this.helpTab;
-  }
 }
