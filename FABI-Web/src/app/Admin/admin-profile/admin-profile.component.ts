@@ -72,8 +72,8 @@ export class AdminProfileComponent implements OnInit {
   /** The total number of Access Logs - @type {number} */           
   numberOfAccessLogs: number = 0;
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  profileTab: boolean = false;
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
@@ -120,18 +120,30 @@ export class AdminProfileComponent implements OnInit {
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         TOGGLE PROFILE 
+  /**
+   * This function will toggle the display of the profile side panel
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleProfileTab() {
+    this.profileTab = !this.profileTab;
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    LOAD ADMIN PROFILE DETAILS
+  //                                                  LOAD ADMIN PROFILE DETAILS
   /**
    *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
    * 
-   * @memberof AdminProfileComponent
+   * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentUserValue;
+    var tempUser = this.authService.getCurrentSessionValue;
     //The id number of the user that is currently logged in
     this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
@@ -156,6 +168,93 @@ export class AdminProfileComponent implements OnInit {
         //Error handling
       }
     });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SAVE CHANGES
+  /**
+   *  This function will send the details to the API to save the changed details to the system.
+   *  @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  saveChanges(){
+    //Indicates if the details can be changed based on whether the passwords match or not
+    var valid = true;
+
+    //Checking to make sure that the passwords are not empty
+    //Checking to make sure that the password and confirmed password match
+    if(this.adminProfileForm.controls.admin_password.value != '' && 
+    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
+      this.password = this.adminProfileForm.controls.admin_password.value;
+    }
+    else{
+      //Indicates that the changes cannot be saved
+      valid = false;
+
+      //POPUP MESSAGE
+      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
+        duration: 3000
+      });
+    }
+
+    //Indicates that the changes that the user has made to their profile details, can be changed
+    if(valid == true){
+      if(this.adminProfileForm.controls.admin_email.value == ''){
+        this.email = this.email;
+      }
+      else{
+        this.email = this.adminProfileForm.controls.admin_email.value;
+      }
+
+      if(this.adminProfileForm.controls.admin_name.value == ''){
+        this.name = this.name;
+      }
+      else{
+        this.name = this.adminProfileForm.controls.admin_name.value;
+      }
+
+      if(this.adminProfileForm.controls.admin_surname.value == ''){
+        this.surname == this.surname;
+      }
+      else{
+        this.surname = this.adminProfileForm.controls.admin_surname.value;
+      }  
+      
+      if(this.adminProfileForm.controls.admin_password.value == ''){
+        this.password == this.password;
+      }
+      else{
+        this.password = this.adminProfileForm.controls.admin_password.value;
+      }
+      
+      //Making a call to the User Management API Service to save the user's changed profile details
+      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
+        if(response.success == true){
+          //Making sure that local storage now has the updated user information
+          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
+
+          //Reloading the updated user's details
+          this.loadAdminProfileDetails();
+
+          //Display message to say that details were successfully saved
+          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+        else{
+          //Error handling
+          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+            duration: 3000
+          });
+        }
+      });
+    }
+    else{
+      //Error handling
+      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
+        duration: 3000
+      });
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -417,93 +516,7 @@ export class AdminProfileComponent implements OnInit {
   }
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SAVE CHANGES
-  /**
-   *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof AdminProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
-    //Indicates if the details can be changed based on whether the passwords match or not
-    var valid = true;
-
-    //Checking to make sure that the passwords are not empty
-    //Checking to make sure that the password and confirmed password match
-    if(this.adminProfileForm.controls.admin_password.value != '' && 
-    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
-      this.password = this.adminProfileForm.controls.admin_password.value;
-    }
-    else{
-      //Indicates that the changes cannot be saved
-      valid = false;
-
-      //POPUP MESSAGE
-      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-        duration: 3000
-      });
-    }
-
-    //Indicates that the changes that the user has made to their profile details, can be changed
-    if(valid == true){
-      if(this.adminProfileForm.controls.admin_email.value == ''){
-        this.email = this.email;
-      }
-      else{
-        this.email = this.adminProfileForm.controls.admin_email.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_name.value == ''){
-        this.name = this.name;
-      }
-      else{
-        this.name = this.adminProfileForm.controls.admin_name.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_surname.value == ''){
-        this.surname == this.surname;
-      }
-      else{
-        this.surname = this.adminProfileForm.controls.admin_surname.value;
-      }  
-      
-      if(this.adminProfileForm.controls.admin_password.value == ''){
-        this.password == this.password;
-      }
-      else{
-        this.password = this.adminProfileForm.controls.admin_password.value;
-      }
-      
-      //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
-        if(response.success == true){
-          //Making sure that local storage now has the updated user information
-          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
-          
-          //Reloading the updated user's details
-          this.loadAdminProfileDetails();
-
-          //Display message to say that details were successfully saved
-          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-        else{
-          //Error handling
-          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-      });
-    }
-    else{
-      //Error handling
-      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-        duration: 3000
-      });
-    }
-  }
-
+  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        SHOW PASSWORD
   /**
@@ -537,22 +550,6 @@ export class AdminProfileComponent implements OnInit {
     else{
       this.confirmInput.nativeElement.type = 'password';
     }
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  TOGGLE NOTIFICATIONS TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof AdminProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
   }
 
 
