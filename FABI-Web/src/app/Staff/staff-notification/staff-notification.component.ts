@@ -35,9 +35,6 @@ export class StaffNotificationComponent implements OnInit {
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /** Object array for holding the administrators -  @type {Member[]} */
-  admins: Member[] = [];   
-
   /** Object array for holding all of the logs -  @type {any[]} */ 
   allNotifications: any[] = [];
   /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
@@ -55,20 +52,6 @@ export class StaffNotificationComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
-  /** Indicates whether there are samples to load or not - @type {boolean} */
-  submittedSamples: boolean = false;
-  /** Indicates whether there are deposit forms to load or not - @type {boolean} */
-  depositForms: boolean = false;
-  /** Indicates whether there are request forms to load or not - @type {boolean} */
-  requestForms: boolean = false;
-
-  /** Object array for holding the deposits associated with the user -  @type {CMWDeposit[]} */
-  deposits: CMWDeposit[] = [];
-  /** Object array for holding the requests associated with the user -  @type {CMWRequest[]} */
-  requests: CMWRequest[] = [];
-  /** Object array for holding the samples associated with the user -  @type {Sample[]} */
-  samples: Sample[] = [];
-
   /** The name and surname of a user concatenated as a string - @type {string} */   
   user1: string;
   /** The name and surname of a user concatenated as a string - @type {string} */   
@@ -84,6 +67,9 @@ export class StaffNotificationComponent implements OnInit {
   confirmPasswordInput: boolean = false;
   /** Indicates if the help tab is hidden/shown - @type {boolean} */  
   helpTab: boolean = false;
+
+  /** The details of the user currently logged in -  @type {any} */
+  currentUser: any;
   
   constructor(
     private authService: AuthenticationService, 
@@ -96,6 +82,7 @@ export class StaffNotificationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentSessionValue.user;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,11 +170,8 @@ export class StaffNotificationComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue();
-
     //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
+    this.notificationLoggingService.getUserLogs(this.currentUser.user.ID).subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.content.data.Logs;
 
@@ -307,10 +291,7 @@ export class StaffNotificationComponent implements OnInit {
       }
     }
 
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue();
-
-    this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
+    this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
         this.loadNotifications();
       }

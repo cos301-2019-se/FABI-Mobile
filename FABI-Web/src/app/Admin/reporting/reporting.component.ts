@@ -76,13 +76,6 @@ export class ReportingComponent implements OnInit {
   /** The date that the logs must end at - @type {string} */
   dateTo: string = '';
 
-  /** Object array for holding all of the logs -  @type {any[]} */ 
-  allNotifications: any[] = [];
-  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
-  newNotifications: any[] = [];
-  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
-  allLogs: string[] = [];
-
   /** Array holding the user logs - @type {any} */
   userLogsArray: any[] = [];
   /** Array holding the database logs - @type {any} */
@@ -100,18 +93,6 @@ export class ReportingComponent implements OnInit {
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
-
-  /** The total number of User Logs - @type {number} */           
-  numberOfUserLogs: number = 0;
-  /** The total number of Database Management Logs - @type {number} */           
-  numberOfDatabaseLogs: number = 0;
-  /** The total number of Access Logs - @type {number} */           
-  numberOfAccessLogs: number = 0;
-
-  /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = true; 
-  /** THe number of the notifications - @type {number} */   
-  localNotificationNumber : number = 1; 
 
   /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
   @ViewChild("userLogsTable") userLogsTable : ElementRef;
@@ -189,32 +170,11 @@ export class ReportingComponent implements OnInit {
   /** Indicates if the help tab is hidden/shown - @type {boolean} */  
   helpTab: boolean = false;
 
-  /** The name and surname of a user concatenated as a string - @type {string} */   
+  /** The details of the user currently logged in -  @type {any} */
+  currentUser: any;
+
+  /** The details of a user -  @type {string} */
   user: string;
-  /** The name and surname of a user concatenated as a string - @type {string} */   
-  user1: string;
-  /** The name and surname of a user concatenated as a string - @type {string} */   
-  user2: string;
-
-  /** The staff member's email address -  @type {string} */
-  email: string = '';
-  /** The staff member's organization -  @type {string} */
-  organization: string = '';
-  /** The staff member's id -  @type {string} */
-  id: string = '';
-  /** The staff member's name -  @type {string} */
-  name: string = '';
-  /** The staff member's surname -  @type {string} */
-  surname: string = '';
-  /** The staff member's user type -  @type {string} */
-  userType: string = '';
-  /** The staff member's password -  @type {string} */
-  password: string = '';
-  /** The staff member's confirmed password -  @type {string} */
-  confirmPassword: string = '';
-
-  /** The form to display the admin member's details -  @type {FormGroup} */
-  adminProfileForm: FormGroup;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       CONSTRUCTOR
@@ -240,17 +200,7 @@ export class ReportingComponent implements OnInit {
     private cultureCollectionService: CultureCollectionAPIService,
     private formBuilder: FormBuilder, 
     private snackBar: MatSnackBar
-    ) { 
-      this.adminProfileForm = this.formBuilder.group({
-        organization_name: '',
-        admin_name: '',
-        admin_surname: '',
-        admin_email: '',
-        admin_type: '',
-        admin_password: '',
-        admin_confirm: ''
-      });
-    }
+    ) {}
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD USER DETAILS
@@ -259,25 +209,14 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails(userOrganization: string, userID: string, type: string) {
+  loadUserDetails(userOrganization: string, userID: string) {
     //Making a call to the User Management API Service to retrieve a specific users details
     this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        if(type == 'user1'){
-          //Sets the users name and surname as a connected string
-          this.user1 = data.fname + ' ' + data.surname;
-        }
-        else if(type == 'user2'){
-          //Sets the users name and surname as a connected string
-          this.user2 = data.fname + ' ' + data.surname;
-        }
-        else if(type == 'none'){
-          //Returns the users name and surname as a connected string
-          this.user = data.fname + ' ' + data.surname;
-        }
+        this.user = data.fname + ' ' + data.surname;
       } 
       else{
         //Error control
@@ -320,9 +259,9 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].details, 'none');
+          this.loadUserDetails(data[i].org1, data[i].details);
           tempArray.push(this.user);
-          this.loadUserDetails(data[i].org2, data[i].user, 'none');
+          this.loadUserDetails(data[i].org2, data[i].user);
           tempArray.push(this.user);
 
           this.userLogsArray.push(tempArray);
@@ -358,7 +297,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].user, 'none');
+          this.loadUserDetails(data[i].org1, data[i].user);
           tempArray.push(this.user);
 
           tempArray.push(data[i].details);
@@ -385,7 +324,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].user, 'none');
+          this.loadUserDetails(data[i].org1, data[i].user);
           tempArray.push(this.user);
 
           tempArray.push(data[i].moreInfo);
@@ -413,7 +352,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(data[i].details);
 
           //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].user, 'none');
+          this.loadUserDetails(data[i].org1, data[i].user);
           tempArray.push(this.user);
 
           this.errorLogsArray.push(tempArray);
@@ -471,7 +410,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(data[i].details);
 
           //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].user, 'none');
+          this.loadUserDetails(data[i].org1, data[i].user);
           tempArray.push(this.user);
 
           this.errorLogsArray.push(tempArray);
@@ -532,7 +471,7 @@ export class ReportingComponent implements OnInit {
             if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
               
-              this.loadUserDetails('FABI', data[j].userID, 'none');
+              this.loadUserDetails('FABI', data[j].userID);
               tempArray.push(this.user);
               tempArray.push(data[j].requestor);
               tempArray.push(data[j].cultureNumber);
@@ -554,7 +493,7 @@ export class ReportingComponent implements OnInit {
                 if(day >= dayFrom){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  this.loadUserDetails('FABI', data[j].userID);
                   tempArray.push(this.user);
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
@@ -576,7 +515,7 @@ export class ReportingComponent implements OnInit {
                 if(day <= dayTo){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  this.loadUserDetails('FABI', data[j].userID);
                   tempArray.push(this.user);
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
@@ -592,7 +531,7 @@ export class ReportingComponent implements OnInit {
               if(month >= monthFrom && month <= monthTo){
                 var tempArray: any = [];
                 
-                this.loadUserDetails('FABI', data[j].userID, 'none');
+                this.loadUserDetails('FABI', data[j].userID);
                 tempArray.push(this.user);
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
@@ -610,7 +549,7 @@ export class ReportingComponent implements OnInit {
           for(var i = 0; i < data.length; i++){
             var tempArray: any = [];
             
-            this.loadUserDetails('FABI', data[i].userID, 'none');
+            this.loadUserDetails('FABI', data[i].userID);
             tempArray.push(this.user);
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
@@ -682,7 +621,7 @@ export class ReportingComponent implements OnInit {
             if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
               
-              this.loadUserDetails('FABI', data[j].userID, 'none');
+              this.loadUserDetails('FABI', data[j].userID);
               tempArray.push(this.user);
               tempArray.push(data[j].cmwCultureNumber);
               tempArray.push(data[j].name);
@@ -705,7 +644,7 @@ export class ReportingComponent implements OnInit {
                 if(day >= dayFrom){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  this.loadUserDetails('FABI', data[j].userID);
                   tempArray.push(this.user);
                   tempArray.push(data[j].cmwCultureNumber);
                   tempArray.push(data[j].name);
@@ -728,7 +667,7 @@ export class ReportingComponent implements OnInit {
                 if(day <= dayTo){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  this.loadUserDetails('FABI', data[j].userID);
                   tempArray.push(this.user);
                   tempArray.push(data[j].cmwCultureNumber);
                   tempArray.push(data[j].name);
@@ -745,7 +684,7 @@ export class ReportingComponent implements OnInit {
               if(month >= monthFrom && month <= monthTo){
                 var tempArray: any = [];
                 
-                this.loadUserDetails('FABI', data[j].userID, 'none');
+                this.loadUserDetails('FABI', data[j].userID);
                 tempArray.push(this.user);
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
@@ -763,7 +702,7 @@ export class ReportingComponent implements OnInit {
           for(var i = 0; i < data.length; i++){
             var tempArray: any = [];
             
-            this.loadUserDetails('FABI', data[i].userID, 'none');
+            this.loadUserDetails('FABI', data[i].userID);
             tempArray.push(this.user);
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
@@ -835,7 +774,7 @@ export class ReportingComponent implements OnInit {
             if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
               
-              this.loadUserDetails('FABI', data[j].userID, 'none');
+              this.loadUserDetails('FABI', data[j].userID);
               tempArray.push(this.user);
               tempArray.push(data[j].requestor);
               tempArray.push(data[j].cultureNumber);
@@ -858,7 +797,7 @@ export class ReportingComponent implements OnInit {
                 if(day >= dayFrom){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  this.loadUserDetails('FABI', data[j].userID);
                   tempArray.push(this.user);
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
@@ -881,7 +820,7 @@ export class ReportingComponent implements OnInit {
                 if(day <= dayTo){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID, 'none');
+                  this.loadUserDetails('FABI', data[j].userID);
                   tempArray.push(this.user);
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
@@ -898,7 +837,7 @@ export class ReportingComponent implements OnInit {
               if(month >= monthFrom && month <= monthTo){
                 var tempArray: any = [];
                 
-                this.loadUserDetails('FABI', data[j].userID, 'none');
+                this.loadUserDetails('FABI', data[j].userID);
                 tempArray.push(this.user);
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
@@ -917,7 +856,7 @@ export class ReportingComponent implements OnInit {
           for(var i = 0; i < data.length; i++){
             var tempArray: any = [];
             
-            this.loadUserDetails('FABI', data[i].userID, 'none');
+            this.loadUserDetails('FABI', data[i].userID);
             tempArray.push(this.user);
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
@@ -1277,156 +1216,6 @@ export class ReportingComponent implements OnInit {
     }
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD LOGS
-  /**
-   *  This function will load all of the user's logs into a string array.
-   * 
-   * @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadLogs(){
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
-
-    //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
-      if(response.success == true){
-        var data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          this.allLogs.push(data[i].id);
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD NOTIFICATIONS
-  /**
-   *  This function will load the admin's notifications into the notification section on the HTML page
-   * 
-   * @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){
-    //Loading all the logs beloning to the user
-    this.loadLogs();
-
-    //Making a call too the notification logging service to return all USER logs
-    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
-      if(response.success = true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          for(var j = 0; j < this.allLogs.length; j++){
-            if(data[i].date == this.allLogs[j]){
-              //A temporary instance of UserLogs that will be added to the allNotifications array
-              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-              
-              //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails(tempLogU.Organization1, tempLogU.Details, 'user1');
-
-              if(tempLogU.Action == "/createOrganization"){
-                tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
-              }
-              else if(tempLogU.Action == "/addStaff"){
-                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
-                tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
-              }
-              else if(tempLogU.Action == "/removeOrg"){
-                tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
-              }
-              else if(tempLogU.Action == "/removeStaff"){
-                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
-                tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
-              }
-  
-              this.allNotifications.push(tempLogU);
-              this.numberOfUserLogs += 1;
-              this.localNotificationNumber += 1;
-            }
-          }          
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-
-    //Making a call too the notification logging service to return all DBML logs
-    this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          for(var j = 0; j < this.allLogs.length; j++){
-            if(data[i].date == this.allLogs[j]){
-              //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
-              var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
-
-              //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails(tempLogD.Organization1, tempLogD.User, 'user1');
-
-              if(tempLogD.Action == "/createDatabase"){
-                tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
-              }
-              else if(tempLogD.Action == "/porting"){
-                tempLogD.Action = tempLogD.Details + " was ported";
-              }
-              else if(tempLogD.Action == "C"){
-                tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + this.user1;
-              }
-
-              this.allNotifications.push(tempLogD);
-              this.numberOfUserLogs += 1;
-              this.localNotificationNumber += 1;
-            }
-          }
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REMOVE NOTIFICATIONS
-  /**
-   *  This function will remove a notification from the notification section on the HTML page.
-   * 
-   * @param {string} id                   //The id of the notification to be removed
-   * @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeNotification(id: string){
-    for(var i =  0; i < this.allNotifications.length; i++){
-      if(this.allNotifications[i].ID == id){
-        this.newNotifications.push(this.allNotifications[i]);
-      }
-    }
-
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
-
-    this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
-      if(response.success == true){
-        this.loadNotifications();
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG ON INIT  
   /**
@@ -1438,10 +1227,9 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    //Calling the neccessary functions as the page loads
-    this.loadNotifications();
-    this.loadAdminProfileDetails();
+    this.currentUser = this.authService.getCurrentSessionValue.user;
 
+    //Calling the neccessary functions as the page loads
     var currentDate = new Date();
     this.date = ('0' + currentDate.getDate()).slice(-2) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
     this.loadAllLogs();
@@ -1486,133 +1274,6 @@ export class ReportingComponent implements OnInit {
   toggleProfileTab() {
     this.profileTab = !this.profileTab;
   }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    LOAD ADMIN PROFILE DETAILS
-  /**
-   *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
-   * 
-   * @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadAdminProfileDetails(){
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
-    //The id number of the user that is currently logged in
-    this.id = tempUser.user.ID;
-    //The organization of the user that is currently logged in
-    this.organization = tempUser.user.organisation;
-
-    //Subscribing to the UserManagementAPIService to get all the staff members details
-    this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Setting the user type of the user
-        this.userType = data.userType;
-        //Setting the first name of the user
-        this.name = data.fname;
-        //Setting the surname of the user
-        this.surname = data.surname;
-        //Setting the email of the user
-        this.email = data.email;
-
-        console.log(this.userType);
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SAVE CHANGES
-  /**
-   *  This function will send the details to the API to save the changed details to the system.
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
-    //Indicates if the details can be changed based on whether the passwords match or not
-    var valid = true;
-
-    //Checking to make sure that the passwords are not empty
-    //Checking to make sure that the password and confirmed password match
-    if(this.adminProfileForm.controls.admin_password.value != '' && 
-    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value){
-      this.password = this.adminProfileForm.controls.admin_password.value;
-    }
-    else{
-      //Indicates that the changes cannot be saved
-      valid = false;
-
-      //POPUP MESSAGE
-      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-        duration: 3000
-      });
-    }
-
-    //Indicates that the changes that the user has made to their profile details, can be changed
-    if(valid == true){
-      if(this.adminProfileForm.controls.admin_email.value == ''){
-        this.email = this.email;
-      }
-      else{
-        this.email = this.adminProfileForm.controls.admin_email.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_name.value == ''){
-        this.name = this.name;
-      }
-      else{
-        this.name = this.adminProfileForm.controls.admin_name.value;
-      }
-
-      if(this.adminProfileForm.controls.admin_surname.value == ''){
-        this.surname == this.surname;
-      }
-      else{
-        this.surname = this.adminProfileForm.controls.admin_surname.value;
-      }  
-      
-      if(this.adminProfileForm.controls.admin_password.value == ''){
-        this.password == this.password;
-      }
-      else{
-        this.password = this.adminProfileForm.controls.admin_password.value;
-      }
-      
-      //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
-        if(response.success == true){
-          //Making sure that local storage now has the updated user information
-          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
-
-          //Reloading the updated user's details
-          this.loadAdminProfileDetails();
-
-          //Display message to say that details were successfully saved
-          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-        else{
-          //Error handling
-          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-      });
-    }
-    else{
-      //Error handling
-      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-        duration: 3000
-      });
-    }
-  }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                      DISPLAY PROFILE SAVE BUTTON 
