@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Tuesday, August 13th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -38,6 +38,10 @@ import * as Interface from '../../_interfaces/interfaces';
 })
 
 export class AdminDashboardComponent implements OnInit {
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //Retriving an HTML element from the HTML page
   @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
