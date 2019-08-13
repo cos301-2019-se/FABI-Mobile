@@ -261,7 +261,7 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadLogs(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue();
+    var tempUser = this.authService.getCurrentSessionValue;
 
     //Making a call to the notification logging service to return all logs belonging to the user
     this.notificationLoggingService.getUserLogs(tempUser.user.ID).subscribe((response: any) => {
@@ -419,7 +419,7 @@ export class DatabaseHandlerComponent implements OnInit {
     }
 
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue();
+    var tempUser = this.authService.getCurrentSessionValue;
 
     this.notificationLoggingService.updateFABIMemberNotifications(tempUser.user.ID, this.newNotifications).subscribe((response: any) => {
       if(response.success == true){
@@ -723,7 +723,7 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
     //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue();
+    var tempUser = this.authService.getCurrentSessionValue;
     //The id number of the user that is currently logged in
     this.id = tempUser.user.ID;
     //The organization of the user that is currently logged in
