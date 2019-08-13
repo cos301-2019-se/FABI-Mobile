@@ -111,10 +111,17 @@ export class AdminProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    this.currentUser = this.authService.getCurrentSessionValue.user;
 
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.loadAdminProfileDetails();
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
     //Calling the neccessary functions as the page loads
-    this.loadAdminProfileDetails();
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    // this.loadAdminProfileDetails();
   }
   
 
@@ -141,9 +148,9 @@ export class AdminProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
     //The id number of the user that is currently logged in
-    this.id = this.currentUser.user.ID;
+    this.id = this.currentUser.ID;
     //The organization of the user that is currently logged in
-    this.organization = this.currentUser.user.organisation;
+    this.organization = this.currentUser.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
