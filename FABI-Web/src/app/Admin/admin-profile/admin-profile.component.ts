@@ -65,8 +65,6 @@ export class AdminProfileComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
-  currentUser: any;
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -116,16 +114,14 @@ export class AdminProfileComponent implements OnInit {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
-      console.log("---- RESPONSE: " + response);
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.loadAdminProfileDetails();
-      this.loadNotifications();
     });
 
     //******** TO BE USED IN PRODUCTION: ********
     //Calling the neccessary functions as the page loads
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
     // this.loadAdminProfileDetails();
-    // this.loadNotifications();
   }
   
 
@@ -152,9 +148,9 @@ export class AdminProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails(){
     //The id number of the user that is currently logged in
-    this.id = this.currentUser.user.ID;
+    this.id = this.currentUser.ID;
     //The organization of the user that is currently logged in
-    this.organization = this.currentUser.user.organisation;
+    this.organization = this.currentUser.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
