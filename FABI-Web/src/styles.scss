@@ -279,7 +279,38 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transform: scale(1.025);
 }
 
-
+/* Submit Button 
+     ========================================================================== */
+     .btn.btn-default-submit {
+        color: #72b555;
+        font-family: "Montserrat", sans-serif;
+    
+        background-color: transparent;
+    
+        border: 1px solid #72b555;
+    
+        border-radius: 5px;
+    
+        padding: 10px;
+    
+        width: auto;
+    
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    
+        transition: all 0.5s;
+    }
+    
+    .btn.btn-default-submit:hover {
+        color: #fff;
+    
+        background: linear-gradient(to right, #76b852, #8dc26f);
+    
+        border: none;
+    
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    
+        transform: scale(1.025);
+    }
 
 /* View Button 
      ========================================================================== */
