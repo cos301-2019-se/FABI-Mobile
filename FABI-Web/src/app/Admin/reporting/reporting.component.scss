@@ -46,7 +46,6 @@ a.nav-link.active {
   margin-top: 25px;
 }
 
-
 .report-table {
   width: 100%;
   height: 100%;
@@ -70,6 +69,38 @@ a.nav-link.active {
   width: 100%;
   height: 100%;
 }
+
+/* Download Button 
+     ========================================================================== */
+     .btn.btn-default-report-download {
+      color: #6B746F;
+      font-family: "Montserrat", sans-serif;
+  
+      background-color: transparent;
+  
+      border: 1px solid #6B746F;
+  
+      border-radius: 5px;
+  
+      padding: 5px;
+      margin: 25px;
+  
+      width: 30%;
+  
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  
+      transition: all 0.5s;
+  }
+  
+  .btn.btn-default-report-download:hover {
+      color: #fff;
+  
+      background-color: rgba(107, 116, 111, 0.95);
+  
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  
+      transform: scale(1.025);
+  }
 
 
 // /*-----------------------
