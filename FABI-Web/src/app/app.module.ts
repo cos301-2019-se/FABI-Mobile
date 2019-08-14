@@ -72,6 +72,10 @@ import { AdminHelpComponent } from './Admin/admin-help/admin-help.component';
 import { StaffHelpComponent } from './Staff/staff-help/staff-help.component';
 import { OrganizationHelpComponent } from './Organization/organization-help/organization-help.component';
 import { MemberHelpComponent } from './Organization-Member/member-help/member-help.component';
+import { AdminMenuComponent } from './Admin/admin-menu/admin-menu.component';
+import { StaffMenuComponent } from './Staff/staff-menu/staff-menu.component';
+import { OrganizationMenuComponent } from './Organization/organization-menu/organization-menu.component';
+import { MemberMenuComponent } from './Organization-Member/member-menu/member-menu.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +123,11 @@ import { MemberHelpComponent } from './Organization-Member/member-help/member-he
     AdminHelpComponent,
     StaffHelpComponent,
     OrganizationHelpComponent,
-    MemberHelpComponent
+    MemberHelpComponent,
+    AdminMenuComponent,
+    StaffMenuComponent,
+    OrganizationMenuComponent,
+    MemberMenuComponent
   ],
   entryComponents: [
     ConfirmComponent,
