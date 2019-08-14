@@ -68,6 +68,7 @@ import { AdminNotificationComponent } from './Admin/admin-notification/admin-not
 import { StaffNotificationComponent } from './Staff/staff-notification/staff-notification.component';
 import { OrganizationNotificationComponent } from './Organization/organization-notification/organization-notification.component';
 import { MemberNotificationComponent } from './Organization-Member/member-notification/member-notification.component';
+import { AdminHelpComponent } from './Admin/admin-help/admin-help.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { MemberNotificationComponent } from './Organization-Member/member-notifi
     AdminNotificationComponent,
     StaffNotificationComponent,
     OrganizationNotificationComponent,
-    MemberNotificationComponent
+    MemberNotificationComponent,
+    AdminHelpComponent
   ],
   entryComponents: [
     ConfirmComponent,

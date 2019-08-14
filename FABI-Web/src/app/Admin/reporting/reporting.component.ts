@@ -91,9 +91,6 @@ export class ReportingComponent implements OnInit {
   /** Array holding the revitalization logs - @type {any} */
   revitalizationLogsArray: any[] = [];
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
-
   /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
   @ViewChild("userLogsTable") userLogsTable : ElementRef;
   /** Holds the table element (databaseLogsTable) from the HTML page - @type {ElementRef} */
@@ -169,6 +166,10 @@ export class ReportingComponent implements OnInit {
   confirmPasswordInput: boolean = false;
   /** Indicates if the help tab is hidden/shown - @type {boolean} */  
   helpTab: boolean = false;
+  /** Indicates if the reporting tab is hidden/shown - @type {boolean} */ 
+  reportingTab: boolean = false;
+  /** Indicates if the log tab is hidden/shown - @type {boolean} */ 
+  logsTab: boolean = false;
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
@@ -395,6 +396,7 @@ export class ReportingComponent implements OnInit {
   generateErrorReport() {
     this.requestReport = false;
     this.depositReport = false;
+    this.revitalizationReport = false;
     this.errorReport = true;
 
     //Loading the 'ERRL' logs
@@ -980,21 +982,6 @@ export class ReportingComponent implements OnInit {
     return newDate;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    TOGGLE NOTIFICATIONS TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
-  }
-
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                      EXPAND USER LOG TABLE
@@ -1234,7 +1221,11 @@ export class ReportingComponent implements OnInit {
     this.date = ('0' + currentDate.getDate()).slice(-2) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
     this.loadAllLogs();
 
+    //Call the generate Request Report so that it is in the tabs in the home tab of the reporting component on load
     this.generateRequestReport();
+
+    //Call the exoand log tabe so that it is in the tabs in the home tab of the reporting component on load
+    this.expandUserLogTable()
   }
 
 
@@ -1309,6 +1300,38 @@ export class ReportingComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE REPORTING 
+  /**
+   * This function will toggle the display of the reporting tab section
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleReportSection() {
+    this.reportingTab = !this.reportingTab;
+    this.logsTab = false;
+
+    //Generate the Request report so that it is ready to be display when the report menu option is clicked
+    this.generateRequestReport();
+  }
+
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE LOG 
+  /**
+   * This function will toggle the display of the logs tab section
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleLogSection(){
+    this.logsTab = !this.logsTab;
+    this.reportingTab = false;
+
+    //Expanf the user log so that it is ready to be display when the log menu option is clicked
+    this.expandUserLogTable();
   }
   
 }
