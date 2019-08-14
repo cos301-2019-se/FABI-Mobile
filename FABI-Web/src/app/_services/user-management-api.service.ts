@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Wednesday, August 14th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -40,6 +40,7 @@ export interface Member {
   Email: string;          //This will contain the email retreived from the DB (is the unique identifier for the member) 
   Name: string;           //This will be the name of the member
   Surname: string;        //This will be the surname of the member
+  ID: string;             //The id number of the member;
 }
 
 //Object for defining the JSON object to be sent when requesting the members of an organization
