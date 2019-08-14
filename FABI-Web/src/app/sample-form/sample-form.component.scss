@@ -1,26 +1,19 @@
 /* ==========================================================================
-   LOGIN PAGE STYLING
+   SUBMIT SAMPLE STYLING
    ========================================================================== */
 
-
-/* General Styling
+/* Submit Sample Container Styling
    ========================================================================== */
 
-/* Login Styling
-   ========================================================================== */
-
-   .login {
+.sample-submission {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-
     width: 100%;
     min-height: 100vh;
     height: auto;
-    
     background-color: #FCFCFC;
-
     position: absolute;
     z-index: -2;
 }
@@ -36,7 +29,7 @@
     right: 0;
     left: 0;
     width: 100%;
-    height: 30vh;
+    height: 40vh;
     background: linear-gradient(to right, #76b852, #8dc26f);
     transform: skewY(-8deg);
     transform-origin: top left;
@@ -47,16 +40,16 @@
 }
 
 /* Width Responsiveness */
-@media (min-width:768px) and (max-width:1199px) {
+@media (min-width:768px) and (max-width:1023px) {
     .banner {
-        height: 80vh;
+        height: 90vh;
         transform: skewY(-9deg);
     }
 }
 
 @media (min-width:1024px) {
     .banner {
-        height: 90vh;
+        height: 100vh;
         transform: skewY(-10deg);
         transform-origin: top right;
 
@@ -64,25 +57,84 @@
     }
 }
 
+// .btn.btn-default-submit {
+//     color: #fff;
+//     font-family: "Montserrat", sans-serif;
 
-/* Login Heading Styling
+//     background-color: transparent;
+
+//     border: 1px solid #fff;
+
+//     border-radius: 5px;
+
+//     padding: 10px;
+
+//     width: auto;
+
+//     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+//     transition: all 0.5s;
+// }
+
+// .btn.btn-default-submit:hover {
+//     color: #fff;
+
+//     background: transparent;
+
+//     border: none;
+
+//     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+//     transform: scale(1.025);
+// }
+
+@media (min-width: 1024px) and (max-height: 932px){
+    .btn.btn-default-submit {
+        color: #fff;
+        font-family: "Montserrat", sans-serif;
+
+        background-color: transparent;
+
+        border: 1px solid #fff;
+
+        border-radius: 5px;
+
+        padding: 10px;
+
+        width: auto;
+
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+        transition: all 0.5s;
+    }
+
+    .btn.btn-default-submit:hover {
+        color: #fff;
+
+        background-color: #fff;
+
+        border: none;
+
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+        transform: scale(1.025);
+    }
+}
+
+
+/*  Heading Styling
     ========================================================================== */
 .heading {
     width: 100%;
-    height: 20vh;
+    height: 15vh;
 
     padding: 50px 0 0 25px;
-}
-
-.heading h5 {
-    color: #F7F7F7;
-    font-family: "Roboto", sans-serif;
 }
 
 .heading h1 {
     color: #F7F7F7;
     font-family: "Montserrat", sans-serif;
-    font-size: 48px;
+    font-size: 40px;
 }
 
 /* Width Responsiveness */
@@ -94,14 +146,9 @@
         padding: 30px 0 0 25px;
     }
 
-    .heading h5 {
-        color: #72B555;
-        font-size: 36px;
-    }
-
     .heading h1 {
         color: #72B555;
-        font-size: 58px;
+        font-size: 52px;
     }
 }
 
@@ -109,7 +156,7 @@
 /* Form Styling
     ========================================================================== */
 
-.login-form {
+.submit-sample-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -119,18 +166,43 @@
     min-height: 50vh;
     height: auto;
 
-    margin-top: 80px;
+    margin-top: 70px;
 
     z-index: 0;
 
     transition: all 0.5s;
+
+
+}
+
+#accordion {
+    width: 100%;
+}
+
+.card-header {
+    background: #F7F7F7;
+}
+
+.card-body {
+    color: black;
+
+    width: 100%;
+}
+
+.btn-link {
+    color: #6B746F;
+}
+
+.btn-link:hover {
+    color: #6b6b6b;
+    text-decoration: none;
 }
 
 
-/* Width Responsiveness */
-@media (min-width:768px) and (max-width:1023px) {
-    .login-form {
-        margin-top: -250px;
+/* Height Responsiveness */
+@media (min-height:800px) {
+    .submit-sample-form {
+        margin-top: 30px;
     }
 }
 
@@ -138,172 +210,46 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    width: 100%;
 }
 
-.login-form .form-group {
-    width: 100%;
+.submit-sample-form .form-group {
+    width: 90%;
 }
 
 .form-group label {
     color: #444444;
 }
 
-.forgot-password {
-    float: right;
-
-    margin-top: 5px;
-}
-
-a.forgot-password {
-    color: #6B746F;
-}
-
-a.forgot-password:hover {
-    color: #6B746F;
-}
-
-.sign-up a {
-    color: #6B746F;
-}
-
-.sign-up a:hover {
-    color: #6B746F;
-}
-
-/* Width Responsiveness */
-@media (min-width:768px) and (max-width:1199px) {
-    // .form-group label {
-    //     color: #FFF;
-    // }
-
-    // .form-text.text-muted {
-    //     color: #FFF !important;
-    //     opacity: 0.5;
-    // }
-
-    // .valid-feedback {
-    //     color: #FFF;
-    // }
-
-    // a.forgot-password {
-    //     color: #FFF;
-    // }
-
-    // a.forgot-password:hover {
-    //     color: #FFF;
-    // }
-    .form-group label {
-        color: black;
-    }
-
-    .form-text.text-muted {
-        color: black !important;
-        opacity: 0.5;
-    }
-
-    .valid-feedback {
-        color: black;
-    }
-
-    a.forgot-password {
-        color: black;
-    }
-
-    a.forgot-password:hover {
-        color: black;
-    }
-}
-
-@media (min-width:1024px) {
-    // .form-group label {
-    //     color: #FFF;
-    // }
-
-    // .form-text.text-muted {
-    //     color: #FFF !important;
-    //     opacity: 0.5;
-    // }
-
-    // .valid-feedback {
-    //     color: #FFF;
-    // }
-
-    // a.forgot-password {
-    //     color: #FFF;
-    // }
-
-    // a.forgot-password:hover {
-    //     color: #FFF;
-    // }
-
-    // .sign-up a {
-    //     color: #FFF;
-    // }
-
-    // .sign-up a:hover {
-    //     color: #FFF;
-    // }
-    .form-group label {
-        color: black;
-    }
-
-    .form-text.text-muted {
-        color: black !important;
-        opacity: 0.5;
-    }
-
-    .valid-feedback {
-        color: black;
-    }
-
-    a.forgot-password {
-        color: black;
-    }
-
-    a.forgot-password:hover {
-        color: black;
-    }
-
-    .sign-up a {
-        color: black;
-    }
-
-    .sign-up a:hover {
-        color: black;
-    }
-
-}
-
-.login-action {
+label {
     width: 100%;
 }
 
-/* Form Button Styling */
-.btn.btn-default {
-    color: #72b555;
+.btn .btn-map {
+    color: #6b746f;
     font-family: "Montserrat", sans-serif;
-
-    float: right;
 
     background-color: transparent;
 
-    border: 1px solid #72b555;
+    border: 1px solid #6b746f;
 
     border-radius: 5px;
 
-    padding: 10px;
+    padding: 5px;
+    margin: 5px;
 
-    width: 50%;
+    width: 40%;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
     transition: all 0.5s;
 }
 
-.btn.btn-default:hover {
-    color: #FFF;
+.btn .btn-map:hover {
+    color: #fff;
 
-    background-color: rgba(114, 181, 85, 0.95);
+    background-color: rgba(107, 116, 111, 0.95);
 
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
@@ -311,36 +257,45 @@ a.forgot-password:hover {
 }
 
 /* Width Responsiveness */
-@media (min-width:768px) {
-    .btn.btn-default {
-        color: #FFF;
+@media (min-width:768px) and (max-width:1199px) {
 
-        border: 1px solid #FFF;
+    .form-group label {
+        color: black;
     }
 
-    .btn.btn-default:hover {
-        color: #72B555;
+    .form-text.text-muted {
+        color: black !important;
+        opacity: 0.5;
+    }
 
-        background-color: rgba(255, 255, 255, 0.95);
-
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-
-        transform: scale(1.025);
+    .valid-feedback {
+        color: black;
     }
 }
 
+@media (min-width:1024px) {
 
-/* Not a Member - Sign Up Styling
-    ========================================================================== */
+    .form-group label {
+        color: black;
+    }
 
-.sign-up {
+    .form-text.text-muted {
+        color: black !important;
+        opacity: 0.5;
+    }
+
+    .valid-feedback {
+        color: black;
+    }
+
+}
+
+.login-action {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
 
-    height: 10vh;
+    width: 100%;
+
+    margin: 25px 0 25px 0;
 }
 
-.card-body {
-    color: black;
-}

@@ -1,5 +1,5 @@
-<!-- Login -->
-<div class="login">
+<!-- Sample Submission -->
+<div class="sample-submission">
 
   <!-- Login Heading -->
   <div class="banner"></div>
@@ -9,9 +9,9 @@
   </div>
   <!-- / Login Heading -->
 
-  <div class="login-form">
+  <div class="submit-sample-form">
 
-      
+
     <!-- Login Form -->
     <form class="needs-validation" iid="sample_form" [formGroup]="sampleForm" (submit)="sendForm()" novalidate>
 
@@ -22,8 +22,8 @@
         <div class="card">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                aria-controls="collapseOne">
+              <button type="button" class="btn btn-link" data-parent="#accordion" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
                 Sample Details
               </button>
             </h5>
@@ -64,8 +64,8 @@
         <div class="card">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                aria-controls="collapseOne">
+              <button type="button" class="btn btn-link" data-parent="#accordion" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="false" aria-controls="collapseOne">
                 Plantation Details
               </button>
             </h5>
@@ -75,9 +75,9 @@
             <div class="card-body">
 
               <p>Not the correct location? Select on map:</p>
-             
+
               <!-- <app-maps-window></app-maps-window> -->
-              <button type="button" (click)="selectLocation()" class="btn btn-default">Google Maps</button>
+              <button type="button" (click)="selectLocation()" class="btn btn-map">Google Maps</button>
 
               <!-- Street Address -->
               <div class="form-group">
@@ -136,9 +136,9 @@
 
               <!-- GPS Coordinates -->
               <div class="form-group">
-                <label for="sample_gpsGPS Coordinates">GPS Coordinates</label>
-                <input type="text" class="form-control form-control-sm" id="sample_gpsGPS Coordinates"
-                  formControlName="sample_gpsGPS Coordinates" placeholder="GPS Coordinates" required>
+                <label for="sample_gps">GPS Coordinates</label>
+                <input type="text" class="form-control form-control-sm" id="sample_gps"
+                  formControlName="sample_gps" placeholder="GPS Coordinates" required>
                 <div class="valid-feedback">
                   Looks good!
                 </div>
@@ -171,8 +171,8 @@
         <div class="card">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                aria-controls="collapseOne">
+              <button type="button" class="btn btn-link" data-parent="#accordion" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="false" aria-controls="collapseOne">
                 Type of Sample
               </button>
             </h5>
@@ -278,11 +278,11 @@
         <!-- / Type of Sample-->
 
         <!--Symptoms-->
-        <div class="card">
+        <div class="card" data-parent="#accordion">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                aria-controls="collapseOne">
+              <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="false" aria-controls="collapseOne">
                 Symptoms
               </button>
             </h5>
@@ -367,11 +367,11 @@
         <!-- / Symptoms-->
 
         <!--Distribution-->
-        <div class="card">
+        <div class="card" data-parent="#accordion">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                aria-controls="collapseOne">
+              <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="false" aria-controls="collapseOne">
                 Distribution
               </button>
             </h5>
@@ -466,22 +466,23 @@
 
               <!-- Percentage_plants_affected -->
               <div class="form-check">
-                  <input class="form-check-input" type="radio" name="percentage_plants_affected" id="twentyfive_to_fifty"
-                    value="twentyfive_to_fifty">
-                  <label class="form-check-label" for="percentage_plants_affected">
-                    25% - 50%
-                  </label>
-                </div>
-                <!-- / Percentage_plants_affected -->
+                <input class="form-check-input" type="radio" name="percentage_plants_affected" id="twentyfive_to_fifty"
+                  value="twentyfive_to_fifty">
+                <label class="form-check-label" for="percentage_plants_affected">
+                  25% - 50%
+                </label>
+              </div>
+              <!-- / Percentage_plants_affected -->
 
               <!-- Percentage_plants_affected -->
               <div class="form-check">
-                  <input class="form-check-input" type="radio" name="percentage_plants_affected" id="greater_fifty" value="greater_fifty">
-                  <label class="form-check-label" for="percentage_plants_affected">
-                      Greater than 50%
-                  </label>
-                </div>
-                <!-- / Percentage_plants_affected -->
+                <input class="form-check-input" type="radio" name="percentage_plants_affected" id="greater_fifty"
+                  value="greater_fifty">
+                <label class="form-check-label" for="percentage_plants_affected">
+                  Greater than 50%
+                </label>
+              </div>
+              <!-- / Percentage_plants_affected -->
 
             </div>
           </div>
@@ -489,111 +490,113 @@
         <!-- / Distribution-->
 
         <!--Conditions-->
-        <div class="card">
-            <div class="card-header" id="headingOne">
-              <h5 class="mb-0">
-                <button type="button"  class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                  aria-controls="collapseOne">
-                  Conditions
-                </button>
-              </h5>
-            </div>
-  
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-              <div class="card-body">
-  
-                <!-- % of plants affected -->
-                <div class="form-group">
-                  <label for="conditions_affected">% of plants affected</label>
-                  <input type="text" class="form-control form-control-sm" id="conditions_affected"
-                    formControlName="conditions_affected" placeholder="% of plants affected" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
+        <div class="card" data-parent="#accordion">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="false" aria-controls="collapseOne">
+                Conditions
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+
+              <!-- % of plants affected -->
+              <div class="form-group">
+                <label for="conditions_affected">% of plants affected</label>
+                <input type="text" class="form-control form-control-sm" id="conditions_affected"
+                  formControlName="conditions_affected" placeholder="% of plants affected" required>
+                <div class="valid-feedback">
+                  Looks good!
                 </div>
-                <!-- / % of plants affected -->
-  
-  
-                <!-- Date when first noticed -->
-                <div class="form-group">
-                  <label for="conditions_problem_noticed">Date when first noticed</label>
-                  <input type="date" class="form-control form-control-sm" id="conditions_problem_noticed"
-                    formControlName="conditions_problem_noticed" placeholder="Date when first noticed" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                </div>
-                <!-- / Date when first noticed -->
-
-                <!-- Date when planted -->
-                <div class="form-group">
-                    <label for="conditions_date_planted">Date when planted</label>
-                    <input type="date" class="form-control form-control-sm" id="conditions_date_planted"
-                      formControlName="conditions_date_planted" placeholder="Date when planted" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Date when planted -->
-
-                  <!-- Unusual weather disturbances -->
-                <div class="form-group">
-                    <label for="conditions_weather_disturbances">Unusual weather disturbances</label>
-                    <input type="text" class="form-control form-control-sm" id="conditions_weather_disturbances"
-                      formControlName="conditions_weather_disturbances" placeholder="Unusual weather disturbances" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Unusual weather disturbances -->
-
-                  <!-- Weather conditions prior to symptom development -->
-                <div class="form-group">
-                    <label for="conditions_weather_prior">Weather conditions prior to symptom development</label>
-                    <input type="text" class="form-control form-control-sm" id="conditions_weather_prior"
-                      formControlName="conditions_weather_prior" placeholder="Weather conditions prior to symptom development" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Weather conditions prior to symptom development -->
-
-                  <!-- Other tree species in the environment that display similar
-                  symptoms? -->
-                <div class="form-group">
-                    <label for="conditions_others">Other tree species in the environment that display similar
-                  symptoms?</label>
-                    <input type="text" class="form-control form-control-sm" id="conditions_others"
-                      formControlName="conditions_others" placeholder="Other tree species in the environment that display similar symptoms?" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Other tree species in the environment that display similar
-                  symptoms? -->
-
-                  <!-- Addition Information -->
-                <div class="form-group">
-                    <label for="conditions_additional"> Addition Information </label>
-                    <input type="text" class="form-control form-control-sm" id="conditions_additional"
-                      formControlName="conditions_additional" placeholder="Additional information" required>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                  </div>
-                  <!-- / Addition Information -->
-  
               </div>
+              <!-- / % of plants affected -->
+
+
+              <!-- Date when first noticed -->
+              <div class="form-group">
+                <label for="conditions_problem_noticed">Date when first noticed</label>
+                <input type="date" class="form-control form-control-sm" id="conditions_problem_noticed"
+                  formControlName="conditions_problem_noticed" placeholder="Date when first noticed" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Date when first noticed -->
+
+              <!-- Date when planted -->
+              <div class="form-group">
+                <label for="conditions_date_planted">Date when planted</label>
+                <input type="date" class="form-control form-control-sm" id="conditions_date_planted"
+                  formControlName="conditions_date_planted" placeholder="Date when planted" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Date when planted -->
+
+              <!-- Unusual weather disturbances -->
+              <div class="form-group">
+                <label for="conditions_weather_disturbances">Unusual weather disturbances</label>
+                <input type="text" class="form-control form-control-sm" id="conditions_weather_disturbances"
+                  formControlName="conditions_weather_disturbances" placeholder="Unusual weather disturbances" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Unusual weather disturbances -->
+
+              <!-- Weather conditions prior to symptom development -->
+              <div class="form-group">
+                <label for="conditions_weather_prior">Weather conditions prior to symptom development</label>
+                <input type="text" class="form-control form-control-sm" id="conditions_weather_prior"
+                  formControlName="conditions_weather_prior"
+                  placeholder="Weather conditions prior to symptom development" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Weather conditions prior to symptom development -->
+
+              <!-- Other tree species in the environment that display similar
+                  symptoms? -->
+              <div class="form-group">
+                <label for="conditions_others">Other tree species in the environment that display similar
+                  symptoms?</label>
+                <input type="text" class="form-control form-control-sm" id="conditions_others"
+                  formControlName="conditions_others"
+                  placeholder="Other tree species in the environment that display similar symptoms?" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Other tree species in the environment that display similar
+                  symptoms? -->
+
+              <!-- Addition Information -->
+              <div class="form-group">
+                <label for="conditions_additional"> Addition Information </label>
+                <input type="text" class="form-control form-control-sm" id="conditions_additional"
+                  formControlName="conditions_additional" placeholder="Additional information" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <!-- / Addition Information -->
+
             </div>
           </div>
-          <!-- / Conditions-->
+        </div>
+        <!-- / Conditions-->
 
       </div>
       <!-- / Form Accordion -->
 
       <!-- Login Button -->
       <div class="login-action">
-        <button type="submit" id="sample_form_submit" class="btn btn-default">Submit Sample</button>
+        <button type="submit" id="sample_form_submit" class="btn btn-default-edit">Submit Sample</button>
       </div>
       <!-- / Login Button -->
 
