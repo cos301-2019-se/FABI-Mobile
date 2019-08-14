@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Wednesday, August 14th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -174,8 +174,8 @@ export class ReportingComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
-  /** The details of a user -  @type {string} */
-  user: string;
+  /** Object array for holding the staff members -  @type {Member[]} */                        
+  staff: Member[] = []; 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       CONSTRUCTOR
@@ -203,6 +203,38 @@ export class ReportingComponent implements OnInit {
     private snackBar: MatSnackBar
     ) {}
 
+  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET ALL STAFF
+  /**
+   *  This function will be used to get all the staff members of FABI and load them into an array
+   *  @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllStaff(){
+     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
+      if(response.success == true){
+        //Temporary array to hold the array of admins retuned from the API call
+        var data = response.data.qs.admins;
+        for(var i = 0; i < data.length; i++){
+          var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
+          this.staff.push(tempMember);
+        }
+       
+        //Temporary array to hold the array of staff returned from the API call
+        var data = response.data.qs.staff;
+        for(var i = 0; i < data.length; i++){
+          var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
+          this.staff.push(tempMember);
+        }
+      }
+      else{
+        //Error handling
+      }
+    });
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD USER DETAILS
   /**
@@ -211,18 +243,11 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        this.user = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
+    for(var i = 0; i < this.staff.length; i++){
+      if(this.staff[i].ID == userID){
+        return this.staff[i].Name + ' ' + this.staff[i].Surname;
       }
-    });
+    }
   }
 
 
@@ -235,35 +260,70 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAllLogs() {
+    this.getAllStaff();
+
     //Loading the 'USER' logs
     this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
       if(response.success = true){
         //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
-        console.log(data);
 
         for(var i = 0; i < data.length; i++){
           var tempArray: any = [];
-          if(data[i].action == 'C'){
-            tempArray.push('Added new user');
-          }
-          else if(data[i].action == 'R'){
-            tempArray.push('Viewed user profile');
-          }
-          else if(data[i].action == 'U'){
-            tempArray.push('Updated user details');
-          }
-          else if(data[i].action == 'D'){
-            tempArray.push('Removed user from system');
-          }
-          
-          tempArray.push(this.getDate(data[i].dateString));
+          if(data[i].action == "/createOrganization"){
+            tempArray.push("New organization was added");
 
-          //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].details);
-          tempArray.push(this.user);
-          this.loadUserDetails(data[i].org2, data[i].user);
-          tempArray.push(this.user);
+            tempArray.push(this.getDate(data[i].dateString));
+
+            //Fetch user information
+            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
+            tempArray.push(data[i].org2);
+          }
+          else if(data[i].action == "/removeOrg"){
+            tempArray.push("Organization removed");
+
+            tempArray.push(this.getDate(data[i].dateString));
+
+            //Fetch user information
+            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
+            tempArray.push(data[i].org2);
+          }
+          else if(data[i].action == '/addStaff'){
+            tempArray.push('Added new user');
+
+            tempArray.push(this.getDate(data[i].dateString));
+
+            //Fetch user information
+            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].org2, data[i].user));
+          }
+          else if(data[i].action == '/updateStaffMember'){
+            tempArray.push('Updated user details');
+
+            tempArray.push(this.getDate(data[i].dateString));
+
+            //Fetch user information
+            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].org2, data[i].user));
+          }
+          else if(data[i].action == '/removeStaff'){
+            tempArray.push('Removed user from system');
+
+            tempArray.push(this.getDate(data[i].dateString));
+
+            //Fetch user information
+            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].org2, data[i].user));
+          }
+          else if(data[i].action == "/udateStaffDatabaseAccess" || data[i].action == "/updateStaffDatabaseAccess"){
+            tempArray.push('User database access updated');
+
+            tempArray.push(this.getDate(data[i].dateString));
+
+            //Fetch user information
+            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].org2, data[i].user));
+          }
 
           this.userLogsArray.push(tempArray);
         }
@@ -273,36 +333,33 @@ export class ReportingComponent implements OnInit {
       }
     });
 
-
     //Loading the 'DBML' logs
     this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
       if(response.success = true){
         //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
-
+        
         for(var i = 0; i < data.length; i++){
           var tempArray: any = [];
-          if(data[i].action == 'C'){
+          if(data[i].action == '/createDatabase' || data[i].action == 'C'){
             tempArray.push('Added new database');
           }
-          else if(data[i].action == 'R'){
-            tempArray.push('Viewed database');
+          else if(data[i].action == '/addDoc'){
+            tempArray.push('Document added to database');
           }
-          else if(data[i].action == 'U'){
-            tempArray.push('Updated database');
+          else if(data[i].action == '/porting'){
+            tempArray.push('Database was ported');
           }
-          else if(data[i].action == 'D'){
-            tempArray.push('Removed database');
+          else if(data[i].action == '/retrieveDatabase'){
+            tempArray.push('Database was retrieved');
           }
-          
+
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].user);
-          tempArray.push(this.user);
+          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
 
           tempArray.push(data[i].details);
-
           this.databaseLogsArray.push(tempArray);
         }
       }
@@ -325,10 +382,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].user);
-          tempArray.push(this.user);
-
-          tempArray.push(data[i].moreInfo);
+          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
 
           this.accessLogsArray.push(tempArray);
         }
@@ -344,7 +398,7 @@ export class ReportingComponent implements OnInit {
       if(response.success = true){
         //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
-
+        
         for(var i = 0; i < data.length; i++){
           var tempArray: any = [];
           
@@ -353,8 +407,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(data[i].details);
 
           //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].user);
-          tempArray.push(this.user);
+          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
 
           this.errorLogsArray.push(tempArray);
         }
@@ -412,8 +465,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(data[i].details);
 
           //Fetch user information
-          this.loadUserDetails(data[i].org1, data[i].user);
-          tempArray.push(this.user);
+          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
 
           this.errorLogsArray.push(tempArray);
         }
@@ -473,8 +525,7 @@ export class ReportingComponent implements OnInit {
             if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
               
-              this.loadUserDetails('FABI', data[j].userID);
-              tempArray.push(this.user);
+              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
               tempArray.push(data[j].requestor);
               tempArray.push(data[j].cultureNumber);
               tempArray.push(data[j].taxonName);
@@ -495,8 +546,7 @@ export class ReportingComponent implements OnInit {
                 if(day >= dayFrom){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID);
-                  tempArray.push(this.user);
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].taxonName);
@@ -517,8 +567,7 @@ export class ReportingComponent implements OnInit {
                 if(day <= dayTo){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID);
-                  tempArray.push(this.user);
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].taxonName);
@@ -533,8 +582,7 @@ export class ReportingComponent implements OnInit {
               if(month >= monthFrom && month <= monthTo){
                 var tempArray: any = [];
                 
-                this.loadUserDetails('FABI', data[j].userID);
-                tempArray.push(this.user);
+                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
                 tempArray.push(data[j].taxonName);
@@ -551,8 +599,7 @@ export class ReportingComponent implements OnInit {
           for(var i = 0; i < data.length; i++){
             var tempArray: any = [];
             
-            this.loadUserDetails('FABI', data[i].userID);
-            tempArray.push(this.user);
+            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
             tempArray.push(data[i].taxonName);
@@ -616,6 +663,7 @@ export class ReportingComponent implements OnInit {
     this.cultureCollectionService.getAllDepositLogs().subscribe((response: any) => {
       if(response.success = true){
         var data = response.data.qs.forms;
+        console.log(data);
 
         if(this.dateFrom != '' && this.dateTo != ''){
           this.depositLogsArray = [];
@@ -623,8 +671,13 @@ export class ReportingComponent implements OnInit {
             if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
               
-              this.loadUserDetails('FABI', data[j].userID);
-              tempArray.push(this.user);
+              if(this.loadUserDetails('FABI', data[j].userID) == null){
+                tempArray.push("");
+              }
+              else{
+                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              }
+              
               tempArray.push(data[j].cmwCultureNumber);
               tempArray.push(data[j].name);
               tempArray.push(data[j].collectedBy);
@@ -646,8 +699,13 @@ export class ReportingComponent implements OnInit {
                 if(day >= dayFrom){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID);
-                  tempArray.push(this.user);
+                  if(this.loadUserDetails('FABI', data[j].userID) == null){
+                    tempArray.push("");
+                  }
+                  else{
+                    tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  }
+
                   tempArray.push(data[j].cmwCultureNumber);
                   tempArray.push(data[j].name);
                   tempArray.push(data[j].collectedBy);
@@ -669,8 +727,13 @@ export class ReportingComponent implements OnInit {
                 if(day <= dayTo){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID);
-                  tempArray.push(this.user);
+                  if(this.loadUserDetails('FABI', data[j].userID) == null){
+                    tempArray.push("");
+                  }
+                  else{
+                    tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  }
+
                   tempArray.push(data[j].cmwCultureNumber);
                   tempArray.push(data[j].name);
                   tempArray.push(data[j].collectedBy);
@@ -686,13 +749,19 @@ export class ReportingComponent implements OnInit {
               if(month >= monthFrom && month <= monthTo){
                 var tempArray: any = [];
                 
-                this.loadUserDetails('FABI', data[j].userID);
-                tempArray.push(this.user);
-                tempArray.push(data[j].requestor);
-                tempArray.push(data[j].cultureNumber);
-                tempArray.push(data[j].taxonName);
-                tempArray.push(data[j].referenceNumber);
-                tempArray.push(data[j].dateRequested);
+                if(this.loadUserDetails('FABI', data[j].userID) == null){
+                  tempArray.push("");
+                }
+                else{
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                }
+
+                tempArray.push(data[j].cmwCultureNumber);
+                tempArray.push(data[j].name);
+                tempArray.push(data[j].collectedBy);
+                tempArray.push(data[j].dateCollected);
+                tempArray.push(data[j].isolatedBy);
+                tempArray.push(data[j].identifiedBy);
                 tempArray.push(data[j].dateSubmitted);
       
                 this.depositLogsArray.push(tempArray);
@@ -704,14 +773,20 @@ export class ReportingComponent implements OnInit {
           for(var i = 0; i < data.length; i++){
             var tempArray: any = [];
             
-            this.loadUserDetails('FABI', data[i].userID);
-            tempArray.push(this.user);
-            tempArray.push(data[i].requestor);
-            tempArray.push(data[i].cultureNumber);
-            tempArray.push(data[i].taxonName);
-            tempArray.push(data[i].referenceNumber);
-            tempArray.push(data[i].dateRequested);
-            tempArray.push(data[i].dateSubmitted);
+            if(this.loadUserDetails('FABI', data[j].userID) == null){
+              tempArray.push("");
+            }
+            else{
+              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+            }
+
+            tempArray.push(data[j].cmwCultureNumber);
+            tempArray.push(data[j].name);
+            tempArray.push(data[j].collectedBy);
+            tempArray.push(data[j].dateCollected);
+            tempArray.push(data[j].isolatedBy);
+            tempArray.push(data[j].identifiedBy);
+            tempArray.push(data[j].dateSubmitted);
   
             this.depositLogsArray.push(tempArray);
           }
@@ -776,8 +851,7 @@ export class ReportingComponent implements OnInit {
             if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
               var tempArray: any = [];
               
-              this.loadUserDetails('FABI', data[j].userID);
-              tempArray.push(this.user);
+              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
               tempArray.push(data[j].requestor);
               tempArray.push(data[j].cultureNumber);
               tempArray.push(data[j].currentName);
@@ -799,8 +873,7 @@ export class ReportingComponent implements OnInit {
                 if(day >= dayFrom){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID);
-                  tempArray.push(this.user);
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].currentName);
@@ -822,8 +895,7 @@ export class ReportingComponent implements OnInit {
                 if(day <= dayTo){
                   var tempArray: any = [];
                   
-                  this.loadUserDetails('FABI', data[j].userID);
-                  tempArray.push(this.user);
+                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].currentName);
@@ -839,8 +911,7 @@ export class ReportingComponent implements OnInit {
               if(month >= monthFrom && month <= monthTo){
                 var tempArray: any = [];
                 
-                this.loadUserDetails('FABI', data[j].userID);
-                tempArray.push(this.user);
+                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
                 tempArray.push(data[j].currentName);
@@ -858,8 +929,7 @@ export class ReportingComponent implements OnInit {
           for(var i = 0; i < data.length; i++){
             var tempArray: any = [];
             
-            this.loadUserDetails('FABI', data[i].userID);
-            tempArray.push(this.user);
+            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
             tempArray.push(data[i].currentName);
@@ -1208,13 +1278,12 @@ export class ReportingComponent implements OnInit {
   /**
    * This function is called when the page loads
    * 
-   * @description 1. Call loadNotifications() 
-   * 
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.currentUser = this.authService.getCurrentSessionValue.user;
+    this.getAllStaff();
 
     //Calling the neccessary functions as the page loads
     var currentDate = new Date();
@@ -1311,10 +1380,16 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleReportSection() {
-    this.reportingTab = !this.reportingTab;
+    if(this.reportingTab == false){
+      this.reportingTab = true;
+    }
+    else{
+      this.reportingTab = false;
+    }
+    
     this.logsTab = false;
 
-    //Generate the Request report so that it is ready to be display when the report menu option is clicked
+    //Generate the Request report so that it is ready to be displayed when the report menu option is clicked
     this.generateRequestReport();
   }
 
@@ -1330,7 +1405,7 @@ export class ReportingComponent implements OnInit {
     this.logsTab = !this.logsTab;
     this.reportingTab = false;
 
-    //Expanf the user log so that it is ready to be display when the log menu option is clicked
+    //Expand the user log so that it is ready to be displayed when the log menu option is clicked
     this.expandUserLogTable();
   }
   
