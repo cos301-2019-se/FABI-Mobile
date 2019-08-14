@@ -204,7 +204,8 @@
             <div class="report-table table-responsive" id="requestReport" *ngIf='requestReport' #requestReportPDF>
 
               <h5> FABI System Request Report - {{date}}</h5>
-              <button class="btn btn-default-view" *ngIf='requestReport' (click)="downloadRequestReport()">Download
+              <button class="btn btn-default-report-download" *ngIf='requestReport'
+                (click)="downloadRequestReport()">Download
                 Request
                 Report</button>
 
@@ -220,15 +221,19 @@
                     <th>Date Submitted</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='requestReport'>
+                <tbody *ngIf='requestReport'>                     
                   <tr *ngFor="let row of requestLogsArray; let i = index">
-                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    <td *ngFor="let key of row; let j = index" [(ngModel)]="row[j]">{{ row[j] }}</td>
                   </tr>
                 </tbody>
               </table>
 
             </div>
             <!-- Tab Content -->
+
+            <!-- Pagination -->
+            
+            <!-- /Pagination -->
 
           </div>
           <!-- / FABI System Request Report Table -->
@@ -240,7 +245,8 @@
             <div class="report-table table-responsive" id="depositReport" *ngIf='depositReport' #depositReportPDF>
 
               <h5> FABI System Deposit Report - {{date}}</h5>
-              <button class="btn btn-default-view" *ngIf='depositReport' (click)="downloadDepositReport()">Download
+              <button class="btn btn-default-report-download" *ngIf='depositReport'
+                (click)="downloadDepositReport()">Download
                 Deposit
                 Report</button>
 
@@ -259,7 +265,7 @@
                 </thead>
                 <tbody *ngIf='depositReport'>
                   <tr *ngFor="let row of depositLogsArray; let i = index">
-                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
               </table>
@@ -276,7 +282,8 @@
             <div class="report-table table-responsive" id="errorReport" *ngIf='errorReport' #errorReportPDF>
 
               <h5> FABI System Error Report - {{date}}</h5>
-              <button class="btn btn-default-view" *ngIf='errorReport' (click)="downloadErrorReport()">Download Error
+              <button class="btn btn-default-report-download" *ngIf='errorReport'
+                (click)="downloadErrorReport()">Download Error
                 Report</button>
 
               <table class="table table-hover" *ngIf="errorLogs" id="previewTableErrorLogs">
@@ -290,7 +297,7 @@
                 </thead>
                 <tbody *ngIf='errorReport'>
                   <tr *ngFor="let row of errorLogsArray; let i = index">
-                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
               </table>
@@ -309,7 +316,7 @@
               #revitalizationReportPDF>
 
               <h5> FABI System Revitalization Report - {{date}}</h5>
-              <button class="btn btn-default-view" *ngIf='revitalizationReport'
+              <button class="btn btn-default-report-download" *ngIf='revitalizationReport'
                 (click)="downloadRevitalizationReport()">Download Revitalization
                 Report</button>
 
@@ -328,12 +335,14 @@
                 </thead>
                 <tbody *ngIf='revitalizationReport'>
                   <tr *ngFor="let row of revitalizationLogsArray; let i = index">
-                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <!-- Tab Content -->
+
+            
 
           </div>
           <!-- / FABI System Error Report Table -->
@@ -400,7 +409,7 @@
                 </thead>
                 <tbody *ngIf='requestReport'>
                   <tr class="tableRow" scope="row" *ngFor="let row of userLogsArray; let i = index">
-                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
               </table>
@@ -433,7 +442,7 @@
                 </thead>
                 <tbody *ngIf='requestReport'>
                   <tr class="tableRow" scope="row" *ngFor="let row of databaseLogsArray; let i = index">
-                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
               </table>
@@ -465,7 +474,7 @@
                 </thead>
                 <tbody *ngIf='requestReport'>
                   <tr class="tableRow" scope="row" *ngFor="let row of accessLogsArray; let i = index">
-                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
               </table>
@@ -498,7 +507,7 @@
                 </thead>
                 <tbody *ngIf='requestReport'>
                   <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray; let i = index">
-                    <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
               </table>
