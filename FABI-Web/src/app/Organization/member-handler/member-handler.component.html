@@ -340,29 +340,9 @@
       <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
       <br />
       <h3>NOTIFICATIONS</h3>
-      <!-- Notification Items -->
-      <div class="notification-items">
-  
-        <!-- Notification Item -->
-      <div class="notification-item" *ngFor="let log of allNotifications">
-          <div class="notification-action">
-            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
-          </div>
-          <div class="notification-heading">
-            <h6><b>{{log.Type}} notification</b></h6>
-          </div>
-          <div class="notification-content">
-            <p><b>Action:</b> {{log.Action}}</p>
-            <p><b>Date:</b> {{log.Date}}</p>
-          </div>
-        </div>
-        <!-- Notification Item -->
-  
-      </div>
-      <!-- Notification Items -->
-      <div class="see-more">
-        <i class="fas fa-ellipsis-h"></i>
-      </div>
+      
+      <app-organization-notification></app-organization-notification>
+      
       <!-- / Notification Section -->
     </div>
   
@@ -370,64 +350,8 @@
     <div id="profile" *ngIf="profileTab">
       <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
       <br />
-      <h3>PROFILE</h3>
-      <!-- Profile Details -->
-      <div class="profile-details">
-        <div class="profile-icon">
-          <i class="fas fa-user-circle"></i>
-        </div>
-  
-        <div class="form">
-          <form class="profile-form needs-validation" novalidate>
-            <div class="form-row align-items-center">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Enter name" onchange="displaySaveButton()"
-                  required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="surname">Surname</label>
-                <input type="text" class="form-control" id="surname" placeholder="Enter surname"
-                  onchange="displaySaveButton()" required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
-                  onchange="displaySaveButton()" required>
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password"
-                  onchange="changedPassword()" required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-              </div>
-              <div class="form-group" id="confirm-password">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()"
-                  required>
-                <div class="valid-feedback">
-                  Looks good!
-                </div>
-              </div>
-              <button type="submit" class="btn btn-default" id="save-btn">Save</button>
-            </div>
-            <!-- / Sign up -->
-          </form>
-        </div>
-  
-      </div>
+      
+      <app-organization-profile></app-organization-profile>
   
     </div>
     <!-- / Profile Section -->
@@ -436,40 +360,8 @@
     <div id="help" *ngIf="helpTab">
       <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
       <br />
-      <h3>HELP</h3>
-      <!-- Help Items -->
-      <div class="help-items">
-  
-        <!-- Help Item -->
-        <div class="help-item">
-          <div class="help-icon">
-            <i class="fas fa-user-friends"></i>
-          </div>
-          <div class="help-heading">
-            <h6>Members</h6>
-          </div>
-          <div class="help-content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- / Help Item -->
-  
-        <!-- Help Item -->
-        <div class="help-item">
-          <div class="help-icon">
-            <i class="fas fa-vial"></i>
-          </div>
-          <div class="help-heading">
-            <h6>Samples</h6>
-          </div>
-          <div class="help-content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- / Help Item -->
-  
-      </div>
-      <!-- Help Items -->
+      
+      <app-organization-help></app-organization-help>
   
     </div>
     <!-- / Help Section -->
