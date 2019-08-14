@@ -13,9 +13,11 @@
  * <<license>>
  */
 
-import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef, Renderer2} from '@angular/core';
-import { OnInit} from '@angular/core';
+import {
+  Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
+  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef, Renderer2
+} from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -34,6 +36,10 @@ import { CultureCollectionAPIService } from '../../_services/culture-collection-
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 
+//Imports used for creating the data table for the pagination and search functionality 
+import * as $ from 'jquery';
+import 'datatables.net';
+
 @Component({
   selector: 'app-reporting',
   templateUrl: './reporting.component.html',
@@ -44,7 +50,7 @@ export class ReportingComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
+
   /** Indicates if there are logs of type USER - @type {boolean} */
   userLogs: boolean = false;
   /** Indicates if there are logs of type DBML - @type {boolean} */
@@ -92,83 +98,83 @@ export class ReportingComponent implements OnInit {
   revitalizationLogsArray: any[] = [];
 
   /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
-  @ViewChild("userLogsTable") userLogsTable : ElementRef;
+  @ViewChild("userLogsTable") userLogsTable: ElementRef;
   /** Holds the table element (databaseLogsTable) from the HTML page - @type {ElementRef} */
-  @ViewChild("databaseLogsTable") databaseLogsTable : ElementRef;
+  @ViewChild("databaseLogsTable") databaseLogsTable: ElementRef;
   /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
-  @ViewChild("accessLogsTable") accessLogsTable : ElementRef;
+  @ViewChild("accessLogsTable") accessLogsTable: ElementRef;
   /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
-  @ViewChild("errorLogsTable") errorLogsTable : ElementRef;
+  @ViewChild("errorLogsTable") errorLogsTable: ElementRef;
 
   /** Holds the table element (userAdd) from the HTML page - @type {ElementRef} */
-  @ViewChild("userAdd") userAdd : ElementRef;
+  @ViewChild("userAdd") userAdd: ElementRef;
   /** Holds the table element (databaseAdd) from the HTML page - @type {ElementRef} */
-  @ViewChild("databaseAdd") databaseAdd : ElementRef;
+  @ViewChild("databaseAdd") databaseAdd: ElementRef;
   /** Holds the table element (accessAdd) from the HTML page - @type {ElementRef} */
-  @ViewChild("accessAdd") accessAdd : ElementRef;
+  @ViewChild("accessAdd") accessAdd: ElementRef;
   /** Holds the table element (errorAdd) from the HTML page - @type {ElementRef} */
-  @ViewChild("errorAdd") errorAdd : ElementRef;
+  @ViewChild("errorAdd") errorAdd: ElementRef;
 
   /** Holds the table element (userCollapse) from the HTML page - @type {ElementRef} */
-  @ViewChild("userCollapse") userCollapse : ElementRef;
+  @ViewChild("userCollapse") userCollapse: ElementRef;
   /** Holds the table element (databaseCollapse) from the HTML page - @type {ElementRef} */
-  @ViewChild("databaseCollapse") databaseCollapse : ElementRef;
+  @ViewChild("databaseCollapse") databaseCollapse: ElementRef;
   /** Holds the table element (accessCollapse) from the HTML page - @type {ElementRef} */
-  @ViewChild("accessCollapse") accessCollapse : ElementRef;
+  @ViewChild("accessCollapse") accessCollapse: ElementRef;
   /** Holds the table element (errorCollapse) from the HTML page - @type {ElementRef} */
-  @ViewChild("errorCollapse") errorCollapse : ElementRef;
+  @ViewChild("errorCollapse") errorCollapse: ElementRef;
 
   /** Holds the table element (errorReportPDF) from the HTML page - @type {ElementRef} */
-  @ViewChild("errorReportPDF") errorReportPDF : ElementRef;
+  @ViewChild("errorReportPDF") errorReportPDF: ElementRef;
   /** Holds the table element (requestReportPDF) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestReportPDF") requestReportPDF : ElementRef;
+  @ViewChild("requestReportPDF") requestReportPDF: ElementRef;
   /** Holds the table element (depositReportPDF) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositReportPDF") depositReportPDF : ElementRef;
+  @ViewChild("depositReportPDF") depositReportPDF: ElementRef;
   /** Holds the table element (revitalizationReportPDF) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationReportPDF") revitalizationReportPDF : ElementRef;
+  @ViewChild("revitalizationReportPDF") revitalizationReportPDF: ElementRef;
 
   /** Holds the table element (requestDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateFrom1") requestDateFrom1 : ElementRef;
+  @ViewChild("requestDateFrom1") requestDateFrom1: ElementRef;
   /** Holds the table element (requestDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateTo1") requestDateTo1 : ElementRef;
+  @ViewChild("requestDateTo1") requestDateTo1: ElementRef;
   /** Holds the table element (requestDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateFrom2") requestDateFrom2 : ElementRef;
+  @ViewChild("requestDateFrom2") requestDateFrom2: ElementRef;
   /** Holds the table element (requestDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateTo2") requestDateTo2 : ElementRef;
+  @ViewChild("requestDateTo2") requestDateTo2: ElementRef;
   /** Holds the table element (depositDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateFrom1") depositDateFrom1 : ElementRef;
+  @ViewChild("depositDateFrom1") depositDateFrom1: ElementRef;
   /** Holds the table element (depositDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateTo1") depositDateTo1 : ElementRef;
+  @ViewChild("depositDateTo1") depositDateTo1: ElementRef;
   /** Holds the table element (depositDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateFrom2") depositDateFrom2 : ElementRef;
+  @ViewChild("depositDateFrom2") depositDateFrom2: ElementRef;
   /** Holds the table element (depositDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateTo2") depositDateTo2 : ElementRef;
+  @ViewChild("depositDateTo2") depositDateTo2: ElementRef;
   /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateFrom1") revitalizationDateFrom1 : ElementRef;
+  @ViewChild("revitalizationDateFrom1") revitalizationDateFrom1: ElementRef;
   /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateTo1") revitalizationDateTo1 : ElementRef;
+  @ViewChild("revitalizationDateTo1") revitalizationDateTo1: ElementRef;
   /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateFrom2") revitalizationDateFrom2 : ElementRef;
+  @ViewChild("revitalizationDateFrom2") revitalizationDateFrom2: ElementRef;
   /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateTo2") revitalizationDateTo2 : ElementRef;
+  @ViewChild("revitalizationDateTo2") revitalizationDateTo2: ElementRef;
   /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateFrom3") revitalizationDateFrom3 : ElementRef;
+  @ViewChild("revitalizationDateFrom3") revitalizationDateFrom3: ElementRef;
   /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateTo3") revitalizationDateTo3 : ElementRef;
+  @ViewChild("revitalizationDateTo3") revitalizationDateTo3: ElementRef;
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
   profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
   saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
   confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
-  /** Indicates if the reporting tab is hidden/shown - @type {boolean} */ 
+  /** Indicates if the reporting tab is hidden/shown - @type {boolean} */
   reportingTab: boolean = false;
-  /** Indicates if the log tab is hidden/shown - @type {boolean} */ 
+  /** Indicates if the log tab is hidden/shown - @type {boolean} */
   logsTab: boolean = false;
 
   /** The details of the user currently logged in -  @type {any} */
@@ -176,6 +182,21 @@ export class ReportingComponent implements OnInit {
 
   /** Object array for holding the staff members -  @type {Member[]} */                        
   staff: Member[] = []; 
+
+  /** Stores the data table -  @type {string} */
+  public tableWidget: any;
+
+  ngAfterViewInit() {
+    this.initDatatable()
+  }
+
+  private initDatatable(): void {
+    let exampleId: any = $('.table');
+    this.tableWidget = exampleId.DataTable({
+      select: true
+    });
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       CONSTRUCTOR
@@ -193,15 +214,15 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private notificationLoggingService: NotificationLoggingService, 
+    private notificationLoggingService: NotificationLoggingService,
     private userManagementService: UserManagementAPIService,
-    private renderer: Renderer2, 
-    private authService: AuthenticationService, 
+    private renderer: Renderer2,
+    private authService: AuthenticationService,
     private router: Router,
     private cultureCollectionService: CultureCollectionAPIService,
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private snackBar: MatSnackBar
-    ) {}
+  ) { }
 
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,7 +252,7 @@ export class ReportingComponent implements OnInit {
       }
       else{
         //Error handling
-      }
+        }
     });
   }
 
@@ -264,12 +285,13 @@ export class ReportingComponent implements OnInit {
 
     //Loading the 'USER' logs
     this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
-      if(response.success = true){
+      if (response.success = true) {
         //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
 
-        for(var i = 0; i < data.length; i++){
+        for (var i = 0; i < data.length; i++) {
           var tempArray: any = [];
+
           if(data[i].action == "/createOrganization"){
             tempArray.push("New organization was added");
 
@@ -328,14 +350,14 @@ export class ReportingComponent implements OnInit {
           this.userLogsArray.push(tempArray);
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
 
     //Loading the 'DBML' logs
     this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
-      if(response.success = true){
+      if (response.success = true) {
         //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
         
@@ -363,7 +385,7 @@ export class ReportingComponent implements OnInit {
           this.databaseLogsArray.push(tempArray);
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -371,13 +393,13 @@ export class ReportingComponent implements OnInit {
 
     //Loading the 'ACCL' logs
     this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
-      if(response.success = true){
+      if (response.success = true) {
         //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
 
-        for(var i = 0; i < data.length; i++){
+        for (var i = 0; i < data.length; i++) {
           var tempArray: any = [];
-          
+
           tempArray.push(data[i].details);
           tempArray.push(this.getDate(data[i].dateString));
 
@@ -387,7 +409,7 @@ export class ReportingComponent implements OnInit {
           this.accessLogsArray.push(tempArray);
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -395,13 +417,13 @@ export class ReportingComponent implements OnInit {
 
     //Loading the 'ERRL' logs
     this.notificationLoggingService.getAllErrorLogs().subscribe((response: any) => {
-      if(response.success = true){
+      if (response.success = true) {
         //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
         
         for(var i = 0; i < data.length; i++){
           var tempArray: any = [];
-          
+
           tempArray.push(data[i].statusCode);
           tempArray.push(this.getDate(data[i].dateString));
           tempArray.push(data[i].details);
@@ -412,28 +434,28 @@ export class ReportingComponent implements OnInit {
           this.errorLogsArray.push(tempArray);
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
 
     //Determines if there are user logs to load or not
-    if(this.userLogsArray != null){
+    if (this.userLogsArray != null) {
       this.userLogs = true;
     }
 
     //Determines if there are database logs to load or not
-    if(this.databaseLogsArray != null){
+    if (this.databaseLogsArray != null) {
       this.databaseLogs = true;
     }
 
     //Determines if there are access logs to load or not
-    if(this.accessLogsArray != null){
+    if (this.accessLogsArray != null) {
       this.accessLogs = true;
     }
 
     //Determines if there are error logs to load or not
-    if(this.errorLogsArray != null){
+    if (this.errorLogsArray != null) {
       this.errorLogs = true;
     }
   }
@@ -454,12 +476,12 @@ export class ReportingComponent implements OnInit {
 
     //Loading the 'ERRL' logs
     this.notificationLoggingService.getAllErrorLogs().subscribe((response: any) => {
-      if(response.success = true){
+      if (response.success = true) {
         var data = response.data.content.data.Logs;
 
-        for(var i = 0; i < data.length; i++){
+        for (var i = 0; i < data.length; i++) {
           var tempArray: any = [];
-          
+
           tempArray.push(data[i].statusCode);
           tempArray.push(this.getDate(data[i].dateString));
           tempArray.push(data[i].details);
@@ -470,7 +492,7 @@ export class ReportingComponent implements OnInit {
           this.errorLogsArray.push(tempArray);
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -516,13 +538,13 @@ export class ReportingComponent implements OnInit {
 
     //Loading the Request forms
     this.cultureCollectionService.getAllRequestLogs().subscribe((response: any) => {
-      if(response.success = true){
+      if (response.success = true) {
         var data = response.data.qs.forms;
 
-        if(this.dateFrom != '' && this.dateTo != ''){
+        if (this.dateFrom != '' && this.dateTo != '') {
           this.requestLogsArray = [];
-          for(var j = 0; j < data.length; j++){
-            if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
+          for (var j = 0; j < data.length; j++) {
+            if (data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo) {
               var tempArray: any = [];
               
               tempArray.push(this.loadUserDetails('FABI', data[j].userID));
@@ -532,18 +554,18 @@ export class ReportingComponent implements OnInit {
               tempArray.push(data[j].referenceNumber);
               tempArray.push(data[j].dateRequested);
               tempArray.push(data[j].dateSubmitted);
-    
+
               this.requestLogsArray.push(tempArray);
             }
-            else{
+            else {
               var month = Number(data[j].dateSubmitted[3] + data[j].dateSubmitted[4]);
               var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
 
-              if(month == monthFrom){
+              if (month == monthFrom) {
                 var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
                 var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
 
-                if(day >= dayFrom){
+                if (day >= dayFrom) {
                   var tempArray: any = [];
                   
                   tempArray.push(this.loadUserDetails('FABI', data[j].userID));
@@ -553,18 +575,18 @@ export class ReportingComponent implements OnInit {
                   tempArray.push(data[j].referenceNumber);
                   tempArray.push(data[j].dateRequested);
                   tempArray.push(data[j].dateSubmitted);
-        
+
                   this.requestLogsArray.push(tempArray);
                 }
               }
 
               var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
 
-              if(month == monthTo){
+              if (month == monthTo) {
                 var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
                 var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
 
-                if(day <= dayTo){
+                if (day <= dayTo) {
                   var tempArray: any = [];
                   
                   tempArray.push(this.loadUserDetails('FABI', data[j].userID));
@@ -574,12 +596,12 @@ export class ReportingComponent implements OnInit {
                   tempArray.push(data[j].referenceNumber);
                   tempArray.push(data[j].dateRequested);
                   tempArray.push(data[j].dateSubmitted);
-        
+
                   this.requestLogsArray.push(tempArray);
                 }
               }
 
-              if(month >= monthFrom && month <= monthTo){
+              if (month >= monthFrom && month <= monthTo) {
                 var tempArray: any = [];
                 
                 tempArray.push(this.loadUserDetails('FABI', data[j].userID));
@@ -589,14 +611,14 @@ export class ReportingComponent implements OnInit {
                 tempArray.push(data[j].referenceNumber);
                 tempArray.push(data[j].dateRequested);
                 tempArray.push(data[j].dateSubmitted);
-      
+
                 this.requestLogsArray.push(tempArray);
               }
             }
           }
         }
-        else{
-          for(var i = 0; i < data.length; i++){
+        else {
+          for (var i = 0; i < data.length; i++) {
             var tempArray: any = [];
             
             tempArray.push(this.loadUserDetails('FABI', data[i].userID));
@@ -606,17 +628,17 @@ export class ReportingComponent implements OnInit {
             tempArray.push(data[i].referenceNumber);
             tempArray.push(data[i].dateRequested);
             tempArray.push(data[i].dateSubmitted);
-  
+
             this.requestLogsArray.push(tempArray);
           }
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
 
-    if(this.requestLogsArray != null){
+    if (this.requestLogsArray != null) {
       this.requestLogs = true;
     }
   }
@@ -661,14 +683,14 @@ export class ReportingComponent implements OnInit {
 
     //Loading the Deposit forms
     this.cultureCollectionService.getAllDepositLogs().subscribe((response: any) => {
-      if(response.success = true){
+      if (response.success = true) {
         var data = response.data.qs.forms;
         console.log(data);
 
-        if(this.dateFrom != '' && this.dateTo != ''){
+        if (this.dateFrom != '' && this.dateTo != '') {
           this.depositLogsArray = [];
-          for(var j = 0; j < data.length; j++){
-            if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
+          for (var j = 0; j < data.length; j++) {
+            if (data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo) {
               var tempArray: any = [];
               
               if(this.loadUserDetails('FABI', data[j].userID) == null){
@@ -677,7 +699,7 @@ export class ReportingComponent implements OnInit {
               else{
                 tempArray.push(this.loadUserDetails('FABI', data[j].userID));
               }
-              
+
               tempArray.push(data[j].cmwCultureNumber);
               tempArray.push(data[j].name);
               tempArray.push(data[j].collectedBy);
@@ -685,18 +707,18 @@ export class ReportingComponent implements OnInit {
               tempArray.push(data[j].isolatedBy);
               tempArray.push(data[j].identifiedBy);
               tempArray.push(data[j].dateSubmitted);
-    
+
               this.depositLogsArray.push(tempArray);
             }
-            else{
+            else {
               var month = Number(data[j].dateSubmitted[3] + data[j].dateSubmitted[4]);
               var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
 
-              if(month == monthFrom){
+              if (month == monthFrom) {
                 var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
                 var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
 
-                if(day >= dayFrom){
+                if (day >= dayFrom) {
                   var tempArray: any = [];
                   
                   if(this.loadUserDetails('FABI', data[j].userID) == null){
@@ -713,18 +735,18 @@ export class ReportingComponent implements OnInit {
                   tempArray.push(data[j].isolatedBy);
                   tempArray.push(data[j].identifiedBy);
                   tempArray.push(data[j].dateSubmitted);
-        
+
                   this.depositLogsArray.push(tempArray);
                 }
               }
 
               var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
 
-              if(month == monthTo){
+              if (month == monthTo) {
                 var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
                 var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
 
-                if(day <= dayTo){
+                if (day <= dayTo) {
                   var tempArray: any = [];
                   
                   if(this.loadUserDetails('FABI', data[j].userID) == null){
@@ -741,12 +763,12 @@ export class ReportingComponent implements OnInit {
                   tempArray.push(data[j].isolatedBy);
                   tempArray.push(data[j].identifiedBy);
                   tempArray.push(data[j].dateSubmitted);
-        
+
                   this.depositLogsArray.push(tempArray);
                 }
               }
 
-              if(month >= monthFrom && month <= monthTo){
+              if (month >= monthFrom && month <= monthTo) {
                 var tempArray: any = [];
                 
                 if(this.loadUserDetails('FABI', data[j].userID) == null){
@@ -763,14 +785,14 @@ export class ReportingComponent implements OnInit {
                 tempArray.push(data[j].isolatedBy);
                 tempArray.push(data[j].identifiedBy);
                 tempArray.push(data[j].dateSubmitted);
-      
+
                 this.depositLogsArray.push(tempArray);
               }
             }
           }
         }
-        else{
-          for(var i = 0; i < data.length; i++){
+        else {
+          for (var i = 0; i < data.length; i++) {
             var tempArray: any = [];
             
             if(this.loadUserDetails('FABI', data[j].userID) == null){
@@ -787,17 +809,17 @@ export class ReportingComponent implements OnInit {
             tempArray.push(data[j].isolatedBy);
             tempArray.push(data[j].identifiedBy);
             tempArray.push(data[j].dateSubmitted);
-  
+
             this.depositLogsArray.push(tempArray);
           }
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
 
-    if(this.depositLogsArray != null){
+    if (this.depositLogsArray != null) {
       this.depositLogs = true;
     }
   }
@@ -842,13 +864,13 @@ export class ReportingComponent implements OnInit {
 
     //Loading the Revitalization forms
     this.cultureCollectionService.getAllRevitalizationLogs().subscribe((response: any) => {
-      if(response.success = true){
+      if (response.success = true) {
         var data = response.data.qs.forms;
 
-        if(this.dateFrom != '' && this.dateTo != ''){
+        if (this.dateFrom != '' && this.dateTo != '') {
           this.revitalizationLogsArray = [];
-          for(var j = 0; j < data.length; j++){
-            if(data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo){
+          for (var j = 0; j < data.length; j++) {
+            if (data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo) {
               var tempArray: any = [];
               
               tempArray.push(this.loadUserDetails('FABI', data[j].userID));
@@ -859,18 +881,18 @@ export class ReportingComponent implements OnInit {
               tempArray.push(data[j].dateRequested);
               tempArray.push(data[j].dateReturned);
               tempArray.push(data[j].dateSubmitted);
-    
+
               this.revitalizationLogsArray.push(tempArray);
             }
-            else{
+            else {
               var month = Number(data[j].dateSubmitted[3] + data[j].dateSubmitted[4]);
               var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
 
-              if(month == monthFrom){
+              if (month == monthFrom) {
                 var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
                 var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
 
-                if(day >= dayFrom){
+                if (day >= dayFrom) {
                   var tempArray: any = [];
                   
                   tempArray.push(this.loadUserDetails('FABI', data[j].userID));
@@ -881,18 +903,18 @@ export class ReportingComponent implements OnInit {
                   tempArray.push(data[j].dateRequested);
                   tempArray.push(data[j].dateReturned);
                   tempArray.push(data[j].dateSubmitted);
-        
+
                   this.revitalizationLogsArray.push(tempArray);
                 }
               }
 
               var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
 
-              if(month == monthTo){
+              if (month == monthTo) {
                 var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
                 var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
 
-                if(day <= dayTo){
+                if (day <= dayTo) {
                   var tempArray: any = [];
                   
                   tempArray.push(this.loadUserDetails('FABI', data[j].userID));
@@ -903,12 +925,12 @@ export class ReportingComponent implements OnInit {
                   tempArray.push(data[j].dateRequested);
                   tempArray.push(data[j].dateReturned);
                   tempArray.push(data[j].dateSubmitted);
-        
+
                   this.revitalizationLogsArray.push(tempArray);
                 }
               }
 
-              if(month >= monthFrom && month <= monthTo){
+              if (month >= monthFrom && month <= monthTo) {
                 var tempArray: any = [];
                 
                 tempArray.push(this.loadUserDetails('FABI', data[j].userID));
@@ -919,14 +941,14 @@ export class ReportingComponent implements OnInit {
                 tempArray.push(data[j].dateRequested);
                 tempArray.push(data[j].dateReturned);
                 tempArray.push(data[j].dateSubmitted);
-      
+
                 this.revitalizationLogsArray.push(tempArray);
               }
             }
           }
         }
-        else{
-          for(var i = 0; i < data.length; i++){
+        else {
+          for (var i = 0; i < data.length; i++) {
             var tempArray: any = [];
             
             tempArray.push(this.loadUserDetails('FABI', data[i].userID));
@@ -937,17 +959,17 @@ export class ReportingComponent implements OnInit {
             tempArray.push(data[i].dateRequested);
             tempArray.push(data[i].dateReturned);
             tempArray.push(data[i].dateSubmitted);
-  
+
             this.revitalizationLogsArray.push(tempArray);
           }
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
 
-    if(this.revitalizationLogsArray != null){
+    if (this.revitalizationLogsArray != null) {
       this.revitalizationLogs = true;
     }
   }
@@ -985,65 +1007,65 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getDate(date: string){
+  getDate(date: string) {
     var tempDate = (date).split(' ');
     var newDate = '';
 
     newDate += tempDate[2];
 
-    if(tempDate[0] == 'Mon'){
+    if (tempDate[0] == 'Mon') {
       newDate += ' Monday ';
     }
-    else if(tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues'){
+    else if (tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues') {
       newDate += ' Tuesday ';
     }
-    else if(tempDate[0] == 'Wed'){
+    else if (tempDate[0] == 'Wed') {
       newDate += ' Wednesday ';
     }
-    else if(tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs'){
+    else if (tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs') {
       newDate += ' Thursday ';
     }
-    else if(tempDate[0] == 'Fri'){
+    else if (tempDate[0] == 'Fri') {
       newDate += ' Friday ';
     }
-    else if(tempDate[0] == 'Sat'){
+    else if (tempDate[0] == 'Sat') {
       newDate += ' Saturday ';
     }
-    else if(tempDate[0] == 'Sun'){
+    else if (tempDate[0] == 'Sun') {
       newDate += ' Sunday ';
     }
 
-    if(tempDate[1] == 'Jan'){
+    if (tempDate[1] == 'Jan') {
       newDate += 'January';
     }
-    else if(tempDate[1] == 'Feb'){
+    else if (tempDate[1] == 'Feb') {
       newDate += 'February';
     }
-    else if(tempDate[1] == 'Mar'){
+    else if (tempDate[1] == 'Mar') {
       newDate += 'March';
     }
-    else if(tempDate[1] == 'Apr'){
+    else if (tempDate[1] == 'Apr') {
       newDate += 'April';
     }
-    else if(tempDate[1] == 'Jun'){
+    else if (tempDate[1] == 'Jun') {
       newDate += 'June';
     }
-    else if(tempDate[1] == 'Jul'){
+    else if (tempDate[1] == 'Jul') {
       newDate += 'July';
     }
-    else if(tempDate[1] == 'Aug'){
+    else if (tempDate[1] == 'Aug') {
       newDate += 'August';
     }
-    else if(tempDate[1] == 'Sep' || tempDate[1] == 'Sept'){
+    else if (tempDate[1] == 'Sep' || tempDate[1] == 'Sept') {
       newDate += 'September';
     }
-    else if(tempDate[1] == 'Oct'){
+    else if (tempDate[1] == 'Oct') {
       newDate += 'October';
     }
-    else if(tempDate[1] == 'Nov'){
+    else if (tempDate[1] == 'Nov') {
       newDate += 'November';
     }
-    else if(tempDate[1] == 'Dec'){
+    else if (tempDate[1] == 'Dec') {
       newDate += 'December';
     }
 
@@ -1060,7 +1082,7 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  expandUserLogTable(){
+  expandUserLogTable() {
     this.renderer.setStyle(this.userLogsTable.nativeElement, 'display', 'block');
     this.renderer.setStyle(this.userCollapse.nativeElement, 'display', 'block');
     this.renderer.setStyle(this.userAdd.nativeElement, 'display', 'none');
@@ -1074,7 +1096,7 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  expandDatabaseLogTable(){
+  expandDatabaseLogTable() {
     this.renderer.setStyle(this.databaseLogsTable.nativeElement, 'display', 'block');
     this.renderer.setStyle(this.databaseCollapse.nativeElement, 'display', 'block');
     this.renderer.setStyle(this.databaseAdd.nativeElement, 'display', 'none');
@@ -1087,7 +1109,7 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  expandAccessLogTable(){
+  expandAccessLogTable() {
     this.renderer.setStyle(this.accessLogsTable.nativeElement, 'display', 'block');
     this.renderer.setStyle(this.accessCollapse.nativeElement, 'display', 'block');
     this.renderer.setStyle(this.accessAdd.nativeElement, 'display', 'none');
@@ -1101,7 +1123,7 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  expandErrorLogTable(){
+  expandErrorLogTable() {
     this.renderer.setStyle(this.errorLogsTable.nativeElement, 'display', 'block');
     this.renderer.setStyle(this.errorCollapse.nativeElement, 'display', 'block');
     this.renderer.setStyle(this.errorAdd.nativeElement, 'display', 'none');
@@ -1115,7 +1137,7 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  collapseUserLogTable(){
+  collapseUserLogTable() {
     this.renderer.setStyle(this.userLogsTable.nativeElement, 'display', 'none');
     this.renderer.setStyle(this.userCollapse.nativeElement, 'display', 'none');
     this.renderer.setStyle(this.userAdd.nativeElement, 'display', 'block');
@@ -1129,7 +1151,7 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  collapseDatabaseLogTable(){
+  collapseDatabaseLogTable() {
     this.renderer.setStyle(this.databaseLogsTable.nativeElement, 'display', 'none');
     this.renderer.setStyle(this.databaseCollapse.nativeElement, 'display', 'none');
     this.renderer.setStyle(this.databaseAdd.nativeElement, 'display', 'block');
@@ -1143,7 +1165,7 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  collapseAccessLogTable(){
+  collapseAccessLogTable() {
     this.renderer.setStyle(this.accessLogsTable.nativeElement, 'display', 'none');
     this.renderer.setStyle(this.accessCollapse.nativeElement, 'display', 'none');
     this.renderer.setStyle(this.accessAdd.nativeElement, 'display', 'block');
@@ -1157,7 +1179,7 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  collapseErrorLogTable(){
+  collapseErrorLogTable() {
     this.renderer.setStyle(this.errorLogsTable.nativeElement, 'display', 'none');
     this.renderer.setStyle(this.errorCollapse.nativeElement, 'display', 'none');
     this.renderer.setStyle(this.errorAdd.nativeElement, 'display', 'block');
@@ -1172,42 +1194,42 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setDateFrom(type: string){
+  setDateFrom(type: string) {
     var temp;
 
-    if(type == 'requested'){
-      if(this.requestReport == true){
+    if (type == 'requested') {
+      if (this.requestReport == true) {
         temp = this.requestDateFrom2.nativeElement.value;
       }
-      else if(this.revitalizationReport == true){
+      else if (this.revitalizationReport == true) {
         temp = this.revitalizationDateFrom2.nativeElement.value;
       }
     }
-    else if(type == 'submitted'){
-      if(this.requestReport == true){
+    else if (type == 'submitted') {
+      if (this.requestReport == true) {
         temp = this.requestDateFrom1.nativeElement.value;
       }
-      else if(this.depositReport == true){
+      else if (this.depositReport == true) {
         temp = this.depositDateFrom1.nativeElement.value;
       }
-      else if(this.revitalizationReport == true){
+      else if (this.revitalizationReport == true) {
         temp = this.revitalizationDateFrom1.nativeElement.value;
       }
     }
-    else if(type == 'collected'){
+    else if (type == 'collected') {
       temp = this.depositDateFrom2.nativeElement.value;
     }
-    else if(type == 'returned'){
+    else if (type == 'returned') {
       temp = this.revitalizationDateFrom3.nativeElement.value;
     }
-    
+
     var day = temp[8] + temp[9];
     var month = temp[5] + temp[6];
     var year = temp[0] + temp[1] + temp[2] + temp[3];
 
     this.dateFrom = day + '/' + month + '/' + year;
 
-    if(this.dateTo == ''){
+    if (this.dateTo == '') {
       var tempDate = new Date();
       this.dateTo = ('0' + tempDate.getDate()).slice(-2) + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
     }
@@ -1222,53 +1244,53 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setDateTo(type: string){
+  setDateTo(type: string) {
     var temp;
 
-    if(type == 'requested'){
-      if(this.requestReport == true){
+    if (type == 'requested') {
+      if (this.requestReport == true) {
         temp = this.requestDateTo2.nativeElement.value;
       }
-      else if(this.revitalizationReport == true){
+      else if (this.revitalizationReport == true) {
         temp = this.revitalizationDateTo2.nativeElement.value;
       }
     }
-    else if(type == 'submitted'){
-      if(this.requestReport == true){
+    else if (type == 'submitted') {
+      if (this.requestReport == true) {
         temp = this.requestDateTo1.nativeElement.value;
       }
-      else if(this.depositReport == true){
+      else if (this.depositReport == true) {
         temp = this.depositDateTo1.nativeElement.value;
       }
-      else if(this.revitalizationReport == true){
+      else if (this.revitalizationReport == true) {
         temp = this.revitalizationDateTo1.nativeElement.value;
       }
     }
-    else if(type == 'collected'){
+    else if (type == 'collected') {
       temp = this.depositDateTo2.nativeElement.value;
     }
-    else if(type == 'returned'){
+    else if (type == 'returned') {
       temp = this.revitalizationDateTo3.nativeElement.value;
     }
 
     var day = temp[8] + temp[9];
     var month = temp[5] + temp[6];
     var year = temp[0] + temp[1] + temp[2] + temp[3];
-    
+
     this.dateTo = day + '/' + month + '/' + year;
 
-    if(this.dateFrom == ''){
+    if (this.dateFrom == '') {
       var tempDate = new Date();
       this.dateFrom = ('0' + tempDate.getDate()).slice(-2) + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
     }
 
-    if(this.requestReport == true){
+    if (this.requestReport == true) {
       this.generateRequestReport();
     }
-    else if(this.depositReport == true){
+    else if (this.depositReport == true) {
       this.generateDepositReport();
     }
-    else if(this.revitalizationReport == true){
+    else if (this.revitalizationReport == true) {
       this.generateRevitalizationReport();
     }
   }
@@ -1319,7 +1341,7 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
+  toggleNotificationsTab() {
     this.notificationsTab = !this.notificationsTab;
   }
 
@@ -1393,7 +1415,7 @@ export class ReportingComponent implements OnInit {
     this.generateRequestReport();
   }
 
- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            TOGGLE LOG 
   /**
    * This function will toggle the display of the logs tab section
@@ -1401,12 +1423,12 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleLogSection(){
+  toggleLogSection() {
     this.logsTab = !this.logsTab;
     this.reportingTab = false;
 
     //Expand the user log so that it is ready to be displayed when the log menu option is clicked
     this.expandUserLogTable();
   }
-  
+
 }
