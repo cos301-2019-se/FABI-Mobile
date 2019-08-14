@@ -18,8 +18,37 @@
   margin-top: 30px;
 }
 
+.reporting-tab {
+  width: 80%;
+  height: 100%;
+}
+
+.log-tab {
+  width: 80%;
+  height: 100%;
+}
+
+a.nav-link {
+  font-family: "Roboto", sans-serif;
+  color: #6B746F;
+}
+
+a.nav-link.active {
+  color: #72B555;
+}
+
+.tab-content {
+  padding: 0;
+  margin:0;
+}
+
+.tab-content .search-table {
+  margin-top: 25px;
+}
+
+
 .report-table {
-  width: 95%;
+  width: 100%;
   height: 100%;
 
   padding: 15px;
