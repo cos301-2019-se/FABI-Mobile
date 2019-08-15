@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -73,13 +73,13 @@ export class DatabaseHandlerComponent implements OnInit {
   /** Holds the column headings to display in the HTML preview table - @type {string[]} */ 
   displayedColumns: string[];
   /** The data source of the HTML table - @type {MatTableDataSource([])} */ 
-  dataSource = new MatTableDataSource([]);
+  databaseData: any[];
   fields: any[] = [];
 
-  databases: any[];
+  databases: Interface.DatabasePrivilege[];
   databasePrivileges: any = {'create': false, 'retrieve': true, 'update': false, 'delete': false};
   
-  selectedDatabase: string;
+  selectedDatabase: Interface.DatabasePrivilege;
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   notificationsTab: boolean = false;
@@ -94,6 +94,8 @@ export class DatabaseHandlerComponent implements OnInit {
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  currentUserPrivileges: any
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -133,12 +135,22 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    this.currentUser = this.authService.getCurrentSessionValue.user;
 
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
+      this.databases = this.currentUserPrivileges.databases;
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // // Set current user logged in
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    // //Calling the neccessary functions as the page loads
     //Load Databases for Drop Down
-    const user = this.authService.getCurrentSessionValue;
-    this.databases = user.user.databases;
+    // this.currentUserPrivileges = this.authService.getFABIUserPrivileges;
   }
+
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,7 +219,7 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getCSV(){
     let data = "";
-    let dbname = this.selectedDatabase;
+    let dbname = this.selectedDatabase.name;
 
     this.dbService.reversePorting(dbname).subscribe((response:any) => {
         this.loading = false;
@@ -253,9 +265,15 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  public viewDatabase() {
-    this.dbService.retrieveDatabase(this.selectedDatabase).subscribe((response: any) => {
+  public viewDatabase(database : Interface.DatabasePrivilege) {
+
+    this.selectedDatabase = database;
+
+    console.log(JSON.stringify(this.selectedDatabase));
+
+    this.dbService.retrieveDatabase(this.selectedDatabase.name).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
+
         Object.keys(response.data.docs[0]).forEach((column) => {
           let obj = {
             'name': column
@@ -263,30 +281,20 @@ export class DatabaseHandlerComponent implements OnInit {
           this.fields.push(obj);
         });
 
-        this.displayedColumns= this.fields.map(field => field.name);
+        this.databaseData = response.data.docs;
 
-        var databaseDetails = this.databases.find(database => {
-          return database.name == this.selectedDatabase;
-        });
-
-        if(databaseDetails && (databaseDetails != null && databaseDetails != '') && databaseDetails.privileges.indexOf('create') != -1) {
+        if(this.selectedDatabase.privileges.indexOf('create') != -1) {
           this.databasePrivileges.create = true;
         }
-        if(databaseDetails && databaseDetails != null && databaseDetails != '' && databaseDetails.privileges.indexOf('retrieve') != -1) {
+        if(this.selectedDatabase.privileges.indexOf('retrieve') != -1) {
           this.databasePrivileges.retrieve = true;
         }
-        if(databaseDetails && databaseDetails != null && databaseDetails != '' && databaseDetails.privileges.indexOf('update') != -1) {
+        if(this.selectedDatabase.privileges.indexOf('update') != -1) {
           this.databasePrivileges.update = true;
-          this.displayedColumns.push("Update");
         }
-        if(databaseDetails && databaseDetails != null && databaseDetails != '' && databaseDetails.privileges.indexOf('delete') != -1) {
+        if(this.selectedDatabase.privileges.indexOf('delete') != -1) {
           this.databasePrivileges.delete = true;
-          this.displayedColumns.push("Remove");
         }
-
-        this.dataSource = new MatTableDataSource(response.data.docs);
-        
-        // this.dataSource.paginator = this.paginator;
   
       } else if (response.success == false) {
         //POPUP MESSAGE
