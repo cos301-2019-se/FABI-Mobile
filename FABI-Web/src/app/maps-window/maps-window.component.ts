@@ -1,9 +1,25 @@
+/**
+ * File Name: maps-window.component.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\maps-window\maps-window.component.ts
+ * Project Name: fabi-web
+ * Created Date: Wednesday, August 14th 2019
+ * Author: Team Nova - novacapstone@gmail.com
+ * -----
+ * Last Modified: Wednesday, August 14th 2019
+ * Modified By: Team Nova
+ * -----
+ * Copyright (c) 2019 University of Pretoria
+ * 
+ * <<license>>
+ */
+
 import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { FormControl } from '@angular/forms';
 import * as Interface from '../_interfaces/interfaces';
 import { MatDialogRef } from '@angular/material';
 
+/** Global declaration of 'google' so that it can be used throught this page - @type {any} */
 declare var google: any;
 
 @Component({
@@ -13,19 +29,52 @@ declare var google: any;
 })
 export class MapsWindowComponent implements OnInit {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /** The location in longitude and latitude - @type {Interface.Location} */
   public location: Interface.Location = {latitude: 0, longitude: 0};
+  /** The address that contains the street name, city, province, and country - @type {Interface.Address} */
   public address: Interface.Address = {street: '', city: '', province: '', country: '', formatted_address: ''};
+  /** The zoom of the displayed map - @type {number} */
   public zoom: number = 0;
   public infoTitle: string = '';
+  /** The type of the map - @type {string} */
   public map_type: string = 'roadmap';
   private geocoder: any;
   public isSatellite: string = "0px";
 
-  @ViewChild('search')
-  public searchElementRef: ElementRef;
+  /** A reference to the 'search' element in the HTML page - @type {ElementRef} */
+  @ViewChild('search') public searchElementRef: ElementRef;
 
-  constructor(private dialogRef: MatDialogRef<MapsWindowComponent>, private mapLoader: MapsAPILoader, private ngZone: NgZone) { }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of MapsWindowComponent.
+   * 
+   * @param {MatDialogRef<MapsWindowComponent>} dialogRef
+   * @param {MapsAPILoader} mapLoader
+   * @param {NgZone} ngZone
+   * 
+   * @memberof MapsWindowComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(
+    private dialogRef: MatDialogRef<MapsWindowComponent>, 
+    private mapLoader: MapsAPILoader, 
+    private ngZone: NgZone) { }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @memberof MapsWindowComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.mapLoader.load().then(() => {
 
@@ -57,6 +106,15 @@ export class MapsWindowComponent implements OnInit {
     });
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      GET CURRENT LOCATION  
+  /**
+   * This function is used to set the current location in the map.
+   * 
+   * @memberof MapsWindowComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   setCurrentLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: Position) => {
@@ -77,6 +135,15 @@ export class MapsWindowComponent implements OnInit {
     }
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         SET LOCATION
+  /**
+   * This function ...
+   * 
+   * @memberof MapsWindowComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectLocation(event) {
     console.log(event);
     this.location.latitude = event.coords.lat;
@@ -88,6 +155,14 @@ export class MapsWindowComponent implements OnInit {
   }
  
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET ADDRESS  
+  /**
+   * This function is used to get the address based on the longitude and latitude provided.
+   * 
+   * @memberof MapsWindowComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAddress(latitude, longitude) {
     this.geocoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
       console.log(results);
@@ -137,8 +212,16 @@ export class MapsWindowComponent implements OnInit {
     });
   }
 
-  changeMapType() {
-    
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         CHANGE MAP TYPE
+  /**
+   * This function is used to change the map type of the map being displayed.
+   * 
+   * @memberof MapsWindowComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  changeMapType() {    
     if(this.map_type = 'roadmap') {
       this.map_type = 'hybrid';
       this.isSatellite = "2px";
@@ -147,9 +230,17 @@ export class MapsWindowComponent implements OnInit {
       this.map_type = 'roadmap';
       this.isSatellite = "0px";
     }
-
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         SELECT 
+  /**
+   * This function ...
+   * 
+   * @memberof MapsWindowComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   select() {
     this.dialogRef.close( 
       {
@@ -159,6 +250,14 @@ export class MapsWindowComponent implements OnInit {
     );
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         CANCEL 
+  /**
+   * This function ...
+   * 
+   * @memberof MapsWindowComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   cancel() {
     this.dialogRef.close();
   }
