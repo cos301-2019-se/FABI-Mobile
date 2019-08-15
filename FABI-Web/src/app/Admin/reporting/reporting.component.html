@@ -398,7 +398,7 @@
 
               <h3 *ngIf="!userLogs">There are currrently no user logs to display</h3>
 
-              <table class="table table-hover" *ngIf="userLogs" id="previewTableUserLogs" #userLogsTable>
+              <table class="table table-hover" *ngIf="userLogs" id="previewTableUserLogs">
                 <thead>
                   <tr>
                     <th>Action performed</th>
@@ -431,7 +431,7 @@
 
               <h3 *ngIf="!databaseLogs">There are currrently no database management logs to display</h3>
 
-              <table class="table table-hover" *ngIf="databaseLogs" id="previewTableDatabaseLogs" #databaseLogsTable>
+              <table class="table table-hover" *ngIf="databaseLogs" id="previewTableDatabaseLogs">
                 <thead>
                   <tr>
                     <th>Action performed</th>
@@ -464,7 +464,7 @@
 
               <h3 *ngIf="!accessLogs">There are currrently no access logs to display</h3>
 
-              <table class="table table-hover" *ngIf="accessLogs" id="previewTableAccessLogs" #accessLogsTable>
+              <table class="table table-hover" *ngIf="accessLogs" id="previewTableAccessLogs">
                 <thead>
                   <tr>
                     <th>Details of access</th>
@@ -496,7 +496,7 @@
 
               <h3 *ngIf="!errorLogs">There are currrently no error logs to display</h3>
 
-              <table class="table table-hover" *ngIf="errorLogs" id="previewTableErrorLogs" #errorLogsTable>
+              <table class="table table-hover" *ngIf="errorLogs" id="previewTableErrorLogs">
                 <thead>
                   <tr>
                     <th>Error status code</th>
