@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Friday, August 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -54,12 +54,8 @@ export class DatabaseHandlerComponent implements OnInit {
   headings: any = [];
   /** Array holding the columns of the new database - @type {any} */
   columns: any = [];
-  /** The name of the database to create via porting - @type {string} */
-  dbname: string;
   /** Used to read the csv file for porting - @type {FileReader} */
   reader: FileReader;
-  /** The value sent through when the file is chosen for porting - @type {any} */
-  fileInput: any;
   /** Indicates if the database has been ported or not - @type {boolean} */
   ported: boolean = false;
 
@@ -76,10 +72,15 @@ export class DatabaseHandlerComponent implements OnInit {
   databaseData: any[];
   fields: any[] = [];
 
+  public portingForm: {
+    file: any,
+    databaseName: string
+  };
+
   databases: Interface.DatabasePrivilege[];
   databasePrivileges: any = {'create': false, 'retrieve': true, 'update': false, 'delete': false};
   
-  selectedDatabase: Interface.DatabasePrivilege;
+  selectedDatabase: string;
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   notificationsTab: boolean = false;
@@ -122,7 +123,13 @@ export class DatabaseHandlerComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService,
     private dbService: DatabaseManagementService,
     private formBuilder: FormBuilder, 
-    ) {}  
+    ) {
+      this.portingForm = {
+        file: null,
+        databaseName: ''
+      }
+      
+    }  
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          NG ON INIT  
@@ -142,7 +149,7 @@ export class DatabaseHandlerComponent implements OnInit {
       this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
       this.databases = this.currentUserPrivileges.databases;
     });
-
+    
     //******** TO BE USED IN PRODUCTION: ********
     // // Set current user logged in
     // this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -162,18 +169,28 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  public submitCSV(input) {
-    this.fileInput = input;
-    this.loading = true;
-    this.dbname = this.port.nativeElement.value;
+  public submitCSV(input?) {
 
-    if(this.dbname == ""){
+    if(input) {
+      this.portingForm.file = input;
+    } 
+
+    console.log("FILE INPUT: " + this.portingForm.file);
+    console.log("DB NAME: " + this.portingForm.databaseName);
+    this.loading = true;
+
+    if(this.portingForm.databaseName == "" || this.portingForm.databaseName == null){
       let snackBarRef = this.snackBar.open("Please enter a name for the database", "Dismiss", { duration: 3000 });
       return;
     }
 
+    if(this.portingForm.file == null || this.portingForm.file == '') {
+      let snackBarRef = this.snackBar.open("Please select a database to port", "Dismiss", { duration: 3000 });
+      return;
+    }
+
     const reader = new FileReader();
-    reader.readAsText(this.fileInput.files[0]);
+    reader.readAsText(this.portingForm.file.files[0]);
     reader.onload = () => {
       let text = reader.result;
 
@@ -218,9 +235,10 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getCSV(){
+    
     let data = "";
-    let dbname = this.selectedDatabase.name;
-
+    let dbname = this.selectedDatabase;
+    
     this.dbService.reversePorting(dbname).subscribe((response:any) => {
         this.loading = false;
         if(response.success == true && response.code == 200) {
@@ -267,11 +285,11 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public viewDatabase(database : Interface.DatabasePrivilege) {
 
-    this.selectedDatabase = database;
+    database = database;
 
-    console.log(JSON.stringify(this.selectedDatabase));
+    console.log(JSON.stringify(database));
 
-    this.dbService.retrieveDatabase(this.selectedDatabase.name).subscribe((response: any) => {
+    this.dbService.retrieveDatabase(database.name).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
 
         Object.keys(response.data.docs[0]).forEach((column) => {
@@ -283,16 +301,16 @@ export class DatabaseHandlerComponent implements OnInit {
 
         this.databaseData = response.data.docs;
 
-        if(this.selectedDatabase.privileges.indexOf('create') != -1) {
+        if(database.privileges.indexOf('create') != -1) {
           this.databasePrivileges.create = true;
         }
-        if(this.selectedDatabase.privileges.indexOf('retrieve') != -1) {
+        if(database.privileges.indexOf('retrieve') != -1) {
           this.databasePrivileges.retrieve = true;
         }
-        if(this.selectedDatabase.privileges.indexOf('update') != -1) {
+        if(database.privileges.indexOf('update') != -1) {
           this.databasePrivileges.update = true;
         }
-        if(this.selectedDatabase.privileges.indexOf('delete') != -1) {
+        if(database.privileges.indexOf('delete') != -1) {
           this.databasePrivileges.delete = true;
         }
   
@@ -325,7 +343,7 @@ export class DatabaseHandlerComponent implements OnInit {
       });
     }
     else{
-      this.dbService.porting(this.dbname, this.jsonData).subscribe((response:any) => {
+      this.dbService.porting(this.portingForm.databaseName, this.jsonData).subscribe((response:any) => {
         this.loading = false;
         if(response.success == true && response.code == 200) {
           //POPUP MESSAGE

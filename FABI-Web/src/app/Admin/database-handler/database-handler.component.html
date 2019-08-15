@@ -196,18 +196,20 @@
         </div>
         <div class="modal-body">
           <div class="form">
-            <form class="view-form">
+            <!-- <form class="view-form"> -->
               <!-- File Upload -->
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile">
-                <label class="custom-file-label" for="customFile">Choose CSV file</label>
+                <input type="file" class="custom-file-input" id="customFile" (change)="submitCSV(input)" #input>
+                <label class="custom-file-label" for="customFile" >Choose CSV file</label>
+                <label class="databaseName" for="databaseNameInput">Database name</label><input type='text'
+            id='databaseNameInput' class="inputSpace" #pDBname [(ngModel)]="portingForm.databaseName" >
               </div>
               <!-- /File Upload -->
-            </form>
+            <!-- </form> -->
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default-save" onclick="saveStaffProfileChanges()">Upload</button>
+          <button type="button" class="btn btn-default-save" (click)=submitCSV()>Upload</button>
         </div>
       </div>
     </div>
@@ -227,23 +229,20 @@
         </div>
         <div class="modal-body">
           <div class="form">
-            <form>
               <div class="form-row align-items-center">
                 <div class="form-group">
-                  <select class="custom-select" *ngIf="databases">
+                  <select class="custom-select" *ngIf="databases" [(ngModel)]="selectedDatabase">
                     <option selected>Choose Database</option>
-                    <option *ngFor="let database of databases" value="{{database.name}}">
+                    <option *ngFor="let database of databases" [value]="database.name">
                       {{database.name}}
                     </option>
                   </select>
                 </div>
-
               </div>
-            </form>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default-save">Download Database</button>
+          <button type="button" class="btn btn-default-save" (click)="getCSV()">Download Database</button>
         </div>
       </div>
     </div>
