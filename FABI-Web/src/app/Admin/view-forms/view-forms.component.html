@@ -394,7 +394,8 @@
           </div>
 
 
-          <button (click)="showProcessForm()" data-toggle="modal" data-target="#processDepositFormModal" class="btn btn-default-save">Process Form</button>
+          <button (click)="showProcessForm()" data-toggle="modal" data-target="#processDepositFormModal"
+            class="btn btn-default-save">Process Form</button>
 
         </div>
 
@@ -1031,46 +1032,57 @@
                 </div>
 
                 <div class="form-row">
-                    <!-- Freeze Dried -->
-                    <div class="form-group col-md-6">
-                      <label for="freezeDried">Freeze Dried</label>
-                      <input type="text" class="form-control form-control-sm" id="freezeDried"
-                        formControlName="freezeDried" placeholder="Freeze Dried" required>
-                      <div class="valid-feedback">
-                        Looks good!
-                      </div>
+                  <!-- Freeze Dried -->
+                  <div class="form-group col-md-6">
+                    <label for="freezeDried">Freeze Dried</label>
+                    <input type="text" class="form-control form-control-sm" id="freezeDried"
+                      formControlName="freezeDried" placeholder="Freeze Dried" required>
+                    <div class="valid-feedback">
+                      Looks good!
                     </div>
-                    <!-- / Freeze Dried -->
-  
-                    <!-- Freeze -80C -->
-                    <div class="form-group col-md-6">
-                      <label for="freeze">Freeze -80C</label>
-                      <input type="text" class="form-control form-control-sm" id="freeze" formControlName="freeze"
-                        placeholder="Freeze -80C" required>
-                      <div class="valid-feedback">
-                        Looks good!
-                      </div>
-                    </div>
-                    <!-- / Freeze -80C -->
                   </div>
+                  <!-- / Freeze Dried -->
 
+                  <!-- Freeze -80C -->
+                  <div class="form-group col-md-6">
+                    <label for="freeze">Freeze -80C</label>
+                    <input type="text" class="form-control form-control-sm" id="freeze" formControlName="freeze"
+                      placeholder="Freeze -80C" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Freeze -80C -->
+                </div>
+
+
+                <div class="form-row">
+                  <!-- Date of Collection Validation -->
+                  <div class="form-group col-md-6">
+                    <label for="dateOfCollectionValidation">Date of Collection Validation</label>
+                    <input type="date" class="form-control form-control-sm" id="dateOfCollectionValidation"
+                      formControlName="dateOfCollectionValidation" placeholder="Date of Collection Validation" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Date of Collection Validation -->
+
+                  <!-- Microscope Slides -->
+                  <div class="form-group col-md-6">
+                    <label for="microscopeSlides">Microscope Slides</label>
+                    <input type="text" class="form-control form-control-sm" id="microscopeSlides"
+                      formControlName="microscopeSlides" placeholder="Microscope Slides" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Microscope Slides -->
+                </div>
+
+              </form>
 
             </div>
-
-
-
-            <div>
-              <mat-form-field class="form_inputs" class="col">
-                <input matInput placeholder="Date of Collection Validation" matInput type="date"
-                  formControlName="dateOfCollectionValidation">
-              </mat-form-field>
-              <br />
-
-              <mat-form-field class="form_inputs" class="col">
-                <input matInput placeholder="Microscope Slides" matInput type="text" formControlName="microscopeSlides">
-              </mat-form-field>
-            </div>
-            </form>
 
           </div>
         </div>
@@ -1078,48 +1090,47 @@
 
       </div>
     </div>
+    <!-- / Process Deposit Form Section -->
+
+
+    <!-- Notification Section -->
+    <div id="notifications" *ngIf="notificationsTab">
+      <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
+      <br />
+
+      <app-admin-notification></app-admin-notification>
+
+    </div>
+    <!-- / Notification Section -->
+
+    <!-- Profile Section -->
+    <div id="profile" *ngIf="profileTab">
+      <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
+      <br />
+
+      <app-admin-profile></app-admin-profile>
+
+    </div>
+    <!-- / Profile Section -->
+
+    <!-- Help Section -->
+    <div id="help" *ngIf="helpTab">
+      <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
+      <br />
+
+      <app-admin-help></app-admin-help>
+
+    </div>
+    <!-- / Help Section -->
+
   </div>
-  <!-- / Process Deposit Form Section -->
+  <!-- / Dashboard Content -->
 
-
-  <!-- Notification Section -->
-  <div id="notifications" *ngIf="notificationsTab">
-    <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
-    <br />
-
-    <app-admin-notification></app-admin-notification>
-
-  </div>
-  <!-- / Notification Section -->
-
-  <!-- Profile Section -->
-  <div id="profile" *ngIf="profileTab">
-    <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
-    <br />
-
-    <app-admin-profile></app-admin-profile>
-
-  </div>
-  <!-- / Profile Section -->
-
-  <!-- Help Section -->
-  <div id="help" *ngIf="helpTab">
-    <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
-    <br />
-
-    <app-admin-help></app-admin-help>
-
-  </div>
-  <!-- / Help Section -->
-
-</div>
-<!-- / Dashboard Content -->
-
-<!-- Up Icon -->
-<!-- <div id="scroll-to-top">
+  <!-- Up Icon -->
+  <!-- <div id="scroll-to-top">
       <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
     </div> -->
-<!-- / Up Icon -->
+  <!-- / Up Icon -->
 
 </div>
 <!-- / Dashboard -->
