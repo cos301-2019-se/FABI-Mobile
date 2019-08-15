@@ -398,11 +398,11 @@ export class SubmitCmwDepositComponent implements OnInit {
     var date = new Date();
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var deposit: CMWDeposit = {userID: this.currentUser.user.ID,cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
+    var deposit: CMWDeposit = {userID: this.currentUser.user.ID, cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
       internationalCollectionNumber: this.internationalCollectionNumber, herbariumNumber: this.herbariumNumber, otherFABICollections: this.otherFABICollections, name: this.name,
       typeStatus: this.typeStatus, host: this.host, vector: this.vector, substrate: this.substrate, continent: this.continent, country: this.country, region: this.region,
       locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected, isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
-      donatedBy: this.donatedBy, additionalNotes: this.additionalNotes, dateSubmitted: currentDate}
+      donatedBy: this.donatedBy, additionalNotes: this.additionalNotes, dateSubmitted: currentDate, formID: ''};
 
     this.cultureCollectionService.submitCMWDepositForm(deposit).subscribe((response: any) => {
       if(response.success == true){
