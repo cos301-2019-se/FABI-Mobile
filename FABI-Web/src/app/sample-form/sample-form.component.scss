@@ -227,12 +227,12 @@ label {
 }
 
 .btn .btn-map {
-    color: #6b746f;
+    color: #6b746f !important;
     font-family: "Montserrat", sans-serif;
 
-    background-color: transparent;
+    background-color: transparent !important;
 
-    border: 1px solid #6b746f;
+    border: 1px solid #6b746f !important;
 
     border-radius: 5px;
 
@@ -247,9 +247,9 @@ label {
 }
 
 .btn .btn-map:hover {
-    color: #fff;
+    color: #fff !important;
 
-    background-color: rgba(107, 116, 111, 0.95);
+    background-color: rgba(107, 116, 111, 0.95) !important;
 
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 

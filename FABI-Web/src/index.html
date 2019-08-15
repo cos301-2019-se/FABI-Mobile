@@ -36,14 +36,13 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script>
-    
+
     function searchFunction() {
 
-      console.log("GOING HERE ATKEAST ");
       var input, filter, table, tr, td, i;
-      input = document.getElementById("search-table");
+      input = document.getElementById("search");
       filter = input.value.toUpperCase();
-      table = document.getElementById("table");
+      table = document.getElementById("info");
       tr = table.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];

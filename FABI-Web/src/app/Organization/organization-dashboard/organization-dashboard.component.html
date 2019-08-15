@@ -210,12 +210,20 @@
 
         <!-- Extra Table Information -->
         <div class="table-information" *ngIf="!organizationMembers">
-            <h6>There are currently no members</h6>
-            <i class="fas fa-plus-circle" routerLink="/member-handler"></i>
-          </div>
-          <!-- / Extra Table Information -->
+          <h6>There are currently no members</h6>
+          <i class="fas fa-plus-circle" routerLink="/member-handler"></i>
+        </div>
+        <!-- / Extra Table Information -->
 
-        <table class="table table-hover" *ngIf="organizationMembers">
+        <div class="input-group search-table">
+            <div class="input-group-prepend ">
+              <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+            </div>
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+              aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+          </div>
+
+        <table class="table table-hover" id="info" *ngIf="organizationMembers">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -234,6 +242,23 @@
       </div>
       <!-- / Member Table -->
 
+      <!-- Sample Table -->
+      <div class="member-table table-responsive">
+        <h5> Sample Table </h5>
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!organizationMembers">
+          <h6>There are currently no samples</h6>
+          <i class="fas fa-plus-circle" routerLink="/member-handler"></i>
+        </div>
+        <!-- / Extra Table Information -->
+
+        <app-organization-view-samples></app-organization-view-samples>
+
+      </div>
+      <!-- / Sample Table -->
+
+
     </div>
     <!-- / Member Tables -->
   </div>
@@ -243,27 +268,27 @@
   <div id="notifications" *ngIf="notificationsTab">
     <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
     <br />
-    
+
     <app-organization-notification></app-organization-notification>
 
   </div>
   <!-- / Notification Section -->
 
-      <!-- Profile Section -->
-      <div id="profile" *ngIf="profileTab">
-          <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
-          <br />
-              
-          <app-organization-profile></app-organization-profile>
-    
-        </div>
-        <!-- / Profile Section -->
+  <!-- Profile Section -->
+  <div id="profile" *ngIf="profileTab">
+    <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
+    <br />
+
+    <app-organization-profile></app-organization-profile>
+
+  </div>
+  <!-- / Profile Section -->
 
   <!-- Help Section -->
   <div id="help" *ngIf="helpTab">
     <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
     <br />
-    
+
     <app-organization-help></app-organization-help>
 
   </div>
