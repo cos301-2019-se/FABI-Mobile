@@ -5,7 +5,7 @@
  * Created Date: Monday, August 5th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -16,7 +16,7 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
-import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -86,6 +86,8 @@ export class ViewFormsComponent implements OnInit {
   additionalNotes: string;                
   /** The date that the form was submitted - @type {string} */
   dateSubmittedDeposit: string; 
+  /** The id number of the deposit form - @type {string} */
+  formID: string;
   
   /** The user id of the user submitting the form - @type {string} */ 
   userIDRequest: string; 
@@ -179,6 +181,9 @@ export class ViewFormsComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
+  /** Object array for holding the staff members -  @type {Member[]} */                        
+  staff: Member[] = []; 
+
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   notificationsTab: boolean = false;
   /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
@@ -246,6 +251,38 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET ALL STAFF
+  /**
+   *  This function will be used to get all the staff members of FABI and load them into an array
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllStaff(){
+    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
+     if(response.success == true){
+       //Temporary array to hold the array of admins retuned from the API call
+       var data = response.data.qs.admins;
+       for(var i = 0; i < data.length; i++){
+         var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
+         this.staff.push(tempMember);
+       }
+      
+       //Temporary array to hold the array of staff returned from the API call
+       var data = response.data.qs.staff;
+       for(var i = 0; i < data.length; i++){
+         var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
+         this.staff.push(tempMember);
+       }
+     }
+     else{
+       //Error handling
+       }
+   });
+ }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  GET ALL DEPOSIT FROMS
   /**
    *  This function will be used to load all of the deposit forms into the HTML page
@@ -264,7 +301,7 @@ export class ViewFormsComponent implements OnInit {
             otherFABICollections: data[i].otherFABICollections, name: data[i].name, typeStatus: data[i].typeStatus, host: data[i].host, vector: data[i].vector,
             substrate: data[i].substrate, continent: data[i].continent, country: data[i].country, region: data[i].region, locality: data[i].locality, 
             gps: data[i].gps, collectedBy: data[i].collectedBy, dateCollected: data[i].dateCollected, isolatedBy: data[i].isolatedBy, identifiedBy: data[i].identifiedBy,
-            donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted};
+            donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted, formID: data[i].id};
           
 
           if(data[i].status == 'submitted'){
@@ -396,7 +433,7 @@ export class ViewFormsComponent implements OnInit {
 
     var tempDeposit = this.depositForms[this.depositFormNumber];
 
-    this.loadUserDetailsDeposit("FABI", tempDeposit.userID);
+    this.loadUserDetails(tempDeposit.userID, 'deposit');
     this.cmwCultureNumberDeposit = tempDeposit.cmwCultureNumber;
     this.genus = tempDeposit.genus;
     this.epitheton = tempDeposit.epitheton;
@@ -421,6 +458,7 @@ export class ViewFormsComponent implements OnInit {
     this.donatedBy = tempDeposit.donatedBy;
     this.additionalNotes = tempDeposit.additionalNotes;
     this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
+    this.formID = tempDeposit.formID;
 
     if(this.depositFormNumber == 0){
       this.depositFormNumber += 1;
@@ -452,7 +490,7 @@ export class ViewFormsComponent implements OnInit {
 
     var tempDeposit = this.depositForms[this.depositFormNumber];
 
-    this.loadUserDetailsDeposit("FABI", tempDeposit.userID);
+    this.loadUserDetails(tempDeposit.userID, 'deposit');
     this.cmwCultureNumberDeposit = tempDeposit.cmwCultureNumber;
     this.genus = tempDeposit.genus;
     this.epitheton = tempDeposit.epitheton;
@@ -477,6 +515,7 @@ export class ViewFormsComponent implements OnInit {
     this.donatedBy = tempDeposit.donatedBy;
     this.additionalNotes = tempDeposit.additionalNotes;
     this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
+    this.formID = tempDeposit.formID;
 
     if(this.depositFormNumber == this.depositForms.length){
       this.depositFormNumber -= 1;
@@ -511,7 +550,7 @@ export class ViewFormsComponent implements OnInit {
 
     var tempRequest = this.requestForms[this.requestFormNumber];
 
-    this.loadUserDetailsRequest("FABI", tempRequest.userID);
+    this.loadUserDetails(tempRequest.userID, 'request');
     this.cmwCultureNumberRequest = tempRequest.cultureNumber;
     this.taxonName = tempRequest.taxonName;
     this.referenceNumberRequest = tempRequest.referenceNumber;
@@ -549,7 +588,7 @@ export class ViewFormsComponent implements OnInit {
 
     var tempRequest = this.requestForms[this.requestFormNumber];
 
-    this.loadUserDetailsRequest("FABI", tempRequest.userID);
+    this.loadUserDetails(tempRequest.userID, 'request');
     this.cmwCultureNumberRequest = tempRequest.cultureNumber;
     this.taxonName = tempRequest.taxonName;
     this.referenceNumberRequest = tempRequest.referenceNumber;
@@ -590,7 +629,7 @@ export class ViewFormsComponent implements OnInit {
 
     var tempRevitalization = this.revitalizationForms[this.revitalizationFormNumber];
 
-    this.loadUserDetailsRevitalization("FABI", tempRevitalization.userID);
+    this.loadUserDetails(tempRevitalization.userID, 'revitalization');
     this.cmwCultureNumberRequest = tempRevitalization.cultureNumber;
     this.currentName = tempRevitalization.currentName;
     this.referenceNumberRevitalization = tempRevitalization.referenceNumber;
@@ -631,7 +670,7 @@ export class ViewFormsComponent implements OnInit {
 
     var tempRevitalization = this.revitalizationForms[this.revitalizationFormNumber];
 
-    this.loadUserDetailsRevitalization("FABI", tempRevitalization.userID);
+    this.loadUserDetails(tempRevitalization.userID, 'revitalization');
     this.cmwCultureNumberRequest = tempRevitalization.cultureNumber;
     this.currentName = tempRevitalization.currentName;
     this.referenceNumberRevitalization = tempRevitalization.referenceNumber;
@@ -675,7 +714,7 @@ export class ViewFormsComponent implements OnInit {
 
     var tempProcessed = this.processedForms[this.processedFormNumber];
 
-    this.loadUserDetailsProcessed("FABI", tempProcessed.userID);
+    this.loadUserDetails(tempProcessed.userID, 'processed');
     this.statusOfCulture = tempProcessed.statusOfCulture;
     this.agarSlants = tempProcessed.agarSlants;
     this.water = tempProcessed.water;
@@ -721,7 +760,7 @@ export class ViewFormsComponent implements OnInit {
 
     var tempProcessed = this.processedForms[this.processedFormNumber];
 
-    this.loadUserDetailsProcessed("FABI", tempProcessed.userID);
+    this.loadUserDetails(tempProcessed.userID, 'processed');
     this.statusOfCulture = tempProcessed.statusOfCulture;
     this.agarSlants = tempProcessed.agarSlants;
     this.water = tempProcessed.water;
@@ -749,97 +788,34 @@ export class ViewFormsComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                   LOAD USER DETAILS DEPOSIT
+  //                                                   LOAD USER DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
    *  @memberof ViewFormsComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetailsDeposit(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
+  loadUserDetails(userID: string, type: string) {
+    var person = '';
 
-        //Returns the users name and surname as a connected string
-        this.userIDDeposit = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
+    for(var i = 0; i < this.staff.length; i++){
+      if(this.staff[i].ID == userID){
+        person = this.staff[i].Name + ' ' + this.staff[i].Surname;
       }
-    });
+    }
+
+    if(type == 'deposit'){
+      this.userIDDeposit = person;
+    }
+    else if(type == 'request'){
+      this.userIDRequest = person;
+    }
+    else if(type == 'revitalization'){
+      this.userIDRevitalization = person;
+    }
+    else if(type == 'processed'){
+      this.userIDProcessed = person;
+    }
   }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    LOAD USER DETAILS REQUEST
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   *  @memberof ViewFormsComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetailsRequest(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        this.userIDRequest = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD USER DETAILS REVITALIZATION
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   *  @memberof ViewFormsComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetailsRevitalization(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        this.userIDRevitalization = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD USER DETAILS PROCESSED
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   *  @memberof ViewFormsComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetailsProcessed(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        this.userIDProcessed = data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        SHOW PROCESS FORM
@@ -878,31 +854,6 @@ export class ViewFormsComponent implements OnInit {
     //this.renderer.setStyle(this.associatedDepositForm.nativeElement, 'display', 'none');
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        PROCESS DEPOSIT FORM
-  /**
-   *  This function will be called so that a deposit form can be processed and its status updated
-   *  @memberof ViewFormsComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  processDepositForm(){
-    var statusOfCulture = this.processForm.controls.statusOfCulture.value;
-    var agarSlants = this.processForm.controls.agarSlants.value;
-    var water = this.processForm.controls.water.value;
-    var oil = this.processForm.controls.oil.value;
-    var roomTemperature = this.processForm.controls.roomTemperature.value;
-    var c18 = this.processForm.controls.c18.value;
-    var freezeDried = this.processForm.controls.freezeDried.value;
-    var freeze = this.processForm.controls.freeze.value;
-    var dateOfCollectionValidation = this.processForm.controls.dateOfCollectionValidation.value;
-    var microscopeSlides = this.processForm.controls.microscopeSlides.value;
-
-    var tempDeposit = this.depositForms[this.depositFormNumber];
-
-    // this.loadNextDepositForm();
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        TOGGLE NOTIFICATIONS TAB
   /**
@@ -927,6 +878,9 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   processDepositProcessedForm(){
+    this.userIDProcessed = this.currentUser.user.ID;
+    this.cmwCultureNumberProcessed = this.cmwCultureNumberDeposit;
+
     if(this.processForm.controls.statusOfCulture.value == "" || this.processForm.controls.statusOfCulture.value == null){
       this.statusOfCulture = "";
     }
@@ -1007,7 +961,7 @@ export class ViewFormsComponent implements OnInit {
 
     this.cultureCollectionService.submitProcessedForm(tempProcessedForm).subscribe((response: any) => {
       if(response.success == true){
-        var tempUpdate: UpdateDepositForm = {userID: this.currentUser.user.ID, status: 'processed', formID: ''};
+        var tempUpdate: UpdateDepositForm = {userID: this.currentUser.user.ID, status: 'processed', formID: this.formID};
 
         this.cultureCollectionService.updateDepositFormStatus(tempUpdate).subscribe((response: any) => {
           if(response.success == true){
@@ -1057,6 +1011,7 @@ export class ViewFormsComponent implements OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     
     //Calling the neccessary functions as the page loads
+    this.getAllStaff();
     this.getAllDepositForms();
     this.getAllRequestForms();
     this.getAllRevitalizationForms();
