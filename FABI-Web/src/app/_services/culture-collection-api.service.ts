@@ -5,7 +5,7 @@
  * Created Date: Monday, July 15th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -62,6 +62,7 @@ export interface CMWDeposit{
   donatedBy: string;                      //The user who donated the culture (if any)
   additionalNotes: string;                //Any additional notes (if any)
   dateSubmitted: string;                  //The date that the form was submitted
+  formID: string;                         //The id number for the actual form
 }
 
 //Object for defining the CMW request form values
