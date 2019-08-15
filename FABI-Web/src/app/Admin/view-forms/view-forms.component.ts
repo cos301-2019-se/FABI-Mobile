@@ -987,6 +987,7 @@ export class ViewFormsComponent implements OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     
     //Calling the neccessary functions as the page loads
+    this.getAllStaff();
     this.getAllDepositForms();
     this.getAllRequestForms();
     this.getAllRevitalizationForms();
