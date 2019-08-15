@@ -113,7 +113,7 @@
         <div class="menu-row">
 
           <!-- Menu Item -->
-          <div class="menu-item">
+          <div class="menu-item" (click)="toggleReportSection()">
             <div class="menu-icon">
               <i class="fas fa-chart-bar"></i>
             </div>
@@ -132,7 +132,7 @@
         <div class="menu-row">
 
           <!-- Menu Item -->
-          <div class="menu-item">
+          <div class="menu-item" (click)="toggleLogSection()">
             <div class="menu-icon">
               <i class="fas fa-file-alt"></i>
             </div>
@@ -223,7 +223,7 @@
                 </thead>
                 <tbody *ngIf='requestReport'>                     
                   <tr *ngFor="let row of requestLogsArray; let i = index">
-                    <td *ngFor="let key of row; let j = index" [(ngModel)]="row[j]">{{ row[j] }}</td>
+                    <td *ngFor="let key of row; let j = index">{{ row[j] }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -361,19 +361,19 @@
         <ul class="nav nav-tabs nav-tabs-responsive" id="myTab" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="userLog-tab" data-toggle="tab" href="#userLogTab" role="tab"
-              aria-controls="userLogTab" aria-selected="true" (click)="expandUserLogTable()">User Log</a>
+              aria-controls="userLogTab" aria-selected="true" (click)="setUserLogTable()">User Log</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="databaseLog-tab" data-toggle="tab" href="#databaseLogTab" role="tab"
-              aria-controls="databaseLogTab" aria-selected="false" (click)="expandDatabaseLogTable()">Database Log</a>
+              aria-controls="databaseLogTab" aria-selected="false" (click)="setDatabaseLogTable()">Database Log</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="accessLog-tab" data-toggle="tab" href="#accessLogTab" role="tab"
-              aria-controls="accessLogTab" aria-selected="false" (click)="expandAccessLogTable()">Access Log</a>
+              aria-controls="accessLogTab" aria-selected="false" (click)="setAccessLogTable()">Access Log</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="errorLog-tab" data-toggle="tab" href="#errorLogTab" role="tab"
-              aria-controls="errorLogTab" aria-selected="false" (click)="expandErrorLogTable()">Error Log</a>
+              aria-controls="errorLogTab" aria-selected="false" (click)="setErrorLogTable()">Error Log</a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -407,7 +407,7 @@
                     <th>Other users involved</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='requestReport'>
+                <tbody *ngIf='userLogs'>
                   <tr class="tableRow" scope="row" *ngFor="let row of userLogsArray; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
@@ -440,7 +440,7 @@
                     <th>Other users involved</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='requestReport'>
+                <tbody *ngIf='databaseLogs'>
                   <tr class="tableRow" scope="row" *ngFor="let row of databaseLogsArray; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
@@ -472,7 +472,7 @@
                     <th>User performing action</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='requestReport'>
+                <tbody *ngIf='accessLogs'>
                   <tr class="tableRow" scope="row" *ngFor="let row of accessLogsArray; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
@@ -505,7 +505,7 @@
                     <th>User performing action</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='requestReport'>
+                <tbody *ngIf='errorLogs'>
                   <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>

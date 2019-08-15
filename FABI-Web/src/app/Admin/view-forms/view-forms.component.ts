@@ -5,7 +5,7 @@
  * Created Date: Monday, August 5th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -86,6 +86,8 @@ export class ViewFormsComponent implements OnInit {
   additionalNotes: string;                
   /** The date that the form was submitted - @type {string} */
   dateSubmittedDeposit: string; 
+  /** The id number of the deposit form - @type {string} */
+  formID: string;
   
   /** The user id of the user submitting the form - @type {string} */ 
   userIDRequest: string; 
@@ -242,7 +244,7 @@ export class ViewFormsComponent implements OnInit {
             otherFABICollections: data[i].otherFABICollections, name: data[i].name, typeStatus: data[i].typeStatus, host: data[i].host, vector: data[i].vector,
             substrate: data[i].substrate, continent: data[i].continent, country: data[i].country, region: data[i].region, locality: data[i].locality, 
             gps: data[i].gps, collectedBy: data[i].collectedBy, dateCollected: data[i].dateCollected, isolatedBy: data[i].isolatedBy, identifiedBy: data[i].identifiedBy,
-            donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted};
+            donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted, formID: data[i].id};
           
 
           if(data[i].status == 'submitted'){
@@ -399,6 +401,7 @@ export class ViewFormsComponent implements OnInit {
     this.donatedBy = tempDeposit.donatedBy;
     this.additionalNotes = tempDeposit.additionalNotes;
     this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
+    this.formID = tempDeposit.formID;
 
     if(this.depositFormNumber == 0){
       this.depositFormNumber += 1;
@@ -455,6 +458,7 @@ export class ViewFormsComponent implements OnInit {
     this.donatedBy = tempDeposit.donatedBy;
     this.additionalNotes = tempDeposit.additionalNotes;
     this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
+    this.formID = tempDeposit.formID;
 
     if(this.depositFormNumber == this.depositForms.length){
       this.depositFormNumber -= 1;
@@ -854,31 +858,6 @@ export class ViewFormsComponent implements OnInit {
     this.renderer.setStyle(this.associatedDepositForm.nativeElement, 'display', 'none');
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        PROCESS DEPOSIT FORM
-  /**
-   *  This function will be called so that a deposit form can be processed and its status updated
-   *  @memberof ViewFormsComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  processDepositForm(){
-    var statusOfCulture = this.processForm.controls.statusOfCulture.value;
-    var agarSlants = this.processForm.controls.agarSlants.value;
-    var water = this.processForm.controls.water.value;
-    var oil = this.processForm.controls.oil.value;
-    var roomTemperature = this.processForm.controls.roomTemperature.value;
-    var c18 = this.processForm.controls.c18.value;
-    var freezeDried = this.processForm.controls.freezeDried.value;
-    var freeze = this.processForm.controls.freeze.value;
-    var dateOfCollectionValidation = this.processForm.controls.dateOfCollectionValidation.value;
-    var microscopeSlides = this.processForm.controls.microscopeSlides.value;
-
-    var tempDeposit = this.depositForms[this.depositFormNumber];
-
-    // this.loadNextDepositForm();
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        TOGGLE NOTIFICATIONS TAB
   /**
@@ -903,6 +882,9 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   processDepositProcessedForm(){
+    this.userIDProcessed = this.currentUser.user.ID;
+    this.cmwCultureNumberProcessed = this.cmwCultureNumberDeposit;
+
     if(this.processForm.controls.statusOfCulture.value == "" || this.processForm.controls.statusOfCulture.value == null){
       this.statusOfCulture = "";
     }
@@ -983,7 +965,7 @@ export class ViewFormsComponent implements OnInit {
 
     this.cultureCollectionService.submitProcessedForm(tempProcessedForm).subscribe((response: any) => {
       if(response.success == true){
-        var tempUpdate: UpdateDepositForm = {userID: this.currentUser.user.ID, status: 'processed', formID: ''};
+        var tempUpdate: UpdateDepositForm = {userID: this.currentUser.user.ID, status: 'processed', formID: this.formID};
 
         this.cultureCollectionService.updateDepositFormStatus(tempUpdate).subscribe((response: any) => {
           if(response.success == true){
