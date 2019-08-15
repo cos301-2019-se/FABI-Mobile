@@ -437,11 +437,14 @@ export class AdminNotificationComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userID: string) {
+    var person = '';
     for(var i = 0; i < this.staff.length; i++){
       if(this.staff[i].ID == userID){
-        return this.staff[i].Name + ' ' + this.staff[i].Surname;
+        person = this.staff[i].Name + ' ' + this.staff[i].Surname;
       }
     }
+
+    return person;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
