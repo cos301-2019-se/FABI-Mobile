@@ -676,7 +676,6 @@ export class ReportingComponent implements OnInit {
     this.cultureCollectionService.getAllDepositLogs().subscribe((response: any) => {
       if (response.success = true) {
         var data = response.data.qs.forms;
-        console.log(data);
 
         if (this.dateFrom != '' && this.dateTo != '') {
           this.depositLogsArray = [];
@@ -1280,13 +1279,7 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleReportSection() {
-    if(this.reportingTab == false){
-      this.reportingTab = true;
-    }
-    else{
-      this.reportingTab = false;
-    }
-    
+    this.reportingTab = !this.reportingTab;    
     this.logsTab = false;
 
     //Generate the Request report so that it is ready to be displayed when the report menu option is clicked
@@ -1305,6 +1298,66 @@ export class ReportingComponent implements OnInit {
     this.logsTab = !this.logsTab;
     this.reportingTab = false;
     this.userLogs = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         SET USER LOGS TABLE 
+  /**
+   * This function will display the user logs table
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setUserLogTable(){
+    this.userLogs = true;
+    this.databaseLogs = false;
+    this.accessLogs = false;
+    this.errorLogs = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      SET DATABASE LOGS TABLE 
+  /**
+   * This function will display the database logs table
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setDatabaseLogTable(){
+    this.userLogs = false;
+    this.databaseLogs = true;
+    this.accessLogs = false;
+    this.errorLogs = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         SET ACCESS LOGS TABLE 
+  /**
+   * This function will display the access logs table
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setAccessLogTable(){
+    this.userLogs = false;
+    this.databaseLogs = false;
+    this.accessLogs = true;
+    this.errorLogs = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         SET ERROR LOGS TABLE 
+  /**
+   * This function will display the error logs table
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setErrorLogTable(){
+    this.userLogs = false;
+    this.databaseLogs = false;
+    this.accessLogs = false;
+    this.errorLogs = true;
   }
 
 }
