@@ -150,7 +150,6 @@ export class OrganizationProfileComponent implements OnInit {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
-        console.log("DATA: " + JSON.stringify(data));
 
         // Fill the form inputs with the user's details
         this.adminProfileForm.setValue( {
