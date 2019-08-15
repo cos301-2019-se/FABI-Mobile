@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -118,15 +118,15 @@ export class OrganizationProfileComponent implements OnInit {
       this.loadAdminProfileDetails();
     });
 
-    this.adminProfileForm.get('organization_name').disable();
-    this.adminProfileForm.get('admin_name').disable();
-    this.adminProfileForm.get('admin_surname').disable();
-    this.adminProfileForm.get('admin_email').disable();
-
     //******** TO BE USED IN PRODUCTION: ********
     //Calling the neccessary functions as the page loads
     // this.currentUser = this.authService.getCurrentSessionValue.user;
     // this.loadAdminProfileDetails();
+
+    this.adminProfileForm.get('organization_name').disable();
+    this.adminProfileForm.get('admin_name').disable();
+    this.adminProfileForm.get('admin_surname').disable();
+    this.adminProfileForm.get('admin_email').disable();
   }
 
 
@@ -275,13 +275,15 @@ export class OrganizationProfileComponent implements OnInit {
   editProfileToggle() {
 
     if(this.isEditingProfile) {
-      this.adminProfileForm.get('admin_name').enable();
-      this.adminProfileForm.get('admin_surname').enable();
-      this.adminProfileForm.get('admin_email').enable();
+      this.adminProfileForm.get('admin_name').disable();
+      this.adminProfileForm.get('admin_surname').disable();
+      this.adminProfileForm.get('admin_email').disable();
+      this.isEditingProfile = false;
     } else {
       this.adminProfileForm.get('admin_name').enable();
       this.adminProfileForm.get('admin_surname').enable();
       this.adminProfileForm.get('admin_email').enable();
+      this.isEditingProfile = true;
     }
     
   }
