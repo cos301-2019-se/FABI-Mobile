@@ -184,6 +184,26 @@ export class ViewFormsComponent implements OnInit {
   /** Object array for holding the staff members -  @type {Member[]} */                        
   staff: Member[] = []; 
 
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  helpTab: boolean = false;
+
+  /** Indicates if the deposit forms tab is hidden/shown - @type {boolean} */  
+  depositFormTab: boolean = false;
+  /** Indicates if the request forms tab is hidden/shown - @type {boolean} */  
+  requestFormTab: boolean = false;
+  /** Indicates if the revitalization forms tab is hidden/shown - @type {boolean} */  
+  revitalizationFormTab: boolean = false;
+  /** Indicates if the processed forms tab is hidden/shown - @type {boolean} */  
+  processedFormTab: boolean = false;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -1006,5 +1026,125 @@ export class ViewFormsComponent implements OnInit {
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE NOTIFICATIONS 
+  /**
+   * This function will toggle the display of the notifications side panel
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificationsTab(){ 
+    this.notificationsTab = !this.notificationsTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE PROFILE 
+  /**
+   * This function will toggle the display of the profile side panel
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleProfileTab() {
+    this.profileTab = !this.profileTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      DISPLAY PROFILE SAVE BUTTON 
+  /**
+   * This function will display the save button option if any details in the profile have been altered
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayProfileSaveBtn() {
+    this.saveBtn = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     DISPLAY PASSWORD CONFIRM INPUT 
+  /**
+   * This function will display the confirm password input field in the user's password was altered
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayConfirmPasswordInput() {
+    this.confirmPasswordInput = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE HELP 
+  /**
+   * This function will toggle the display of the help side panel
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleHelpTab() {
+    this.helpTab = !this.helpTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE DEPOSIT FORMS 
+  /**
+   * This function will toggle the display of the deposit form section
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleDepositFormsTab() {
+    this.depositFormTab = !this.depositFormTab;
+    this.requestFormTab = false;
+    this.revitalizationFormTab  = false;
+    this.processedFormTab = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE REQUEST FORMS 
+  /**
+   * This function will toggle the display of the request form section
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleRequestFormsTab() {
+    this.requestFormTab = !this.requestFormTab;
+    this.depositFormTab = false;
+    this.revitalizationFormTab  = false;
+    this.processedFormTab = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE REVITALIZATION FORMS 
+  /**
+   * This function will toggle the display of the revitalization form section
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleRevitalizationFormsTab() {
+    this.revitalizationFormTab = !this.revitalizationFormTab;
+    this.requestFormTab = false;
+    this.depositFormTab  = false;
+    this.processedFormTab = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE PROCESSED FORMS 
+  /**
+   * This function will toggle the display of the processes formd section
+   * 
+   * @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleProcessedFormsTab() {
+    this.processedFormTab = !this.processedFormTab;
+    this.requestFormTab = false;
+    this.revitalizationFormTab  = false;
+    this.depositFormTab = false;
   }
 }

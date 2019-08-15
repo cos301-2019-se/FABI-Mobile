@@ -58,7 +58,8 @@
 
         <!-- Profile Actions -->
         <div class="profile-actions">
-          <button type="button" class="btn btn-default-edit" (click)="editProfileToggle()">Edit</button>
+          <button type="button" class="btn btn-default-edit" (click)="editProfileToggle()" [hidden]="isEditingProfile">Edit</button>
+          <button type="button" class="btn btn-default-cancel" (click)="editProfileToggle()" [hidden]="!isEditingProfile">Cancel</button>
           <button type="submit" class="btn btn-default-save" [hidden]="!adminProfileForm.dirty" (click)="saveChanges()">Save Changes</button>
       </div>
         <!-- / Profile Actions -->
