@@ -198,6 +198,8 @@ export class ViewFormsComponent implements OnInit {
   revitalizationFormTab: boolean = false;
   /** Indicates if the processed forms tab is hidden/shown - @type {boolean} */  
   processedFormTab: boolean = false;
+  /** Indicates if the associated forms tab is hidden/shown - @type {boolean} */  
+  associatedFormTab: boolean = false;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -847,7 +849,7 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   showProcessForm(){
-    this.renderer.setStyle(this.processFormShow.nativeElement, 'display', 'block');
+    //this.renderer.setStyle(this.processFormShow.nativeElement, 'display', 'block');
   }
 
 
@@ -859,7 +861,9 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewAssociatedDepositForm(){
-    this.renderer.setStyle(this.associatedDepositForm.nativeElement, 'display', 'block');
+    //this.renderer.setStyle(this.associatedDepositForm.nativeElement, 'display', 'block');
+
+    this.associatedFormTab = !this.associatedFormTab;
   }
 
 
@@ -871,7 +875,7 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   hideAssociatedDepositForm(){
-    this.renderer.setStyle(this.associatedDepositForm.nativeElement, 'display', 'none');
+    //this.renderer.setStyle(this.associatedDepositForm.nativeElement, 'display', 'none');
   }
 
 
