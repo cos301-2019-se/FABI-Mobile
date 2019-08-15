@@ -235,7 +235,6 @@ export class UserManagementAPIService {
     };
 
     return this.http.request('POST', updateStaffMemberDetailsURL, options).pipe(map((response : any) => {
-      console.log("----RESPONSE: " + JSON.stringify(response));
       if (response && (response.token && response.token != '' && response.code == 200)) {
         this.authService.updateSessionVariables(response.data);
       }
@@ -784,4 +783,5 @@ export class UserManagementAPIService {
 
     return this.http.request<any>(method, getDBNamesURL, options);
   }  
+
 }

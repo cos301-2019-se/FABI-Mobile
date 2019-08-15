@@ -28,7 +28,7 @@ import { config } from "../../environments/environment.prod";
 export class AuthenticationService {
 
   //////////////////////////// AUTHENTICATION SERVICE VARIABLES /////////////////////////// 
-  private currentUser: any;
+  private currentUser: Interface.UserPrivileges;
   private currentSessionSubject: BehaviorSubject<any>;
   public currentSession: Observable<any>;
 
@@ -36,6 +36,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
     this.currentSessionSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('sessionDetails')));
     this.currentSession = this.currentSessionSubject.asObservable();
+    this.currentUser = {databases: []};
   }
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,17 +100,12 @@ export class AuthenticationService {
     return this.currentUser;
   }
 
+
   public get isLoggedIn(): any {
     if(localStorage.getItem('loggedIn')) {
       return JSON.parse(localStorage.getItem('loggedIn'));
     }
     return false;
-  }
-
-  public setCurrentUserValues(name: string, surname: string, email: string): any {
-    this.currentUser.name = name;
-    this.currentUser.surname = surname;
-    this.currentUser.email = email;
   }
 
   logoutUser() {
@@ -151,7 +147,9 @@ export class AuthenticationService {
 
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        this.currentUser = response.userDetails;
+        if(response.userDetails.databases) {
+          this.currentUser.databases = response.userDetails.databases;
+        }
       }
       return response;
     }));
@@ -184,9 +182,13 @@ export class AuthenticationService {
     };
 
     return this.http.request<any>(method, url, options).pipe(map(response => {
+      
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        this.currentUser = response.userDetails;
+        if(response.userDetails.databases) {
+          console.log(response.userDetails.databases);
+          this.currentUser.databases = response.userDetails.databases;
+        }
       }
       return response;
     }));
@@ -221,7 +223,9 @@ export class AuthenticationService {
     return this.http.request<any>(method, url, options).pipe(map(response => {
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        this.currentUser = response.userDetails;
+        if(response.userDetails.databases) {
+          this.currentUser.databases = response.userDetails.databases;
+        }
       }
       return response;
     }));
@@ -256,7 +260,9 @@ export class AuthenticationService {
     return this.http.request<any>(method, url, options).pipe(map(response => {
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        this.currentUser = response.userDetails;
+        if(response.userDetails.databases) {
+          this.currentUser.databases = response.userDetails.databases;
+        }
       }
       return response;
     }));
@@ -265,8 +271,8 @@ export class AuthenticationService {
 
   temporaryLoginStaff() {
     
-    const Lemail = "jackjones@gmail.com";
-    const Lpassw = "WyCyaCmKex";
+    const Lemail = "jackjohnson@gmail.com";
+    const Lpassw = "lEexJ2hV5m";
     const Lorg = "FABI";
 
     // User details to be passed to API
@@ -291,11 +297,55 @@ export class AuthenticationService {
     return this.http.request<any>(method, url, options).pipe(map(response => {
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        this.currentUser = response.userDetails;
+        if(response.userDetails.databases) {
+          this.currentUser.databases = response.userDetails.databases;
+        }
       }
       return response;
     }));
 
+  }
+
+  loadFABIUserPrivileges() {
+
+    let getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;
+    let method = 'POST';
+
+    const postData = {
+      "orgName": this.getCurrentSessionValue.user.orgainsation,
+      "id": this.getCurrentSessionValue.user.ID
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    this.http.request<any>(method, getUserDetailsURL, options).subscribe((response: any) => {
+      if(response && (response.token && response.token != '')) {
+        if(response.data.databases) {
+          this.currentUser.databases = response.data.databases;
+        }
+      }
+    });
+    
+  }
+
+  getFABIUserPrivileges() {
+
+    if(this.getCurrentUserValue == '' || this.getCurrentUserValue == null) {
+      this.loadFABIUserPrivileges();
+      return this.getCurrentUserValue;
+    } else {
+      return this.getCurrentUserValue;
+    }
+      
   }
 
 }

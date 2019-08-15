@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -92,8 +92,9 @@ export interface StaffInfo {
     surname: string,
     email: string,
     phone?: number,
-    position?: string
+    position?: string,
   }
+  
 
   export interface DatabasePrivilege {
      name: string,
@@ -107,7 +108,10 @@ export interface StaffInfo {
     delete: boolean
   }
 
-  
+  export interface UserPrivileges {
+    databases?: DatabasePrivilege[]
+  }
+
   
   export interface ClientFormData {
     tree_species: string;
