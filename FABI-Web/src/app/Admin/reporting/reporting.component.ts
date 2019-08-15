@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 14th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -38,12 +38,12 @@ import html2canvas from 'html2canvas';
 
 //Imports used for creating the data table for the pagination and search functionality 
 import * as $ from 'jquery';
-import 'datatables.net';
+// import 'datatables.net';
 
 @Component({
   selector: 'app-reporting',
   templateUrl: './reporting.component.html',
-  styleUrls: ['./reporting.component.scss']
+  // styleUrls: ['./reporting.component.scss']
 })
 export class ReportingComponent implements OnInit {
 
@@ -96,15 +96,6 @@ export class ReportingComponent implements OnInit {
   depositLogsArray: any[] = [];
   /** Array holding the revitalization logs - @type {any} */
   revitalizationLogsArray: any[] = [];
-
-  /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
-  @ViewChild("userLogsTable") userLogsTable: ElementRef;
-  /** Holds the table element (databaseLogsTable) from the HTML page - @type {ElementRef} */
-  @ViewChild("databaseLogsTable") databaseLogsTable: ElementRef;
-  /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
-  @ViewChild("accessLogsTable") accessLogsTable: ElementRef;
-  /** Holds the table element (userLogsTable) from the HTML page - @type {ElementRef} */
-  @ViewChild("errorLogsTable") errorLogsTable: ElementRef;
 
   /** Holds the table element (userAdd) from the HTML page - @type {ElementRef} */
   @ViewChild("userAdd") userAdd: ElementRef;
@@ -187,15 +178,15 @@ export class ReportingComponent implements OnInit {
   public tableWidget: any;
 
   ngAfterViewInit() {
-    this.initDatatable()
+    // this.initDatatable()
   }
 
-  private initDatatable(): void {
-    let exampleId: any = $('.table');
-    this.tableWidget = exampleId.DataTable({
-      select: true
-    });
-  }
+  // private initDatatable(): void {
+  //   let exampleId: any = $('.table');
+  //   this.tableWidget = exampleId.DataTable({
+  //     select: true
+  //   });
+  // }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -263,12 +254,15 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails(userOrganization: string, userID: string) {
+  loadUserDetails(userID: string) {
+    var person = '';
     for(var i = 0; i < this.staff.length; i++){
       if(this.staff[i].ID == userID){
-        return this.staff[i].Name + ' ' + this.staff[i].Surname;
+        person = this.staff[i].Name + ' ' + this.staff[i].Surname;
       }
     }
+
+    return person
   }
 
 
@@ -298,7 +292,7 @@ export class ReportingComponent implements OnInit {
             tempArray.push(this.getDate(data[i].dateString));
 
             //Fetch user information
-            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].details));
             tempArray.push(data[i].org2);
           }
           else if(data[i].action == "/removeOrg"){
@@ -307,7 +301,7 @@ export class ReportingComponent implements OnInit {
             tempArray.push(this.getDate(data[i].dateString));
 
             //Fetch user information
-            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].details));
             tempArray.push(data[i].org2);
           }
           else if(data[i].action == '/addStaff'){
@@ -316,8 +310,8 @@ export class ReportingComponent implements OnInit {
             tempArray.push(this.getDate(data[i].dateString));
 
             //Fetch user information
-            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
-            tempArray.push(this.loadUserDetails(data[i].org2, data[i].user));
+            tempArray.push(this.loadUserDetails(data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].user));
           }
           else if(data[i].action == '/updateStaffMember'){
             tempArray.push('Updated user details');
@@ -325,8 +319,8 @@ export class ReportingComponent implements OnInit {
             tempArray.push(this.getDate(data[i].dateString));
 
             //Fetch user information
-            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
-            tempArray.push(this.loadUserDetails(data[i].org2, data[i].user));
+            tempArray.push(this.loadUserDetails(data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].user));
           }
           else if(data[i].action == '/removeStaff'){
             tempArray.push('Removed user from system');
@@ -334,8 +328,8 @@ export class ReportingComponent implements OnInit {
             tempArray.push(this.getDate(data[i].dateString));
 
             //Fetch user information
-            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
-            tempArray.push(this.loadUserDetails(data[i].org2, data[i].user));
+            tempArray.push(this.loadUserDetails(data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].user));
           }
           else if(data[i].action == "/udateStaffDatabaseAccess" || data[i].action == "/updateStaffDatabaseAccess"){
             tempArray.push('User database access updated');
@@ -343,8 +337,8 @@ export class ReportingComponent implements OnInit {
             tempArray.push(this.getDate(data[i].dateString));
 
             //Fetch user information
-            tempArray.push(this.loadUserDetails(data[i].org1, data[i].details));
-            tempArray.push(this.loadUserDetails(data[i].org2, data[i].user));
+            tempArray.push(this.loadUserDetails(data[i].details));
+            tempArray.push(this.loadUserDetails(data[i].user));
           }
 
           this.userLogsArray.push(tempArray);
@@ -379,7 +373,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+          tempArray.push(this.loadUserDetails(data[i].user));
 
           tempArray.push(data[i].details);
           this.databaseLogsArray.push(tempArray);
@@ -404,7 +398,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.getDate(data[i].dateString));
 
           //Fetch user information
-          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+          tempArray.push(this.loadUserDetails(data[i].user));
 
           this.accessLogsArray.push(tempArray);
         }
@@ -429,7 +423,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(data[i].details);
 
           //Fetch user information
-          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+          tempArray.push(this.loadUserDetails(data[i].user));
 
           this.errorLogsArray.push(tempArray);
         }
@@ -487,7 +481,7 @@ export class ReportingComponent implements OnInit {
           tempArray.push(data[i].details);
 
           //Fetch user information
-          tempArray.push(this.loadUserDetails(data[i].org1, data[i].user));
+          tempArray.push(this.loadUserDetails(data[i].user));
 
           this.errorLogsArray.push(tempArray);
         }
@@ -547,7 +541,7 @@ export class ReportingComponent implements OnInit {
             if (data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo) {
               var tempArray: any = [];
               
-              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              tempArray.push(this.loadUserDetails(data[j].userID));
               tempArray.push(data[j].requestor);
               tempArray.push(data[j].cultureNumber);
               tempArray.push(data[j].taxonName);
@@ -568,7 +562,7 @@ export class ReportingComponent implements OnInit {
                 if (day >= dayFrom) {
                   var tempArray: any = [];
                   
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(this.loadUserDetails(data[j].userID));
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].taxonName);
@@ -589,7 +583,7 @@ export class ReportingComponent implements OnInit {
                 if (day <= dayTo) {
                   var tempArray: any = [];
                   
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(this.loadUserDetails(data[j].userID));
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].taxonName);
@@ -604,7 +598,7 @@ export class ReportingComponent implements OnInit {
               if (month >= monthFrom && month <= monthTo) {
                 var tempArray: any = [];
                 
-                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                tempArray.push(this.loadUserDetails(data[j].userID));
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
                 tempArray.push(data[j].taxonName);
@@ -621,7 +615,7 @@ export class ReportingComponent implements OnInit {
           for (var i = 0; i < data.length; i++) {
             var tempArray: any = [];
             
-            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
+            tempArray.push(this.loadUserDetails(data[i].userID));
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
             tempArray.push(data[i].taxonName);
@@ -685,7 +679,6 @@ export class ReportingComponent implements OnInit {
     this.cultureCollectionService.getAllDepositLogs().subscribe((response: any) => {
       if (response.success = true) {
         var data = response.data.qs.forms;
-        console.log(data);
 
         if (this.dateFrom != '' && this.dateTo != '') {
           this.depositLogsArray = [];
@@ -693,11 +686,11 @@ export class ReportingComponent implements OnInit {
             if (data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo) {
               var tempArray: any = [];
               
-              if(this.loadUserDetails('FABI', data[j].userID) == null){
+              if(this.loadUserDetails(data[j].userID) == null){
                 tempArray.push("");
               }
               else{
-                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                tempArray.push(this.loadUserDetails(data[j].userID));
               }
 
               tempArray.push(data[j].cmwCultureNumber);
@@ -721,11 +714,11 @@ export class ReportingComponent implements OnInit {
                 if (day >= dayFrom) {
                   var tempArray: any = [];
                   
-                  if(this.loadUserDetails('FABI', data[j].userID) == null){
+                  if(this.loadUserDetails(data[j].userID) == null){
                     tempArray.push("");
                   }
                   else{
-                    tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                    tempArray.push(this.loadUserDetails(data[j].userID));
                   }
 
                   tempArray.push(data[j].cmwCultureNumber);
@@ -749,11 +742,11 @@ export class ReportingComponent implements OnInit {
                 if (day <= dayTo) {
                   var tempArray: any = [];
                   
-                  if(this.loadUserDetails('FABI', data[j].userID) == null){
+                  if(this.loadUserDetails(data[j].userID) == null){
                     tempArray.push("");
                   }
                   else{
-                    tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                    tempArray.push(this.loadUserDetails(data[j].userID));
                   }
 
                   tempArray.push(data[j].cmwCultureNumber);
@@ -771,11 +764,11 @@ export class ReportingComponent implements OnInit {
               if (month >= monthFrom && month <= monthTo) {
                 var tempArray: any = [];
                 
-                if(this.loadUserDetails('FABI', data[j].userID) == null){
+                if(this.loadUserDetails(data[j].userID) == null){
                   tempArray.push("");
                 }
                 else{
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(this.loadUserDetails(data[j].userID));
                 }
 
                 tempArray.push(data[j].cmwCultureNumber);
@@ -795,11 +788,11 @@ export class ReportingComponent implements OnInit {
           for (var i = 0; i < data.length; i++) {
             var tempArray: any = [];
             
-            if(this.loadUserDetails('FABI', data[j].userID) == null){
+            if(this.loadUserDetails(data[j].userID) == null){
               tempArray.push("");
             }
             else{
-              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              tempArray.push(this.loadUserDetails(data[j].userID));
             }
 
             tempArray.push(data[j].cmwCultureNumber);
@@ -873,7 +866,7 @@ export class ReportingComponent implements OnInit {
             if (data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo) {
               var tempArray: any = [];
               
-              tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+              tempArray.push(this.loadUserDetails(data[j].userID));
               tempArray.push(data[j].requestor);
               tempArray.push(data[j].cultureNumber);
               tempArray.push(data[j].currentName);
@@ -895,7 +888,7 @@ export class ReportingComponent implements OnInit {
                 if (day >= dayFrom) {
                   var tempArray: any = [];
                   
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(this.loadUserDetails(data[j].userID));
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].currentName);
@@ -917,7 +910,7 @@ export class ReportingComponent implements OnInit {
                 if (day <= dayTo) {
                   var tempArray: any = [];
                   
-                  tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                  tempArray.push(this.loadUserDetails(data[j].userID));
                   tempArray.push(data[j].requestor);
                   tempArray.push(data[j].cultureNumber);
                   tempArray.push(data[j].currentName);
@@ -933,7 +926,7 @@ export class ReportingComponent implements OnInit {
               if (month >= monthFrom && month <= monthTo) {
                 var tempArray: any = [];
                 
-                tempArray.push(this.loadUserDetails('FABI', data[j].userID));
+                tempArray.push(this.loadUserDetails(data[j].userID));
                 tempArray.push(data[j].requestor);
                 tempArray.push(data[j].cultureNumber);
                 tempArray.push(data[j].currentName);
@@ -951,7 +944,7 @@ export class ReportingComponent implements OnInit {
           for (var i = 0; i < data.length; i++) {
             var tempArray: any = [];
             
-            tempArray.push(this.loadUserDetails('FABI', data[i].userID));
+            tempArray.push(this.loadUserDetails(data[i].userID));
             tempArray.push(data[i].requestor);
             tempArray.push(data[i].cultureNumber);
             tempArray.push(data[i].currentName);
@@ -1073,118 +1066,6 @@ export class ReportingComponent implements OnInit {
 
     return newDate;
   }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      EXPAND USER LOG TABLE
-  /**
-   *  This function will be used to expand the table containing the user logs on depand.
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  expandUserLogTable() {
-    this.renderer.setStyle(this.userLogsTable.nativeElement, 'display', 'block');
-    this.renderer.setStyle(this.userCollapse.nativeElement, 'display', 'block');
-    this.renderer.setStyle(this.userAdd.nativeElement, 'display', 'none');
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  EXPAND DATABASE LOG TABLE
-  /**
-   *  This function will be used to expand the table containing the database logs on depand.
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  expandDatabaseLogTable() {
-    this.renderer.setStyle(this.databaseLogsTable.nativeElement, 'display', 'block');
-    this.renderer.setStyle(this.databaseCollapse.nativeElement, 'display', 'block');
-    this.renderer.setStyle(this.databaseAdd.nativeElement, 'display', 'none');
-  }
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  EXPAND ACCESS LOG TABLE
-  /**
-   *  This function will be used to expand the table containing the access logs on depand.
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  expandAccessLogTable() {
-    this.renderer.setStyle(this.accessLogsTable.nativeElement, 'display', 'block');
-    this.renderer.setStyle(this.accessCollapse.nativeElement, 'display', 'block');
-    this.renderer.setStyle(this.accessAdd.nativeElement, 'display', 'none');
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  EXPAND ERROR LOG TABLE
-  /**
-   *  This function will be used to expand the table containing the error logs on depand.
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  expandErrorLogTable() {
-    this.renderer.setStyle(this.errorLogsTable.nativeElement, 'display', 'block');
-    this.renderer.setStyle(this.errorCollapse.nativeElement, 'display', 'block');
-    this.renderer.setStyle(this.errorAdd.nativeElement, 'display', 'none');
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  COLLAPSE USER LOG TABLE
-  /**
-   *  This function will be used to collapse the table containing the user logs on depand.
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  collapseUserLogTable() {
-    this.renderer.setStyle(this.userLogsTable.nativeElement, 'display', 'none');
-    this.renderer.setStyle(this.userCollapse.nativeElement, 'display', 'none');
-    this.renderer.setStyle(this.userAdd.nativeElement, 'display', 'block');
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  COLLAPSE DATABASE LOG TABLE
-  /**
-   *  This function will be used to collapse the table containing the database logs on depand.
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  collapseDatabaseLogTable() {
-    this.renderer.setStyle(this.databaseLogsTable.nativeElement, 'display', 'none');
-    this.renderer.setStyle(this.databaseCollapse.nativeElement, 'display', 'none');
-    this.renderer.setStyle(this.databaseAdd.nativeElement, 'display', 'block');
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  COLLAPSE ACCESS LOG TABLE
-  /**
-   *  This function will be used to collapse the table containing the access logs on depand.
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  collapseAccessLogTable() {
-    this.renderer.setStyle(this.accessLogsTable.nativeElement, 'display', 'none');
-    this.renderer.setStyle(this.accessCollapse.nativeElement, 'display', 'none');
-    this.renderer.setStyle(this.accessAdd.nativeElement, 'display', 'block');
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  COLLAPSE ERROR LOG TABLE
-  /**
-   *  This function will be used to collapse the table containing the error logs on depand.
-   *  @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  collapseErrorLogTable() {
-    this.renderer.setStyle(this.errorLogsTable.nativeElement, 'display', 'none');
-    this.renderer.setStyle(this.errorCollapse.nativeElement, 'display', 'none');
-    this.renderer.setStyle(this.errorAdd.nativeElement, 'display', 'block');
-  }
-
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        SET DATE FROM
@@ -1315,8 +1196,7 @@ export class ReportingComponent implements OnInit {
     //Call the generate Request Report so that it is in the tabs in the home tab of the reporting component on load
     this.generateRequestReport();
 
-    //Call the exoand log tabe so that it is in the tabs in the home tab of the reporting component on load
-    this.expandUserLogTable()
+    this.userLogs = true;
   }
 
 
@@ -1402,13 +1282,7 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleReportSection() {
-    if(this.reportingTab == false){
-      this.reportingTab = true;
-    }
-    else{
-      this.reportingTab = false;
-    }
-    
+    this.reportingTab = !this.reportingTab;    
     this.logsTab = false;
 
     //Generate the Request report so that it is ready to be displayed when the report menu option is clicked
@@ -1426,9 +1300,67 @@ export class ReportingComponent implements OnInit {
   toggleLogSection() {
     this.logsTab = !this.logsTab;
     this.reportingTab = false;
+    this.userLogs = true;
+  }
 
-    //Expand the user log so that it is ready to be displayed when the log menu option is clicked
-    this.expandUserLogTable();
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         SET USER LOGS TABLE 
+  /**
+   * This function will display the user logs table
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setUserLogTable(){
+    this.userLogs = true;
+    this.databaseLogs = false;
+    this.accessLogs = false;
+    this.errorLogs = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      SET DATABASE LOGS TABLE 
+  /**
+   * This function will display the database logs table
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setDatabaseLogTable(){
+    this.userLogs = false;
+    this.databaseLogs = true;
+    this.accessLogs = false;
+    this.errorLogs = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         SET ACCESS LOGS TABLE 
+  /**
+   * This function will display the access logs table
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setAccessLogTable(){
+    this.userLogs = false;
+    this.databaseLogs = false;
+    this.accessLogs = true;
+    this.errorLogs = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         SET ERROR LOGS TABLE 
+  /**
+   * This function will display the error logs table
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setErrorLogTable(){
+    this.userLogs = false;
+    this.databaseLogs = false;
+    this.accessLogs = false;
+    this.errorLogs = true;
   }
 
 }

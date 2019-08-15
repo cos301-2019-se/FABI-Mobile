@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -52,11 +52,6 @@ export class StaffNotificationComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
-  /** The name and surname of a user concatenated as a string - @type {string} */   
-  user1: string;
-  /** The name and surname of a user concatenated as a string - @type {string} */   
-  user2: string;
-
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   notificationsTab: boolean = false;
   /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
@@ -70,7 +65,27 @@ export class StaffNotificationComponent implements OnInit {
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  /** Object array for holding the staff members -  @type {Member[]} */                        
+  staff: Member[] = []; 
   
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       CONSTRUCTOR
+  /**
+   * Creates an instance of StaffNotificationComponent.
+   * 
+   * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API Service
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API Service
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
+   * @param {Resolver} resolver
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private authService: AuthenticationService, 
     private router: Router, 
@@ -92,6 +107,38 @@ export class StaffNotificationComponent implements OnInit {
     // this.currentUser = this.authService.getCurrentSessionValue.user;
 
   }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET ALL STAFF
+  /**
+   *  This function will be used to get all the staff members of FABI and load them into an array
+   *  @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllStaff(){
+    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
+     if(response.success == true){
+       //Temporary array to hold the array of admins retuned from the API call
+       var data = response.data.qs.admins;
+       for(var i = 0; i < data.length; i++){
+         var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
+         this.staff.push(tempMember);
+       }
+      
+       //Temporary array to hold the array of staff returned from the API call
+       var data = response.data.qs.staff;
+       for(var i = 0; i < data.length; i++){
+         var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
+         this.staff.push(tempMember);
+       }
+     }
+     else{
+       //Error handling
+       }
+   });
+ }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        GET DATE
@@ -219,41 +266,38 @@ export class StaffNotificationComponent implements OnInit {
               var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
               
               //Getting the name and surname of the users passed using their id numbers
-              this.loadUserDetails(tempLogU.Organization1, tempLogU.Details, 'user1');
+              var user = this.loadUserDetails(tempLogU.Details);
               
               if(tempLogU.Action == "/createOrganization"){
-                tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + this.user1;
+                tempLogU.Action = "New organization " + tempLogU.User + " was added to the system by " + user;
                 
                 this.allNotifications.push(tempLogU);
                 this.numberOfUserLogs += 1;
                 this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "/addStaff"){
-                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
-                tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
+                tempLogU.Action = "New user, " + this.loadUserDetails(tempLogU.User) + ", was added to the system by " + user;
 
                 this.allNotifications.push(tempLogU);
                 this.numberOfUserLogs += 1;
                 this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "C"){
-                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
-                tempLogU.Action = "New user, " + this.user2 + ", was added to the system by " + this.user1;
+                tempLogU.Action = "New user, " + this.loadUserDetails(tempLogU.User) + ", was added to the system by " + user;
 
                 this.allNotifications.push(tempLogU);
                 this.numberOfUserLogs += 1;
                 this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "/removeOrg"){
-                tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + this.user1;
+                tempLogU.Action = "Organization " + tempLogU.User + " was removed from the system by " + user;
 
                 this.allNotifications.push(tempLogU);
                 this.numberOfUserLogs += 1;
                 this.localNotificationNumber += 1;
               }
               else if(tempLogU.Action == "/removeStaff"){
-                this.loadUserDetails(tempLogU.Organization2, tempLogU.User, 'user2');
-                tempLogU.Action = "New user, " + this.user2 + ", was removed from the system by " + this.user1;
+                tempLogU.Action = "New user, " + this.loadUserDetails(tempLogU.User) + ", was removed from the system by " + user;
 
                 this.allNotifications.push(tempLogU);
                 this.numberOfUserLogs += 1;
@@ -277,26 +321,15 @@ export class StaffNotificationComponent implements OnInit {
    *  @memberof StaffNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails(userOrganization: string, userID: string, type: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        if(type == 'user1'){
-          //Sets the users name and surname as a connected string
-          this.user1 = data.fname + ' ' + data.surname;
-        }
-        else if(type == 'user2'){
-          //Sets the users name and surname as a connected string
-          this.user2 = data.fname + ' ' + data.surname;
-        }
-      } 
-      else{
-        //Error control
+  loadUserDetails(userID: string) {
+    var person = '';
+    for(var i = 0; i < this.staff.length; i++){
+      if(this.staff[i].ID == userID){
+        person = this.staff[i].Name + ' ' + this.staff[i].Surname;
       }
-    });
+    }
+
+    return person;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
