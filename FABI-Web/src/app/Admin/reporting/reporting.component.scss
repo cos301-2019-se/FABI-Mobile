@@ -10,7 +10,7 @@
   justify-content: center;
   align-items: center;
 
-  width: 100%;
+  width: 80%;
   min-height: 20vh;
   height: auto;
 
@@ -21,6 +21,8 @@
 .reporting-tab {
   width: 80%;
   height: 100%;
+
+
 }
 
 .log-tab {
@@ -38,6 +40,10 @@ a.nav-link.active {
 }
 
 .tab-content {
+  width: 80%;
+  min-height: 20vh;
+  height: auto;
+  
   padding: 0;
   margin:0;
 }
