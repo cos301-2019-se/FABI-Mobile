@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -265,8 +265,8 @@ export class AuthenticationService {
 
   temporaryLoginStaff() {
     
-    const Lemail = "huckfinn@gmail.com";
-    const Lpassw = "ppaXfIUF2H";
+    const Lemail = "jackjones@gmail.com";
+    const Lpassw = "WyCyaCmKex";
     const Lorg = "FABI";
 
     // User details to be passed to API

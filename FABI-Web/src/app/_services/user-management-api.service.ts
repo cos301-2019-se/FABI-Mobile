@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 14th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -217,7 +217,7 @@ export class UserManagementAPIService {
     };
 
     var data: POSTUpdateMember = { 
-      orgName: this.authService.getCurrentSessionValue.user.organization,
+      orgName: this.authService.getCurrentSessionValue.user.organisation,
       id: this.authService.getCurrentSessionValue.user.ID, 
       fields: member 
     };
@@ -235,7 +235,8 @@ export class UserManagementAPIService {
     };
 
     return this.http.request('POST', updateStaffMemberDetailsURL, options).pipe(map((response : any) => {
-      if (response && (response.data && response.data != '')) {
+      console.log("----RESPONSE: " + JSON.stringify(response));
+      if (response && (response.token && response.token != '' && response.code == 200)) {
         this.authService.updateSessionVariables(response.data);
       }
       return response;
@@ -267,12 +268,10 @@ export class UserManagementAPIService {
     };
 
     var data: POSTUpdateOrganization = { 
-      orgName: this.authService.getCurrentSessionValue.user.organization,
+      orgName: this.authService.getCurrentSessionValue.user.organisation,
       id: this.authService.getCurrentSessionValue.user.ID, 
       fields: member 
     };
-
-    let orgName = this.authService.getCurrentSessionValue.user.organization;
 
     const options = {
       method: 'POST',
@@ -287,7 +286,7 @@ export class UserManagementAPIService {
     };
 
     return this.http.request('POST', updateOrganizationMemberDetailsURL, options).pipe(map((response : any) => {
-      if (response && (response.data && response.data != '')) {
+      if (response && (response.token && response.token != '' && response.code == 200)) {
         this.authService.updateSessionVariables(response.data);
       }
       return response;
