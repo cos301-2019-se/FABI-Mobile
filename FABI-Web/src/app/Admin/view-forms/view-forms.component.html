@@ -180,215 +180,946 @@
     <!-- / Primary Content -->
 
     <!-- CMW Forms -->
-    <div class="cmw-forms" id="reports" ng-app="portApp" ngController="previewCtrl">
+    <div class="cmw-forms">
 
 
       <!-- Deposit Form Tab -->
-      <div class="depositForm-tab" *ngIf="depositFormTab">
+      <div class="tab" *ngIf="depositFormTab">
 
-        <button (click)="showProcessForm()" class="btn btn-default spinner">Process Form</button>
-        <div class="arrowDiv leftArrow" (click)="loadPreviousDepositForm()"><i class="fas fa-arrow-left"></i></div>
-        <div class="arrowDiv rightArrow" (click)="loadNextDepositForm()"><i class="fas fa-arrow-right"></i></div>
-        <div class="individualDepositForm" ng-app="refresh_div1" ng-controller="refresh_control1">
-          <h3>User: </h3>
-          <p>{{userIDDeposit}}</p><br />
-          <h3>Date Submitted: </h3>
-          <p>{{dateSubmittedDeposit}}</p><br />
-          <h3>Culture Number: </h3>
-          <p>{{cultureNumberDeposit}}</p>
-          <br /><br />
-          <h3>Genus: </h3>
-          <p>{{genus}}</p>
-          <h3 class="right">Epitheton: </h3>
-          <p>{{epitheton}}</p><br />
-          <h3>Personal Collection Number: </h3>
-          <p>{{personalCollectionNumber}}</p><br />
-          <h3>International Collection Number: </h3>
-          <p>{{internationalCollectionNumber}}</p><br />
-          <h3>Herbarium Number: </h3>
-          <p>{{herbariumNumber}}</p><br />
-          <h3>Other FABI Collections: </h3>
-          <p>{{otherFABICollections}}</p>
-          <br /><br />
-          <h3>Culture Name: </h3>
-          <p>{{name}}</p>
-          <h3 class="right">Type Status:</h3>
-          <p>{{typeStatus}}</p><br />
-          <h3>Host: </h3>
-          <p>{{host}}</p>
-          <h3 class="right">Vector: </h3>
-          <p>{{vector}}</p><br />
-          <h3>Substrate: </h3>
-          <p>{{substrate}}</p>
-          <br /><br /><br />
-          <h3>Continent: </h3>
-          <p>{{continent}}</p>
-          <h3 class="right">Country: </h3>
-          <p>{{country}}</p><br />
-          <h3>Region: </h3>
-          <p>{{region}}</p>
-          <h3 class="right">Locality: </h3>
-          <p>{{locality}}</p><br />
-          <h3>GPS: </h3>
-          <p>{{gps}}</p>
-          <br /><br />
-          <h3>Collected By: </h3>
-          <p>{{collectedBy}}</p>
-          <h3 class="right">Date Collected:</h3>
-          <p>{{dateCollected}}</p><br />
-          <h3>Isolated By: </h3>
-          <p>{{isolatedBy}}</p>
-          <h3 class="right">Identified By: </h3>
-          <p>{{identifiedBy}}</p><br />
-          <h3>Donated By: </h3>
-          <p>{{donatedBy}}</p><br />
-          <h3>Additional Notes: </h3>
-          <p>{{additionalNotes}}</p>
+        <div class="view-form-actions">
+          <i class="fas fa-arrow-left" (click)="loadPreviousDepositForm()"></i>
+          <h6>DEPOSIT FORM DETAILS</h6>
+          <i class="fas fa-arrow-right" (click)="loadNextDepositForm()"></i>
+        </div>
+
+        <div class="tab-content" ng-app="refresh_div1" ng-controller="refresh_control1">
+
+          <div class="form-row">
+            <!-- User -->
+            <div class="form-group col-md-6">
+              <label>User</label>
+              <p class="form-control form-control-sm">{{userIDDeposit}}</p>
+            </div>
+            <!-- / User -->
+
+            <!-- Date Submitted -->
+            <div class="form-group col-md-6">
+              <label>Date Submitted</label>
+              <p class="form-control form-control-sm">{{dateSubmittedDeposit}}</p>
+            </div>
+            <!-- / Date Submitted -->
+          </div>
+
+          <div class="form-row">
+            <!-- Culture Name -->
+            <div class="form-group col-md-6">
+              <label>Culture Name</label>
+              <p class="form-control form-control-sm">{{name}}</p>
+            </div>
+            <!-- / Culture Name -->
+
+            <!-- Culture Number -->
+            <div class="form-group col-md-6">
+              <label>Culture Number</label>
+              <p class="form-control form-control-sm">{{cultureNumberDeposit}}</p>
+            </div>
+            <!-- / Culture Number -->
+          </div>
+
+          <div class="form-row">
+            <!-- Personal Collection Number -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Personal Collection Number</label>
+              <p class="form-control form-control-sm">{{personalCollectionNumber}}</p>
+            </div>
+            <!-- / Personal Collection Number -->
+
+            <!-- International Collection Number -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>International Collection Number</label>
+              <p class="form-control form-control-sm">{{internationalCollectionNumber}}</p>
+            </div>
+            <!-- / International Collection Number -->
+
+            <!-- Other FABI Collections -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Other FABI Collections</label>
+              <p class="form-control form-control-sm">{{otherFABICollections}}</p>
+            </div>
+            <!-- / Other FABI Collections -->
+          </div>
+
+          <div class="form-row">
+            <!-- Genus -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Genus</label>
+              <p class="form-control form-control-sm">{{genus}}</p>
+            </div>
+            <!-- / Genus -->
+
+            <!-- Epitheton -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Epitheton</label>
+              <p class="form-control form-control-sm">{{epitheton}}</p>
+            </div>
+            <!-- / Epitheton -->
+
+            <!-- Herbarium Number -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Herbarium Number</label>
+              <p class="form-control form-control-sm">{{herbariumNumber}}</p>
+            </div>
+            <!-- / Herbarium Number -->
+          </div>
+
+          <div class="form-row">
+            <!-- Type Status -->
+            <div class="form-group col-md-6">
+              <label>Type Status</label>
+              <p class="form-control form-control-sm">{{typeStatus}}</p>
+            </div>
+            <!-- / Type Status -->
+          </div>
+
+          <div class="form-row">
+            <!-- Host -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Host</label>
+              <p class="form-control form-control-sm">{{host}}</p>
+            </div>
+            <!-- / Host -->
+
+            <!-- Vector -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Vector</label>
+              <p class="form-control form-control-sm">{{vector}}</p>
+            </div>
+            <!-- / Vector -->
+
+
+            <!-- Substrate -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Substrate</label>
+              <p class="form-control form-control-sm">{{substrate}}</p>
+            </div>
+            <!-- / Substrate -->
+          </div>
+
+
+          <div class="form-row">
+            <!-- Continent -->
+            <div class="form-group col-md-6">
+              <label>Continent</label>
+              <p class="form-control form-control-sm">{{continent}}</p>
+            </div>
+            <!-- / Continent -->
+
+            <!-- Country -->
+            <div class="form-group col-md-6">
+              <label>Country</label>
+              <p class="form-control form-control-sm">{{country}}</p>
+            </div>
+            <!-- / Country -->
+          </div>
+
+          <div class="form-row">
+            <!-- Region -->
+            <div class="form-group col-md-6">
+              <label>Region</label>
+              <p class="form-control form-control-sm">{{region}}</p>
+            </div>
+            <!-- / Region -->
+
+            <!-- Locality -->
+            <div class="form-group col-md-6">
+              <label>Locality</label>
+              <p class="form-control form-control-sm">{{locality}}</p>
+            </div>
+            <!-- / Locality -->
+
+            <!-- GPS -->
+            <div class="form-group col-md-6">
+              <label>GPS</label>
+              <p class="form-control form-control-sm">{{gps}}</p>
+            </div>
+            <!-- / GPS -->
+          </div>
+
+          <div class="form-row">
+            <!-- Collected By -->
+            <div class="form-group col-md-6">
+              <label>Collected By</label>
+              <p class="form-control form-control-sm">{{collectedBy}}</p>
+            </div>
+            <!-- / Collected By -->
+
+            <!-- Date CollectedDate Collected -->
+            <div class="form-group col-md-6">
+              <label>Date Collected</label>
+              <p class="form-control form-control-sm">{{dateCollected}}</p>
+            </div>
+            <!-- / Date Collected -->
+          </div>
+
+          <div class="form-row">
+            <!-- Isolated By -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Isolated By</label>
+              <p class="form-control form-control-sm">{{isolatedBy}}</p>
+            </div>
+            <!-- / Isolated By -->
+
+            <!-- Identified By -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Identified By</label>
+              <p class="form-control form-control-sm">{{identifiedBy}}</p>
+            </div>
+            <!-- / Identified By -->
+
+            <!-- Donated By -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Donated By</label>
+              <p class="form-control form-control-sm">{{donatedBy}}</p>
+            </div>
+            <!-- / Donated By -->
+          </div>
+
+          <div class="form-row">
+            <!-- Additional Notes -->
+            <div class="form-group col-md-6">
+              <label>Additional Notes</label>
+              <p class="form-control form-control-sm">{{additionalNotes}}</p>
+            </div>
+            <!-- / Additional Notes -->
+          </div>
+
+
+          <button (click)="showProcessForm()" data-toggle="modal" data-target="#processDepositFormModal" class="btn btn-default-save">Process Form</button>
+
         </div>
 
       </div>
       <!-- / Deposit Form Tab -->
 
       <!-- Request Form Tab -->
-      <div class="requestForm-tab" *ngIf="requestFormTab">
-        <div class="arrowDiv leftArrow" (click)="loadPreviousRequestForm()"><i class="fas fa-arrow-left"></i></div>
-        <div class="arrowDiv rightArrow" (click)="loadNextRequestForm()"><i class="fas fa-arrow-right"></i></div>
-        <div id="individualRequestForm" ng-app="refresh_div2" ng-controller="refresh_control2">
-          <h3>User: </h3>
-          <p>{{userIDRequest}}</p><br />
-          <h3>Date Submitted: </h3>
-          <p>{{dateSubmittedRequest}}</p><br />
-          <h3>Culture Number: </h3>
-          <p>{{cultureNumberRequest}}</p>
-          <br /><br /><br />
-          <h3>Taxon Name: </h3>
-          <p>{{taxonName}}</p>
-          <h3>Reference Number:</h3>
-          <p>{{referenceNumberRequest}}</p><br />
-          <h3>Date Requested: </h3>
-          <p>{{dateRequestedRequest}}</p>
-          <br /><br /><br />
-          <h3>Notes: </h3>
-          <p>{{notes}}</p>
+      <div class="tab" *ngIf="requestFormTab">
+
+        <div class="view-form-actions">
+          <i class="fas fa-arrow-left" (click)="loadPreviousRequestForm()"></i>
+          <h6>REQUEST FORM DETAILS</h6>
+          <i class="fas fa-arrow-right" (click)="loadNextRequestForm()"></i>
         </div>
+
+        <div class="tab-content" ng-app="refresh_div2" ng-controller="refresh_control2">
+
+          <div class="form-row">
+            <!-- User -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>User</label>
+              <p class="form-control form-control-sm">{{userIDRequest}}</p>
+            </div>
+            <!-- / User -->
+
+            <!-- Date Submitted -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Date Submitted</label>
+              <p class="form-control form-control-sm">{{dateSubmittedRequest}}</p>
+            </div>
+            <!-- / Date Submitted -->
+
+            <!-- Date Requested -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Date Requested</label>
+              <p class="form-control form-control-sm">{{dateRequestedRequest}}</p>
+            </div>
+            <!-- / Date Requested -->
+          </div>
+
+          <div class="form-row">
+            <!-- Culture Number -->
+            <div class="form-group col-md-6">
+              <label>Culture Number</label>
+              <p class="form-control form-control-sm">{{cultureNumberRequest}}</p>
+            </div>
+            <!-- / Culture Number -->
+          </div>
+
+          <div class="form-row">
+            <!-- Taxon Name -->
+            <div class="form-group col-md-6">
+              <label>Taxon Name</label>
+              <p class="form-control form-control-sm">{{taxonName}}</p>
+            </div>
+            <!-- / Taxon Name -->
+          </div>
+
+          <div class="form-row">
+            <!-- Reference Number -->
+            <div class="form-group col-md-6">
+              <label>Reference Number</label>
+              <p class="form-control form-control-sm">{{referenceNumberRequest}}</p>
+            </div>
+            <!-- / Reference Number -->
+          </div>
+
+          <div class="form-row">
+            <!-- Notes -->
+            <div class="form-group col-md-6">
+              <label>Notes</label>
+              <p class="form-control form-control-sm">{{notes}}</p>
+            </div>
+            <!-- / Notes -->
+          </div>
+
+        </div>
+
+
       </div>
       <!-- / Request Form Tab -->
 
       <!-- Revitalization Form Tab -->
-      <div class="revitalizationForm-tab" *ngIf="revitalizationFormTab">
-        <div class="arrowDiv leftArrow" (click)="loadPreviousRevitalizationForm()"><i class="fas fa-arrow-left"></i>
+      <div class="tab" *ngIf="revitalizationFormTab">
+
+        <div class="view-form-actions">
+          <i class="fas fa-arrow-left" (click)="loadPreviousRevitalizationForm()"></i>
+          <h6>REVITALIZATION FORM DETAILS</h6>
+          <i class="fas fa-arrow-right" (click)="loadNextRevitalizationForm()"></i>
         </div>
-        <div class="arrowDiv rightArrow" (click)="loadNextRevitalizationForm()"><i class="fas fa-arrow-right"></i></div>
-        <div id="individualRevitalizationForm" ng-app="refresh_div3" ng-controller="refresh_control3">
-          <h3>User: </h3>
-          <p>{{userIDRevitalization}}</p><br />
-          <h3>Date Submitted: </h3>
-          <p>{{dateSubmittedRevitalization}}</p><br />
-          <h3>Culture Number: </h3>
-          <p>{{cultureNumberRevitalization}}</p>
-          <br /><br /><br />
-          <h3>Culture Name: </h3>
-          <p>{{currentName}}</p>
-          <h3>Name Bionumerics:</h3>
-          <p>{{nameBionumerics}}</p><br />
-          <h3>Culture Condition: </h3>
-          <p>{{cultureCondition}}</p>
-          <h3>Sequence Date Submitted: </h3>
-          <p>{{sequenceDateSubmitted}}</p><br />
-          <h3>Reference Number: </h3>
-          <p>{{referenceNumberRevitalization}}</p>
-          <br /><br /><br />
-          <h3>Date Requested: </h3>
-          <p>{{dateRequestedRevitalization}}</p>
-          <h3>Date Returned:</h3>
-          <p>{{dateReturned}}</p>
+
+        <div class="tab-content" ng-app="refresh_div3" ng-controller="refresh_control3">
+
+          <div class="form-row">
+            <!-- User -->
+            <div class="form-group col-md-6">
+              <label>User</label>
+              <p class="form-control form-control-sm">{{userIDRevitalization}}</p>
+            </div>
+            <!-- / User -->
+
+            <!-- Date Submitted -->
+            <div class="form-group col-md-6">
+              <label>Date Submitted</label>
+              <p class="form-control form-control-sm">{{dateSubmittedRevitalization}}</p>
+            </div>
+            <!-- / Date Submitted -->
+          </div>
+
+          <div class="form-row">
+            <!-- Date Requested -->
+            <div class="form-group col-md-6">
+              <label>Date Requested</label>
+              <p class="form-control form-control-sm">{{dateRequestedRevitalization}}</p>
+            </div>
+            <!-- / Date Requested -->
+
+
+            <!-- Date Returned -->
+            <div class="form-group col-md-6">
+              <label>Date Returned</label>
+              <p class="form-control form-control-sm">{{dateReturned}}</p>
+            </div>
+            <!-- / Date Returned -->
+          </div>
+
+          <div class="form-row">
+            <!-- Culture Name -->
+            <div class="form-group col-md-6">
+              <label>Culture Name</label>
+              <p class="form-control form-control-sm">{{currentName}}</p>
+            </div>
+            <!-- / Culture Name -->
+
+            <!-- Culture Number -->
+            <div class="form-group col-md-6">
+              <label>Culture Number</label>
+              <p class="form-control form-control-sm">{{cultureNumberRevitalization}}</p>
+            </div>
+            <!-- / Culture Number -->
+          </div>
+
+          <div class="form-row">
+            <!-- Name Bionumerics -->
+            <div class="form-group col-md-6">
+              <label>Name Bionumerics</label>
+              <p class="form-control form-control-sm">{{nameBionumerics}}</p>
+            </div>
+            <!-- / Name Bionumerics -->
+          </div>
+
+          <div class="form-row">
+            <!-- Culture Condition -->
+            <div class="form-group col-md-6">
+              <label>Culture Condition</label>
+              <p class="form-control form-control-sm">{{cultureCondition}}</p>
+            </div>
+            <!-- / Culture Condition -->
+          </div>
+
+          <div class="form-row">
+            <!-- Sequence Date Submitted -->
+            <div class="form-group col-md-6">
+              <label>Sequence Date Submitted</label>
+              <p class="form-control form-control-sm">{{sequenceDateSubmitted}}</p>
+            </div>
+            <!-- / Sequence Date Submitted -->
+          </div>
+
+          <div class="form-row">
+            <!-- Reference Number -->
+            <div class="form-group col-md-6">
+              <label>Reference Number</label>
+              <p class="form-control form-control-sm">{{referenceNumberRevitalization}}</p>
+            </div>
+            <!-- / Reference Number -->
+          </div>
+
         </div>
+
       </div>
       <!-- / Revitalization Form Tab -->
 
       <!-- Process Form Tab -->
-      <div class="processedForm-tab" *ngIf="processedFormTab">
-        <div class="arrowDiv leftArrow" (click)="loadPreviousProcessedForm()"><i class="fas fa-arrow-left"></i></div>
-        <div class="arrowDiv rightArrow" (click)="loadNextProcessedForm()"><i class="fas fa-arrow-right"></i></div>
-        <div id="individualProcessedForm" ng-app="refresh_div4" ng-controller="refresh_control4">
-          <h3>User: </h3>
-          <p>{{userIDProcessed}}</p><br />
-          <h3>Date Submitted: </h3>
-          <p>{{dateSubmittedProcessedForm}}</p><br />
-          <h3>Culture Number: </h3>
-          <p>{{cmwCultureNumberProcessed}}</p>
-          <br /><br /><br />
-          <h3>Status of Culture: </h3>
-          <p>{{statusOfCulture}}</p>
-          <h3>Agar Slants:</h3>
-          <p>{{agarSlants}}</p><br />
-          <h3>Water: </h3>
-          <p>{{water}}</p>
-          <h3>Oil: </h3>
-          <p>{{oil}}</p><br />
-          <h3>Room Temperature: </h3>
-          <p>{{roomTemperature}}</p>
-          <h3>18 C: </h3>
-          <p>{{c18}}</p><br />
-          <h3>Freeze Dried: </h3>
-          <p>{{freezeDried}}</p>
-          <h3>Freeze: </h3>
-          <p>{{freeze}}</p><br />
-          <h3>Microscope Slides: </h3>
-          <p>{{microscopeSlides}}</p>
-          <br /><br /><br />
-          <h3>Date of Collection Validation: </h3>
-          <p>{{dateOfCollectionValidation}}</p>
-          <h3>Date Returned:</h3>
-          <p>{{dateReturned}}</p><br />
+      <div class="tab" *ngIf="processedFormTab">
+
+        <div class="view-form-actions">
+          <i class="fas fa-arrow-left" (click)="loadPreviousProcessedForm()"></i>
+          <h6>PROCESSED FORM DETAILS</h6>
+          <i class="fas fa-arrow-right" (click)="loadNextProcessedForm()"></i>
         </div>
+
+        <div class="tab-content" ng-app="refresh_div4" ng-controller="refresh_control4">
+
+          <div class="form-row">
+            <!-- User -->
+            <div class="form-group col-md-6">
+              <label>User</label>
+              <p class="form-control form-control-sm">{{userIDProcessed}}</p>
+            </div>
+            <!-- / User -->
+
+            <!-- Date Submitted -->
+            <div class="form-group col-md-6">
+              <label>Date Submitted</label>
+              <p class="form-control form-control-sm">{{dateSubmittedProcessedForm}}</p>
+            </div>
+            <!-- / Date Submitted -->
+          </div>
+
+          <div class="form-row">
+            <!-- Date of Collection Validation -->
+            <div class="form-group col-md-6">
+              <label>Date of Collection Validation</label>
+              <p class="form-control form-control-sm">{{dateOfCollectionValidation}}</p>
+            </div>
+            <!-- / Date of Collection Validation -->
+
+            <!-- Date Returned -->
+            <div class="form-group col-md-6">
+              <label>Date Returned</label>
+              <p class="form-control form-control-sm">{{dateReturned}}</p>
+            </div>
+            <!-- / Date Returned -->
+          </div>
+
+          <div class="form-row">
+            <!-- Culture Number -->
+            <div class="form-group col-md-6">
+              <label>Culture Number</label>
+              <p class="form-control form-control-sm">{{cmwCultureNumberProcessed}}</p>
+            </div>
+            <!-- / Culture Number -->
+          </div>
+
+          <div class="form-row">
+            <!-- Status of Culture -->
+            <div class="form-group col-md-6">
+              <label>Status of Culture</label>
+              <p class="form-control form-control-sm">{{statusOfCulture}}</p>
+            </div>
+            <!-- / Status of Culture -->
+          </div>
+
+          <div class="form-row">
+            <!-- Agar Slants -->
+            <div class="form-group col-md-6">
+              <label>Agar Slants</label>
+              <p class="form-control form-control-sm">{{agarSlants}}</p>
+            </div>
+            <!-- / Agar Slants -->
+          </div>
+
+          <div class="form-row">
+            <!-- Water -->
+            <div class="form-group col-md-6">
+              <label>Water</label>
+              <p class="form-control form-control-sm">{{water}}</p>
+            </div>
+            <!-- / Water -->
+
+            <!-- Oil -->
+            <div class="form-group col-md-6">
+              <label>Oil</label>
+              <p class="form-control form-control-sm">{{oil}}</p>
+            </div>
+            <!-- / Oil -->
+          </div>
+
+          <div class="form-row">
+            <!-- Room Temperature -->
+            <div class="form-group col-md-6">
+              <label>Room Temperature</label>
+              <p class="form-control form-control-sm">{{roomTemperature}}</p>
+            </div>
+            <!-- / Room Temperature -->
+
+            <!-- 18 C -->
+            <div class="form-group col-md-6">
+              <label>18 C</label>
+              <p class="form-control form-control-sm">{{c18}}</p>
+            </div>
+            <!-- / 18 C -->
+          </div>
+
+          <div class="form-row">
+            <!-- Freeze Dried -->
+            <div class="form-group col-md-6">
+              <label>Freeze Dried</label>
+              <p class="form-control form-control-sm">{{freezeDried}}</p>
+            </div>
+            <!-- / Freeze Dried -->
+
+            <!-- Freeze -->
+            <div class="form-group col-md-6">
+              <label>Freeze</label>
+              <p class="form-control form-control-sm">{{freeze}}</p>
+            </div>
+            <!-- / Freeze -->
+          </div>
+
+          <div class="form-row">
+            <!-- Microscope Slides -->
+            <div class="form-group col-md-6">
+              <label>Microscope Slides</label>
+              <p class="form-control form-control-sm">{{microscopeSlides}}</p>
+            </div>
+            <!-- / Microscope Slides -->
+          </div>
+
+          <button (click)="viewAssociatedDepositForm()" class="btn btn-default-save">View Associated Deposit
+            Form</button>
+
+        </div>
+
       </div>
       <!-- / Process Form Tab -->
 
 
+      <!-- Associated Form Tab -->
+      <div class="tab" *ngIf="associatedFormTab">
+
+        <div class="view-form-actions">
+          <i class="fas fa-arrow-left" (click)="loadPreviousDepositForm()"></i>
+          <h6>DEPOSIT FORM DETAILS</h6>
+          <i class="fas fa-arrow-right" (click)="loadNextDepositForm()"></i>
+        </div>
+
+        <div class="tab-content" ng-app="refresh_div1" ng-controller="refresh_control1">
+
+          <div class="form-row">
+            <!-- User -->
+            <div class="form-group col-md-6">
+              <label>User</label>
+              <p class="form-control form-control-sm">{{userIDDeposit}}</p>
+            </div>
+            <!-- / User -->
+
+            <!-- Date Submitted -->
+            <div class="form-group col-md-6">
+              <label>Date Submitted</label>
+              <p class="form-control form-control-sm">{{dateSubmittedDeposit}}</p>
+            </div>
+            <!-- / Date Submitted -->
+          </div>
+
+          <div class="form-row">
+            <!-- Culture Name -->
+            <div class="form-group col-md-6">
+              <label>Culture Name</label>
+              <p class="form-control form-control-sm">{{name}}</p>
+            </div>
+            <!-- / Culture Name -->
+
+            <!-- Culture Number -->
+            <div class="form-group col-md-6">
+              <label>Culture Number</label>
+              <p class="form-control form-control-sm">{{cultureNumberDeposit}}</p>
+            </div>
+            <!-- / Culture Number -->
+          </div>
+
+          <div class="form-row">
+            <!-- Personal Collection Number -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Personal Collection Number</label>
+              <p class="form-control form-control-sm">{{personalCollectionNumber}}</p>
+            </div>
+            <!-- / Personal Collection Number -->
+
+            <!-- International Collection Number -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>International Collection Number</label>
+              <p class="form-control form-control-sm">{{internationalCollectionNumber}}</p>
+            </div>
+            <!-- / International Collection Number -->
+
+            <!-- Other FABI Collections -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Other FABI Collections</label>
+              <p class="form-control form-control-sm">{{otherFABICollections}}</p>
+            </div>
+            <!-- / Other FABI Collections -->
+          </div>
+
+          <div class="form-row">
+            <!-- Genus -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Genus</label>
+              <p class="form-control form-control-sm">{{genus}}</p>
+            </div>
+            <!-- / Genus -->
+
+            <!-- Epitheton -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Epitheton</label>
+              <p class="form-control form-control-sm">{{epitheton}}</p>
+            </div>
+            <!-- / Epitheton -->
+
+            <!-- Herbarium Number -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Herbarium Number</label>
+              <p class="form-control form-control-sm">{{herbariumNumber}}</p>
+            </div>
+            <!-- / Herbarium Number -->
+          </div>
+
+          <div class="form-row">
+            <!-- Type Status -->
+            <div class="form-group col-md-6">
+              <label>Type Status</label>
+              <p class="form-control form-control-sm">{{typeStatus}}</p>
+            </div>
+            <!-- / Type Status -->
+          </div>
+
+          <div class="form-row">
+            <!-- Host -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Host</label>
+              <p class="form-control form-control-sm">{{host}}</p>
+            </div>
+            <!-- / Host -->
+
+            <!-- Vector -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Vector</label>
+              <p class="form-control form-control-sm">{{vector}}</p>
+            </div>
+            <!-- / Vector -->
+
+
+            <!-- Substrate -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Substrate</label>
+              <p class="form-control form-control-sm">{{substrate}}</p>
+            </div>
+            <!-- / Substrate -->
+          </div>
+
+
+          <div class="form-row">
+            <!-- Continent -->
+            <div class="form-group col-md-6">
+              <label>Continent</label>
+              <p class="form-control form-control-sm">{{continent}}</p>
+            </div>
+            <!-- / Continent -->
+
+            <!-- Country -->
+            <div class="form-group col-md-6">
+              <label>Country</label>
+              <p class="form-control form-control-sm">{{country}}</p>
+            </div>
+            <!-- / Country -->
+          </div>
+
+          <div class="form-row">
+            <!-- Region -->
+            <div class="form-group col-md-6">
+              <label>Region</label>
+              <p class="form-control form-control-sm">{{region}}</p>
+            </div>
+            <!-- / Region -->
+
+            <!-- Locality -->
+            <div class="form-group col-md-6">
+              <label>Locality</label>
+              <p class="form-control form-control-sm">{{locality}}</p>
+            </div>
+            <!-- / Locality -->
+
+            <!-- GPS -->
+            <div class="form-group col-md-6">
+              <label>GPS</label>
+              <p class="form-control form-control-sm">{{gps}}</p>
+            </div>
+            <!-- / GPS -->
+          </div>
+
+          <div class="form-row">
+            <!-- Collected By -->
+            <div class="form-group col-md-6">
+              <label>Collected By</label>
+              <p class="form-control form-control-sm">{{collectedBy}}</p>
+            </div>
+            <!-- / Collected By -->
+
+            <!-- Date CollectedDate Collected -->
+            <div class="form-group col-md-6">
+              <label>Date Collected</label>
+              <p class="form-control form-control-sm">{{dateCollected}}</p>
+            </div>
+            <!-- / Date Collected -->
+          </div>
+
+          <div class="form-row">
+            <!-- Isolated By -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Isolated By</label>
+              <p class="form-control form-control-sm">{{isolatedBy}}</p>
+            </div>
+            <!-- / Isolated By -->
+
+            <!-- Identified By -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Identified By</label>
+              <p class="form-control form-control-sm">{{identifiedBy}}</p>
+            </div>
+            <!-- / Identified By -->
+
+            <!-- Donated By -->
+            <div class="form-group col-md-6 col-xl-4">
+              <label>Donated By</label>
+              <p class="form-control form-control-sm">{{donatedBy}}</p>
+            </div>
+            <!-- / Donated By -->
+          </div>
+
+          <div class="form-row">
+            <!-- Additional Notes -->
+            <div class="form-group col-md-6">
+              <label>Additional Notes</label>
+              <p class="form-control form-control-sm">{{additionalNotes}}</p>
+            </div>
+            <!-- / Additional Notes -->
+          </div>
+
+
+          <button (click)="showProcessForm()" class="btn btn-default-save">Process Form</button>
+
+        </div>
+
+      </div>
+      <!-- / Associated Deposit Form Tab -->
 
     </div>
     <!-- / CMW Forms -->
 
+    <!-- Process Deposit Form Section -->
+    <div class="modal fade" id="processDepositFormModal" tabindex="-1" role="dialog"
+      aria-labelledby="processDepositFormModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
 
-    <!-- Notification Section -->
-    <div id="notifications" *ngIf="notificationsTab">
-      <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
-      <br />
+          <!-- Modal Header-->
+          <div class="modal-header">
+            <h5 class="modal-title" id="processDepositFormModalTitle">Process Deposit Form</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><i class="fas fa-times"></i></span>
+            </button>
+          </div>
+          <!-- / Modal Header-->
 
-      <app-admin-notification></app-admin-notification>
+          <!-- Modal Body-->
+          <div class="modal-body">
+            <div class="form">
 
+              <form id="processForm" [formGroup]="processForm" (submit)="processDepositProcessedForm()">
+
+                <div class="form-row">
+                  <!-- Status of Culture -->
+                  <div class="form-group col-md-6">
+                    <label for="statusOfCulture">Status of Culture</label>
+                    <input type="text" class="form-control form-control-sm" id="statusOfCulture"
+                      formControlName="statusOfCulture" placeholder="Status of Culture" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Status of Culture -->
+                </div>
+
+                <div class="form-row">
+                  <!-- Agar Slants -->
+                  <div class="form-group col-md-6">
+                    <label for="agarSlants">Agar Slants</label>
+                    <input type="text" class="form-control form-control-sm" id="agarSlants" formControlName="agarSlants"
+                      placeholder="Agar Slants" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Agar Slants -->
+                </div>
+
+                <div class="form-row">
+                  <!-- Water -->
+                  <div class="form-group col-md-6">
+                    <label for="water">Water</label>
+                    <input type="text" class="form-control form-control-sm" id="water" formControlName="water"
+                      placeholder="Water" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Water -->
+
+                  <!-- Oil -->
+                  <div class="form-group col-md-6">
+                    <label for="oil">Oil</label>
+                    <input type="text" class="form-control form-control-sm" id="oil" formControlName="oil"
+                      placeholder="Oil" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Oil -->
+                </div>
+
+                <div class="form-row">
+                  <!-- Room Temperature -->
+                  <div class="form-group col-md-6">
+                    <label for="roomTemperature">Room Temperature</label>
+                    <input type="text" class="form-control form-control-sm" id="roomTemperature"
+                      formControlName="roomTemperature" placeholder="Room Temperature" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Room Temperature -->
+
+                  <!-- 18C -->
+                  <div class="form-group col-md-6">
+                    <label for="c18">18C</label>
+                    <input type="text" class="form-control form-control-sm" id="c18" formControlName="c18"
+                      placeholder="18C" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / 18C -->
+                </div>
+
+                <div class="form-row">
+                    <!-- Freeze Dried -->
+                    <div class="form-group col-md-6">
+                      <label for="freezeDried">Freeze Dried</label>
+                      <input type="text" class="form-control form-control-sm" id="freezeDried"
+                        formControlName="freezeDried" placeholder="Freeze Dried" required>
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                    </div>
+                    <!-- / Freeze Dried -->
+  
+                    <!-- Freeze -80C -->
+                    <div class="form-group col-md-6">
+                      <label for="freeze">Freeze -80C</label>
+                      <input type="text" class="form-control form-control-sm" id="freeze" formControlName="freeze"
+                        placeholder="Freeze -80C" required>
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                    </div>
+                    <!-- / Freeze -80C -->
+                  </div>
+
+
+            </div>
+
+
+
+            <div>
+              <mat-form-field class="form_inputs" class="col">
+                <input matInput placeholder="Date of Collection Validation" matInput type="date"
+                  formControlName="dateOfCollectionValidation">
+              </mat-form-field>
+              <br />
+
+              <mat-form-field class="form_inputs" class="col">
+                <input matInput placeholder="Microscope Slides" matInput type="text" formControlName="microscopeSlides">
+              </mat-form-field>
+            </div>
+            </form>
+
+          </div>
+        </div>
+        <!-- / Modal Body-->
+
+      </div>
     </div>
-    <!-- / Notification Section -->
+  </div>
+  <!-- / Process Deposit Form Section -->
 
-    <!-- Profile Section -->
-    <div id="profile" *ngIf="profileTab">
-      <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
-      <br />
 
-      <app-admin-profile></app-admin-profile>
+  <!-- Notification Section -->
+  <div id="notifications" *ngIf="notificationsTab">
+    <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
+    <br />
 
-    </div>
-    <!-- / Profile Section -->
-
-    <!-- Help Section -->
-    <div id="help" *ngIf="helpTab">
-      <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
-      <br />
-
-      <app-admin-help></app-admin-help>
-
-    </div>
-    <!-- / Help Section -->
+    <app-admin-notification></app-admin-notification>
 
   </div>
-  <!-- / Dashboard Content -->
+  <!-- / Notification Section -->
 
-  <!-- Up Icon -->
-  <!-- <div id="scroll-to-top">
+  <!-- Profile Section -->
+  <div id="profile" *ngIf="profileTab">
+    <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
+    <br />
+
+    <app-admin-profile></app-admin-profile>
+
+  </div>
+  <!-- / Profile Section -->
+
+  <!-- Help Section -->
+  <div id="help" *ngIf="helpTab">
+    <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
+    <br />
+
+    <app-admin-help></app-admin-help>
+
+  </div>
+  <!-- / Help Section -->
+
+</div>
+<!-- / Dashboard Content -->
+
+<!-- Up Icon -->
+<!-- <div id="scroll-to-top">
       <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
     </div> -->
-  <!-- / Up Icon -->
+<!-- / Up Icon -->
 
 </div>
 <!-- / Dashboard -->
