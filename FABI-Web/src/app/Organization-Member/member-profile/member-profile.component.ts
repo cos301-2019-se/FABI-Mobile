@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -64,6 +64,10 @@ export class MemberProfileComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  currentUser: any;
+
+  isEditingProfile: boolean = false;
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
@@ -95,10 +99,38 @@ export class MemberProfileComponent implements OnInit {
       organization_name: '',
       member_name: '',
       member_surname: '',
-      member_email: '',
-      member_password: '',
-      member_confirm: ''
+      member_email: ''
     });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadMemberProfileDetails()
+   * 
+   * @memberof MemberProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginOrganisationMember().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.loadMemberProfileDetails();
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    //Calling the neccessary functions as the page loads
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    //Calling the neccessary functions as the page loads
+    // this.loadMemberProfileDetails();
+
+    this.memberProfileForm.get('organization_name').disable();
+    this.memberProfileForm.get('member_name').disable();
+    this.memberProfileForm.get('member_surname').disable();
+    this.memberProfileForm.get('member_email').disable();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,12 +171,11 @@ export class MemberProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadMemberProfileDetails(){
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
+
     //The id number of the user that is currently logged in
-    this.id = tempUser.user.ID;
+    this.id = this.currentUser.ID;
     //The organization of the user that is currently logged in
-    this.organization = tempUser.user.organisation;
+    this.organization = this.currentUser.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -152,12 +183,13 @@ export class MemberProfileComponent implements OnInit {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        //Setting the name of the user
-        this.name = data.fname;
-        //Setting the surname of the user
-        this.surname = data.surname;
-        //Setting the email of the user
-        this.email = data.email;
+        // Fill the form inputs with the user's details
+        this.memberProfileForm.setValue( {
+          member_name: data.fname,
+          member_surname: data.surname,
+          member_email: data.email,
+          organization_name: this.currentUser.organisation
+        });
       }
       else{
         //Error handling
@@ -174,76 +206,35 @@ export class MemberProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-    //Indicates if the details can be changed based on whether the passwords match or not
-    var valid = true;
 
-    //Checking to make sure that the passwords are not empty
-    //Checking to make sure that the password and confirmed password match
-    if(this.memberProfileForm.controls.admin_password.value != '' && 
-    this.memberProfileForm.controls.admin_password.value == this.memberProfileForm.controls.admin_confirm.value){
-      this.password = this.memberProfileForm.controls.admin_password.value;
-    }
-    else{
-      //Indicates that the changes cannot be saved
-      valid = false;
-
-      //POPUP MESSAGE
-      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-        duration: 3000
-      });
+    // Check if form input is valid 
+    if (this.memberProfileForm.invalid) {
+      return;
     }
 
-    //Indicates that the changes that the user has made to their profile details, can be changed
-    if(valid == true){
-      if(this.memberProfileForm.controls.member_email.value == ''){
-        this.email = this.email;
-      }
-      else{
-        this.email = this.memberProfileForm.controls.member_email.value;
-      }
-
-      if(this.memberProfileForm.controls.member_name.value == ''){
-        this.name = this.name;
-      }
-      else{
-        this.name = this.memberProfileForm.controls.member_name.value;
-      }
-
-      if(this.memberProfileForm.controls.member_surname.value == ''){
-        this.surname == this.surname;
-      }
-      else{
-        this.surname = this.memberProfileForm.controls.member_surname.value;
-      }   
+    var Uemail = this.memberProfileForm.controls.member_email.value;
+    var Uname = this.memberProfileForm.controls.member_name.value;
+    var Usurname = this.memberProfileForm.controls.member_surname.value;
       
-      //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateOrganizationMemberDetails(this.organization, this.email, this.name).subscribe((response: any) => {
-        if(response.success == true){
-          //Making sure that local storage now has the updated user information
-          this.authService.setCurrentUserValues(this.name, this.surname, this.email);
+    //Making a call to the User Management API Service to save the user's changed profile details
+    this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
+      if(response.success == true){
+        
+        //Reloading the updated user's details
+        this.loadMemberProfileDetails();
 
-          //Reloading the updated user's details
-          this.loadMemberProfileDetails();
-
-          //Display message to say that details were successfully saved
-          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-        else{
-          //Error handling
-          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-      });
-    }
-    else{
-      //Error handling
-      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-        duration: 3000
-      });
-    }
+        //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+          duration: 3000
+        });
+      }
+      else{
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+          duration: 3000
+        });
+      }
+    });
   }
 
 
@@ -280,18 +271,20 @@ export class MemberProfileComponent implements OnInit {
     }
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          NG ON INIT  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Call loadMemberProfileDetails()
-   * 
-   * @memberof MemberProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    //Calling the neccessary functions as the page loads
-    this.loadMemberProfileDetails();
+  editProfileToggle() {
+
+    if(this.isEditingProfile) {
+      this.memberProfileForm.get('member_name').disable();
+      this.memberProfileForm.get('member_surname').disable();
+      this.memberProfileForm.get('member_email').disable();
+      this.isEditingProfile = false;
+    } else {
+      this.memberProfileForm.get('member_name').enable();
+      this.memberProfileForm.get('member_surname').enable();
+      this.memberProfileForm.get('member_email').enable();
+      this.isEditingProfile = true;
+    }
+    
   }
+
 }

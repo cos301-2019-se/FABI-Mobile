@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -250,13 +250,15 @@ export class StaffProfileComponent implements OnInit {
   editProfileToggle() {
 
     if(this.isEditingProfile) {
-      this.staffProfileForm.get('staff_name').enable();
-      this.staffProfileForm.get('staff_surname').enable();
-      this.staffProfileForm.get('staff_email').enable();
+      this.staffProfileForm.get('staff_name').disable();
+      this.staffProfileForm.get('staff_surname').disable();
+      this.staffProfileForm.get('staff_email').disable();
+      this.isEditingProfile = false;
     } else {
       this.staffProfileForm.get('staff_name').enable();
       this.staffProfileForm.get('staff_surname').enable();
       this.staffProfileForm.get('staff_email').enable();
+      this.isEditingProfile = true;
     }
     
   }
