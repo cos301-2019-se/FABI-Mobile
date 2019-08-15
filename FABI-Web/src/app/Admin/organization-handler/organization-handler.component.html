@@ -147,20 +147,26 @@
     <!-- Organization Tables -->
     <div class="organization-tables">
 
-        <div class="input-group search-table">
-            <div class="input-group-prepend ">
-              <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-            </div>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-              aria-describedby="basic-addon1" (keyup)="searchFunction()" id="search-table">
-          </div>
-    
-
       <!-- Organization Table -->
       <div class="organization-table table-responsive">
         <h5> Organization Table </h5>
 
-        <table class="table table-hover" *ngIf="organizations" id="table">
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!organizations">
+          <h6>There are currently no organizations</h6>
+          <i class="fas fa-plus-circle" data-toggle="modal" data-target="#addModal"></i>
+        </div>
+        <!-- / Extra Table Information -->
+
+        <div class="input-group search-table">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+        </div>
+
+        <table class="table table-hover" *ngIf="organizations" id="info">
           <thead>
             <tr>
               <th scope="col">Organization</th>
@@ -223,23 +229,24 @@
             <!-- OrganizationName -->
             <div class="form-group">
               <label for="name">Organization Name</label>
-              <input type="text" class="form-control" id="name" placeholder="Enter organization name" disabled [value]="selectedOrg.orgName">
+              <input type="text" class="form-control" id="name" placeholder="Enter organization name" disabled
+                [value]="selectedOrg.orgName">
             </div>
             <!-- /Organization Name -->
 
             <!-- Name -->
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" placeholder="Enter name"
-                disabled [value]="selectedOrg.admin.fname">
+              <input type="text" class="form-control" id="name" placeholder="Enter name" disabled
+                [value]="selectedOrg.admin.fname">
             </div>
             <!-- /Name -->
 
             <!-- Surname -->
             <div class="form-group">
               <label for="surname">Surname</label>
-              <input type="text" class="form-control" id="surname" placeholder="Enter surname"
-                disabled [value]="selectedOrg.admin.surname">
+              <input type="text" class="form-control" id="surname" placeholder="Enter surname" disabled
+                [value]="selectedOrg.admin.surname">
             </div>
             <!-- /Surname -->
 
@@ -255,8 +262,8 @@
             <!-- Phone -->
             <div class="form-group">
               <label for="phone">Phone</label>
-              <input type="text" class="form-control" id="phone" placeholder="Enter phone"
-                disabled [value]="selectedOrg.admin.phone">
+              <input type="text" class="form-control" id="phone" placeholder="Enter phone" disabled
+                [value]="selectedOrg.admin.phone">
             </div>
             <!-- /Phone -->
 
@@ -405,7 +412,7 @@
   <div id="notifications" *ngIf="notificationsTab">
     <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
     <br />
-    
+
     <app-admin-notification></app-admin-notification>
 
   </div>
@@ -415,7 +422,7 @@
   <div id="profile" *ngIf="profileTab">
     <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
     <br />
-    
+
     <app-admin-profile></app-admin-profile>
 
   </div>
@@ -425,7 +432,7 @@
   <div id="help" *ngIf="helpTab">
     <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
     <br />
-    
+
     <app-admin-help></app-admin-help>
 
   </div>
