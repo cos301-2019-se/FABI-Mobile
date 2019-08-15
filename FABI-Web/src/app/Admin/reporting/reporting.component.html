@@ -407,7 +407,7 @@
                     <th>Other users involved</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='userLogs'>
+                <tbody>
                   <tr class="tableRow" scope="row" *ngFor="let row of userLogsArray; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
@@ -440,7 +440,7 @@
                     <th>Other users involved</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='databaseLogs'>
+                <tbody>
                   <tr class="tableRow" scope="row" *ngFor="let row of databaseLogsArray; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
@@ -472,7 +472,7 @@
                     <th>User performing action</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='accessLogs'>
+                <tbody>
                   <tr class="tableRow" scope="row" *ngFor="let row of accessLogsArray; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
@@ -505,7 +505,7 @@
                     <th>User performing action</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='errorLogs'>
+                <tbody>
                   <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
