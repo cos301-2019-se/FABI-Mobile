@@ -43,7 +43,7 @@ import * as $ from 'jquery';
 @Component({
   selector: 'app-reporting',
   templateUrl: './reporting.component.html',
-  styleUrls: ['./reporting.component.scss']
+  // styleUrls: ['./reporting.component.scss']
 })
 export class ReportingComponent implements OnInit {
 
