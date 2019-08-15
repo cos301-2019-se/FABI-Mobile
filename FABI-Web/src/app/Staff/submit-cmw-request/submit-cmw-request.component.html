@@ -1,26 +1,32 @@
 <form class="view-form needs-validation" novalidate [formGroup]="cmwRequestForm" (submit)="submitCMWRequestForm()">
 
 
-  <mat-form-field class="example-full-width">
+  <!-- <mat-form-field class="example-full-width">
     <input matInput [(ngModel)]="requestor" placeholder="Requestor (Surname, Initials)" type="text"
       [formControl]="requestorControl" formControlName="requestor" [matAutocomplete]="autoRequestor">
     <mat-autocomplete #autoRequestor="matAutocomplete" (optionSelected)="setRequestor($event)">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}
       </mat-option>
     </mat-autocomplete>
-  </mat-form-field>
+  </mat-form-field> -->
 
-  <!-- Requestor Name -->
-  <!-- <div class="form-group">
-      <label for="requestor">Requestor Name</label>
-      <input class="form-control form-control-sm mdb-autocomplete" type="search" id="requestor" [(ngModel)]="requestor" placeholder="Requestor (Surname, Initials)" type="text"
-      [formControl]="requestorControl" formControlName="requestor" [matAutocomplete]="autoRequestor" required>
-      <div class="valid-feedback">
-        Looks good!
+    <!-- Requestor Name -->
+    <div class="form-group">
+        <label for="requestor">Requestor Name</label>
+        <select class="form-control form-control-sm" [(ngModel)]="requestor" id="requestor" formControlName="requestor"
+          required>
+          <option value="" selected>
+            Please select a requestor
+          </option>
+          <option *ngFor="let option of filteredOptions | async"  [value]="option">
+              {{option}}
+          </option>
+        </select>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
       </div>
-    </div> -->
-    <!-- / Requestor Name -->
-
+      <!-- / Requestor Name -->
 
   <!-- Taxon Name -->
   <div class="form-group">

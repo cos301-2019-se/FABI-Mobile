@@ -221,6 +221,9 @@
   </div>
   <!-- / GPS -->
 
+
+
+  <!-- Identified By Name -->
   <mat-form-field class="example-full-width">
     <input matInput [(ngModel)]="collectedBy" placeholder="Collected By (Surname, Initials)" type="text"
       [formControl]="collectedByControl" formControlName="collected_by" [matAutocomplete]="autoCollectedBy">
@@ -228,6 +231,24 @@
       <mat-option *ngFor="let option of filteredOptions1 | async" [value]="option">{{option}}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
+  <br />
+  <!-- <div class="form-group">
+      <label for="requestor">Collected By (Surname, Initials)</label>
+      <select class="form-control form-control-sm" [(ngModel)]="collectedBy"  id="identifiedByControl"
+        [formControl]="collectedByControl" formControlName="collected_by"  required>
+        <option value="" selected>
+          Please select a requestor
+        </option>
+        <option *ngFor="let option of filteredOptions1 | async" [value]="option">
+          {{option}}
+        </option>
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div> -->
+  <!-- / Identified By Name -->
+
 
 
   <!-- Date Collected -->
@@ -241,6 +262,8 @@
   </div>
   <!-- / Date Collected -->
 
+
+  <!-- Isolated By Name -->
   <mat-form-field class="example-full-width">
     <input matInput [(ngModel)]="isolatedBy" placeholder="Isolated By (Surname, Initials)" type="text"
       [formControl]="isolatedByControl" formControlName="isolated_by" [matAutocomplete]="autoIsolatedBy">
@@ -249,7 +272,26 @@
     </mat-autocomplete>
   </mat-form-field>
   <br />
+  <!-- <div class="form-group">
+    <label for="requestor">Isolated By (Surname, Initials)</label>
+    <select class="form-control form-control-sm" [[(ngModel)]="isolatedBy" id="isolatedByControl"
+      [formControl]="isolatedByControl" formControlName="isolated_by" required>
+      <option value="" selected>
+        Please select a requestor
+      </option>
+      <option *ngFor="let option of filteredOptions3 | async" [value]="option">
+        {{option}}
+      </option>
+    </select>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div> -->
+  <!-- / Isolated By Name -->
 
+
+
+  <!-- Identified By Name -->
   <mat-form-field class="example-full-width">
     <input matInput [(ngModel)]="identifiedBy" placeholder="Identified By (Surname, Initials)" type="text"
       [formControl]="identifiedByControl" formControlName="identified_by" [matAutocomplete]="autoIdentifiedBy">
@@ -258,7 +300,25 @@
     </mat-autocomplete>
   </mat-form-field>
   <br />
+  <!-- <div class="form-group">
+    <label for="requestor">Identified By (Surname, Initials)</label>
+    <select class="form-control form-control-sm" [(ngModel)]="identifiedBy" id="identifiedByControl"
+      [formControl]="identifiedByControl" formControlName="identified_by" required>
+      <option value="" selected>
+        Please select a requestor
+      </option>
+      <option *ngFor="let option of filteredOptions2 | async" [value]="option">
+        {{option}}
+      </option>
+    </select>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div> -->
+  <!-- / Identified By Name -->
 
+
+  <!-- Donated By Name -->
   <mat-form-field class="example-full-width">
     <input matInput [(ngModel)]="donatedBy" placeholder="Donated By (Surname, Initials)" type="text"
       [formControl]="donatedByControl" formControlName="donated_by" [matAutocomplete]="autoDonatedBy">
@@ -267,6 +327,22 @@
     </mat-autocomplete>
   </mat-form-field>
   <br />
+  <!-- <div class="form-group">
+      <label for="requestor">Donated By (Surname, Initials)</label>
+      <select class="form-control form-control-sm" [(ngModel)]="donatedBy" id="identifiedByControl"
+      [formControl]="donatedByControl" formControlName="donated_by" required>
+        <option value="" selected>
+          Please select a requestor
+        </option>
+        <option *ngFor="let option of filteredOptions4 | async" [value]="option">
+          {{option}}
+        </option>
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div> -->
+  <!-- / Donated By Name -->
 
   <!-- Additional Notes -->
   <div class="form-group">
