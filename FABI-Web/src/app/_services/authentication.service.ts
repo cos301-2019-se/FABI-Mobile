@@ -186,7 +186,6 @@ export class AuthenticationService {
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
         if(response.userDetails.databases) {
-          console.log(response.userDetails.databases);
           this.currentUser.databases = response.userDetails.databases;
         }
       }
