@@ -38,7 +38,6 @@ import { MemberDashboardComponent } from './Organization-Member/member-dashboard
 import { MemberProfileComponent } from './Organization-Member/member-profile/member-profile.component';
 import { MemberSubmitSampleComponent } from './Organization-Member/member-submit-sample/member-submit-sample.component';
 import { MemberViewSamplesComponent } from './Organization-Member/member-view-samples/member-view-samples.component';
-import { SplashComponent } from './splash/splash.component';
 import { StaffDashboardComponent } from './Staff/staff-dashboard/staff-dashboard.component';
 import { StaffSubmitSampleComponent } from './Staff/staff-submit-sample/staff-submit-sample.component';
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
@@ -97,7 +96,6 @@ import { MemberMenuComponent } from './Organization-Member/member-menu/member-me
     MemberProfileComponent,
     MemberSubmitSampleComponent,
     MemberViewSamplesComponent,
-    SplashComponent,
     StaffDashboardComponent,
     StaffSubmitSampleComponent,
     SubmitCmwRequestComponent,
