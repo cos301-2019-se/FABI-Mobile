@@ -64,6 +64,8 @@ export class OrganizationHandlerComponent implements OnInit {
   organizations: Interface.Organisation[];
   /** The total number of Organization - @type {number} */           
   numberOfOrganizations: number = 0;
+  /** The flag which indicates that the numberOfOrganizations has been set - @type {boolean} */           
+  setOrganizationLength: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;   
 
@@ -329,9 +331,9 @@ export class OrganizationHandlerComponent implements OnInit {
         
         //Store the total number of organizations for the statistics 
         this.numberOfOrganizations = this.organizations.length;
-        
-        this.dataSource = new MatTableDataSource(this.organizations);
-        this.dataSource.paginator = this.paginator;
+
+        //Sets flag to enable the display of statistics on the dashboard
+        this.setOrganizationLength = true;
 
       } 
       else if (response.success == false) {
