@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Friday, August 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,8 +15,8 @@
 
 import {
   Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef, Renderer2
-} from '@angular/core';
+  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef, Renderer2,
+  Pipe, PipeTransform } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -77,10 +77,6 @@ export class ReportingComponent implements OnInit {
 
   /** The current date in string format - @type {string} */
   date: string;
-  /** The date that the logs must start from - @type {string} */
-  dateFrom: string = '';
-  /** The date that the logs must end at - @type {string} */
-  dateTo: string = '';
 
   /** Array holding the user logs - @type {any} */
   userLogsArray: any[] = [];
@@ -176,6 +172,9 @@ export class ReportingComponent implements OnInit {
 
   /** Stores the data table -  @type {string} */
   public tableWidget: any;
+
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchItem: string;
 
   ngAfterViewInit() {
     // this.initDatatable()
@@ -535,96 +534,18 @@ export class ReportingComponent implements OnInit {
       if (response.success = true) {
         var data = response.data.qs.forms;
 
-        if (this.dateFrom != '' && this.dateTo != '') {
-          this.requestLogsArray = [];
-          for (var j = 0; j < data.length; j++) {
-            if (data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo) {
-              var tempArray: any = [];
-              
-              tempArray.push(this.loadUserDetails(data[j].userID));
-              tempArray.push(data[j].requestor);
-              tempArray.push(data[j].cultureNumber);
-              tempArray.push(data[j].taxonName);
-              tempArray.push(data[j].referenceNumber);
-              tempArray.push(data[j].dateRequested);
-              tempArray.push(data[j].dateSubmitted);
+        for (var i = 0; i < data.length; i++) {
+          var tempArray: any = [];
+          
+          tempArray.push(this.loadUserDetails(data[i].userID));
+          tempArray.push(data[i].requestor);
+          tempArray.push(data[i].cultureNumber);
+          tempArray.push(data[i].taxonName);
+          tempArray.push(data[i].referenceNumber);
+          tempArray.push(data[i].dateRequested);
+          tempArray.push(data[i].dateSubmitted);
 
-              this.requestLogsArray.push(tempArray);
-            }
-            else {
-              var month = Number(data[j].dateSubmitted[3] + data[j].dateSubmitted[4]);
-              var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
-
-              if (month == monthFrom) {
-                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
-                var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
-
-                if (day >= dayFrom) {
-                  var tempArray: any = [];
-                  
-                  tempArray.push(this.loadUserDetails(data[j].userID));
-                  tempArray.push(data[j].requestor);
-                  tempArray.push(data[j].cultureNumber);
-                  tempArray.push(data[j].taxonName);
-                  tempArray.push(data[j].referenceNumber);
-                  tempArray.push(data[j].dateRequested);
-                  tempArray.push(data[j].dateSubmitted);
-
-                  this.requestLogsArray.push(tempArray);
-                }
-              }
-
-              var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
-
-              if (month == monthTo) {
-                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
-                var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
-
-                if (day <= dayTo) {
-                  var tempArray: any = [];
-                  
-                  tempArray.push(this.loadUserDetails(data[j].userID));
-                  tempArray.push(data[j].requestor);
-                  tempArray.push(data[j].cultureNumber);
-                  tempArray.push(data[j].taxonName);
-                  tempArray.push(data[j].referenceNumber);
-                  tempArray.push(data[j].dateRequested);
-                  tempArray.push(data[j].dateSubmitted);
-
-                  this.requestLogsArray.push(tempArray);
-                }
-              }
-
-              if (month >= monthFrom && month <= monthTo) {
-                var tempArray: any = [];
-                
-                tempArray.push(this.loadUserDetails(data[j].userID));
-                tempArray.push(data[j].requestor);
-                tempArray.push(data[j].cultureNumber);
-                tempArray.push(data[j].taxonName);
-                tempArray.push(data[j].referenceNumber);
-                tempArray.push(data[j].dateRequested);
-                tempArray.push(data[j].dateSubmitted);
-
-                this.requestLogsArray.push(tempArray);
-              }
-            }
-          }
-        }
-        else {
-          for (var i = 0; i < data.length; i++) {
-            var tempArray: any = [];
-            
-            tempArray.push(this.loadUserDetails(data[i].userID));
-            tempArray.push(data[i].requestor);
-            tempArray.push(data[i].cultureNumber);
-            tempArray.push(data[i].taxonName);
-            tempArray.push(data[i].referenceNumber);
-            tempArray.push(data[i].dateRequested);
-            tempArray.push(data[i].dateSubmitted);
-
-            this.requestLogsArray.push(tempArray);
-          }
+          this.requestLogsArray.push(tempArray);
         }
       }
       else {
@@ -680,131 +601,19 @@ export class ReportingComponent implements OnInit {
       if (response.success = true) {
         var data = response.data.qs.forms;
 
-        if (this.dateFrom != '' && this.dateTo != '') {
-          this.depositLogsArray = [];
-          for (var j = 0; j < data.length; j++) {
-            if (data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo) {
-              var tempArray: any = [];
-              
-              if(this.loadUserDetails(data[j].userID) == null){
-                tempArray.push("");
-              }
-              else{
-                tempArray.push(this.loadUserDetails(data[j].userID));
-              }
+        for (var i = 0; i < data.length; i++) {
+          var tempArray: any = [];
+          
+          tempArray.push(this.loadUserDetails(data[i].userID));
+          tempArray.push(data[i].cmwCultureNumber);
+          tempArray.push(data[i].name);
+          tempArray.push(data[i].collected_by);
+          tempArray.push(data[i].dateCollected);
+          tempArray.push(data[i].isolatedBy);
+          tempArray.push(data[i].identifiedBy);
+          tempArray.push(data[i].dateSubmitted);
 
-              tempArray.push(data[j].cmwCultureNumber);
-              tempArray.push(data[j].name);
-              tempArray.push(data[j].collectedBy);
-              tempArray.push(data[j].dateCollected);
-              tempArray.push(data[j].isolatedBy);
-              tempArray.push(data[j].identifiedBy);
-              tempArray.push(data[j].dateSubmitted);
-
-              this.depositLogsArray.push(tempArray);
-            }
-            else {
-              var month = Number(data[j].dateSubmitted[3] + data[j].dateSubmitted[4]);
-              var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
-
-              if (month == monthFrom) {
-                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
-                var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
-
-                if (day >= dayFrom) {
-                  var tempArray: any = [];
-                  
-                  if(this.loadUserDetails(data[j].userID) == null){
-                    tempArray.push("");
-                  }
-                  else{
-                    tempArray.push(this.loadUserDetails(data[j].userID));
-                  }
-
-                  tempArray.push(data[j].cmwCultureNumber);
-                  tempArray.push(data[j].name);
-                  tempArray.push(data[j].collectedBy);
-                  tempArray.push(data[j].dateCollected);
-                  tempArray.push(data[j].isolatedBy);
-                  tempArray.push(data[j].identifiedBy);
-                  tempArray.push(data[j].dateSubmitted);
-
-                  this.depositLogsArray.push(tempArray);
-                }
-              }
-
-              var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
-
-              if (month == monthTo) {
-                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
-                var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
-
-                if (day <= dayTo) {
-                  var tempArray: any = [];
-                  
-                  if(this.loadUserDetails(data[j].userID) == null){
-                    tempArray.push("");
-                  }
-                  else{
-                    tempArray.push(this.loadUserDetails(data[j].userID));
-                  }
-
-                  tempArray.push(data[j].cmwCultureNumber);
-                  tempArray.push(data[j].name);
-                  tempArray.push(data[j].collectedBy);
-                  tempArray.push(data[j].dateCollected);
-                  tempArray.push(data[j].isolatedBy);
-                  tempArray.push(data[j].identifiedBy);
-                  tempArray.push(data[j].dateSubmitted);
-
-                  this.depositLogsArray.push(tempArray);
-                }
-              }
-
-              if (month >= monthFrom && month <= monthTo) {
-                var tempArray: any = [];
-                
-                if(this.loadUserDetails(data[j].userID) == null){
-                  tempArray.push("");
-                }
-                else{
-                  tempArray.push(this.loadUserDetails(data[j].userID));
-                }
-
-                tempArray.push(data[j].cmwCultureNumber);
-                tempArray.push(data[j].name);
-                tempArray.push(data[j].collectedBy);
-                tempArray.push(data[j].dateCollected);
-                tempArray.push(data[j].isolatedBy);
-                tempArray.push(data[j].identifiedBy);
-                tempArray.push(data[j].dateSubmitted);
-
-                this.depositLogsArray.push(tempArray);
-              }
-            }
-          }
-        }
-        else {
-          for (var i = 0; i < data.length; i++) {
-            var tempArray: any = [];
-            
-            if(this.loadUserDetails(data[j].userID) == null){
-              tempArray.push("");
-            }
-            else{
-              tempArray.push(this.loadUserDetails(data[j].userID));
-            }
-
-            tempArray.push(data[j].cmwCultureNumber);
-            tempArray.push(data[j].name);
-            tempArray.push(data[j].collectedBy);
-            tempArray.push(data[j].dateCollected);
-            tempArray.push(data[j].isolatedBy);
-            tempArray.push(data[j].identifiedBy);
-            tempArray.push(data[j].dateSubmitted);
-
-            this.depositLogsArray.push(tempArray);
-          }
+          this.depositLogsArray.push(tempArray);
         }
       }
       else {
@@ -860,101 +669,19 @@ export class ReportingComponent implements OnInit {
       if (response.success = true) {
         var data = response.data.qs.forms;
 
-        if (this.dateFrom != '' && this.dateTo != '') {
-          this.revitalizationLogsArray = [];
-          for (var j = 0; j < data.length; j++) {
-            if (data[j].dateSubmitted == this.dateFrom || data[j].dateSubmitted == this.dateTo) {
-              var tempArray: any = [];
-              
-              tempArray.push(this.loadUserDetails(data[j].userID));
-              tempArray.push(data[j].requestor);
-              tempArray.push(data[j].cultureNumber);
-              tempArray.push(data[j].currentName);
-              tempArray.push(data[j].referenceNumber);
-              tempArray.push(data[j].dateRequested);
-              tempArray.push(data[j].dateReturned);
-              tempArray.push(data[j].dateSubmitted);
+        for (var i = 0; i < data.length; i++) {
+          var tempArray: any = [];
+          
+          tempArray.push(this.loadUserDetails(data[i].userID));
+          tempArray.push(data[i].requestor);
+          tempArray.push(data[i].cultureNumber);
+          tempArray.push(data[i].currentName);
+          tempArray.push(data[i].referenceNumber);
+          tempArray.push(data[i].dateRequested);
+          tempArray.push(data[i].dateReturned);
+          tempArray.push(data[i].dateSubmitted);
 
-              this.revitalizationLogsArray.push(tempArray);
-            }
-            else {
-              var month = Number(data[j].dateSubmitted[3] + data[j].dateSubmitted[4]);
-              var monthFrom = Number(this.dateFrom[3] + this.dateFrom[4]);
-
-              if (month == monthFrom) {
-                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
-                var dayFrom = Number(this.dateFrom[0] + this.dateFrom[1]);
-
-                if (day >= dayFrom) {
-                  var tempArray: any = [];
-                  
-                  tempArray.push(this.loadUserDetails(data[j].userID));
-                  tempArray.push(data[j].requestor);
-                  tempArray.push(data[j].cultureNumber);
-                  tempArray.push(data[j].currentName);
-                  tempArray.push(data[j].referenceNumber);
-                  tempArray.push(data[j].dateRequested);
-                  tempArray.push(data[j].dateReturned);
-                  tempArray.push(data[j].dateSubmitted);
-
-                  this.revitalizationLogsArray.push(tempArray);
-                }
-              }
-
-              var monthTo = Number(this.dateTo[3] + this.dateTo[4]);
-
-              if (month == monthTo) {
-                var day = Number(data[j].dateSubmitted[0] + data[j].dateSubmitted[1]);
-                var dayTo = Number(this.dateTo[0] + this.dateTo[1]);
-
-                if (day <= dayTo) {
-                  var tempArray: any = [];
-                  
-                  tempArray.push(this.loadUserDetails(data[j].userID));
-                  tempArray.push(data[j].requestor);
-                  tempArray.push(data[j].cultureNumber);
-                  tempArray.push(data[j].currentName);
-                  tempArray.push(data[j].referenceNumber);
-                  tempArray.push(data[j].dateRequested);
-                  tempArray.push(data[j].dateReturned);
-                  tempArray.push(data[j].dateSubmitted);
-
-                  this.revitalizationLogsArray.push(tempArray);
-                }
-              }
-
-              if (month >= monthFrom && month <= monthTo) {
-                var tempArray: any = [];
-                
-                tempArray.push(this.loadUserDetails(data[j].userID));
-                tempArray.push(data[j].requestor);
-                tempArray.push(data[j].cultureNumber);
-                tempArray.push(data[j].currentName);
-                tempArray.push(data[j].referenceNumber);
-                tempArray.push(data[j].dateRequested);
-                tempArray.push(data[j].dateReturned);
-                tempArray.push(data[j].dateSubmitted);
-
-                this.revitalizationLogsArray.push(tempArray);
-              }
-            }
-          }
-        }
-        else {
-          for (var i = 0; i < data.length; i++) {
-            var tempArray: any = [];
-            
-            tempArray.push(this.loadUserDetails(data[i].userID));
-            tempArray.push(data[i].requestor);
-            tempArray.push(data[i].cultureNumber);
-            tempArray.push(data[i].currentName);
-            tempArray.push(data[i].referenceNumber);
-            tempArray.push(data[i].dateRequested);
-            tempArray.push(data[i].dateReturned);
-            tempArray.push(data[i].dateSubmitted);
-
-            this.revitalizationLogsArray.push(tempArray);
-          }
+          this.revitalizationLogsArray.push(tempArray);
         }
       }
       else {
@@ -1067,115 +794,6 @@ export class ReportingComponent implements OnInit {
     return newDate;
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SET DATE FROM
-  /**
-   *  This function will set the starting date for the logs on the reporting page.
-   * @param {string} type The type of the date (Requested or Submitted) 
-   * @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setDateFrom(type: string) {
-    var temp;
-
-    if (type == 'requested') {
-      if (this.requestReport == true) {
-        temp = this.requestDateFrom2.nativeElement.value;
-      }
-      else if (this.revitalizationReport == true) {
-        temp = this.revitalizationDateFrom2.nativeElement.value;
-      }
-    }
-    else if (type == 'submitted') {
-      if (this.requestReport == true) {
-        temp = this.requestDateFrom1.nativeElement.value;
-      }
-      else if (this.depositReport == true) {
-        temp = this.depositDateFrom1.nativeElement.value;
-      }
-      else if (this.revitalizationReport == true) {
-        temp = this.revitalizationDateFrom1.nativeElement.value;
-      }
-    }
-    else if (type == 'collected') {
-      temp = this.depositDateFrom2.nativeElement.value;
-    }
-    else if (type == 'returned') {
-      temp = this.revitalizationDateFrom3.nativeElement.value;
-    }
-
-    var day = temp[8] + temp[9];
-    var month = temp[5] + temp[6];
-    var year = temp[0] + temp[1] + temp[2] + temp[3];
-
-    this.dateFrom = day + '/' + month + '/' + year;
-
-    if (this.dateTo == '') {
-      var tempDate = new Date();
-      this.dateTo = ('0' + tempDate.getDate()).slice(-2) + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
-    }
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SET DATE TO
-  /**
-   *  This function will set the ending date for the logs on the reporting page.
-   * @param {string} type The type of the date (Requested or Submitted) 
-   * @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setDateTo(type: string) {
-    var temp;
-
-    if (type == 'requested') {
-      if (this.requestReport == true) {
-        temp = this.requestDateTo2.nativeElement.value;
-      }
-      else if (this.revitalizationReport == true) {
-        temp = this.revitalizationDateTo2.nativeElement.value;
-      }
-    }
-    else if (type == 'submitted') {
-      if (this.requestReport == true) {
-        temp = this.requestDateTo1.nativeElement.value;
-      }
-      else if (this.depositReport == true) {
-        temp = this.depositDateTo1.nativeElement.value;
-      }
-      else if (this.revitalizationReport == true) {
-        temp = this.revitalizationDateTo1.nativeElement.value;
-      }
-    }
-    else if (type == 'collected') {
-      temp = this.depositDateTo2.nativeElement.value;
-    }
-    else if (type == 'returned') {
-      temp = this.revitalizationDateTo3.nativeElement.value;
-    }
-
-    var day = temp[8] + temp[9];
-    var month = temp[5] + temp[6];
-    var year = temp[0] + temp[1] + temp[2] + temp[3];
-
-    this.dateTo = day + '/' + month + '/' + year;
-
-    if (this.dateFrom == '') {
-      var tempDate = new Date();
-      this.dateFrom = ('0' + tempDate.getDate()).slice(-2) + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
-    }
-
-    if (this.requestReport == true) {
-      this.generateRequestReport();
-    }
-    else if (this.depositReport == true) {
-      this.generateDepositReport();
-    }
-    else if (this.revitalizationReport == true) {
-      this.generateRevitalizationReport();
-    }
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG ON INIT  
   /**
@@ -1192,11 +810,6 @@ export class ReportingComponent implements OnInit {
     var currentDate = new Date();
     this.date = ('0' + currentDate.getDate()).slice(-2) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
     this.loadAllLogs();
-
-    //Call the generate Request Report so that it is in the tabs in the home tab of the reporting component on load
-    this.generateRequestReport();
-
-    this.userLogs = true;
   }
 
 
@@ -1287,6 +900,8 @@ export class ReportingComponent implements OnInit {
 
     //Generate the Request report so that it is ready to be displayed when the report menu option is clicked
     this.generateRequestReport();
+    this.requestLogs = true;
+    this.userLogs = false;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1301,6 +916,7 @@ export class ReportingComponent implements OnInit {
     this.logsTab = !this.logsTab;
     this.reportingTab = false;
     this.userLogs = true;
+    this.requestLogs = false;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1362,5 +978,4 @@ export class ReportingComponent implements OnInit {
     this.accessLogs = false;
     this.errorLogs = true;
   }
-
 }

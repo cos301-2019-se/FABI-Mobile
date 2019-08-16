@@ -192,8 +192,8 @@
             <div class="input-group-prepend ">
               <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-              aria-describedby="basic-addon1" (keyup)="searchFunction()" id="search-table">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="searchItem"
+              aria-describedby="basic-addon1" id="search-table" [(ngModel)]="searchItem">
           </div>
 
           <!-- FABI System Request Report Table -->
@@ -209,20 +209,20 @@
                 Request
                 Report</button>
 
-              <table class="table table-hover" *ngIf="requestLogs" id="previewTableRequestLogs">
+              <table class="table table-hover" *ngIf="requestLogs" id="previewTableRequestLogs" >
                 <thead>
                   <tr>
                     <th>Person</th>
                     <th>Requestor</th>
                     <th>CMW Culture Number</th>
                     <th>Taxon Name</th>
-                    <th s>Reference Number</th>
+                    <th>Reference Number</th>
                     <th>Date Requested</th>
                     <th>Date Submitted</th>
                   </tr>
                 </thead>
                 <tbody *ngIf='requestReport'>                     
-                  <tr *ngFor="let row of requestLogsArray; let i = index">
+                  <tr *ngFor="let row of requestLogsArray | filter : searchItem; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }}</td>
                   </tr>
                 </tbody>
@@ -264,7 +264,7 @@
                   </tr>
                 </thead>
                 <tbody *ngIf='depositReport'>
-                  <tr *ngFor="let row of depositLogsArray; let i = index">
+                  <tr *ngFor="let row of depositLogsArray | filter : searchItem; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
@@ -296,7 +296,7 @@
                   </tr>
                 </thead>
                 <tbody *ngIf='errorReport'>
-                  <tr *ngFor="let row of errorLogsArray; let i = index">
+                  <tr *ngFor="let row of errorLogsArray | filter : searchItem; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
@@ -334,7 +334,7 @@
                   </tr>
                 </thead>
                 <tbody *ngIf='revitalizationReport'>
-                  <tr *ngFor="let row of revitalizationLogsArray; let i = index">
+                  <tr *ngFor="let row of revitalizationLogsArray | filter : searchItem; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
@@ -382,8 +382,8 @@
             <div class="input-group-prepend ">
               <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-              aria-describedby="basic-addon1" (keyup)="searchFunction()" id="search-table">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="searchItem"
+              aria-describedby="basic-addon1" id="search-table" [(ngModel)]="searchItem">
           </div>
 
           <!-- User Log Table Table -->
@@ -408,7 +408,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let row of userLogsArray; let i = index">
+                  <tr class="tableRow" scope="row" *ngFor="let row of userLogsArray | filter : searchItem; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
@@ -441,7 +441,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let row of databaseLogsArray; let i = index">
+                  <tr class="tableRow" scope="row" *ngFor="let row of databaseLogsArray | filter : searchItem; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
@@ -473,7 +473,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let row of accessLogsArray; let i = index">
+                  <tr class="tableRow" scope="row" *ngFor="let row of accessLogsArray | filter : searchItem; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
@@ -506,7 +506,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray; let i = index">
+                  <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray | filter : searchItem; let i = index">
                     <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
                   </tr>
                 </tbody>
