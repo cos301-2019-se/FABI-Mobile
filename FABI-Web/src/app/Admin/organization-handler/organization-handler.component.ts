@@ -238,6 +238,7 @@ export class OrganizationHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectOrganisation(org: Interface.Organisation) {
     this.selectedOrg = org;
+    console.log("SELECT: " + JSON.stringify(this.selectedOrg));
   }
   
 
