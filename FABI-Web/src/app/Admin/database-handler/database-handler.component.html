@@ -197,25 +197,61 @@
         <div class="modal-body">
           <div class="form">
             <!-- <form class="view-form"> -->
-<<<<<<< HEAD
-              <!-- File Upload -->
-              <div class="custom-file">
-                  <label class="databaseName" for="databaseNameInput">Database name</label><input type='text'
-                  id='databaseNameInput' class="inputSpace" #pDBname [(ngModel)]="portingForm.databaseName" >
-                <input type="file" class="custom-file-input" id="customFile" (change)="submitCSV(input)" #input>
-                <!-- <label class="custom-file-label" for="customFile" >Choose CSV file</label> -->
-              </div>
-              <!-- /File Upload -->
-=======
+
+            <!-- Database Name -->
+            <div class="database-name" style="margin-bottom: 15px;">
+              <label class="databaseName" for="databaseNameInput">Database name</label>
+
+              <input type='text' id='databaseNameInput' class="inputSpace" #pDBname
+                [(ngModel)]="portingForm.databaseName">
+
+            </div>
+
             <!-- File Upload -->
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="customFile" (change)="submitCSV(input)" #input>
+
+
               <label class="custom-file-label" for="customFile">Choose CSV file</label>
-              <label class="databaseName" for="databaseNameInput">Database name</label><input type='text'
-                id='databaseNameInput' class="inputSpace" #pDBname [(ngModel)]="portingForm.databaseName">
+              <input type="file" class="custom-file-input" id="customFile" (change)="submitCSV(input)" #input>
+
             </div>
             <!-- /File Upload -->
->>>>>>> Back-End
+
+
+
+            <label *ngIf="preview">Is this what the database should look like?</label>
+            <span><button *ngIf="preview" class="btn btn-default" (click)="submitDatabase()">Yes</button><button
+                *ngIf="preview" class="btn btn-default" (click)="removePreview()">No</button></span>
+
+            <table *ngIf="preview" id="previewTable">
+              <thead>
+                <tr>
+                  <th class="tableHeading" *ngFor="let header of headings; let i = index">{{header}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="tableRow" *ngFor="let row of columns; let i = index">
+                  <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+                </tr>
+              </tbody>
+            </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <!-- </form> -->
           </div>
         </div>
@@ -374,22 +410,7 @@
       </div>
       <div class="modal-body">
 
-        <label *ngIf="preview">Is this what the database should look like?</label>
-        <span><button *ngIf="preview" class="btn btn-default" (click)="submitDatabase()">Yes</button><button
-            *ngIf="preview" class="btn btn-default" (click)="removePreview()">No</button></span>
 
-        <table *ngIf="preview" id="previewTable">
-          <thead>
-            <tr>
-              <th class="tableHeading" *ngFor="let header of headings; let i = index">{{header}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="tableRow" *ngFor="let row of columns; let i = index">
-              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
-            </tr>
-          </tbody>
-        </table>
 
       </div>
       <div class="modal-footer">
