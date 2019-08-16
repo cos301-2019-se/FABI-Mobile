@@ -160,6 +160,6 @@ import { MemberMenuComponent } from './Organization-Member/member-menu/member-me
   providers: [
     NotificationService
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

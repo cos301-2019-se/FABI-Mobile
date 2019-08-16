@@ -19,13 +19,19 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 
+import { FilterPipe } from '../_pipes/filter.pipe';
+
 
 @NgModule({
   declarations: [
+    FilterPipe
   ],
   imports: [
     CommonModule,
     AdminRoutingModule
+  ],
+  exports: [
+    FilterPipe
   ]
 })
 export class AdminModule { }

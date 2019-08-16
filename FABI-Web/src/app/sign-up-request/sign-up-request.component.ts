@@ -1,11 +1,11 @@
 /**
- * File Name: login.component.ts
- * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\login\login.component.ts
+ * File Name: sign-up-request.component.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\sign-up-request\sign-up-request.component.ts
  * Project Name: fabi-web
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 8th 2019
+ * Last Modified: Thursday, August 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -16,7 +16,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 
 import { UserManagementAPIService } from "../_services/user-management-api.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -89,7 +88,6 @@ export class SignUpRequestComponent implements OnInit {
   }
 
   ngOnInit() {
-
     //-------- Location --------
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -148,7 +146,6 @@ export class SignUpRequestComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   registerOrg() {
-
     this.submitted = true;
 
     if (this.registerOrgForm.invalid) {
