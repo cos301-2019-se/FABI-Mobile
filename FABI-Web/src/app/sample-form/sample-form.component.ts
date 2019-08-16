@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Friday, August 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -81,7 +81,7 @@ export class SampleFormComponent implements OnInit {
       sample_province: ['', Validators.required],
       sample_gps: ['', Validators.required],
       date_sample_collected: ['', Validators.required],
-      date_sample_sent: ['', Validators.required],
+      date_sample_sent: [Validators.required],
 
       sample_type_soil: ['', Validators.required],
       sample_type_stems: ['', Validators.required],
@@ -121,6 +121,15 @@ export class SampleFormComponent implements OnInit {
       conditions_others: ['', Validators.required],
       conditions_additional: ['', Validators.required]
     })
+  }
+
+
+  ngOnInit() {
+    let today = new Date();
+    console.log("DATE: " + today);
+    this.sampleForm.patchValue( {
+      date_sample_sent: today
+    });
   }
 
 
@@ -212,13 +221,6 @@ export class SampleFormComponent implements OnInit {
       });
     })
 
-  }
-
-  ngOnInit() {
-    let today = new Date();
-    this.sampleForm.patchValue( {
-      date_sample_sent: today
-    });
   }
 
 
