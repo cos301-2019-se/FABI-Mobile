@@ -69,8 +69,39 @@
 
 .modal-body {
   display: flex;
-  justify-content: center;
 }
+
+modal {
+  padding-right: 0 !important;
+}
+
+#addModal .modal-dialog {
+  max-width: 85%;
+}
+
+#addModal .modal-content {
+  min-height: 90vh;
+  height: auto;
+}
+
+.preview-actions {
+  margin-top: 25px;
+}
+
+.preview-actions h6{
+  color: #72b555;
+  font-family: "Montserrat", sans-serif;
+}
+
+.btn.btn-default-save {
+  width: 30%;
+}
+
+.btn.btn-default-cancel {
+  width: 30%;
+}
+
+
 
 #confirmDeleteModal .modal-body {
   display: flex;
