@@ -199,10 +199,10 @@
             <!-- <form class="view-form"> -->
               <!-- File Upload -->
               <div class="custom-file">
+                  <label class="databaseName" for="databaseNameInput">Database name</label><input type='text'
+                  id='databaseNameInput' class="inputSpace" #pDBname [(ngModel)]="portingForm.databaseName" >
                 <input type="file" class="custom-file-input" id="customFile" (change)="submitCSV(input)" #input>
-                <label class="custom-file-label" for="customFile" >Choose CSV file</label>
-                <label class="databaseName" for="databaseNameInput">Database name</label><input type='text'
-            id='databaseNameInput' class="inputSpace" #pDBname [(ngModel)]="portingForm.databaseName" >
+                <!-- <label class="custom-file-label" for="customFile" >Choose CSV file</label> -->
               </div>
               <!-- /File Upload -->
             <!-- </form> -->
