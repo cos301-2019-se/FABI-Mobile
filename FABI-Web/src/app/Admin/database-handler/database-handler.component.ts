@@ -54,10 +54,6 @@ export class DatabaseHandlerComponent implements OnInit {
   headings: any = [];
   /** Array holding the columns of the new database - @type {any} */
   columns: any = [];
-  /** Used to read the csv file for porting - @type {FileReader} */
-  reader: FileReader;
-  /** Indicates if the database has been ported or not - @type {boolean} */
-  ported: boolean = false;
 
   jsonData: any;  
 
@@ -95,6 +91,15 @@ export class DatabaseHandlerComponent implements OnInit {
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  /** The name of the database to create via porting - @type {string} */
+  dbname: string;
+  /** Used to read the csv file for porting - @type {FileReader} */
+  reader: FileReader;
+  /** The value sent through when the file is chosen for porting - @type {any} */
+  fileInput: any;
+  /** Indicates if the database has been ported or not - @type {boolean} */
+  ported: boolean = false;
 
   currentUserPrivileges: any
 
@@ -170,14 +175,12 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public submitCSV(input?) {
-
     if(input) {
       this.portingForm.file = input;
     } 
 
-    console.log("FILE INPUT: " + this.portingForm.file);
-    console.log("DB NAME: " + this.portingForm.databaseName);
     this.loading = true;
+    this.dbname = this.port.nativeElement.value;
 
     if(this.portingForm.databaseName == "" || this.portingForm.databaseName == null){
       let snackBarRef = this.snackBar.open("Please enter a name for the database", "Dismiss", { duration: 3000 });
@@ -234,8 +237,7 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getCSV(){
-    
+  getCSV(){    
     let data = "";
     let dbname = this.selectedDatabase;
     
@@ -284,10 +286,7 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public viewDatabase(database : Interface.DatabasePrivilege) {
-
     database = database;
-
-    console.log(JSON.stringify(database));
 
     this.dbService.retrieveDatabase(database.name).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
