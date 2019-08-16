@@ -549,6 +549,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     width: 100%;
     min-height: 100vh;
     height: 100%;
+
+    padding-bottom: 50px;
 }
 
 /* Primary Content Section
@@ -988,7 +990,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     align-items: center;
 
     width: 100%;
-    min-height: 90vh;
+    min-height: 60vh;
     height: auto;
 
     margin: 10vh 0 5vh 0;
@@ -1062,21 +1064,25 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     align-items: center;
 
     width: 80%;
-    min-height: 90vh;
+    min-height: 60vh;
     height: auto;
 
 }
 
 .profile-details .form .form-row {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
 
-    min-height: 90vh;
+    min-height: 60vh;
     height: auto;
 }
 
 .profile-details .form .form-group {
     width: 100%;
+}
+
+.profile-form {
+    width: 80%;
 }
 
 #confirm-password {
