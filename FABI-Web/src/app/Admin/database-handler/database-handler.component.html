@@ -197,14 +197,14 @@
         <div class="modal-body">
           <div class="form">
             <!-- <form class="view-form"> -->
-              <!-- File Upload -->
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile" (change)="submitCSV(input)" #input>
-                <label class="custom-file-label" for="customFile" >Choose CSV file</label>
-                <label class="databaseName" for="databaseNameInput">Database name</label><input type='text'
-            id='databaseNameInput' class="inputSpace" #pDBname [(ngModel)]="portingForm.databaseName" >
-              </div>
-              <!-- /File Upload -->
+            <!-- File Upload -->
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="customFile" (change)="submitCSV(input)" #input>
+              <label class="custom-file-label" for="customFile">Choose CSV file</label>
+              <label class="databaseName" for="databaseNameInput">Database name</label><input type='text'
+                id='databaseNameInput' class="inputSpace" #pDBname [(ngModel)]="portingForm.databaseName">
+            </div>
+            <!-- /File Upload -->
             <!-- </form> -->
           </div>
         </div>
@@ -229,16 +229,16 @@
         </div>
         <div class="modal-body">
           <div class="form">
-              <div class="form-row align-items-center">
-                <div class="form-group">
-                  <select class="custom-select" *ngIf="databases" [(ngModel)]="selectedDatabase">
-                    <option selected>Choose Database</option>
-                    <option *ngFor="let database of databases" [value]="database.name">
-                      {{database.name}}
-                    </option>
-                  </select>
-                </div>
+            <div class="form-row align-items-center">
+              <div class="form-group">
+                <select class="custom-select" *ngIf="databases" [(ngModel)]="selectedDatabase">
+                  <option selected>Choose Database</option>
+                  <option *ngFor="let database of databases" [value]="database.name">
+                    {{database.name}}
+                  </option>
+                </select>
               </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -306,29 +306,85 @@
 <!-- / Dashboard -->
 
 
-
 <!-- View Database Modal -->
+<div class="modal fade" id="viewDatabaseModal" tabindex="-1" role="dialog" aria-labelledby="viewDatabaseModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="downloadModalTitle">View Database</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
 
-<div class="modal fade" id="viewDatabaseModal" tabindex="-1" role="dialog" aria-labelledby="viewDatabaseModal" aria-hidden="true">
-  <div class="input-group search-table">
-    <div class="input-group-prepend ">
-      <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+        <div class="input-group search-table">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+        </div>
+
+        <table class="table table-hover" *ngIf="databases" id="info">
+          <thead>
+            <tr>
+              <th *ngFor="let field of fields">{{field.name}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of databaseData">
+              <td *ngFor="let field of fields">{{data[field.name]}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default-save" (click)="getCSV()">Download Database</button>
+      </div>
     </div>
-    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-      aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
   </div>
-  
-  <table class="table table-hover" *ngIf="databases" id="info">
-    <thead>
-      <tr>
-        <th *ngFor="let field of fields">{{field.name}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of databaseData" >
-        <td *ngFor="let field of fields">{{data[field.name]}}</td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<!-- / View Database Modal-->
+<!-- / View Database Modal -->
+
+
+<!-- Preview Database Modal -->
+<div class="modal fade" id="viewDatabaseModal" tabindex="-1" role="dialog" aria-labelledby="viewDatabaseModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="downloadModalTitle">Preview Database</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <label *ngIf="preview">Is this what the database should look like?</label>
+        <span><button *ngIf="preview" class="btn btn-default" (click)="submitDatabase()">Yes</button><button
+            *ngIf="preview" class="btn btn-default" (click)="removePreview()">No</button></span>
+
+        <table *ngIf="preview" id="previewTable">
+          <thead>
+            <tr>
+              <th class="tableHeading" *ngFor="let header of headings; let i = index">{{header}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tableRow" *ngFor="let row of columns; let i = index">
+              <th *ngFor="let key of row; let j = index">{{ row[j] }} </th>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default-save" (click)="getCSV()">Download Database</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / Preview Database Modal -->
