@@ -1,8 +1,0 @@
-<h2 mat-dialog-title>{{data.title}}</h2>
-<mat-dialog-content *ngIf="data.message != null || data.message != ''">{{data.message}}</mat-dialog-content>
-<mat-dialog-content *ngIf="data.info != null || data.info != ''">{{data.info}}</mat-dialog-content>
-<br/>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close="Cancel">{{data.cancel}}</button>
-  <button mat-button cdkFocusInitial mat-dialog-close="Confirm">{{data.confirm}}</button>
-</mat-dialog-actions>
