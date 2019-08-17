@@ -43,7 +43,7 @@ import { StaffSubmitSampleComponent } from './Staff/staff-submit-sample/staff-su
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
-import { ConfirmComponent } from './confirm/confirm.component';
+import { LoadingComponent } from './_loading/loading.component';
 
 import { ErrorComponent } from './_errors/error-component/error.component';
 import { HomeComponent } from './home/home.component';
@@ -101,7 +101,7 @@ import { MemberMenuComponent } from './Organization-Member/member-menu/member-me
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
-    ConfirmComponent,
+    LoadingComponent,
     UpdateComponent,
     AdminDivComponent,
     StaffDivComponent,
@@ -128,7 +128,7 @@ import { MemberMenuComponent } from './Organization-Member/member-menu/member-me
     MemberMenuComponent
   ],
   entryComponents: [
-    ConfirmComponent,
+    LoadingComponent,
     AdminDivComponent,
     StaffDivComponent,
     NotificationDivComponent,

@@ -5,7 +5,7 @@
  * Created Date: Tuesday, June 25th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Saturday, August 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -25,7 +25,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../_errors/error-component/error.component';
-import { ConfirmComponent } from "../confirm/confirm.component";
+import { LoadingComponent } from "../_loading/loading.component";
 
 import * as Interface from '../_interfaces/interfaces';
 

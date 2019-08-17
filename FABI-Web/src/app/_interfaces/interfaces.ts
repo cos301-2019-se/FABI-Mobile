@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Saturday, August 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -111,6 +111,19 @@ export interface StaffInfo {
   export interface UserPrivileges {
     databases?: DatabasePrivilege[]
   }
+
+  export interface Confirm {
+    title: string,
+    message: string,
+    info: string,
+    cancel: string,
+    confirm: string
+  }
+
+  // export interface Loading {
+  //   isLoading: boolean,
+  //   title: string
+  // }
 
   
   export interface ClientFormData {

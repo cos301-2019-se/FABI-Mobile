@@ -177,10 +177,10 @@
             <tr *ngFor="let organization of organizations">
               <td>{{organization.orgName}}</td>
               <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
-                  [id]="organization.email" (click)="selectOrganisation(organization)">View</button>
-                <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal"
-                  [id]="organization.email" (click)="selectOrganisation(organization)">Delete</button>
+                <button class="btn btn-default-view" data-toggle="modal" 
+                  [id]="organization.email" (click)="selectOrganisation(organization)" >View</button>
+                <button class="btn btn-default-delete" data-toggle="modal"
+                  [id]="organization.email" (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal">Delete</button>
                 <!--(click)="removeOrganizationPrompt(organization)-->
               </td>
             </tr>
@@ -267,7 +267,7 @@
             <!-- /Phone -->
 
             <!-- Delete Action -->
-            <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+            <button class="btn btn-default-delete" data-toggle="modal" (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal" >Delete</button>
             <!-- /Delete Action -->
 
           </div>
@@ -367,7 +367,7 @@
 
 
                 <!-- Submit -->
-                <button type="submit" class="btn btn-default-save">Add Organization</button>
+                <button  type="submit" class="btn btn-default-save" >Add Organization</button>
                 <!-- / Submit -->
 
               </div>
@@ -384,28 +384,31 @@
   </div>
   <!-- / Add Staff Modal Section -->
 
-  <!-- Delete Staff Confirm Modal Section -->
+  <!-- Delete Organization Confirm Modal Section -->
   <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteModalTitle">Are you sure?</h5>
+          <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''">{{deleteData.title}}</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fas fa-times"></i></span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Everything related to this organization will be permantely deleted</p>
+          <h4 *ngIf="deleteData.message != null || deleteData.message != ''">{{deleteData.message}}</h4>
+          <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
+          <p><span>All information related to this organization will be permantely deleted</span></p>
           <div class="confirm-actions">
-            <button type="button" class="btn btn-default-confirm" (click)="removeOrg()">Confirm</button>
-            <button type="button" class="btn btn-default-cancel">Cancel</button>
+            <button type="button" class="btn btn-default-cancel" *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal" data-dismiss="modal" >{{deleteData.cancel}}</button>
+            <button type="button" class="btn btn-default-confirm" (click)="removeOrg()" *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal" data-dismiss="modal" >{{deleteData.confirm}}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- / Delete Staff Confirm Modal Section -->
+  <!-- / Delete Organization Confirm Modal Section -->
+
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
