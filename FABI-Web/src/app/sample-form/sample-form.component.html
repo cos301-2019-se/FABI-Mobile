@@ -48,7 +48,7 @@
                 <!-- Number of samples -->
                 <div class="form-group col-md-6">
                   <label for="sample_num_samples">Number of samples</label>
-                  <input type="text" class="form-control form-control-sm" id="sample_num_samples"
+                  <input type="number" class="form-control form-control-sm" id="sample_num_samples"
                     formControlName="sample_num_samples" placeholder="Number of samples" required>
                   <div class="valid-feedback">
                     Looks good!
@@ -689,7 +689,7 @@
                     <h6>By clicking the box below, you give the FABI Diagnostic CLinic permission to collect/process this sample for diagnostic
                         and research purposes</h6>
                       <input type="checkbox" class="form-check-input" id="permission_granted"
-                        formControlName="permission_granted">
+                        formControlName="permission_granted" required>
                       <label class="form-check-label" for="permission_granted">Permission Granted</label>
                     </div>
                   <!-- / Permission -->

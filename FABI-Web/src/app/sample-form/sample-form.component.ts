@@ -220,37 +220,37 @@ export class SampleFormComponent implements OnInit {
 
     // const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
 
-    // this.clinicService.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
-    //   if (response.success == true && response.code == 200) {
-    //     //POPUP MESSAGE
-    //     let snackBarRef = this.snackBar.open("Successfully Submitted Form", "Dismiss", {
-    //       duration: 3000
-    //     });
-    //   } 
-    //   else if (response.success == false) {
-    //     //POPUP MESSAGE
-    //     let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Submit Form", message: response.message } });
-    //     dialogRef.afterClosed().subscribe((result) => {
-    //       if (result == "Retry") {
-    //         this.sendForm();
-    //       }
-    //       //Take out when authenication is working - Just for test/demp purposes
-    //       //this.router.navigate(['sample-form']);
-    //       //
-    //     })
-    //   }
-    // }, (err: HttpErrorResponse) => {
-    //   //POPUP MESSAGE
-    //   let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Submit Form", message: err.message } });
-    //   dialogRef.afterClosed().subscribe((result) => {
-    //     if (result == "Retry") {
-    //       this.sendForm();
-    //     }
-    //     //Take out when authenication is working - Just for test/demp purposes
-    //     //this.router.navigate(['sample-form']);
-    //     //
-    //   });
-    // })
+    this.clinicService.submitSampleForm(formDetails).subscribe((response: any) => {
+      if (response.success == true && response.code == 200) {
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Successfully Submitted Form", "Dismiss", {
+          duration: 3000
+        });
+      } 
+      else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Submit Form", message: response.message } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.sendForm();
+          }
+          //Take out when authenication is working - Just for test/demp purposes
+          //this.router.navigate(['sample-form']);
+          //
+        })
+      }
+    }, (err: HttpErrorResponse) => {
+      //POPUP MESSAGE
+      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Submit Form", message: err.message } });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result == "Retry") {
+          this.sendForm();
+        }
+        //Take out when authenication is working - Just for test/demp purposes
+        //this.router.navigate(['sample-form']);
+        //
+      });
+    })
 
   }
 
