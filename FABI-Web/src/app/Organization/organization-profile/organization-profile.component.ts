@@ -306,7 +306,7 @@ export class OrganizationProfileComponent implements OnInit {
     
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Password" }});
 
-    this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
+    this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
       
       loadingRef.close();
 
