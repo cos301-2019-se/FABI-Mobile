@@ -159,7 +159,7 @@ ngOnInit() {
   this.authService.temporaryLoginOrganisation().subscribe((response: any) => {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     this.getNumberOfOrganizationMembers();
-    this.getNumberOfOrganizationSamples();
+    //this.getNumberOfOrganizationSamples();
     this.getNumberOfCompletedOrganizationSamples();
     this.loadNotifications();
   });
@@ -213,33 +213,6 @@ logout() {
   this.authService.logoutUser();
   this.router.navigate(['/login']);
 }
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                            GET NUMBER OF ORGANIZATION SAMPLES
-/**
- *  This function will use an API service to get all the samples of an organization. These samples will be read into the
- *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
- *  HTML page with the number of samples belonging to the organization.
- * 
- * @memberof OrganizationDashboardComponent
- */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-getNumberOfOrganizationSamples(){
-  //Subscribing to the DiagnosticClinicAPIService to get a list containing all the samples belonging to the organization
-  this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
-    if (response.success == true) {
-      var tempSamples = response.data.samples;
-      this.numberOfOrganizationSamples = tempSamples.length;
-      this.sampleStats = this.numberOfOrganizationSamples.toString();
-    }
-    else {
-      this.numberOfOrganizationSamples = 0;
-      this.sampleStats = this.numberOfOrganizationSamples.toString();
-    }
-  });
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                           GET NUMBER OF COMPLETED ORGANIZATION SAMPLES
