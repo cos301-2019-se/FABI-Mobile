@@ -101,7 +101,6 @@ export class OrganizationHandlerComponent implements OnInit {
   confirmPasswordInput: boolean = false;
   /** Indicates if the help tab is hidden/shown - @type {boolean} */  
   helpTab: boolean = false;
-
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 

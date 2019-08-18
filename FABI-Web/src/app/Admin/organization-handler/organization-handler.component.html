@@ -177,11 +177,10 @@
             <tr *ngFor="let organization of organizations">
               <td>{{organization.orgName}}</td>
               <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" 
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"  
                   [id]="organization.email" (click)="selectOrganisation(organization)" >View</button>
                 <button class="btn btn-default-delete" data-toggle="modal"
                   [id]="organization.email" (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal">Delete</button>
-                <!--(click)="removeOrganizationPrompt(organization)-->
               </td>
             </tr>
           </tbody>
@@ -267,7 +266,7 @@
             <!-- /Phone -->
 
             <!-- Delete Action -->
-            <button class="btn btn-default-delete" data-toggle="modal" (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal" >Delete</button>
+            <button class="btn btn-default-delete" data-toggle="modal" (click)="removeOrganizationPrompt(selectedOrg)" data-target="#confirmDeleteModal" >Delete</button>
             <!-- /Delete Action -->
 
           </div>
