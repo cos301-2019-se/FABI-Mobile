@@ -33,7 +33,6 @@ import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-
 
 export class OrganizationViewSamplesComponent implements OnInit {
 
-  sampleData: any[];
   sampleFields: any[] = [];
   samples: any[];
   selectedSampleData: any
@@ -123,14 +122,13 @@ export class OrganizationViewSamplesComponent implements OnInit {
     
     this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
 
-      console.log("RESPONSE: " + response);
       if (response.success == true && response.code == 200) {
 
         this.samples = response.data.samples;
         
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Getting Samples", message: response.message, retry: true } });
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
           if (result == "Retry") {
             this.viewSamples();
@@ -152,8 +150,6 @@ export class OrganizationViewSamplesComponent implements OnInit {
       this.sampleFields.push(obj);
 
     });
-
-    console.log("--- DATA: " + JSON.stringify(this.selectedSampleData));
         
   }
 
