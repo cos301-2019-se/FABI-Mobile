@@ -76,8 +76,9 @@ import { StaffMenuComponent } from './Staff/staff-menu/staff-menu.component';
 import { OrganizationMenuComponent } from './Organization/organization-menu/organization-menu.component';
 import { MemberMenuComponent } from './Organization-Member/member-menu/member-menu.component';
 
+import { FilterPipe } from './_pipes/filter.pipe';
 
-import { DataTablesModule } from 'angular-datatables';
+// import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -128,7 +129,8 @@ import { DataTablesModule } from 'angular-datatables';
     AdminMenuComponent,
     StaffMenuComponent,
     OrganizationMenuComponent,
-    MemberMenuComponent
+    MemberMenuComponent,
+    FilterPipe
   ],
   entryComponents: [
     LoadingComponent,
@@ -152,7 +154,7 @@ import { DataTablesModule } from 'angular-datatables';
     OrganizationMemberModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    DataTablesModule,
+    // DataTablesModule,
     ErrorsModule,
     LayoutModule,
     MatAutocompleteModule,
