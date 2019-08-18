@@ -1,26 +1,14 @@
 <form class="view-form needs-validation" novalidate [formGroup]="cmwRevitalizationForm"
   (submit)="submitCMWRevitaalizationForm()">
 
-
-  <!-- <mat-form-field class="example-full-width">
-    <input matInput [(ngModel)]="requestor" placeholder="Requester (Surname, Initials)" type="text"
-      [formControl]="requestorControl" formControlName="requestor" [matAutocomplete]="autoRequestor">
-    <mat-autocomplete #autoRequestor="matAutocomplete" (optionSelected)="setRequestor($event)">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <br /> -->
-
   <!-- Requestor Name -->
   <div class="form-group">
     <label for="requestor">Requestor Name</label>
-    <select class="form-control form-control-sm" [(ngModel)]="requestor" id="requestor" formControlName="requestor"
-      required>
+    <select class="form-control form-control-sm" id="requestor" formControlName="requestor" required>
       <option value="" selected>
         Please select a requestor
       </option>
-      <option *ngFor="let option of filteredOptions | async" [value]="option">
+      <option name="searchItem" *ngFor="let option of staff" [value]="option | filter : searchItem">
         {{option}}
       </option>
     </select>
@@ -45,7 +33,7 @@
   <div class="form-group">
     <label for="name_bionumerics">Name as in Bionumerics</label>
     <input type="text" class="form-control form-control-sm" id="name_bionumerics" formControlName="name_bionumerics"
-      placeholder="Name as in Bionumerics" required>
+      placeholder="Name as in Bionumerics">
     <div class="valid-feedback">
       Looks good!
     </div>
@@ -62,24 +50,22 @@
     </div>
   </div>
 
-
   <!-- Condition of the Culture -->
   <div class="form-group">
     <label for="culture_condition">Condition of the Culture</label>
     <input type="text" class="form-control form-control-sm" id="culture_condition" formControlName="culture_condition"
-      placeholder="Condition of the Culture" required>
+      placeholder="Condition of the Culture">
     <div class="valid-feedback">
       Looks good!
     </div>
   </div>
   <!-- / Condition of the Culture -->
 
-
   <!-- Sequence Data Submitted -->
   <div class="form-group">
     <label for="sequence_data_submitted">Sequence Data Submitted</label>
     <input type="text" class="form-control form-control-sm" id="sequence_data_submitted"
-      formControlName="sequence_data_submitted" placeholder="Sequence Data Submitted" required>
+      formControlName="sequence_data_submitted" placeholder="Sequence Data Submitted">
     <div class="valid-feedback">
       Looks good!
     </div>
@@ -90,13 +76,12 @@
   <div class="form-group">
     <label for="reference_number">Reference Number</label>
     <input type="text" class="form-control form-control-sm" id="reference_number" formControlName="reference_number"
-      placeholder="Reference Number" required>
+      placeholder="Reference Number">
     <div class="valid-feedback">
       Looks good!
     </div>
   </div>
   <!-- / Reference Number -->
-
 
   <!-- Date Requested -->
   <div class="form-group">
