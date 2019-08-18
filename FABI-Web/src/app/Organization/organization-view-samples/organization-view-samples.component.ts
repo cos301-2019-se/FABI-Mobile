@@ -35,15 +35,14 @@ export class OrganizationViewSamplesComponent implements OnInit {
 
   sampleFields: any[] = [];
   samples: any[];
-  selectedSampleData: any
+  selectedSampleData: any;
+
+  /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
+  sampleTableLoading: boolean = true;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -58,11 +57,11 @@ export class OrganizationViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private router: Router
-    ) { }
+  ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                           NG ON INIT  
@@ -77,22 +76,6 @@ export class OrganizationViewSamplesComponent implements OnInit {
   ngOnInit() {
     //Calling the neccessary functions as the page loads
     this.viewSamples();
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    TOGGLE NOTIFICATIONS TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof OrganizationViewSamplesComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
   }
 
 
@@ -119,13 +102,17 @@ export class OrganizationViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
-    
+
     this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
 
       if (response.success == true && response.code == 200) {
 
         this.samples = response.data.samples;
-        
+
+
+        //Deactivate loading table spinners
+        this.sampleTableLoading = false;
+
       } else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
@@ -141,7 +128,7 @@ export class OrganizationViewSamplesComponent implements OnInit {
   selectSample(sample: any) {
 
     this.selectedSampleData = sample.data;
-        
+
     Object.keys(this.selectedSampleData).forEach((column) => {
 
       let obj = {
