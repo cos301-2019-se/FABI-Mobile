@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -27,9 +27,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
 
 
 @Component({
@@ -124,6 +125,7 @@ export class OrganizationDashboardComponent implements OnInit {
     public sanitizer: DomSanitizer, 
     private notificationLoggingService: NotificationLoggingService, 
     private snackBar: MatSnackBar, 
+    private dialog: MatDialog
     ) { 
       this.adminProfileForm = this.formBuilder.group({
         organization_name: '',
@@ -224,7 +226,8 @@ export class OrganizationDashboardComponent implements OnInit {
    * @memberof OrganizationDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfOrganizationSamples(){
+  getNumberOfOrganizationSamples() {
+
     //Subscribing to the DiagnosticClinicAPIService to get a list containing all the samples belonging to the organization
     this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
       if(response.success == true){
