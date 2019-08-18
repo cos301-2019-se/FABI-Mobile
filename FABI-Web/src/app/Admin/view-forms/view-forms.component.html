@@ -184,12 +184,12 @@
 
 
       <!-- Deposit Form Tab -->
-      <div class="tab" *ngIf="depositFormTab">
+      <div class="tab" *ngIf="depositFormTab" #depositFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" (click)="loadPreviousDepositForm()"></i>
+          <i class="fas fa-arrow-left" (click)="loadPreviousDepositForm()" *ngIf="downloadDeposit"></i>
           <h6>DEPOSIT FORM DETAILS</h6>
-          <i class="fas fa-arrow-right" (click)="loadNextDepositForm()"></i>
+          <i class="fas fa-arrow-right" (click)="loadNextDepositForm()" *ngIf="downloadDeposit"></i>
         </div>
 
         <div class="tab-content" ng-app="ref" ng-controller="ref">
@@ -221,7 +221,7 @@
             <!-- Culture Number -->
             <div class="form-group col-md-6">
               <label>Culture Number</label>
-              <p class="form-control form-control-sm">{{cultureNumberDeposit}}</p>
+              <p class="form-control form-control-sm">{{cmwCultureNumberDeposit}}</p>
             </div>
             <!-- / Culture Number -->
           </div>
@@ -395,7 +395,7 @@
 
 
           <button (click)="showProcessForm()" data-toggle="modal" data-target="#processDepositFormModal"
-            class="btn btn-default-save">Process Form</button>
+            class="btn btn-default-save">Process Form</button><button (click)="downloadDepositForm()" class="btn btn-default-save">Download This Deposit Form</button>
 
         </div>
 
@@ -403,12 +403,12 @@
       <!-- / Deposit Form Tab -->
 
       <!-- Request Form Tab -->
-      <div class="tab" *ngIf="requestFormTab">
+      <div class="tab" *ngIf="requestFormTab" #requestFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" (click)="loadPreviousRequestForm()"></i>
+          <i class="fas fa-arrow-left" (click)="loadPreviousRequestForm()" *ngIf="downloadRequest"></i>
           <h6>REQUEST FORM DETAILS</h6>
-          <i class="fas fa-arrow-right" (click)="loadNextRequestForm()"></i>
+          <i class="fas fa-arrow-right" (click)="loadNextRequestForm()" *ngIf="downloadRequest"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div2" ng-controller="refresh_control2">
@@ -440,7 +440,7 @@
             <!-- Culture Number -->
             <div class="form-group col-md-6">
               <label>Culture Number</label>
-              <p class="form-control form-control-sm">{{cultureNumberRequest}}</p>
+              <p class="form-control form-control-sm">{{cmwCultureNumberRequest}}</p>
             </div>
             <!-- / Culture Number -->
           </div>
@@ -472,6 +472,8 @@
             <!-- / Notes -->
           </div>
 
+          <button (click)="downloadRequestForm()" class="btn btn-default-save">Download This Request Form</button>
+
         </div>
 
 
@@ -479,12 +481,12 @@
       <!-- / Request Form Tab -->
 
       <!-- Revitalization Form Tab -->
-      <div class="tab" *ngIf="revitalizationFormTab">
+      <div class="tab" *ngIf="revitalizationFormTab" #revitalizationFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" (click)="loadPreviousRevitalizationForm()"></i>
+          <i class="fas fa-arrow-left" (click)="loadPreviousRevitalizationForm()" *ngIf="downloadRevitalization"></i>
           <h6>REVITALIZATION FORM DETAILS</h6>
-          <i class="fas fa-arrow-right" (click)="loadNextRevitalizationForm()"></i>
+          <i class="fas fa-arrow-right" (click)="loadNextRevitalizationForm()" *ngIf="downloadRevitalization"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div3" ng-controller="refresh_control3">
@@ -533,7 +535,7 @@
             <!-- Culture Number -->
             <div class="form-group col-md-6">
               <label>Culture Number</label>
-              <p class="form-control form-control-sm">{{cultureNumberRevitalization}}</p>
+              <p class="form-control form-control-sm">{{cmwCultureNumberRevitalization}}</p>
             </div>
             <!-- / Culture Number -->
           </div>
@@ -574,18 +576,20 @@
             <!-- / Reference Number -->
           </div>
 
+          <button (click)="downloadRevitalizationForm()" class="btn btn-default-save">Download This Revitalization Form</button>
+
         </div>
 
       </div>
       <!-- / Revitalization Form Tab -->
 
       <!-- Process Form Tab -->
-      <div class="tab" *ngIf="processedFormTab">
+      <div class="tab" *ngIf="processedFormTab" #processedFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" (click)="loadPreviousProcessedForm()"></i>
+          <i class="fas fa-arrow-left" (click)="loadPreviousProcessedForm()" *ngIf="downloadProcessed"></i>
           <h6>PROCESSED FORM DETAILS</h6>
-          <i class="fas fa-arrow-right" (click)="loadNextProcessedForm()"></i>
+          <i class="fas fa-arrow-right" (click)="loadNextProcessedForm()" *ngIf="downloadProcessed"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div4" ng-controller="refresh_control4">
@@ -606,21 +610,12 @@
             <!-- / Date Submitted -->
           </div>
 
-          <div class="form-row">
-            <!-- Date of Collection Validation -->
-            <div class="form-group col-md-6">
-              <label>Date of Collection Validation</label>
-              <p class="form-control form-control-sm">{{dateOfCollectionValidation}}</p>
-            </div>
-            <!-- / Date of Collection Validation -->
-
-            <!-- Date Returned -->
-            <div class="form-group col-md-6">
-              <label>Date Returned</label>
-              <p class="form-control form-control-sm">{{dateReturned}}</p>
-            </div>
-            <!-- / Date Returned -->
+          <!-- Date of Collection Validation -->
+          <div class="form-group col-md-6">
+            <label>Date of Collection Validation</label>
+            <p class="form-control form-control-sm">{{dateOfCollectionValidation}}</p>
           </div>
+          <!-- / Date of Collection Validation -->
 
           <div class="form-row">
             <!-- Culture Number -->
@@ -707,7 +702,7 @@
           </div>
 
           <button (click)="viewAssociatedDepositForm()" class="btn btn-default-save">View Associated Deposit
-            Form</button>
+            Form</button><button (click)="downloadProcessedForm()" class="btn btn-default-save">Download This Processed Form</button>
 
         </div>
 
