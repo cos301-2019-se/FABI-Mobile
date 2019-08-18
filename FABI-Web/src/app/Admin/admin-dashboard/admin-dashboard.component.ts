@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,7 +22,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
@@ -30,6 +30,7 @@ import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLog
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 import * as Interface from '../../_interfaces/interfaces';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -117,6 +118,7 @@ export class AdminDashboardComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder, 
     private snackBar: MatSnackBar, 
+    private dialog: MatDialog
     ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,8 +136,10 @@ export class AdminDashboardComponent implements OnInit {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
+      let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Loading" }});
       this.getNumberOfFABIMembers();
       this.getNumberOfFABISamples();
+      loadingRef.close();
     });
 
     //******** TO BE USED IN PRODUCTION: ********

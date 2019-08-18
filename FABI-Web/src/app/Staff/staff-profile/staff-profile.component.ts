@@ -17,9 +17,10 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@an
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-staff-profile',
@@ -121,7 +122,8 @@ export class StaffProfileComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService, 
     private snackBar: MatSnackBar, 
     private authService: AuthenticationService, 
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
     ) { 
       this.staffProfileForm = this.formBuilder.group({
       staff_name: '',
@@ -242,8 +244,13 @@ export class StaffProfileComponent implements OnInit {
     var Uname = this.staffProfileForm.controls.staff_name.value;
     var Usurname = this.staffProfileForm.controls.staff_surname.value;
 
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Profile" }});
+
     // Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if(response.success == true && response.code == 200){
 
         //Reloading the updated user's details
@@ -275,7 +282,12 @@ export class StaffProfileComponent implements OnInit {
     var Ucurrent = this.changePasswordForm.controls.current_password.value;
     var Unew = this.changePasswordForm.controls.new_password.value;
 
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Password" }});
+
     this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if(response.success == true && response.code == 200){
 
         //Display message to say that details were successfully saved

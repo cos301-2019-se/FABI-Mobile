@@ -129,7 +129,8 @@ export class MemberProfileComponent implements OnInit {
     private snackBar: MatSnackBar, 
     private router: Router,
     private formBuilder: FormBuilder, 
-    private userManagementService: UserManagementAPIService
+    private userManagementService: UserManagementAPIService,
+    private dialog: MatDialog
     ){
     this.memberProfileForm = this.formBuilder.group({
       organization_name: '',
@@ -267,9 +268,14 @@ export class MemberProfileComponent implements OnInit {
     var Uemail = this.memberProfileForm.controls.member_email.value;
     var Uname = this.memberProfileForm.controls.member_name.value;
     var Usurname = this.memberProfileForm.controls.member_surname.value;
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Profile" }});
       
     //Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
+
+      loadingRef.close();
+      
       if(response.success == true){
         
         //Reloading the updated user's details
@@ -300,8 +306,13 @@ export class MemberProfileComponent implements OnInit {
       
     var Ucurrent = this.changePasswordForm.controls.current_password.value;
     var Unew = this.changePasswordForm.controls.new_password.value;
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Password" }});
     
     this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if(response.success == true && response.code == 200){
 
         //Display message to say that details were successfully saved
