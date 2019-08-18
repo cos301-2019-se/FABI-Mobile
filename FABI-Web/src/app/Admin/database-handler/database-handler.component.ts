@@ -63,8 +63,6 @@ export class DatabaseHandlerComponent implements OnInit {
   /** Holds the div element (pDBname) from the HTML page - @type {ElementRef} */
   @ViewChild("pDBname") port : ElementRef;
 
-  /** Holds the column headings to display in the HTML preview table - @type {string[]} */ 
-  displayedColumns: string[];
   /** The data source of the HTML table - @type {MatTableDataSource([])} */ 
   databaseData: any[];
   fields: any[] = [];

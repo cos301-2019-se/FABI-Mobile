@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -33,9 +33,10 @@ import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-
 
 export class OrganizationViewSamplesComponent implements OnInit {
 
-  displayedColumns: string[];
-  dataSource = new MatTableDataSource([]);
-  fields: any[] = [];
+  sampleData: any[];
+  sampleFields: any[] = [];
+  samples: any[];
+  selectedSampleData: any
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -65,21 +66,6 @@ export class OrganizationViewSamplesComponent implements OnInit {
     ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    TOGGLE NOTIFICATIONS TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof OrganizationViewSamplesComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                           NG ON INIT  
   /**
    * This function is called when the page loads
@@ -92,6 +78,22 @@ export class OrganizationViewSamplesComponent implements OnInit {
   ngOnInit() {
     //Calling the neccessary functions as the page loads
     this.viewSamples();
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    TOGGLE NOTIFICATIONS TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof OrganizationViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
   }
 
 
@@ -118,20 +120,12 @@ export class OrganizationViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
+    
     this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
+
       if (response.success == true && response.code == 200) {
-        
-        Object.keys(response.data.samples[0]).forEach((column) => {
 
-          let obj = {
-            'name': column
-          }
-          this.fields.push(obj);
-
-        });
-
-        this.displayedColumns= this.fields.map(field => field.name);
-        this.dataSource = new MatTableDataSource(response.data.samples);
+        this.samples = response.data.samples;
         
       } else if (response.success == false) {
         //POPUP MESSAGE
@@ -143,6 +137,23 @@ export class OrganizationViewSamplesComponent implements OnInit {
         })
       }
     });
+  }
+
+  selectSample(sample: any) {
+
+    this.selectedSampleData = sample.data;
+        
+    Object.keys(this.selectedSampleData).forEach((column) => {
+
+      let obj = {
+        'name': column
+      }
+      this.sampleFields.push(obj);
+
+    });
+
+    console.log("--- DATA: " + JSON.stringify(this.selectedSampleData));
+        
   }
 
 }
