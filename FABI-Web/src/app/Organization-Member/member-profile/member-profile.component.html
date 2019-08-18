@@ -6,22 +6,29 @@
     <i class="fas fa-user-circle"></i>
   </div>
 
+  <!-- Loading Spinner -->
+  <div class="spinner-grow text-success loading" role="status" *ngIf="userProfileLoading">
+  </div>
+  <!-- /Loading Spinner -->
+
   <!-- Profile Form -->
-  <div class="form">
+  <div class="form" *ngIf="!userProfileLoading">
     <form class="profile-form needs-validation" novalidate [formGroup]="memberProfileForm" (submit)="saveChanges()">
       <div class="form-row align-items-center">
 
         <!-- Name -->
         <div class="form-group">
           <label for="member_name">Name</label>
-          <input type="text" class="form-control" id="member_name" placeholder="Enter name" formControlName="member_name" required
-          [ngClass]="{
+          <input type="text" class="form-control" id="member_name" placeholder="Enter name"
+            formControlName="member_name" required
+            [ngClass]="{
             'is-invalid': memberProfileForm.controls['member_name'].invalid && (submitted || memberProfileForm.controls['member_name'].dirty), 
-            'is-valid': memberProfileForm.controls['member_name'].valid && (submitted || memberProfileForm.controls['member_name'].dirty)}" >
-           <!-- Error Validation Feedback--> 
-          <div *ngIf="memberProfileForm.controls['member_name'].invalid && (submitted || memberProfileForm.controls['member_name'].dirty)" >
+            'is-valid': memberProfileForm.controls['member_name'].valid && (submitted || memberProfileForm.controls['member_name'].dirty)}">
+          <!-- Error Validation Feedback-->
+          <div
+            *ngIf="memberProfileForm.controls['member_name'].invalid && (submitted || memberProfileForm.controls['member_name'].dirty)">
             <div *ngFor="let validation of member_profile_validators.member_name">
-                <p *ngIf="memberProfileForm.get('member_name').hasError(validation.type)">{{validation.message}}</p>
+              <p *ngIf="memberProfileForm.get('member_name').hasError(validation.type)">{{validation.message}}</p>
             </div>
           </div>
           <!-- / Error Validation Feedback-->
@@ -31,14 +38,16 @@
         <!-- Surname -->
         <div class="form-group">
           <label for="member_surname">Surname</label>
-          <input type="text" class="form-control" id="member_surname" placeholder="Enter surname" formControlName="member_surname" required
-          [ngClass]="{
+          <input type="text" class="form-control" id="member_surname" placeholder="Enter surname"
+            formControlName="member_surname" required
+            [ngClass]="{
             'is-invalid': memberProfileForm.controls['member_surname'].invalid && (submitted || memberProfileForm.controls['member_surname'].dirty), 
-            'is-valid': memberProfileForm.controls['member_surname'].valid && (submitted || memberProfileForm.controls['member_surname'].dirty)}" >
-           <!-- Error Validation Feedback--> 
-          <div *ngIf="memberProfileForm.controls['member_surname'].invalid && (submitted || memberProfileForm.controls['member_surname'].dirty)" >
+            'is-valid': memberProfileForm.controls['member_surname'].valid && (submitted || memberProfileForm.controls['member_surname'].dirty)}">
+          <!-- Error Validation Feedback-->
+          <div
+            *ngIf="memberProfileForm.controls['member_surname'].invalid && (submitted || memberProfileForm.controls['member_surname'].dirty)">
             <div *ngFor="let validation of member_profile_validators.member_surname">
-                <p *ngIf="memberProfileForm.get('member_surname').hasError(validation.type)">{{validation.message}}</p>
+              <p *ngIf="memberProfileForm.get('member_surname').hasError(validation.type)">{{validation.message}}</p>
             </div>
           </div>
           <!-- / Error Validation Feedback-->
@@ -48,14 +57,16 @@
         <!-- Email -->
         <div class="form-group">
           <label for="member_email">Email address</label>
-          <input type="email" class="form-control" id="member_email" aria-describedby="emailHelp" placeholder="Enter email" formControlName="member_email" required
-          [ngClass]="{
+          <input type="email" class="form-control" id="member_email" aria-describedby="emailHelp"
+            placeholder="Enter email" formControlName="member_email" required
+            [ngClass]="{
             'is-invalid': memberProfileForm.controls['member_email'].invalid && (submitted || memberProfileForm.controls['member_email'].dirty), 
-            'is-valid': memberProfileForm.controls['member_email'].valid && (submitted || memberProfileForm.controls['member_email'].dirty)}" >
-           <!-- Error Validation Feedback--> 
-          <div *ngIf="memberProfileForm.controls['member_email'].invalid && (submitted || memberProfileForm.controls['member_email'].dirty)" >
+            'is-valid': memberProfileForm.controls['member_email'].valid && (submitted || memberProfileForm.controls['member_email'].dirty)}">
+          <!-- Error Validation Feedback-->
+          <div
+            *ngIf="memberProfileForm.controls['member_email'].invalid && (submitted || memberProfileForm.controls['member_email'].dirty)">
             <div *ngFor="let validation of member_profile_validators.member_email">
-                <p *ngIf="memberProfileForm.get('member_email').hasError(validation.type)">{{validation.message}}</p>
+              <p *ngIf="memberProfileForm.get('member_email').hasError(validation.type)">{{validation.message}}</p>
             </div>
           </div>
           <!-- / Error Validation Feedback-->
@@ -74,17 +85,16 @@
 
         <!-- Profile Actions -->
         <div class="profile-actions">
-          <button type="button" class="btn btn-default-edit" (click)="editProfileToggle()" [hidden]="isEditingProfile">Edit</button>
-          <button type="button" class="btn btn-default-cancel" (click)="editProfileToggle()" [hidden]="!isEditingProfile">Cancel</button>
+          <button type="button" class="btn btn-default-edit" (click)="editProfileToggle()"
+            [hidden]="isEditingProfile">Edit</button>
+          <button type="button" class="btn btn-default-cancel" (click)="editProfileToggle()"
+            [hidden]="!isEditingProfile">Cancel</button>
+          <button type="button" class="btn btn-default-edit" data-toggle="modal"
+            data-target="#changePasswordModal">Change Password</button>
           <button type="submit" class="btn btn-default-save" [hidden]="!memberProfileForm.dirty">Save Changes</button>
         </div>
         <!-- / Profile Actions -->
 
-        <!-- Change Password Action-->
-        <div>
-          <button type="button" class="btn btn-default-edit" data-toggle="modal" data-target="#changePasswordModal">Change Password</button>
-        </div>
-        <!-- / Change Password Action-->
 
       </div>
 
@@ -95,91 +105,101 @@
 </div>
 
 <!-- Change Password Modal -->
-<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addModalTitle">Change Password</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"><i class="fas fa-times"></i></span>
-          </button>
-        </div>
-        <!-- Modal Body -->
-        <div class="modal-body">
-          <div class="form">
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalTitle">Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="form">
 
-            <!-- Change Password Form -->
-            <form id="change_password_form" [formGroup]="changePasswordForm" (submit)="changePassword()"
-              class="needs-validation" novalidate>
-              <div class="row">
+          <!-- Change Password Form -->
+          <form id="change_password_form" [formGroup]="changePasswordForm" (submit)="changePassword()"
+            class="needs-validation" novalidate>
+            <div class="row">
 
 
-                <!-- Current Password -->
-                <div class="form-group">
-                  <label for="current_password">Current Password</label>
-                  <input type="password" class="form-control" id="current_password" placeholder="Enter current password" formControlName="current_password" required 
+              <!-- Current Password -->
+              <div class="form-group">
+                <label for="current_password">Current Password</label>
+                <input type="password" class="form-control" id="current_password" placeholder="Enter current password"
+                  formControlName="current_password" required
                   [ngClass]="{
                     'is-invalid': changePasswordForm.controls['current_password'].invalid && (submitted || changePasswordForm.controls['current_password'].dirty), 
-                    'is-valid': changePasswordForm.controls['current_password'].valid && (submitted || changePasswordForm.controls['current_password'].dirty)}" >
-                   <!-- Error Validation Feedback--> 
-                  <div *ngIf="changePasswordForm.controls['current_password'].invalid && (submitted || changePasswordForm.controls['current_password'].dirty)" >
-                    <div *ngFor="let validation of change_password_validators.current_password">
-                        <p *ngIf="changePasswordForm.get('current_password').hasError(validation.type)">{{validation.message}}</p>
-                    </div>
+                    'is-valid': changePasswordForm.controls['current_password'].valid && (submitted || changePasswordForm.controls['current_password'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="changePasswordForm.controls['current_password'].invalid && (submitted || changePasswordForm.controls['current_password'].dirty)">
+                  <div *ngFor="let validation of change_password_validators.current_password">
+                    <p *ngIf="changePasswordForm.get('current_password').hasError(validation.type)">
+                      {{validation.message}}</p>
                   </div>
-                  <!-- / Error Validation Feedback--> 
                 </div>
-                <!-- / Current Password -->
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Current Password -->
 
-                 <!-- New Password -->
-                 <div class="form-group">
-                  <label for="new_password">New Password</label>
-                  <input type="password" class="form-control" id="new_password" placeholder="Enter new password" formControlName="new_password" required
+              <!-- New Password -->
+              <div class="form-group">
+                <label for="new_password">New Password</label>
+                <input type="password" class="form-control" id="new_password" placeholder="Enter new password"
+                  formControlName="new_password" required
                   [ngClass]="{
                     'is-invalid': changePasswordForm.controls['new_password'].invalid && (submitted || changePasswordForm.controls['new_password'].dirty), 
-                    'is-valid': changePasswordForm.controls['new_password'].valid && (submitted || changePasswordForm.controls['new_password'].dirty)}" >
-                   <!-- Error Validation Feedback--> 
-                  <div *ngIf="changePasswordForm.controls['new_password'].invalid && (submitted || changePasswordForm.controls['new_password'].dirty)" >
-                    <div *ngFor="let validation of change_password_validators.new_password">
-                        <p *ngIf="changePasswordForm.get('new_password').hasError(validation.type)">{{validation.message}}</p>
-                    </div>
+                    'is-valid': changePasswordForm.controls['new_password'].valid && (submitted || changePasswordForm.controls['new_password'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="changePasswordForm.controls['new_password'].invalid && (submitted || changePasswordForm.controls['new_password'].dirty)">
+                  <div *ngFor="let validation of change_password_validators.new_password">
+                    <p *ngIf="changePasswordForm.get('new_password').hasError(validation.type)">{{validation.message}}
+                    </p>
                   </div>
-                  <!-- / Error Validation Feedback--> 
                 </div>
-                <!-- / New Password -->
-                  
-                 <!-- Confirm Password -->
-                 <div class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm_password" placeholder="Confirm new password" formControlName="confirm_password" required
-                    [ngClass]="{
-                      'is-invalid': changePasswordForm.controls['confirm_password'].invalid && (submitted || changePasswordForm.controls['confirm_password'].dirty), 
-                      'is-valid': changePasswordForm.controls['confirm_password'].valid && (submitted || changePasswordForm.controls['confirm_password'].dirty)}" >
-                     <!-- Error Validation Feedback--> 
-                    <div *ngIf="changePasswordForm.controls['confirm_password'].invalid && (submitted || changePasswordForm.controls['confirm_password'].dirty)" >
-                      <div *ngFor="let validation of change_password_validators.confirm_password">
-                          <p *ngIf="changePasswordForm.get('confirm_password').hasError(validation.type)">{{validation.message}}</p>
-                      </div>
-                    </div>
-                    <!-- / Error Validation Feedback--> 
-                  </div>
-                  <!-- / Confirm Password -->
-
-
-                <!-- Submit -->
-                <button  type="submit" class="btn btn-default-save" >Save</button>
-                <!-- / Submit -->
-
+                <!-- / Error Validation Feedback-->
               </div>
-            </form>
-            <!-- / Change Password Form -->
+              <!-- / New Password -->
 
-          </div>
+              <!-- Confirm Password -->
+              <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm new password"
+                  formControlName="confirm_password" required
+                  [ngClass]="{
+                      'is-invalid': changePasswordForm.controls['confirm_password'].invalid && (submitted || changePasswordForm.controls['confirm_password'].dirty), 
+                      'is-valid': changePasswordForm.controls['confirm_password'].valid && (submitted || changePasswordForm.controls['confirm_password'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="changePasswordForm.controls['confirm_password'].invalid && (submitted || changePasswordForm.controls['confirm_password'].dirty)">
+                  <div *ngFor="let validation of change_password_validators.confirm_password">
+                    <p *ngIf="changePasswordForm.get('confirm_password').hasError(validation.type)">
+                      {{validation.message}}</p>
+                  </div>
+                </div>
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Confirm Password -->
+
+
+              <!-- Submit -->
+              <button type="submit" class="btn btn-default-save">Save</button>
+              <!-- / Submit -->
+
+            </div>
+          </form>
+          <!-- / Change Password Form -->
+
         </div>
-        <!-- / Modal Body -->
-        <div class="modal-footer">
-        </div>
+      </div>
+      <!-- / Modal Body -->
+      <div class="modal-footer">
       </div>
     </div>
   </div>
+</div>
 <!-- / Change Password Modal -->
