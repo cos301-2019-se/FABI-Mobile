@@ -1,6 +1,14 @@
 <h3>NOTIFICATIONS</h3>
 <h5 *ngIf="!notifications">No notifications</h5>
 
+<!-- Loading Spinner -->
+<div class="notification-loading">
+  <div class="spinner-grow text-success loading" role="status" *ngIf="notificationsLoading">
+  </div>
+</div>
+
+<!-- /Loading Spinner -->
+
 <!-- Notification Items -->
 <div class="notification-items" *ngIf="allNotifications">
 
