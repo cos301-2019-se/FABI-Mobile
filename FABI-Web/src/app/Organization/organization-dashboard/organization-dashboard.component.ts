@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -29,9 +29,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
 
 
 @Component({
@@ -104,6 +105,43 @@ export class OrganizationDashboardComponent implements OnInit {
 
   /** Specifies if the list of members have been retreived to disable the loading spinner - @type {boolean} */
   memberTableLoading: boolean = true;
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of OrganizationDashboardComponent.
+   * 
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
+   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
+   * 
+   * @memberof OrganizationDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(
+    private authService: AuthenticationService, 
+    private router: Router, 
+    private userManagementService: UserManagementAPIService, 
+    private diagnosticClinicService: DiagnosticClinicAPIService, 
+    private resolver: ComponentFactoryResolver,
+    private formBuilder: FormBuilder, 
+    public sanitizer: DomSanitizer, 
+    private notificationLoggingService: NotificationLoggingService, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog
+    ) { 
+      this.adminProfileForm = this.formBuilder.group({
+        organization_name: '',
+        admin_name: '',
+        admin_surname: '',
+        admin_email: '',
+        admin_type: '',
+        admin_password: '',
+        admin_confirm: ''
+      });
+      
+    }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,13 +233,31 @@ getNumberOfOrganizationMembers(){
       //Deactivate loading table spinners
       this.memberTableLoading = false;
 
-      this.numberOfOrganizationMembers = this.organizationMembers.length;
-      this.memberStats = this.numberOfOrganizationMembers.toString();
-    }
-    else {
-      //The organization's members could not be retrieved
-      this.numberOfOrganizationMembers = 0;
-      this.memberStats = this.numberOfOrganizationMembers.toString();
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                            GET NUMBER OF ORGANIZATION SAMPLES
+  /**
+   *  This function will use an API service to get all the samples of an organization. These samples will be read into the
+   *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
+   *  HTML page with the number of samples belonging to the organization.
+   * 
+   * @memberof OrganizationDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getNumberOfOrganizationSamples() {
+
+    //Subscribing to the DiagnosticClinicAPIService to get a list containing all the samples belonging to the organization
+    this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
+      if(response.success == true){
+        var tempSamples = response.data.samples;
+        this.numberOfOrganizationSamples = tempSamples.length;
+        this.sampleStats = this.numberOfOrganizationSamples.toString();
+      }
+      else{
+        this.numberOfOrganizationSamples = 0;
+        this.sampleStats = this.numberOfOrganizationSamples.toString();
+      }
+    });
+  }
 
       //TODO: handle error
     }
