@@ -10,7 +10,7 @@
   justify-content: center;
   align-items: center;
 
-  width: 80%;
+  width: 100%;
   min-height: 20vh;
   height: auto;
 
@@ -21,8 +21,6 @@
 .reporting-tab {
   width: 80%;
   height: 100%;
-
-
 }
 
 .log-tab {
@@ -37,15 +35,13 @@ a.nav-link {
 
 a.nav-link.active {
   color: #72B555;
+
+  border-top: 2px solid #72B555;
 }
 
 .tab-content {
-  width: 80%;
-  min-height: 20vh;
-  height: auto;
-  
   padding: 0;
-  margin:0;
+  margin: 0;
 }
 
 .tab-content .search-table {
@@ -78,35 +74,67 @@ a.nav-link.active {
 
 /* Download Button 
      ========================================================================== */
-     .btn.btn-default-report-download {
-      color: #6B746F;
-      font-family: "Montserrat", sans-serif;
-  
-      background-color: transparent;
-  
-      border: 1px solid #6B746F;
-  
-      border-radius: 5px;
-  
-      padding: 5px;
-      margin: 25px;
-  
-      width: 30%;
-  
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
-  
-      transition: all 0.5s;
-  }
-  
-  .btn.btn-default-report-download:hover {
-      color: #fff;
-  
-      background-color: rgba(107, 116, 111, 0.95);
-  
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  
-      transform: scale(1.025);
-  }
+.btn.btn-default-report-download {
+  color: #6B746F;
+  font-family: "Montserrat", sans-serif;
+
+  background-color: transparent;
+
+  border: 1px solid #6B746F;
+
+  border-radius: 5px;
+
+  padding: 5px;
+  margin: 25px;
+
+  width: 30%;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+  transition: all 0.5s;
+}
+
+.btn.btn-default-report-download:hover {
+  color: #fff;
+
+  background-color: rgba(107, 116, 111, 0.95);
+
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+  transform: scale(1.025);
+}
+
+/* Download Button 
+     ========================================================================== */
+.btn.btn-default-report-download {
+  color: #6B746F;
+  font-family: "Montserrat", sans-serif;
+
+  background-color: transparent;
+
+  border: 1px solid #6B746F;
+
+  border-radius: 5px;
+
+  padding: 5px;
+  margin: 25px;
+
+  width: auto;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+  transition: all 0.5s;
+}
+
+.btn.btn-default-report-download:hover {
+  color: #fff;
+
+  background-color: rgba(107, 116, 111, 0.95);
+
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+  transform: scale(1.025);
+}
 
 
 // /*-----------------------

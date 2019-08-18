@@ -76,6 +76,9 @@ import { StaffMenuComponent } from './Staff/staff-menu/staff-menu.component';
 import { OrganizationMenuComponent } from './Organization/organization-menu/organization-menu.component';
 import { MemberMenuComponent } from './Organization-Member/member-menu/member-menu.component';
 
+
+import { DataTablesModule } from 'angular-datatables';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -149,6 +152,7 @@ import { MemberMenuComponent } from './Organization-Member/member-menu/member-me
     OrganizationMemberModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    DataTablesModule,
     ErrorsModule,
     LayoutModule,
     MatAutocompleteModule,
