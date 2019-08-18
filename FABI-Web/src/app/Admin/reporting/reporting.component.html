@@ -201,7 +201,7 @@
             aria-labelledby="requestReport-tab">
 
             <!-- Tab Content -->
-            <div class="report-table table-responsive" id="requestReport" *ngIf='requestReport' #requestReportPDF>
+            <div class="dashboard-table table-responsive" id="requestReport" *ngIf='requestReport' #requestReportPDF>
 
               <h5> FABI System Request Report - {{date}}</h5>
               <button class="btn btn-default-report-download" *ngIf='requestReport'
@@ -390,7 +390,7 @@
           <div class="tab-pane fade" id="userLogTab" role="tabpanel" aria-labelledby="userLog-tab">
 
             <!-- Tab Content -->
-            <div class="report-table table-responsive" id="logs">
+            <div class="report-table table-responsive" id="userLogs" *ngIf="userLogs">
 
               <h5>
                 User Log Table - {{date}}
