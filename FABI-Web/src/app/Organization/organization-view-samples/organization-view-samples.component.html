@@ -10,11 +10,19 @@
   <thead>
     <tr>
       <th scope="col">Sample Name</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let sample of dataSource">
+    <!-- <tr *ngFor="let sample of dataSource">
       <td>{{sample.name}} </td>
+      <td><button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal" [id]="xxxxx"
+          (click)="xxxxxx()">View</button> </td>
+    </tr> -->
+    <tr>
+        <td>Sample Test (Hardcoded) </td>
+        <td><button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal" [id]="xxxxx"
+            (click)="xxxxxx()">View</button> </td>
     </tr>
   </tbody>
 </table>
@@ -29,3 +37,48 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table> -->
+
+<!-- View Sample Modal Section -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header-->
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalTitle">View Sample</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <!-- / Modal Header-->
+
+      <!-- Modal Body-->
+      <div class="modal-body">
+
+        <div class="view-fields">
+
+          <div class="form-row">
+            <!-- Culture Name -->
+            <div class="form-group col-md-6">
+              <label>Culture Name</label>
+              <p class="form-control form-control-sm">{{name}}</p>
+            </div>
+            <!-- / Culture Name -->
+
+            <!-- Culture Number -->
+            <div class="form-group col-md-6">
+              <label>Culture Number</label>
+              <p class="form-control form-control-sm">{{cmwCultureNumberDeposit}}</p>
+            </div>
+            <!-- / Culture Number -->
+          </div>
+
+        </div>
+
+      </div>
+      <!-- / Modal Body-->
+
+    </div>
+  </div>
+</div>
+<!-- / View Sample Modal Section -->

@@ -10,7 +10,7 @@
       <div class="nav-links">
         <a class="nav-link active" routerLink="/staff-dashboard"><i class="fas fa-home"></i></a>
         <a class="nav-link" routerLink="/staff-view-samples"><i class="fas fa-search"></i></a>
-        <a class="nav-link" routerLink="staff-submit-sample"><i class="fas fa-vial"></i></a>
+        <a class="nav-link" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i></a>
         <a class="nav-link" routerLink="/cmw-menu"><i class="fas fa-vials"></i></a>
         <a class="nav-link" routerLink="/"> <i class="fas fa-plus-circle"></i></a>
       </div>
@@ -167,7 +167,7 @@
         </div>
         <!-- / Extra Table Information -->
 
-        <div class="input-group search-table">
+        <div class="input-group search-table" *ngIf="submittedSamples">
           <div class="input-group-prepend ">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
@@ -202,11 +202,11 @@
         <!-- Extra Table Information -->
         <div class="table-information" *ngIf="!depositForms">
           <h6>You currently have no deposits</h6>
-          <i class="fas fa-plus-circle"></i>
+          <i class="fas fa-plus-circle" routerLink="/cmw-menu"></i>
         </div>
         <!-- / Extra Table Information -->
 
-        <div class="input-group search-table">
+        <div class="input-group search-table" *ngIf="depositForms">
           <div class="input-group-prepend ">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
