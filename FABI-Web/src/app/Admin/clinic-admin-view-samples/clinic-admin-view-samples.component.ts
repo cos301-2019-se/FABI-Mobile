@@ -32,6 +32,9 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
   samples: any[];
   selectedSampleData: any
 
+  /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
+  sampleTableLoading: boolean = true;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,6 +123,9 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
       if (response.success == true && response.code == 200) {
 
         this.samples = response.data.samples;
+
+        //Deactivate loading table spinners
+        this.sampleTableLoading = false;
         
       } else if (response.success == false) {
         //POPUP MESSAGE
