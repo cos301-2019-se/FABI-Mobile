@@ -216,5 +216,29 @@ export class DiagnosticClinicAPIService {
 
     return this.http.request<any>(method, submitSampleURL, options);
   }
+
+  retrieveSampleDetails(sampleRefNum: string) {
+
+    let retreiveSampleDetailsURL =   `${config.diagnosticClinicURL}/retrieveSample`;
+    let method = 'POST';
+
+    const postData = {
+      "refNum": sampleRefNum
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, retreiveSampleDetailsURL, options);
+
+  }
   
 }
