@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -193,7 +193,7 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData) {
+  submitSampleForm(formDetails: Interface.StaffInfo) {
     let submitSampleURL = '***REMOVED***/submitSample';
     let method = 'POST';
 

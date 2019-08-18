@@ -122,44 +122,68 @@ export interface StaffInfo {
   //   isLoading: boolean,
   //   title: string
   // }
+  
 
   
-  export interface ClientFormData {
-    tree_species: string;
-    number_samples: string;
-    location1: string;
-    location2: string;
-    compartment: string;
-    gps: string;
-    date_collection: string;
-    date_sent: string;
-    type_soil: string;
-    type_stems: string;
-    type_leaves: string;
-    type_roots: string;
-    type_twigs: string;
-    type_seedlings: string;
-    type_media: string;
-    type_water: string;
-    symptom_wilt: string;
-    symptom_stunting: string;
-    symptom_leafspot: string;
-    symptom_rootrot: string;
-    symptom_dieback: string;
-    symptom_cankers: string;
-    symptom_death: string;
-    symptom_wood: string;
-    symptom_other: string;
-    distribution_localized: string;
-    distribution_scattered: string;
-    distribution_general: string;
-    conditions_affected: string;
-    conditions_problem_noticed: string;
-    conditions_date_planted: string;
-    conditions_weather_disturbance: string;
-    conditions_weather_prior: string;
-    conditions_other: string;
-    conditions_additional: string;
+  export interface SampleFormData {
+      // Sample Details
+      sample_plant_species: string,
+      sample_num_samples: number,
+      date_sample_collected: Date,
+      date_sample_sent: Date,
+
+      // Plantation Details
+      sample_street: string,
+      sample_area: string,
+      sample_city: string,
+      sample_farm: string,
+      sample_province: string,
+      sample_gps: string,
+
+      // Type of Sample
+      sample_type_soil: string,
+      sample_type_stems: string,
+      sample_type_roots: string,
+      sample_type_twigs: string,
+      sample_type_leaves: string,
+      sample_type_seedlings: string,
+      sample_type_media: string,
+      sample_type_water: string,
+      sample_type_insect: string,
+      sample_type_nuts: string,
+      sample_type_other: string,
+
+      // Symptoms
+      symptom_wilt: string,
+      symptom_stunting: string,
+      symptom_leafspot: string,
+      symptom_rootrot: string,
+      symptom_dieback: string,
+      symptom_cankers: string,
+      symptom_death: string,
+      symptom_wood: string,
+      symptom_other: string,
+
+      // Distribution of Symptoms
+      distribution_localized: string,
+      distributed_scattered: string,
+      distributed_general: string,
+      distributed_clumps: string,
+      distributed_na: string,
+      distributed_other: string,
+      percentage_plants_affected: string,
+
+      // Conditons
+      conditions_date_problem_noticed: Date,
+      conditions_date_planted: Date,
+      conditions_weather_disturbances: string,
+      conditions_weather_prior: string,
+      conditions_others: string,
+      conditions_additional: string
+
+      // Permissions
+      landowner_name: string,
+      permission_granted: boolean 
   }
 
   export interface Location {
