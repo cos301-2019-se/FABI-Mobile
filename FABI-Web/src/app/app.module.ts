@@ -76,6 +76,8 @@ import { StaffMenuComponent } from './Staff/staff-menu/staff-menu.component';
 import { OrganizationMenuComponent } from './Organization/organization-menu/organization-menu.component';
 import { MemberMenuComponent } from './Organization-Member/member-menu/member-menu.component';
 
+import { FilterPipe } from './_pipes/filter.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,7 +127,8 @@ import { MemberMenuComponent } from './Organization-Member/member-menu/member-me
     AdminMenuComponent,
     StaffMenuComponent,
     OrganizationMenuComponent,
-    MemberMenuComponent
+    MemberMenuComponent,
+    FilterPipe
   ],
   entryComponents: [
     ConfirmComponent,

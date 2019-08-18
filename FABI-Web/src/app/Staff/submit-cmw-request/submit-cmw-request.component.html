@@ -1,24 +1,14 @@
 <form class="view-form needs-validation" novalidate [formGroup]="cmwRequestForm" (submit)="submitCMWRequestForm()">
 
-
-  <!-- <mat-form-field class="example-full-width">
-    <input matInput [(ngModel)]="requestor" placeholder="Requestor (Surname, Initials)" type="text"
-      [formControl]="requestorControl" formControlName="requestor" [matAutocomplete]="autoRequestor">
-    <mat-autocomplete #autoRequestor="matAutocomplete" (optionSelected)="setRequestor($event)">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field> -->
-
     <!-- Requestor Name -->
     <div class="form-group">
         <label for="requestor">Requestor Name</label>
-        <select class="form-control form-control-sm" [(ngModel)]="requestor" id="requestor" formControlName="requestor"
+        <select class="form-control form-control-sm" id="requestor" formControlName="requestor"
           required>
           <option value="" selected>
             Please select a requestor
           </option>
-          <option *ngFor="let option of filteredOptions | async"  [value]="option">
+          <option name="searchItem" *ngFor="let option of staff"  [value]="option | filter : searchItem">
               {{option}}
           </option>
         </select>
@@ -31,8 +21,7 @@
   <!-- Taxon Name -->
   <div class="form-group">
     <label for="taxon_name">Taxon Name</label>
-    <input type="text" class="form-control form-control-sm" id="taxon_name" formControlName="taxon_name"
-      placeholder="Taxon name" required>
+    <input type="text" class="form-control form-control-sm" id="taxon_name" formControlName="taxon_name" placeholder="Taxon name">
     <div class="valid-feedback">
       Looks good!
     </div>
@@ -42,8 +31,7 @@
   <!-- Culture Number -->
   <div class="form-group">
     <label for="culture_number">Culture Number</label>
-    <input type="text" class="form-control form-control-sm" id="culture_number" formControlName="culture_number"
-      placeholder="Culture number" required>
+    <input type="text" class="form-control form-control-sm" id="culture_number" formControlName="culture_number" placeholder="Culture number" required>
     <div class="valid-feedback">
       Looks good!
     </div>
@@ -65,7 +53,7 @@
   <div class="form-group">
     <label for="reference_number">Reference Number</label>
     <input type="text" class="form-control form-control-sm" id="reference_number" formControlName="reference_number"
-      placeholder="Reference number" required>
+      placeholder="Reference number">
     <div class="valid-feedback">
       Looks good!
     </div>
@@ -75,8 +63,7 @@
   <!-- Notes -->
   <div class="form-group">
     <label for="notes">Notes</label>
-    <input type="text" class="form-control form-control-sm" id="notes" formControlName="notes" placeholder="Notes"
-      required>
+    <input type="text" class="form-control form-control-sm" id="notes" formControlName="notes" placeholder="Notes">
     <div class="valid-feedback">
       Looks good!
     </div>
