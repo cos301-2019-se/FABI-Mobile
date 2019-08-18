@@ -815,7 +815,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 /* Dashboard Table Section
      ========================================================================== */
 .dashboard-table {
-    width: 95%;
+    width: 100%;
     height: 50%;
 
     padding: 15px;
@@ -911,6 +911,10 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 }
 
 .notification-item:hover>.notification-heading h6 {
+    color: #fff;
+}
+
+.notification-item:hover>.notification-content {
     color: #fff;
 }
 
