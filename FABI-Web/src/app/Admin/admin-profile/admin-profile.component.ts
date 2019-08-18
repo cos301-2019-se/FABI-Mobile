@@ -17,12 +17,13 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@an
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
 import { DISABLED } from '@angular/forms/src/model';
 
 import { ChangePasswordFormValidators } from "../../_interfaces/form-validators";
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-admin-profile',
@@ -128,7 +129,8 @@ export class AdminProfileComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService, 
     private snackBar: MatSnackBar, 
     private authService: AuthenticationService, 
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
     ) { 
     this.adminProfileForm = this.formBuilder.group({
       admin_name: ['', Validators.required],
@@ -252,8 +254,13 @@ export class AdminProfileComponent implements OnInit {
     var Uname = this.adminProfileForm.controls.admin_name.value;
     var Usurname = this.adminProfileForm.controls.admin_surname.value;
 
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Profile Details" }});
+
     //Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if(response.success == true){
         
          //Display message to say that details were successfully saved
@@ -285,8 +292,13 @@ export class AdminProfileComponent implements OnInit {
       
     var Ucurrent = this.changePasswordForm.controls.current_password.value;
     var Unew = this.changePasswordForm.controls.new_password.value;
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Password" }});
     
     this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if(response.success == true && response.code == 200){
 
         //Display message to say that details were successfully saved

@@ -223,8 +223,12 @@ export class MemberHandlerComponent implements OnInit {
     const org_details: Interface.Organisation = { orgName: user.user.organisation };
     const member_details: Interface.OrganisationMember = { fname: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Adding Member" }});
 
     this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
+
+      loadingRef.close();
+      
       this.loading = false;
 
       if (response.success == true && response.code == 200) {
@@ -305,8 +309,13 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMember() {
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Removing Member" }});
     
     this.userManagementService.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Member Removed", "Dismiss", {
@@ -347,7 +356,13 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewMembers() {
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Loading" }});
+
     this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
+
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         this.orgMembers = response.data.members;
         this.dataSource = new MatTableDataSource(this.orgMembers);
