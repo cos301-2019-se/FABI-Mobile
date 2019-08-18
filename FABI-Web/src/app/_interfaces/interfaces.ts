@@ -35,8 +35,7 @@ export interface Organisation {
  * @interface OrganisationAdmin
  */
 export interface OrganisationAdmin {
-    name?: string;  // First Name of Admin
-    fname?: string;  // First Name of Admin
+    fname: string;  // First Name of Admin
     surname: string; // Surname of Admin
     email: string; // Email of Admin
     password?: string; // Passsword of Admin

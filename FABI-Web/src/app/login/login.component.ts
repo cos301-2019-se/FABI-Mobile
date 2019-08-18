@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /** Object for defining the login form -  @type {FormGroup} */
-  login_form: FormGroup;
+  loginForm: FormGroup;
   /** Object for storing all forms that require validation-  @type {HTMLCollectionOf<Element>} */
   forms: HTMLCollectionOf<Element> = null;
   /** To check if form has been submitted - @type {boolean} */
@@ -58,15 +58,15 @@ export class LoginComponent implements OnInit {
 
   login_validation_messages = {
     'organization': [
-      { type:  'required', message: 'Please select an Organization'}
+      { type:  'required', message: 'Organization is required'}
     ],
     'email': [
       { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please enter a valid email' }
+      { type: 'pattern', message: 'Invalid email' }
     ],
     'password': [
       { type: 'required', message: 'Password is required' },
-      // { type: 'minlength', message: 'Password must be at least 5 characters long' },
+      // { type: 'minlength', message: 'Password must be at least 8 characters long' },
       // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
     ],
   }
@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
     //   var organization = '';
     // }
 
-    this.login_form = this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
       email: ['',Validators.compose([
         Validators.required,
@@ -128,7 +128,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
 
     // Check if form input is valid 
-    if (this.login_form.invalid) {
+    if (this.loginForm.invalid) {
       return;
     }
 
@@ -136,9 +136,9 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     // Get form details
-    const Lemail = this.login_form.controls.email.value;
-    const Lpassw = this.login_form.controls.password.value;
-    const Lorg = this.login_form.controls.organization.value;
+    const Lemail = this.loginForm.controls.email.value;
+    const Lpassw = this.loginForm.controls.password.value;
+    const Lorg = this.loginForm.controls.organization.value;
 
     // User details to be passed to API
     const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
