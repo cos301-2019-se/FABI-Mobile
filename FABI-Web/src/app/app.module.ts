@@ -78,7 +78,7 @@ import { MemberMenuComponent } from './Organization-Member/member-menu/member-me
 
 import { FilterPipe } from './_pipes/filter.pipe';
 
-import { DataTablesModule } from 'angular-datatables';
+// import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -154,7 +154,7 @@ import { DataTablesModule } from 'angular-datatables';
     OrganizationMemberModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    DataTablesModule,
+    // DataTablesModule,
     ErrorsModule,
     LayoutModule,
     MatAutocompleteModule,

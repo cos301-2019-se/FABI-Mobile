@@ -189,7 +189,7 @@
         <div class="view-form-actions">
           <i class="fas fa-arrow-left" (click)="loadPreviousDepositForm()" *ngIf="downloadDeposit"></i>
           <h6>DEPOSIT FORM DETAILS</h6>
-          <i class="fas fa-arrow-right" (click)="loadNextDepositForm()" *ngIf="downloadDeposit"></i>
+          <i class="fas fa-download" (click)="downloadDepositForm()" *ngIf="downloadDeposit"></i><i class="fas fa-trash-alt" (click)="deleteDepositForm()" *ngIf="downloadDeposit"></i><i class="fas fa-arrow-right" (click)="loadNextDepositForm()" *ngIf="downloadDeposit"></i>
         </div>
 
         <div class="tab-content" ng-app="ref" ng-controller="ref">
@@ -395,7 +395,7 @@
 
 
           <button (click)="showProcessForm()" data-toggle="modal" data-target="#processDepositFormModal"
-            class="btn btn-default-save">Process Form</button><button (click)="downloadDepositForm()" class="btn btn-default-save">Download This Deposit Form</button>
+            class="btn btn-default-save" *ngIf="downloadDeposit">Process Form</button>
 
         </div>
 
@@ -408,7 +408,7 @@
         <div class="view-form-actions">
           <i class="fas fa-arrow-left" (click)="loadPreviousRequestForm()" *ngIf="downloadRequest"></i>
           <h6>REQUEST FORM DETAILS</h6>
-          <i class="fas fa-arrow-right" (click)="loadNextRequestForm()" *ngIf="downloadRequest"></i>
+          <i class="fas fa-download" (click)="downloadRequestForm()" *ngIf="downloadRequest"></i><i class="fas fa-trash-alt" (click)="deleteRequestForm()" *ngIf="downloadRequest"></i><i class="fas fa-arrow-right" (click)="loadNextRequestForm()" *ngIf="downloadRequest"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div2" ng-controller="refresh_control2">
@@ -472,8 +472,6 @@
             <!-- / Notes -->
           </div>
 
-          <button (click)="downloadRequestForm()" class="btn btn-default-save">Download This Request Form</button>
-
         </div>
 
 
@@ -486,7 +484,7 @@
         <div class="view-form-actions">
           <i class="fas fa-arrow-left" (click)="loadPreviousRevitalizationForm()" *ngIf="downloadRevitalization"></i>
           <h6>REVITALIZATION FORM DETAILS</h6>
-          <i class="fas fa-arrow-right" (click)="loadNextRevitalizationForm()" *ngIf="downloadRevitalization"></i>
+          <i class="fas fa-download" (click)="downloadRevitalizationForm()" *ngIf="downloadRevitalization"></i><i class="fas fa-trash-alt" (click)="deleteRevitalizationForm()" *ngIf="downloadRevitalization"></i><i class="fas fa-arrow-right" (click)="loadNextRevitalizationForm()" *ngIf="downloadRevitalization"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div3" ng-controller="refresh_control3">
@@ -576,8 +574,6 @@
             <!-- / Reference Number -->
           </div>
 
-          <button (click)="downloadRevitalizationForm()" class="btn btn-default-save">Download This Revitalization Form</button>
-
         </div>
 
       </div>
@@ -589,7 +585,7 @@
         <div class="view-form-actions">
           <i class="fas fa-arrow-left" (click)="loadPreviousProcessedForm()" *ngIf="downloadProcessed"></i>
           <h6>PROCESSED FORM DETAILS</h6>
-          <i class="fas fa-arrow-right" (click)="loadNextProcessedForm()" *ngIf="downloadProcessed"></i>
+          <i class="fas fa-download" (click)="downloadProcessedForm()" *ngIf="downloadProcessed"></i><i class="fas fa-trash-alt" (click)="deleteProcessedForm()" *ngIf="downloadProcessed"></i><i class="fas fa-arrow-right" (click)="loadNextProcessedForm()" *ngIf="downloadProcessed"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div4" ng-controller="refresh_control4">
@@ -701,8 +697,8 @@
             <!-- / Microscope Slides -->
           </div>
 
-          <button (click)="viewAssociatedDepositForm()" class="btn btn-default-save">View Associated Deposit
-            Form</button><button (click)="downloadProcessedForm()" class="btn btn-default-save">Download This Processed Form</button>
+          <button (click)="viewAssociatedDepositForm()" class="btn btn-default-save" *ngIf="downloadProcessed">View Associated Deposit
+            Form</button>
 
         </div>
 
