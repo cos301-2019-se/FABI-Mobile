@@ -22,6 +22,10 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CultureCollectionAPIService, CMWDeposit, CMWRequest, CMWRevitalization, ProcessedForm, UpdateDepositForm } from '../../_services/culture-collection-api.service';
 
+//These imports are used to created a downloadable PDF of the forms
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-view-forms',
   templateUrl: './view-forms.component.html',
@@ -206,6 +210,24 @@ export class ViewFormsComponent implements OnInit {
   /** Indicates if the associated forms tab is hidden/shown - @type {boolean} */  
   associatedFormTab: boolean = false;
 
+  /** Will hide the navigational arrows when the form is to be downloaded - @type {boolean} */ 
+  downloadDeposit: boolean = true;
+  /** Will hide the navigational arrows when the form is to be downloaded - @type {boolean} */ 
+  downloadRequest: boolean = true;
+  /** Will hide the navigational arrows when the form is to be downloaded - @type {boolean} */ 
+  downloadRevitalization: boolean = true;
+  /** Will hide the navigational arrows when the form is to be downloaded - @type {boolean} */ 
+  downloadProcessed: boolean = true;
+
+  /** Holds the table element (depositFormPDF) from the HTML page - @type {ElementRef} */
+  @ViewChild("depositFormPDF") depositFormPDF: ElementRef;
+  /** Holds the table element (requestFormPDF) from the HTML page - @type {ElementRef} */
+  @ViewChild("requestFormPDF") requestFormPDF: ElementRef;
+  /** Holds the table element (revitalizationFormPDF) from the HTML page - @type {ElementRef} */
+  @ViewChild("revitalizationFormPDF") revitalizationFormPDF: ElementRef;
+  /** Holds the table element (processedFormPDF) from the HTML page - @type {ElementRef} */
+  @ViewChild("processedFormPDF") processedFormPDF: ElementRef;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -294,7 +316,7 @@ export class ViewFormsComponent implements OnInit {
     this.cultureCollectionService.getAllDepositLogs().subscribe((response: any) => {
       if(response.success == true){
         var data = response.data.qs.forms;
-
+        
         for(var i = 0; i < data.length; i++){
           var tempDeposit = [];
           tempDeposit.push(data[i].userID);
@@ -315,7 +337,14 @@ export class ViewFormsComponent implements OnInit {
           tempDeposit.push(data[i].region);
           tempDeposit.push(data[i].locality);
           tempDeposit.push(data[i].gps);
-          tempDeposit.push(data[i].collected_by);
+          
+          if(!data[i].collected_by){
+            tempDeposit.push(data[i].collectedBy);
+          }
+          else{
+            tempDeposit.push(data[i].collected_by);
+          }
+
           tempDeposit.push(data[i].dateCollected);
           tempDeposit.push(data[i].isolatedBy);
           tempDeposit.push(data[i].identifiedBy);
@@ -1078,7 +1107,7 @@ export class ViewFormsComponent implements OnInit {
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
     this.dateSubmittedProcessedForm = currentDate;
 
-    var tempProcessedForm: ProcessedForm = {userID: this.currentUser.user.ID, statusOfCulture: this.statusOfCulture, agarSlants: this.agarSlants, water: this.water,
+    var tempProcessedForm: ProcessedForm = {userID: this.currentUser.ID, statusOfCulture: this.statusOfCulture, agarSlants: this.agarSlants, water: this.water,
       oil: this.oil, roomTemperature: this.roomTemperature, c18: this.c18, freezeDried: this.freezeDried, freeze: this.freeze,
       dateOfCollectionValidation: this.dateOfCollectionValidation, microscopeSlides: this.microscopeSlides, dateSubmittedProcessedForm: this.dateSubmittedProcessedForm,
       cultureCollectionNumber: this.cmwCultureNumberDeposit};
@@ -1125,7 +1154,7 @@ export class ViewFormsComponent implements OnInit {
   /**
    * This function is called when the page loads
    * 
-   * @description 1. Call loadNotifications() | 2. Call loadDepositForms() | 3. Call getAllRequestForms() |
+   * @description 1. Call getAllStaff() | 2. Call getAllDepositForms() | 3. Call getAllRequestForms() |
    *              4. Call getAllRevitalizationForms() | 5. Call getAllProcessedForm()
    * 
    * @memberof ViewFormsComponent
@@ -1274,5 +1303,113 @@ export class ViewFormsComponent implements OnInit {
     this.requestFormTab = false;
     this.revitalizationFormTab  = false;
     this.depositFormTab = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  DOWNLOAD DEPOSIT FORM
+  /**
+   *  This function will be used to download the deposit form that is displayed on screen as a PDF document.
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  downloadDepositForm() {
+    this.downloadDeposit = false;
+
+    var report = this.depositFormPDF.nativeElement;
+    html2canvas(report).then(canvas => {
+      var imageWidth = 208;
+      var pageHeight = 295;
+      var imageHeight = canvas.height * imageWidth / canvas.width;
+      var heightLeft = imageHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
+      pdf.save('Deposit_Form.pdf');
+    });
+
+    this.downloadDeposit = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  DOWNLOAD REQUEST FORM
+  /**
+   *  This function will be used to download the request form that is displayed on screen as a PDF document.
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  downloadRequestForm() {
+    this.downloadRequest = false;
+
+    var report = this.requestFormPDF.nativeElement;
+    html2canvas(report).then(canvas => {
+      var imageWidth = 208;
+      var pageHeight = 295;
+      var imageHeight = canvas.height * imageWidth / canvas.width;
+      var heightLeft = imageHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
+      pdf.save('Request_Form.pdf');
+    });
+
+    this.downloadRequest = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                               DOWNLOAD REVITALIZATION FORM
+  /**
+   *  This function will be used to download the revitalization form that is displayed on screen as a PDF document.
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  downloadRevitalizationForm() {
+    this.downloadRevitalization = false;
+
+    var report = this.revitalizationFormPDF.nativeElement;
+    html2canvas(report).then(canvas => {
+      var imageWidth = 208;
+      var pageHeight = 295;
+      var imageHeight = canvas.height * imageWidth / canvas.width;
+      var heightLeft = imageHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
+      pdf.save('Revitalization_Form.pdf');
+    });
+
+    this.downloadRevitalization = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  DOWNLOAD PROCESSED FORM
+  /**
+   *  This function will be used to download the processed form that is displayed on screen as a PDF document.
+   *  @memberof ViewFormsComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  downloadProcessedForm() {
+    this.downloadProcessed = false;
+
+    var report = this.processedFormPDF.nativeElement;
+    html2canvas(report).then(canvas => {
+      var imageWidth = 208;
+      var pageHeight = 295;
+      var imageHeight = canvas.height * imageWidth / canvas.width;
+      var heightLeft = imageHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      let pdf = new jspdf('p', 'mm', 'a4');
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imageWidth, imageHeight);
+      pdf.save('Processed_Form.pdf');
+    });
+
+    this.downloadProcessed = true;
   }
 }

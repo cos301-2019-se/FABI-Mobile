@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -42,10 +42,6 @@ export class SubmitCmwRequestComponent implements OnInit {
 
   /** Object array for holding the staff members -  @type {string[]} */                        
   staff: string[] = []; 
-  /** Object array for holding the staff members -  @type {String[]} */
-  filteredOptions: Observable<string[]>;
-  /** The form control for the autocomplete of the requestor input -  @type {FormControl} */
-  requestorControl = new FormControl();
 
   /** The requestor of the form -  @type {string} */
   requestor: string;
@@ -65,6 +61,9 @@ export class SubmitCmwRequestComponent implements OnInit {
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  /** The search item the user is looking for in the form -  @type {string} */
+  public searchItem: string;
 
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,20 +112,7 @@ export class SubmitCmwRequestComponent implements OnInit {
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['/login']);
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            SET REQUESTOR 
-  /*** This function will set the 'requestor' variable according to the option selected in the mat-autocomplete element
-   * 
-   * @memberof SubmitCmwRequestComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setRequestor(event$){
-    this.requestor = event$.option.value;
-  }
-  
+  }  
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  SUBMIT CMW REQUEST FORM
@@ -137,21 +123,21 @@ export class SubmitCmwRequestComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitCMWRequestForm(){
     if(this.cmwRequestForm.controls.requestor.value == null || this.cmwRequestForm.controls.requestor.value == ""){
-      this.requestor = "";
+      this.requestor = "N/A";
     }
     else{
       this.requestor = this.cmwRequestForm.controls.requestor.value;
     }
 
     if(this.cmwRequestForm.controls.taxon_name.value == null || this.cmwRequestForm.controls.taxon_name.value == ""){
-      this.taxonName = "";
+      this.taxonName = "N/A";
     }
     else{
       this.taxonName = this.cmwRequestForm.controls.taxon_name.value;
     }
 
     if(this.cmwRequestForm.controls.culture_number.value == null || this.cmwRequestForm.controls.culture_number.value == ""){
-      this.cultureNumber = "";
+      this.cultureNumber = "N/A";
     }
     else{
       this.cultureNumber = this.cmwRequestForm.controls.culture_number.value;
@@ -164,14 +150,14 @@ export class SubmitCmwRequestComponent implements OnInit {
     this.dateRequested = day + '/' + month + '/' + year;
     
     if(this.cmwRequestForm.controls.reference_number.value == null || this.cmwRequestForm.controls.reference_number.value == ""){
-      this.referenceNumber = "";
+      this.referenceNumber = "N/A";
     }
     else{
       this.referenceNumber = this.cmwRequestForm.controls.reference_number.value;
     }
 
     if(this.cmwRequestForm.controls.notes.value == null || this.cmwRequestForm.controls.notes.value == ""){
-      this.notes = "";
+      this.notes = "N/A";
     }
     else{
       this.notes = this.cmwRequestForm.controls.notes.value;
@@ -180,7 +166,7 @@ export class SubmitCmwRequestComponent implements OnInit {
     var date = new Date();
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var request: CMWRequest = {userID: this.currentUser.user.ID, requestor: this.requestor, taxonName: this.taxonName, 
+    var request: CMWRequest = {userID: this.currentUser.ID, requestor: this.requestor, taxonName: this.taxonName, 
         cultureNumber: this.cultureNumber, dateRequested: this.dateRequested, referenceNumber: this.referenceNumber, 
         notes: this.notes, dateSubmitted: currentDate};
     
@@ -230,19 +216,6 @@ export class SubmitCmwRequestComponent implements OnInit {
     });
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                              FILTER
-  /**
-   *  This function will filter the autocomplete results on the form.
-   * @memberof SubmitCmwRequestComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.staff.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                      TOGGLE NOTIFICATIONS TAB
   /**
@@ -263,7 +236,7 @@ export class SubmitCmwRequestComponent implements OnInit {
   /**
    * This function is called when the page loads
    * 
-   * @description 1. Call loadNotifications() | 2. Call getAllStaff()
+   * @description 1. Call getAllStaff()
    * 
    * @memberof SubmitCmwRequestComponent
    */
@@ -273,7 +246,6 @@ export class SubmitCmwRequestComponent implements OnInit {
     
     //Calling the neccessary functions as the page loads
     this.getAllStaff();
-    this.filteredOptions = this.requestorControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
   }
 
 }
