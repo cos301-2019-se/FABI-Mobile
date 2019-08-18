@@ -143,44 +143,6 @@ export class OrganizationDashboardComponent implements OnInit {
       
     }
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                             CONSTRUCTOR
-/**
- * Creates an instance of OrganizationDashboardComponent.
- * 
- * @param {UserManagementAPIService} userManagementService For calling the User Management API service
- * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
- * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
- * @param {AuthenticationService} authService Used for all authentication and session control
- * @param {Router} router
- * 
- * @memberof OrganizationDashboardComponent
- */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-constructor(
-  private authService: AuthenticationService,
-  private router: Router,
-  private userManagementService: UserManagementAPIService,
-  private diagnosticClinicService: DiagnosticClinicAPIService,
-  private resolver: ComponentFactoryResolver,
-  private formBuilder: FormBuilder,
-  public sanitizer: DomSanitizer,
-  private notificationLoggingService: NotificationLoggingService,
-  private snackBar: MatSnackBar,
-) {
-  this.adminProfileForm = this.formBuilder.group({
-    organization_name: '',
-    admin_name: '',
-    admin_surname: '',
-    admin_email: '',
-    admin_type: '',
-    admin_password: '',
-    admin_confirm: ''
-  });
-
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                    NG ON INIT()  
 /**
@@ -232,32 +194,6 @@ getNumberOfOrganizationMembers(){
 
       //Deactivate loading table spinners
       this.memberTableLoading = false;
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                            GET NUMBER OF ORGANIZATION SAMPLES
-  /**
-   *  This function will use an API service to get all the samples of an organization. These samples will be read into the
-   *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-   *  HTML page with the number of samples belonging to the organization.
-   * 
-   * @memberof OrganizationDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfOrganizationSamples() {
-
-    //Subscribing to the DiagnosticClinicAPIService to get a list containing all the samples belonging to the organization
-    this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
-      if(response.success == true){
-        var tempSamples = response.data.samples;
-        this.numberOfOrganizationSamples = tempSamples.length;
-        this.sampleStats = this.numberOfOrganizationSamples.toString();
-      }
-      else{
-        this.numberOfOrganizationSamples = 0;
-        this.sampleStats = this.numberOfOrganizationSamples.toString();
-      }
-    });
-  }
 
       //TODO: handle error
     }

@@ -123,6 +123,7 @@ export class OrganizationViewSamplesComponent implements OnInit {
     
     this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
 
+      console.log("RESPONSE: " + response);
       if (response.success == true && response.code == 200) {
 
         this.samples = response.data.samples;
