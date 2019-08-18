@@ -100,21 +100,28 @@
         <h5> Member Table </h5>
 
         <!-- Extra Table Information -->
-        <div class="table-information" *ngIf="!orgMembers">
+        <div class="table-information" *ngIf="!orgMembers && !memberTableLoading">
           <h6>There are currently no members</h6>
           <i class="fas fa-plus-circle" data-toggle="modal" data-target="#addModal"></i>
         </div>
         <!-- / Extra Table Information -->
 
-        <div class="input-group search-table">
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="orgMembers && !memberTableLoading">
           <div class="input-group-prepend ">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
             aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
         </div>
+        <!-- / Search Table -->
 
-        <table class="table table-hover" id="info">
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-success loading" role="status" *ngIf="memberTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" id="info" *ngIf="orgMembers && !memberTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
