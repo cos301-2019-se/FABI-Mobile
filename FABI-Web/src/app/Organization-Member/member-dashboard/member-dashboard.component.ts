@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -62,6 +62,8 @@ export class MemberDashboardComponent implements OnInit {
   /** Indicates if the help tab is hidden/shown - @type {boolean} */  
   helpTab: boolean = false;
 
+  currentUser: any
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -79,6 +81,36 @@ export class MemberDashboardComponent implements OnInit {
     private resolver: ComponentFactoryResolver, 
     private diagnosticClinicService: DiagnosticClinicAPIService
     ) { }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          NG ON INIT()  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call getNumberOfMemberSamples() | 2. Call getNumberOfCompletedMemberSamples() | 
+   *              3. Call loadNotifications()
+   * @memberof MemberDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.getNumberOfMemberSamples();
+      this.getNumberOfCompletedMemberSamples();
+      this.loadNotifications();
+    });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // // Set current user logged in
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+     //Calling the neccessary functions as the page loads
+    //  this.getNumberOfMemberSamples();
+    //  this.getNumberOfCompletedMemberSamples();
+    //  this.loadNotifications();
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,22 +199,7 @@ export class MemberDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){}
 
- 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          NG ON INIT()  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Call getNumberOfMemberSamples() | 2. Call getNumberOfCompletedMemberSamples() | 
-   *              3. Call loadNotifications()
-   * @memberof MemberDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    this.getNumberOfMemberSamples();
-    this.getNumberOfCompletedMemberSamples();
-    this.loadNotifications();
-  }
+
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         TOGGLE NOTIFICATIONS 

@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, August 17th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -71,23 +71,23 @@ export class OrganizationHandlerComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;   
 
-  register_validation_messages = {
+  register_organization_validators = {
     'organization_name': [
       { type: 'required', message: 'Organization name is required' },
     ],
     'admin_email': [
       { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please enter a valid email' }
+      { type: 'pattern', message: 'Invalid email' }
     ],
     'admin_name': [
-      { type: 'required', message: 'Name is required' }
+      { type: 'required', message: 'First name is required' }
     ],
     'admin_surname': [
       { type: 'required', message: 'Surname is required' }
     ],
     'admin_phone': [
       { type: 'required', message: 'Phone No. is required' },
-      { type: 'pattern', message: 'Please enter a valid South African number' }
+      // { type: 'pattern', message: 'Please enter a valid number' }
     ],   
   }
 
@@ -130,7 +130,6 @@ export class OrganizationHandlerComponent implements OnInit {
     ) {
     this.registerOrgForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
-      organization_location: ['', Validators.required],
       admin_name: ['', Validators.required],
       admin_surname: ['', Validators.required],
       admin_email: ['', Validators.compose([
