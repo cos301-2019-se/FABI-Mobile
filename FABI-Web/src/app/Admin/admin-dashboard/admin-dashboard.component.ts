@@ -88,6 +88,11 @@ export class AdminDashboardComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
+  /** Specifies if the list of admins have been retreived to disable the loading spinner - @type {boolean} */  
+  adminTableLoading: boolean = true;
+  /** Specifies if the list of staff have been retreived to disable the loading spinner - @type {boolean} */  
+  staffTableLoading: boolean = true;
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
@@ -174,6 +179,11 @@ export class AdminDashboardComponent implements OnInit {
         this.admins = response.data.qs.admins;
         //Temporary array to hold the array of staff returned from the API call
         this.staff = response.data.qs.staff;
+
+        //Deactivate loading table spinners
+        this.adminTableLoading = false;
+        this.staffTableLoading = false;
+
 
         this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
         this.userStats = this.numberOfFABIMembers.toString();
