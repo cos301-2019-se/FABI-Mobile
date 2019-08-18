@@ -66,6 +66,9 @@ export class AdminProfileComponent implements OnInit {
 
   submitted: boolean;
 
+  /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */  
+  userProfileLoading: boolean = true;
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
@@ -219,6 +222,9 @@ export class AdminProfileComponent implements OnInit {
       if(response.success == true){
         //Temporarily holds the data returned from the API call
         const data = response.data;
+
+        //Deactivate loading spinners
+        this.userProfileLoading = false;
 
         // Fill the form inputs with the user's details
         this.adminProfileForm.setValue( {

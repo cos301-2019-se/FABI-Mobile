@@ -57,10 +57,14 @@ export class StaffProfileComponent implements OnInit {
   /** The form to change the user's password -  @type {FormGroup} */
   changePasswordForm: FormGroup;
 
+  /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
+  userProfileLoading: boolean = true;
+
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput : ElementRef;
+  @ViewChild("passwordInput") passwordInput: ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput : ElementRef;
+  @ViewChild("confirmInput") confirmInput: ElementRef;
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
@@ -117,15 +121,15 @@ export class StaffProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private userManagementService: UserManagementAPIService, 
-    private formBuilder: FormBuilder, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private snackBar: MatSnackBar, 
-    private authService: AuthenticationService, 
+    private userManagementService: UserManagementAPIService,
+    private formBuilder: FormBuilder,
+    private notificationLoggingService: NotificationLoggingService,
+    private snackBar: MatSnackBar,
+    private authService: AuthenticationService,
     private router: Router,
     private dialog: MatDialog
-    ) { 
-      this.staffProfileForm = this.formBuilder.group({
+  ) {
+    this.staffProfileForm = this.formBuilder.group({
       staff_name: '',
       staff_surname: '',
       staff_email: '',
@@ -143,8 +147,8 @@ export class StaffProfileComponent implements OnInit {
       ])],
       confirm_password: ['', Validators.required]
     }, {
-      validator: this.PasswordMatch('new_password', 'confirm_password')
-    });
+        validator: this.PasswordMatch('new_password', 'confirm_password')
+      });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,7 +164,7 @@ export class StaffProfileComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginStaff().subscribe((response : any) => {
+    this.authService.temporaryLoginStaff().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.loadStaffProfileDetails();
     });
@@ -198,7 +202,7 @@ export class StaffProfileComponent implements OnInit {
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadStaffProfileDetails(){
+  loadStaffProfileDetails() {
     //The id number of the user that is currently logged in
     this.id = this.currentUser.ID;
     //The organization of the user that is currently logged in
@@ -206,19 +210,22 @@ export class StaffProfileComponent implements OnInit {
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if(response.success == true && response.code == 200){
+      if (response.success == true && response.code == 200) {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Deactivate loading spinners
+        this.userProfileLoading = false;
+
         // Fill the form inputs with the user's details
-        this.staffProfileForm.setValue( {
+        this.staffProfileForm.setValue({
           staff_name: data.fname,
           staff_surname: data.surname,
           staff_email: data.email,
           staff_type: data.userType
         });
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -231,10 +238,10 @@ export class StaffProfileComponent implements OnInit {
    *  @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
+  saveChanges() {
 
     this.submitted = true;
-    
+
     // Check if form input is valid 
     if (this.staffProfileForm.invalid) {
       return;
@@ -244,14 +251,14 @@ export class StaffProfileComponent implements OnInit {
     var Uname = this.staffProfileForm.controls.staff_name.value;
     var Usurname = this.staffProfileForm.controls.staff_surname.value;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Profile" }});
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Profile" } });
 
     // Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
 
-      if(response.success == true && response.code == 200){
+      if (response.success == true && response.code == 200) {
 
         //Reloading the updated user's details
         this.loadStaffProfileDetails();
@@ -261,7 +268,7 @@ export class StaffProfileComponent implements OnInit {
           duration: 3000
         });
       }
-      else{
+      else {
         //Error handling
         let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
           duration: 3000
@@ -278,17 +285,17 @@ export class StaffProfileComponent implements OnInit {
     if (this.changePasswordForm.invalid) {
       return;
     }
-      
+
     var Ucurrent = this.changePasswordForm.controls.current_password.value;
     var Unew = this.changePasswordForm.controls.new_password.value;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Password" }});
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
 
     this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
 
-      if(response.success == true && response.code == 200){
+      if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
         let snackBarRef = this.snackBar.open("Successfully changed password. Please login with new password", "Dismiss", {
@@ -298,7 +305,7 @@ export class StaffProfileComponent implements OnInit {
         this.authService.logoutUser();
         this.router.navigate(['login']);
       }
-      else{
+      else {
         //Error handling
         let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
           duration: 3000
@@ -307,23 +314,23 @@ export class StaffProfileComponent implements OnInit {
     });
   }
 
-  
+
   PasswordMatch(newP: string, confirmP: string) {
-      return (formGroup: FormGroup) => {
-        const newControl = formGroup.controls[newP];
-        const confirmControl = formGroup.controls[confirmP];
+    return (formGroup: FormGroup) => {
+      const newControl = formGroup.controls[newP];
+      const confirmControl = formGroup.controls[confirmP];
 
-        if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
-            // return if another validator has already found an error on the matchingControl
-            return;
-        }
+      if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
 
-        // set error on matchingControl if validation fails
-        if (newControl.value !== confirmControl.value) {
-          confirmControl.setErrors({ passwordMatch: true });
-        } else {
-          confirmControl.setErrors(null);
-        }
+      // set error on matchingControl if validation fails
+      if (newControl.value !== confirmControl.value) {
+        confirmControl.setErrors({ passwordMatch: true });
+      } else {
+        confirmControl.setErrors(null);
+      }
     }
   }
 
@@ -336,11 +343,11 @@ export class StaffProfileComponent implements OnInit {
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showPassword(){
-    if(this.passwordInput.nativeElement.type === 'password'){
+  showPassword() {
+    if (this.passwordInput.nativeElement.type === 'password') {
       this.passwordInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.passwordInput.nativeElement.type = 'password';
     }
   }
@@ -354,18 +361,18 @@ export class StaffProfileComponent implements OnInit {
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showConfirmedPassword(){
-    if(this.confirmInput.nativeElement.type === 'password'){
+  showConfirmedPassword() {
+    if (this.confirmInput.nativeElement.type === 'password') {
       this.confirmInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.confirmInput.nativeElement.type = 'password';
     }
   }
 
   editProfileToggle() {
 
-    if(this.isEditingProfile) {
+    if (this.isEditingProfile) {
       this.staffProfileForm.get('staff_name').disable();
       this.staffProfileForm.get('staff_surname').disable();
       this.staffProfileForm.get('staff_email').disable();
@@ -376,7 +383,7 @@ export class StaffProfileComponent implements OnInit {
       this.staffProfileForm.get('staff_email').enable();
       this.isEditingProfile = true;
     }
-    
+
   }
 
 

@@ -164,17 +164,6 @@
           </div>
           <!-- / Menu Item -->
 
-          <!-- Menu Item -->
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fas fa-vial"></i>
-            </div>
-            <div class="menu-heading">
-              <h6>Submit Samples</h6>
-            </div>
-          </div>
-          <!-- / Menu Item -->
-
         </div>
         <!-- / Menu Shortcut Row -->
 
@@ -184,10 +173,10 @@
           <!-- Menu Item -->
           <div class="menu-item">
             <div class="menu-icon">
-              <i class="fas fa-search"></i>
+              <i class="fas fa-vial"></i>
             </div>
             <div class="menu-heading">
-              <h6>View Samples</h6>
+              <h6>Submit Samples</h6>
             </div>
           </div>
           <!-- / Menu Item -->
@@ -216,12 +205,12 @@
         <!-- / Extra Table Information -->
 
         <div class="input-group search-table">
-            <div class="input-group-prepend ">
-              <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-            </div>
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-              aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+        </div>
 
         <table class="table table-hover" id="info" *ngIf="organizationMembers">
           <thead>
