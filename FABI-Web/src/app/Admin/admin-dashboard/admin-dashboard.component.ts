@@ -63,6 +63,7 @@ export class AdminDashboardComponent implements OnInit {
   cultureCurators: Member[] = []; 
   /** Object array for holding the diagnostic clinic administrators -  @type {Member[]} */               
   diagnosticClinicAdmins: Member[] = []; 
+  
   /** Object array for holding all of FABI's samples -  @type {Object[]} */        
   samples: Object[] = [];  
   /** Object array for holding all of FABI's completed samples -  @type {Object[]} */                      
