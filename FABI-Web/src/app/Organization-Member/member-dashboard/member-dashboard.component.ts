@@ -37,32 +37,36 @@ export class MemberDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   /** Holds the div element (sampleContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('sampleContainer', {read: ViewContainerRef}) sampleContainer;
+  @ViewChild('sampleContainer', { read: ViewContainerRef }) sampleContainer;
   /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
+  @ViewChild('notificationContainer', { read: ViewContainerRef }) notificationContainer;
 
-  /** The ID of the logged in member - @type {string} */ 
+  /** The ID of the logged in member - @type {string} */
   memberID: string = '1234';
-  /** The number of samples belonging to the member - @type {number} */ 
+  /** The number of samples belonging to the member - @type {number} */
   numberOfMemberSamples: number;
-  /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = false;  
+  /** Indicates if there are notifications to load - @type {boolean} */
+  notifications: boolean = false;
 
-  /** Object array for holding the samples for the member -  @type {Sample[]} */               
+  /** Object array for holding the samples for the member -  @type {Sample[]} */
   memberSamples: Sample[] = [];
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
   profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
   saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
   confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
 
-  currentUser: any
+  currentUser: any;
+
+  /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
+  sampleTableLoading: boolean = true;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -76,11 +80,11 @@ export class MemberDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
-    private router: Router, 
-    private resolver: ComponentFactoryResolver, 
+    private authService: AuthenticationService,
+    private router: Router,
+    private resolver: ComponentFactoryResolver,
     private diagnosticClinicService: DiagnosticClinicAPIService
-    ) { }
+  ) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +100,7 @@ export class MemberDashboardComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
+    this.authService.temporaryLoginOrganisation().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.getNumberOfMemberSamples();
       this.getNumberOfCompletedMemberSamples();
@@ -106,7 +110,7 @@ export class MemberDashboardComponent implements OnInit {
     //******** TO BE USED IN PRODUCTION: ********
     // // Set current user logged in
     // this.currentUser = this.authService.getCurrentSessionValue.user;
-     //Calling the neccessary functions as the page loads
+    //Calling the neccessary functions as the page loads
     //  this.getNumberOfMemberSamples();
     //  this.getNumberOfCompletedMemberSamples();
     //  this.loadNotifications();
@@ -125,30 +129,33 @@ export class MemberDashboardComponent implements OnInit {
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfMemberSamples(){
+  getNumberOfMemberSamples() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true) {
         //Populating the arrays with the returned data
         var tempSamples = response.data.samples;
-        for(var i = 0; i < tempSamples.length; i++){
-          var tempSpecies: Species = {species: tempSamples[i].data.species};
-          var tempSample: Sample = {userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, referenceNumber: tempSamples[i].referenceNumber, data: tempSpecies};
+        for (var i = 0; i < tempSamples.length; i++) {
+          var tempSpecies: Species = { species: tempSamples[i].data.species };
+          var tempSample: Sample = { userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, referenceNumber: tempSamples[i].referenceNumber, data: tempSpecies };
           this.memberSamples.push(tempSample);
         }
 
+        //Deactivate loading table spinners
+        this.sampleTableLoading = false;
+        
         this.numberOfMemberSamples = this.memberSamples.length;
 
-        if(this.memberSamples.length == 0){
+        if (this.memberSamples.length == 0) {
           //Dynamically loads one div if no samples are returned
           const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
           sampleDivRef.instance.Number = 'You currently have no samples.';
           sampleDivRef.instance.Status = '';
           sampleDivRef.instance.Details = '';
         }
-        else{
+        else {
           //Dynamically loads all the samples into the HTML page
-          for(var i = 0; i < this.memberSamples.length; i++){
+          for (var i = 0; i < this.memberSamples.length; i++) {
             const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
             sampleDivRef.instance.Number = 'Sample' + (i + 1).toString();
             sampleDivRef.instance.Status = 'Status: ' + this.memberSamples[i].status;
@@ -156,7 +163,7 @@ export class MemberDashboardComponent implements OnInit {
           }
         }
       }
-      else{
+      else {
         //Could not return samples
         this.numberOfMemberSamples = 0;
 
@@ -173,7 +180,7 @@ export class MemberDashboardComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
- 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                GET NUMBER OF COMPLETED MEMBER SAMPLES
   /**
@@ -184,11 +191,11 @@ export class MemberDashboardComponent implements OnInit {
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfCompletedMemberSamples(){
+  getNumberOfCompletedMemberSamples() {
 
   }
 
- 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        LOAD NOTIFICATIONS
   /**
@@ -197,11 +204,11 @@ export class MemberDashboardComponent implements OnInit {
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){}
+  loadNotifications() { }
 
 
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         TOGGLE NOTIFICATIONS 
   /**
    * This function will toggle the display of the notifications side panel
@@ -209,7 +216,7 @@ export class MemberDashboardComponent implements OnInit {
    * @memberof MemberDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
+  toggleNotificationsTab() {
     this.notificationsTab = !this.notificationsTab;
   }
 
@@ -223,7 +230,7 @@ export class MemberDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProfileTab() {
     this.profileTab = !this.profileTab;
-  }  
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       DISPLAY PROFILE SAVE BUTTON 

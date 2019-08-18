@@ -14,9 +14,11 @@
  */
 
 
-import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
-import { OnInit} from '@angular/core';
+import {
+  Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
+  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef
+} from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -39,34 +41,37 @@ import * as Interface from '../../_interfaces/interfaces';
 })
 export class AdminNotificationComponent implements OnInit {
 
-  /** Object array for holding all of the logs -  @type {any[]} */ 
+  /** Object array for holding all of the logs -  @type {any[]} */
   allNotifications: any[] = [];
-  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */
   newNotifications: string[] = [];
-  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */
   allLogs: string[] = [];
 
-  /** The total number of User Logs - @type {number} */           
+  /** The total number of User Logs - @type {number} */
   numberOfUserLogs: number = 0;
-  /** The total number of Database Management Logs - @type {number} */           
+  /** The total number of Database Management Logs - @type {number} */
   numberOfDatabaseLogs: number = 0;
-  /** The total number of Access Logs - @type {number} */           
+  /** The total number of Access Logs - @type {number} */
   numberOfAccessLogs: number = 0;
 
   /** The total number of FABI staff members - @type {number} */
-  numberOfFABIMembers: number;        
-  /** The total number of FABI samples - @type {number} */           
+  numberOfFABIMembers: number;
+  /** The total number of FABI samples - @type {number} */
   numberOfSamples: number;
-  /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = true; 
-  /** The number of the notifications - @type {number} */   
-  localNotificationNumber : number = 1;    
+  /** Indicates if there are notifications to load - @type {boolean} */
+  notifications: boolean = true;
+  /** The number of the notifications - @type {number} */
+  localNotificationNumber: number = 1;
 
-  /** Object array for holding the staff members -  @type {Member[]} */                        
+  /** Object array for holding the staff members -  @type {Member[]} */
   staff: Member[] = [];
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */
+  notificationsLoading: boolean = true;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -85,20 +90,20 @@ export class AdminNotificationComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    public sanitizer: DomSanitizer, 
+    public sanitizer: DomSanitizer,
     private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private resolver: ComponentFactoryResolver, 
-    private authService: AuthenticationService, 
+    private diagnosticClinicService: DiagnosticClinicAPIService,
+    private notificationLoggingService: NotificationLoggingService,
+    private resolver: ComponentFactoryResolver,
+    private authService: AuthenticationService,
     private router: Router,
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar 
-  ) {}
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+    this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.loadNotifications();
     });
@@ -117,29 +122,29 @@ export class AdminNotificationComponent implements OnInit {
    *  @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllStaff(){
+  getAllStaff() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
-     if(response.success == true){
-       //Temporary array to hold the array of admins retuned from the API call
-       var data = response.data.qs.admins;
-       for(var i = 0; i < data.length; i++){
-         var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
-         this.staff.push(tempMember);
-       }
-      
-       //Temporary array to hold the array of staff returned from the API call
-       var data = response.data.qs.staff;
-       for(var i = 0; i < data.length; i++){
-         var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
-         this.staff.push(tempMember);
-       }
-     }
-     else{
-       //Error handling
-       }
-   });
- }
+      if (response.success == true) {
+        //Temporary array to hold the array of admins retuned from the API call
+        var data = response.data.qs.admins;
+        for (var i = 0; i < data.length; i++) {
+          var tempMember: Member = { Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id };
+          this.staff.push(tempMember);
+        }
+
+        //Temporary array to hold the array of staff returned from the API call
+        var data = response.data.qs.staff;
+        for (var i = 0; i < data.length; i++) {
+          var tempMember: Member = { Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id };
+          this.staff.push(tempMember);
+        }
+      }
+      else {
+        //Error handling
+      }
+    });
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        GET DATE
@@ -150,65 +155,65 @@ export class AdminNotificationComponent implements OnInit {
    * @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getDate(date: string){
+  getDate(date: string) {
     var tempDate = (date).split(' ');
     var newDate = '';
 
     newDate += tempDate[2];
 
-    if(tempDate[0] == 'Mon'){
+    if (tempDate[0] == 'Mon') {
       newDate += ' Monday ';
     }
-    else if(tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues'){
+    else if (tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues') {
       newDate += ' Tuesday ';
     }
-    else if(tempDate[0] == 'Wed'){
+    else if (tempDate[0] == 'Wed') {
       newDate += ' Wednesday ';
     }
-    else if(tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs'){
+    else if (tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs') {
       newDate += ' Thursday ';
     }
-    else if(tempDate[0] == 'Fri'){
+    else if (tempDate[0] == 'Fri') {
       newDate += ' Friday ';
     }
-    else if(tempDate[0] == 'Sat'){
+    else if (tempDate[0] == 'Sat') {
       newDate += ' Saturday ';
     }
-    else if(tempDate[0] == 'Sun'){
+    else if (tempDate[0] == 'Sun') {
       newDate += ' Sunday ';
     }
 
-    if(tempDate[1] == 'Jan'){
+    if (tempDate[1] == 'Jan') {
       newDate += 'January';
     }
-    else if(tempDate[1] == 'Feb'){
+    else if (tempDate[1] == 'Feb') {
       newDate += 'February';
     }
-    else if(tempDate[1] == 'Mar'){
+    else if (tempDate[1] == 'Mar') {
       newDate += 'March';
     }
-    else if(tempDate[1] == 'Apr'){
+    else if (tempDate[1] == 'Apr') {
       newDate += 'April';
     }
-    else if(tempDate[1] == 'Jun'){
+    else if (tempDate[1] == 'Jun') {
       newDate += 'June';
     }
-    else if(tempDate[1] == 'Jul'){
+    else if (tempDate[1] == 'Jul') {
       newDate += 'July';
     }
-    else if(tempDate[1] == 'Aug'){
+    else if (tempDate[1] == 'Aug') {
       newDate += 'August';
     }
-    else if(tempDate[1] == 'Sep' || tempDate[1] == 'Sept'){
+    else if (tempDate[1] == 'Sep' || tempDate[1] == 'Sept') {
       newDate += 'September';
     }
-    else if(tempDate[1] == 'Oct'){
+    else if (tempDate[1] == 'Oct') {
       newDate += 'October';
     }
-    else if(tempDate[1] == 'Nov'){
+    else if (tempDate[1] == 'Nov') {
       newDate += 'November';
     }
-    else if(tempDate[1] == 'Dec'){
+    else if (tempDate[1] == 'Dec') {
       newDate += 'December';
     }
 
@@ -225,17 +230,17 @@ export class AdminNotificationComponent implements OnInit {
    * @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadLogs(){
+  loadLogs() {
     //Making a call to the notification logging service to return all logs belonging to the user
     this.notificationLoggingService.getUserLogs(this.currentUser.ID).subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true) {
         var data = response.data.content.data.Logs;
 
-        for(var i = 0; i < data.length; i++){
+        for (var i = 0; i < data.length; i++) {
           this.allLogs.push(data[i].id);
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -249,7 +254,7 @@ export class AdminNotificationComponent implements OnInit {
    * @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){
+  loadNotifications() {
     //Loading all the staff withing FABI
     this.getAllStaff();
     //Loading all the logs beloning to the user
@@ -257,150 +262,153 @@ export class AdminNotificationComponent implements OnInit {
 
     //Making a call too the notification logging service to return all USER logs
     this.notificationLoggingService.getAllUserLogs().subscribe((response: any) => {
-      if(response.success = true){
+      if (response.success = true) {
         //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
-        for(var i = 0; i < data.length; i++){
-          for(var j = 0; j < this.allLogs.length; j++){
-            if(data[i].date == this.allLogs[j]){
+        for (var i = 0; i < data.length; i++) {
+          for (var j = 0; j < this.allLogs.length; j++) {
+            if (data[i].date == this.allLogs[j]) {
               //A temporary instance of UserLogs that will be added to the allNotifications array
-              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-              
+              var tempLogU: UserLogs = { LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber };
+
               //Getting the name and surname of the users passed using their id numbers
               var user = this.loadUserDetails(tempLogU.Details);
 
-              if(tempLogU.Action == "/createOrganization"){
+              if (tempLogU.Action == "/createOrganization") {
                 tempLogU.Action = "New organization " + tempLogU.Organization2 + " was added to the system by " + user;
 
                 var valid = true;
-                for(var k = 0; k < this.allNotifications.length; k++){
-                  if(this.allNotifications[k].Action == tempLogU.Action){
+                for (var k = 0; k < this.allNotifications.length; k++) {
+                  if (this.allNotifications[k].Action == tempLogU.Action) {
                     valid = false;
                   }
                 }
 
-                if(valid == true){
+                if (valid == true) {
                   this.allNotifications.push(tempLogU);
                   this.numberOfUserLogs += 1;
                   this.localNotificationNumber += 1;
                 }
               }
-              else if(tempLogU.Action == "/addStaff"){
+              else if (tempLogU.Action == "/addStaff") {
                 tempLogU.Action = "New user, " + this.loadUserDetails(tempLogU.User) + ", was added to the system by " + user;
 
                 var valid = true;
-                for(var k = 0; k < this.allNotifications.length; k++){
-                  if(this.allNotifications[k].Action == tempLogU.Action){
+                for (var k = 0; k < this.allNotifications.length; k++) {
+                  if (this.allNotifications[k].Action == tempLogU.Action) {
                     valid = false;
                   }
                 }
 
-                if(valid == true){
+                if (valid == true) {
                   this.allNotifications.push(tempLogU);
                   this.numberOfUserLogs += 1;
                   this.localNotificationNumber += 1;
                 }
               }
-              else if(tempLogU.Action == "/removeOrg"){
+              else if (tempLogU.Action == "/removeOrg") {
                 tempLogU.Action = "Organization " + tempLogU.Organization2 + " was removed from the system by " + user;
 
                 var valid = true;
-                for(var k = 0; k < this.allNotifications.length; k++){
-                  if(this.allNotifications[k].Action == tempLogU.Action){
+                for (var k = 0; k < this.allNotifications.length; k++) {
+                  if (this.allNotifications[k].Action == tempLogU.Action) {
                     valid = false;
                   }
                 }
 
-                if(valid == true){
+                if (valid == true) {
                   this.allNotifications.push(tempLogU);
                   this.numberOfUserLogs += 1;
                   this.localNotificationNumber += 1;
                 }
               }
-              else if(tempLogU.Action == "/removeStaff"){
+              else if (tempLogU.Action == "/removeStaff") {
                 tempLogU.Action = "New user, " + this.loadUserDetails(tempLogU.User) + ", was removed from the system by " + user;
 
                 var valid = true;
-                for(var k = 0; k < this.allNotifications.length; k++){
-                  if(this.allNotifications[k].Action == tempLogU.Action){
+                for (var k = 0; k < this.allNotifications.length; k++) {
+                  if (this.allNotifications[k].Action == tempLogU.Action) {
                     valid = false;
                   }
                 }
 
-                if(valid == true){
+                if (valid == true) {
                   this.allNotifications.push(tempLogU);
                   this.numberOfUserLogs += 1;
                   this.localNotificationNumber += 1;
                 }
               }
             }
-          }         
+          }
         }
+
+        //Deactivate loading table spinners
+        this.notificationsLoading = false;
       }
-      else{
+      else {
         //Error handling
       }
     });
 
     //Making a call too the notification logging service to return all DBML logs
     this.notificationLoggingService.getAllDatabaseManagementLogs().subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true) {
         //Temporarily holds the data returned from the API call
         const data = response.data.content.data.Logs;
 
-        for(var i = 0; i < data.length; i++){
-          for(var j = 0; j < this.allLogs.length; j++){
-            if(data[i].date == this.allLogs[j]){
+        for (var i = 0; i < data.length; i++) {
+          for (var j = 0; j < this.allLogs.length; j++) {
+            if (data[i].date == this.allLogs[j]) {
               //A temporary instance of DatabaseManagementLogs that will be added to the allNotifications array
-              var tempLogD: DatabaseManagementLogs = {LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber}
+              var tempLogD: DatabaseManagementLogs = { LogID: data[i].date, Type: 'DBML', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber }
 
               //Getting the name and surname of the users passed using their id numbers
               var user = this.loadUserDetails(tempLogD.User);
 
-              if(tempLogD.Action == "/createDatabase"){
+              if (tempLogD.Action == "/createDatabase") {
                 tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + user;
 
                 var valid = true;
-                for(var k = 0; k < this.allNotifications.length; k++){
-                  if(this.allNotifications[k].Action == tempLogD.Action){
+                for (var k = 0; k < this.allNotifications.length; k++) {
+                  if (this.allNotifications[k].Action == tempLogD.Action) {
                     valid = false;
                   }
                 }
 
-                if(valid == true){
+                if (valid == true) {
                   this.allNotifications.push(tempLogD);
                   this.numberOfDatabaseLogs += 1;
                   this.localNotificationNumber += 1;
                 }
               }
-              else if(tempLogD.Action == "/porting" || tempLogD.Action == "/addDoc"){
+              else if (tempLogD.Action == "/porting" || tempLogD.Action == "/addDoc") {
                 tempLogD.Action = tempLogD.Details + " was ported";
 
                 var valid = true;
-                for(var k = 0; k < this.allNotifications.length; k++){
-                  if(this.allNotifications[k].Action == tempLogD.Action){
+                for (var k = 0; k < this.allNotifications.length; k++) {
+                  if (this.allNotifications[k].Action == tempLogD.Action) {
                     valid = false;
                   }
                 }
 
-                if(valid == true){
+                if (valid == true) {
                   this.allNotifications.push(tempLogD);
                   this.numberOfDatabaseLogs += 1;
                   this.localNotificationNumber += 1;
                 }
               }
-              else if(tempLogD.Action == "C"){
+              else if (tempLogD.Action == "C") {
                 tempLogD.Action = "New database, " + tempLogD.Details + ", was added to the system by " + user;
 
                 var valid = true;
-                for(var k = 0; k < this.allNotifications.length; k++){
-                  if(this.allNotifications[k].Action == tempLogD.Action){
+                for (var k = 0; k < this.allNotifications.length; k++) {
+                  if (this.allNotifications[k].Action == tempLogD.Action) {
                     valid = false;
                   }
                 }
 
-                if(valid == true){
+                if (valid == true) {
                   this.allNotifications.push(tempLogD);
                   this.numberOfDatabaseLogs += 1;
                   this.localNotificationNumber += 1;
@@ -410,7 +418,7 @@ export class AdminNotificationComponent implements OnInit {
           }
         }
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -427,8 +435,8 @@ export class AdminNotificationComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userID: string) {
     var person = '';
-    for(var i = 0; i < this.staff.length; i++){
-      if(this.staff[i].ID == userID){
+    for (var i = 0; i < this.staff.length; i++) {
+      if (this.staff[i].ID == userID) {
         person = this.staff[i].Name + ' ' + this.staff[i].Surname;
       }
     }
@@ -446,17 +454,17 @@ export class AdminNotificationComponent implements OnInit {
    * @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeNotification(id: string){
+  removeNotification(id: string) {
     this.newNotifications.push(id);
 
     this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.ID, this.newNotifications).subscribe((response: any) => {
-      if(response.success == true){
-        
-        }
-      else{
+      if (response.success == true) {
+
+      }
+      else {
         //Error handling
       }
     });
-  } 
+  }
 
 }

@@ -64,8 +64,8 @@ export class MemberProfileComponent implements OnInit {
   /** The form to change the user's password -  @type {FormGroup} */
   changePasswordForm: FormGroup;
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  private toggle_status: boolean = false;
 
   currentUser: any;
 
@@ -73,10 +73,13 @@ export class MemberProfileComponent implements OnInit {
 
   submitted: boolean;
 
+  /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
+  userProfileLoading: boolean = true;
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput : ElementRef;
+  @ViewChild("passwordInput") passwordInput: ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput : ElementRef;
+  @ViewChild("confirmInput") confirmInput: ElementRef;
 
   member_profile_validators = {
     'member_name': [
@@ -125,13 +128,13 @@ export class MemberProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
-    private snackBar: MatSnackBar, 
+    private authService: AuthenticationService,
+    private snackBar: MatSnackBar,
     private router: Router,
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private userManagementService: UserManagementAPIService,
     private dialog: MatDialog
-    ){
+  ) {
     this.memberProfileForm = this.formBuilder.group({
       organization_name: '',
       member_name: '',
@@ -150,8 +153,8 @@ export class MemberProfileComponent implements OnInit {
       ])],
       confirm_password: ['', Validators.required]
     }, {
-      validator: this.PasswordMatch('new_password', 'confirm_password')
-    });
+        validator: this.PasswordMatch('new_password', 'confirm_password')
+      });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,7 +170,7 @@ export class MemberProfileComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginOrganisationMember().subscribe((response : any) => {
+    this.authService.temporaryLoginOrganisationMember().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.loadMemberProfileDetails();
     });
@@ -195,8 +198,8 @@ export class MemberProfileComponent implements OnInit {
    * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
+  toggleNotificaitonsTab() {
+    this.toggle_status = !this.toggle_status;
   }
 
 
@@ -221,7 +224,7 @@ export class MemberProfileComponent implements OnInit {
    * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadMemberProfileDetails(){
+  loadMemberProfileDetails() {
 
     //The id number of the user that is currently logged in
     this.id = this.currentUser.ID;
@@ -230,19 +233,22 @@ export class MemberProfileComponent implements OnInit {
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true) {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Deactivate loading spinners
+        this.userProfileLoading = false;
+
         // Fill the form inputs with the user's details
-        this.memberProfileForm.setValue( {
+        this.memberProfileForm.setValue({
           member_name: data.fname,
           member_surname: data.surname,
           member_email: data.email,
           organization_name: this.currentUser.organisation
         });
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -256,7 +262,7 @@ export class MemberProfileComponent implements OnInit {
    *  @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
+  saveChanges() {
 
     this.submitted = true;
 
@@ -269,15 +275,15 @@ export class MemberProfileComponent implements OnInit {
     var Uname = this.memberProfileForm.controls.member_name.value;
     var Usurname = this.memberProfileForm.controls.member_surname.value;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Profile" }});
-      
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Profile" } });
+
     //Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
-      
-      if(response.success == true){
-        
+
+      if (response.success == true) {
+
         //Reloading the updated user's details
         this.loadMemberProfileDetails();
 
@@ -286,7 +292,7 @@ export class MemberProfileComponent implements OnInit {
           duration: 3000
         });
       }
-      else{
+      else {
         //Error handling
         let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
           duration: 3000
@@ -303,17 +309,17 @@ export class MemberProfileComponent implements OnInit {
     if (this.changePasswordForm.invalid) {
       return;
     }
-      
+
     var Ucurrent = this.changePasswordForm.controls.current_password.value;
     var Unew = this.changePasswordForm.controls.new_password.value;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Password" }});
-    
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
+
     this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
 
-      if(response.success == true && response.code == 200){
+      if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
         let snackBarRef = this.snackBar.open("Successfully changed password. Please login with new password", "Dismiss", {
@@ -323,7 +329,7 @@ export class MemberProfileComponent implements OnInit {
         this.authService.logoutUser();
         this.router.navigate(['login']);
       }
-      else{
+      else {
         //Error handling
         let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
           duration: 3000
@@ -332,23 +338,23 @@ export class MemberProfileComponent implements OnInit {
     });
   }
 
-  
+
   PasswordMatch(newP: string, confirmP: string) {
-      return (formGroup: FormGroup) => {
-        const newControl = formGroup.controls[newP];
-        const confirmControl = formGroup.controls[confirmP];
+    return (formGroup: FormGroup) => {
+      const newControl = formGroup.controls[newP];
+      const confirmControl = formGroup.controls[confirmP];
 
-        if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
-            // return if another validator has already found an error on the matchingControl
-            return;
-        }
+      if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
 
-        // set error on matchingControl if validation fails
-        if (newControl.value !== confirmControl.value) {
-          confirmControl.setErrors({ passwordMatch: true });
-        } else {
-          confirmControl.setErrors(null);
-        }
+      // set error on matchingControl if validation fails
+      if (newControl.value !== confirmControl.value) {
+        confirmControl.setErrors({ passwordMatch: true });
+      } else {
+        confirmControl.setErrors(null);
+      }
     }
   }
 
@@ -360,11 +366,11 @@ export class MemberProfileComponent implements OnInit {
    * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showPassword(){
-    if(this.passwordInput.nativeElement.type === 'password'){
+  showPassword() {
+    if (this.passwordInput.nativeElement.type === 'password') {
       this.passwordInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.passwordInput.nativeElement.type = 'password';
     }
   }
@@ -377,18 +383,18 @@ export class MemberProfileComponent implements OnInit {
    * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showConfirmedPassword(){
-    if(this.confirmInput.nativeElement.type === 'password'){
+  showConfirmedPassword() {
+    if (this.confirmInput.nativeElement.type === 'password') {
       this.confirmInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.confirmInput.nativeElement.type = 'password';
     }
   }
 
   editProfileToggle() {
 
-    if(this.isEditingProfile) {
+    if (this.isEditingProfile) {
       this.memberProfileForm.get('member_name').disable();
       this.memberProfileForm.get('member_surname').disable();
       this.memberProfileForm.get('member_email').disable();
@@ -399,7 +405,7 @@ export class MemberProfileComponent implements OnInit {
       this.memberProfileForm.get('member_email').enable();
       this.isEditingProfile = true;
     }
-    
+
   }
 
 }
