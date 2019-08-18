@@ -5,7 +5,7 @@
  * Created Date: Wednesday, August 14th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 14th 2019
+ * Last Modified: Friday, August 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -222,7 +222,8 @@ export class MapsWindowComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   changeMapType() {    
-    if(this.map_type = 'roadmap') {
+    
+    if(this.map_type == 'roadmap') {
       this.map_type = 'hybrid';
       this.isSatellite = "2px";
 

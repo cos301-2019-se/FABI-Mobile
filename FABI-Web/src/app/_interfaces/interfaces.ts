@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Saturday, August 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -35,8 +35,7 @@ export interface Organisation {
  * @interface OrganisationAdmin
  */
 export interface OrganisationAdmin {
-    name?: string;  // First Name of Admin
-    fname?: string;  // First Name of Admin
+    fname: string;  // First Name of Admin
     surname: string; // Surname of Admin
     email: string; // Email of Admin
     password?: string; // Passsword of Admin
@@ -111,6 +110,19 @@ export interface StaffInfo {
   export interface UserPrivileges {
     databases?: DatabasePrivilege[]
   }
+
+  export interface Confirm {
+    title: string,
+    message: string,
+    info: string,
+    cancel: string,
+    confirm: string
+  }
+
+  // export interface Loading {
+  //   isLoading: boolean,
+  //   title: string
+  // }
 
   
   export interface ClientFormData {

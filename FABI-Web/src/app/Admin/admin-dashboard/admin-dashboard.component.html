@@ -261,7 +261,7 @@
             aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
         </div>
 
-        <table class="table table-hover" id="info" *ngIf="admins">
+        <table class="table table-hover" *ngIf="admins">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -301,7 +301,7 @@
 
 
         <h3 *ngIf="!staff">No staff members found</h3>
-        <table class="table table-hover" id="info" *ngIf="staff">
+        <table class="table table-hover" *ngIf="staff">
           <thead>
             <tr>
               <th scope="col">Name</th>
