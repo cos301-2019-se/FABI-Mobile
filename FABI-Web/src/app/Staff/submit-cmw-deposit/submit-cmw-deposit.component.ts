@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -40,22 +40,6 @@ export class SubmitCmwDepositComponent implements OnInit {
 
   /** Object array for holding the staff members -  @type {string[]} */                        
   staff: string[] = []; 
-  /** Object array for holding the staff members -  @type {String[]} */
-  filteredOptions1: Observable<string[]>;
-  /** Object array for holding the staff members -  @type {String[]} */
-  filteredOptions2: Observable<string[]>;
-  /** Object array for holding the staff members -  @type {String[]} */
-  filteredOptions3: Observable<string[]>;
-  /** Object array for holding the staff members -  @type {String[]} */
-  filteredOptions4: Observable<string[]>;
-  /** The form control for the autocomplete of the collectedBy input -  @type {FormControl} */
-  collectedByControl = new FormControl();
-  /** The form control for the autocomplete of the isolatedBy input -  @type {FormControl} */
-  isolatedByControl = new FormControl();
-  /** The form control for the autocomplete of the identifiedBy input -  @type {FormControl} */
-  identifiedByControl = new FormControl();
-  /** The form control for the autocomplete of the donatedBy input -  @type {FormControl} */
-  donatedByControl = new FormControl();
 
   /** The cmw culture number of the form -  @type {string} */
   cmwCultureNumber: string;
@@ -109,6 +93,15 @@ export class SubmitCmwDepositComponent implements OnInit {
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  /** The search collected the user is looking for in the form -  @type {string} */
+  public searchCollected: string;
+  /** The search isolated the user is looking for in the form -  @type {string} */
+  public searchIsolated: string;
+  /** The search identified the user is looking for in the form -  @type {string} */
+  public searchIdentified: string;
+  /** The search donated the user is looking for in the form -  @type {string} */
+  public searchDonated: string;
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -178,55 +171,6 @@ export class SubmitCmwDepositComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            SET COLLECTED BY 
-  /*** This function will set the 'collectedBy' variable according to the option selected in the mat-autocomplete element
-   * 
-   * @memberof SubmitCmwDepositComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setCollectedBy(event$){
-    this.collectedBy = event$.option.value;
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            SET ISOLATED BY 
-  /*** This function will set the 'isolatedBy' variable according to the option selected in the mat-autocomplete element
-   * 
-   * @memberof SubmitCmwDepositComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setIsolatedBy(event$){
-    this.isolatedBy = event$.option.value;
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            SET IDENTIFIED BY 
-  /*** This function will set the 'identifiedBy' variable according to the option selected in the mat-autocomplete element
-   * 
-   * @memberof SubmitCmwDepositComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setIdentifiedBy(event$){
-    this.identifiedBy = event$.option.value;
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            SET DONATED BY 
-  /*** This function will set the 'donatedBy' variable according to the option selected in the mat-autocomplete element
-   * 
-   * @memberof SubmitCmwDepositComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setDonatedBy(event$){
-    this.donatedBy = event$.option.value;
-  }
-
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  SUBMIT CMW DEPOSIT FORM
   /**
@@ -236,160 +180,160 @@ export class SubmitCmwDepositComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitCMWDepositForm(){
     if(this.cmwDepositForm.controls.cmw_culture_number.value == null || this.cmwDepositForm.controls.cmw_culture_number.value == ""){
-      	this.cmwCultureNumber = "";
+      this.cmwCultureNumber = "N/A";
     }
     else{
       this.cmwCultureNumber = this.cmwDepositForm.controls.cmw_culture_number.value;
     }
 
     if(this.cmwDepositForm.controls.genus.value == null || this.cmwDepositForm.controls.genus.value == ""){
-      this.genus = "";
+      this.genus = "N/A";
     }
     else{
       this.genus = this.cmwDepositForm.controls.genus.value;
     }
 
     if(this.cmwDepositForm.controls.epitheton.value == null || this.cmwDepositForm.controls.epitheton.value == ""){
-      this.epitheton = "";
+      this.epitheton = "N/A";
     }
     else{
       this.epitheton = this.cmwDepositForm.controls.epitheton.value;
     }
 
     if(this.cmwDepositForm.controls.personal_collection_number.value == null || this.cmwDepositForm.controls.personal_collection_number.value == ""){
-      this.personalCollectionNumber = "";
+      this.personalCollectionNumber = "N/A";
     }
     else{
       this.personalCollectionNumber = this.cmwDepositForm.controls.personal_collection_number.value;
     }
 
     if(this.cmwDepositForm.controls.international_collection_number.value == null || this.cmwDepositForm.controls.international_collection_number.value == ""){
-      this.internationalCollectionNumber = "";
+      this.internationalCollectionNumber = "N/A";
     }
     else{
       this.internationalCollectionNumber = this.cmwDepositForm.controls.international_collection_number.value;
     }
 
     if(this.cmwDepositForm.controls.herbarium_number.value == null || this.cmwDepositForm.controls.herbarium_number.value == ""){
-      this.herbariumNumber = "";
+      this.herbariumNumber = "N/A";
     }
     else{
       this.herbariumNumber = this.cmwDepositForm.controls.herbarium_number.value;
     }
 
     if(this.cmwDepositForm.controls.other_FABI_collections.value == null || this.cmwDepositForm.controls.other_FABI_collections.value == ""){
-      this.otherFABICollections = "";
+      this.otherFABICollections = "N/A";
     }
     else{
       this.otherFABICollections = this.cmwDepositForm.controls.other_FABI_collections.value;
     }
 
     if(this.cmwDepositForm.controls.name.value == null || this.cmwDepositForm.controls.name.value == ""){
-      this.name = "";
+      this.name = "N/A";
     }
     else{
       this.name = this.cmwDepositForm.controls.name.value;
     }
 
     if(this.cmwDepositForm.controls.type_status.value == null || this.cmwDepositForm.controls.type_status.value == ""){
-      this.typeStatus = "";
+      this.typeStatus = "N/A";
     }
     else{
       this.typeStatus = this.cmwDepositForm.controls.type_status.value;
     }
 
     if(this.cmwDepositForm.controls.host.value == null || this.cmwDepositForm.controls.host.value == ""){
-      this.host = "";
+      this.host = "N/A";
     }
     else{
       this.host = this.cmwDepositForm.controls.host.value;
     }
 
     if(this.cmwDepositForm.controls.vector.value == null || this.cmwDepositForm.controls.vector.value == ""){
-      this.vector = "";
+      this.vector = "N/A";
     }
     else{
       this.vector = this.cmwDepositForm.controls.vector.value;
     }
 
     if(this.cmwDepositForm.controls.substrate.value == null || this.cmwDepositForm.controls.substrate.value == ""){
-      this.substrate = "";
+      this.substrate = "N/A";
     }
     else{
       this.substrate = this.cmwDepositForm.controls.substrate.value;
     }
 
     if(this.cmwDepositForm.controls.continent.value == null || this.cmwDepositForm.controls.continent.value == ""){
-      this.continent = "";
+      this.continent = "N/A";
     }
     else{
       this.continent = this.cmwDepositForm.controls.continent.value;
     }
 
     if(this.cmwDepositForm.controls.country.value == null || this.cmwDepositForm.controls.country.value == ""){
-      this.country = "";
+      this.country = "N/A";
     }
     else{
       this.country = this.cmwDepositForm.controls.country.value;
     }
 
     if(this.cmwDepositForm.controls.region.value == null || this.cmwDepositForm.controls.region.value == ""){
-      this.region = "";
+      this.region = "N/A";
     }
     else{
       this.region = this.cmwDepositForm.controls.region.value;
     }
 
     if(this.cmwDepositForm.controls.locality.value == null || this.cmwDepositForm.controls.locality.value == ""){
-      this.locality = "";
+      this.locality = "N/A";
     }
     else{
       this.locality = this.cmwDepositForm.controls.locality.value;
     }
 
     if(this.cmwDepositForm.controls.gps.value == null || this.cmwDepositForm.controls.gps.value == ""){
-      this.gps = "";
+      this.gps = "N/A";
     }
     else{
       this.gps = this.cmwDepositForm.controls.gps.value;
     }
 
     if(this.cmwDepositForm.controls.collected_by.value == null || this.cmwDepositForm.controls.collected_by.value == ""){
-      this.collectedBy = "";
+      this.collectedBy = "N/A";
     }
     else{
       this.collectedBy = this.cmwDepositForm.controls.collected_by.value;
     }
       
-    var temp = (this.cmwDepositForm.controls.date_requested.value).toString();
+    var temp = (this.cmwDepositForm.controls.date_collected.value).toString();
     var year = temp[0] + temp[1] + temp[2] + temp[3];
     var month = temp[5] + temp[6];
     var day = temp[8] + temp[9];
     this.dateCollected = day + '/' + month + '/' + year;
 
     if(this.cmwDepositForm.controls.isolated_by.value == null || this.cmwDepositForm.controls.isolated_by.value == ""){
-      this.isolatedBy = "";
+      this.isolatedBy = "N/A";
     }
     else{
       this.isolatedBy = this.cmwDepositForm.controls.isolated_by.value;
     }
 
     if(this.cmwDepositForm.controls.identified_by.value == null || this.cmwDepositForm.controls.identified_by.value == ""){
-      this.identifiedBy = "";
+      this.identifiedBy = "N/A";
     }
     else{
       this.identifiedBy = this.cmwDepositForm.controls.identified_by.value;
     }
 
     if(this.cmwDepositForm.controls.donated_by.value == null || this.cmwDepositForm.controls.donated_by.value == ""){
-      this.donatedBy = "";
+      this.donatedBy = "N/A";
     }
     else{
       this.donatedBy = this.cmwDepositForm.controls.donated_by.value;
     }
 
     if(this.cmwDepositForm.controls.additional_notes.value == null || this.cmwDepositForm.controls.additional_notes.value == ""){
-      this.additionalNotes = "";
+      this.additionalNotes = "N/A";
     }
     else{
       this.additionalNotes = this.cmwDepositForm.controls.additional_notes.value;
@@ -398,12 +342,12 @@ export class SubmitCmwDepositComponent implements OnInit {
     var date = new Date();
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var deposit: CMWDeposit = {userID: this.currentUser.user.ID, cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
+    var deposit: CMWDeposit = {userID: this.currentUser.ID, cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
       internationalCollectionNumber: this.internationalCollectionNumber, herbariumNumber: this.herbariumNumber, otherFABICollections: this.otherFABICollections, name: this.name,
       typeStatus: this.typeStatus, host: this.host, vector: this.vector, substrate: this.substrate, continent: this.continent, country: this.country, region: this.region,
       locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected, isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
       donatedBy: this.donatedBy, additionalNotes: this.additionalNotes, dateSubmitted: currentDate, formID: ''};
-
+ 
     this.cultureCollectionService.submitCMWDepositForm(deposit).subscribe((response: any) => {
       if(response.success == true){
         //Successfully submitted deposit form
@@ -465,25 +409,13 @@ export class SubmitCmwDepositComponent implements OnInit {
     this.toggle_status = !this.toggle_status; 
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                              FILTER
-  /**
-   *  This function will filter the autocomplete results on the form.
-   * @memberof SubmitCmwDepositComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.staff.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         NG ON INIT  
   /**
    * This function is called when the page loads
    * 
-   * @description 1. Call loadNotifications() | 2. Call getAllStaff()
+   * @description 1. Call getAllStaff()
    * 
    * @memberof SubmitCmwDepositComponent
    */
@@ -493,10 +425,6 @@ export class SubmitCmwDepositComponent implements OnInit {
     
     //Calling the neccessary functions as the page loads
     this.getAllStaff();
-    this.filteredOptions1 = this.collectedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
-    this.filteredOptions2 = this.identifiedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
-    this.filteredOptions3 = this.isolatedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
-    this.filteredOptions4 = this.donatedByControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
   }
 
 }

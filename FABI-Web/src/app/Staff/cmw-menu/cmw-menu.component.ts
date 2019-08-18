@@ -5,7 +5,7 @@
  * Created Date: Monday, August 12th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesdau, August 13th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,10 +15,6 @@
 
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
-import { DiagnosticClinicAPIService, Sample } from '../../_services/diagnostic-clinic-api.service';
-import { CultureCollectionAPIService, CMWDeposit, CMWRequest } from '../../_services/culture-collection-api.service';
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Route, Router } from '@angular/router';
@@ -30,25 +26,9 @@ import { Route, Router } from '@angular/router';
 })
 export class CmwMenuComponent implements OnInit {
 
-  /** Object array for holding the administrators -  @type {Member[]} */
-  admins: Member[] = [];   
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
-
-  /** Indicates whether there are samples to load or not - @type {boolean} */
-  submittedSamples: boolean = false;
-  /** Indicates whether there are deposit forms to load or not - @type {boolean} */
-  depositForms: boolean = false;
-  /** Indicates whether there are request forms to load or not - @type {boolean} */
-  requestForms: boolean = false;
-
-  /** Object array for holding the deposits associated with the user -  @type {CMWDeposit[]} */
-  deposits: CMWDeposit[] = [];
-  /** Object array for holding the requests associated with the user -  @type {CMWRequest[]} */
-  requests: CMWRequest[] = [];
-  /** Object array for holding the samples associated with the user -  @type {Sample[]} */
-  samples: Sample[] = [];
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   notificationsTab: boolean = false;
@@ -64,16 +44,34 @@ export class CmwMenuComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of CmwMenuComponent.
+   * 
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
+   * @param {Renderer2} renderer Used for creating the PDF documents to download
+   * 
+   * @memberof CmwMenuComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private authService: AuthenticationService, 
     private router: Router, 
-    private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
-    private resolver: ComponentFactoryResolver, 
-    private notificationLoggingService: NotificationLoggingService,
-    private cultureCollectionService: CultureCollectionAPIService
-    ) { }
+    private resolver: ComponentFactoryResolver
+  ) { }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @memberof CmwMenuComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.currentUser = this.authService.getCurrentSessionValue.user;
   }

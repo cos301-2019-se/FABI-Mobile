@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -40,10 +40,6 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
 
   /** Object array for holding the staff members -  @type {string[]} */                        
   staff: string[] = []; 
-  /** Object array for holding the staff members -  @type {String[]} */
-  filteredOptions: Observable<string[]>;
-  /** The form control for the autocomplete of the requestor input -  @type {FormControl} */
-  requestorControl = new FormControl();
 
   /** The requestor of the form -  @type {string} */
   requestor: string;
@@ -69,6 +65,9 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  /** The search item the user is looking for in the form -  @type {string} */
+  public searchItem: string;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -124,18 +123,6 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            SET REQUESTOR 
-  /*** This function will set the 'requestor' variable according to the option selected in the mat-autocomplete element
-   * 
-   * @memberof SubmitCmwRevitalizationComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setRequestor(event$){
-    this.requestor = event$.option.value;
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  SUBMIT CMW REVITALIZATION FORM
   /**
    * This function will submit a CMW Revitalization form based on the information provided in the form on the HTML page.
@@ -144,49 +131,49 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitCMWRevitalizationForm(){
     if(this.cmwRevitalizationForm.controls.requestor.value == null || this.cmwRevitalizationForm.controls.requestor.value == ""){
-      this.requestor = "";
+      this.requestor = "N/A";
     }
     else{
       this.requestor = this.cmwRevitalizationForm.controls.requestor.value;
     }
 
     if(this.cmwRevitalizationForm.controls.current_name.value == null || this.cmwRevitalizationForm.controls.current_name.value == ""){
-      this.currentName = "";
+      this.currentName = "N/A";
     }
     else{
       this.currentName = this.cmwRevitalizationForm.controls.current_name.value;
     }
 
     if(this.cmwRevitalizationForm.controls.name_bionumerics.value == null || this.cmwRevitalizationForm.controls.name_bionumerics.value == ""){
-      this.bionumericsName = "";
+      this.bionumericsName = "N/A";
     }
     else{
       this.bionumericsName = this.cmwRevitalizationForm.controls.name_bionumerics.value;
     }
 
     if(this.cmwRevitalizationForm.controls.culture_number.value == null || this.cmwRevitalizationForm.controls.culture_number.value == ""){
-      this.cultureNumber = "";
+      this.cultureNumber = "N/A";
     }
     else{
       this.cultureNumber = this.cmwRevitalizationForm.controls.culture_number.value;
     }
 
     if(this.cmwRevitalizationForm.controls.culture_condition.value == null || this.cmwRevitalizationForm.controls.culture_condition.value == ""){
-      this.cultureCondition = "";
+      this.cultureCondition = "N/A";
     }
     else{
       this.cultureCondition = this.cmwRevitalizationForm.controls.culture_condition.value;
     }
 
     if(this.cmwRevitalizationForm.controls.sequence.value == null || this.cmwRevitalizationForm.controls.sequence.value == ""){
-      this.sequence = "";
+      this.sequence = "N/A";
     }
     else{
       this.sequence = this.cmwRevitalizationForm.controls.sequence.value;
     }
 
     if(this.cmwRevitalizationForm.controls.reference_number.value == null || this.cmwRevitalizationForm.controls.reference_number.value == ""){
-      this.referenceNumber = "";
+      this.referenceNumber = "N/A";
     }
     else{
       this.referenceNumber = this.cmwRevitalizationForm.controls.reference_number.value;
@@ -207,7 +194,7 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     var date = new Date();
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var revitalization: CMWRevitalization = {userID: this.currentUser.user.ID, requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
+    var revitalization: CMWRevitalization = {userID: this.currentUser.ID, requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
       cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested,
       dateReturned: this.dateReturned, dateSubmitted: currentDate};
 
@@ -273,24 +260,11 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                                  FILTER
-  /**
-   *  This function will filter the autocomplete results on the form.
-   * @memberof SubmitCmwRevitalizationComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.staff.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                           NG ON INIT  
   /**
    * This function is called when the page loads
    * 
-   * @description 1. Call loadNotifications() | 2. Call getAllStaff()
+   * @description 1. Call getAllStaff()
    * 
    * @memberof SubmitCmwRevitalizationComponent
    */
@@ -299,7 +273,6 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     
     this.getAllStaff();
-    this.filteredOptions = this.requestorControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)));
   }
 
 }
