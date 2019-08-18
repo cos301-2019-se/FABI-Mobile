@@ -34,6 +34,7 @@ import * as Interface from '../../_interfaces/interfaces';
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 
 
 @Component({
@@ -56,7 +57,7 @@ export class StaffHandlerComponent implements OnInit {
   /** If page is busy loading something - @type {boolean} */
   loading: boolean = false;
   /** Selected Staff Member from the table - @type {Interface.Organisation} */
-  selectedStaff: Interface.StaffInfo;
+  selectedStaff: Interface.StaffInfo ={fname: '', surname: '', email: '' };
   /** Array of Staff Member objects - @type {StaffInfo[]} */
   staffMembers: Interface.StaffInfo[];
   /** The number of the staff members - @type {number} */   
@@ -94,27 +95,6 @@ export class StaffHandlerComponent implements OnInit {
       selected: false
     }
   ];
-  
-
-  add_validation_messages = {
-    'staff_email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please enter a valid email' }
-    ],
-    'staff_name': [
-      { type: 'required', message: 'Name is required' }
-    ],
-    'staff_surname': [
-      { type: 'required', message: 'Surname is required' }
-    ],
-    'staff_phone': [
-      { type: 'required', message: 'Phone No. is required' },
-      { type: 'pattern', message: 'Please enter a valid South African number' }
-    ],   
-    'staff_position': [
-      { type: 'required', message: 'Position is required' }
-    ],   
-  }
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   notificationsTab: boolean = false;
@@ -126,6 +106,8 @@ export class StaffHandlerComponent implements OnInit {
   confirmPasswordInput: boolean = false;
   /** Indicates if the help tab is hidden/shown - @type {boolean} */  
   helpTab: boolean = false;
+
+  deleteData: Interface.Confirm = {title: '', message: '', info: '', cancel: '', confirm: ''};
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
@@ -320,7 +302,7 @@ export class StaffHandlerComponent implements OnInit {
     const LstaffEmail = this.addStaffForm.controls.staff_email.value;
     const LstaffPhone = this.addStaffForm.controls.staff_phone.value;
     const LstaffPosition = this.addStaffForm.controls.admin_type.value;
-    const staff_details: Interface.StaffInfo = { name: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition};
+    const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition};
 
     var databasePrivileges : Interface.DatabasePrivilege[];
 
@@ -389,26 +371,19 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeStaffMemberPrompt(member: Interface.StaffInfo) {    
-    const staffDetails = member.name + " " + member.surname + " " + member.email;
+  removeStaffMemberPrompt(member: Interface.StaffInfo) {   
 
-    let dialogRef = this.dialog.open(LoadingComponent, {
-      data: {
-        title: "Remove Staff Member",
-        message: "Are you sure you want to remove this Staff Member?",
-        info: staffDetails,
-        cancel: "Cancel",
-        confirm: "Remove"
-      }
-    });
+    const staffDetails = member.fname + " " + member.surname + " " + member.email;
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result == "Confirm") {
-        this.selectedStaff = member;
-        this.removeStaffMember();
-        
-      }
-    })
+    this.selectedStaff = member;
+
+    this.deleteData = {
+      title: "Remove Staff Member",
+      message: "Are you sure you want to remove this Staff Member?",
+      info: staffDetails,
+      cancel: "Cancel",
+      confirm: "Remove"
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -420,6 +395,7 @@ export class StaffHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeStaffMember() {
+    
     this.userManagementService.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE

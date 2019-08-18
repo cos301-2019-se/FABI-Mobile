@@ -169,7 +169,7 @@
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal" [id]="staff.email"
                   (click)="selectStaffMember(staff)">View</button>
                 <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal"
-                  [id]="staff.email" (click)="selectStaffMember(staff)">Delete</button>
+                  [id]="staff.email" (click)="removeStaffMemberPrompt(staff)">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -246,12 +246,12 @@
             <div class="form-group">
               <label for="phone">Phone</label>
               <input type="text" class="form-control" id="phone" placeholder="Enter phone" disabled
-                [value]="selectedStaff.email">
+                [value]="selectedStaff.phone">
             </div>
             <!-- /Phone -->
 
             <!-- Delete Action -->
-            <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+            <button class="btn btn-default-delete" data-toggle="modal" (click)="removeStaffMemberPrompt(selectedStaff)" data-target="#confirmDeleteModal">Delete</button>
             <!-- /Delete Action -->
 
           </div>
@@ -454,34 +454,26 @@
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-
-        <!-- Modal Header -->
         <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteModalTitle">Are you sure?</h5>
+          <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''">{{deleteData.title}}</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fas fa-times"></i></span>
           </button>
         </div>
-        <!-- Modal Header -->
-
-        <!-- Modal Body -->
         <div class="modal-body">
-
-          <p>Everything related to this member of staff will be permantely deleted</p>
-
-          <!-- Delete Actions -->
+          <h4 *ngIf="deleteData.message != null || deleteData.message != ''">{{deleteData.message}}</h4>
+          <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
+          <p><span>All information related to this staff member will be permantely deleted</span></p>
           <div class="confirm-actions">
-            <button type="button" class="btn btn-default-confirm" (click)="removeStaffMember()">Confirm</button>
-            <button type="button" class="btn btn-default-cancel">Cancel</button>
+            <button type="button" class="btn btn-default-cancel" *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal" data-dismiss="modal" >{{deleteData.cancel}}</button>
+            <button type="button" class="btn btn-default-confirm" (click)="removeStaffMember()" *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal" data-dismiss="modal" >{{deleteData.confirm}}</button>
           </div>
-          <!-- /Delete Actions -->
-
         </div>
-        <!-- /Modal Body -->
       </div>
     </div>
   </div>
   <!-- / Delete Staff Confirm Modal Section -->
+
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
