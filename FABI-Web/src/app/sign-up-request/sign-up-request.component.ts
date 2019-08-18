@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Saturday, August 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -162,7 +162,7 @@ export class SignUpRequestComponent implements OnInit {
     const LadminEmail = this.registerOrgForm.controls.admin_email.value;
     const LadminPhone = this.registerOrgForm.controls.admin_phone.value;
 
-    const admin_details: Interface.OrganisationAdmin = { name: LadminName, surname: LadminSurname, email: LadminEmail };
+    const admin_details: Interface.OrganisationAdmin = { fname: LadminName, surname: LadminSurname, email: LadminEmail };
     const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };
 
     this.userManagementService.createOrganization(org_details).subscribe((response: any) => {
