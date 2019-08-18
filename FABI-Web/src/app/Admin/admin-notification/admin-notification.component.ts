@@ -61,17 +61,6 @@ export class AdminNotificationComponent implements OnInit {
   notifications: boolean = true; 
   /** The number of the notifications - @type {number} */   
   localNotificationNumber : number = 1;    
-  
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
-  profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
-  saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
-  confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
-  helpTab: boolean = false;
 
   /** Object array for holding the staff members -  @type {Member[]} */                        
   staff: Member[] = [];
@@ -469,17 +458,5 @@ export class AdminNotificationComponent implements OnInit {
       }
     });
   } 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      TOGGLE NOTIFICATIONS 
-  /**
-   * This function will toggle the display of the notifications side panel
-   * 
-   * @memberof AdminNotificationComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
-    this.notificationsTab = !this.notificationsTab;
-  }
 
 }
