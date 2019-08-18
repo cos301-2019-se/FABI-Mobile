@@ -1,3 +1,18 @@
+<!-- Search Table -->
+<div class="input-group search-table" *ngIf="samples && !sampleTableLoading">
+  <div class="input-group-prepend ">
+    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+  </div>
+  <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+    aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+</div>
+<!-- / Search Table -->
+
+<!-- Loading Spinner -->
+<div class="spinner-grow text-success loading" role="status" *ngIf="sampleTableLoading">
+</div>
+<!-- /Loading Spinner -->
+
 <table class="table table-hover" id="info" *ngIf="samples">
   <thead>
     <tr>
@@ -8,15 +23,15 @@
     </tr>
   </thead>
   <tbody>
-      <tr *ngFor="let sample of samples">
-          <td>{{sample.referenceNumber}}</td>
-          <td>{{sample.userID}}</td>
-          <td>{{sample.status}}</td>
-          <td class="table-action">
-              <button class="btn btn-default-view" data-toggle="modal" data-target="#viewSampleModal"
-                [id]="sample" (click)="selectSample(sample)">View</button>
-            </td>
-      </tr>
+    <tr *ngFor="let sample of samples">
+      <td>{{sample.referenceNumber}}</td>
+      <td>{{sample.userID}}</td>
+      <td>{{sample.status}}</td>
+      <td class="table-action">
+        <button class="btn btn-default-view" data-toggle="modal" data-target="#viewSampleModal" [id]="sample"
+          (click)="selectSample(sample)">View</button>
+      </td>
+    </tr>
   </tbody>
 </table>
 
