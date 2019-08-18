@@ -69,6 +69,7 @@
 
 .modal-body {
   display: flex;
+  flex-direction: column;
 }
 
 modal {
@@ -80,6 +81,16 @@ modal {
 }
 
 #addModal .modal-content {
+  min-height: 90vh;
+  height: auto;
+}
+
+#viewDatabaseModal .modal-dialog {
+  max-width: 85%;
+}
+
+
+#viewDatabaseModal .modal-content {
   min-height: 90vh;
   height: auto;
 }

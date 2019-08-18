@@ -112,6 +112,9 @@ export class StaffHandlerComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
+  /** Specifies if the list of staff have been retreived to disable the loading spinner - @type {boolean} */  
+  staffTableLoading: boolean = true;
+
   add_staff_validators = {
     'staff_name': [
       { type: 'required', message: 'First name required' },
@@ -443,6 +446,9 @@ export class StaffHandlerComponent implements OnInit {
 
         //Set number of staff members for statistics 
         this.numberOfStaffMembers = this.staffMembers.length;
+
+        //Deactivate loading table spinners
+        this.staffTableLoading = false;
         
 
       } 

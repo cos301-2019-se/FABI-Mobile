@@ -103,6 +103,10 @@ export class MemberHandlerComponent implements OnInit {
 
   currentUser: any;
 
+  /** Specifies if the list of members have been retreived to disable the loading spinner - @type {boolean} */  
+  memberTableLoading: boolean = true;
+
+
   add_member_validators = {
     'member_email': [
       { type: 'required', message: 'Email is required' },
@@ -367,6 +371,9 @@ export class MemberHandlerComponent implements OnInit {
         this.orgMembers = response.data.members;
         this.dataSource = new MatTableDataSource(this.orgMembers);
         this.dataSource.paginator = this.paginator;
+
+        //Deactivate loading table spinners
+        this.memberTableLoading = false;
 
       } 
       else if (response.success == false) {
