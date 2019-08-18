@@ -699,12 +699,13 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
+    
     let removeMemberURL = `${config.userManagementURL}/removeMember`;
     let method = 'POST';
 
     const postData = {
       "orgName": this.authService.getCurrentSessionValue.user.organisation,
-      "id": memberInfo.ID
+      "id": memberInfo.id
     }
 
     console.log("//// POST: " + JSON.stringify(postData))

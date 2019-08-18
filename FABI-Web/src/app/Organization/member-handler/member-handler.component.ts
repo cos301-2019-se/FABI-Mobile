@@ -56,7 +56,7 @@ export class MemberHandlerComponent implements OnInit {
   /** If page is busy loading something - @type {boolean} */
   loading: boolean = false;
   /** Selected Member from the table - @type {Interface.OrganisationMember} */
-  selectedMember: Interface.OrganisationMember;
+  selectedMember: Interface.OrganisationMember = {fname:'', surname: '', email: ''};
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
   /** Array of Member objects - @type {OrganisationMember[]} */
@@ -95,12 +95,13 @@ export class MemberHandlerComponent implements OnInit {
   password: string = '';
   /** The staff member's confirmed password -  @type {string} */
   confirmPassword: string = '';
-
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
-
+  deleteData: Interface.Confirm = {title: '', message: '', info: '', cancel: '', confirm: ''};
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   private toggle_status: boolean = false;
+
+  currentUser: any;
 
   add_member_validators = {
     'member_email': [
@@ -158,6 +159,26 @@ export class MemberHandlerComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            NG ON INIT()
+  /**
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.viewMembers();
+    });
+    
+    //******** TO BE USED IN PRODUCTION: ********
+    // // Set current user logged in
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    //Calling the neccessary functions as the page loads
+    // this.viewMembers();
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    TOGGLE NOTIFICATIONS TAB
   /**
    *  This function is used to toggle the notifications tab.
@@ -172,34 +193,6 @@ export class MemberHandlerComponent implements OnInit {
     this.toggle_status = !this.toggle_status;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            NG ON INIT()
-  /**
-   * @memberof MemberHandlerComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    this.viewMembers();
-
-    //Get the Organization's Details
-    this.userManagementService.getOrganizationDetails().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        // ***********************************
-        // POLPULATE FIELDS BASED ALREADY KNOWN INFORMATION
-        // *************
-
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Load Organizations' Details", message: response.message } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
-      }
-    });
-
-  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          ADD MEMBER
@@ -228,7 +221,7 @@ export class MemberHandlerComponent implements OnInit {
 
     const user = this.authService.getCurrentSessionValue;
     const org_details: Interface.Organisation = { orgName: user.user.organisation };
-    const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
+    const member_details: Interface.OrganisationMember = { fname: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
 
     this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
@@ -262,7 +255,7 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  selectOrganisation(member: Interface.OrganisationMember) {
+  selectMember(member: Interface.OrganisationMember) {
     this.selectedMember = member;
   }
 
@@ -275,24 +268,18 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMemberPrompt(member: Interface.OrganisationMember) {
+
     const memberDetails = member.fname + " " + member.surname + " " + member.email;
 
-    let dialogRef = this.dialog.open(LoadingComponent, {
-      data: {
-        title: "Remove Member",
-        message: "Are you sure you want to remove this Member?",
-        info: memberDetails,
-        cancel: "Cancel",
-        confirm: "Remove"
-      }
-    });
+    this.selectedMember = member;
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result == "Confirm") {
-        this.selectedMember = member;
-        this.removeMember();
+      this.deleteData = {
+      title: "Remove Member",
+      message: "Are you sure you want to remove this Member?",
+      info: memberDetails,
+      cancel: "Cancel",
+      confirm: "Remove"
       }
-    })
   }
 
 
@@ -318,6 +305,7 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMember() {
+    
     this.userManagementService.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
