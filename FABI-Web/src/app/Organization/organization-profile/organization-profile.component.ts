@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Saturday, August 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -23,7 +23,7 @@ import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
 import { AuthenticationService } from '../../_services/authentication.service';
-import { ConfirmComponent } from "../../confirm/confirm.component";
+import { LoadingComponent } from "../../_loading/loading.component";
 
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 

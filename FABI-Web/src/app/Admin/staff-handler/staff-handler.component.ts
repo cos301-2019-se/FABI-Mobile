@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Saturday, August 17th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -24,7 +24,7 @@ import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../../_errors/error-component/error.component';
 import { Router } from '@angular/router';
-import { ConfirmComponent } from "../../confirm/confirm.component";
+import { LoadingComponent } from "../../_loading/loading.component";
 
 //Include Material Components
 import { MatPaginator, MatTableDataSource } from '@angular/material';
@@ -376,7 +376,7 @@ export class StaffHandlerComponent implements OnInit {
   removeStaffMemberPrompt(member: Interface.StaffInfo) {    
     const staffDetails = member.name + " " + member.surname + " " + member.email;
 
-    let dialogRef = this.dialog.open(ConfirmComponent, {
+    let dialogRef = this.dialog.open(LoadingComponent, {
       data: {
         title: "Remove Staff Member",
         message: "Are you sure you want to remove this Staff Member?",

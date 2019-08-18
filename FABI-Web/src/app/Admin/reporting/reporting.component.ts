@@ -43,7 +43,7 @@ import * as $ from 'jquery';
 @Component({
   selector: 'app-reporting',
   templateUrl: './reporting.component.html',
-  // styleUrls: ['./reporting.component.scss']
+  styleUrls: ['./reporting.component.scss']
 })
 export class ReportingComponent implements OnInit {
 
@@ -810,6 +810,12 @@ export class ReportingComponent implements OnInit {
     var currentDate = new Date();
     this.date = ('0' + currentDate.getDate()).slice(-2) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
     this.loadAllLogs();
+
+    //Generate first displayed report so that it is ready to load
+    this.generateRequestReport();
+
+    //Generate first displayed log so that it is ready to load
+    this.setUserLogTable();
   }
 
 
@@ -899,9 +905,11 @@ export class ReportingComponent implements OnInit {
     this.logsTab = false;
 
     //Generate the Request report so that it is ready to be displayed when the report menu option is clicked
-    this.generateRequestReport();
     this.requestLogs = true;
     this.userLogs = false;
+
+    //Display requets report immediately since it is the first active tab
+    this.requestReport = true;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -915,8 +923,13 @@ export class ReportingComponent implements OnInit {
   toggleLogSection() {
     this.logsTab = !this.logsTab;
     this.reportingTab = false;
-    this.userLogs = true;
     this.requestLogs = false;
+
+    //Generate user log so it is ready to be displayed 
+    this.setUserLogTable();
+    
+    //Display requets report immediately since it is the first active tab
+    this.userLogs = true;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
