@@ -1,21 +1,20 @@
-<table class="table table-hover" id="info" *ngIf="dataSource">
+<table class="table table-hover" id="info" *ngIf="samples">
   <thead>
     <tr>
-      <th scope="col">Sample Name</th>
+      <th scope="col">Sample Reference No.</th>
+      <th scope="col">Status</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    <!-- <tr *ngFor="let sample of dataSource">
-        <td>{{sample.name}} </td>
-        <td><button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal" [id]="xxxxx"
-            (click)="xxxxxx()">View</button> </td>
-      </tr> -->
-    <tr>
-      <td>Sample Test (Hardcoded) </td>
-      <td><button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal" [id]="xxxxx"
-          (click)="xxxxxx()">View</button> </td>
-    </tr>
+      <tr *ngFor="let sample of samples">
+          <td>{{sample.referenceNumber}}</td>
+          <td>{{sample.status}}</td>
+          <td class="table-action">
+              <button class="btn btn-default-view" data-toggle="modal" data-target="#viewSampleModal"
+                [id]="sample" (click)="selectSample(sample)">View</button>
+            </td>
+      </tr>
   </tbody>
 </table>
 
@@ -59,7 +58,7 @@
 </table> -->
 
 <!-- View Sample Modal Section -->
-<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle" aria-hidden="true">
+<div class="modal fade" id="viewSampleModal" tabindex="-1" role="dialog" aria-labelledby="viewSampleModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
 
@@ -77,20 +76,13 @@
 
         <div class="view-fields">
 
-          <div class="form-row">
-            <!-- Culture Name -->
-            <div class="form-group col-md-6">
-              <label>Culture Name</label>
-              <p class="form-control form-control-sm">{{name}}</p>
+          <div class="form-row" *ngFor="let field of sampleFields">
+            <!-- Sample Data -->
+            <div class="form-group col-md-6" >
+              <label>{{field.name}}</label>
+              <p class="form-control form-control-sm">{{selectedSampleData[field.name]}}</p>
             </div>
-            <!-- / Culture Name -->
-
-            <!-- Culture Number -->
-            <div class="form-group col-md-6">
-              <label>Culture Number</label>
-              <p class="form-control form-control-sm">{{cmwCultureNumberDeposit}}</p>
-            </div>
-            <!-- / Culture Number -->
+            <!-- / Sample Data -->
           </div>
 
         </div>
