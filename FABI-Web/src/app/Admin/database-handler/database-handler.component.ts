@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 16th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -31,6 +31,7 @@ import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLog
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
 import * as Interface  from '../../_interfaces/interfaces';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-database-handler',
@@ -175,12 +176,13 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public submitCSV(input?) {
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "" }});
     
     if(input) {
       this.portingForm.file = input;
     } 
 
-    this.loading = true;
     this.dbname = this.port.nativeElement.value;
 
     if(this.portingForm.databaseName == "" || this.portingForm.databaseName == null){
@@ -227,6 +229,7 @@ export class DatabaseHandlerComponent implements OnInit {
       this.headings = headingNames.split(',');
     }
 
+    loadingRef.close();
     this.preview = true;
   }
 
@@ -239,11 +242,14 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getCSV(){    
+
     let data = "";
     let dbname = this.selectedDatabase;
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Downloading CSV" }});
     
-    this.dbService.reversePorting(dbname).subscribe((response:any) => {
-        this.loading = false;
+    this.dbService.retrieveDatabase(dbname).subscribe((response:any) => {
+
         if(response.success == true && response.code == 200) {
           data = response.data.docs;
           let CSVdata = this.portCSV.extractDatabase(data, dbname);
@@ -264,6 +270,8 @@ export class DatabaseHandlerComponent implements OnInit {
             }
           })
         }    
+
+        loadingRef.close();
       }, (err: HttpErrorResponse) => {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
@@ -274,6 +282,7 @@ export class DatabaseHandlerComponent implements OnInit {
         });
       
         console.log("ERROR:" + err.message);
+        loadingRef.close();
     }); 
   }
 
@@ -287,9 +296,13 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public viewDatabase(database : Interface.DatabasePrivilege) {
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Retrieving Database" }});
+
     database = database;
 
     this.dbService.retrieveDatabase(database.name).subscribe((response: any) => {
+
       if (response.success == true && response.code == 200) {
 
         Object.keys(response.data.docs[0]).forEach((column) => {
@@ -323,6 +336,8 @@ export class DatabaseHandlerComponent implements OnInit {
           }
         })
       }
+
+      loadingRef.close();
     });
 
   }
@@ -337,14 +352,20 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitDatabase(){
+
     if(this.ported == true){
       let snackBarRef = this.snackBar.open("The file has already been ported", "Dismiss", {
         duration: 4000
       });
     }
     else{
+
+      let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Porting" }});
+
       this.dbService.porting(this.portingForm.databaseName, this.jsonData).subscribe((response:any) => {
-        this.loading = false;
+
+        loadingRef.close();
+
         if(response.success == true && response.code == 200) {
           //POPUP MESSAGE
           let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
@@ -352,6 +373,7 @@ export class DatabaseHandlerComponent implements OnInit {
           });
 
           this.ported = true;
+          
         }else if (response.success == false) {
           //POPUP MESSAGE
           let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
@@ -459,6 +481,11 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
+  }
+
+  resetDatabaseFields() {
+    this.fields = [];
+    this.databaseData = [];
   }
 
 }

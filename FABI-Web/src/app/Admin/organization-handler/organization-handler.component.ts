@@ -330,8 +330,14 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  viewOrganizations() {    
+  viewOrganizations() {
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Loading" }});
+
     this.userManagementService.getAllOrganizations().subscribe((response: any) => {
+
+      loadingRef.close();
+      
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
         
