@@ -302,66 +302,102 @@
                 <!-- Name -->
                 <div class="form-group">
                   <label for="organization_name">Organization Name</label>
-                  <input type="text" class="form-control" id="organization_name" placeholder="Enter organization name"
-                    formControlName="organization_name" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                  <input type="text" class="form-control" id="organization_name" placeholder="Enter organization name" formControlName="organization_name" required
+                  [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty), 
+                    'is-valid': registerOrgForm.controls['organization_name'].valid && (submitted || registerOrgForm.controls['organization_name'].dirty)}" >
+                   <!-- Error Validation Feedback--> 
+                  <div *ngIf="registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty)" >
+                    <div *ngFor="let validation of register_organization_validators.organization_name">
+                        <p *ngIf="registerOrgForm.get('organization_name').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Name -->
 
                 <!-- Location -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="organization_location">Organization Location</label>
-                  <input type="text" class="form-control" id="organization_location"
-                    placeholder="Enter organization location" formControlName="organization_location" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                </div>
+                  <input type="text" class="form-control" id="organization_location" placeholder="Enter organization location" formControlName="organization_location" required
+                  [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['organization_location'].invalid && (submitted || registerOrgForm.controls['organization_location'].dirty), 
+                    'is-valid': registerOrgForm.controls['organization_location'].valid && (submitted || registerOrgForm.controls['organization_location'].dirty)}" > -->
+                   <!-- Error Validation Feedback--> 
+                  <!-- <div *ngIf="registerOrgForm.controls['organization_location'].invalid && (submitted || registerOrgForm.controls['organization_location'].dirty)" >
+                    <div *ngFor="let validation of register_organization_validators.organization_location">
+                        <p *ngIf="registerOrgForm.get('organization_location').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
+                  </div> -->
+                  <!-- / Error Validation Feedback-->
+                <!-- </div> -->
                 <!-- / Location -->
 
                 <!-- Admin Name -->
                 <div class="form-group">
                   <label for="admin_name">Admin Name</label>
-                  <input type="text" class="form-control" id="admin_name" placeholder="Enter admin name"
-                    formControlName="admin_name" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                  <input type="text" class="form-control" id="admin_name" placeholder="Enter admin name" formControlName="admin_name" required
+                  [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_name'].valid && (submitted || registerOrgForm.controls['admin_name'].dirty)}" >
+                   <!-- Error Validation Feedback--> 
+                  <div *ngIf="registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty)" >
+                    <div *ngFor="let validation of register_organization_validators.admin_name">
+                        <p *ngIf="registerOrgForm.get('admin_name').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Admin Name -->
 
                 <!-- Admin Surname -->
                 <div class="form-group">
                   <label for="admin_surname">Admin Surname</label>
-                  <input type="text" class="form-control" id="admin_surname" placeholder="Enter admin surname"
-                    formControlName="admin_surname" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                  <input type="text" class="form-control" id="admin_surname" placeholder="Enter admin surname" formControlName="admin_surname" required
+                  [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_surname'].valid && (submitted || registerOrgForm.controls['admin_surname'].dirty)}" >
+                   <!-- Error Validation Feedback--> 
+                  <div *ngIf="registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty)" >
+                    <div *ngFor="let validation of register_organization_validators.admin_surname">
+                        <p *ngIf="registerOrgForm.get('admin_surname').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Admin Surname -->
 
                 <!-- Email -->
                 <div class="form-group">
                   <label for="admin_email">Email address</label>
-                  <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-                    placeholder="Enter email" formControlName="admin_email" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                  <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp" placeholder="Enter email" formControlName="admin_email" required
+                  [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_email'].valid && (submitted || registerOrgForm.controls['admin_email'].dirty)}" >
+                   <!-- Error Validation Feedback--> 
+                  <div *ngIf="registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty)" >
+                    <div *ngFor="let validation of register_organization_validators.admin_email">
+                        <p *ngIf="registerOrgForm.get('admin_email').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Email -->
 
                 <!-- Phone -->
                 <div class="form-group">
                   <label for="admin_phone">Phone</label>
-                  <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone"
-                    formControlName="admin_phone" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                  <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone" formControlName="admin_phone" required
+                  [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_phone'].valid && (submitted || registerOrgForm.controls['admin_phone'].dirty)}" >
+                   <!-- Error Validation Feedback--> 
+                  <div *ngIf="registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty)" >
+                    <div *ngFor="let validation of register_organization_validators.admin_phone">
+                        <p *ngIf="registerOrgForm.get('admin_phone').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Phone -->
 

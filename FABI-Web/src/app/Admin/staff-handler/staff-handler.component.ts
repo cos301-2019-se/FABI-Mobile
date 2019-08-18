@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, August 17th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -129,6 +129,22 @@ export class StaffHandlerComponent implements OnInit {
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  add_staff_validators = {
+    'staff_name': [
+      { type: 'required', message: 'First name required' },
+    ],
+    'staff_surname': [
+      { type: 'required', message: 'Surname required' },
+    ],
+    'staff_email': [
+      { type: 'required', message: 'Email required' },
+      { type: 'pattern', message: 'Invalid email' }
+    ],
+    'staff_phone': [
+      { type: 'required', message: 'Phone No. is required' },
+    ]
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
