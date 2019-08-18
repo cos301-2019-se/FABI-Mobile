@@ -93,24 +93,6 @@ export class ReportingComponent implements OnInit {
   /** Array holding the revitalization logs - @type {any} */
   revitalizationLogsArray: any[] = [];
 
-  /** Holds the table element (userAdd) from the HTML page - @type {ElementRef} */
-  @ViewChild("userAdd") userAdd: ElementRef;
-  /** Holds the table element (databaseAdd) from the HTML page - @type {ElementRef} */
-  @ViewChild("databaseAdd") databaseAdd: ElementRef;
-  /** Holds the table element (accessAdd) from the HTML page - @type {ElementRef} */
-  @ViewChild("accessAdd") accessAdd: ElementRef;
-  /** Holds the table element (errorAdd) from the HTML page - @type {ElementRef} */
-  @ViewChild("errorAdd") errorAdd: ElementRef;
-
-  /** Holds the table element (userCollapse) from the HTML page - @type {ElementRef} */
-  @ViewChild("userCollapse") userCollapse: ElementRef;
-  /** Holds the table element (databaseCollapse) from the HTML page - @type {ElementRef} */
-  @ViewChild("databaseCollapse") databaseCollapse: ElementRef;
-  /** Holds the table element (accessCollapse) from the HTML page - @type {ElementRef} */
-  @ViewChild("accessCollapse") accessCollapse: ElementRef;
-  /** Holds the table element (errorCollapse) from the HTML page - @type {ElementRef} */
-  @ViewChild("errorCollapse") errorCollapse: ElementRef;
-
   /** Holds the table element (errorReportPDF) from the HTML page - @type {ElementRef} */
   @ViewChild("errorReportPDF") errorReportPDF: ElementRef;
   /** Holds the table element (requestReportPDF) from the HTML page - @type {ElementRef} */
@@ -119,35 +101,6 @@ export class ReportingComponent implements OnInit {
   @ViewChild("depositReportPDF") depositReportPDF: ElementRef;
   /** Holds the table element (revitalizationReportPDF) from the HTML page - @type {ElementRef} */
   @ViewChild("revitalizationReportPDF") revitalizationReportPDF: ElementRef;
-
-  /** Holds the table element (requestDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateFrom1") requestDateFrom1: ElementRef;
-  /** Holds the table element (requestDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateTo1") requestDateTo1: ElementRef;
-  /** Holds the table element (requestDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateFrom2") requestDateFrom2: ElementRef;
-  /** Holds the table element (requestDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestDateTo2") requestDateTo2: ElementRef;
-  /** Holds the table element (depositDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateFrom1") depositDateFrom1: ElementRef;
-  /** Holds the table element (depositDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateTo1") depositDateTo1: ElementRef;
-  /** Holds the table element (depositDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateFrom2") depositDateFrom2: ElementRef;
-  /** Holds the table element (depositDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositDateTo2") depositDateTo2: ElementRef;
-  /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateFrom1") revitalizationDateFrom1: ElementRef;
-  /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateTo1") revitalizationDateTo1: ElementRef;
-  /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateFrom2") revitalizationDateFrom2: ElementRef;
-  /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateTo2") revitalizationDateTo2: ElementRef;
-  /** Holds the table element (revitalizationDateFrom) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateFrom3") revitalizationDateFrom3: ElementRef;
-  /** Holds the table element (revitalizationDateTo) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationDateTo3") revitalizationDateTo3: ElementRef;
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
