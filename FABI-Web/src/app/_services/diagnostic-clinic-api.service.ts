@@ -193,8 +193,8 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitSampleForm(formDetails: Interface.StaffInfo) {
-    let submitSampleURL = '***REMOVED***/submitSample';
+  submitSampleForm(formDetails: Interface.SampleFormData) {
+    let submitSampleURL =   `${config.diagnosticClinicURL}/submitSample`;
     let method = 'POST';
 
     const postData = {
