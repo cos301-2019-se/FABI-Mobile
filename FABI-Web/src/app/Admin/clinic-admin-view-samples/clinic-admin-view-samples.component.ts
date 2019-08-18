@@ -1,8 +1,8 @@
 /**
- * File Name: member-view-samples.component.ts
- * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Organization-Member\member-view-samples\member-view-samples.component.ts
+ * File Name: clinic-admin-view-samples.component.ts
+ * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\NEW\FABI-Mobile\FABI-Web\src\app\Admin\clinic-admin-view-samples\clinic-admin-view-samples.component.ts
  * Project Name: fabi-web
- * Created Date: Friday, May 24th 2019
+ * Created Date: Monday, August 19th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
  * Last Modified: Monday, August 19th 2019
@@ -14,9 +14,7 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
-//Include Material Components
+import { Component, OnInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
@@ -24,20 +22,20 @@ import { Router } from '@angular/router';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
 
 @Component({
-  selector: 'app-member-view-samples',
-  templateUrl: './member-view-samples.component.html',
-  styleUrls: ['./member-view-samples.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: 'app-clinic-admin-view-samples',
+  templateUrl: './clinic-admin-view-samples.component.html',
+  styleUrls: ['./clinic-admin-view-samples.component.scss']
 })
-export class MemberViewSamplesComponent implements OnInit {
+export class ClinicAdminViewSamplesComponent implements OnInit {
+
+  sampleFields: any[] = [];
+  samples: any[];
+  selectedSampleData: any
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  sampleFields: any[] = [];
-  samples: any[];
-  selectedSampleData: any
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
@@ -45,13 +43,13 @@ export class MemberViewSamplesComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
-   * Creates an instance of MemberViewSamplesComponent.
+   * Creates an instance of ClinicAdminViewSamplesComponent.
    * @param {AuthenticationService} authService Used for all authentication and session control
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {MatDialog} dialog
    * @param {Router} router
    * 
-   * @memberof MemberViewSamplesComponent
+   * @memberof ClinicAdminViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
@@ -62,29 +60,13 @@ export class MemberViewSamplesComponent implements OnInit {
     ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  TOGGLE NOTIFICATIONS TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof MemberViewSamplesComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
-  }
-
-  
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            NG ON INIT  
+  //                                                           NG ON INIT  
   /**
    * This function is called when the page loads
    * 
    * @description 1. Call viewSamples()
    * 
-   * @memberof MemberViewSamplesComponent
+   * @memberof ClinicAdminViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
@@ -94,11 +76,27 @@ export class MemberViewSamplesComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    TOGGLE NOTIFICATIONS TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof ClinicAdminViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab(){
+    this.toggle_status = !this.toggle_status; 
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 
   /**
    * This function will log the user out of the web application and clear the authentication data stored in the local storage
    * 
-   * @memberof MemberViewSamplesComponent
+   * @memberof ClinicAdminViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
@@ -110,14 +108,14 @@ export class MemberViewSamplesComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            VIEW SAMPLES 
   /**
-   * This function will be used to display all the samples associated with the user in the HTML page
+   * This function will be used to load all of the samples belonging to all organization into the HTML page
    * 
-   * @memberof MemberViewSamplesComponent
+   * @memberof ClinicAdminViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
-
-    this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
+    
+    this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
 
       if (response.success == true && response.code == 200) {
 
