@@ -5,7 +5,7 @@
  * Created Date: Monday, August 5th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -134,14 +134,14 @@ export class ViewFormsComponent implements OnInit {
   /** The number of the processed form currently displayed - @type {number} */
   processedFormNumber: number = 0; 
 
-  /** An array holding all of the deposit forms - @type {CMWDeposit[]} */
-  depositForms: CMWDeposit[] = [];
-  /** An array holding all of the request forms - @type {CMWRequest[]} */
-  requestForms: CMWRequest[] = []; 
-  /** An array holding all of the revitalization forms - @type {CMWRevitalization[]} */
-  revitalizationForms: CMWRevitalization[] = []; 
-  /** An array holding all of the processed forms - @type {ProcessedForm[]} */
-  processedForms: ProcessedForm[] = []; 
+  /** An array holding all of the deposit forms - @type {any[]} */
+  depositForms: any[] = [];
+  /** An array holding all of the request forms - @type {any[]} */
+  requestForms: any[] = []; 
+  /** An array holding all of the revitalization forms - @type {any[]} */
+  revitalizationForms: any[] = []; 
+  /** An array holding all of the processed forms - @type {any[]} */
+  processedForms: any[] = []; 
 
   /** The form to get the process form details -  @type {FormGroup} */
   processForm: FormGroup;
@@ -296,13 +296,33 @@ export class ViewFormsComponent implements OnInit {
         var data = response.data.qs.forms;
 
         for(var i = 0; i < data.length; i++){
-          var tempDeposit: CMWDeposit = {userID: data[i].userID, cmwCultureNumber: data[i].cmwCultureNumber, genus: data[i].genus, epitheton: data[i].epitheton,
-            personalCollectionNumber: data[i].personalCollectionNumber, internationalCollectionNumber: data[i].internationalCollectionNumber, herbariumNumber: data[i].herbariumNumber,
-            otherFABICollections: data[i].otherFABICollections, name: data[i].name, typeStatus: data[i].typeStatus, host: data[i].host, vector: data[i].vector,
-            substrate: data[i].substrate, continent: data[i].continent, country: data[i].country, region: data[i].region, locality: data[i].locality, 
-            gps: data[i].gps, collectedBy: data[i].collectedBy, dateCollected: data[i].dateCollected, isolatedBy: data[i].isolatedBy, identifiedBy: data[i].identifiedBy,
-            donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted, formID: data[i].id};
-          
+          var tempDeposit = [];
+          tempDeposit.push(data[i].userID);
+          tempDeposit.push(data[i].cmwCultureNumber);
+          tempDeposit.push(data[i].genus);
+          tempDeposit.push(data[i].epitheton);
+          tempDeposit.push(data[i].personalCollectionNumber);
+          tempDeposit.push(data[i].internationalCollectionNumber);
+          tempDeposit.push(data[i].herbariumNumber);
+          tempDeposit.push(data[i].otherFABICollections);
+          tempDeposit.push(data[i].name);
+          tempDeposit.push(data[i].typeStatus);
+          tempDeposit.push(data[i].host);
+          tempDeposit.push(data[i].vector);
+          tempDeposit.push(data[i].substrate);
+          tempDeposit.push(data[i].continent);
+          tempDeposit.push(data[i].country);
+          tempDeposit.push(data[i].region);
+          tempDeposit.push(data[i].locality);
+          tempDeposit.push(data[i].gps);
+          tempDeposit.push(data[i].collected_by);
+          tempDeposit.push(data[i].dateCollected);
+          tempDeposit.push(data[i].isolatedBy);
+          tempDeposit.push(data[i].identifiedBy);
+          tempDeposit.push(data[i].donatedBy);
+          tempDeposit.push(data[i].additionalNotes);
+          tempDeposit.push(data[i].dateSubmitted);
+          tempDeposit.push(data[i].id);
 
           if(data[i].status == 'submitted'){
             this.depositForms.push(tempDeposit);
@@ -333,8 +353,15 @@ export class ViewFormsComponent implements OnInit {
         var data = response.data.qs.forms;
 
         for(var i = 0; i < data.length; i++){
-          var tempRequest: CMWRequest = {userID: data[i].userID, requestor: data[i].requestor, taxonName: data[i].taxonName, cultureNumber: data[i].cultureNumber,
-            dateRequested: data[i].dateRequested, referenceNumber: data[i].referenceNumber, notes: data[i].notes, dateSubmitted: data[i].dateSubmitted};
+          var tempRequest = [];
+          tempRequest.push(data[i].userID);
+          tempRequest.push(data[i].requestor);
+          tempRequest.push(data[i].taxonName);
+          tempRequest.push(data[i].cultureNumber);
+          tempRequest.push(data[i].dateRequested);
+          tempRequest.push(data[i].referenceNumber);
+          tempRequest.push(data[i].notes);
+          tempRequest.push(data[i].dateSubmitted);
 
           this.requestForms.push(tempRequest);
         }
@@ -362,9 +389,18 @@ export class ViewFormsComponent implements OnInit {
         var data = response.data.qs.forms;
 
         for(var i = 0; i < data.length; i++){
-          var tempRevitalization: CMWRevitalization = {userID: data[i].userID, requestor: data[i].requestor, currentName: data[i].currentName, 
-            cultureNumber: data[i].cultureNumber, nameBionumerics: data[i].nameBionumerics, cultureCondition: data[i].cultureCondition, sequenceDateSubmitted: data[i].sequenceDateSubmitted,
-            dateRequested: data[i].dateRequested, referenceNumber: data[i].referenceNumber, dateReturned: data[i].dateReturned, dateSubmitted: data[i].dateSubmitted};
+          var tempRevitalization = [];
+          tempRevitalization.push(data[i].userID);
+          tempRevitalization.push(data[i].requestor);
+          tempRevitalization.push(data[i].currentName);
+          tempRevitalization.push(data[i].cultureNumber);
+          tempRevitalization.push(data[i].nameBionumerics);
+          tempRevitalization.push(data[i].cultureCondition);
+          tempRevitalization.push(data[i].sequenceDateSubmitted);
+          tempRevitalization.push(data[i].dateRequested);
+          tempRevitalization.push(data[i].referenceNumber);
+          tempRevitalization.push(data[i].dateReturned);
+          tempRevitalization.push(data[i].dateSubmitted);
 
           this.revitalizationForms.push(tempRevitalization);
         }
@@ -393,10 +429,20 @@ export class ViewFormsComponent implements OnInit {
         var data = response.data.qs.forms;
 
         for(var i = 0; i < data.length; i++){
-          var tempProcessed: ProcessedForm = {userID: data[i].userID, statusOfCulture: data[i].statusOfCulture, agarSlants: data[i].agarSlants,
-            water: data[i].water, oil: data[i].oil, roomTemperature: data[i].roomTemperature, c18: data[i].c18, freezeDried: data[i].freezeDried,
-            freeze: data[i].freeze, dateOfCollectionValidation: data[i].dateOfCollectionValidation, microscopeSlides: data[i].microscopeSlides,
-            dateSubmittedProcessedForm: data[i].dateSubmittedProcessedForm, cultureCollectionNumber: data[i].cultureCollectionNumber};
+          var tempProcessed = [];
+          tempProcessed.push(data[i].userID);
+          tempProcessed.push(data[i].statusOfCulture);
+          tempProcessed.push(data[i].agarSlants);
+          tempProcessed.push(data[i].water);
+          tempProcessed.push(data[i].oil);
+          tempProcessed.push(data[i].roomTemperature);
+          tempProcessed.push(data[i].c18);
+          tempProcessed.push(data[i].freezeDried);
+          tempProcessed.push(data[i].freeze);
+          tempProcessed.push(data[i].dateOfCollectionValidation);
+          tempProcessed.push(data[i].microscopeSlides);
+          tempProcessed.push(data[i].dateSubmittedProcessedForm);
+          tempProcessed.push(data[i].cultureCollectionNumber);
 
           this.processedForms.push(tempProcessed);
         }
@@ -418,7 +464,7 @@ export class ViewFormsComponent implements OnInit {
    *  @memberof ViewFormsComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNextDepositForm(){    
+  loadNextDepositForm(){ 
     if(this.depositFormNumber != 0){
       if(this.depositFormNumber == this.depositForms.length - 1){
         this.depositFormNumber = 0;
@@ -430,35 +476,41 @@ export class ViewFormsComponent implements OnInit {
         this.depositFormNumber += 1;
       }
     }
-
+    
     var tempDeposit = this.depositForms[this.depositFormNumber];
+    
+    if(!tempDeposit[0]){
+      this.userIDDeposit = "";
+    }
+    else{
+      this.userIDDeposit = this.loadUserDetails(tempDeposit[0]); 
+    }
 
-    this.loadUserDetails(tempDeposit.userID, 'deposit');
-    this.cmwCultureNumberDeposit = tempDeposit.cmwCultureNumber;
-    this.genus = tempDeposit.genus;
-    this.epitheton = tempDeposit.epitheton;
-    this.personalCollectionNumber = tempDeposit.personalCollectionNumber;
-    this.internationalCollectionNumber = tempDeposit.internationalCollectionNumber;
-    this.herbariumNumber = tempDeposit.herbariumNumber;
-    this.otherFABICollections = tempDeposit.otherFABICollections;
-    this.name = tempDeposit.name;
-    this.typeStatus = tempDeposit.typeStatus;
-    this.host = tempDeposit.host;
-    this.vector = tempDeposit.vector;
-    this.substrate = tempDeposit.substrate;
-    this.continent = tempDeposit.continent;
-    this.country = tempDeposit.country;
-    this.region = tempDeposit.region;
-    this.locality = tempDeposit.locality;
-    this.gps = tempDeposit.gps;
-    this.collectedBy = tempDeposit.collectedBy;
-    this.dateCollected = tempDeposit.dateCollected;
-    this.isolatedBy = tempDeposit.isolatedBy;
-    this.identifiedBy = tempDeposit.identifiedBy;
-    this.donatedBy = tempDeposit.donatedBy;
-    this.additionalNotes = tempDeposit.additionalNotes;
-    this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
-    this.formID = tempDeposit.formID;
+    this.cmwCultureNumberDeposit = tempDeposit[1];
+    this.genus = tempDeposit[2];
+    this.epitheton = tempDeposit[3];
+    this.personalCollectionNumber = tempDeposit[4];
+    this.internationalCollectionNumber = tempDeposit[5];
+    this.herbariumNumber = tempDeposit[6];
+    this.otherFABICollections = tempDeposit[7];
+    this.name = tempDeposit[8];
+    this.typeStatus = tempDeposit[9];
+    this.host = tempDeposit[10];
+    this.vector = tempDeposit[11];
+    this.substrate = tempDeposit[12];
+    this.continent = tempDeposit[13];
+    this.country = tempDeposit[14];
+    this.region = tempDeposit[15];
+    this.locality = tempDeposit[16];
+    this.gps = tempDeposit[17];
+    this.collectedBy = tempDeposit[18];
+    this.dateCollected = tempDeposit[19];
+    this.isolatedBy = tempDeposit[20];
+    this.identifiedBy = tempDeposit[21];
+    this.donatedBy = tempDeposit[22];
+    this.additionalNotes = tempDeposit[23];
+    this.dateSubmittedDeposit = tempDeposit[24];
+    this.formID = tempDeposit[25];
 
     if(this.depositFormNumber == 0){
       this.depositFormNumber += 1;
@@ -490,32 +542,38 @@ export class ViewFormsComponent implements OnInit {
 
     var tempDeposit = this.depositForms[this.depositFormNumber];
 
-    this.loadUserDetails(tempDeposit.userID, 'deposit');
-    this.cmwCultureNumberDeposit = tempDeposit.cmwCultureNumber;
-    this.genus = tempDeposit.genus;
-    this.epitheton = tempDeposit.epitheton;
-    this.personalCollectionNumber = tempDeposit.personalCollectionNumber;
-    this.internationalCollectionNumber = tempDeposit.internationalCollectionNumber;
-    this.herbariumNumber = tempDeposit.herbariumNumber;
-    this.otherFABICollections = tempDeposit.otherFABICollections;
-    this.name = tempDeposit.name;
-    this.typeStatus = tempDeposit.typeStatus;
-    this.host = tempDeposit.host;
-    this.vector = tempDeposit.vector;
-    this.substrate = tempDeposit.substrate;
-    this.continent = tempDeposit.continent;
-    this.country = tempDeposit.country;
-    this.region = tempDeposit.region;
-    this.locality = tempDeposit.locality;
-    this.gps = tempDeposit.gps;
-    this.collectedBy = tempDeposit.collectedBy;
-    this.dateCollected = tempDeposit.dateCollected;
-    this.isolatedBy = tempDeposit.isolatedBy;
-    this.identifiedBy = tempDeposit.identifiedBy;
-    this.donatedBy = tempDeposit.donatedBy;
-    this.additionalNotes = tempDeposit.additionalNotes;
-    this.dateSubmittedDeposit = tempDeposit.dateSubmitted;
-    this.formID = tempDeposit.formID;
+    if(!tempDeposit[0]){
+      this.userIDDeposit = "";
+    }
+    else{
+      this.userIDDeposit = this.loadUserDetails(tempDeposit[0]); 
+    }
+
+    this.cmwCultureNumberDeposit = tempDeposit[1];
+    this.genus = tempDeposit[2];
+    this.epitheton = tempDeposit[3];
+    this.personalCollectionNumber = tempDeposit[4];
+    this.internationalCollectionNumber = tempDeposit[5];
+    this.herbariumNumber = tempDeposit[6];
+    this.otherFABICollections = tempDeposit[7];
+    this.name = tempDeposit[8];
+    this.typeStatus = tempDeposit[9];
+    this.host = tempDeposit[10];
+    this.vector = tempDeposit[11];
+    this.substrate = tempDeposit[12];
+    this.continent = tempDeposit[13];
+    this.country = tempDeposit[14];
+    this.region = tempDeposit[15];
+    this.locality = tempDeposit[16];
+    this.gps = tempDeposit[17];
+    this.collectedBy = tempDeposit[18];
+    this.dateCollected = tempDeposit[19];
+    this.isolatedBy = tempDeposit[20];
+    this.identifiedBy = tempDeposit[21];
+    this.donatedBy = tempDeposit[22];
+    this.additionalNotes = tempDeposit[23];
+    this.dateSubmittedDeposit = tempDeposit[24];
+    this.formID = tempDeposit[25];
 
     if(this.depositFormNumber == this.depositForms.length){
       this.depositFormNumber -= 1;
@@ -550,13 +608,19 @@ export class ViewFormsComponent implements OnInit {
 
     var tempRequest = this.requestForms[this.requestFormNumber];
 
-    this.loadUserDetails(tempRequest.userID, 'request');
-    this.cmwCultureNumberRequest = tempRequest.cultureNumber;
-    this.taxonName = tempRequest.taxonName;
-    this.referenceNumberRequest = tempRequest.referenceNumber;
-    this.dateRequestedRequest = tempRequest.dateRequested;
-    this.notes = tempRequest.notes;
-    this.dateSubmittedRequest = tempRequest.dateSubmitted;
+    if(!tempRequest[0]){
+      this.userIDRequest = "";
+    }
+    else{
+      this.userIDRequest = this.loadUserDetails(tempRequest[0]); 
+    }
+
+    this.cmwCultureNumberRequest = tempRequest[3];
+    this.taxonName = tempRequest[2];
+    this.referenceNumberRequest = tempRequest[5];
+    this.dateRequestedRequest = tempRequest[4];
+    this.notes = tempRequest[6];
+    this.dateSubmittedRequest = tempRequest[7];
 
     if(this.requestFormNumber == 0){
       this.requestFormNumber += 1;
@@ -588,13 +652,19 @@ export class ViewFormsComponent implements OnInit {
 
     var tempRequest = this.requestForms[this.requestFormNumber];
 
-    this.loadUserDetails(tempRequest.userID, 'request');
-    this.cmwCultureNumberRequest = tempRequest.cultureNumber;
-    this.taxonName = tempRequest.taxonName;
-    this.referenceNumberRequest = tempRequest.referenceNumber;
-    this.dateRequestedRequest = tempRequest.dateRequested;
-    this.notes = tempRequest.notes;
-    this.dateSubmittedRequest = tempRequest.dateSubmitted;
+    if(!tempRequest[0]){
+      this.userIDRequest = "";
+    }
+    else{
+      this.userIDRequest = this.loadUserDetails(tempRequest[0]); 
+    }
+
+    this.cmwCultureNumberRequest = tempRequest[3];
+    this.taxonName = tempRequest[2];
+    this.referenceNumberRequest = tempRequest[5];
+    this.dateRequestedRequest = tempRequest[4];
+    this.notes = tempRequest[6];
+    this.dateSubmittedRequest = tempRequest[7];
 
     if(this.requestFormNumber == this.requestForms.length){
       this.requestFormNumber -= 1;
@@ -628,17 +698,23 @@ export class ViewFormsComponent implements OnInit {
     }
 
     var tempRevitalization = this.revitalizationForms[this.revitalizationFormNumber];
+    
+    if(!tempRevitalization[0]){
+      this.userIDRevitalization = "";
+    }
+    else{
+      this.userIDRevitalization = this.loadUserDetails(tempRevitalization[0]); 
+    }
 
-    this.loadUserDetails(tempRevitalization.userID, 'revitalization');
-    this.cmwCultureNumberRequest = tempRevitalization.cultureNumber;
-    this.currentName = tempRevitalization.currentName;
-    this.referenceNumberRevitalization = tempRevitalization.referenceNumber;
-    this.dateRequestedRevitalization = tempRevitalization.dateRequested;
-    this.nameBionumerics = tempRevitalization.nameBionumerics;
-    this.cultureCondition = tempRevitalization.cultureCondition;
-    this.sequenceDateSubmitted = tempRevitalization.sequenceDateSubmitted;
-    this.dateReturned = tempRevitalization.dateReturned;
-    this.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
+    this.cmwCultureNumberRequest = tempRevitalization[3];
+    this.currentName = tempRevitalization[2];
+    this.referenceNumberRevitalization = tempRevitalization[8];
+    this.dateRequestedRevitalization = tempRevitalization[7];
+    this.nameBionumerics = tempRevitalization[4];
+    this.cultureCondition = tempRevitalization[5];
+    this.sequenceDateSubmitted = tempRevitalization[6];
+    this.dateReturned = tempRevitalization[9];
+    this.dateSubmittedRevitalization = tempRevitalization[10];
 
     if(this.revitalizationFormNumber == 0){
       this.revitalizationFormNumber += 1;
@@ -670,16 +746,22 @@ export class ViewFormsComponent implements OnInit {
 
     var tempRevitalization = this.revitalizationForms[this.revitalizationFormNumber];
 
-    this.loadUserDetails(tempRevitalization.userID, 'revitalization');
-    this.cmwCultureNumberRequest = tempRevitalization.cultureNumber;
-    this.currentName = tempRevitalization.currentName;
-    this.referenceNumberRevitalization = tempRevitalization.referenceNumber;
-    this.dateRequestedRevitalization = tempRevitalization.dateRequested;
-    this.nameBionumerics = tempRevitalization.nameBionumerics;
-    this.cultureCondition = tempRevitalization.cultureCondition;
-    this.sequenceDateSubmitted = tempRevitalization.sequenceDateSubmitted;
-    this.dateReturned = tempRevitalization.dateReturned;
-    this.dateSubmittedRevitalization = tempRevitalization.dateSubmitted;
+    if(!tempRevitalization[0]){
+      this.userIDRevitalization = "";
+    }
+    else{
+      this.userIDRevitalization = this.loadUserDetails(tempRevitalization[0]); 
+    }
+
+    this.cmwCultureNumberRequest = tempRevitalization[3];
+    this.currentName = tempRevitalization[2];
+    this.referenceNumberRevitalization = tempRevitalization[8];
+    this.dateRequestedRevitalization = tempRevitalization[7];
+    this.nameBionumerics = tempRevitalization[4];
+    this.cultureCondition = tempRevitalization[5];
+    this.sequenceDateSubmitted = tempRevitalization[6];
+    this.dateReturned = tempRevitalization[9];
+    this.dateSubmittedRevitalization = tempRevitalization[10];
 
     if(this.revitalizationFormNumber == this.revitalizationForms.length){
       this.revitalizationFormNumber -= 1;
@@ -714,19 +796,25 @@ export class ViewFormsComponent implements OnInit {
 
     var tempProcessed = this.processedForms[this.processedFormNumber];
 
-    this.loadUserDetails(tempProcessed.userID, 'processed');
-    this.statusOfCulture = tempProcessed.statusOfCulture;
-    this.agarSlants = tempProcessed.agarSlants;
-    this.water = tempProcessed.water;
-    this.oil = tempProcessed.oil;
-    this.roomTemperature = tempProcessed.roomTemperature;
-    this.c18 = tempProcessed.c18;
-    this.freezeDried = tempProcessed.freezeDried;
-    this.freeze = tempProcessed.freeze;
-    this.dateOfCollectionValidation = tempProcessed.dateOfCollectionValidation;
-    this.microscopeSlides = tempProcessed.microscopeSlides;
-    this.dateSubmittedProcessedForm = tempProcessed.dateSubmittedProcessedForm;
-    this.cmwCultureNumberProcessed = tempProcessed.cultureCollectionNumber;
+    if(!tempProcessed[0]){
+      this.userIDProcessed = "";
+    }
+    else{
+      this.userIDProcessed = this.loadUserDetails(tempProcessed[0]); 
+    }
+
+    this.statusOfCulture = tempProcessed[1];
+    this.agarSlants = tempProcessed[2];
+    this.water = tempProcessed[3];
+    this.oil = tempProcessed[4];
+    this.roomTemperature = tempProcessed[5];
+    this.c18 = tempProcessed[6];
+    this.freezeDried = tempProcessed[7];
+    this.freeze = tempProcessed[8];
+    this.dateOfCollectionValidation = tempProcessed[9];
+    this.microscopeSlides = tempProcessed[10];
+    this.dateSubmittedProcessedForm = tempProcessed[11];
+    this.cmwCultureNumberProcessed = tempProcessed[12];
 
     if(this.processedFormNumber == 0){
       this.processedFormNumber += 1;
@@ -760,19 +848,25 @@ export class ViewFormsComponent implements OnInit {
 
     var tempProcessed = this.processedForms[this.processedFormNumber];
 
-    this.loadUserDetails(tempProcessed.userID, 'processed');
-    this.statusOfCulture = tempProcessed.statusOfCulture;
-    this.agarSlants = tempProcessed.agarSlants;
-    this.water = tempProcessed.water;
-    this.oil = tempProcessed.oil;
-    this.roomTemperature = tempProcessed.roomTemperature;
-    this.c18 = tempProcessed.c18;
-    this.freezeDried = tempProcessed.freezeDried;
-    this.freeze = tempProcessed.freeze;
-    this.dateOfCollectionValidation = tempProcessed.dateOfCollectionValidation;
-    this.microscopeSlides = tempProcessed.microscopeSlides;
-    this.dateSubmittedProcessedForm = tempProcessed.dateSubmittedProcessedForm;
-    this.cmwCultureNumberProcessed = tempProcessed.cultureCollectionNumber;
+    if(!tempProcessed[0]){
+      this.userIDProcessed = "";
+    }
+    else{
+      this.userIDProcessed = this.loadUserDetails(tempProcessed[0]); 
+    }
+
+    this.statusOfCulture = tempProcessed[1];
+    this.agarSlants = tempProcessed[2];
+    this.water = tempProcessed[3];
+    this.oil = tempProcessed[4];
+    this.roomTemperature = tempProcessed[5];
+    this.c18 = tempProcessed[6];
+    this.freezeDried = tempProcessed[7];
+    this.freeze = tempProcessed[8];
+    this.dateOfCollectionValidation = tempProcessed[9];
+    this.microscopeSlides = tempProcessed[10];
+    this.dateSubmittedProcessedForm = tempProcessed[11];
+    this.cmwCultureNumberProcessed = tempProcessed[12];
 
     if(this.processedFormNumber == this.processedForms.length){
       this.processedFormNumber -= 1;
@@ -794,7 +888,7 @@ export class ViewFormsComponent implements OnInit {
    *  @memberof ViewFormsComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails(userID: string, type: string) {
+  loadUserDetails(userID: string) {
     var person = '';
 
     for(var i = 0; i < this.staff.length; i++){
@@ -803,18 +897,7 @@ export class ViewFormsComponent implements OnInit {
       }
     }
 
-    if(type == 'deposit'){
-      this.userIDDeposit = person;
-    }
-    else if(type == 'request'){
-      this.userIDRequest = person;
-    }
-    else if(type == 'revitalization'){
-      this.userIDRevitalization = person;
-    }
-    else if(type == 'processed'){
-      this.userIDProcessed = person;
-    }
+    return person;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -837,9 +920,50 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewAssociatedDepositForm(){
-    //this.renderer.setStyle(this.associatedDepositForm.nativeElement, 'display', 'block');
-
     this.associatedFormTab = !this.associatedFormTab;
+
+    var tempDeposit;
+
+    for(var i = 0; i < this.depositForms.length; i++){
+      if(this.depositForms[i][1] == this.cmwCultureNumberProcessed){
+        tempDeposit = this.depositForms[i];
+      }
+    }
+
+    if(tempDeposit != null){
+      if(!tempDeposit[0]){
+        this.userIDDeposit = "";
+      }
+      else{
+        this.userIDDeposit = this.loadUserDetails(tempDeposit[0]); 
+      }
+  
+      this.cmwCultureNumberDeposit = tempDeposit[1];
+      this.genus = tempDeposit[2];
+      this.epitheton = tempDeposit[3];
+      this.personalCollectionNumber = tempDeposit[4];
+      this.internationalCollectionNumber = tempDeposit[5];
+      this.herbariumNumber = tempDeposit[6];
+      this.otherFABICollections = tempDeposit[7];
+      this.name = tempDeposit[8];
+      this.typeStatus = tempDeposit[9];
+      this.host = tempDeposit[10];
+      this.vector = tempDeposit[11];
+      this.substrate = tempDeposit[12];
+      this.continent = tempDeposit[13];
+      this.country = tempDeposit[14];
+      this.region = tempDeposit[15];
+      this.locality = tempDeposit[16];
+      this.gps = tempDeposit[17];
+      this.collectedBy = tempDeposit[18];
+      this.dateCollected = tempDeposit[19];
+      this.isolatedBy = tempDeposit[20];
+      this.identifiedBy = tempDeposit[21];
+      this.donatedBy = tempDeposit[22];
+      this.additionalNotes = tempDeposit[23];
+      this.dateSubmittedDeposit = tempDeposit[24];
+      this.formID = tempDeposit[25];
+    }
   }
 
 
@@ -1101,7 +1225,7 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleDepositFormsTab() {
-    this.depositFormTab = !this.depositFormTab;
+    this.depositFormTab = true;
     this.requestFormTab = false;
     this.revitalizationFormTab  = false;
     this.processedFormTab = false;
@@ -1116,7 +1240,7 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleRequestFormsTab() {
-    this.requestFormTab = !this.requestFormTab;
+    this.requestFormTab = true;
     this.depositFormTab = false;
     this.revitalizationFormTab  = false;
     this.processedFormTab = false;
@@ -1131,7 +1255,7 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleRevitalizationFormsTab() {
-    this.revitalizationFormTab = !this.revitalizationFormTab;
+    this.revitalizationFormTab = true;
     this.requestFormTab = false;
     this.depositFormTab  = false;
     this.processedFormTab = false;
@@ -1146,7 +1270,7 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProcessedFormsTab() {
-    this.processedFormTab = !this.processedFormTab;
+    this.processedFormTab = true;
     this.requestFormTab = false;
     this.revitalizationFormTab  = false;
     this.depositFormTab = false;
