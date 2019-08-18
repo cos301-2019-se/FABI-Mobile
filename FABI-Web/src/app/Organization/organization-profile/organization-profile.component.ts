@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, August 17th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -60,14 +60,49 @@ export class OrganizationProfileComponent implements OnInit {
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
 
+  /** The form to change the user's password -  @type {FormGroup} */
+  changePasswordForm: FormGroup;
+
   currentUser: any
 
   isEditingProfile: boolean = false;
+
+  submitted: boolean;
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
   @ViewChild("confirmInput") confirmInput : ElementRef;
+
+  admin_profile_validators = {
+    'admin_name': [
+      { type: 'required', message: 'First name required' },
+    ],
+    'admin_surname': [
+      { type: 'required', message: 'Surname required' },
+    ],
+    'admin_email': [
+      { type: 'required', message: 'Email required' },
+      { type: 'pattern', message: 'Invalid email' }
+    ]
+  }
+
+  change_password_validators = {
+    'current_password': [
+      { type: 'required', message: 'Current password required' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+    ],
+    'new_password': [
+      { type: 'required', message: 'New password required' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase' }
+    ],
+    'confirm_password': [
+      { type: 'required', message: 'Confirm password required' },
+      { type: 'passwordMatch', message: 'Passwords must match' }
+    ]
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,6 +131,20 @@ export class OrganizationProfileComponent implements OnInit {
       admin_name: ['', Validators.required],
       admin_surname: ['', Validators.required],
       admin_email: ['', Validators.required]
+    });
+
+    this.changePasswordForm = this.formBuilder.group({
+      current_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      new_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      confirm_password: ['', Validators.required]
+    }, {
+      validator: this.PasswordMatch('new_password', 'confirm_password')
     });
   }
 
@@ -204,6 +253,8 @@ export class OrganizationProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
+
+    this.submitted = true;
     
     // Check if form input is valid 
     if (this.adminProfileForm.invalid) {
@@ -234,6 +285,58 @@ export class OrganizationProfileComponent implements OnInit {
       }
     });
   }
+
+  changePassword() {
+
+    this.submitted = true;
+
+    // Check if form input is valid 
+    if (this.changePasswordForm.invalid) {
+      return;
+    }
+      
+    var Ucurrent = this.changePasswordForm.controls.current_password.value;
+    var Unew = this.changePasswordForm.controls.new_password.value;
+    
+    this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
+      if(response.success == true && response.code == 200){
+
+        //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully changed password. Please login with new password", "Dismiss", {
+          duration: 3000
+        });
+
+        this.authService.logoutUser();
+        this.router.navigate(['login']);
+      }
+      else{
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+
+  PasswordMatch(newP: string, confirmP: string) {
+    return (formGroup: FormGroup) => {
+      const newControl = formGroup.controls[newP];
+      const confirmControl = formGroup.controls[confirmP];
+
+      if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
+          // return if another validator has already found an error on the matchingControl
+          return;
+      }
+
+      // set error on matchingControl if validation fails
+      if (newControl.value !== confirmControl.value) {
+        confirmControl.setErrors({ passwordMatch: true });
+      } else {
+        confirmControl.setErrors(null);
+      }
+  }
+}
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
