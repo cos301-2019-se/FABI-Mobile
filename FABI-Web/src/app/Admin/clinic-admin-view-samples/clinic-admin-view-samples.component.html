@@ -24,6 +24,7 @@
     <thead>
         <tr>
             <th scope="col">Sample Reference No.</th>
+            <th scope="col">Organizaion</th>
             <th scope="col">Submitted By</th>
             <th scope="col">Status</th>
             <th scope="col">Action</th>
@@ -32,6 +33,7 @@
     <tbody>
         <tr *ngFor="let sample of samples">
             <td>{{sample.referenceNumber}}</td>
+            <td>{{sample.orgName}}</td>
             <td>{{sample.userID}}</td>
             <td>{{sample.status}}</td>
             <td class="table-action">
