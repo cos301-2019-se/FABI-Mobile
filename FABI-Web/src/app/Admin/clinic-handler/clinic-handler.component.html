@@ -112,60 +112,23 @@
 
     <!-- Clinic Tables -->
     <div class="clinic-tables">
-      <div class="input-group search-table">
-        <div class="input-group-prepend ">
-          <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+
+
+      <!-- Sample Table -->
+      <div class="sample-table table-responsive">
+        <h5> Sample Table </h5>
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!organizationMembers">
+          <h6>There are currently no samples</h6>
+          <i class="fas fa-plus-circle" routerLink="/member-handler"></i>
         </div>
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-          aria-describedby="basic-addon1">
+        <!-- / Extra Table Information -->
+
+        <app-organization-view-samples></app-organization-view-samples>
+
       </div>
-      <!-- Clinic Table -->
-      <div class="clinic-table table-responsive">
-        <h5> Clinic Table </h5>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal">View</button>
-                <button class="btn btn-default-delete" data-toggle="modal"
-                  data-target="#confirmDeleteModal">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal">View</button>
-                <button class="btn btn-default-delete" data-toggle="modal"
-                  data-target="#confirmDeleteModal">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal">View</button>
-                <button class="btn btn-default-delete" data-toggle="modal"
-                  data-target="#confirmDeleteModal">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- / Clinic Table -->
+      <!-- / Sample Table -->
 
     </div>
     <!-- / Clinic Tables -->
@@ -332,7 +295,7 @@
   <div id="profile" *ngIf="profileTab">
     <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
     <br />
-    
+
     <app-admin-profile></app-admin-profile>
 
   </div>
@@ -342,7 +305,7 @@
   <div id="help" *ngIf="helpTab">
     <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
     <br />
-    
+
     <app-admin-help></app-admin-help>
 
   </div>
