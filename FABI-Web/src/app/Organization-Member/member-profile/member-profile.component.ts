@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, August 17th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -64,6 +64,7 @@ export class MemberProfileComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
+  /** The user that is currently logged in - @type {boolean} */  
   currentUser: any;
 
   isEditingProfile: boolean = false;

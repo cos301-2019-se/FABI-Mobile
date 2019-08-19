@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -63,7 +63,7 @@ export class StaffNotificationComponent implements OnInit {
   /** Indicates if the help tab is hidden/shown - @type {boolean} */  
   helpTab: boolean = false;
 
-  /** The details of the user currently logged in -  @type {any} */
+  /** The user that is currently logged in -  @type {any} */
   currentUser: any;
 
   /** Object array for holding the staff members -  @type {Member[]} */                        
