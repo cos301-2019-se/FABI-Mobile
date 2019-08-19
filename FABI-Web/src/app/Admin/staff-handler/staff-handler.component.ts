@@ -196,7 +196,6 @@ export class StaffHandlerComponent implements OnInit {
     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       //Calling the neccessary functions as the page loads  
-      this.displayUserTypes();
       this.viewStaff();
       this.addStaffForm.get('admin_type').disable();  
       this.getAdminTypes();
@@ -230,6 +229,7 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   getDBNames() {
+
     this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
       if (response.success == true && response.code == 200) {
         console.log(response);
@@ -475,22 +475,7 @@ export class StaffHandlerComponent implements OnInit {
     });
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //    USER TYPES -> TO BE FETCHED FROM DB IN THE FUTURE
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  displayUserTypes() {
-    this.userTypes = [
-      {
-        "ID":1,
-        "Name":"Admin"
-      },
-      {
-        "ID":2,
-        "Name":"Staff"
-      }
-    ]
-  }
-
+  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            TOGGLE NOTIFICATIONS 
   /**
