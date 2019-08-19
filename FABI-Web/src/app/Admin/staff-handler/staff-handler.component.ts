@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Monday, August 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -56,8 +56,8 @@ export class StaffHandlerComponent implements OnInit {
   valid: boolean = false;
   /** If page is busy loading something - @type {boolean} */
   loading: boolean = false;
-  /** Selected Staff Member from the table - @type {Interface.Organisation} */
-  selectedStaff: Interface.StaffInfo ={fname: '', surname: '', email: '' };
+  /** Selected Staff Member from the table - @type {Interface.StaffInfo} */
+  selectedStaff: Interface.StaffInfo = {fname: '', surname: '', email: ''};
   /** Array of Staff Member objects - @type {StaffInfo[]} */
   staffMembers: Interface.StaffInfo[];
   /** The number of the staff members - @type {number} */   
@@ -154,7 +154,8 @@ export class StaffHandlerComponent implements OnInit {
     private userManagementService: UserManagementAPIService, 
     private notificationLoggingService: NotificationLoggingService
     )  {
-    const formControls = this.privileges.map(control => new FormControl(false));
+
+    // const formControls = this.privileges.map(control => new FormControl(false));
 
     this.addStaffForm = this.formBuilder.group({
       staff_name: ['', Validators.required],
@@ -167,6 +168,8 @@ export class StaffHandlerComponent implements OnInit {
         Validators.required,
         // Validators.pattern('')
       ])],
+      staff_position: ['', Validators.required],
+      admin_type: ['', Validators.required]
 
       // fabi_admin_privileges: new FormArray(formControls),
       // fabi_staff_privileges: new FormArray(formControls),
@@ -193,7 +196,6 @@ export class StaffHandlerComponent implements OnInit {
     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       //Calling the neccessary functions as the page loads  
-      this.displayUserTypes();
       this.viewStaff();
       this.addStaffForm.get('admin_type').disable();  
       this.getAdminTypes();
@@ -227,6 +229,7 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   getDBNames() {
+
     this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
       if (response.success == true && response.code == 200) {
         console.log(response);
@@ -304,30 +307,38 @@ export class StaffHandlerComponent implements OnInit {
     const LstaffSurname = this.addStaffForm.controls.staff_surname.value;
     const LstaffEmail = this.addStaffForm.controls.staff_email.value;
     const LstaffPhone = this.addStaffForm.controls.staff_phone.value;
-    const LstaffPosition = this.addStaffForm.controls.admin_type.value;
-    const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition};
+    let LstaffPosition;
 
-    var databasePrivileges : Interface.DatabasePrivilege[];
+    if(this.addStaffForm.controls.staff_position.value == "Yes") {
+       LstaffPosition = "Staff";
+    } else {
+       LstaffPosition = this.addStaffForm.controls.admin_type.value;
+    }
 
-    this.databaseNames.forEach(name => {
-      var temp : Interface.DatabasePrivilege;
+    
+    const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone};
 
-      var boxes: NodeListOf<HTMLElement> = document.getElementsByName(`${name}`);
+    // var databasePrivileges : Interface.DatabasePrivilege[];
 
-        for(var i = 0; i < document.getElementsByName(`${name}`).length; i++) {
-          var box = boxes[i] as HTMLInputElement;
-          if(box.checked = true) {
-            console.log("---VALUE: " + box[i].value);
-            temp.privileges.push(box[i].value);
-          }
-        }
+    // this.databaseNames.forEach(name => {
+    //   var temp : Interface.DatabasePrivilege;
 
-        if(temp.privileges[0] != null) {
-          temp.name = name;
-          databasePrivileges.push(temp);
-        }
+    //   var boxes: NodeListOf<HTMLElement> = document.getElementsByName(`${name}`);
+
+    //     for(var i = 0; i < document.getElementsByName(`${name}`).length; i++) {
+    //       var box = boxes[i] as HTMLInputElement;
+    //       if(box.checked = true) {
+    //         console.log("---VALUE: " + box[i].value);
+    //         temp.privileges.push(box[i].value);
+    //       }
+    //     }
+
+    //     if(temp.privileges[0] != null) {
+    //       temp.name = name;
+    //       databasePrivileges.push(temp);
+    //     }
       
-    }); 
+    // }); 
 
     this.userManagementService.addStaffMember(staff_details).subscribe((response: any) => {      
       this.loading = false;
@@ -464,22 +475,7 @@ export class StaffHandlerComponent implements OnInit {
     });
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //    USER TYPES -> TO BE FETCHED FROM DB IN THE FUTURE
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  displayUserTypes() {
-    this.userTypes = [
-      {
-        "ID":1,
-        "Name":"Admin"
-      },
-      {
-        "ID":2,
-        "Name":"Staff"
-      }
-    ]
-  }
-
+  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            TOGGLE NOTIFICATIONS 
   /**
