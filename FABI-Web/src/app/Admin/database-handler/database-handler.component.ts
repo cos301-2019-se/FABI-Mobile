@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Monday, August 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -131,9 +131,8 @@ export class DatabaseHandlerComponent implements OnInit {
       this.portingForm = {
         file: null,
         databaseName: ''
-      }
-      
-    }  
+      }      
+  }  
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          NG ON INIT  
@@ -146,7 +145,6 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -162,8 +160,6 @@ export class DatabaseHandlerComponent implements OnInit {
     // this.currentUserPrivileges = this.authService.getFABIUserPrivileges;
   }
 
-
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          SUBMIT CSV
   /**
@@ -174,14 +170,21 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public submitCSV(input?) {
+    this.dbname = '';
+    this.fileInput = '';
+    this.loading = false;
+    this.headings = [];
+    this.columns = [];
+
+    this.fileInput = input;
+    this.loading = true;
+    this.dbname = this.port.nativeElement.value;
 
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "" }});
     
     if(input) {
       this.portingForm.file = input;
     } 
-
-    this.dbname = this.port.nativeElement.value;
 
     if(this.portingForm.databaseName == "" || this.portingForm.databaseName == null){
       let snackBarRef = this.snackBar.open("Please enter a name for the database", "Dismiss", { duration: 3000 });
@@ -200,17 +203,43 @@ export class DatabaseHandlerComponent implements OnInit {
 
       //converts file to JSON Object
       this.jsonData = this.portCSV.convertToJSON(text);
-
-      var columnsIn = this.jsonData[0];
-      for(var key in columnsIn){;
-        this.headings.push(key);
-      } 
       
+      var columnsIn = this.jsonData[0];
+      var tempString = '';
+      var valid = false;
+      for(var key in columnsIn){
+        if(key.indexOf(',') > -1){
+          this.headings.push(key);
+          valid = true;
+        }
+        else{
+          tempString += key + ',';
+        }
+      } 
+
+      if(valid == false){
+        tempString = tempString.slice(0, -1);
+        this.headings.push(tempString);
+      }
+      
+      var valid = false;
       for(var i = 0; i < this.jsonData.length; i++){
-        var columnsIn = this.jsonData[i];
+        columnsIn = this.jsonData[i];
+        var tempString = '';
         for(var key in columnsIn){
-          this.columns.push(this.jsonData[i][key]);
+          if(key.indexOf(',') > -1){
+            this.columns.push(this.jsonData[i][key]);
+            valid = true;
+          }
+          else{
+            tempString += this.jsonData[i][key] + ',';
+          }
         } 
+        
+        if(valid == false){
+          tempString = tempString.slice(0, -1);
+          this.columns.push(tempString);
+        }
       }
 
       if(this.headings.length != 0){
@@ -239,27 +268,26 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getCSV(){    
-
+  getCSV(){  
     let data = "";
     let dbname = this.selectedDatabase;
 
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Downloading CSV" }});
     
     this.dbService.retrieveDatabase(dbname).subscribe((response:any) => {
-
         if(response.success == true && response.code == 200) {
           data = response.data.docs;
           let CSVdata = this.portCSV.extractDatabase(data, dbname);
           
           //Save data in csv file and show download dialog
-          var blob = new Blob([CSVdata], {type: 'application/csv;charset=utf-8'});
+          var blob = new Blob([CSVdata], {type: 'text/csv;charset=utf-8'});
           var downloadLink = document.createElement('a');
           downloadLink.setAttribute('download', dbname+".csv" );
           downloadLink.setAttribute('href', window.URL.createObjectURL(blob) );
           var event = new MouseEvent("click");
           downloadLink.dispatchEvent(event);
-        } else if (response.success == false) {
+        } 
+        else if (response.success == false) {
           //POPUP MESSAGE
           let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
           dialogRef.afterClosed().subscribe((result) => {
@@ -279,7 +307,6 @@ export class DatabaseHandlerComponent implements OnInit {
           }
         });
       
-        console.log("ERROR:" + err.message);
         loadingRef.close();
     }); 
   }
@@ -294,15 +321,12 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public viewDatabase(database : Interface.DatabasePrivilege) {
-
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Retrieving Database" }});
 
     database = database;
 
     this.dbService.retrieveDatabase(database.name).subscribe((response: any) => {
-
       if (response.success == true && response.code == 200) {
-
         Object.keys(response.data.docs[0]).forEach((column) => {
           let obj = {
             'name': column
@@ -315,17 +339,21 @@ export class DatabaseHandlerComponent implements OnInit {
         if(database.privileges.indexOf('create') != -1) {
           this.databasePrivileges.create = true;
         }
+
         if(database.privileges.indexOf('retrieve') != -1) {
           this.databasePrivileges.retrieve = true;
         }
+
         if(database.privileges.indexOf('update') != -1) {
           this.databasePrivileges.update = true;
         }
+
         if(database.privileges.indexOf('delete') != -1) {
           this.databasePrivileges.delete = true;
         }
   
-      } else if (response.success == false) {
+      } 
+      else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the data", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -350,20 +378,16 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitDatabase(){
-
     if(this.ported == true){
       let snackBarRef = this.snackBar.open("The file has already been ported", "Dismiss", {
         duration: 4000
       });
     }
     else{
-
       let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Porting" }});
 
       this.dbService.porting(this.portingForm.databaseName, this.jsonData).subscribe((response:any) => {
-
         loadingRef.close();
-
         if(response.success == true && response.code == 200) {
           //POPUP MESSAGE
           let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
@@ -372,7 +396,8 @@ export class DatabaseHandlerComponent implements OnInit {
 
           this.ported = true;
           
-        }else if (response.success == false) {
+        }
+        else if (response.success == false) {
           //POPUP MESSAGE
           let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
           dialogRef.afterClosed().subscribe((result) => {
@@ -389,7 +414,6 @@ export class DatabaseHandlerComponent implements OnInit {
               this.ngOnInit();
             }
           });
-          console.log("ERROR:" + err.message);
       });
     }
   }
