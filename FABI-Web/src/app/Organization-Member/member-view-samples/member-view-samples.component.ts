@@ -150,4 +150,8 @@ export class MemberViewSamplesComponent implements OnInit {
         
   }
 
+  resetSampleFields() {
+    this.sampleFields = [];
+  }
+
 }
