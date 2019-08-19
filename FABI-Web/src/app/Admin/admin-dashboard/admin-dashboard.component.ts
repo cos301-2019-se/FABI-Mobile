@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,7 +22,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
@@ -30,6 +30,7 @@ import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLog
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 import * as Interface from '../../_interfaces/interfaces';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -62,6 +63,7 @@ export class AdminDashboardComponent implements OnInit {
   cultureCurators: Member[] = []; 
   /** Object array for holding the diagnostic clinic administrators -  @type {Member[]} */               
   diagnosticClinicAdmins: Member[] = []; 
+  
   /** Object array for holding all of FABI's samples -  @type {Object[]} */        
   samples: Object[] = [];  
   /** Object array for holding all of FABI's completed samples -  @type {Object[]} */                      
@@ -85,6 +87,11 @@ export class AdminDashboardComponent implements OnInit {
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  /** Specifies if the list of admins have been retreived to disable the loading spinner - @type {boolean} */  
+  adminTableLoading: boolean = true;
+  /** Specifies if the list of staff have been retreived to disable the loading spinner - @type {boolean} */  
+  staffTableLoading: boolean = true;
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
@@ -117,6 +124,7 @@ export class AdminDashboardComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder, 
     private snackBar: MatSnackBar, 
+    private dialog: MatDialog
     ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,8 +142,10 @@ export class AdminDashboardComponent implements OnInit {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
+      let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Loading" }});
       this.getNumberOfFABIMembers();
       this.getNumberOfFABISamples();
+      loadingRef.close();
     });
 
     //******** TO BE USED IN PRODUCTION: ********
@@ -169,6 +179,11 @@ export class AdminDashboardComponent implements OnInit {
         this.admins = response.data.qs.admins;
         //Temporary array to hold the array of staff returned from the API call
         this.staff = response.data.qs.staff;
+
+        //Deactivate loading table spinners
+        this.adminTableLoading = false;
+        this.staffTableLoading = false;
+
 
         this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
         this.userStats = this.numberOfFABIMembers.toString();

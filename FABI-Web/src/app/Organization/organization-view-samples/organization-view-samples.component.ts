@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -33,17 +33,16 @@ import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-
 
 export class OrganizationViewSamplesComponent implements OnInit {
 
-  displayedColumns: string[];
-  dataSource = new MatTableDataSource([]);
-  fields: any[] = [];
+  sampleFields: any[] = [];
+  samples: any[];
+  selectedSampleData: any;
+
+  /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
+  sampleTableLoading: boolean = true;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -58,26 +57,11 @@ export class OrganizationViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private router: Router
-    ) { }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    TOGGLE NOTIFICATIONS TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof OrganizationViewSamplesComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
-  }
+  ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                           NG ON INIT  
@@ -118,24 +102,20 @@ export class OrganizationViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
+
     this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
+
       if (response.success == true && response.code == 200) {
-        
-        Object.keys(response.data.samples[0]).forEach((column) => {
 
-          let obj = {
-            'name': column
-          }
-          this.fields.push(obj);
+        this.samples = response.data.samples;
 
-        });
 
-        this.displayedColumns= this.fields.map(field => field.name);
-        this.dataSource = new MatTableDataSource(response.data.samples);
-        
+        //Deactivate loading table spinners
+        this.sampleTableLoading = false;
+
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Getting Samples", message: response.message, retry: true } });
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
           if (result == "Retry") {
             this.viewSamples();
@@ -143,6 +123,21 @@ export class OrganizationViewSamplesComponent implements OnInit {
         })
       }
     });
+  }
+
+  selectSample(sample: any) {
+
+    this.selectedSampleData = sample.data;
+
+    Object.keys(this.selectedSampleData).forEach((column) => {
+
+      let obj = {
+        'name': column
+      }
+      this.sampleFields.push(obj);
+
+    });
+        
   }
 
 }

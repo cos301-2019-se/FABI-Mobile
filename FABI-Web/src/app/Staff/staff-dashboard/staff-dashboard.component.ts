@@ -69,6 +69,8 @@ export class StaffDashboardComponent implements OnInit {
   /** The user that is currently logged in -  @type {any} */
   currentUser: any;
 
+  /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */  
+  sampleTableLoading: boolean = true;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -168,6 +170,9 @@ export class StaffDashboardComponent implements OnInit {
       if(response.success == true){
         this.submittedSamples = true;
         var data = response.date.samples;
+
+        //Deactivate loading table spinners
+        this.sampleTableLoading = false;
 
         for(var i = 0; i < data.length; i++){
           var tempSample: Sample = {userID: data[i].userID, orgName: data[i].orgName, status: data[i].status, referenceNumber: data[i].referenceNmber, data: data[i].data};

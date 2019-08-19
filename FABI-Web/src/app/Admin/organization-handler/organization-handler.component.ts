@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, August 17th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,7 +15,7 @@
 
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';
+import { ViewEncapsulation } from '@angular/core';
 
 import { AuthenticationService } from '../../_services/authentication.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -59,51 +59,54 @@ export class OrganizationHandlerComponent implements OnInit {
   /** If page is busy loading something - @type {boolean} */
   // loading: Interface.Loading = {title: '', isLoading: false};
   /** Selected Organisation from the table - @type {Interface.Organisation} */
-  selectedOrg: Interface.Organisation = {orgName: "", admin: {fname: "", surname: "", email: ""}};
+  selectedOrg: Interface.Organisation = { orgName: "", admin: { fname: "", surname: "", email: "" } };
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
-  /** The total number of Organization - @type {number} */           
+  /** The total number of Organization - @type {number} */
   numberOfOrganizations: number = 0;
-  /** The flag which indicates that the numberOfOrganizations has been set - @type {boolean} */           
+  /** The flag which indicates that the numberOfOrganizations has been set - @type {boolean} */
   setOrganizationLength: boolean = false;
 
-  deleteData: Interface.Confirm = {title: '', message: '', info: '', cancel: '', confirm: ''};
+  deleteData: Interface.Confirm = { title: '', message: '', info: '', cancel: '', confirm: '' };
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;   
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  register_validation_messages = {
+  register_organization_validators = {
     'organization_name': [
       { type: 'required', message: 'Organization name is required' },
     ],
     'admin_email': [
       { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please enter a valid email' }
+      { type: 'pattern', message: 'Invalid email' }
     ],
     'admin_name': [
-      { type: 'required', message: 'Name is required' }
+      { type: 'required', message: 'First name is required' }
     ],
     'admin_surname': [
       { type: 'required', message: 'Surname is required' }
     ],
     'admin_phone': [
       { type: 'required', message: 'Phone No. is required' },
-      { type: 'pattern', message: 'Please enter a valid South African number' }
-    ],   
+      // { type: 'pattern', message: 'Please enter a valid number' }
+    ],
   }
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
   profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
   saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
   confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
-
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+
+  /** Specifies if the list of organizations have been retreived to disable the loading spinner - @type {boolean} */
+  organizationTableLoading: boolean = true;
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -120,17 +123,16 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private authService: AuthenticationService, 
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
-    private router: Router, 
-    private userManagementService: UserManagementAPIService, 
+  constructor(private authService: AuthenticationService,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private router: Router,
+    private userManagementService: UserManagementAPIService,
     private notificationLoggingService: NotificationLoggingService
-    ) {
+  ) {
     this.registerOrgForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
-      organization_location: ['', Validators.required],
       admin_name: ['', Validators.required],
       admin_surname: ['', Validators.required],
       admin_email: ['', Validators.compose([
@@ -141,8 +143,8 @@ export class OrganizationHandlerComponent implements OnInit {
         Validators.required,
         // Validators.pattern('')
       ])]
-    });    
-  }	
+    });
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    NG ON INIT  
@@ -157,11 +159,11 @@ export class OrganizationHandlerComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+    this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.viewOrganizations();
     });
-    
+
     //******** TO BE USED IN PRODUCTION: ********
     // // Set current user logged in
     // this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -202,7 +204,7 @@ export class OrganizationHandlerComponent implements OnInit {
 
     this.valid = true;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Registering Organization" }});
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Registering Organization" } });
 
     const LorgName = this.registerOrgForm.controls.organization_name.value;
     const LadminName = this.registerOrgForm.controls.admin_name.value;
@@ -250,7 +252,7 @@ export class OrganizationHandlerComponent implements OnInit {
   selectOrganisation(org: Interface.Organisation) {
     this.selectedOrg = org;
   }
-  
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                     REMOVE ORGANIZATION PROMPT
@@ -261,19 +263,19 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeOrganizationPrompt(org: Interface.Organisation) {    
+  removeOrganizationPrompt(org: Interface.Organisation) {
 
     const orgDetails = `${org.orgName}`;
 
     this.selectedOrg = org;
 
-      this.deleteData = {
-        title: "Remove Organisation",
-        message: "Are you sure you want to remove this Organisation?",
-        info: orgDetails,
-        cancel: "Cancel",
-        confirm: "Remove"
-      }
+    this.deleteData = {
+      title: "Remove Organisation",
+      message: "Are you sure you want to remove this Organisation?",
+      info: orgDetails,
+      cancel: "Cancel",
+      confirm: "Remove"
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,7 +288,7 @@ export class OrganizationHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrg() {
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Removing Organization" }});
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Removing Organization" } });
 
     this.userManagementService.removeOrganization(this.selectedOrg).subscribe((response: any) => {
 
@@ -298,7 +300,7 @@ export class OrganizationHandlerComponent implements OnInit {
           duration: 3000
         });
         this.refreshDataSource();
-      } 
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
@@ -321,7 +323,7 @@ export class OrganizationHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
     this.viewOrganizations();
-      
+
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -332,18 +334,27 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  viewOrganizations() {    
+  viewOrganizations() {
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Loading" } });
+
     this.userManagementService.getAllOrganizations().subscribe((response: any) => {
+
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
-        
+
         //Store the total number of organizations for the statistics 
         this.numberOfOrganizations = this.organizations.length;
 
         //Sets flag to enable the display of statistics on the dashboard
         this.setOrganizationLength = true;
 
-      } 
+        //Deactivate loading table spinners
+        this.organizationTableLoading = false;
+
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the Organisations", message: response.message, retry: true } });
@@ -364,7 +375,7 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
+  toggleNotificationsTab() {
     this.notificationsTab = !this.notificationsTab;
   }
 
@@ -415,5 +426,5 @@ export class OrganizationHandlerComponent implements OnInit {
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
   }
-  
+
 }

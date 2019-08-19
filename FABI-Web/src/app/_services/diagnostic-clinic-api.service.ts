@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -193,8 +193,8 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData) {
-    let submitSampleURL = '***REMOVED***/submitSample';
+  submitSampleForm(formDetails: Interface.SampleFormData) {
+    let submitSampleURL =   `${config.diagnosticClinicURL}/submitSample`;
     let method = 'POST';
 
     const postData = {
@@ -215,6 +215,30 @@ export class DiagnosticClinicAPIService {
     };
 
     return this.http.request<any>(method, submitSampleURL, options);
+  }
+
+  retrieveSampleDetails(sampleRefNum: string) {
+
+    let retreiveSampleDetailsURL =   `${config.diagnosticClinicURL}/retrieveSample`;
+    let method = 'POST';
+
+    const postData = {
+      "refNum": sampleRefNum
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, retreiveSampleDetailsURL, options);
+
   }
   
 }

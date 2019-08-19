@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 16th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -72,17 +72,21 @@ export class SampleFormComponent implements OnInit {
     ) {
       this.sampleForm = this.formBuilder.group({
 
+      // Sample Details
       sample_plant_species: ['', Validators.required],
       sample_num_samples: ['', Validators.required],
+      date_sample_collected: ['', Validators.required],
+      date_sample_sent: [Validators.required],
+      
+      // Plantation Details
       sample_street: ['', Validators.required],
       sample_area: ['', Validators.required],
       sample_city: ['', Validators.required],
       sample_farm: ['', Validators.required],
       sample_province: ['', Validators.required],
       sample_gps: ['', Validators.required],
-      date_sample_collected: ['', Validators.required],
-      date_sample_sent: [Validators.required],
 
+      // Type of Sample
       sample_type_soil: ['', Validators.required],
       sample_type_stems: ['', Validators.required],
       sample_type_roots: ['', Validators.required],
@@ -95,6 +99,7 @@ export class SampleFormComponent implements OnInit {
       sample_type_nuts: ['', Validators.required],
       sample_type_other: [''],
 
+      // Symptoms
       symptom_wilt: ['', Validators.required],
       symptom_stunting: ['', Validators.required],
       symptom_leafspot: ['', Validators.required],
@@ -105,6 +110,7 @@ export class SampleFormComponent implements OnInit {
       symptom_wood: ['', Validators.required],
       symptom_other: [''],
 
+      // Distribution of Symptoms
       distribution_localized: ['', Validators.required],
       distributed_scattered: ['', Validators.required],
       distributed_general: ['', Validators.required],
@@ -113,13 +119,17 @@ export class SampleFormComponent implements OnInit {
       distributed_other: [''],
       percentage_plants_affected: ['', Validators.required],
 
-      conditions_affected: ['', Validators.required],
-      conditions_problem_noticed: ['', Validators.required],
+      // Conditions
+      conditions_date_problem_noticed: ['', Validators.required],
       conditions_date_planted: ['', Validators.required],
       conditions_weather_disturbances: ['', Validators.required],
       conditions_weather_prior: ['', Validators.required],
       conditions_others: ['', Validators.required],
-      conditions_additional: ['', Validators.required]
+      conditions_additional: ['', Validators.required],
+
+      // Permission
+      landowner_name: [''],
+      permission_granted: ['', Validators.required] 
     })
   }
 
@@ -142,59 +152,83 @@ export class SampleFormComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   sendForm() {
-    this.success = true;
 
-    const formDetails: Interface.ClientFormData = {
-      tree_species : this.sampleForm.controls.sample_form_tree_species.value,
-      number_samples : this.sampleForm.controls.sample_form_number_samples.value,
-      location1 : this.sampleForm.controls.sample_form_location1.value,
-      location2 : this.sampleForm.controls.sample_form_location2.value,
-      compartment : this.sampleForm.controls.sample_form_compartment.value,
+    this.submitted = true;
 
-      gps : this.sampleForm.controls.sample_form_gps.value,
-      date_collection : this.sampleForm.controls.sample_form_date_collection.value,
-      date_sent : this.sampleForm.controls.sample_form_date_sent.value,
+    const formDetails: Interface.SampleFormData = {
+      // Sample Details
+      sample_plant_species: this.sampleForm.controls.sample_plant_species.value,
+      sample_num_samples: this.sampleForm.controls.sample_num_samples.value,
+      date_sample_collected: this.sampleForm.controls.date_sample_collected.value,
+      date_sample_sent: this.sampleForm.controls.date_sample_sent.value,
 
-      type_soil : this.sampleForm.controls.sample_type_soil.value,
-      type_stems : this.sampleForm.controls.sample_type_stems.value,
-      type_roots : this.sampleForm.controls.sample_type_roots.value,
-      type_twigs : this.sampleForm.controls.sample_type_twigs.value,
-      type_leaves : this.sampleForm.controls.sample_type_leaves.value,
-      type_seedlings : this.sampleForm.controls.sample_type_seedlings.value,
-      type_media : this.sampleForm.controls.sample_type_media.value,
-      type_water : this.sampleForm.controls.sample_type_water.value,
+      // Plantation Details
+      sample_street: this.sampleForm.controls.sample_street.value,
+      sample_area: this.sampleForm.controls.sample_area.value,
+      sample_city: this.sampleForm.controls.sample_city.value,
+      sample_farm: this.sampleForm.controls.sample_farm.value,
+      sample_province: this.sampleForm.controls.sample_province.value,
+      sample_gps: this.sampleForm.controls.sample_gps.value,
 
-      symptom_wilt : this.sampleForm.controls.symptom_wilt.value,
-      symptom_stunting : this.sampleForm.controls.symptom_stunting.value,
-      symptom_leafspot : this.sampleForm.controls.symptom_leafspot.value,
-      symptom_rootrot : this.sampleForm.controls.symptom_rootrot.value,
-      symptom_dieback : this.sampleForm.controls.symptom_dieback.value,
-      symptom_cankers : this.sampleForm.controls.symptom_cankers.value,
-      symptom_death : this.sampleForm.controls.symptom_death.value,
-      symptom_wood : this.sampleForm.controls.symptom_wood.value,
-      symptom_other : this.sampleForm.controls.symptom_other.value,
+      // Type of Sample
+      sample_type_soil: this.sampleForm.controls.sample_type_soil.value,
+      sample_type_stems: this.sampleForm.controls.sample_type_stems.value,
+      sample_type_roots: this.sampleForm.controls.sample_type_roots.value,
+      sample_type_twigs: this.sampleForm.controls.sample_type_twigs.value,
+      sample_type_leaves: this.sampleForm.controls.sample_type_leaves.value,
+      sample_type_seedlings: this.sampleForm.controls.sample_type_seedlings.value,
+      sample_type_media: this.sampleForm.controls.sample_type_media.value,
+      sample_type_water: this.sampleForm.controls.sample_type_water.value,
+      sample_type_insect: this.sampleForm.controls.sample_type_insect.value,
+      sample_type_nuts: this.sampleForm.controls.sample_type_nuts.value,
+      sample_type_other: this.sampleForm.controls.sample_type_other.value,
 
-      distribution_localized : this.sampleForm.controls.distribution_localized.value,
-      distribution_scattered : this.sampleForm.controls.distributed_scattered.value,
-      distribution_general : this.sampleForm.controls.distributed_general.value,
+      // Symptoms
+      symptom_wilt: this.sampleForm.controls.symptom_wilt.value,
+      symptom_stunting: this.sampleForm.controls.symptom_stunting.value,
+      symptom_leafspot: this.sampleForm.controls.symptom_leafspot.value,
+      symptom_rootrot: this.sampleForm.controls.symptom_rootrot.value,
+      symptom_dieback: this.sampleForm.controls.symptom_dieback.value,
+      symptom_cankers: this.sampleForm.controls.symptom_cankers.value,
+      symptom_death: this.sampleForm.controls.symptom_death.value,
+      symptom_wood: this.sampleForm.controls.symptom_wood.value,
+      symptom_other: this.sampleForm.controls.symptom_other.value,
 
-      conditions_affected : this.sampleForm.controls.conditions_affected.value,
-      conditions_problem_noticed : this.sampleForm.controls.conditions_problem_noticed.value,
-      conditions_date_planted : this.sampleForm.controls.conditions_date_planted.value,
-      conditions_weather_disturbance : this.sampleForm.controls.conditions_weather_disturbances.value,
-      conditions_weather_prior : this.sampleForm.controls.conditions_weather_prior.value,
-      conditions_other : this.sampleForm.controls.conditions_others.value,
-      conditions_additional : this.sampleForm.controls.conditions_additional.value,
+      // Distribution of Symptoms
+      distribution_localized: this.sampleForm.controls.distribution_localized.value,
+      distributed_scattered: this.sampleForm.controls.distributed_scattered.value,
+      distributed_general: this.sampleForm.controls.distributed_general.value,
+      distributed_clumps: this.sampleForm.controls.distributed_clumps.value,
+      distributed_na: this.sampleForm.controls.distributed_na.value,
+      distributed_other: this.sampleForm.controls.distributed_other.value,
+      percentage_plants_affected: this.sampleForm.controls.percentage_plants_affected.value,
+
+      // Conditons
+      conditions_date_problem_noticed: this.sampleForm.controls.conditions_date_problem_noticed.value,
+      conditions_date_planted: this.sampleForm.controls.conditions_date_planted.value,
+      conditions_weather_disturbances: this.sampleForm.controls.conditions_weather_disturbances.value,
+      conditions_weather_prior: this.sampleForm.controls.conditions_weather_prior.value,
+      conditions_others: this.sampleForm.controls.conditions_others.value,
+      conditions_additional: this.sampleForm.controls.conditions_additional.value,
+
+      // Permissions
+      landowner_name: this.sampleForm.controls.landowner_name.value,
+      permission_granted: this.sampleForm.controls.permission_granted.value
     };
 
-    const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
+    console.log("---FORM: " + JSON.stringify(formDetails));
 
-    this.clinicService.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
+    // const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
+
+    this.clinicService.submitSampleForm(formDetails).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Submitted Form", "Dismiss", {
           duration: 3000
         });
+
+        //Navigate to the pre-diagnosis 
+        this.router.navigate(['/pre-diagnosis']);
       } 
       else if (response.success == false) {
         //POPUP MESSAGE

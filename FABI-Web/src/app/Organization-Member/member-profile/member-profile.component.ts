@@ -61,18 +61,57 @@ export class MemberProfileComponent implements OnInit {
   /** The form to display the admin member's details -  @type {FormGroup} */
   memberProfileForm: FormGroup;
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
+  /** The form to change the user's password -  @type {FormGroup} */
+  changePasswordForm: FormGroup;
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  private toggle_status: boolean = false;
 
   /** The user that is currently logged in - @type {boolean} */  
   currentUser: any;
 
   isEditingProfile: boolean = false;
 
+  submitted: boolean;
+
+  /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
+  userProfileLoading: boolean = true;
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput : ElementRef;
+  @ViewChild("passwordInput") passwordInput: ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput : ElementRef;
+  @ViewChild("confirmInput") confirmInput: ElementRef;
+
+  member_profile_validators = {
+    'member_name': [
+      { type: 'required', message: 'First name required' },
+    ],
+    'member_surname': [
+      { type: 'required', message: 'Surname required' },
+    ],
+    'member_email': [
+      { type: 'required', message: 'Email required' },
+      { type: 'pattern', message: 'Invalid email' }
+    ]
+  }
+
+
+  change_password_validators = {
+    'current_password': [
+      { type: 'required', message: 'Current password required' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+    ],
+    'new_password': [
+      { type: 'required', message: 'New password required' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase' }
+    ],
+    'confirm_password': [
+      { type: 'required', message: 'Confirm password required' },
+      { type: 'passwordMatch', message: 'Passwords must match' }
+    ]
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,18 +129,33 @@ export class MemberProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
-    private snackBar: MatSnackBar, 
+    private authService: AuthenticationService,
+    private snackBar: MatSnackBar,
     private router: Router,
-    private formBuilder: FormBuilder, 
-    private userManagementService: UserManagementAPIService
-    ){
+    private formBuilder: FormBuilder,
+    private userManagementService: UserManagementAPIService,
+    private dialog: MatDialog
+  ) {
     this.memberProfileForm = this.formBuilder.group({
       organization_name: '',
       member_name: '',
       member_surname: '',
       member_email: ''
     });
+
+    this.changePasswordForm = this.formBuilder.group({
+      current_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      new_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      confirm_password: ['', Validators.required]
+    }, {
+        validator: this.PasswordMatch('new_password', 'confirm_password')
+      });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,7 +171,7 @@ export class MemberProfileComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginOrganisationMember().subscribe((response : any) => {
+    this.authService.temporaryLoginOrganisationMember().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.loadMemberProfileDetails();
     });
@@ -145,8 +199,8 @@ export class MemberProfileComponent implements OnInit {
    * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
+  toggleNotificaitonsTab() {
+    this.toggle_status = !this.toggle_status;
   }
 
 
@@ -171,7 +225,7 @@ export class MemberProfileComponent implements OnInit {
    * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadMemberProfileDetails(){
+  loadMemberProfileDetails() {
 
     //The id number of the user that is currently logged in
     this.id = this.currentUser.ID;
@@ -180,19 +234,22 @@ export class MemberProfileComponent implements OnInit {
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true) {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Deactivate loading spinners
+        this.userProfileLoading = false;
+
         // Fill the form inputs with the user's details
-        this.memberProfileForm.setValue( {
+        this.memberProfileForm.setValue({
           member_name: data.fname,
           member_surname: data.surname,
           member_email: data.email,
           organization_name: this.currentUser.organisation
         });
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -206,7 +263,9 @@ export class MemberProfileComponent implements OnInit {
    *  @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
+  saveChanges() {
+
+    this.submitted = true;
 
     // Check if form input is valid 
     if (this.memberProfileForm.invalid) {
@@ -216,11 +275,16 @@ export class MemberProfileComponent implements OnInit {
     var Uemail = this.memberProfileForm.controls.member_email.value;
     var Uname = this.memberProfileForm.controls.member_name.value;
     var Usurname = this.memberProfileForm.controls.member_surname.value;
-      
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Profile" } });
+
     //Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
-      if(response.success == true){
-        
+
+      loadingRef.close();
+
+      if (response.success == true) {
+
         //Reloading the updated user's details
         this.loadMemberProfileDetails();
 
@@ -229,13 +293,70 @@ export class MemberProfileComponent implements OnInit {
           duration: 3000
         });
       }
-      else{
+      else {
         //Error handling
         let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
           duration: 3000
         });
       }
     });
+  }
+
+  changePassword() {
+
+    this.submitted = true;
+
+    // Check if form input is valid 
+    if (this.changePasswordForm.invalid) {
+      return;
+    }
+
+    var Ucurrent = this.changePasswordForm.controls.current_password.value;
+    var Unew = this.changePasswordForm.controls.new_password.value;
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
+
+    this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
+
+      loadingRef.close();
+
+      if (response.success == true && response.code == 200) {
+
+        //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully changed password. Please login with new password", "Dismiss", {
+          duration: 3000
+        });
+
+        this.authService.logoutUser();
+        this.router.navigate(['login']);
+      }
+      else {
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+
+  PasswordMatch(newP: string, confirmP: string) {
+    return (formGroup: FormGroup) => {
+      const newControl = formGroup.controls[newP];
+      const confirmControl = formGroup.controls[confirmP];
+
+      if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+
+      // set error on matchingControl if validation fails
+      if (newControl.value !== confirmControl.value) {
+        confirmControl.setErrors({ passwordMatch: true });
+      } else {
+        confirmControl.setErrors(null);
+      }
+    }
   }
 
 
@@ -246,11 +367,11 @@ export class MemberProfileComponent implements OnInit {
    * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showPassword(){
-    if(this.passwordInput.nativeElement.type === 'password'){
+  showPassword() {
+    if (this.passwordInput.nativeElement.type === 'password') {
       this.passwordInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.passwordInput.nativeElement.type = 'password';
     }
   }
@@ -263,18 +384,18 @@ export class MemberProfileComponent implements OnInit {
    * @memberof MemberProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showConfirmedPassword(){
-    if(this.confirmInput.nativeElement.type === 'password'){
+  showConfirmedPassword() {
+    if (this.confirmInput.nativeElement.type === 'password') {
       this.confirmInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.confirmInput.nativeElement.type = 'password';
     }
   }
 
   editProfileToggle() {
 
-    if(this.isEditingProfile) {
+    if (this.isEditingProfile) {
       this.memberProfileForm.get('member_name').disable();
       this.memberProfileForm.get('member_surname').disable();
       this.memberProfileForm.get('member_email').disable();
@@ -285,7 +406,7 @@ export class MemberProfileComponent implements OnInit {
       this.memberProfileForm.get('member_email').enable();
       this.isEditingProfile = true;
     }
-    
+
   }
 
 }

@@ -17,12 +17,13 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@an
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
 import { DISABLED } from '@angular/forms/src/model';
 
 import { ChangePasswordFormValidators } from "../../_interfaces/form-validators";
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-admin-profile',
@@ -63,6 +64,11 @@ export class AdminProfileComponent implements OnInit {
   /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
   profileTab: boolean = false;
 
+  submitted: boolean;
+
+  /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */  
+  userProfileLoading: boolean = true;
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
@@ -73,23 +79,34 @@ export class AdminProfileComponent implements OnInit {
 
   isEditingProfile: boolean = false;
 
+  admin_profile_validators = {
+    'admin_name': [
+      { type: 'required', message: 'First name required' },
+    ],
+    'admin_surname': [
+      { type: 'required', message: 'Surname required' },
+    ],
+    'admin_email': [
+      { type: 'required', message: 'Email required' },
+      { type: 'pattern', message: 'Invalid email' }
+    ]
+  }
+
 
   change_password_validators = {
     'current_password': [
       { type: 'required', message: 'Current password required' },
-      // { type: 'minlength', message: 'Password must be at least 5 characters long' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
       // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
     ],
     'new_password': [
       { type: 'required', message: 'New password required' },
-      // { type: 'minlength', message: 'Password must be at least 5 characters long' },
-      // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase' }
     ],
     'confirm_password': [
       { type: 'required', message: 'Confirm password required' },
       { type: 'passwordMatch', message: 'Passwords must match' }
-      // { type: 'minlength', message: 'Password must be at least 5 characters long' },
-      // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
     ]
   }
 
@@ -115,18 +132,28 @@ export class AdminProfileComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService, 
     private snackBar: MatSnackBar, 
     private authService: AuthenticationService, 
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
     ) { 
     this.adminProfileForm = this.formBuilder.group({
       admin_name: ['', Validators.required],
       admin_surname: ['', Validators.required],
-      admin_email: ['', Validators.required],
+      admin_email: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
       admin_type: ['', Validators.required]
     });
 
     this.changePasswordForm = this.formBuilder.group({
-      current_password: ['', Validators.required],
-      new_password: ['', Validators.required],
+      current_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      new_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
       confirm_password: ['', Validators.required]
     }, {
       validator: this.PasswordMatch('new_password', 'confirm_password')
@@ -196,6 +223,9 @@ export class AdminProfileComponent implements OnInit {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Deactivate loading spinners
+        this.userProfileLoading = false;
+
         // Fill the form inputs with the user's details
         this.adminProfileForm.setValue( {
           admin_name: data.fname,
@@ -219,6 +249,8 @@ export class AdminProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
 
+    this.submitted = true;
+
     // Check if form input is valid 
     if (this.adminProfileForm.invalid) {
       return;
@@ -228,8 +260,13 @@ export class AdminProfileComponent implements OnInit {
     var Uname = this.adminProfileForm.controls.admin_name.value;
     var Usurname = this.adminProfileForm.controls.admin_surname.value;
 
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Profile Details" }});
+
     //Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if(response.success == true){
         
          //Display message to say that details were successfully saved
@@ -252,6 +289,8 @@ export class AdminProfileComponent implements OnInit {
 
   changePassword() {
 
+    this.submitted = true;
+
     // Check if form input is valid 
     if (this.changePasswordForm.invalid) {
       return;
@@ -259,9 +298,30 @@ export class AdminProfileComponent implements OnInit {
       
     var Ucurrent = this.changePasswordForm.controls.current_password.value;
     var Unew = this.changePasswordForm.controls.new_password.value;
-    var Uconfirm = this.changePasswordForm.controls.confirm_password.value;
 
-    console.log(Ucurrent + " " + Unew + " " + Uconfirm);
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Password" }});
+    
+    this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
+
+      loadingRef.close();
+
+      if(response.success == true && response.code == 200){
+
+        //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully changed password. Please login with new password", "Dismiss", {
+          duration: 3000
+        });
+
+        this.authService.logoutUser();
+        this.router.navigate(['login']);
+      }
+      else{
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
+          duration: 3000
+        });
+      }
+    });
   }
 
   
@@ -282,7 +342,6 @@ export class AdminProfileComponent implements OnInit {
           confirmControl.setErrors(null);
         }
     }
-
   }
  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

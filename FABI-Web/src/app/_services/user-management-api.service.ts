@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -699,12 +699,13 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
+    
     let removeMemberURL = `${config.userManagementURL}/removeMember`;
     let method = 'POST';
 
     const postData = {
       "orgName": this.authService.getCurrentSessionValue.user.organisation,
-      "id": memberInfo.ID
+      "id": memberInfo.id
     }
 
     console.log("//// POST: " + JSON.stringify(postData))
@@ -782,6 +783,58 @@ export class UserManagementAPIService {
     };
 
     return this.http.request<any>(method, getDBNamesURL, options);
-  }  
+  }
+
+  
+  updateStaffPassword(oldPassword: string, newPassword: string) {
+
+    let updateStaffPasswordURL = `${config.userManagementURL}/updateStaffPassword`;
+    let method = 'POST';
+
+    const postData = {
+      "id": this.authService.getCurrentSessionValue.user.ID,
+      "oldPass": oldPassword,
+      "newPass": newPassword
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, updateStaffPasswordURL, options);
+  }
+
+  updateOrganizationMemberPassword(oldPassword: string, newPassword: string) {
+
+    let updateOrganizationMemberPasswordURL = `${config.userManagementURL}/updateOrgMemberPassword`;
+    let method = 'POST';
+
+    const postData = {
+      "id": this.authService.getCurrentSessionValue.user.ID,
+      "oldPass": oldPassword,
+      "newPass": newPassword,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, updateOrganizationMemberPasswordURL, options);
+  }
 
 }
