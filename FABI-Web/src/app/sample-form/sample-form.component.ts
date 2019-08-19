@@ -226,6 +226,9 @@ export class SampleFormComponent implements OnInit {
         let snackBarRef = this.snackBar.open("Successfully Submitted Form", "Dismiss", {
           duration: 3000
         });
+
+        //Navigate to the pre-diagnosis 
+        this.router.navigate(['/pre-diagnosis']);
       } 
       else if (response.success == false) {
         //POPUP MESSAGE

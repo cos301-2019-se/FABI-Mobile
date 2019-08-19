@@ -78,6 +78,7 @@ import { MemberMenuComponent } from './Organization-Member/member-menu/member-me
 
 import { FilterPipe } from './_pipes/filter.pipe';
 import { ClinicAdminViewSamplesComponent } from './Admin/clinic-admin-view-samples/clinic-admin-view-samples.component';
+import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
 
 // import { DataTablesModule } from 'angular-datatables';
 
@@ -132,7 +133,8 @@ import { ClinicAdminViewSamplesComponent } from './Admin/clinic-admin-view-sampl
     OrganizationMenuComponent,
     MemberMenuComponent,
     FilterPipe,
-    ClinicAdminViewSamplesComponent
+    ClinicAdminViewSamplesComponent,
+    PreDiagnosisComponent
   ],
   entryComponents: [
     LoadingComponent,
