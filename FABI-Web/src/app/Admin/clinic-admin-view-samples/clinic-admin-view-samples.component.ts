@@ -118,7 +118,7 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
     
-    this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
+    this.diagnosticClinicService.getAllSamples().subscribe((response: any) => {
 
       if (response.success == true && response.code == 200) {
 
@@ -152,6 +152,10 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
 
     });
         
+  }
+
+  resetSampleFields() {
+    this.sampleFields = [];
   }
 
 }

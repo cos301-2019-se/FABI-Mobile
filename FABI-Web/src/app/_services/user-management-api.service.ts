@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Monday, August 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -531,15 +531,17 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   addStaffMember(staffInfo: Interface.StaffInfo) {
-    if (staffInfo.position == "Admin")
-      return this.addFABIAdmin(staffInfo);
+
+    let staffDetails = {"fname": staffInfo.fname, "surname": staffInfo.surname, "email": staffInfo, "phone": staffInfo.phone};
 
     let addStaffMemberURL = `${config.userManagementURL}/addStaff`;
     let method = 'POST';
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "staff": staffInfo
+      "staff": staffDetails,
+      "databases": [],
+      "userType": staffInfo.position
     }
 
     const options = {
