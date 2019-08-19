@@ -187,9 +187,11 @@
       <div class="tab" *ngIf="depositFormTab" #depositFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" (click)="loadPreviousDepositForm()" *ngIf="downloadDeposit"></i>
+          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousDepositForm()" *ngIf="downloadDeposit"></i>
           <h6>DEPOSIT FORM DETAILS</h6>
-          <i class="fas fa-download" (click)="downloadDepositForm()" *ngIf="downloadDeposit"></i><i class="fas fa-trash-alt" (click)="deleteDepositForm()" *ngIf="downloadDeposit"></i><i class="fas fa-arrow-right" (click)="loadNextDepositForm()" *ngIf="downloadDeposit"></i>
+          <i class="fas fa-download" title="Download form" (click)="downloadDepositForm()" *ngIf="downloadDeposit"></i>
+          <i class="fas fa-trash-alt" title="Delete form" (click)="deleteDepositForm()" *ngIf="downloadDeposit"></i>
+          <i class="fas fa-arrow-right" title="Next form" (click)="loadNextDepositForm()" *ngIf="downloadDeposit"></i>
         </div>
 
         <div class="tab-content" ng-app="ref" ng-controller="ref">
@@ -406,9 +408,11 @@
       <div class="tab" *ngIf="requestFormTab" #requestFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" (click)="loadPreviousRequestForm()" *ngIf="downloadRequest"></i>
+          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousRequestForm()" *ngIf="downloadRequest"></i>
           <h6>REQUEST FORM DETAILS</h6>
-          <i class="fas fa-download" (click)="downloadRequestForm()" *ngIf="downloadRequest"></i><i class="fas fa-trash-alt" (click)="deleteRequestForm()" *ngIf="downloadRequest"></i><i class="fas fa-arrow-right" (click)="loadNextRequestForm()" *ngIf="downloadRequest"></i>
+          <i class="fas fa-download" title="Download form" (click)="downloadRequestForm()" *ngIf="downloadRequest"></i>
+          <i class="fas fa-trash-alt" title="Delete form" (click)="deleteRequestForm()" *ngIf="downloadRequest"></i>
+          <i class="fas fa-arrow-right" title="Next form" (click)="loadNextRequestForm()" *ngIf="downloadRequest"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div2" ng-controller="refresh_control2">
@@ -482,9 +486,11 @@
       <div class="tab" *ngIf="revitalizationFormTab" #revitalizationFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" (click)="loadPreviousRevitalizationForm()" *ngIf="downloadRevitalization"></i>
+          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousRevitalizationForm()" *ngIf="downloadRevitalization"></i>
           <h6>REVITALIZATION FORM DETAILS</h6>
-          <i class="fas fa-download" (click)="downloadRevitalizationForm()" *ngIf="downloadRevitalization"></i><i class="fas fa-trash-alt" (click)="deleteRevitalizationForm()" *ngIf="downloadRevitalization"></i><i class="fas fa-arrow-right" (click)="loadNextRevitalizationForm()" *ngIf="downloadRevitalization"></i>
+          <i class="fas fa-download" title="Download form" (click)="downloadRevitalizationForm()" *ngIf="downloadRevitalization"></i>
+          <i class="fas fa-trash-alt" title="Delete form" (click)="deleteRevitalizationForm()" *ngIf="downloadRevitalization"></i>
+          <i class="fas fa-arrow-right" title="Next form" (click)="loadNextRevitalizationForm()" *ngIf="downloadRevitalization"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div3" ng-controller="refresh_control3">
@@ -583,9 +589,11 @@
       <div class="tab" *ngIf="processedFormTab" #processedFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" (click)="loadPreviousProcessedForm()" *ngIf="downloadProcessed"></i>
+          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousProcessedForm()" *ngIf="downloadProcessed"></i>
           <h6>PROCESSED FORM DETAILS</h6>
-          <i class="fas fa-download" (click)="downloadProcessedForm()" *ngIf="downloadProcessed"></i><i class="fas fa-trash-alt" (click)="deleteProcessedForm()" *ngIf="downloadProcessed"></i><i class="fas fa-arrow-right" (click)="loadNextProcessedForm()" *ngIf="downloadProcessed"></i>
+          <i class="fas fa-download" title="Download form" (click)="downloadProcessedForm()" *ngIf="downloadProcessed"></i>
+          <i class="fas fa-trash-alt" title="Delete form" (click)="deleteProcessedForm()" *ngIf="downloadProcessed"></i>
+          <i class="fas fa-arrow-right" title="Next form" (click)="loadNextProcessedForm()" *ngIf="downloadProcessed"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div4" ng-controller="refresh_control4">
@@ -710,9 +718,9 @@
       <div class="tab" *ngIf="associatedFormTab">
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" (click)="loadPreviousDepositForm()"></i>
+          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousDepositForm()"></i>
           <h6>DEPOSIT FORM DETAILS</h6>
-          <i class="fas fa-arrow-right" (click)="loadNextDepositForm()"></i>
+          <i class="fas fa-arrow-right" title="Next form" (click)="loadNextDepositForm()"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div1" ng-controller="refresh_control1">
