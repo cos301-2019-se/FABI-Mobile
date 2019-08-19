@@ -11,6 +11,7 @@ import { SubmitCmwRevitalizationComponent } from './submit-cmw-revitalization/su
 import { Role } from '../_interfaces/role';
 import { AuthenticationGuard } from '../_guards/authentication.guard';
 import { StaffProfileComponent } from './staff-profile/staff-profile.component';
+import { LoginComponent } from '../login/login.component';
 
 const routes: Routes = [
   {
@@ -54,7 +55,11 @@ const routes: Routes = [
     component: SubmitCmwRevitalizationComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.Staff] }
-  }
+  },
+  {
+    path: 'login', 
+    component: LoginComponent
+  },
 ];
 
 @NgModule({

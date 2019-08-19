@@ -48,7 +48,7 @@
                 <!-- Number of samples -->
                 <div class="form-group col-md-6">
                   <label for="sample_num_samples">Number of samples</label>
-                  <input type="text" class="form-control form-control-sm" id="sample_num_samples"
+                  <input type="number" class="form-control form-control-sm" id="sample_num_samples"
                     formControlName="sample_num_samples" placeholder="Number of samples" required>
                   <div class="valid-feedback">
                     Looks good!
@@ -205,7 +205,7 @@
                 <!-- Soil -->
                 <div class="form-check col-md-6">
                   <input type="checkbox" class="form-check-input" id="sample_type_soil"
-                    formControlName="sample_type_soil">
+                    formControlName="sample_type_soil" value="test">
                   <label class="form-check-label" for="sample_type_soil">Soil</label>
                 </div>
                 <!-- / Soil -->
@@ -414,13 +414,13 @@
         </div>
         <!-- / Symptoms-->
 
-        <!--Distribution-->
+        <!--Distribution of Symptoms-->
         <div class="card">
           <div class="card-header" id="headingFive" data-parent="#accordion" data-toggle="collapse"
             data-target="#collapseFive">
             <h5 class="mb-0">
               <button type="button" class="btn btn-link" aria-expanded="false" aria-controls="collapseFive">
-                Distribution
+                Distribution of Symptoms
               </button>
             </h5>
           </div>
@@ -552,7 +552,7 @@
             </div>
           </div>
         </div>
-        <!-- / Distribution-->
+        <!-- / Distribution of Symptoms-->
 
         <!--Conditions-->
         <div class="card">
@@ -560,7 +560,7 @@
             data-target="#collapseSix">
             <h5 class="mb-0">
               <button type="button" class="btn btn-link" aria-expanded="false" aria-controls="collapseSix">
-                Conditions
+                Weather and Planting Conditions
               </button>
             </h5>
           </div>
@@ -569,25 +569,11 @@
             <div class="card-body">
 
               <div class="form-row">
-                <!-- % of plants affected -->
-                <div class="form-group col-md-6">
-                  <label for="conditions_affected">Percentage of plants affected</label>
-                  <input type="text" class="form-control form-control-sm" id="conditions_affected"
-                    formControlName="conditions_affected" placeholder="Percentage of plants affected" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                </div>
-                <!-- / % of plants affected -->
-              </div>
-
-
-              <div class="form-row">
                 <!-- Date when first noticed -->
                 <div class="form-group col-md-6">
                   <label for="conditions_problem_noticed">Date when first noticed</label>
-                  <input type="date" class="form-control form-control-sm" id="conditions_problem_noticed"
-                    formControlName="conditions_problem_noticed" placeholder="Date when first noticed" required>
+                  <input type="date" class="form-control form-control-sm" id="conditions_date_problem_noticed"
+                    formControlName="conditions_date_problem_noticed" placeholder="Date problem was first noticed" required>
                   <div class="valid-feedback">
                     Looks good!
                   </div>
@@ -596,7 +582,7 @@
 
                 <!-- Date when planted -->
                 <div class="form-group col-md-6">
-                  <label for="conditions_date_planted">Date when planted</label>
+                  <label for="conditions_date_planted">Date plants were planted</label>
                   <input type="date" class="form-control form-control-sm" id="conditions_date_planted"
                     formControlName="conditions_date_planted" placeholder="Date when planted" required>
                   <div class="valid-feedback">
@@ -623,7 +609,7 @@
               <div class="form-row">
                 <!-- Weather conditions prior to symptom development -->
                 <div class="form-group col-md-6">
-                  <label for="conditions_weather_prior">Conditions prior to symptom development</label>
+                  <label for="conditions_weather_prior">Weather conditions prior to symptom development</label>
                   <input type="text" class="form-control form-control-sm" id="conditions_weather_prior"
                     formControlName="conditions_weather_prior"
                     placeholder="Weather conditions prior to symptom development" required>
@@ -638,7 +624,7 @@
                 <!-- Other tree species in the environment that display similar
                   symptoms? -->
                 <div class="form-group col-md-6">
-                  <label for="conditions_others">Other tree species in the environment that display similar
+                  <label for="conditions_others">Other plants in the environment that display similar
                     symptoms?</label>
                   <input type="text" class="form-control form-control-sm" id="conditions_others"
                     formControlName="conditions_others"
@@ -654,7 +640,8 @@
               <div class="form-row">
                 <!-- Addition Information -->
                 <div class="form-group col-md-6">
-                  <label for="conditions_additional"> Addition Information </label>
+                  <label for="conditions_additional"> Addition Information: (Please include any information about planting conditons, fungicide use,
+                     herbicide use, changes to fertigation, routine disruptions, etc.) </label>
                   <input type="text" class="form-control form-control-sm" id="conditions_additional"
                     formControlName="conditions_additional" placeholder="Additional information" required>
                   <div class="valid-feedback">
@@ -668,6 +655,49 @@
           </div>
         </div>
         <!-- / Conditions-->
+
+        <!--Permissions-->
+        <div class="card">
+            <div class="card-header" id="headingSeven" data-parent="#accordion" data-toggle="collapse"
+              data-target="#collapseSeven">
+              <h5 class="mb-0">
+                <button type="button" class="btn btn-link" aria-expanded="false" aria-controls="collapseSeven">
+                  Landowner or person in charge's permission to sample on property
+                </button>
+              </h5>
+            </div>
+  
+            <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+              <div class="card-body">
+  
+                <div class="form-row">
+                  <!-- Landowner  -->
+                  <div class="form-group col-md-6">
+                    <label for="landowner_name">Name of landowner/person in charge</label>
+                    <input type="text" class="form-control form-control-sm" id="landowner_name"
+                      formControlName="landowner_name" placeholder="Person name" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                  </div>
+                  <!-- / Landowner -->
+                </div>
+  
+                <div class="form-row">
+                  <!-- Permission -->
+                  <div class="form-check col-md-6">
+                    <h6>By clicking the box below, you give the FABI Diagnostic CLinic permission to collect/process this sample for diagnostic
+                        and research purposes</h6>
+                      <input type="checkbox" class="form-check-input" id="permission_granted"
+                        formControlName="permission_granted" required>
+                      <label class="form-check-label" for="permission_granted">Permission Granted</label>
+                    </div>
+                  <!-- / Permission -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- / Permissions -->
 
       </div>
       <!-- / Form Accordion -->
@@ -684,3 +714,23 @@
 
 </div>
 <!-- / Login -->
+
+
+  <!-- Permission Modal Section -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2></h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h6>By clicking the box below, you give FABI Diagnostic Clinic permission to collect/process this sample for diagnostic and research purposes</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Peermission Modal Section -->

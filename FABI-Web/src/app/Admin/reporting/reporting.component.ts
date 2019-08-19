@@ -878,9 +878,7 @@ export class ReportingComponent implements OnInit {
     this.reportingTab = false;
     this.requestLogs = false;
 
-    //Generate user log so it is ready to be displayed 
-    this.setUserLogTable();
-    
+
     //Display requets report immediately since it is the first active tab
     this.userLogs = true;
   }

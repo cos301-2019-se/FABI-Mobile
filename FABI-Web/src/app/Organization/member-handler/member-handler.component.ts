@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Monday, August 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -56,7 +56,7 @@ export class MemberHandlerComponent implements OnInit {
   /** If page is busy loading something - @type {boolean} */
   loading: boolean = false;
   /** Selected Member from the table - @type {Interface.OrganisationMember} */
-  selectedMember: Interface.OrganisationMember;
+  selectedMember: Interface.OrganisationMember = {fname:'', surname: '', email: ''};
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
   /** Array of Member objects - @type {OrganisationMember[]} */
@@ -95,17 +95,22 @@ export class MemberHandlerComponent implements OnInit {
   password: string = '';
   /** The staff member's confirmed password -  @type {string} */
   confirmPassword: string = '';
-
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
-
+  deleteData: Interface.Confirm = {title: '', message: '', info: '', cancel: '', confirm: ''};
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   private toggle_status: boolean = false;
 
-  add_validation_messages = {
+  currentUser: any;
+
+  /** Specifies if the list of members have been retreived to disable the loading spinner - @type {boolean} */  
+  memberTableLoading: boolean = true;
+
+
+  add_member_validators = {
     'member_email': [
       { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please enter a valid email' }
+      { type: 'pattern', message: 'Invalid email' }
     ],
     'member_name': [
       { type: 'required', message: 'Name is required' }
@@ -115,7 +120,7 @@ export class MemberHandlerComponent implements OnInit {
     ],
     'member_phone': [
       { type: 'required', message: 'Phone No. is required' },
-      { type: 'pattern', message: 'Please enter a valid South African number' }
+      // { type: 'pattern', message: 'Please enter a valid South African number' }
     ]
   }
 
@@ -147,7 +152,6 @@ export class MemberHandlerComponent implements OnInit {
     this.addMemberForm = this.formBuilder.group({
       member_name: ['', Validators.required],
       member_surname: ['', Validators.required],
-      member_location: ['', Validators.required],
       member_email: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
@@ -157,7 +161,7 @@ export class MemberHandlerComponent implements OnInit {
         // Validators.pattern('')
       ])]
 
-    }),
+    });
 
     this.adminProfileForm = this.formBuilder.group({
       organization_name: '',
@@ -244,8 +248,12 @@ export class MemberHandlerComponent implements OnInit {
     const org_details: Interface.Organisation = { orgName: this.currentUser.organisation };
     const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Adding Member" }});
 
     this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
+
+      loadingRef.close();
+      
       this.loading = false;
 
       if (response.success == true && response.code == 200) {
@@ -276,7 +284,7 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  selectOrganisation(member: Interface.OrganisationMember) {
+  selectMember(member: Interface.OrganisationMember) {
     this.selectedMember = member;
   }
 
@@ -289,24 +297,18 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMemberPrompt(member: Interface.OrganisationMember) {
+
     const memberDetails = member.fname + " " + member.surname + " " + member.email;
 
-    let dialogRef = this.dialog.open(LoadingComponent, {
-      data: {
-        title: "Remove Member",
-        message: "Are you sure you want to remove this Member?",
-        info: memberDetails,
-        cancel: "Cancel",
-        confirm: "Remove"
-      }
-    });
+    this.selectedMember = member;
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result == "Confirm") {
-        this.selectedMember = member;
-        this.removeMember();
+      this.deleteData = {
+      title: "Remove Member",
+      message: "Are you sure you want to remove this Member?",
+      info: memberDetails,
+      cancel: "Cancel",
+      confirm: "Remove"
       }
-    })
   }
 
 
@@ -332,7 +334,13 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMember() {
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Removing Member" }});
+    
     this.userManagementService.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Member Removed", "Dismiss", {
@@ -373,11 +381,20 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewMembers() {
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Loading" }});
+
     this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
+
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         this.orgMembers = response.data.members;
         this.dataSource = new MatTableDataSource(this.orgMembers);
         this.dataSource.paginator = this.paginator;
+
+        //Deactivate loading table spinners
+        this.memberTableLoading = false;
 
       } 
       else if (response.success == false) {

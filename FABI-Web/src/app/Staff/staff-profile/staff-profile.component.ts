@@ -17,9 +17,10 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@an
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-staff-profile',
@@ -53,15 +54,55 @@ export class StaffProfileComponent implements OnInit {
   /** The form to display the staff member's details -  @type {FormGroup} */
   staffProfileForm: FormGroup;
 
+  /** The form to change the user's password -  @type {FormGroup} */
+  changePasswordForm: FormGroup;
+
+  /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
+  userProfileLoading: boolean = true;
+
+
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput : ElementRef;
+  @ViewChild("passwordInput") passwordInput: ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput : ElementRef;
+  @ViewChild("confirmInput") confirmInput: ElementRef;
 
   /** The user that is currently logged in -  @type {any} */
   currentUser: any;
 
   isEditingProfile: boolean = false;
+
+  submitted: boolean;
+
+  staff_profile_validators = {
+    'admin_name': [
+      { type: 'required', message: 'First name required' },
+    ],
+    'admin_surname': [
+      { type: 'required', message: 'Surname required' },
+    ],
+    'admin_email': [
+      { type: 'required', message: 'Email required' },
+      { type: 'pattern', message: 'Invalid email' }
+    ]
+  }
+
+
+  change_password_validators = {
+    'current_password': [
+      { type: 'required', message: 'Current password required' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+    ],
+    'new_password': [
+      { type: 'required', message: 'New password required' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase' }
+    ],
+    'confirm_password': [
+      { type: 'required', message: 'Confirm password required' },
+      { type: 'passwordMatch', message: 'Passwords must match' }
+    ]
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,19 +121,34 @@ export class StaffProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private userManagementService: UserManagementAPIService, 
-    private formBuilder: FormBuilder, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private snackBar: MatSnackBar, 
-    private authService: AuthenticationService, 
-    private router: Router
-    ) { 
-      this.staffProfileForm = this.formBuilder.group({
+    private userManagementService: UserManagementAPIService,
+    private formBuilder: FormBuilder,
+    private notificationLoggingService: NotificationLoggingService,
+    private snackBar: MatSnackBar,
+    private authService: AuthenticationService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
+    this.staffProfileForm = this.formBuilder.group({
       staff_name: '',
       staff_surname: '',
       staff_email: '',
       staff_type: ''
     });
+
+    this.changePasswordForm = this.formBuilder.group({
+      current_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      new_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      confirm_password: ['', Validators.required]
+    }, {
+        validator: this.PasswordMatch('new_password', 'confirm_password')
+      });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +164,7 @@ export class StaffProfileComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginStaff().subscribe((response : any) => {
+    this.authService.temporaryLoginStaff().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.loadStaffProfileDetails();
     });
@@ -146,7 +202,7 @@ export class StaffProfileComponent implements OnInit {
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadStaffProfileDetails(){
+  loadStaffProfileDetails() {
     //The id number of the user that is currently logged in
     this.id = this.currentUser.ID;
     //The organization of the user that is currently logged in
@@ -154,19 +210,22 @@ export class StaffProfileComponent implements OnInit {
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true && response.code == 200) {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
+        //Deactivate loading spinners
+        this.userProfileLoading = false;
+
         // Fill the form inputs with the user's details
-        this.staffProfileForm.setValue( {
+        this.staffProfileForm.setValue({
           staff_name: data.fname,
           staff_surname: data.surname,
           staff_email: data.email,
           staff_type: data.userType
         });
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -179,8 +238,10 @@ export class StaffProfileComponent implements OnInit {
    *  @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
-    
+  saveChanges() {
+
+    this.submitted = true;
+
     // Check if form input is valid 
     if (this.staffProfileForm.invalid) {
       return;
@@ -190,9 +251,14 @@ export class StaffProfileComponent implements OnInit {
     var Uname = this.staffProfileForm.controls.staff_name.value;
     var Usurname = this.staffProfileForm.controls.staff_surname.value;
 
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Profile" } });
+
     // Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
-      if(response.success == true){
+
+      loadingRef.close();
+
+      if (response.success == true && response.code == 200) {
 
         //Reloading the updated user's details
         this.loadStaffProfileDetails();
@@ -202,13 +268,70 @@ export class StaffProfileComponent implements OnInit {
           duration: 3000
         });
       }
-      else{
+      else {
         //Error handling
         let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
           duration: 3000
         });
       }
     });
+  }
+
+  changePassword() {
+
+    this.submitted = true;
+
+    // Check if form input is valid 
+    if (this.changePasswordForm.invalid) {
+      return;
+    }
+
+    var Ucurrent = this.changePasswordForm.controls.current_password.value;
+    var Unew = this.changePasswordForm.controls.new_password.value;
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
+
+    this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
+
+      loadingRef.close();
+
+      if (response.success == true && response.code == 200) {
+
+        //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully changed password. Please login with new password", "Dismiss", {
+          duration: 3000
+        });
+
+        this.authService.logoutUser();
+        this.router.navigate(['login']);
+      }
+      else {
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+
+  PasswordMatch(newP: string, confirmP: string) {
+    return (formGroup: FormGroup) => {
+      const newControl = formGroup.controls[newP];
+      const confirmControl = formGroup.controls[confirmP];
+
+      if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+
+      // set error on matchingControl if validation fails
+      if (newControl.value !== confirmControl.value) {
+        confirmControl.setErrors({ passwordMatch: true });
+      } else {
+        confirmControl.setErrors(null);
+      }
+    }
   }
 
 
@@ -220,11 +343,11 @@ export class StaffProfileComponent implements OnInit {
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showPassword(){
-    if(this.passwordInput.nativeElement.type === 'password'){
+  showPassword() {
+    if (this.passwordInput.nativeElement.type === 'password') {
       this.passwordInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.passwordInput.nativeElement.type = 'password';
     }
   }
@@ -238,18 +361,18 @@ export class StaffProfileComponent implements OnInit {
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showConfirmedPassword(){
-    if(this.confirmInput.nativeElement.type === 'password'){
+  showConfirmedPassword() {
+    if (this.confirmInput.nativeElement.type === 'password') {
       this.confirmInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.confirmInput.nativeElement.type = 'password';
     }
   }
 
   editProfileToggle() {
 
-    if(this.isEditingProfile) {
+    if (this.isEditingProfile) {
       this.staffProfileForm.get('staff_name').disable();
       this.staffProfileForm.get('staff_surname').disable();
       this.staffProfileForm.get('staff_email').disable();
@@ -260,7 +383,7 @@ export class StaffProfileComponent implements OnInit {
       this.staffProfileForm.get('staff_email').enable();
       this.isEditingProfile = true;
     }
-    
+
   }
 
 
