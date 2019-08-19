@@ -124,9 +124,6 @@ export class MemberHandlerComponent implements OnInit {
     ]
   }
 
-  /** The user that is currently logged in -  @type {any} */
-  currentUser: any;
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
@@ -246,7 +243,7 @@ export class MemberHandlerComponent implements OnInit {
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
     const org_details: Interface.Organisation = { orgName: this.currentUser.organisation };
-    const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
+    const member_details: Interface.OrganisationMember = { fname: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Adding Member" }});
 

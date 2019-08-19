@@ -34,6 +34,7 @@ const submitCMWRequestFormURL = `${config.cultureClinicURL}/submitCMWRequestForm
 const submitCMWRevitalizationFormURL = `${config.cultureClinicURL}/submitCMWRevitalizationForm`;
 const submitProcessedFormURL =  `${config.cultureClinicURL}/submitCMWProcessingForm`;
 const updateDepositFormStatusURL = `${config.cultureClinicURL}/updateDepositStatus`;
+const getPrediagnosisURL = ``;
 
 //Object for defining the CMW deposit form values
 export interface CMWDeposit{
@@ -364,6 +365,32 @@ export class CultureCollectionAPIService {
     };
 
     return this.http.request('POST', updateDepositFormStatusURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET SAMPLE PRE DIAGNOSIS
+  /**
+   * This function is used to get the pre-diagnosis for a sample that has been submitted.
+   *
+   * @returns API response @type any
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getSamplePreDiagnosis(){
+    const options = {
+        method: 'POST',
+        url: getPrediagnosisURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+        },
+        // body: data,
+        json: true
+    };
+
+    return this.http.request('POST', getPrediagnosisURL, options);
   }
 
 }
