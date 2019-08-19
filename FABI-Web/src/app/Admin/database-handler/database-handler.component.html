@@ -132,7 +132,7 @@
             aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
         </div>
 
-        <table class="table table-hover" *ngIf="databases" id="info">
+        <table class="table table-hover" *ngIf="databases" >
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -248,7 +248,7 @@
                   </tbody>
                 </table>
               </div>
-              <!-- /Preview Table -->
+              <!-- / Preview Table -->
 
             </div>
             <!-- / Preview Uplaoded Database Section -->
@@ -372,7 +372,7 @@
             aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
         </div>
 
-        <table class="table table-hover" *ngIf="databases" id="info">
+        <table class="table table-hover" *ngIf="databases" >
           <thead>
             <tr>
               <th *ngFor="let field of fields">{{field.name}}</th>
