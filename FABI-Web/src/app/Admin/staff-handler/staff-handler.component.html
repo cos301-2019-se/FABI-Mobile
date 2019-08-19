@@ -136,21 +136,28 @@
         <h5> Staff List </h5>
 
         <!-- Extra Table Information -->
-        <div class="table-information" *ngIf="!staffMembers">
+        <div class="table-information" *ngIf="!staffMembers && !staffTableLoading">
           <h6>There are currently no staff members</h6>
           <i class="fas fa-plus-circle" data-toggle="modal" data-target="#addModal"></i>
         </div>
         <!-- / Extra Table Information -->
 
-        <div class="input-group search-table">
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="staffMembers && !staffTableLoading">
           <div class="input-group-prepend ">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
             aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
         </div>
+        <!-- / Search Table -->
 
-        <table class="table table-hover" *ngIf="staffMembers" id="info">
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-success loading" role="status" *ngIf="staffTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" id="info" *ngIf="staffMembers && !staffTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -169,7 +176,7 @@
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal" [id]="staff.email"
                   (click)="selectStaffMember(staff)">View</button>
                 <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal"
-                  [id]="staff.email" (click)="selectStaffMember(staff)">Delete</button>
+                  [id]="staff.email" (click)="removeStaffMemberPrompt(staff)">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -246,12 +253,13 @@
             <div class="form-group">
               <label for="phone">Phone</label>
               <input type="text" class="form-control" id="phone" placeholder="Enter phone" disabled
-                [value]="selectedStaff.email">
+                [value]="selectedStaff.phone">
             </div>
             <!-- /Phone -->
 
             <!-- Delete Action -->
-            <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+            <button class="btn btn-default-delete" data-toggle="modal" (click)="removeStaffMemberPrompt(selectedStaff)"
+              data-target="#confirmDeleteModal">Delete</button>
             <!-- /Delete Action -->
 
           </div>
@@ -292,10 +300,18 @@
                 <div class="form-group">
                   <label for="staff_name">Name</label>
                   <input type="text" class="form-control" id="staff_name" placeholder="Enter name"
-                    formControlName="staff_name" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                    formControlName="staff_name" required
+                    [ngClass]="{
+                    'is-invalid': addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty), 
+                    'is-valid': addStaffForm.controls['staff_name'].valid && (submitted || addStaffForm.controls['staff_name'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty)">
+                    <div *ngFor="let validation of add_staff_validators.staff_name">
+                      <p *ngIf="addStaffForm.get('staff_name').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Name -->
 
@@ -303,10 +319,18 @@
                 <div class="form-group">
                   <label for="staff_surname">Surname</label>
                   <input type="text" class="form-control" id="staff_surname" placeholder="Enter surname"
-                    formControlName="staff_surname" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                    formControlName="staff_surname" required
+                    [ngClass]="{
+                    'is-invalid': addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty), 
+                    'is-valid': addStaffForm.controls['staff_surname'].valid && (submitted || addStaffForm.controls['staff_surname'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty)">
+                    <div *ngFor="let validation of add_staff_validators.staff_surname">
+                      <p *ngIf="addStaffForm.get('staff_surname').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Surname -->
 
@@ -314,10 +338,18 @@
                 <div class="form-group">
                   <label for="staff_email">Email address</label>
                   <input type="email" class="form-control" id="staff_email" aria-describedby="emailHelp"
-                    placeholder="Enter email" formControlName="staff_email" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                    placeholder="Enter email" formControlName="staff_email" required
+                    [ngClass]="{
+                    'is-invalid': addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty), 
+                    'is-valid': addStaffForm.controls['staff_email'].valid && (submitted || addStaffForm.controls['staff_email'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty)">
+                    <div *ngFor="let validation of add_staff_validators.staff_email">
+                      <p *ngIf="addStaffForm.get('staff_email').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Email -->
 
@@ -325,10 +357,18 @@
                 <div class="form-group">
                   <label for="staff_phone">Phone</label>
                   <input type="text" class="form-control" id="staff_phone" placeholder="Enter phone"
-                    formControlName="staff_phone" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                    formControlName="staff_phone" required
+                    [ngClass]="{
+                    'is-invalid': addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty), 
+                    'is-valid': addStaffForm.controls['staff_phone'].valid && (submitted || addStaffForm.controls['staff_phone'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty)">
+                    <div *ngFor="let validation of add_staff_validators.staff_phone">
+                      <p *ngIf="addStaffForm.get('staff_phone').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Phone -->
 
@@ -430,34 +470,30 @@
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-
-        <!-- Modal Header -->
         <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteModalTitle">Are you sure?</h5>
+          <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''">{{deleteData.title}}</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fas fa-times"></i></span>
           </button>
         </div>
-        <!-- Modal Header -->
-
-        <!-- Modal Body -->
         <div class="modal-body">
-
-          <p>Everything related to this member of staff will be permantely deleted</p>
-
-          <!-- Delete Actions -->
+          <h4 *ngIf="deleteData.message != null || deleteData.message != ''">{{deleteData.message}}</h4>
+          <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
+          <p><span>All information related to this staff member will be permantely deleted</span></p>
           <div class="confirm-actions">
-            <button type="button" class="btn btn-default-confirm" (click)="removeStaffMember()">Confirm</button>
-            <button type="button" class="btn btn-default-cancel">Cancel</button>
+            <button type="button" class="btn btn-default-cancel"
+              *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.cancel}}</button>
+            <button type="button" class="btn btn-default-confirm" (click)="removeStaffMember()"
+              *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.confirm}}</button>
           </div>
-          <!-- /Delete Actions -->
-
         </div>
-        <!-- /Modal Body -->
       </div>
     </div>
   </div>
   <!-- / Delete Staff Confirm Modal Section -->
+
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">

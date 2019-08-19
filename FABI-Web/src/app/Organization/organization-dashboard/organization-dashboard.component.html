@@ -10,7 +10,7 @@
       <div class="nav-links">
         <a class="nav-link active" routerLink="/organization-dashboard"><i class="fas fa-home"></i></a>
         <a class="nav-link" routerLink="/member-handler"><i class="fas fa-user-friends"></i></a>
-        <a class="nav-link" routerLink="/organization-submit-sample"><i class="fas fa-vial"></i></a>
+        <a class="nav-link" routerLink="/submit-sample"><i class="fas fa-vial"></i></a>
         <a class="nav-link" routerLink="/organization-view-samples"><i class="fas fa-search"></i></a>
       </div>
     </div>
@@ -109,7 +109,7 @@
         <div class="statistic-box">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
-              <h5>Number of Samples</h5>
+              <h5>Number of Members</h5>
             </div>
             <div class="statistic-box-info">
               <p id="organization_users_stats">{{memberStats}}</p>
@@ -164,17 +164,6 @@
           </div>
           <!-- / Menu Item -->
 
-          <!-- Menu Item -->
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fas fa-vial"></i>
-            </div>
-            <div class="menu-heading">
-              <h6>Submit Samples</h6>
-            </div>
-          </div>
-          <!-- / Menu Item -->
-
         </div>
         <!-- / Menu Shortcut Row -->
 
@@ -184,10 +173,10 @@
           <!-- Menu Item -->
           <div class="menu-item">
             <div class="menu-icon">
-              <i class="fas fa-search"></i>
+              <i class="fas fa-vial"></i>
             </div>
             <div class="menu-heading">
-              <h6>View Samples</h6>
+              <h6>Submit Samples</h6>
             </div>
           </div>
           <!-- / Menu Item -->
@@ -215,15 +204,22 @@
         </div>
         <!-- / Extra Table Information -->
 
-        <div class="input-group search-table">
-            <div class="input-group-prepend ">
-              <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-            </div>
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-              aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="organizationMembers && !memberTableLoading">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+        </div>
+        <!-- / Search Table -->
 
-        <table class="table table-hover" id="info" *ngIf="organizationMembers">
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-success loading" role="status" *ngIf="memberTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" id="info" *ngIf="organizationMembers && !memberTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -245,14 +241,7 @@
       <!-- Sample Table -->
       <div class="member-table table-responsive">
         <h5> Sample Table </h5>
-
-        <!-- Extra Table Information -->
-        <div class="table-information" *ngIf="!organizationMembers">
-          <h6>There are currently no samples</h6>
-          <i class="fas fa-plus-circle" routerLink="/member-handler"></i>
-        </div>
-        <!-- / Extra Table Information -->
-
+ 
         <app-organization-view-samples></app-organization-view-samples>
 
       </div>

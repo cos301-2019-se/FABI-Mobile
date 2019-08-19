@@ -5,7 +5,7 @@
  * Created Date: Sunday, July 28th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 12th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -85,39 +85,6 @@ export class DatabaseManagementService {
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
         'Accept': 'application/json'
-      },
-      body: postData,
-      json: true
-    };
-
-    return this.http.request<any>(method, portingURL, options);
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         REVERSE PORTING
-  /**
-   * Method thats sends a request to the API to get data from the database to create a .csv file 
-   *
-   * @param {String} databaseName
-   * @returns API response 
-   * @memberof HttpService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  reversePorting(databaseName: String) {
-    
-    const portingURL = "";
-    const method = 'POST';
-
-    const postData = {
-      "databaseName": databaseName,
-    };
-
-    const options = {
-      headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*"
       },
       body: postData,
       json: true

@@ -1,0 +1,112 @@
+/* ==========================================================================
+   SUBMIT SAMPLE STYLING
+   ========================================================================== */
+
+/* Submit Sample Container Styling
+   ========================================================================== */
+
+   .sample-submission {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    background-color: #FCFCFC;
+    position: absolute;
+    z-index: -2;
+}
+
+
+/* Banner Styling
+   ========================================================================== */
+
+.banner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 40vh;
+    background: linear-gradient(to right, #76b852, #8dc26f);
+    transform: skewY(-8deg);
+    transform-origin: top left;
+
+    z-index: -1;
+
+    transition: all 0.5s;
+}
+
+/* Width Responsiveness */
+@media (min-width:768px) and (max-width:1023px) {
+    .banner {
+        height: 90vh;
+        transform: skewY(-9deg);
+    }
+}
+
+@media (min-width:1024px) {
+    .banner {
+        height: 100vh;
+        transform: skewY(-10deg);
+        transform-origin: top right;
+
+        top: 2vh;
+    }
+}
+
+
+/*  Heading Styling
+    ========================================================================== */
+.heading {
+    width: 100%;
+    height: 15vh;
+
+    padding: 50px 0 0 25px;
+}
+
+.heading h1 {
+    color: #F7F7F7;
+    font-family: "Montserrat", sans-serif;
+    font-size: 40px;
+}
+
+/* Width Responsiveness */
+@media (min-width:1024px) {
+    .heading {
+        width: 100%;
+        height: 20vh;
+
+        padding: 30px 0 0 25px;
+    }
+
+    .heading h1 {
+        color: #72B555;
+        font-size: 52px;
+    }
+}
+
+
+/* Form Styling
+    ========================================================================== */
+
+.pre-diagnosis {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 85%;
+    min-height: 50vh;
+    height: auto;
+
+    margin-top: 70px;
+
+    z-index: 0;
+
+    transition: all 0.5s;
+
+
+}

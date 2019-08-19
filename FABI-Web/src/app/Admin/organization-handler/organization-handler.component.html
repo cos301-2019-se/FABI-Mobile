@@ -130,7 +130,7 @@
               <h5>Total Organizations</h5>
             </div>
             <div class="statistic-box-info">
-                <p *ngIf="setOrganizationLength">{{numberOfOrganizations}}</p>
+              <p *ngIf="setOrganizationLength">{{numberOfOrganizations}}</p>
             </div>
           </div>
         </div>
@@ -151,41 +151,47 @@
         <h5> Organization Table </h5>
 
         <!-- Extra Table Information -->
-        <div class="table-information" *ngIf="!organizations">
+        <div class="table-information" *ngIf="!organizations && !organizationTableLoading">
           <h6>There are currently no organizations</h6>
           <i class="fas fa-plus-circle" data-toggle="modal" data-target="#addModal"></i>
         </div>
         <!-- / Extra Table Information -->
 
-        <div class="input-group search-table">
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="organizations && !organizationTableLoading">
           <div class="input-group-prepend ">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
             aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
         </div>
+        <!-- / Search Table -->
 
-        <table class="table table-hover" *ngIf="organizations" id="info">
-          <thead>
-            <tr>
-              <th scope="col">Organization</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-success loading" role="status" *ngIf="organizationTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
 
-          <tbody>
-            <tr *ngFor="let organization of organizations">
-              <td>{{organization.orgName}}</td>
-              <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" 
-                  [id]="organization.email" (click)="selectOrganisation(organization)" >View</button>
-                <button class="btn btn-default-delete" data-toggle="modal"
-                  [id]="organization.email" (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal">Delete</button>
-                <!--(click)="removeOrganizationPrompt(organization)-->
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <table class="table table-hover" id="info" *ngIf="organizations && !organizationTableLoading">
+            <thead>
+              <tr>
+                <th scope="col">Organization</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let organization of organizations">
+                <td>{{organization.orgName}}</td>
+                <td class="table-action">
+                  <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
+                    [id]="organization.email" (click)="selectOrganisation(organization)">View</button>
+                  <button class="btn btn-default-delete" data-toggle="modal" [id]="organization.email"
+                    (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
       </div>
       <!-- / Organization Table -->
 
@@ -267,7 +273,8 @@
             <!-- /Phone -->
 
             <!-- Delete Action -->
-            <button class="btn btn-default-delete" data-toggle="modal" (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal" >Delete</button>
+            <button class="btn btn-default-delete" data-toggle="modal" (click)="removeOrganizationPrompt(selectedOrg)"
+              data-target="#confirmDeleteModal">Delete</button>
             <!-- /Delete Action -->
 
           </div>
@@ -303,32 +310,55 @@
                 <div class="form-group">
                   <label for="organization_name">Organization Name</label>
                   <input type="text" class="form-control" id="organization_name" placeholder="Enter organization name"
-                    formControlName="organization_name" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                    formControlName="organization_name" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty), 
+                    'is-valid': registerOrgForm.controls['organization_name'].valid && (submitted || registerOrgForm.controls['organization_name'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.organization_name">
+                      <p *ngIf="registerOrgForm.get('organization_name').hasError(validation.type)">
+                        {{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Name -->
 
                 <!-- Location -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="organization_location">Organization Location</label>
-                  <input type="text" class="form-control" id="organization_location"
-                    placeholder="Enter organization location" formControlName="organization_location" required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                </div>
+                  <input type="text" class="form-control" id="organization_location" placeholder="Enter organization location" formControlName="organization_location" required
+                  [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['organization_location'].invalid && (submitted || registerOrgForm.controls['organization_location'].dirty), 
+                    'is-valid': registerOrgForm.controls['organization_location'].valid && (submitted || registerOrgForm.controls['organization_location'].dirty)}" > -->
+                <!-- Error Validation Feedback-->
+                <!-- <div *ngIf="registerOrgForm.controls['organization_location'].invalid && (submitted || registerOrgForm.controls['organization_location'].dirty)" >
+                    <div *ngFor="let validation of register_organization_validators.organization_location">
+                        <p *ngIf="registerOrgForm.get('organization_location').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
+                  </div> -->
+                <!-- / Error Validation Feedback-->
+                <!-- </div> -->
                 <!-- / Location -->
 
                 <!-- Admin Name -->
                 <div class="form-group">
                   <label for="admin_name">Admin Name</label>
                   <input type="text" class="form-control" id="admin_name" placeholder="Enter admin name"
-                    formControlName="admin_name" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                    formControlName="admin_name" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_name'].valid && (submitted || registerOrgForm.controls['admin_name'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.admin_name">
+                      <p *ngIf="registerOrgForm.get('admin_name').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Admin Name -->
 
@@ -336,10 +366,19 @@
                 <div class="form-group">
                   <label for="admin_surname">Admin Surname</label>
                   <input type="text" class="form-control" id="admin_surname" placeholder="Enter admin surname"
-                    formControlName="admin_surname" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                    formControlName="admin_surname" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_surname'].valid && (submitted || registerOrgForm.controls['admin_surname'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.admin_surname">
+                      <p *ngIf="registerOrgForm.get('admin_surname').hasError(validation.type)">{{validation.message}}
+                      </p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Admin Surname -->
 
@@ -347,10 +386,18 @@
                 <div class="form-group">
                   <label for="admin_email">Email address</label>
                   <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-                    placeholder="Enter email" formControlName="admin_email" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                    placeholder="Enter email" formControlName="admin_email" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_email'].valid && (submitted || registerOrgForm.controls['admin_email'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.admin_email">
+                      <p *ngIf="registerOrgForm.get('admin_email').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Email -->
 
@@ -358,16 +405,24 @@
                 <div class="form-group">
                   <label for="admin_phone">Phone</label>
                   <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone"
-                    formControlName="admin_phone" required>
-                  <div class="valid-feedback">
-                    Looks good!
+                    formControlName="admin_phone" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_phone'].valid && (submitted || registerOrgForm.controls['admin_phone'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.admin_phone">
+                      <p *ngIf="registerOrgForm.get('admin_phone').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Phone -->
 
 
                 <!-- Submit -->
-                <button  type="submit" class="btn btn-default-save" >Add Organization</button>
+                <button type="submit" class="btn btn-default-save">Add Organization</button>
                 <!-- / Submit -->
 
               </div>
@@ -400,8 +455,12 @@
           <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
           <p><span>All information related to this organization will be permantely deleted</span></p>
           <div class="confirm-actions">
-            <button type="button" class="btn btn-default-cancel" *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal" data-dismiss="modal" >{{deleteData.cancel}}</button>
-            <button type="button" class="btn btn-default-confirm" (click)="removeOrg()" *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal" data-dismiss="modal" >{{deleteData.confirm}}</button>
+            <button type="button" class="btn btn-default-cancel"
+              *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.cancel}}</button>
+            <button type="button" class="btn btn-default-confirm" (click)="removeOrg()"
+              *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.confirm}}</button>
           </div>
         </div>
       </div>
