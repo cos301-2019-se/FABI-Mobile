@@ -1031,7 +1031,7 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   processDepositProcessedForm(){
-    this.userIDProcessed = this.currentUser.user.ID;
+    this.userIDProcessed = this.currentUser.ID;
     this.cmwCultureNumberProcessed = this.cmwCultureNumberDeposit;
 
     if(this.processForm.controls.statusOfCulture.value == "" || this.processForm.controls.statusOfCulture.value == null){
@@ -1114,7 +1114,7 @@ export class ViewFormsComponent implements OnInit {
 
     this.cultureCollectionService.submitProcessedForm(tempProcessedForm).subscribe((response: any) => {
       if(response.success == true){
-        var tempUpdate: UpdateDepositForm = {userID: this.currentUser.user.ID, status: 'processed', formID: this.formID};
+        var tempUpdate: UpdateDepositForm = {userID: this.currentUser.ID, status: 'processed', formID: this.formID};
 
         this.cultureCollectionService.updateDepositFormStatus(tempUpdate).subscribe((response: any) => {
           if(response.success == true){
