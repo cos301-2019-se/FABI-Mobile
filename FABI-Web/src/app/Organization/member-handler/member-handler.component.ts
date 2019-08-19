@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, August 17th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -119,6 +119,9 @@ export class MemberHandlerComponent implements OnInit {
     ]
   }
 
+  /** The user that is currently logged in -  @type {any} */
+  currentUser: any;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
@@ -156,16 +159,15 @@ export class MemberHandlerComponent implements OnInit {
 
     }),
 
-      this.adminProfileForm = this.formBuilder.group({
-        organization_name: '',
-        admin_name: '',
-        admin_surname: '',
-        admin_email: '',
-        admin_type: '',
-        admin_password: '',
-        admin_confirm: ''
-      });
-
+    this.adminProfileForm = this.formBuilder.group({
+      organization_name: '',
+      admin_name: '',
+      admin_surname: '',
+      admin_email: '',
+      admin_type: '',
+      admin_password: '',
+      admin_confirm: ''
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,6 +193,8 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.viewMembers();
+
+    this.currentUser = this.authService.getCurrentSessionValue.user;
 
     //Get the Organization's Details
     this.userManagementService.getOrganizationDetails().subscribe((response: any) => {
@@ -237,8 +241,7 @@ export class MemberHandlerComponent implements OnInit {
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
-    const user = this.authService.getCurrentSessionValue;
-    const org_details: Interface.Organisation = { orgName: user.user.organisation };
+    const org_details: Interface.Organisation = { orgName: this.currentUser.organisation };
     const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
 
@@ -422,12 +425,10 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadAdminProfileDetails() {
-    //Getting the user's details from local storage
-    var tempUser = this.authService.getCurrentSessionValue;
     //The id number of the user that is currently logged in
-    this.id = tempUser.user.ID;
+    this.id = this.currentUser.ID;
     //The organization of the user that is currently logged in
-    this.organization = tempUser.user.organisation;
+    this.organization = this.currentUser.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {

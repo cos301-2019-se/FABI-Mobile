@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, August 17th 2019
+ * Last Modified: Sunday, August 18th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -60,6 +60,7 @@ export class OrganizationProfileComponent implements OnInit {
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
 
+  /** The user that is currently logged in -  @type {any} */
   currentUser: any
 
   isEditingProfile: boolean = false;
