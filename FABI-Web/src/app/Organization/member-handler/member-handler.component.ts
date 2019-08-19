@@ -101,6 +101,7 @@ export class MemberHandlerComponent implements OnInit {
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   private toggle_status: boolean = false;
 
+  /** The user that is currently logged in -  @type {any} */
   currentUser: any;
 
   /** Specifies if the list of members have been retreived to disable the loading spinner - @type {boolean} */  
@@ -123,9 +124,6 @@ export class MemberHandlerComponent implements OnInit {
       // { type: 'pattern', message: 'Please enter a valid South African number' }
     ]
   }
-
-  /** The user that is currently logged in -  @type {any} */
-  currentUser: any;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -196,27 +194,18 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    this.viewMembers();
 
-    this.currentUser = this.authService.getCurrentSessionValue.user;
-
-    //Get the Organization's Details
-    this.userManagementService.getOrganizationDetails().subscribe((response: any) => {
-      if (response.success == true && response.status == 200) {
-        // ***********************************
-        // POLPULATE FIELDS BASED ALREADY KNOWN INFORMATION
-        // *************
-
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Load Organizations' Details", message: response.message } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
-      }
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
+      this.currentUser = this.authService.getCurrentSessionValue.user;
+      this.viewMembers();
     });
+    
+    //******** TO BE USED IN PRODUCTION: ********
+    // // Set current user logged in
+    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    //Calling the neccessary functions as the page loads
+    // this.viewMembers();
 
   }
 
@@ -246,7 +235,7 @@ export class MemberHandlerComponent implements OnInit {
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
     const org_details: Interface.Organisation = { orgName: this.currentUser.organisation };
-    const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
+    const member_details: Interface.OrganisationMember = { fname: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Adding Member" }});
 
