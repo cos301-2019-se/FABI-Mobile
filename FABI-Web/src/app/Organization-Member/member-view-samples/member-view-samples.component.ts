@@ -45,6 +45,9 @@ export class MemberViewSamplesComponent implements OnInit {
   /** The search item the user is looking for in the table -  @type {string} */
   public searchSample: string;
 
+  /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
+  sampleTableLoading: boolean = true;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -125,6 +128,9 @@ export class MemberViewSamplesComponent implements OnInit {
       if (response.success == true && response.code == 200) {
 
         this.samples = response.data.samples;
+
+        //Deactivate loading table spinners
+        this.sampleTableLoading = false;
         
       } else if (response.success == false) {
         //POPUP MESSAGE

@@ -1,29 +1,26 @@
 <h3>NOTIFICATIONS</h3>
-    <h5 *ngIf="!notifications">No notifications</h5>
 
-    <!-- Notification Items -->
-    <div class="notification-items" *ngIf="allNotifications">
+<!-- Notification Items -->
+<div class="notification-items">
 
-      <!-- Notification Item -->
-      <div class="notification-item" *ngFor="let log of allNotifications">
-        <div class="notification-action">
-          <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
-        </div>
-        <div class="notification-heading">
-          <h6><b>{{log.Type}} notification</b></h6>
-        </div>
-        <div class="notification-content">
-          <p><b>Action:</b> {{log.Action}}</p>
-          <p><b>Date:</b> {{log.Date}}</p>
-        </div>
-      </div>
-      <!-- Notification Item -->
+  <!-- No Notification Indicator -->
+  <h5 class="no-notifications" *ngIf="!notifications">No notifications</h5>
+  <!-- / No Notification Indicator -->
 
+  <!-- Notification Item -->
+  <div class="notification-item" *ngFor="let log of allNotifications">
+    <div class="notification-action">
+      <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
     </div>
-    <!-- Notification Items -->
-
-    <!-- See More Icon -->
-    <div class="see-more">
-      <i class="fas fa-ellipsis-h"></i>
+    <div class="notification-heading">
+      <h6><b>{{log.Type}} notification</b></h6>
     </div>
-    <!-- / See More Icon -->
+    <div class="notification-content">
+      <p><b>Action:</b> {{log.Action}}</p>
+      <p><b>Date:</b> {{log.Date}}</p>
+    </div>
+  </div>
+  <!-- Notification Item -->
+
+</div>
+<!-- Notification Items -->

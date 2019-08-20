@@ -1,8 +1,11 @@
 <h3>NOTIFICATIONS</h3>
-<h5 *ngIf="!notifications">No notifications</h5>
 
 <!-- Notification Items -->
-<div class="notification-items" *ngIf="allNotifications">
+<div class="notification-items">
+
+  <!-- No Notification Indicator -->
+  <h5 class="no-notifications" *ngIf="!notifications">No notifications</h5>
+  <!-- / No Notification Indicator -->
 
   <!-- Notification Item -->
   <div class="notification-item" *ngFor="let log of allNotifications">
@@ -21,9 +24,3 @@
 
 </div>
 <!-- Notification Items -->
-
-<!-- See More Icon -->
-<div class="see-more">
-  <i class="fas fa-ellipsis-h"></i>
-</div>
-<!-- / See More Icon -->
