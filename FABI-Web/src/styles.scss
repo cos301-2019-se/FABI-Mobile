@@ -842,8 +842,11 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     background-color: #F7F7F7;
     width: 100%;
-    min-height: 100vh;
-    height: auto;
+    //min-height: 100vh;
+    //height: auto;
+    height: 100vh;
+
+    overflow:scroll;
 
     float: right;
 
@@ -855,6 +858,13 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 #notifications h3 {
     font-family: "Montserrat", sans-serif;
     color: #6B746F;
+}
+
+.no-notifications{
+    font-family: "Roboto", sans-serif;
+    color: #6B746F;
+
+    margin-top: 50%;
 }
 
 #notifications i {
@@ -880,7 +890,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     background-color: #FFF;
 
-    border-left: 5px solid #72B555;
+    border: 1px solid #72B555;
 
     border-radius: 5px;
 
@@ -946,6 +956,18 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     #notifications {
         width: 60vh;
     }
+}
+
+.notification-loading {
+    display: flex;
+    justify-content: center;
+}
+
+.loading {
+    width: 50px;
+    height: 50px;
+
+    margin-top: 100px;
 }
 
 .see-more {
