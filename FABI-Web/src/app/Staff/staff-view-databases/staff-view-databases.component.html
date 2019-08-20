@@ -1,0 +1,88 @@
+<!-- Database Tables -->
+<div class="database-tables">
+
+  <!-- Database Table -->
+  <div class="database-table table-responsive">
+    <h5> Database List </h5>
+
+    <!-- Extra Table Information -->
+    <div class="table-information" *ngIf="!databases">
+      <h6>There are currently no databases</h6>
+      <i class="fas fa-plus-circle" data-toggle="modal" data-target="#addModal"></i>
+    </div>
+    <!-- / Extra Table Information -->
+
+    <div class="input-group search-table">
+      <div class="input-group-prepend ">
+        <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+      </div>
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+        aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchDatabase">
+    </div>
+
+    <table class="table table-hover" *ngIf="databases" >
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let database of databases | filter : 'database' : searchDatabase">
+          <td>{{database.name}}</td>
+          <td class="table-action">
+            <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal"
+              [id]="database" (click)="viewDatabase(database)">View</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- / Database Table -->
+
+</div>
+<!-- / Database Tables -->
+
+
+<!-- View Database Modal -->
+<div class="modal fade" id="viewDatabaseModal" tabindex="-1" role="dialog" aria-labelledby="viewDatabaseModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="downloadModalTitle">View Database</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetDatabaseFields()">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="input-group search-table">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchView">
+        </div>
+
+        <table class="table table-hover" *ngIf="databaseData" >
+          <thead>
+            <tr>
+              <th *ngFor="let field of fields">{{field.name}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of databaseData | filter : 'databaseView' : searchView">
+              <td *ngFor="let field of fields">{{data[field.name]}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default-save" (click)="getCSV()">Download Database</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / View Database Modal -->
