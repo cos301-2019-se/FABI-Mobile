@@ -7,6 +7,13 @@
   <h5 class="no-notifications" *ngIf="!notifications">No notifications</h5>
   <!-- / No Notification Indicator -->
 
+  <!-- Loading Spinner -->
+  <div class="notification-loading">
+    <div class="spinner-grow text-secondary loading" role="status" *ngIf="notificationsLoading">
+    </div>
+  </div>
+  <!-- /Loading Spinner -->
+
   <!-- Notification Item -->
   <div class="notification-item" *ngFor="let log of allNotifications">
     <div class="notification-action">
