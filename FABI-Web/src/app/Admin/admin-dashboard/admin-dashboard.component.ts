@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Monday, August 19th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -97,6 +97,11 @@ export class AdminDashboardComponent implements OnInit {
   @ViewChild("passwordInput") passwordInput : ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
   @ViewChild("confirmInput") confirmInput : ElementRef;
+
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchAdmins: string;
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchStaff: string;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
