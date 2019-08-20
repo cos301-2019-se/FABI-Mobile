@@ -14,7 +14,7 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { DatabaseManagementService } from "../../_services/database-management.service";
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -24,13 +24,13 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
 import { ErrorComponent } from '../../_errors/error-component/error.component';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 
 import { Porting } from '../../_services/porting.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-import * as Interface  from '../../_interfaces/interfaces';
+import * as Interface from '../../_interfaces/interfaces';
 import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
@@ -47,34 +47,45 @@ export class StaffViewDatabasesComponent implements OnInit {
   /** Indicates if a file is loading or not - @type {boolean} */
   loading: boolean = false;
 
-  /** The data source of the HTML table - @type {MatTableDataSource([])} */ 
+  /** The data source of the HTML table - @type {MatTableDataSource([])} */
   databaseData: any[];
   fields: any[] = [];
   databases: Interface.DatabasePrivilege[];
-  databasePrivileges: any = {'create': false, 'retrieve': true, 'update': false, 'delete': false};
+  databasePrivileges: any = { 'create': false, 'retrieve': true, 'update': false, 'delete': false };
   selectedDatabase: string;
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
-  currentUserPrivileges: any
+  currentUserPrivileges: any;
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
+  helpTab: boolean = false;
 
   constructor(
-    private authService: AuthenticationService, 
-    private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
-    private resolver: ComponentFactoryResolver, 
-    private userManagementService: UserManagementAPIService, 
+    private authService: AuthenticationService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private resolver: ComponentFactoryResolver,
+    private userManagementService: UserManagementAPIService,
     private dbService: DatabaseManagementService,
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+    this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
       this.databases = this.currentUserPrivileges.databases;
     });
-    
+
     //******** TO BE USED IN PRODUCTION: ********
     // // Set current user logged in
     // this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -84,7 +95,7 @@ export class StaffViewDatabasesComponent implements OnInit {
   }
 
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        VIEW DATABASE
   /**
    *  This function is used to load the selected database and display it in the HTML page
@@ -92,9 +103,9 @@ export class StaffViewDatabasesComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  public viewDatabase(database : Interface.DatabasePrivilege) {
+  public viewDatabase(database: Interface.DatabasePrivilege) {
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Retrieving Database" }});
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Retrieving Database" } });
 
     this.dbService.retrieveDatabase(database.name).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
@@ -122,8 +133,8 @@ export class StaffViewDatabasesComponent implements OnInit {
         // if(database.privileges.indexOf('delete') != -1) {
         //   this.databasePrivileges.delete = true;
         // }
-  
-      } 
+
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the data", message: response.message, retry: true } });
@@ -142,6 +153,67 @@ export class StaffViewDatabasesComponent implements OnInit {
   resetDatabaseFields() {
     this.fields = [];
     this.databaseData = [];
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      TOGGLE NOTIFICATIONS 
+  /**
+   * This function will toggle the display of the notifications side panel
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificationsTab() {
+    this.notificationsTab = !this.notificationsTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE PROFILE 
+  /**
+   * This function will toggle the display of the profile side panel
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleProfileTab() {
+    this.profileTab = !this.profileTab;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      DISPLAY PROFILE SAVE BUTTON 
+  /**
+   * This function will display the save button option if any details in the profile have been altered
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayProfileSaveBtn() {
+    this.saveBtn = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                   DISPLAY PASSWORD CONFIRM INPUT 
+  /**
+   * This function will display the confirm password input field in the user's password was altered
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayConfirmPasswordInput() {
+    this.confirmPasswordInput = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE HELP 
+  /**
+   * This function will toggle the display of the help side panel
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleHelpTab() {
+    this.helpTab = !this.helpTab;
   }
 
 }

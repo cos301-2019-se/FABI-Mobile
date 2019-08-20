@@ -1,5 +1,5 @@
 <!-- Extra Table Information -->
-<div class="table-information" *ngIf="!samples">
+<div class="table-information" *ngIf="!samples && !sampleTableLoading">
   <h6>There are currently no samples</h6>
   <i class="fas fa-plus-circle" routerLink="/member-submit-sample"></i>
 </div>
@@ -16,11 +16,11 @@
 <!-- / Search Table -->
 
 <!-- Loading Spinner -->
-<div class="spinner-grow text-success loading" role="status" *ngIf="sampleTableLoading">
+<div class="spinner-grow text-secondary loading" role="status" *ngIf="sampleTableLoading">
 </div>
 <!-- /Loading Spinner -->
 
-<table class="table table-hover"  *ngIf="samples">
+<table class="table table-hover"  *ngIf="samples && !sampleTableLoading">
   <thead>
     <tr>
       <th scope="col">Sample Reference No.</th>
