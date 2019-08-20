@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Tuesday, August 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -72,6 +72,11 @@ export class StaffDashboardComponent implements OnInit {
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */  
   sampleTableLoading: boolean = true;
 
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchSample: string;
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchDeposit: string;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -109,7 +114,6 @@ export class StaffDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginStaff().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -206,7 +210,7 @@ export class StaffDashboardComponent implements OnInit {
             locality: data[i].locality, gps: data[i].gps, collectedBy: data[i].collectedBy, dateCollected: data[i].dateCollected, isolatedBy: data[i].isolatedBy,
             identifiedBy: data[i].identifiedBy, donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted, formID: data[i].id};
           
-          if(tempDeposit.userID == localStorage.getItem('userID')){
+          if(tempDeposit.userID == this.currentUser.ID){
             this.depositForms = true;
             this.deposits.push(tempDeposit);
           }

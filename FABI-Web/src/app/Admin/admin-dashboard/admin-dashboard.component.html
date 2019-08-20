@@ -259,7 +259,7 @@
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchAdmins">
         </div>
         <!-- / Search Table -->
 
@@ -277,7 +277,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let admin of admins">
+            <tr *ngFor="let admin of admins | filter : 'admin-dashboard' : searchAdmins">
               <td>{{admin.fname}}</td>
               <td>{{admin.surname}}</td>
               <td>{{admin.email}}</td>
@@ -304,7 +304,7 @@
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchStaff">
         </div>
         <!-- / Search Table -->
 
@@ -323,10 +323,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let staff of staff">
-              <td>{{staff.fname}}</td>
-              <td>{{staff.surname}}</td>
-              <td>{{staff.email}}</td>
+            <tr *ngFor="let s of staff | filter : 'admin-dashboard' : searchStaff">
+              <td>{{s.fname}}</td>
+              <td>{{s.surname}}</td>
+              <td>{{s.email}}</td>
             </tr>
           </tbody>
         </table>
