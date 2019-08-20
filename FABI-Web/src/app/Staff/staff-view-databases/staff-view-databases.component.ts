@@ -69,7 +69,7 @@ export class StaffViewDatabasesComponent implements OnInit {
 
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+    this.authService.temporaryLoginStaff().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
       this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
       this.databases = this.currentUserPrivileges.databases;
