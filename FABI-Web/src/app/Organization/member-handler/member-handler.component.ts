@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 19th 2019
+ * Last Modified: Tuesday, August 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -107,7 +107,6 @@ export class MemberHandlerComponent implements OnInit {
   /** Specifies if the list of members have been retreived to disable the loading spinner - @type {boolean} */  
   memberTableLoading: boolean = true;
 
-
   add_member_validators = {
     'member_email': [
       { type: 'required', message: 'Email is required' },
@@ -124,6 +123,9 @@ export class MemberHandlerComponent implements OnInit {
       // { type: 'pattern', message: 'Please enter a valid South African number' }
     ]
   }
+
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchMember: string;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
