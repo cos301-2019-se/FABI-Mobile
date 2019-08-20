@@ -1,16 +1,18 @@
 <h3>NOTIFICATIONS</h3>
-<h5 *ngIf="!notifications">No notifications</h5>
-
-<!-- Loading Spinner -->
-<div class="notification-loading">
-  <div class="spinner-grow text-success loading" role="status" *ngIf="notificationsLoading">
-  </div>
-</div>
-
-<!-- /Loading Spinner -->
 
 <!-- Notification Items -->
-<div class="notification-items" *ngIf="allNotifications">
+<div class="notification-items">
+
+  <!-- No Notification Indicator -->
+  <h5 class="no-notifications" *ngIf="!notifications">No notifications</h5>
+  <!-- / No Notification Indicator -->
+
+  <!-- Loading Spinner -->
+  <div class="notification-loading">
+    <div class="spinner-grow text-secondary loading" role="status" *ngIf="notificationsLoading">
+    </div>
+  </div>
+  <!-- /Loading Spinner -->
 
   <!-- Notification Item -->
   <div class="notification-item" *ngFor="let log of allNotifications">
@@ -29,9 +31,3 @@
 
 </div>
 <!-- Notification Items -->
-
-<!-- See More Icon -->
-<div class="see-more">
-  <i class="fas fa-ellipsis-h"></i>
-</div>
-<!-- / See More Icon -->
