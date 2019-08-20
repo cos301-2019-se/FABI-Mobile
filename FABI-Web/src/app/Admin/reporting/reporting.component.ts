@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 16th 2019
+ * Last Modified: Tuesday, August 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -128,6 +128,8 @@ export class ReportingComponent implements OnInit {
 
   /** The search item the user is looking for in the table -  @type {string} */
   public searchItem: string;
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchReports: string;
 
   ngAfterViewInit() {
     // this.initDatatable()
@@ -560,7 +562,14 @@ export class ReportingComponent implements OnInit {
           tempArray.push(this.loadUserDetails(data[i].userID));
           tempArray.push(data[i].cmwCultureNumber);
           tempArray.push(data[i].name);
-          tempArray.push(data[i].collected_by);
+          
+          if(!data[i].collected_by){
+            tempArray.push(data[i].collectedBy);
+          }
+          else{
+            tempArray.push(data[i].collected_by);
+          }
+
           tempArray.push(data[i].dateCollected);
           tempArray.push(data[i].isolatedBy);
           tempArray.push(data[i].identifiedBy);
@@ -861,7 +870,7 @@ export class ReportingComponent implements OnInit {
     this.requestLogs = true;
     this.userLogs = false;
 
-    //Display requets report immediately since it is the first active tab
+    //Display request report immediately since it is the first active tab
     this.requestReport = true;
   }
 
@@ -877,9 +886,8 @@ export class ReportingComponent implements OnInit {
     this.logsTab = !this.logsTab;
     this.reportingTab = false;
     this.requestLogs = false;
+    this.requestReport = false;
 
-
-    //Display requets report immediately since it is the first active tab
     this.userLogs = true;
   }
 
