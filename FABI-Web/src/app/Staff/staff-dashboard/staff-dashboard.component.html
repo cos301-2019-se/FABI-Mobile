@@ -8,16 +8,17 @@
       <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
       <div class="nav-links">
-        <a class="nav-link active" routerLink="/staff-dashboard"><i class="fas fa-home"></i></a>
-        <a class="nav-link" routerLink="/staff-view-samples"><i class="fas fa-search"></i></a>
-        <a class="nav-link" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i></a>
-        <a class="nav-link" routerLink="/cmw-menu"><i class="fas fa-vials"></i></a>
-        <a class="nav-link" routerLink="/"> <i class="fas fa-plus-circle"></i></a>
+        <a class="nav-link active" href="#"><i class="fas fa-home"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-vial"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-vials"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-database"></i></a>
+        <a class="nav-link" href="#"> <i class="fas fa-plus-circle"></i></a>
       </div>
     </div>
     <div class="bottom-nav-items">
       <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
-      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </div>
   <!-- / Sidenav -->
@@ -29,20 +30,23 @@
         <h1 class="brand">STAFF DASHBOARD</h1>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <!-- Navbar Items -->
-          <li class="nav-item active">
-            <a class="nav-link" routerLink="/staff-dashboard">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/staff-view-samples">Samples</a>
+            <a class="nav-link" href="#">Samples</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/cmw-menu">CMW Culture Collection</a>
+            <a class="nav-link" href="#">CMW Culture Collection</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+            <a class="nav-link" href="#">Databases</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="logout()">Logout</a>
+            <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -161,7 +165,7 @@
         <h5> Samples </h5>
 
         <!-- Extra Table Information -->
-        <div class="table-information" *ngIf="!submittedSamples">
+        <div class="table-information" *ngIf="!submittedSamples && !sampleTableLoading">
           <h6>You currently have no samples</h6>
           <i class="fas fa-plus-circle" routerLink="staff-submit-sample"></i>
         </div>
@@ -178,7 +182,7 @@
         <!-- / Search Table -->
 
         <!-- Loading Spinner -->
-        <div class="spinner-grow text-success loading" role="status" *ngIf="sampleTableLoading">
+        <div class="spinner-grow text-secondary loading" role="status" *ngIf="sampleTableLoading">
         </div>
         <!-- /Loading Spinner -->
 
@@ -200,45 +204,6 @@
         </table>
       </div>
       <!-- / Samples Table -->
-
-
-      <!-- Deposits Table -->
-      <div class="dashboard-table table-responsive">
-        <h5> Deposits Table </h5>
-
-        <!-- Extra Table Information -->
-        <div class="table-information" *ngIf="!depositForms">
-          <h6>You currently have no deposits</h6>
-          <i class="fas fa-plus-circle" routerLink="/cmw-menu"></i>
-        </div>
-        <!-- / Extra Table Information -->
-
-        <div class="input-group search-table" *ngIf="depositForms">
-          <div class="input-group-prepend ">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-          </div>
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchDeposit">
-        </div>
-
-        <table class="table table-hover" id="info" *ngIf="depositForms">
-          <thead>
-            <tr>
-              <th scope="col">Culture Number</th>
-              <th scope="col">Culture Name</th>
-              <th scope="col">Date Submitted</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="depositForms">
-            <tr *ngFor="let deposit of deposits | filter : 'deposits' : searchDeposit">
-              <td>{{deposit.cultureNumber}}</td>
-              <td>{{deposit.name}}</td>
-              <td>{{deposit.dateSubmitted}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- / Deposits Table -->
       
     </div>
     <!-- / Staff Tables -->
