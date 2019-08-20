@@ -112,7 +112,7 @@
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchMember">
         </div>
         <!-- / Search Table -->
 
@@ -121,7 +121,7 @@
         </div>
         <!-- /Loading Spinner -->
 
-        <table class="table table-hover" id="info" *ngIf="orgMembers && !memberTableLoading">
+        <table class="table table-hover"  *ngIf="orgMembers && !memberTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -130,7 +130,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let member of orgMembers">
+            <tr *ngFor="let member of orgMembers | filter : 'admin-dashboard' : searchMember">
               <td>{{member.fname}} </td>
               <td>{{member.surname}}</td>
               <td>{{member.email}}</td>

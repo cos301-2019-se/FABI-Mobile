@@ -129,10 +129,10 @@
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchDatabase">
         </div>
 
-        <table class="table table-hover" *ngIf="databases" id="info">
+        <table class="table table-hover" *ngIf="databases" >
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -140,7 +140,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let database of databases">
+            <tr *ngFor="let database of databases | filter : 'database' : searchDatabase">
               <td>{{database.name}}</td>
               <td class="table-action">
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal"
@@ -248,7 +248,7 @@
                   </tbody>
                 </table>
               </div>
-              <!-- /Preview Table -->
+              <!-- / Preview Table -->
 
             </div>
             <!-- / Preview Uplaoded Database Section -->
@@ -369,17 +369,17 @@
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1" onkeyup="searchFunction()" id="search" title="Search">
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchView">
         </div>
 
-        <table class="table table-hover" *ngIf="databases" id="info">
+        <table class="table table-hover" *ngIf="databases" >
           <thead>
             <tr>
               <th *ngFor="let field of fields">{{field.name}}</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of databaseData">
+            <tr *ngFor="let data of databaseData | filter : 'databaseView' : searchView">
               <td *ngFor="let field of fields">{{data[field.name]}}</td>
             </tr>
           </tbody>

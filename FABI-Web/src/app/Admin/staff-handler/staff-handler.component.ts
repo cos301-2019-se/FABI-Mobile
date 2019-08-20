@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 19th 2019
+ * Last Modified: Tuesday, August 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -130,6 +130,9 @@ export class StaffHandlerComponent implements OnInit {
       { type: 'required', message: 'Phone No. is required' },
     ]
   }
+
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchStaff: string;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
