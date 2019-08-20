@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 19th 2019
+ * Last Modified: Tuesday, August 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -530,9 +530,9 @@ export class UserManagementAPIService {
    * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  addStaffMember(staffInfo: Interface.StaffInfo) {
+  addStaffMember(staffInfo: Interface.StaffInfo, databasePrivileges: Interface.DatabasePrivilege[]) {
 
-    let staffDetails = {"fname": staffInfo.fname, "surname": staffInfo.surname, "email": staffInfo, "phone": staffInfo.phone};
+    let staffDetails = {"fname": staffInfo.fname, "surname": staffInfo.surname, "email": staffInfo.email, "phone": staffInfo.phone};
 
     let addStaffMemberURL = `${config.userManagementURL}/addStaff`;
     let method = 'POST';
@@ -540,9 +540,11 @@ export class UserManagementAPIService {
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "staff": staffDetails,
-      "databases": [],
+      "databases": databasePrivileges,
       "userType": staffInfo.position
     }
+
+    console.log("--- " + JSON.stringify(postData));
 
     const options = {
       headers: {
