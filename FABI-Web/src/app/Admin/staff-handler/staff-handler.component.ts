@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 20th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -132,7 +132,7 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchStaff: string;
+  public searchStaff: string = "";
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -242,10 +242,8 @@ export class StaffHandlerComponent implements OnInit {
   }
 
   getDBNames() {
-
     this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
       if (response.success == true && response.code == 200) {
-        console.log(response);
         this.allDatabaseNames = response.data.docs;
 
         this.allDatabaseNames.map(() => {
@@ -348,10 +346,6 @@ export class StaffHandlerComponent implements OnInit {
     });
 
 
-    console.log("--- " + JSON.stringify(databasePrivileges));
-    console.log("--- " + JSON.stringify(staff_details));
-
-
     this.userManagementService.addStaffMember(staff_details, databasePrivileges).subscribe((response: any) => {      
       this.loading = false;
 
@@ -398,7 +392,6 @@ export class StaffHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeStaffMemberPrompt(member: Interface.StaffInfo) {   
-
     const staffDetails = member.fname + " " + member.surname + " " + member.email;
 
     this.selectedStaff = member;
@@ -420,8 +413,7 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeStaffMember() {
-    
+  removeStaffMember() {    
     this.userManagementService.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE

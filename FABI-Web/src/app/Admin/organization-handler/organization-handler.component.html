@@ -181,7 +181,7 @@
             </thead>
 
             <tbody>
-              <tr *ngFor="let organization of organizations | filter : 'organizations' : searchView">
+              <tr *ngFor="let organization of organizations | filter : 'organizations' : searchOrganization">
                 <td>{{organization.orgName}}</td>
                 <td class="table-action">
                   <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"

@@ -29,7 +29,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let sample of samples | filter : 'members' : searchSample">
+    <tr *ngFor="let sample of samples | filter : 'member-samples' : searchSample">
       <td>{{sample.referenceNumber}}</td>
       <td>{{sample.status}}</td>
       <td class="table-action">
