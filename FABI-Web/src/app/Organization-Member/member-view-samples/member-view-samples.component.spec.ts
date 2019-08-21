@@ -5,9 +5,6 @@ import { MemberViewSamplesComponent } from './member-view-samples.component';
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
-//Import the data service for API calls
-import { APIconnectionService } from '../../apiconnection.service';
-
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
 
