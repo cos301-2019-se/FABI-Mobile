@@ -1,0 +1,370 @@
+dead
+dying
+Few roots, dead
+well developed, dying
+dead, few roots
+few roots, dead
+Healthy
+Discolouration
+stem feeder roots dead
+no roots
+healthy
+j-rooting
+insects, j-rooting
+well devolped
+discolouration
+Dead
+Stunted
+Root:shoot ratio, Die-back
+Die-back 
+Root:shoot ratio
+Wilted
+Wilted, Die-back
+Well developed, Healthy
+Die-back
+Root:shoot ratio, Wilted
+Root:shoot ratio, Dead
+Wilted, Stunted
+Die-back, Stunted, Scorch
+Die-back, Wilted
+Diseased
+Died
+Root:shoot ratio, Die-back, Wilted
+Alive
+Scorch
+Dry
+All Dead
+Root:shoot ration
+Too dead and dry
+Wilted, Root:shoot ratio
+Dying
+Completely dead
+Well developed, Dead
+Dry and brown
+Well developed, J-rooting
+Wilted, Scorch
+Root:shoot ratio, Wilted, Die-back
+Very dry Seedling
+Few roots, Dead
+J-rooting, Dead
+Root:shoot ration, Wilted
+Wited
+Dead or dry
+Very dry
+Wilted, Scortch
+Die-back, Dry
+Dry, Dead
+No tip
+Healthy, Few roots
+No tips
+WIlted
+Discolooured tips
+Root:shoot ratio (1-6,9), Wilted (8-16)
+Root:shoot ratio (1-20)
+Root:shoot ratio (21-40)
+Wilted, Dead
+well developed 
+Root:shoot ratio, Completely dead
+Wilted, All dead
+scorch
+Stunted, Wilted
+Too dead
+Needles discoloured
+Healthy, Green
+Dead and brown
+Roots dead, Tips brown
+Brown leaves at bottom, green at top
+Healthy green leaves
+Brown leaves 
+Good ratio, Wilted
+Healthy, Root:shoot ratio
+Few needles/Brown
+Mix of brown and green needles
+Green needles
+Brown needles
+Dead, Very dry
+Brown roots, Green tips
+Dead tree
+Brown, Dead
+Sample to dry, Throw away
+Slightly wilted
+Asymptomatic
+Dry piece of wood
+Sample dried out
+Mix of maroon and green leaves
+Samples dried out
+Tips green, roots black
+Unhealthy
+Few, Dead, Plug bound
+Well Developed, J-rooting, Dead, Plug bound
+Well Developed, Few roots, Dead
+J-rolling, Dead, Plug bound
+Discoloration, Tip die back, Wilting, Stem cankers
+Well developed, Dead, Plug bound
+Dead, White resin
+Well developed, Dead, No white tips
+Well developed, Dead, No white tips, Discoloration
+Well developed, Dead, No white tips, Dry
+J-rooting, Few roots, Dead
+Well developed
+J-rooting, Few roots, Dead, Plug bound
+J-rooting, Dead, Plug bound
+J-rooting, Few roots, Plug bound
+Few root, Dead
+Well developed, J-rooting, Dead
+Few roots, Dead, Plug bound
+J-rooting
+Well developed, J-rooting, Dead, Plug bound
+Well developed, Insect/Mechanical damage, J-rooting, Dead
+No roots
+No roots (only one), Healthy
+Few roots
+Well developed, J-rooting, Few roots, Dead
+Well developed, Few roots, Dead, Plug bound
+Well developed, Healthy, Few roots, Plug bound
+Well developed, Dying
+Well developed, Resins
+Well developed, Insect/Mechanical damage
+Well developed, J-rooting, Dead, Mycelial growth
+J-rooting, Few roots
+Well developed, Discoloration
+Few roots, Discoloration
+Some alive, Some dead
+Well developed, Healthy, J-rooting, Dead, Plug bound
+J-rooting, Few roots, Discoloration
+Well developed, Healthy, J-rooting
+Healthy, J-rooting, Few roots, Dead
+Few roots, Dead, Discoloration
+Under-developed, J-rooting, Dead
+Well developed, Healthy, Slight j-rooting
+Healthy, J-rooting
+Well developed, Mostly dead
+Some alive, some dead
+Well developed, Healthy, J-rooting, Plug bound
+Healthy, J-rooting, Plug bound
+Healthy, J-rooting, Few roots, Plug bound
+Few roots, White mycelium
+Well developed, Drying
+Discloration under bark
+Well developed, Too moist
+Well developed, J-rooting, Dead (10), Plug bound
+Wilting, Dry
+Few roots, Dead, Dry
+No roots, J-rooting, Dead
+No roots, Dead
+No root, Just small main root
+Root:shoot ratio, Stunted
+No Armillaria observed
+Armillaria
+J-rooting, Discoloration
+P.patula Willowmere
+P.patula Yonderdale
+P.patula Bairathol
+Leaf spot
+Few roots, bunched near bottom
+Few roots, Discoloration on some of the roots
+Well developed, Healthy, J-rooting, Plug-bound
+Well developed, Healthy, Plug bound
+Well developed, J-rooting, Plug bound
+No roots, J-rooting
+Well developed, Starting to die
+Healthy, Well developed
+Die-back, wilted
+Half dead
+Looks healthy but is rotten on inside with stem bark removed
+State 
+Looks ealthy
+No leaves
+Looks healthy
+Tip die-back
+3 diseased roots
+Plant dead
+Leaf blight
+Dead, wilted
+Not sure
+Death, wilted and leaf spots
+Wilted, roots are dead
+Root:shoot, wilted
+Root:shoot, wilted, die-back
+Lesions on root collar, stems
+Lesions on root collar, roots dead
+Lesions on Root collar
+Not specified
+Wilted, Almost no green leaves, Dry, Dead
+Wilted, Dry, Dead
+Healthy, Alive
+Brown tips, Dead roots
+Discoloured leaf needles
+Discoloration of leaves
+Not healthy, Wilted, Die-back
+Discoloration of leaves, Die-back
+Discoloraiton of leaves
+Growth tip healthy
+Tip looks healthy
+Growth tip looks healthy
+Everything is dead
+Healthy minus leaf spots
+Healthy beside discolouration along root collar
+Healthy besides dead roots swelling on root collars with branches coming out
+Leaf spots are present on the leaves
+Stem die-back
+Wilted, S?
+Die-back, Growth tips dead
+Wilted, Dry
+Dead roots, Brown tips
+Dead roots, Green tips
+Dead roots, Dead tips
+Root:shoot ratio, Die-back, Wilted, Not healthy
+Die-back, Wilted, Not healthy
+Die-back, Wilted, Unhealthy
+Root:shoot ratio, no shoots
+Wilted, Unhealthy
+Root:shoot ratio, Dead-no growth
+Healthy roots, Green tips
+Green, Healthy
+Wilted, Very dry
+Dead roots, Green and brown tips
+Root:shoot ratio, Wilted, Blunted
+Green healthy
+A bit dry
+Healthy rootsLeaves show some discoloration
+A bit dry, healthy
+Healthy shoot
+Healthy 
+S?
+Plant is dead
+Plant looks unhealthy
+Dead roors, Brown tips
+Die-back, S?
+Die-back, Plant looks healthy
+Plant is almost dead, needles, yellowing
+Die-back, Wilted, B?, S?
+Die-back, Plant is dead
+Die-back, Wilted, B?, S?, Plant is dead
+Healthy, Resprouts
+Healthy, except the tip
+Rootless cutting, decomposting
+Rootless cutting
+Discoloration, Outer bark, Between outer and inner bark, Sapwood
+Healthy, Wilted
+Healthy, S?
+Root:shoot ratio, Dying from top down
+Dying from top down
+?
+Roots look sick
+Wilted, Oedema
+One root system
+Lesions on lower stem and root collar
+Leaf spots
+Root collar
+Fungal structures on leaves
+Root are dead
+Roots are dead
+Root:shoot ratio, Wilted, Roots are dead
+Root:shoot ratio, Wilted, S?
+Healthy besides discoloration of internodes
+Healthy, Blunted
+Blunted, Needles discolored
+Roots discoloured, Healthy
+Overall healthy
+Root:shoot ratio good, Overall healthy
+Browning @ nodes/ Isolated from edge of discoloration
+Cuttings, Dead and rotting
+Dead, rotting cuttings therefore no roots or RC
+Lots of Resins
+Branches have resin, some discoloration cuttings therefore no roots and RC
+Roots curling and rotting
+Some discoloration
+Dead, Decaying
+Roots curling
+Roots curl upwards, Sample decayed
+Lesions on stem and leaves
+Stem lesions, branches dying above lesions, Leaf lesions
+Leaves with spots, Stems with lesions, main stem dead above lesion
+Main branch dead, Side stem covered with lesions, Fruiting bodies, Spots on leaves
+Branches with leave cuttings, Infection causing branches to shap, Lesions on leaves and stems
+Tip wilted
+Wilted tip
+Wilted 
+Tip curling
+Slight discoloration on needles
+Very few roots
+Healthy white roots
+Tip discoloured
+Very small
+Needles brown
+Tip wilted and discoloured
+Discoloration on tip
+Bigger than avarage sample, Tip discoloured
+Stunted otherwise healthy
+Stunted, Tip discoloured
+Stunted, Well developed
+Tip discoloured, Stunted
+Stem stunted, roots well developed
+Short stem, Well developed, Roots
+Stunted, Healthy
+Discoloured, Stunted
+Healthy, Stunted
+Some needles discoloured
+Die-back, Swollen roots, Cracking, Dead
+Die-back, Wilted, Dead
+Root dead, Brown and yellow needles
+Branch: Healthy
+Discoloured
+Wilted, Brown
+Brown discolration
+Brown and dry
+Wilted, Discoloured
+Slightly discoloured
+Healthy, Tip wilted
+Red discoloration
+Discoloured tip
+Discoloured, Greem tip
+Material dry, Tip die-back, Stem discoloration, Root discoloration
+Root:Shoot Ratio, Wilted, Dead
+Root:Shoot Ratio, Dead
+Root:shoot Ratio
+Yellow, few roots-dead
+Root:shoot ration, Stunted
+Root:shoot ration, Wilted, Dead
+Brown discoloration
+Root:shoot ratio, Wilted, Stunted
+Few roots-dead, Brown tips on most
+Wilted, Tip alive, Dry
+Wilted green tips
+Discoloured in places
+Wilted, Tip discoloured
+Tip discoloured ans wilted
+Wilted tip, Healthy, Green
+Healthy, Some black
+Healthy, Some needles rotten
+Stunted, Green
+Stunted, Needles black (tips)
+Some black needles, Yellow at some bases
+Wilted, Main stem and needles brown
+Tip wilted, Stem grey/back, Needles yellowish to green on ends
+Green, Healthy, Tip slightly wilted
+Wilted, part of stem discoloured
+Green, Wilted
+Discoloured, Dry
+Root:Shoot Ratio, Die-back, Wilted
+Root:Shoot Ratio, Die-back, Dead
+Root:Shoot Ratio
+Wilted, Yellowing needles
+Plants are yellowing
+All plants look healthy
+Root:shoot ratio, Wilted, Dead
+Severe J-rooting, Dry
+Die-back, Dead
+Few dead leaves, Brown discoloraiton around root collar, Dry conditions
+Scortch, Dead
+Healthy, Brown roots, Few white tips
+Scortch
+Die-back, Scortch
+Needles turning brown at the tips
+Needles browning, death at the tips
+No white tips
+Healthy Seedling
+Root:shoot ration, Healthy
+Wilted, Dead, Rotten roots, Root collar collapse, Insects
+Roots well developed, dead and wilted

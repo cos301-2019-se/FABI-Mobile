@@ -1,4 +1,5 @@
 const request = require('request');
+const config = require('./config')
 
 module.exports = function(formData){
 	
@@ -30,7 +31,7 @@ module.exports = function(formData){
 		
 		try{
 			options.path = '/predict';
-			request.post('https://dtree-dot-api-fabi.appspot.com/predict', options, (error, response, body) => {
+			request.post(config.prediction, options, (error, response, body) => {
 				if(error){
 					console.log(error)
 				}else{
