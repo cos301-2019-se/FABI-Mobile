@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 19th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -24,7 +24,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
 import { ErrorComponent } from '../../_errors/error-component/error.component';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 
 import { Porting } from '../../_services/porting.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
@@ -49,8 +49,6 @@ export class DatabaseHandlerComponent implements OnInit {
   loading: boolean = false;
   /** Indicates if the preview table can be loaded or not - @type {boolean} */
   preview: boolean = false;
-  /** An instance of the Porting class - @type {Porting} */
-  portCSV: Porting = new Porting();
   /** Array holding the headings of the new database - @type {any} */
   headings: any = [];
   /** Array holding the columns of the new database - @type {any} */
@@ -72,8 +70,7 @@ export class DatabaseHandlerComponent implements OnInit {
     databaseName: string
   };
 
-  databases: Interface.DatabasePrivilege[];
-  databasePrivileges: any = {'create': false, 'retrieve': true, 'update': false, 'delete': false};
+  allDatabaseNames: Interface.DatabasePrivilege[];
   
   selectedDatabase: string;
 
@@ -132,6 +129,7 @@ export class DatabaseHandlerComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService,
     private dbService: DatabaseManagementService,
     private formBuilder: FormBuilder, 
+    private portCSV: Porting
     ) {
       this.portingForm = {
         file: null,
@@ -153,16 +151,14 @@ export class DatabaseHandlerComponent implements OnInit {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
-      this.databases = this.currentUserPrivileges.databases;
+      this.getDBNames();
     });
     
     //******** TO BE USED IN PRODUCTION: ********
     // // Set current user logged in
     // this.currentUser = this.authService.getCurrentSessionValue.user;
     // //Calling the neccessary functions as the page loads
-    //Load Databases for Drop Down
-    // this.currentUserPrivileges = this.authService.getFABIUserPrivileges;
+    // this.getDBNames();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -274,6 +270,8 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getCSV(){  
+
+
     let data = "";
     let dbname = this.selectedDatabase;
 
@@ -317,6 +315,27 @@ export class DatabaseHandlerComponent implements OnInit {
   }
 
 
+  getDBNames() {
+
+    this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
+      if (response.success == true && response.code == 200) {
+
+        this.allDatabaseNames = response.data.docs;
+        
+      } 
+      else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Database Names", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.getDBNames();
+          }
+        })
+      }
+    });
+  }
+
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        VIEW DATABASE
   /**
@@ -325,12 +344,13 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  public viewDatabase(database : Interface.DatabasePrivilege) {
+  public viewDatabase(databaseName : string) {
+
+    this.selectedDatabase = databaseName;
+    
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Retrieving Database" }});
 
-    database = database;
-
-    this.dbService.retrieveDatabase(database.name).subscribe((response: any) => {
+    this.dbService.retrieveDatabase(databaseName).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         Object.keys(response.data.docs[0]).forEach((column) => {
           let obj = {
@@ -340,22 +360,6 @@ export class DatabaseHandlerComponent implements OnInit {
         });
 
         this.databaseData = response.data.docs;
-
-        if(database.privileges.indexOf('create') != -1) {
-          this.databasePrivileges.create = true;
-        }
-
-        if(database.privileges.indexOf('retrieve') != -1) {
-          this.databasePrivileges.retrieve = true;
-        }
-
-        if(database.privileges.indexOf('update') != -1) {
-          this.databasePrivileges.update = true;
-        }
-
-        if(database.privileges.indexOf('delete') != -1) {
-          this.databasePrivileges.delete = true;
-        }
   
       } 
       else if (response.success == false) {

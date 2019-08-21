@@ -132,7 +132,7 @@
             aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchDatabase">
         </div>
 
-        <table class="table table-hover" *ngIf="databases" >
+        <table class="table table-hover" *ngIf="allDatabaseNames" >
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -140,11 +140,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let database of databases | filter : 'database' : searchDatabase">
-              <td>{{database.name}}</td>
+            <tr *ngFor="let DBName of allDatabaseNames | filter : 'DBName' : searchDatabase">
+              <td>{{DBName}}</td>
               <td class="table-action">
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal"
-                  [id]="database" (click)="viewDatabase(database)">View</button>
+                  [id]="DBName" (click)="viewDatabase(DBName)">View</button>
               </td>
             </tr>
           </tbody>
@@ -275,10 +275,10 @@
 
               <!-- Database Dropdown -->
               <div class="form-group">
-                <select class="custom-select" *ngIf="databases" [(ngModel)]="selectedDatabase">
+                <select class="custom-select" *ngIf="allDatabaseNames" [(ngModel)]="selectedDatabase">
                   <option selected>Choose Database</option>
-                  <option *ngFor="let database of databases" [value]="database.name">
-                    {{database.name}}
+                  <option *ngFor="let database of allDatabaseNames" [value]="database">
+                    {{database}}
                   </option>
                 </select>
               </div>
@@ -372,7 +372,7 @@
             aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchView">
         </div>
 
-        <table class="table table-hover" *ngIf="databases" >
+        <table class="table table-hover" *ngIf="databaseData" >
           <thead>
             <tr>
               <th *ngFor="let field of fields">{{field.name}}</th>
@@ -387,7 +387,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default-save" (click)="getCSV()">Download Database</button>
+        <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal" data-dismiss="modal">Download Database</button>
       </div>
     </div>
   </div>

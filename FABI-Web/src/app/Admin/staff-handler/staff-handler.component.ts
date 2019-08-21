@@ -71,7 +71,7 @@ export class StaffHandlerComponent implements OnInit {
 
   adminTypes: any[];
 
-  databaseNames: any[];
+  allDatabaseNames: any[];
 
   privileges: any = [
     {
@@ -172,13 +172,12 @@ export class StaffHandlerComponent implements OnInit {
         // Validators.pattern('')
       ])],
       staff_position: ['', Validators.required],
-      admin_type: ['', Validators.required]
+      admin_type: ['', Validators.required],
+      database_privileges: new FormArray([])
 
-      // fabi_admin_privileges: new FormArray(formControls),
-      // fabi_staff_privileges: new FormArray(formControls),
-      // database_privileges: new FormArray(formControls),
+    });
+    
 
-    })
   };
 
 
@@ -204,6 +203,9 @@ export class StaffHandlerComponent implements OnInit {
       this.getAdminTypes();
       this.getDBNames();
       this.onChanges();
+
+      // this.addDatabaseCheckboxes();
+
     });
 
 
@@ -217,6 +219,14 @@ export class StaffHandlerComponent implements OnInit {
     // this.getDBNames();
     // this.onChanges();
     
+  }
+
+  private addDatabaseCheckboxes() {
+    
+    this.allDatabaseNames.map((control) => {
+      new FormControl(false);
+      (this.addStaffForm.controls.orders as FormArray).push(control)
+    });
   }
 
   onChanges() {
@@ -236,12 +246,12 @@ export class StaffHandlerComponent implements OnInit {
     this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
       if (response.success == true && response.code == 200) {
         console.log(response);
-        this.databaseNames = response.data.docs;
+        this.allDatabaseNames = response.data.docs;
 
-        // this.databaseNames.forEach(name => {
-        //   document.getElementById("databasesTable").innerHTML = `<tr> <td>${name}</td> <td><input type="checkbox" name="${name}" value="add"></td> <td><input type="checkbox" name="${name}" value="delete"></td> <td><input type="checkbox" name="${name}" value="update"></td>  <td><input type="checkbox" name="${name}" value="view"></td> </tr>`;
-          
-        // });
+        this.allDatabaseNames.map(() => {
+          const control = new FormControl(false); 
+          (this.addStaffForm.controls.database_privileges as FormArray).push(control)
+        });
         
       } 
       else if (response.success == false) {
@@ -312,38 +322,37 @@ export class StaffHandlerComponent implements OnInit {
     const LstaffPhone = this.addStaffForm.controls.staff_phone.value;
     let LstaffPosition;
 
-    if(this.addStaffForm.controls.staff_position.value == "Yes") {
+    if(this.addStaffForm.controls.staff_position.value == "No") {
        LstaffPosition = "Staff";
     } else {
        LstaffPosition = this.addStaffForm.controls.admin_type.value;
     }
 
+    console.log("DB: " + this.addStaffForm.controls.database_privileges.value);
+
     
     const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone};
 
-    // var databasePrivileges : Interface.DatabasePrivilege[];
+    var databasePrivileges : Interface.DatabasePrivilege[] = [];
 
-    // this.databaseNames.forEach(name => {
-    //   var temp : Interface.DatabasePrivilege;
+    this.addStaffForm.controls.database_privileges.value.forEach((value, i)=> {
 
-    //   var boxes: NodeListOf<HTMLElement> = document.getElementsByName(`${name}`);
-
-    //     for(var i = 0; i < document.getElementsByName(`${name}`).length; i++) {
-    //       var box = boxes[i] as HTMLInputElement;
-    //       if(box.checked = true) {
-    //         console.log("---VALUE: " + box[i].value);
-    //         temp.privileges.push(box[i].value);
-    //       }
-    //     }
-
-    //     if(temp.privileges[0] != null) {
-    //       temp.name = name;
-    //       databasePrivileges.push(temp);
-    //     }
+      if(value == true) {
+        let dbPrivilege : Interface.DatabasePrivilege = {
+          name: this.allDatabaseNames[i],
+          privileges: ['retrieve']
+        };
+        databasePrivileges.push(dbPrivilege);
+      }
       
-    // }); 
+    });
 
-    this.userManagementService.addStaffMember(staff_details).subscribe((response: any) => {      
+
+    console.log("--- " + JSON.stringify(databasePrivileges));
+    console.log("--- " + JSON.stringify(staff_details));
+
+
+    this.userManagementService.addStaffMember(staff_details, databasePrivileges).subscribe((response: any) => {      
       this.loading = false;
 
       if (response.success == true && response.code == 200) {

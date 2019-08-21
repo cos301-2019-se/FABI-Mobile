@@ -356,7 +356,7 @@
                 <!-- Phone -->
                 <div class="form-group">
                   <label for="staff_phone">Phone</label>
-                  <input type="text" class="form-control" id="staff_phone" placeholder="Enter phone"
+                  <input type="number" class="form-control" id="staff_phone" placeholder="Enter phone"
                     formControlName="staff_phone" required
                     [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty), 
@@ -407,39 +407,17 @@
                 </div>
                 <!-- / Admin Type Drop Down -->
 
-                <!-- User Privileges Table -->
-                <!-- <div class="privileges-table table-responsive">
-                  <h5> User Database Privileges </h5>
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">Database</th>
-                        <th scope="col">Add</th>
-                        <th scope="col">Delete</th>
-                        <th scope="col">Update</th>
-                        <th scope="col">View</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let dbName of databaseNames">
-                        <td>{{dbName}}</td>
-                        <td>
-                          <input type="checkbox" name="{{dbName}}" value="add">
-                        </td>
-                        <td>
-                          <input type="checkbox" name="{{dbName}}" value="delete">
-                        </td>
-                        <td>
-                          <input type="checkbox" name="{{dbName}}" value="update">
-                        </td>
-                        <td>
-                          <input type="checkbox" name="{{dbName}}" value="view">
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div> -->
-                <!-- / User Privileges Table -->
+                <!-- Database Privileges Table -->
+
+                <div class="form-group">
+                    <label for="database_privileges">Database Privileges</label>
+                    <div formArrayName="database_privileges" *ngFor="let database_privilege of addStaffForm.controls.database_privileges.controls; let i = index" id="database_privileges">
+                        <input type="checkbox" [formControlName]="i">
+                        {{allDatabaseNames[i]}}
+                    </div>
+                </div>
+              
+                <!-- / Database Privileges Table -->
 
                 <!-- Submit -->
                 <button type="submit" class="btn btn-default-save">Add Staff Member</button>
