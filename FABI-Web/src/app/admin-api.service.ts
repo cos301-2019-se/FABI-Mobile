@@ -7,8 +7,13 @@ import { BehaviorSubject } from 'rxjs';
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const getAllOrganizationsURL: string = 'https://user-management-dot-api-fabi.appspot.com/getAllOrganizations';
 const createOrganizationURL: string = 'https://user-management-dot-api-fabi.appspot.com/createOrganization';
+=======
+const getAllOrganizationsURL: string = '***REMOVED***/getAllOrganizations';
+const createOrganizationURL: string = '***REMOVED***/createOrganization';
+>>>>>>> API
 =======
 const getAllOrganizationsURL: string = '***REMOVED***/getAllOrganizations';
 const createOrganizationURL: string = '***REMOVED***/createOrganization';
@@ -22,6 +27,7 @@ const authenticateOrgURL: string = 'https://authentication-dot-api-fabi.appspot.
 const authenticateOrgMemberURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginOrgMember';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const addStaffMemberURL: string = 'https://user-management-dot-api-fabi.appspot.com/addStaff';
 
 const addFABIAdminURL: string = 'https://user-management-dot-api-fabi.appspot.com/addFabiAdmin';
@@ -29,12 +35,17 @@ const addFABIAdminURL: string = 'https://user-management-dot-api-fabi.appspot.co
 
 const portingURL: string = 'https://database-management-dot-api-fabi.appspot.com/porting';
 =======
+=======
+>>>>>>> API
 const addStaffMemberURL: string = '***REMOVED***/addStaff';
 
 const addFABIAdminURL: string = '***REMOVED***/addFabiAdmin';
 
 
 const portingURL: string = '***REMOVED***/porting';
+<<<<<<< HEAD
+>>>>>>> API
+=======
 >>>>>>> API
 
 

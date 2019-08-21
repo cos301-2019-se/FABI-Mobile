@@ -1,12 +1,5 @@
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
 https://authentication-dot-api-fabi.appspot.com
-<<<<<<< HEAD
-https://database-management-dot-api-fabi.appspot.com
-https://diagnostic-clinic-dot-api-fabi.appspot.com
-https://login-dot-api-fabi.appspot.com
-https://user-management-dot-api-fabi.appspot.com
-=======
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
->>>>>>> API

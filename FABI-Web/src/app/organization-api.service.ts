@@ -6,9 +6,15 @@ import { StaticInjector } from '@angular/core/src/di/injector';
 import { BehaviorSubject } from 'rxjs';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const addMemberURL: string = 'https://user-management-dot-api-fabi.appspot.com/addMemberToOrg';
 const submitSampleURL: string = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/submitSample';
 const retrieveAllOrgSamples: string = 'https://diagnostic-clinic-dot-api-fabi.appspot.com/retrieveAllOrgSamples';
+=======
+const addMemberURL: string = '***REMOVED***/addMemberToOrg';
+const submitSampleURL: string = '***REMOVED***/submitSample';
+const retrieveAllOrgSamples: string = '***REMOVED***/retrieveAllOrgSamples';
+>>>>>>> API
 =======
 const addMemberURL: string = '***REMOVED***/addMemberToOrg';
 const submitSampleURL: string = '***REMOVED***/submitSample';
