@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 20th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -76,6 +76,7 @@ export class StaffViewDatabasesComponent implements OnInit {
     private userManagementService: UserManagementAPIService,
     private dbService: DatabaseManagementService,
     private formBuilder: FormBuilder,
+    private portCSV: Porting
   ) { }
 
   ngOnInit() {
@@ -94,6 +95,59 @@ export class StaffViewDatabasesComponent implements OnInit {
     // this.currentUserPrivileges = this.authService.getFABIUserPrivileges;
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET CSV
+  /**
+   *  This function will be used to download the selected database in the format of a .csv file.
+   * 
+   *  @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getCSV(){  
+
+
+    let data = "";
+    let dbname = this.selectedDatabase;
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Downloading CSV" }});
+    
+    this.dbService.retrieveDatabase(dbname).subscribe((response:any) => {
+        if(response.success == true && response.code == 200) {
+          data = response.data.docs;
+          let CSVdata = this.portCSV.extractDatabase(data, dbname);
+          
+          //Save data in csv file and show download dialog
+          var blob = new Blob([CSVdata], {type: 'text/csv;charset=utf-8'});
+          var downloadLink = document.createElement('a');
+          downloadLink.setAttribute('download', dbname+".csv" );
+          downloadLink.setAttribute('href', window.URL.createObjectURL(blob) );
+          var event = new MouseEvent("click");
+          downloadLink.dispatchEvent(event);
+        } 
+        else if (response.success == false) {
+          //POPUP MESSAGE
+          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
+          dialogRef.afterClosed().subscribe((result) => {
+            if(result == "Retry") {
+              this.ngOnInit();
+            }
+          })
+        }    
+
+        loadingRef.close();
+      }, (err: HttpErrorResponse) => {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
+        dialogRef.afterClosed().subscribe((result) => {
+          if(result == "Retry") {
+            this.ngOnInit();
+          }
+        });
+      
+        loadingRef.close();
+    }); 
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        VIEW DATABASE
@@ -104,6 +158,8 @@ export class StaffViewDatabasesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public viewDatabase(database: Interface.DatabasePrivilege) {
+
+    this.selectedDatabase = database.name
 
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Retrieving Database" } });
 
