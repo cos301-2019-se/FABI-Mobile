@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
-const refNumberGenerator = require('./generateReferenceNumber');
+const log = require('../sendLogs');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -10,9 +10,9 @@ const refNumberGenerator = require('./generateReferenceNumber');
 router.post('/', submitForm);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             submit sample
+//                                             Submit CMW Deposit Form
 /**
- * @summary submit a sample to the diagnostic clinic
+ * @summary submit a CMW request
  * @description  REQUEST DATA REQUIRED: all form data
  *
  * @param {*} res Used to send response to the client
@@ -37,35 +37,11 @@ function submitForm(req, res)
         });
     }
 
-    else if (req.body.orgName == undefined || req.body.orgName == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "No organization Name Submitted"
-        });
-    }
-
-    else if (req.body.data == undefined || req.body.data == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "Data to be submitted missing"
-        });
-    }
     else{
 
     
-    refnum = refNumberGenerator();
-    req.body.referenceNumber = refnum;
-    sampleRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(refnum);
+    id = new Date().getTime().toString();
+    sampleRef = db.collection('CultureCollection').doc('CMWDeposit').collection('Forms').doc(id);
     req.body.status = 'submitted';
     sampleRef.set(req.body).then(()=>
     {
@@ -78,8 +54,13 @@ function submitForm(req, res)
             title: "SUCCESS",
             message : "form succesfully submitted",
             data: {
-                referenceNumber : refnum
             }
+        });
+        log({
+            type: "ACCL",
+            statusCode: "200",
+            details: "/submitCMWRevitalizationFrom",
+            user: req.body.userID
         });
     })
 }

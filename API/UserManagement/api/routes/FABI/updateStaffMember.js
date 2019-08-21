@@ -82,8 +82,18 @@ function updateStaff(req, res) {
                 //(4)
                 if(req.body.fields.hasOwnProperty('password'))
                 {
-                    const salt = bcrypt.genSaltSync(10);
-                    req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
+                    res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                            success: true,
+                            code: 200,
+                            title: "FAILURE",
+                            message: "CANNOT UPDATE PASSWORD USING THIS ENDPOINT"
+                        });
+
+                    //const salt = bcrypt.genSaltSync(10);
+                    //req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
                 }
 
                 var updateRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
@@ -91,18 +101,19 @@ function updateStaff(req, res) {
                 //(5)
                 updateRef.update(req.body.fields).then(() => {
 
-                    res.setHeader('Content-Type', 'application/problem+json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                        success: true,
-                        code: 200,
-                        title: "SUCCESS",
-                        message: "User Updated",
-                        data: {
-                            
-                        }
-                });
+                    db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id).get().then( doc => {
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                            success: true,
+                            code: 200,
+                            title: "SUCCESS",
+                            message: "User Updated",
+                            data : doc.data()
+                        });
+                    });
+                   
                 log({
                     type: 'USER',
                     action: 'AddMemberToOrg',

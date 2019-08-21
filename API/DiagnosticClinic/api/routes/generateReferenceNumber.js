@@ -5,16 +5,16 @@ const nodemailer = require('nodemailer');
 const EmailTemplate = require('email-templates');
 const path = require('path');
 const Promise = require('bluebird');
+const config = require('./config.js');
 
-const passwordKey = 'putwikaovlthpajo';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            EMAIL SETTINGS 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'aeronland@gmail.com',
-      pass: 'putwikaovlthpajo'
+      user: config.user,
+      pass: config.pass
     }
 });
 
