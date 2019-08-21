@@ -140,7 +140,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let DBName of allDatabaseNames | filter : 'DBName' : searchDatabase">
+            <tr *ngFor="let DBName of allDatabaseNames | filter : 'database' : searchDatabase">
               <td>{{DBName}}</td>
               <td class="table-action">
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal"
@@ -379,7 +379,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of databaseData | filter : 'databaseView' : searchView">
+            <tr *ngFor="let data of databaseData | filter : 'database-view' : searchView">
               <td *ngFor="let field of fields">{{data[field.name]}}</td>
             </tr>
           </tbody>

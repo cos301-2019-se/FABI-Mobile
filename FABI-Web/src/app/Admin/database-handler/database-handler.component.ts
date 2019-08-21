@@ -100,9 +100,9 @@ export class DatabaseHandlerComponent implements OnInit {
   currentUserPrivileges: any
 
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchDatabase: string;
+  public searchDatabase: string = "";
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchView: string;
+  public searchView: string = "";
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
