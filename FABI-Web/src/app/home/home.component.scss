@@ -216,6 +216,15 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
   width: 100%;
 }
 
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+
+  height: 100%;
+  width: 100%;
+}
+
 .hero::before {
   background: url("src/assets/images/primary_background.jpg");
   background-position: center;
@@ -354,7 +363,7 @@ hr {
 .services {
   display: flex;
   flex-direction: column;
-  min-height: 30vh;
+  min-height: 40vh;
   height: auto;
   width: 100%;
 

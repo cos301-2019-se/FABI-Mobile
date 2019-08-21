@@ -41,7 +41,8 @@
 
         <a class="nav-link" href="#">Contact</a>
 
-        <a class="nav-link" data-toggle="modal" data-target="#requestToRegisterModal"><button type="button" class="btn btn-default-register-nav">Register</button></a>
+        <a class="nav-link" data-toggle="modal" data-target="#requestToRegisterModal"><button type="button"
+            class="btn btn-default-register-nav">Register</button></a>
 
       </div>
       <!-- /Notification Icons -->
@@ -49,20 +50,23 @@
   </div>
   <!-- / Navbar-->
 
-  <div class="hero-content">
-    <div class="content-headings">
-      <h5>Welcome to FABI</h5>
-      <h3>Forestry and Agricultural Biotechnology Institute</h3>
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="content-headings">
+        <h5>Welcome to FABI</h5>
+        <h3>Forestry and Agricultural Biotechnology Institute</h3>
+      </div>
+      <div class="content-actions">
+        <button type="button" class="btn btn-default-login">Login</button>
+        <button type="button" class="btn btn-default-register" data-toggle="modal"
+          data-target="#requestToRegisterModal">Register</button>
+      </div>
     </div>
-    <div class="content-actions">
-      <button type="button" class="btn btn-default-login">Login</button>
-      <button type="button" class="btn btn-default-register" data-toggle="modal" data-target="#requestToRegisterModal">Register</button>
-    </div>
-  </div>
 
-  <div class="social-media">
-    <i class="fab fa-facebook-f"></i>
-    <i class="fab fa-twitter"></i>
+    <div class="social-media">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
+    </div>
   </div>
 </div>
 
@@ -254,125 +258,126 @@
 </div>
 <!-- / Bottom navbar Section -->
 
- <!-- Request to Register Modal Section -->
- <div class="modal fade" id="requestToRegisterModal" tabindex="-1" role="dialog" aria-labelledby="requestToRegisterModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+<!-- Request to Register Modal Section -->
+<div class="modal fade" id="requestToRegisterModal" tabindex="-1" role="dialog"
+  aria-labelledby="requestToRegisterModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
 
-        <!-- Modal Header-->
-        <div class="modal-header">
-          <h5 class="modal-title" id="requestToRegisterModalTitle">Request To Register</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"><i class="fas fa-times"></i></span>
-          </button>
-        </div>
-        <!-- / Modal Header-->
+      <!-- Modal Header-->
+      <div class="modal-header">
+        <h5 class="modal-title" id="requestToRegisterModalTitle">Request To Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <!-- / Modal Header-->
 
-        <!-- Modal Body -->
-        <div class="modal-body">
-          <div class="form">
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="form">
 
-            <!-- Request Form -->
-            <form id="add_new_member_form" class="needs-validation" [formGroup]="addStaffForm" (submit)="addStaff()"
-              novalidate>
-              <div class="row">
+          <!-- Request Form -->
+          <form id="add_new_member_form" class="needs-validation" [formGroup]="addStaffForm" (submit)="addStaff()"
+            novalidate>
+            <div class="row">
 
-                <!-- Name -->
-                <div class="form-group">
-                  <label for="staff_name">Name</label>
-                  <input type="text" class="form-control" id="staff_name" placeholder="Enter name"
-                    formControlName="staff_name" required
-                    [ngClass]="{
+              <!-- Name -->
+              <div class="form-group">
+                <label for="staff_name">Name</label>
+                <input type="text" class="form-control" id="staff_name" placeholder="Enter name"
+                  formControlName="staff_name" required
+                  [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty), 
                     'is-valid': addStaffForm.controls['staff_name'].valid && (submitted || addStaffForm.controls['staff_name'].dirty)}">
-                  <!-- Error Validation Feedback-->
-                  <div
-                    *ngIf="addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty)">
-                    <div *ngFor="let validation of add_staff_validators.staff_name">
-                      <p *ngIf="addStaffForm.get('staff_name').hasError(validation.type)">{{validation.message}}</p>
-                    </div>
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty)">
+                  <div *ngFor="let validation of add_staff_validators.staff_name">
+                    <p *ngIf="addStaffForm.get('staff_name').hasError(validation.type)">{{validation.message}}</p>
                   </div>
-                  <!-- / Error Validation Feedback-->
                 </div>
-                <!-- / Name -->
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Name -->
 
-                <!-- Surname -->
-                <div class="form-group">
-                  <label for="staff_surname">Surname</label>
-                  <input type="text" class="form-control" id="staff_surname" placeholder="Enter surname"
-                    formControlName="staff_surname" required
-                    [ngClass]="{
+              <!-- Surname -->
+              <div class="form-group">
+                <label for="staff_surname">Surname</label>
+                <input type="text" class="form-control" id="staff_surname" placeholder="Enter surname"
+                  formControlName="staff_surname" required
+                  [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty), 
                     'is-valid': addStaffForm.controls['staff_surname'].valid && (submitted || addStaffForm.controls['staff_surname'].dirty)}">
-                  <!-- Error Validation Feedback-->
-                  <div
-                    *ngIf="addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty)">
-                    <div *ngFor="let validation of add_staff_validators.staff_surname">
-                      <p *ngIf="addStaffForm.get('staff_surname').hasError(validation.type)">{{validation.message}}</p>
-                    </div>
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty)">
+                  <div *ngFor="let validation of add_staff_validators.staff_surname">
+                    <p *ngIf="addStaffForm.get('staff_surname').hasError(validation.type)">{{validation.message}}</p>
                   </div>
-                  <!-- / Error Validation Feedback-->
                 </div>
-                <!-- / Surname -->
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Surname -->
 
-                <!-- Email -->
-                <div class="form-group">
-                  <label for="staff_email">Email address</label>
-                  <input type="email" class="form-control" id="staff_email" aria-describedby="emailHelp"
-                    placeholder="Enter email" formControlName="staff_email" required
-                    [ngClass]="{
+              <!-- Email -->
+              <div class="form-group">
+                <label for="staff_email">Email address</label>
+                <input type="email" class="form-control" id="staff_email" aria-describedby="emailHelp"
+                  placeholder="Enter email" formControlName="staff_email" required
+                  [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty), 
                     'is-valid': addStaffForm.controls['staff_email'].valid && (submitted || addStaffForm.controls['staff_email'].dirty)}">
-                  <!-- Error Validation Feedback-->
-                  <div
-                    *ngIf="addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty)">
-                    <div *ngFor="let validation of add_staff_validators.staff_email">
-                      <p *ngIf="addStaffForm.get('staff_email').hasError(validation.type)">{{validation.message}}</p>
-                    </div>
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty)">
+                  <div *ngFor="let validation of add_staff_validators.staff_email">
+                    <p *ngIf="addStaffForm.get('staff_email').hasError(validation.type)">{{validation.message}}</p>
                   </div>
-                  <!-- / Error Validation Feedback-->
                 </div>
-                <!-- / Email -->
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Email -->
 
-                <!-- Phone -->
-                <div class="form-group">
-                  <label for="staff_phone">Phone</label>
-                  <input type="number" class="form-control" id="staff_phone" placeholder="Enter phone"
-                    formControlName="staff_phone" required
-                    [ngClass]="{
+              <!-- Phone -->
+              <div class="form-group">
+                <label for="staff_phone">Phone</label>
+                <input type="number" class="form-control" id="staff_phone" placeholder="Enter phone"
+                  formControlName="staff_phone" required
+                  [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty), 
                     'is-valid': addStaffForm.controls['staff_phone'].valid && (submitted || addStaffForm.controls['staff_phone'].dirty)}">
-                  <!-- Error Validation Feedback-->
-                  <div
-                    *ngIf="addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty)">
-                    <div *ngFor="let validation of add_staff_validators.staff_phone">
-                      <p *ngIf="addStaffForm.get('staff_phone').hasError(validation.type)">{{validation.message}}</p>
-                    </div>
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty)">
+                  <div *ngFor="let validation of add_staff_validators.staff_phone">
+                    <p *ngIf="addStaffForm.get('staff_phone').hasError(validation.type)">{{validation.message}}</p>
                   </div>
-                  <!-- / Error Validation Feedback-->
                 </div>
-                <!-- / Phone -->
-
-                <!-- Submit -->
-                <button type="submit" class="btn btn-default-save">Register</button>
-                <!-- / Submit -->
-
+                <!-- / Error Validation Feedback-->
               </div>
-            </form>
-            <!-- / Request Form -->
+              <!-- / Phone -->
 
-          </div>
+              <!-- Submit -->
+              <button type="submit" class="btn btn-default-save">Register</button>
+              <!-- / Submit -->
+
+            </div>
+          </form>
+          <!-- / Request Form -->
+
         </div>
-        <!-- / Modal Body -->
-
       </div>
-
-      <!-- Modal Footer -->
-      <div class="modal-footer">
-
-      </div>
-      <!-- /Modal Footer -->
+      <!-- / Modal Body -->
 
     </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+
+    </div>
+    <!-- /Modal Footer -->
+
   </div>
-  <!-- / Request to Register ModalSection -->
+</div>
+<!-- / Request to Register ModalSection -->
