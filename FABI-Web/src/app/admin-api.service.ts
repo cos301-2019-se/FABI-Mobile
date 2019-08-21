@@ -7,8 +7,13 @@ import { BehaviorSubject } from 'rxjs';
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const getAllOrganizationsURL: string = '***REMOVED***/getAllOrganizations';
 const createOrganizationURL: string = '***REMOVED***/createOrganization';
+=======
+const getAllOrganizationsURL: string = '***REMOVED***/getAllOrganizations';
+const createOrganizationURL: string = '***REMOVED***/createOrganization';
+>>>>>>> API
 =======
 const getAllOrganizationsURL: string = '***REMOVED***/getAllOrganizations';
 const createOrganizationURL: string = '***REMOVED***/createOrganization';
@@ -22,6 +27,7 @@ const authenticateOrgURL: string = 'https://authentication-dot-api-fabi.appspot.
 const authenticateOrgMemberURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginOrgMember';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const addStaffMemberURL: string = '***REMOVED***/addStaff';
 
 const addFABIAdminURL: string = '***REMOVED***/addFabiAdmin';
@@ -29,12 +35,17 @@ const addFABIAdminURL: string = '***REMOVED***/addFabiAdmin';
 
 const portingURL: string = '***REMOVED***/porting';
 =======
+=======
+>>>>>>> API
 const addStaffMemberURL: string = '***REMOVED***/addStaff';
 
 const addFABIAdminURL: string = '***REMOVED***/addFabiAdmin';
 
 
 const portingURL: string = '***REMOVED***/porting';
+<<<<<<< HEAD
+>>>>>>> API
+=======
 >>>>>>> API
 
 

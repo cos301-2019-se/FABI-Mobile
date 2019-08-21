@@ -1,12 +1,4 @@
-https://authentication-dot-api-fabi.appspot.com
-<<<<<<< HEAD
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-=======
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
->>>>>>> API
