@@ -195,7 +195,7 @@
             </tr>
           </thead>
           <tbody *ngIf="submittedSamples">
-            <tr ngFor="let sample of samples | filter : 'staffSamples' : searchSample">
+            <tr ngFor="let sample of samples | filter : 'staff-samples' : searchSample">
               <td>{{sample.referenceNumber}}</td>
               <td>{{sample.status}}</td>
               <td>{{sample.dateSubmitted}}</td>
