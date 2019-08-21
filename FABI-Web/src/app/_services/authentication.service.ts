@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 20th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -79,8 +79,6 @@ export class AuthenticationService {
       'surname': user.surname,
       'email': user.email,
       'permission': user.userType,
-      //REMOVE ASAP:
-      'databases': user.databases
     }
 
     let sess = {
@@ -311,7 +309,7 @@ export class AuthenticationService {
     let method = 'POST';
 
     const postData = {
-      "orgName": this.getCurrentSessionValue.user.orgainsation,
+      "orgName": this.getCurrentSessionValue.user.organisation,
       "id": this.getCurrentSessionValue.user.ID
     }
 
@@ -327,6 +325,8 @@ export class AuthenticationService {
     };
 
     this.http.request<any>(method, getUserDetailsURL, options).subscribe((response: any) => {
+
+      console.log("DETAILS: " + JSON.stringify(response));
       if(response && (response.token && response.token != '')) {
         if(response.data.databases) {
           this.currentUser.databases = response.data.databases;
@@ -337,13 +337,14 @@ export class AuthenticationService {
   }
 
   getFABIUserPrivileges() {
+    // console.log("DETAILS: " + JSON.stringify(this.getCurrentUserValue));
 
-    if(this.getCurrentUserValue == '' || this.getCurrentUserValue == null) {
+    // if(this.getCurrentUserValue == '' || this.getCurrentUserValue == null) {
       this.loadFABIUserPrivileges();
-      return this.getCurrentUserValue;
-    } else {
-      return this.getCurrentUserValue;
-    }
+    //   return this.getCurrentUserValue;
+    // } else {
+    //   return this.getCurrentUserValue;
+    // }
       
   }
 

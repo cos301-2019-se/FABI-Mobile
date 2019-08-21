@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 19th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -103,6 +103,8 @@ export class AdminDashboardComponent implements OnInit {
   /** The search item the user is looking for in the table -  @type {string} */
   public searchStaff: string;
 
+  currentUserPrivileges: any;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -151,6 +153,9 @@ export class AdminDashboardComponent implements OnInit {
       this.getNumberOfFABIMembers();
       this.getNumberOfFABISamples();
       loadingRef.close();
+      this.currentUserPrivileges = this.authService.getCurrentUserValue;
+
+      console.log("PRIV : " + JSON.stringify(this.currentUserPrivileges));
     });
 
     //******** TO BE USED IN PRODUCTION: ********
