@@ -8,11 +8,11 @@
       <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
       <div class="nav-links">
-        <a class="nav-link active" href="#"><i class="fas fa-home"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-home"></i></a>
         <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
         <a class="nav-link" href="#"><i class="fas fa-vial"></i></a>
         <a class="nav-link" href="#"><i class="fas fa-vials"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-database"></i></a>
+        <a class="nav-link active" href="#"><i class="fas fa-database"></i></a>
         <a class="nav-link" href="#"> <i class="fas fa-plus-circle"></i></a>
       </div>
     </div>
@@ -31,7 +31,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <!-- Navbar Items -->
           <li class="nav-item">
-            <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Samples</a>
@@ -40,7 +40,7 @@
             <a class="nav-link" href="#">CMW Culture Collection</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Databases</a>
+            <a class="nav-link active" href="#">Databases <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
@@ -61,7 +61,7 @@
       <!-- / Menu Button -->
 
       <!-- Navbar Title -->
-      <h5>HOME</h5>
+      <h5>Databases</h5>
       <!-- / Navbar Title -->
 
       <!-- Notification Icons -->
@@ -82,8 +82,8 @@
 
       <!-- Content Heading -->
       <div class="content-heading">
-        <h2>Staff Dashbaord</h2>
-        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
+        <h2>View Databases</h2>
+        <i class="fas fa-bell" id="new-notifications" (click)="showNotifications()"></i>
         <i class="far fa-bell" id="no-new-notifications"></i>
       </div>
       <!-- / Content Heading -->
@@ -92,121 +92,56 @@
       <div class="section-divider"></div>
       <!-- / Section Divider -->
 
-      <!-- Handler Shortcuts -->
-      <div class="handler-shortcuts">
-
-        <!-- Menu Shortcut Row -->
-        <div class="menu-row">
-
-          <!-- Menu Item -->
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fas fa-search"></i>
-            </div>
-            <div class="menu-heading">
-              <h6>View Samples</h6>
-            </div>
-          </div>
-          <!-- / Menu Item -->
-
-          <!-- Menu Item -->
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fas fa-vial"></i>
-            </div>
-            <div class="menu-heading">
-              <h6>Submit Sample</h6>
-            </div>
-          </div>
-          <!-- / Menu Item -->
-
-        </div>
-        <!-- / Menu Shortcut Row -->
-
-        <!-- Menu Shortcut Row -->
-        <div class="menu-row">
-
-          <!-- Menu Item -->
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fas fa-vials"></i>
-            </div>
-            <div class="menu-heading">
-              <h6>CMW Culture Collection</h6>
-            </div>
-          </div>
-          <!-- / Menu Item -->
-
-          <!-- Menu Item -->
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fas fa-plus-circle"></i>
-            </div>
-            <div class="menu-heading">
-              <h6>Data Gatherer</h6>
-            </div>
-          </div>
-          <!-- / Menu Item -->
-
-        </div>
-        <!-- / Menu Shortcut Row -->
-
-      </div>
-      <!-- / Handler Shortcuts -->
-
     </div>
     <!-- / Primary Content -->
 
-    <!-- Staff Tables -->
-    <div class="staff-tables">
+    <!-- Database Tables -->
+    <div class="database-tables">
 
-      <!-- Samples Table -->
-      <div class="dashboard-table table-responsive">
-        <h5> Samples </h5>
+      <!-- Database Table -->
+      <div class="database-table table-responsive">
+        <h5> Database List </h5>
 
         <!-- Extra Table Information -->
-        <div class="table-information" *ngIf="!submittedSamples && !sampleTableLoading">
-          <h6>You currently have no samples</h6>
-          <i class="fas fa-plus-circle" routerLink="staff-submit-sample"></i>
+        <div class="table-information" *ngIf="!databases">
+          <h6>There are currently no databases</h6>
+          <i class="fas fa-plus-circle" data-toggle="modal" data-target="#addModal"></i>
         </div>
         <!-- / Extra Table Information -->
 
-        <!-- Search Table -->
-        <div class="input-group search-table" *ngIf="submittedSamples && !sampleTableLoading">
+        <div class="input-group search-table">
           <div class="input-group-prepend ">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchSample">
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchDatabase">
         </div>
-        <!-- / Search Table -->
 
-        <!-- Loading Spinner -->
-        <div class="spinner-grow text-secondary loading" role="status" *ngIf="sampleTableLoading">
-        </div>
-        <!-- /Loading Spinner -->
-
-        <table class="table table-hover" id="info" *ngIf="submittedSamples && !sampleTableLoading">
+        <table class="table table-hover" *ngIf="databases">
           <thead>
             <tr>
-              <th scope="col">Reference Number</th>
-              <th scope="col">Processing Stage</th>
-              <th scope="col">Date Submitted</th>
+              <th scope="col">Name</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
-          <tbody *ngIf="submittedSamples">
-            <tr ngFor="let sample of samples | filter : 'staffSamples' : searchSample">
-              <td>{{sample.referenceNumber}}</td>
-              <td>{{sample.status}}</td>
-              <td>{{sample.dateSubmitted}}</td>
+          <tbody>
+            <tr *ngFor="let database of databases | filter : 'database' : searchDatabase">
+              <td>{{database.name}}</td>
+              <td class="table-action">
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal"
+                  [id]="database" (click)="viewDatabase(database)">View</button>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <!-- / Samples Table -->
-      
+      <!-- / Database Table -->
+
     </div>
-    <!-- / Staff Tables -->
+    <!-- / Database Tables -->
+
+
+
   </div>
   <!-- / Dashboard Content -->
 
@@ -238,6 +173,7 @@
     <app-staff-help></app-staff-help>
 
   </div>
+  <!-- / Help Section -->
 
   <!-- Up Icon -->
   <!-- <div id="scroll-to-top">
@@ -247,3 +183,46 @@
 
 </div>
 <!-- / Dashboard -->
+
+<!-- View Database Modal -->
+<div class="modal fade" id="viewDatabaseModal" tabindex="-1" role="dialog" aria-labelledby="viewDatabaseModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="downloadModalTitle">View Database</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetDatabaseFields()">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="input-group search-table">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchView">
+        </div>
+
+        <table class="table table-hover" *ngIf="databaseData">
+          <thead>
+            <tr>
+              <th *ngFor="let field of fields">{{field.name}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of databaseData | filter : 'databaseView' : searchView">
+              <td *ngFor="let field of fields">{{data[field.name]}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal" data-dismiss="modal" >Download Database</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / View Database Modal -->
