@@ -37,50 +37,8 @@ function createDatabase(req, res)
 {
 // Store request data is qs
 const salt = bcrypt.genSaltSync(10);
-    var pass = generatePassword(10);
-    const qs = {
-        databaseName : req.body.databaseName,
-        admin : {
-            fname: req.body.admin.name,
-            surname: req.body.admin.surname,
-            email: req.body.admin.email,
-            password: bcrypt.hashSync(pass, salt)
-        }
-    }
+    
 // (1) Check if all required data is received and that it is correct.
-    if (req.body.admin.name == undefined || req.body.admin.name == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "Admin name expected"
-        });
-    }
-    if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "Admin surname expected"
-        });
-    }
-    if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "Admin surname expected"
-        });
-    }
     if (req.body.databaseName == undefined || req.body.databaseName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
@@ -95,8 +53,9 @@ const salt = bcrypt.genSaltSync(10);
 
 // (2) Connect to DB
     
+    nameObject = {DBName : req.body.databaseName};
 
-    adminRef = db.collection('Databases').doc(req.body.databaseName).collection('Admins').doc(req.body.admin.email).set(qs.admin).then(()=>{
+    adminRef = db.collection('Databases').doc(req.body.databaseName).set(nameObject).then(()=>{
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
                 res.setHeader("Access-Control-Allow-Origin", "*");

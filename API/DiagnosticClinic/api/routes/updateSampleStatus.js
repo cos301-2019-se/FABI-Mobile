@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt-nodejs');
 router.post('/', updateMember);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Update Organization Member
+//                                             Update Sample Status
 /**
  * @summary Update a Member memebr associated with Organization
  * @description  REQUEST DATA REQUIRED: origional email of user to be updated ,fields which are to be changed, name of Organization

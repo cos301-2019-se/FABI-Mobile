@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
-const refNumberGenerator = require('./generateReferenceNumber');
+const log = require('../sendLogs');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -10,10 +10,10 @@ const refNumberGenerator = require('./generateReferenceNumber');
 router.post('/', submitForm);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             submit sample
+//                                             Update Deposit Status
 /**
- * @summary submit a sample to the diagnostic clinic
- * @description  REQUEST DATA REQUIRED: all form data
+ * @summary update the status of a submitted form
+ * @description  REQUEST DATA REQUIRED: status to update to
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
@@ -36,8 +36,7 @@ function submitForm(req, res)
             message: "User ID is required"
         });
     }
-
-    else if (req.body.orgName == undefined || req.body.orgName == '') {
+    else if (req.body.status == undefined || req.body.status == ''){
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -45,11 +44,10 @@ function submitForm(req, res)
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "No organization Name Submitted"
+            message: "Status is required"
         });
     }
-
-    else if (req.body.data == undefined || req.body.data == '') {
+    else if (req.body.formID == undefined || req.body.formID == ''){
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -57,32 +55,33 @@ function submitForm(req, res)
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "Data to be submitted missing"
+            message: "Form ID is required"
         });
     }
     else{
 
-    
-    refnum = refNumberGenerator();
-    req.body.referenceNumber = refnum;
-    sampleRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(refnum);
-    req.body.status = 'submitted';
-    sampleRef.set(req.body).then(()=>
-    {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-        success: true,
-            code: 200,
-            title: "SUCCESS",
-            message : "form succesfully submitted",
-            data: {
-                referenceNumber : refnum
-            }
-        });
-    })
-}
+        sampleRef = db.collection('CultureCollection').doc('CMWDeposit').collection('Forms').doc(req.body.formID);
+        sampleRef.update({status : req.body.status}).then(()=>
+        {
+            res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+            success: true,
+                code: 200,
+                title: "SUCCESS",
+                message : "form succesfully submitted",
+                data: {
+                }
+            });
+            log({
+                type: "ACCL",
+                statusCode: "200",
+                details: "/submitCMWRevitalizationFrom",
+                user: req.body.userID
+            });
+        })
+    }
 }
 
 
