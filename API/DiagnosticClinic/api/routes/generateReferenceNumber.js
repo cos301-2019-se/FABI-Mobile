@@ -5,7 +5,8 @@ const nodemailer = require('nodemailer');
 const EmailTemplate = require('email-templates');
 const path = require('path');
 const Promise = require('bluebird');
-const config = require('./config.js');
+const config = require('../config.js');
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            EMAIL SETTINGS 
@@ -28,7 +29,7 @@ const transporter = nodemailer.createTransport({
  *  3. Send Email
  */
 /////////////////////////////////////////////////////////////////////
-function generate() {
+function generate(result) {
       
 // (1) Generate the Reference Number (random 4 digit number)
       let refNum ='ref-' + new Date().getTime();
@@ -38,7 +39,7 @@ function generate() {
             from: 'FABI_WepApp',
             to: 'novacapstone@gmail.com',
             subject: "Sample Reference Number",
-            text: `Thank you for your sample submission. Your reference number is: ${refNum}`
+            text: `Thank you for your sample submission. Your reference number is: ${refNum}. Your prediagnosis is ${result}.` 
       }
 
       transporter.sendMail(mailObject, (error, info) => {

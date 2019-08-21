@@ -55,6 +55,7 @@ function getMember(req, res) {
                 message: "No samples for given member found"
             });
         }
+        else{
             samples = [];
             doc.forEach(element => {
                 samples.push(element.data());
@@ -69,9 +70,11 @@ function getMember(req, res) {
                 title: "SUCCESS",
                 message: "Samples for member Found",
                 data: {
-                    samples         
+                    samples   
                 }
             });
+        }
     });
+
 }
 module.exports = router;
