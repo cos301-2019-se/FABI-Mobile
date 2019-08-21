@@ -24,17 +24,10 @@
   
  ## API Documentation
   - [Authentication API Documentation](https://authentication-dot-api-fabi.appspot.com)
-<<<<<<< HEAD
   - [Database Management API Documentation](***REMOVED***)
   - [Diagnostic Clinic API Documentation](***REMOVED***)
   - [Login API Documentation](***REMOVED***)
   - [User Management API Documentation](***REMOVED***)
-=======
-  - [Database Management API Documentation](***REMOVED***)
-  - [Diagnostic Clinic API Documentation](***REMOVED***)
-  - [Login API Documentation](***REMOVED***)
-  - [User Management API Documentation](***REMOVED***)
->>>>>>> API
   
  ## Project Management
  
