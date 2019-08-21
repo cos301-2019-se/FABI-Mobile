@@ -963,7 +963,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     justify-content: center;
 }
 
-.loading {
+.loading-notifications {
     width: 50px;
     height: 50px;
 
@@ -989,7 +989,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     background-color: #F7F7F7;
     width: 100%;
-    min-height: 70vh;
+    min-height: 100vh;
     height: auto;
 
     float: right;
@@ -1015,7 +1015,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     justify-content: flex-start;
     align-items: center;
 
-    width: 90%;
+    width: 80%;
     min-height: 65vh;
     height: auto;
 
@@ -1125,6 +1125,13 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     align-items: center;
 
     width: 100%;
+}
+
+.loading-profile {
+    width: 50px;
+    height: 50px;
+
+    margin-top: 100px;
 }
 
 /* ==========================================================================

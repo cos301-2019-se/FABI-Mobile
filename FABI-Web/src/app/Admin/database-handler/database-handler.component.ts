@@ -97,12 +97,15 @@ export class DatabaseHandlerComponent implements OnInit {
   /** Indicates if the database has been ported or not - @type {boolean} */
   ported: boolean = false;
 
-  currentUserPrivileges: any
+  currentUserPrivileges: any;
 
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchDatabase: string;
+  public searchDatabase: string = "";
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchView: string;
+  public searchView: string = "";
+
+  /** Specifies if the list of databases have been retreived to disable the loading spinner - @type {boolean} */
+  databaseTableLoading: boolean = true;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -321,6 +324,9 @@ export class DatabaseHandlerComponent implements OnInit {
       if (response.success == true && response.code == 200) {
 
         this.allDatabaseNames = response.data.docs;
+
+        //Deactivate loading table spinners
+        this.databaseTableLoading = false;
         
       } 
       else if (response.success == false) {

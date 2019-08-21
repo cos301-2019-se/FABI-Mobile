@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 20th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -127,20 +127,9 @@ export class ReportingComponent implements OnInit {
   public tableWidget: any;
 
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchItem: string;
+  public searchItem: string = "";
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchReports: string;
-
-  ngAfterViewInit() {
-    // this.initDatatable()
-  }
-
-  // private initDatatable(): void {
-  //   let exampleId: any = $('.table');
-  //   this.tableWidget = exampleId.DataTable({
-  //     select: true
-  //   });
-  // }
+  public searchReports: string = "";
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

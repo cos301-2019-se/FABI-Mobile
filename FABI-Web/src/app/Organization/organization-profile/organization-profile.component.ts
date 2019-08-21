@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 19th 2019
+ * Last Modified: Tuesday, August 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -192,12 +192,11 @@ export class OrganizationProfileComponent implements OnInit {
    * @memberof OrganizationProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadAdminProfileDetails(){
-    
-     //The id number of the user that is currently logged in
-     this.id = this.currentUser.ID;
-     //The organization of the user that is currently logged in
-     this.organization = this.currentUser.organisation;
+  loadAdminProfileDetails(){    
+    //The id number of the user that is currently logged in
+    this.id = this.currentUser.ID;
+    //The organization of the user that is currently logged in
+    this.organization = this.currentUser.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
@@ -261,7 +260,6 @@ export class OrganizationProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   saveChanges(){
-
     this.submitted = true;
     
     // Check if form input is valid 
@@ -277,11 +275,9 @@ export class OrganizationProfileComponent implements OnInit {
       
     //Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
-
       loadingRef.close();
 
       if(response.success == true){
-
         //Reloading the updated user's details
         this.loadAdminProfileDetails();
 
@@ -300,7 +296,6 @@ export class OrganizationProfileComponent implements OnInit {
   }
 
   changePassword() {
-
     this.submitted = true;
 
     // Check if form input is valid 
@@ -313,8 +308,7 @@ export class OrganizationProfileComponent implements OnInit {
     
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Password" }});
 
-    this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
-      
+    this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {      
       loadingRef.close();
 
       if(response.success == true && response.code == 200){
@@ -353,8 +347,8 @@ export class OrganizationProfileComponent implements OnInit {
       } else {
         confirmControl.setErrors(null);
       }
+    }
   }
-}
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -393,7 +387,6 @@ export class OrganizationProfileComponent implements OnInit {
   }
 
   editProfileToggle() {
-
     if(this.isEditingProfile) {
       this.adminProfileForm.get('admin_name').disable();
       this.adminProfileForm.get('admin_surname').disable();
@@ -406,8 +399,6 @@ export class OrganizationProfileComponent implements OnInit {
       this.isEditingProfile = true;
     }
     
-  }
-
-  
+  } 
 
 }

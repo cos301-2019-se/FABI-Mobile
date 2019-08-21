@@ -118,21 +118,28 @@
         <h5> Database List </h5>
 
         <!-- Extra Table Information -->
-        <div class="table-information" *ngIf="!databases">
+        <div class="table-information" *ngIf="!allDatabaseNames && !databaseTableLoading">
           <h6>There are currently no databases</h6>
-          <i class="fas fa-plus-circle" data-toggle="modal" data-target="#addModal"></i>
+          <i class="fas fa-plus-circle" routerLink="/staff-handler"></i>
         </div>
         <!-- / Extra Table Information -->
 
-        <div class="input-group search-table">
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="allDatabaseNames && !databaseTableLoading">
           <div class="input-group-prepend ">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchDatabase">
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchAdmins">
         </div>
+        <!-- / Search Table -->
 
-        <table class="table table-hover" *ngIf="allDatabaseNames" >
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-secondary loading" role="status" *ngIf="databaseTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" *ngIf="allDatabaseNames && !databaseTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -140,7 +147,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let DBName of allDatabaseNames | filter : 'DBName' : searchDatabase">
+            <tr *ngFor="let DBName of allDatabaseNames | filter : 'database' : searchDatabase">
               <td>{{DBName}}</td>
               <td class="table-action">
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal"
@@ -379,7 +386,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of databaseData | filter : 'databaseView' : searchView">
+            <tr *ngFor="let data of databaseData | filter : 'database-view' : searchView">
               <td *ngFor="let field of fields">{{data[field.name]}}</td>
             </tr>
           </tbody>
