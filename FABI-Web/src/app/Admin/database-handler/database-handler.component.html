@@ -275,10 +275,10 @@
 
               <!-- Database Dropdown -->
               <div class="form-group">
-                <select class="custom-select" *ngIf="databases" [(ngModel)]="selectedDatabase">
+                <select class="custom-select" *ngIf="allDatabaseNames" [(ngModel)]="selectedDatabase">
                   <option selected>Choose Database</option>
-                  <option *ngFor="let database of databases" [value]="database.name">
-                    {{database.name}}
+                  <option *ngFor="let database of allDatabaseNames" [value]="database">
+                    {{database}}
                   </option>
                 </select>
               </div>
@@ -387,7 +387,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default-save" (click)="getCSV()">Download Database</button>
+        <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal" data-dismiss="modal">Download Database</button>
       </div>
     </div>
   </div>
