@@ -1,0 +1,202 @@
+place;count
+1;brown discolouration;1
+2;wilted;6
+3;wilting;4
+4;dying;3
+5;dead;10
+6;Healthy;4958
+7;discolouration;10
+8;Discolouration;34
+9;dead0;1
+10;healthy;30
+11;alive;2
+12;aphids;1
+13;girdling;1
+14; discolouration;2
+15;scorch;1
+16;resin exudation;18
+17;Discoloration;3430
+18;Cankers;6
+19;Insect/Mechanical damage;93
+20; Discoloration;513
+21;Alive;269
+22;Wilted;82
+23;Dead;119
+24;Kino/Gum/Resin Exudation;163
+27; Sapwood;1139
+31; Insect/Mechanical damage;7
+36;hail damage;2
+38; Cambium;1243
+40; Healthy;73
+46; Fruiting bodies;68
+47; Between outer and inner bark;661
+50;Canker;10
+51; Kino/Gum/Resin Exudation;11
+52;Mechanical damage;96
+55;Sapwood;1179
+59;Blue discoloration;2
+60;Discoloraiton;196
+65;Fruiting bodies;73
+66;Resin exudation;19
+75; Discoloraiton;33
+87; Sapwwod;2
+89; Outer bark;1442
+91;Dicoloration;1
+94; Girdling;1
+105;Outer bark;1471
+106;resin soaked;3
+109; Between Outer and inner bark;1
+124;helthy;1
+146; Swelling;11
+158;Cambium;1262
+162; Between outer inner bark;2
+169;Insect/Mechanical damage ;3
+214; Wilted;9
+266;Gridling;1
+321;Discloration;6
+323;Outer bark Cambium;2
+325;Healhty;2
+326;Swelling;14
+327;Discoloration ;20
+334; Cambium Sapwood;1
+335;Dying;2
+337; Discloration;1
+338;Discoloration (1-16);0
+345; Cambiu;1244
+349;Healthy (1-20);0
+350;Healthy (21-40);0
+351;Discoloraition;2
+358; Dead;6
+399;Kino/Gum/Resin exudation;1
+402; Dscoloration;1
+414;Dry??;11
+415;Unhealthy;3
+417; Ouer bark;5
+422;Dry;11
+426;Clean and dry;4
+428; Almost dead;1
+434; Between inner and outer bark;73
+476; Fuirting bodies;1
+489;Girdling;3
+500;Discoloured;3
+507;Healthy (top);0
+508; Discoloration and Outer bark (bottom);0
+523;Not healthy;1
+524;Almost dry;1
+526; Slight discoloration;1
+530; Between outer & inner bark;109
+536;Clean;12
+537;Fresh;1
+539; Fungal structure;1
+543; Dying;1
+544;Dead after wilting;1
+546; Dry;1
+548; Clean;1
+551;Top tips alive;0
+552; Lower tips dead;0
+556;Some alive;0
+557; Some dead;0
+564;Some are fresh;0
+565; Some are dry but clean;0
+572; Fresh;0
+575; Between inner & outer bark;0
+583;Small;0
+586; Small;0
+587;Slight discoloration;1
+595;Almost dead;1
+597; Green;4
+599; discoloration;5
+600;Cankers ;0
+603; Bark discoloration;0
+609;Outer bark is discoloured;0
+610;White mycelia;0
+612; White mycelia;0
+615; Water-soaked;0
+652; Bewteen outer & inner bark;0
+654;No stem;0
+655;Insect/Mechanical Damage;1
+661; Dark Lesions;0
+662; White/Grey Fungal Growth;0
+666;Dis coloration;0
+669; One has no tip;1
+673; Betwee outer & inner bark;1
+677; Between outer  inner bark;1
+681;Insect damage;0
+684; Blue stain;0
+686; Resin Exudation;0
+688;Resin Exudation;163
+691; Resin;0
+693;Lower stem is brown;0
+697; Between  outer & inner bark;0
+704; Rough marks on bark;0
+708;White fungal growth;0
+709;Discoloration (darkened lesions);0
+710;Discoloration (blue stains);0
+711; White fungal growth;0
+719;Developed;0
+720;  Big cambium;0
+721;Halthy;0
+735; Necrotic;0
+740;Discoloration (Blue Stain);0
+741;Discoloration (Water-soaked);0
+742;Discoloration (Brown lesions);0
+743; White mycelial growth;0
+745;Discoloration (Brown);0
+746;Discoloration (Possibly Blue stain);0
+748; White mycelial growth ;0
+749;Discoloration ( Water-soaked & Blue discoloration);0
+751; Unhealthy;0
+752;No tip;6
+757;Cut;0
+758;Wilted ;0
+759;Alive (some);0
+760; Dead (some);0
+761;Wilting;0
+763; Wilting;0
+767; Scorch;2
+778;Tip die-back;0
+779;Die-back;12
+781; Die-back;4
+782;Leaf spots;1
+783; Too dry;1
+784;Some dying;1
+785; Others alive;1
+789;Alive (light green);0
+791; Starting to die;0
+792;Alve;0
+797; Outer Bark;5
+799; Little discoloration on one side;0
+803;None;17
+806; cambium;1
+814; Cambuim;26
+826;K?/Gum/?/Exudation;0
+828;Everything is dead;2
+829;Die-back of stem;1
+832; Bewteen outer and inner bark;28
+841; K?/Gam/?Exudation;0
+844; Cambium Between outer and inner bark;1
+851;Insect/Mechanical damage/Discoloration/Outer bark/Between outer and inner bark;1
+855; Between outer and inner bark ;1
+890;Decomposting;5
+897;Discolortation;65
+901; Discolortation;1
+916;Insect/mechanical damage;2
+920;Slight staining;1
+941;Discolration;3
+944; Discoloration @ nodes;10
+945;Discoloured patches;1
+946;Almost purple discoloration;1
+947;Purple internal leasions;1
+948;Internal discoloration;1
+951; Lesions;1
+952; Fruitin bodies;1
+968;Kino/Gum/Resio Exudation;3
+972; Kino/Gum/Resio Exudation;1
+986;Insect Mechanical damage;1
+998; Between outer an inner bark;1
+999;Bottom half healthy;1
+1000; Top half grey/brown;1
+1001;Parts healthy other parts discoloured;6
+1006;Kino/Gum Exudation;3
+1010; Kino/Gum Exudation;1
+1058;Kino/Gum/Resin Exudatuin;3
