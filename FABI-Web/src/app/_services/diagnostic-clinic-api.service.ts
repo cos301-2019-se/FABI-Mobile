@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 19th 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -195,13 +195,29 @@ export class DiagnosticClinicAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitSampleForm(formDetails: Interface.SampleFormData) {
+
+    let tempDetails = {
+      "Locations": "harding",
+      "Province": "Gauteng",
+      "Genus": "eucalyptus",
+      "Species": "radiata",
+      "SampleType": "root",
+      "Asym_Dis": "D",
+      "NurseryFields": "N",
+      "Roots": "dry",
+      "Root-Collar": "Wilted, abitDry",
+      "Stem": "Girdled",
+      "GrowthTip": "Swelling",
+      "Neeldes-Leaves": "healthy"
+    }
+
     let submitSampleURL =   `${config.diagnosticClinicURL}/submitSample`;
     let method = 'POST';
 
     const postData = {
       "orgName": this.authService.getCurrentSessionValue.user.organisation,
       "userID": this.authService.getCurrentSessionValue.user.ID,
-      "data": formDetails
+      "data": tempDetails
     }
 
     const options = {
