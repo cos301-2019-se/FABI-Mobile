@@ -1,13 +1,13 @@
-<!-- Navbar -->
-<div class="pos-f-t">
-
+<div class="hero">
+  <!-- Navbar -->
+  <div class="pos-f-t">
     <div class="collapse" id="navbarToggleExternalContent">
-  
       <div class="bg-dark p-4">
         <h1 class="brand">FABI</h1>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <!-- Navbar Items -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
@@ -16,232 +16,368 @@
             <a class="nav-link" href="#">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact us</a>
+            <a class="nav-link" href="#">Contact</a>
           </li>
+
+          <!-- / Navbar Items -->
         </ul>
-  
-        <!-- Social Media Links -->
-        <div class="social-media">
-          <a class="nav-link" href="#"><i class="fab fa-twitter-square"></i></a>
-          <a class="nav-link" href="#"><i class="fab fa-facebook-square"></i></a>
-        </div>
-        <!-- / Social Media Links -->
       </div>
     </div>
-  
     <nav class="navbar navbar-dark bg-dark">
+      <!-- Menu Button -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
         aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      <!-- / Menu Button -->
+
+      <!-- Notification Icons -->
+      <div class="notifications-icon">
+        <a class="nav-link" href="#">Home</a>
+
+        <a class="nav-link" href="#">About</a>
+
+        <a class="nav-link" href="#">Services</a>
+
+        <a class="nav-link" href="#">Contact</a>
+
+        <a class="nav-link" data-toggle="modal" data-target="#requestToRegisterModal"><button type="button"
+            class="btn btn-default-register-nav">Register</button></a>
+
+      </div>
+      <!-- /Notification Icons -->
     </nav>
-  
   </div>
   <!-- / Navbar-->
-  
-  <!-- Hero Section -->
-  <div class="hero">
-  
-    <!-- Hero Content-->
+
+  <div class="hero-section">
     <div class="hero-content">
-      <h1 class="section-heading">FABI</h1>
-      <h3 class="section-subheading">Forestry & Agriculture Biotechnology Institute</h3>
-      <hr />
-      <p class="section-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim accumsan ex, at
-        pulvinar elit. Praesent sapien magna, pulvinar in auctor et, dapibus quis lacus.</p>
-      <!-- / Hero Content-->
-  
-      <!-- Hero Actions-->
-      <div class="hero-actions">
-        <button type="button" class="btn btn-default login" routerLink="/login">Login</button>
-        <br />
-        <button type="button" class="btn btn-default register" routerLink="/login">Request to Register</button>
+      <div class="content-headings">
+        <h5>Welcome to FABI</h5>
+        <h3>Forestry and Agricultural Biotechnology Institute</h3>
       </div>
-      <!-- / Hero Actions-->
-  
-    </div>
-  
-  </div>
-  <!-- / Hero Section -->
-  
-  <!-- Marker -->
-  <div class="marker">
-    <p>ABOUT US</p>
-    <i class="fas fa-chevron-down"></i>
-  </div>
-  <!-- / Marker -->
-  
-  <!-- About Section -->
-  <div class="about">
-  
-    <!-- About Content-->
-    <div class="about-content">
-      <h1 class="section-heading">ABOUT US</h1>
-      <hr />
-      <p class="section-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim accumsan ex, at
-        pulvinar elit. Praesent sapien magna, pulvinar in auctor et, dapibus quis lacus.</p>
-      <!-- / About Content-->
-  
-      <!-- About Actions-->
-      <div class="about-actions">
-        <button type="button" class="btn btn-default contact">Contact us</button>
+      <div class="content-actions">
+        <button type="button" class="btn btn-default-login">Login</button>
+        <button type="button" class="btn btn-default-register" data-toggle="modal"
+          data-target="#requestToRegisterModal">Register</button>
       </div>
-      <!-- / About Actions-->
-  
     </div>
-  
-  </div>
-  <!-- / About Section -->
-  
-  <!-- Marker -->
-  <div class="marker">
-    <p>OUR SERVICES</p>
-    <i class="fas fa-chevron-down"></i>
-  </div>
-  <!-- / Marker -->
-  
-  <!-- Services Section -->
-  <div class="services">
-  
-    <!-- Services Content-->
-    <div class="services-content">
-      <h1 class="section-heading">SERVICES</h1>
-      <hr />
-  
-      <!-- Service Information Boxes -->
-      <div class="service-boxes">
-  
-        <!-- Service Box -->
-        <div class="service-box">
-          <div class="service-icon">
-            <i class="fas fa-clinic-medical"></i>
-          </div>
-          <div class="service-info">
-            <h6>Diagnostic Clinic</h6>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- / Service Box -->
-  
-        <!-- Service Box -->
-        <div class="service-box">
-          <div class="service-icon">
-            <i class="fas fa-clinic-medical"></i>
-          </div>
-          <div class="service-info">
-            <h6>Diagnostic Clinic</h6>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- / Service Box -->
-  
-        <!-- Service Box -->
-        <div class="service-box">
-          <div class="service-icon">
-            <i class="fas fa-clinic-medical"></i>
-          </div>
-          <div class="service-info">
-            <h6>Diagnostic Clinic</h6>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- / Service Box -->
-  
-      </div>
-      <!-- / Service Information Boxes -->
-  
-    </div>
-  
-  </div>
-  <!-- / Services Section -->
-  
-  <!-- Marker -->
-  <div class="marker">
-    <p>CONTACT US</p>
-    <i class="fas fa-chevron-down"></i>
-  </div>
-  <!-- / Marker -->
-  
-  <!-- Contact us Section -->
-  <div class="contact-us">
-  
-    <!-- Contact us Content-->
-    <div class="contact-us-content">
-  
-      <h1 class="section-heading">CONTACT US</h1>
-      <hr />
-      <p class="section-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-  
-      <!-- Contact Form -->
-      <br />
-      <form class="needs-validation" novalidate [formGroup]="contact_form" (submit)="contact()">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" formControlName="name" placeholder="John Doe" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="message">Your Message</label>
-          <textarea class="form-control" id="message" rows="3" formControlName="message" required></textarea>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-        </div>
-  
-        <!-- Contact us Actions-->
-        <div class="contact-us-actions">
-          <button type="submit" class="btn btn-default contact">Contact us</button>
-        </div>
-        <!-- / Contact us Actions-->
-  
-      </form>
-      <!-- /Contact Form -->
-  
-      <!-- / Contact us Content-->
-    </div>
-  
-  </div>
-  <!-- / Contact us Section -->
-  
-  <!-- Marker -->
-  <div class="marker">
-    <p>BACK TO TOP</p>
-    <i class="fas fa-chevron-up"></i>
-  </div>
-  <!-- / Marker -->
-  
-  <!-- Bottom navbar Section -->
-  <div class="bg-dark p-4">
-    <h1 class="brand">FABI</h1>
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Services</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Contact us</a>
-      </li>
-    </ul>
-  
-    <!-- Social Media Links -->
+
     <div class="social-media">
-      <a class="nav-link" href="#"><i class="fab fa-twitter-square"></i></a>
-      <a class="nav-link" href="#"><i class="fab fa-facebook-square"></i></a>
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
     </div>
-    <!-- / Social Media Links -->
   </div>
-  <!-- / Bottom navbar Section -->
+</div>
+
+<div class="about-us">
+
+  <div class="section-heading">
+    <h3>About FABI</h3>
+  </div>
+
+  <div class="section-content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla. Donec
+      quis scelerisque orci, at rutrum turpis. Ut pretium mauris urna, non pharetra ante ultrices eget.</p>
+  </div>
+
+</div>
+
+
+<div class="services">
+
+  <div class="service-item">
+    <div class="service-icon">
+      <i class="fas fa-stethoscope"></i>
+    </div>
+    <div class="service-heading">
+      <h5>Diagnostic Clinic</h5>
+    </div>
+    <div class="service-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla. Donec
+        quis scelerisque orci, at rutrum turpis.</p>
+    </div>
+  </div>
+
+  <div class="service-item">
+    <div class="service-icon">
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="service-heading">
+      <h5>Research</h5>
+    </div>
+    <div class="service-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla. Donec
+        quis scelerisque orci, at rutrum turpis.</p>
+    </div>
+  </div>
+
+  <div class="service-item">
+    <div class="service-icon">
+      <i class="fas fa-info"></i>
+    </div>
+    <div class="service-heading">
+      <h5>Infographics</h5>
+    </div>
+    <div class="service-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla. Donec
+        quis scelerisque orci, at rutrum turpis.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="how-it-works">
+
+  <div class="section-heading-how">
+    <h3>How it works</h3>
+  </div>
+
+  <div class="section-content-how">
+
+    <div class="how-item-row">
+      <div class="how-item">
+        <div class="how-icon">
+          <h3>1</h3>
+        </div>
+        <div class="how-heading">
+          <h5>Register</h5>
+        </div>
+        <div class="how-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla.
+            Donec quis scelerisque orci, at rutrum turpis.</p>
+        </div>
+      </div>
+
+      <div class="how-item">
+        <div class="how-icon">
+          <h3>2</h3>
+        </div>
+        <div class="how-heading">
+          <h5>Login</h5>
+        </div>
+        <div class="how-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla.
+            Donec quis scelerisque orci, at rutrum turpis.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-item-row">
+      <div class="how-item">
+        <div class="how-icon">
+          <h3>3</h3>
+        </div>
+        <div class="how-heading">
+          <h5>Submit Samples</h5>
+        </div>
+        <div class="how-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla.
+            Donec quis scelerisque orci, at rutrum turpis.</p>
+        </div>
+      </div>
+
+      <div class="how-item">
+        <div class="how-icon">
+          <h3>4</h3>
+        </div>
+        <div class="how-heading">
+          <h5>Get Results</h5>
+        </div>
+        <div class="how-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla.
+            Donec quis scelerisque orci, at rutrum turpis.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Contact us Section -->
+<div class="contact-us">
+  <!-- Contact us Content-->
+  <div class="contact-us-content">
+    <div class="section-heading">
+      <h3>Contact Us</h3>
+    </div>
+    <div class="section-content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+
+
+
+    <!-- Contact Form -->
+    <br />
+    <form>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="email" class="form-control" id="name" placeholder="John Doe">
+      </div>
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea class="form-control" id="message" rows="3"></textarea>
+      </div>
+    </form>
+    <!-- /Contact Form -->
+
+    <!-- / Contact us Content-->
+
+    <!-- Contact us Actions-->
+    <div class="contact-us-actions">
+      <button type="button" class="btn btn-default-contact">Contact us</button>
+    </div>
+    <!-- / Contact us Actions-->
+  </div>
+</div>
+<!-- / Contact us Section -->
+
+<!-- Bottom navbar Section -->
+<div class="bg-dark p-4">
+  <h1 class="brand">FABI</h1>
+  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item active">
+      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">About</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Services</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Contact us</a>
+    </li>
+  </ul>
+
+</div>
+<!-- / Bottom navbar Section -->
+
+<!-- Request to Register Modal Section -->
+<div class="modal fade" id="requestToRegisterModal" tabindex="-1" role="dialog"
+  aria-labelledby="requestToRegisterModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header-->
+      <div class="modal-header">
+        <h5 class="modal-title" id="requestToRegisterModalTitle">Request To Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <!-- / Modal Header-->
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="form">
+
+          <!-- Request Form -->
+          <form id="add_new_member_form" class="needs-validation" [formGroup]="addStaffForm" (submit)="addStaff()"
+            novalidate>
+            <div class="row">
+
+              <!-- Name -->
+              <div class="form-group">
+                <label for="staff_name">Name</label>
+                <input type="text" class="form-control" id="staff_name" placeholder="Enter name"
+                  formControlName="staff_name" required
+                  [ngClass]="{
+                    'is-invalid': addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty), 
+                    'is-valid': addStaffForm.controls['staff_name'].valid && (submitted || addStaffForm.controls['staff_name'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty)">
+                  <div *ngFor="let validation of add_staff_validators.staff_name">
+                    <p *ngIf="addStaffForm.get('staff_name').hasError(validation.type)">{{validation.message}}</p>
+                  </div>
+                </div>
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Name -->
+
+              <!-- Surname -->
+              <div class="form-group">
+                <label for="staff_surname">Surname</label>
+                <input type="text" class="form-control" id="staff_surname" placeholder="Enter surname"
+                  formControlName="staff_surname" required
+                  [ngClass]="{
+                    'is-invalid': addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty), 
+                    'is-valid': addStaffForm.controls['staff_surname'].valid && (submitted || addStaffForm.controls['staff_surname'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty)">
+                  <div *ngFor="let validation of add_staff_validators.staff_surname">
+                    <p *ngIf="addStaffForm.get('staff_surname').hasError(validation.type)">{{validation.message}}</p>
+                  </div>
+                </div>
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Surname -->
+
+              <!-- Email -->
+              <div class="form-group">
+                <label for="staff_email">Email address</label>
+                <input type="email" class="form-control" id="staff_email" aria-describedby="emailHelp"
+                  placeholder="Enter email" formControlName="staff_email" required
+                  [ngClass]="{
+                    'is-invalid': addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty), 
+                    'is-valid': addStaffForm.controls['staff_email'].valid && (submitted || addStaffForm.controls['staff_email'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty)">
+                  <div *ngFor="let validation of add_staff_validators.staff_email">
+                    <p *ngIf="addStaffForm.get('staff_email').hasError(validation.type)">{{validation.message}}</p>
+                  </div>
+                </div>
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Email -->
+
+              <!-- Phone -->
+              <div class="form-group">
+                <label for="staff_phone">Phone</label>
+                <input type="number" class="form-control" id="staff_phone" placeholder="Enter phone"
+                  formControlName="staff_phone" required
+                  [ngClass]="{
+                    'is-invalid': addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty), 
+                    'is-valid': addStaffForm.controls['staff_phone'].valid && (submitted || addStaffForm.controls['staff_phone'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty)">
+                  <div *ngFor="let validation of add_staff_validators.staff_phone">
+                    <p *ngIf="addStaffForm.get('staff_phone').hasError(validation.type)">{{validation.message}}</p>
+                  </div>
+                </div>
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Phone -->
+
+              <!-- Submit -->
+              <button type="submit" class="btn btn-default-save">Register</button>
+              <!-- / Submit -->
+
+            </div>
+          </form>
+          <!-- / Request Form -->
+
+        </div>
+      </div>
+      <!-- / Modal Body -->
+
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+
+    </div>
+    <!-- /Modal Footer -->
+
+  </div>
+</div>
+<!-- / Request to Register ModalSection -->
