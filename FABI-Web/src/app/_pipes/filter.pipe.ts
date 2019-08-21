@@ -5,7 +5,7 @@
  * Created Date: Friday, August 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 20th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,40 +22,109 @@ import { Pipe, PipeTransform, Injectable } from '@angular/core';
 @Injectable()
 export class FilterPipe implements PipeTransform {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TRANSFORM 
+  /**
+   * This function will be used to dynamically search all tables throughout the applications.
+   * 
+   * @param {any[]} items This is the array of items from the table to be searched
+   * @param {string} type The type of search based on the component that calls the filter function
+   * @param {string} value The value to be searched for 
+   * 
+   * @memberof FilterPipe
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   transform(items: any[], type: string, value: string): any[] {
+    //Return the array of items if either there are no items, or there is no search value
     if (!items || !value) {
       return items;
     }
 
     if(type == "reporting"){
+      //If the search is being requested from the Reporting component
       return items.filter((item: string) => this.applyFilter(item, value));
     }
     else if(type == "admin-dashboard"){
-      return items.filter((item: string) => this.adminFilter(item, value));
+      //If the search is being requested from the Admin dashboard (or any other dashboard)
+      return items.filter((val) => {
+        let temp = (val.fname.toLocaleLowerCase().includes(value)) || 
+        (val.surname.toLocaleLowerCase().includes(value)) ||
+        (val.email.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
     else if(type == "database"){
-      return items.filter((item: string) => this.databaseFilter(item, value));
+      //If the search is requested from the Database Handler component
+      return items.filter((val) => {
+        let temp = (val.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
-    else if(type == "databaseView"){
-      return items.filter((item: string) => this.databaseViewFilter(item, value));
+    else if(type == "staff-database"){
+      //If the search is requested form the Staff View Databases component
+      return items.filter((val) => {
+        let temp = (val.name.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
-    else if(type == "clinicAdmin"){
-      return items.filter((item: string) => this.clinicAdminFilter(item, value));
+    else if(type == "database-view"){
+      //If the search is requested from the Database Handler component
+      return items.filter((val) => {
+        let temp = (val.name.toLocaleLowerCase().includes(value));
+        return temp;
+      });
+    }
+    else if(type == "clinic-admin"){
+      //If the search is requested from the Clinic Admin View Samples component
+      return items.filter((val) => {
+        let temp = (val.referenceNumber.toLocaleLowerCase().includes(value)) || 
+        (val.orgName.toLocaleLowerCase().includes(value)) ||
+        (val.userID.toLocaleLowerCase().includes(value)) ||
+        (val.status.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
     else if(type == "organizations"){
-      return items.filter((item: string) => this.organizationsFilter(item, value));
+      //If the search is requested from the Organization Handler component
+      return items.filter((val) => {
+        let temp = (val.orgName.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
     else if(type == "samples"){
-      return items.filter((item: string) => this.sampleFilter(item, value));
+      //If the search is requested from any component that displayes samples
+      return items.filter((val) => {
+        let temp = (val.referenceNumber.toLocaleLowerCase().includes(value)) ||
+        (val.userID.toLocaleLowerCase().includes(value)) ||
+        (val.status.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
-    else if(type == "members"){
-      return items.filter((item: string) => this.memberFilter(item, value));
+    else if(type == "member-samples"){
+      //If the search is requested from the Member View Samples component
+      return items.filter((val) => {
+        let temp = (val.referenceNumber.toLocaleLowerCase().includes(value)) ||
+        (val.status.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
-    else if(type == "staffSamples"){
-      return items.filter((item: string) => this.staffSamplesFilter(item, value));
+    else if(type == "staff-samples"){
+      //If the search is requested from the Staff Dashboard component
+      return items.filter((val) => {
+        let temp = (val.referenceNumber.toLocaleLowerCase().includes(value)) ||
+        (val.status.toLocaleLowerCase().includes(value)) ||
+        (val.dateSubmitted.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
     else if(type == "deposits"){
-      return items.filter((item: string) => this.depositsFilter(item, value));
+      //If the search is requested from the Staff Dashboard component
+      return items.filter((val) => {
+        let temp = (val.cultureNumber.toLocaleLowerCase().includes(value)) ||
+        (val.name.toLocaleLowerCase().includes(value)) ||
+        (val.dateSubmitted.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
   }
 
@@ -67,134 +136,6 @@ export class FilterPipe implements PipeTransform {
           return true;
         }
       }
-    }
-
-    return false;
-  }
-
-  adminFilter(field: any, value: string){
-    if(field.fname.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-    
-    if(field.surname.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.email.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    return false;
-  }
-
-  databaseFilter(field: any, value: string){
-    if(field.name.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    return false;
-  }
-
-  databaseViewFilter(field: any, value: string){
-    if(field.species.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.id.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.num.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    return false;
-  }
-
-  clinicAdminFilter(field: any, value: string){
-    if(field.referenceNumber.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.orgName.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.userID.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.status.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    return false;
-  }
-
-  organizationsFilter(field: any, value: string){
-    if(field.orgName.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    return false;
-  }
-
-  sampleFilter(field: any, value: string){
-    if(field.referenceNumber.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.userID.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.status.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    return false;
-  }
-
-  memberFilter(field: any, value: string){
-    if(field.referenceNumber.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.status.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    return false;
-  }
-
-  staffSamplesFilter(field: any, value: string){
-    if(field.referenceNumber.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.status.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.dateSubmitted.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    return false;
-  }
-
-  depositsFilter(field: any, value: string){
-    if(field.cultureNumber.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.name.toLowerCase() == value.toLowerCase()){
-      return true;
-    }
-
-    if(field.dateSubmitted.toLowerCase() == value.toLowerCase()){
-      return true;
     }
 
     return false;

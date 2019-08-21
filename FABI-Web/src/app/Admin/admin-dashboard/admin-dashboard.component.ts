@@ -13,9 +13,11 @@
  * <<license>>
  */
 
-import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
-import { OnInit} from '@angular/core';
+import {
+  Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
+  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef
+} from '@angular/core';
+import { OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -45,63 +47,63 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //Retriving an HTML element from the HTML page
-  @ViewChild('adminContainer', {read: ViewContainerRef}) adminContainer;
-  @ViewChild('staffContainer', {read: ViewContainerRef}) staffContainer;
-  
+  @ViewChild('adminContainer', { read: ViewContainerRef }) adminContainer;
+  @ViewChild('staffContainer', { read: ViewContainerRef }) staffContainer;
+
   /** Contains the user stats that will be dynamically loaded in the HTML page - @type {string} */
   userStats: string;
   /** Contains the sample stats that will be dynamically loaded in the HTML page - @type {string} */
   sampleStats: string;
 
   /** Object array for holding the administrators -  @type {Member[]} */
-  admins: Member[] = []; 
-  /** Object array for holding the staff members -  @type {Member[]} */                        
-  staff: Member[] = [];  
-  /** Object array for holding the database administrators -  @type {Member[]} */                        
-  databaseAdmins: Member[] = [];   
-  /** Object array for holding the culture curators -  @type {Member[]} */              
-  cultureCurators: Member[] = []; 
-  /** Object array for holding the diagnostic clinic administrators -  @type {Member[]} */               
-  diagnosticClinicAdmins: Member[] = []; 
-  
-  /** Object array for holding all of FABI's samples -  @type {Object[]} */        
-  samples: Object[] = [];  
-  /** Object array for holding all of FABI's completed samples -  @type {Object[]} */                      
-  completedSamples: Object[] = [];  
+  admins: Member[] = [];
+  /** Object array for holding the staff members -  @type {Member[]} */
+  staff: Member[] = [];
+  /** Object array for holding the database administrators -  @type {Member[]} */
+  databaseAdmins: Member[] = [];
+  /** Object array for holding the culture curators -  @type {Member[]} */
+  cultureCurators: Member[] = [];
+  /** Object array for holding the diagnostic clinic administrators -  @type {Member[]} */
+  diagnosticClinicAdmins: Member[] = [];
+
+  /** Object array for holding all of FABI's samples -  @type {Object[]} */
+  samples: Object[] = [];
+  /** Object array for holding all of FABI's completed samples -  @type {Object[]} */
+  completedSamples: Object[] = [];
 
   /** The total number of FABI staff members - @type {number} */
-  numberOfFABIMembers: number;        
-  /** The total number of FABI samples - @type {number} */           
-  numberOfSamples: number;  
-  
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  numberOfFABIMembers: number;
+  /** The total number of FABI samples - @type {number} */
+  numberOfSamples: number;
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
   profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
   saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
   confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
-  /** Specifies if the list of admins have been retreived to disable the loading spinner - @type {boolean} */  
+  /** Specifies if the list of admins have been retreived to disable the loading spinner - @type {boolean} */
   adminTableLoading: boolean = true;
-  /** Specifies if the list of staff have been retreived to disable the loading spinner - @type {boolean} */  
+  /** Specifies if the list of staff have been retreived to disable the loading spinner - @type {boolean} */
   staffTableLoading: boolean = true;
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput : ElementRef;
+  @ViewChild("passwordInput") passwordInput: ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput : ElementRef;
+  @ViewChild("confirmInput") confirmInput: ElementRef;
 
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchAdmins: string;
+  public searchAdmins: string = "";
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchStaff: string;
+  public searchStaff: string = "";
 
   currentUserPrivileges: any;
 
@@ -122,17 +124,17 @@ export class AdminDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    public sanitizer: DomSanitizer, 
+    public sanitizer: DomSanitizer,
     private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private resolver: ComponentFactoryResolver, 
-    private authService: AuthenticationService, 
+    private diagnosticClinicService: DiagnosticClinicAPIService,
+    private notificationLoggingService: NotificationLoggingService,
+    private resolver: ComponentFactoryResolver,
+    private authService: AuthenticationService,
     private router: Router,
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
     private dialog: MatDialog
-    ) { }
+  ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         NG ON INIT  
@@ -146,10 +148,12 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
 
+    window.addEventListener('scroll', this.scroll, true); //third parameter
+
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+    this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
-      let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Loading" }});
+      let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Loading" } });
       this.getNumberOfFABIMembers();
       this.getNumberOfFABISamples();
       loadingRef.close();
@@ -166,6 +170,19 @@ export class AdminDashboardComponent implements OnInit {
     // this.getNumberOfFABISamples();
   }
 
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.scroll, true);
+  }
+
+  scroll = (event: any): void => {
+    
+    //Hide the notifications, profile, and help tabs if open
+    this.notificationsTab = false;
+    this.profileTab = false;
+    this.helpTab = false;
+
+  };
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                              GET NUMBER OF FABI MEMBERS
@@ -181,10 +198,10 @@ export class AdminDashboardComponent implements OnInit {
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfFABIMembers(){
+  getNumberOfFABIMembers() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true) {
         //Temporary array to hold the array of admins retuned from the API call
         this.admins = response.data.qs.admins;
         //Temporary array to hold the array of staff returned from the API call
@@ -198,7 +215,7 @@ export class AdminDashboardComponent implements OnInit {
         this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
         this.userStats = this.numberOfFABIMembers.toString();
       }
-      else{
+      else {
         //The FABI members could not be retrieved
         this.numberOfFABIMembers = 0;
         this.userStats = this.numberOfFABIMembers.toString();
@@ -219,24 +236,24 @@ export class AdminDashboardComponent implements OnInit {
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfFABISamples(){
+  getNumberOfFABISamples() {
     //Subscribing to the DiagnosticClinicAPIService to get a list containing all of FABI's samples
     this.diagnosticClinicService.getAllSamples().subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true) {
         //Populating the sample array with the returned data
         this.samples = response.data.samples;
 
         this.numberOfSamples = this.samples.length;
         this.sampleStats = this.numberOfSamples.toString();
       }
-      else{
+      else {
         //The FABI members could not be retrieved
         this.sampleStats = '0';
       }
     });
   }
 
- 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                         GET NUMBER OF COMPLETED FABI SAMPLES
   /**
@@ -247,7 +264,7 @@ export class AdminDashboardComponent implements OnInit {
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfCompletedFABISamples(){}
+  getNumberOfCompletedFABISamples() { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,7 +288,7 @@ export class AdminDashboardComponent implements OnInit {
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
+  toggleNotificationsTab() {
     this.notificationsTab = !this.notificationsTab;
   }
 
@@ -322,4 +339,5 @@ export class AdminDashboardComponent implements OnInit {
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
   }
+
 }

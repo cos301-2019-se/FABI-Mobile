@@ -45,7 +45,7 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
   private toggle_status : boolean = false;
 
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchSample: string;
+  public searchSample: string = "";
 
   statusTypes = ["complete", "submitted", "diagnosing"];
 

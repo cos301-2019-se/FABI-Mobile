@@ -68,6 +68,30 @@ export class StaffViewDatabasesComponent implements OnInit {
   /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
 
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchDatabase: string = "";
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchView: string = "";
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of StaffViewDatabasesComponent.
+   * 
+   * @param {HttpService} service For calling the 'http' API service
+   * @param {MatSnackBar} snackBar 
+   * @param {MatDialog} dialog 
+   * @param {Router} router
+   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API service
+   * @param {DatabaseManagementService} dbService For calling the Database Management API service
+   * @param {FormBuilder} formBuilder For building the HTML form to get its values
+   * @param {AuthenticationService} authService For authenticating the user
+   * 
+   * @memberof StaffViewDatabasesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private authService: AuthenticationService,
     private snackBar: MatSnackBar,
@@ -100,12 +124,10 @@ export class StaffViewDatabasesComponent implements OnInit {
   /**
    *  This function will be used to download the selected database in the format of a .csv file.
    * 
-   *  @memberof DatabaseHandlerComponent
+   *  @memberof StaffViewDatabasesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getCSV(){  
-
-
     let data = "";
     let dbname = this.selectedDatabase;
 
@@ -154,11 +176,10 @@ export class StaffViewDatabasesComponent implements OnInit {
   /**
    *  This function is used to load the selected database and display it in the HTML page
    * 
-   *  @memberof DatabaseHandlerComponent
+   *  @memberof StaffViewDatabasesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public viewDatabase(database: Interface.DatabasePrivilege) {
-
     this.selectedDatabase = database.name
 
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Retrieving Database" } });
@@ -216,7 +237,7 @@ export class StaffViewDatabasesComponent implements OnInit {
   /**
    * This function will toggle the display of the notifications side panel
    * 
-   * @memberof StaffDashboardComponent
+   * @memberof StaffViewDatabasesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificationsTab() {
@@ -228,7 +249,7 @@ export class StaffViewDatabasesComponent implements OnInit {
   /**
    * This function will toggle the display of the profile side panel
    * 
-   * @memberof StaffDashboardComponent
+   * @memberof StaffViewDatabasesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleProfileTab() {
@@ -241,7 +262,7 @@ export class StaffViewDatabasesComponent implements OnInit {
   /**
    * This function will display the save button option if any details in the profile have been altered
    * 
-   * @memberof StaffDashboardComponent
+   * @memberof StaffViewDatabasesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayProfileSaveBtn() {
@@ -253,7 +274,7 @@ export class StaffViewDatabasesComponent implements OnInit {
   /**
    * This function will display the confirm password input field in the user's password was altered
    * 
-   * @memberof StaffDashboardComponent
+   * @memberof StaffViewDatabasesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   displayConfirmPasswordInput() {
@@ -265,7 +286,7 @@ export class StaffViewDatabasesComponent implements OnInit {
   /**
    * This function will toggle the display of the help side panel
    * 
-   * @memberof StaffDashboardComponent
+   * @memberof StaffViewDatabasesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
