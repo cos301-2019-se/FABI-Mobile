@@ -79,6 +79,7 @@ import { MemberMenuComponent } from './Organization-Member/member-menu/member-me
 import { FilterPipe } from './_pipes/filter.pipe';
 import { ClinicAdminViewSamplesComponent } from './Admin/clinic-admin-view-samples/clinic-admin-view-samples.component';
 import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
+import { StaffViewDatabasesComponent } from './Staff/staff-view-databases/staff-view-databases.component';
 
 // import { DataTablesModule } from 'angular-datatables';
 
@@ -134,7 +135,8 @@ import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
     MemberMenuComponent,
     FilterPipe,
     ClinicAdminViewSamplesComponent,
-    PreDiagnosisComponent
+    PreDiagnosisComponent,
+    StaffViewDatabasesComponent
   ],
   entryComponents: [
     LoadingComponent,
