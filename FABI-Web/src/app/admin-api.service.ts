@@ -6,8 +6,13 @@ import { StaticInjector } from '@angular/core/src/di/injector';
 import { BehaviorSubject } from 'rxjs';
 
 
+<<<<<<< HEAD
 const getAllOrganizationsURL: string = '***REMOVED***/getAllOrganizations';
 const createOrganizationURL: string = '***REMOVED***/createOrganization';
+=======
+const getAllOrganizationsURL: string = '***REMOVED***/getAllOrganizations';
+const createOrganizationURL: string = '***REMOVED***/createOrganization';
+>>>>>>> API
 const getOrgDetailsURL: string = '';
 
 const authenticateFABIAdminURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginAdmin';
@@ -16,12 +21,21 @@ const authenticateDataAdminURL: string = 'https://authentication-dot-api-fabi.ap
 const authenticateOrgURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginOrgAdmin';
 const authenticateOrgMemberURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginOrgMember';
 
+<<<<<<< HEAD
 const addStaffMemberURL: string = '***REMOVED***/addStaff';
 
 const addFABIAdminURL: string = '***REMOVED***/addFabiAdmin';
 
 
 const portingURL: string = '***REMOVED***/porting';
+=======
+const addStaffMemberURL: string = '***REMOVED***/addStaff';
+
+const addFABIAdminURL: string = '***REMOVED***/addFabiAdmin';
+
+
+const portingURL: string = '***REMOVED***/porting';
+>>>>>>> API
 
 
 

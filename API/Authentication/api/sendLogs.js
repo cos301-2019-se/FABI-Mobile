@@ -26,7 +26,11 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/ACCL';
+<<<<<<< HEAD
             request.post('***REMOVED***/ACCL', options, (error, response, body) => {
+=======
+            request.post('***REMOVED***/ACCL', options, (error, response, body) => {
+>>>>>>> API
                 if(error){
 					console.log(error)
                 }
@@ -100,7 +104,11 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/USER';
+<<<<<<< HEAD
             request.post('***REMOVED***/USER', options, (error, response, body) => {
+=======
+            request.post('***REMOVED***/USER', options, (error, response, body) => {
+>>>>>>> API
                 if(error){
                     console.log(error)
 				}
@@ -137,7 +145,11 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/DBML';
+<<<<<<< HEAD
             request.post('***REMOVED***/DBML', options, (error, response, body) => {
+=======
+            request.post('***REMOVED***/DBML', options, (error, response, body) => {
+>>>>>>> API
                 if(error){
                     console.log(error)
 				}

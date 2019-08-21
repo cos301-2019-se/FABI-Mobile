@@ -52,9 +52,9 @@ function getAllOrganizations(req, res) {
                 data.Organizations.push(doc.data());
             })
             //(3)
-            data.Organizations.forEach(doc => {
-                delete doc.admin;
-            })
+            //data.Organizations.forEach(doc => {
+              //  delete doc.admin;
+            //})
 
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');

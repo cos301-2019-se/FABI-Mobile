@@ -40,7 +40,7 @@ function addOrganization(req, res)
 
 
 // (1) 
-    if (req.body.admin.name == undefined || req.body.admin.name == '') {
+    if (req.body.admin.fname == undefined || req.body.admin.fname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -94,10 +94,9 @@ function addOrganization(req, res)
         const qs = {
             orgName : req.body.orgName,
             admin : {
-                fname: req.body.admin.name,
+                fname: req.body.admin.fname,
                 surname: req.body.admin.surname,
                 email: req.body.admin.email,
-                password: bcrypt.hashSync(pass, salt),
                 id : new Date().getTime().toString(),
                 userType: "OrganizationAdmin"
             }
@@ -105,6 +104,7 @@ function addOrganization(req, res)
 
         // (4)
         docRef.set(qs).then(() => {
+            qs.admin.password = bcrypt.hashSync(pass, salt)
             adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
