@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -136,7 +136,6 @@ export class SampleFormComponent implements OnInit {
 
   ngOnInit() {
     let today = new Date();
-    console.log("DATE: " + today);
     this.sampleForm.patchValue( {
       date_sample_sent: today
     });
