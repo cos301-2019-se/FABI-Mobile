@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 20th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -33,6 +33,10 @@ import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-
 
 export class OrganizationViewSamplesComponent implements OnInit {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   sampleFields: any[] = [];
   samples: any[];
   selectedSampleData: any;
@@ -40,12 +44,8 @@ export class OrganizationViewSamplesComponent implements OnInit {
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
   sampleTableLoading: boolean = true;
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                          GLOBAL VARIABLES
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   /** The search item the user is looking for in the table -  @type {string} */
-  public searchSample: string;
+  public searchSample: string = "";
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR

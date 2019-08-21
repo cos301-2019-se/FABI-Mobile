@@ -20,7 +20,7 @@
   
   .section-content {
     font-family: "Roboto", sans-serif;
-    color: #5a8f43;
+    color: white;
   }
   
   /* Horizontal Rule Styling */
@@ -32,12 +32,12 @@
   
   /* Button Styling */
   .btn.btn-default {
-    color: #72b555;
+    color: white;
     font-family: "Montserrat", sans-serif;
   
-    background-color: transparent;
+    background-color: #6aa84f;
   
-    border: 1px solid #72b555;
+    border: 1px solid white;
   
     border-radius: 5px;
   
@@ -160,7 +160,7 @@
     content: "";
     background: url(src/assets/images/primary_background.jpg);
     background-size: cover;
-    opacity: 0.2;
+    opacity: 0.9;
     top: 0;
     left: 0;
     bottom: 0;
