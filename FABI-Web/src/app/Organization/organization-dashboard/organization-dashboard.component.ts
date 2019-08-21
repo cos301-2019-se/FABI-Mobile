@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Tuesday, August 20th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -72,21 +72,6 @@ export class OrganizationDashboardComponent implements OnInit {
   /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
   @ViewChild('notificationContainer', { read: ViewContainerRef }) notificationContainer;
 
-  /** The staff member's email address -  @type {string} */
-  email: string = '';
-  /** The staff member's organization -  @type {string} */
-  organization: string = '';
-  /** The staff member's id -  @type {string} */
-  id: string = '';
-  /** The staff member's name -  @type {string} */
-  name: string = '';
-  /** The staff member's surname -  @type {string} */
-  surname: string = '';
-  /** The staff member's password -  @type {string} */
-  password: string = '';
-  /** The staff member's confirmed password -  @type {string} */
-  confirmPassword: string = '';
-
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
 
@@ -106,6 +91,10 @@ export class OrganizationDashboardComponent implements OnInit {
 
   /** Specifies if the list of members have been retreived to disable the loading spinner - @type {boolean} */
   memberTableLoading: boolean = true;
+
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchMember: string;
+  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -192,6 +181,7 @@ getNumberOfOrganizationMembers(){
     if (response.success == true) {
       //Populating the arrays with the returned data
       this.organizationMembers = response.data.members;
+      this.memberStats = (this.organizationMembers.length).toString();
 
       //Deactivate loading table spinners
       this.memberTableLoading = false;
@@ -274,126 +264,6 @@ toggleNotificationsTab(){
 toggleProfileTab() {
   this.profileTab = !this.profileTab;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                  LOAD ADMIN PROFILE DETAILS
-/**
- *  This function will use an API service to load all the admin member's details into the elements on the HTML page.
- * 
- * @memberof OrganizationDashboardComponent
- */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-loadAdminProfileDetails(){
-  // //Getting the user's details from local storage
-  // var tempUser = this.authService.getCurrentSessionValue;
-  // //The id number of the user that is currently logged in
-  // this.id = tempUser.user.ID;
-  // //The organization of the user that is currently logged in
-  // this.organization = tempUser.user.organisation;
-
-  //Subscribing to the UserManagementAPIService to get all the staff members details
-  this.userManagementService.getUserDetails(this.currentUser.organisation, this.currentUser.ID).subscribe((response: any) => {
-    if (response.success == true) {
-      //Temporarily holds the data returned from the API call
-      const data = response.data;
-
-      //Setting the first name of the user
-      this.name = data.fname;
-      //Setting the surname of the user
-      this.surname = data.surname;
-      //Setting the email of the user
-      this.email = data.email;
-    }
-    else {
-      //Error handling
-    }
-  });
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                        SAVE CHANGES
-/**
- *  This function will send the details to the API to save the changed details to the system.
- *  @memberof OrganizationDashboardComponent
- */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-saveChanges(){
-  //Indicates if the details can be changed based on whether the passwords match or not
-  var valid = true;
-
-  //Checking to make sure that the passwords are not empty
-  //Checking to make sure that the password and confirmed password match
-  if (this.adminProfileForm.controls.admin_password.value != '' &&
-    this.adminProfileForm.controls.admin_password.value == this.adminProfileForm.controls.admin_confirm.value) {
-    this.password = this.adminProfileForm.controls.admin_password.value;
-  }
-  else {
-    //Indicates that the changes cannot be saved
-    valid = false;
-
-    //POPUP MESSAGE
-    let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-      duration: 3000
-    });
-  }
-
-  //Indicates that the changes that the user has made to their profile details, can be changed
-  if (valid == true) {
-    if (this.adminProfileForm.controls.admin_email.value == '') {
-      this.email = this.email;
-    }
-    else {
-      this.email = this.adminProfileForm.controls.admin_email.value;
-    }
-
-    if (this.adminProfileForm.controls.admin_name.value == '') {
-      this.name = this.name;
-    }
-    else {
-      this.name = this.adminProfileForm.controls.admin_name.value;
-    }
-
-    if (this.adminProfileForm.controls.admin_surname.value == '') {
-      this.surname == this.surname;
-    }
-    else {
-      this.surname = this.adminProfileForm.controls.admin_surname.value;
-    }
-
-    if (this.adminProfileForm.controls.admin_password.value == '') {
-      this.password == this.password;
-    }
-    else {
-      this.password = this.adminProfileForm.controls.admin_password.value;
-    }
-
-    //Making a call to the User Management API Service to save the user's changed profile details
-    this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname).subscribe((response: any) => {
-      if (response.success == true) {
-        //Reloading the updated user's details
-        this.loadAdminProfileDetails();
-
-        //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-          duration: 3000
-        });
-      }
-      else {
-        //Error handling
-        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-          duration: 3000
-        });
-      }
-    });
-  }
-  else {
-    //Error handling
-    let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-      duration: 3000
-    });
-  }
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                          DISPLAY PROFILE SAVE BUTTON 
