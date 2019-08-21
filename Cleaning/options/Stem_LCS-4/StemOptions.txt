@@ -1,0 +1,399 @@
+dark streaks
+dry
+lesions
+discolouration
+dead
+discolouration, sapwood
+healthy
+insect damage
+Healthy
+mehanical dadmga, resin exudation,
+few,dead
+Discolouration
+alive
+girdling
+Discoloration
+Dead
+Insect/Mechanical damage
+Discoloraiton, Sapwood, Healthy
+Discoloraiton, Sapwood
+Healthy, Discoloration, Sapwood
+Discoloration, Sapwood
+Discoloration, Healthy
+Healthy, Discoloration
+deadf
+Discoloration, Cambium
+Discoloraiton
+Healhty
+Discoloration, Between outer and inner bark
+Healthy, Sapwood
+Discoloraiton, Between outer and inner bark
+Sapwood
+Outer bark
+Discoloraiton, Cambium
+Insect/Mechanical damage, Discoloration
+Insect/Mechnical damage
+Insect/Mechanical damage, Discoloration, Cambium
+Healthy, Sapwood, Discoloration
+Healthy, Sapwwod
+Girdling, Discoloration, Swelling, Cambium
+Girdling, Swelling, Cambium
+Girdling, Swelling, Discoloration, Cambium
+Health, Discoloration, Sapwood
+Girdling, Insect/Mechanical damage
+Discoloration, Fruiting bodies
+Girdling, Healthy
+Discoloration, Outer bark
+Girdling, Discoloration
+Fruiting bodies
+Discoloration, Sapwood, Healthy
+Well developed, Healthy
+Well developed
+Discoloration, Outer bark, Cambium
+Insect/Mechanical damage, Discoloration, Outer bark, Cambium
+Discoloration, Outer bark, Cambium, Between outer and inner bark
+Healthy, Discoloration, Outer bark
+Discoloration, Outer bark, Between outer and inner bark
+Discoloraiton, Healthy
+Discoloraiton, Outer bark
+Discoloraiton, Outer bark, Between outer and inner bark
+Healthy, Outer bark, Cambium
+Discoloration, Outer bark, Cambium, Between outer inner bark
+Discoloration, Outer bark, Cambium, Between outer and inner bark, Fruiting bodies
+Discoloration, Outer bark, Fruiting bodies
+Discoloration, Outer bark, Cambium, Sapwood
+Discoloration, Outer bark, Cambium, Fruiting bodies
+Discoloration, Outer bark, Cambium, Sapwood, Fruiting bodies
+Discoloraiton, Outer bark, Cambium, Between outer and inner bark
+Discoloraiton, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Discoloraiton, Cambium, Sapwood
+Discoloraiton,Outer bark, Cambium
+Healthy, Discoloration, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Healthy, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Healthy, Outer bark, Cambium, Between outer and inner bark, Sapwood, Discoloration
+Discoloration, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Healthy, Discoloration, Outer bark, Between outer and inner bark
+Discoloration, Cambium, Between outer and inner bark
+Discoloration, Outer bark, Between outer and inner bark, Cambium
+Discoloration, Outer bark, Between outer and inner bark, Cambium, Sapwood
+Discoloration, Cambiu
+Insect/Mechanical damage, Healthy
+Girdling, Discoloraiton, Fruiting bodies, Sapwood
+Insect/Mechanical damage, Discoloration, Fruiting bodies, Sapwood
+Girdling, Insect/Mechanical damage, Discoloration, Fruiting bodies, Sapwood
+Insect/Mechanical damage, Healthy, Discoloration, Fruiting bodies, Sapwood
+Discoloration, Outer bark, Between outer and inner bark, Sapwood
+Discolouration, Cambium, Sapwood
+Girdling, Insect/Mechanical damage, Healthy
+Discoloration, Cambium, Sapwood
+Discoloration, Sapwood, Fruiting bodies
+Discolouration, Cambium
+Healthy, Discoloration, Between outer and inner bark
+Discolouration, Sapwood
+Healthy, Cambium
+Insect/Mechanical damage, Discoloraiton, Cambium
+Healthy, Outer bark
+Healthy, Discoloration, Cambium
+Discoloraiton, Outer bark, Cambium, Sapwood
+Healthy, Cambium, Discoloration
+Discoloration, Cambium, Fruiting bodies
+Discoloration, Outer bark, Sapwood
+Girdling, Discoloration, Cambium
+Discoloration, Cambium, Outer bark
+Discoloraiton, Fruiting bodies
+Healthy, Outer bark, Cambium, Sapwood
+Insect/Mechanical damage, Outer bark
+Girdling, Insect/Mechanical damage, Discoloration
+Insect/Mechanical damage, Discoloration, Fruiting bodies
+Rot
+Healthy, Cambium, Sapwood
+Discolouration, Fruiting bodies
+Girdling
+Between outer and inner bark
+Discoloration 
+Discoloration, Outer bark 
+Discoloration, Swelling
+Clean
+Healthy, Discloration
+Healthy, Ouer bark
+Healthy (1-20)
+Healthy (21-40)
+Discloration, Sapwood
+Discloration, Outer bark
+Discoloraiton, Swelling
+Dicoloration, Healthy
+Discoloraiton, Cambium, Healthy
+Insect/Mechanical damage, Discoloration, Outer bark
+Discolouration, Cambium, Outer bark
+Disolouration, Sapwood
+Disolouration, Cambium
+Discoloration, Cambium, Sapwood, Fruiting bodies
+Cambium, Sapwood, Fruiting bodies
+Cambium, Discoloration, Sapwood
+Cambium, Discoloration
+Cambium, Discoloration, Healthy
+Outer bark, Sapwood
+Outer bark, Cambium
+Outer bark, Cambium, Sapwood
+Discoloraiton, Outer bark, Cambium
+Discoloration, Sapwood, Cambium
+Discoloration, Between outer and inner bark, Sapwood
+Discoloration, Cambium, Outer bark, Sapwood
+Discolouration, Outer bark, Cambium, Sapwood
+Discoloration, Cambium, Fruiting bodies, Sapwood
+Discoloration, Outer bark, Cambium, Fruiting bodies, Sapwood
+Almost dry??
+Unhealthy??
+Discoloration, Cambium, Sapwood, Outer bark
+Discoloration, Sapwood, J-rooting
+Well developed, Dead, J-rooting
+Dry
+Discolouration, Outer bark, Sapwood
+Discolouration, Outer bark
+Healthy/Clean
+Healthy/Clean/Dry
+Cambium, Outer bark
+cankers
+Discoloured, Outer bark, Cambium
+Discoloration, Outer bark, Between inner and outer bark
+Discoloration, Outer bark, Cambium, Between inner and outer bark
+Discoloration, Outer bark, Between inner and outer bark, Cambium
+Discoloration, Outer bark, Between inner and outer bark, Cambium, Sapwood
+Discoloration, Outer bark, Between inner and outer bark, Sapwood, Cambium
+Discoloration, Outer bark, Between inner and outer bark, Sapwood, Cambium, Fruiting bodies
+Outer bark, Between outer and inner bark, Cambium, Sapwood
+Cambium
+Discoloraiton, Sapwood, Cambium
+Discoloration, Between outer and inner bark, Cambium
+Healthy, Insect/Mechanical damage
+Healthy, Fruiting bodies
+Healthy, Discoloration, Outer bark, Cambium
+Insect/Mechanical damage, Discoloration, Swelling
+Between outer and inner bark, Sapwood
+Insect Mechanical damage, Discoloration
+Discoloration, Outer bark, Cambium, Between outer and inner bark, Swelling, Sapwood
+Girdling, Discoloration, Outer bark, Cambium, Between outer and inner bark, Swelling, Sapwood
+Outer bark, Between outer and inner bark
+Insect/Mechanical damage, Discoloration, Outer bark, Cambium, Between outer and inner bark
+Discoloration, Between outer and inner bark, Outer bark
+Discoloration, Outer bark, Between outer and inner bark, Cambium, Sapwood, Fruiting bodies
+Healthy, Discoloration, Outer bark, Swelling
+Insect/Mechanical damage, Discoloration, Cambium, Between outer and inner bark
+Insect/Mechanical damage, Discoloration, Cambium, Between outer and inner bark, Sapwood
+Discoloration, Outer bark, Between outer and inner bark, Sapwood, Cambium
+Discoloration, Outer bark, Cambium, Swelling, Between outer and inner bark, Sapwood
+Discoloration, Outer bark, Cambium, Between outer and inner bark, Sapwood, Fruiting bodies
+Discoloration, Fruiting bodies, between outer & inner bark
+Slight discoloration
+Discoloration, between outer & inner bark
+Healthy, Slight discoloration, Outer bark
+Discoloration, Outer bark, Slight browning
+Unhealthy
+Clean but debarked and dry
+Clean and dry
+Clean but dry
+Clean and unhealthy
+A bit dry
+Discoloration, Outer Bark
+Dry but clean
+Slight discoloration, Outer bark
+Healthy, Discoloration, Outer bark, Cambium, Between outer & inner bark
+Discoloration, Outer bark, Between outer & inner bark
+Insect/Mechanical damage, Outer bark, Cambium
+Discoloration, Sapwood, Covered with white mycelia
+Discoloration, Sapwood, White mycelia
+Discoloration, Water-soaked
+Discoloration ( dark black)
+Discoloration, Water-soaked, Sapwood
+Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Resins 
+Mechanical damage
+Healthy, Clean
+Discoloration, Outer bark, Swelling
+Upper stem still alive
+Discoloration, Dead from the top
+Discoloration, Unhealthy
+Almost dead, Brown from the top
+Healthy, Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Clean, Dry
+Discoloration, Outer bark, Cambium, Between outer & inner bark
+Resin Exudation
+Kino/Gum/Resin Exudation, Discoloration, Between outer & inner bark
+Kino/Gum/Resin Exudation, Discoloration, Outer bark, Cambium, Between outer & inner bark
+Kino/Gum/Resin Exudation, Healthy
+Resin Exudation, Outer bark
+Insect/Mechanical damage but no insects were found
+Insect/Mechanical damage,Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Insect/Mechanical damage,Discoloration, Outer bark, Cambium, Between outer & inner bark
+Insect/Mechanical damage,Discoloration, Outer bark, Cambium, Sapwood
+No discoloration
+Discoloration, Outer bark, Cambium, Between inner & outer bark, Sapwood
+Cambium, Clean
+Discoloration, Outer bark, Cambium, Between inner & outer bark
+Discoloration, Outer bark, Between inner & outer bark
+Slight Discoloration, Cambium, Between inner & outer bark
+Brown discoloration, Outer bark, Cambium
+Healthy, Slight discoloration, Cambium, Between inner & outer bark
+Healthy, Discoloration, Cambium, Between inner & outer bark
+Healthy, Dry
+Kino/Gum/Resin Exudation
+Healthy 
+Dry, Clean
+White mycelia
+Discoloration, White mycelia
+Insect/Mechanical damage, Discoloration, Sapwood
+Insect/Mechanical damage, Discoloration, Outer bark, Between outer & inner bark
+Insect/Mechanical damage, Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Discoloration, Outer bark,Cambium, Between outer & inner bark, Sapwood, Dead 
+Discoloration, Outer bark,Cambium, Between outer & inner bark, Sapwood
+Discoloration, Outer bark, Between outer & inner bark, Sapwood
+Discoloration, Cambium, Between outer & inner bark,Sapwood
+Discoloration, Outer bark, Bewteen outer & inner bark, Sapwood
+Healthy, Discoloration, Between outer & inner bark
+Discoloration, Cambium, Between outer & inner bark, Sapwood
+Discoloration, Between outer & inner bark
+Resins
+Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood, Resins
+Discoloration, Water-soaked, Lesions
+Discoloration, Lesion
+Discoloration, Water-soaked, White Fungal Growth
+Discoloration, Water-soaked, Dark Lesions
+Insect/Mechanical damage, Discoloration, Water-soaked
+Healty, Clean
+Kino/Gum/Resin Exudation, Discoloration, Outer bark, Between outer & inner bark 
+Insect/Mechanical damage, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Outer bark, Cambium, Between outer & inner bark, Sapwood
+Insect damage, Discoloration
+Discoloration, Blue stain
+Insect damage, Discoloration, Water-soaked
+Insect/Mechanical damage, Resin, Discoloration, Water-soaked
+Discoloration, Cambium, Between oute & inner bark, Sapwood
+Discoloration, Between outer & inner bark, Sapwood
+Discoloration,Cambium, Between outer & inner bark, Sapwood
+Healthy, Rough marks on stem
+Discoloration, White fungal growth
+Discoloration, Watersoaked, White fungal growth
+Outer bark, Dead, White fungal growth
+Insect damage, Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Insect/Mechanical damage, Discoloration, Outer bark, Cambium, Between outer & inner bark
+Insect/Mechanical damage, Discoloration, Outer bark, Between outer & inner bark, Sapwood
+Rotted away
+Girdling, Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Girdling, Necrotic and decayed
+Girdling, Dead
+Girdling, Rotten
+Discoloration (Water-soaked)
+Discoloration (Water-soaked), White mycelial growth
+Discoloration (Blue Stain)
+Discoloration ( Water-soaked)
+Discoloration (Possibly Blue stain)
+Discoloration, White mycelial growth
+Discoloration ( Lesions)
+Discoloration, Outer bark, Fruiting bodies, Between outer & inner bark
+Insect/Mechanical damage, Discoloration, Outer bark, Fruiting bodies, Between outer & inner bark, Sapwood
+Insect/Mechanical damage, Outer bark, Between outer & inner bark, Sapwood
+Discoloration, Outer bark,  Cambium, Between outer & inner bark, Sapwood
+Discoloration (Brown lesions)
+Discoloration, White mycelial growth 
+Discoloration, Outer bark, Camboim, Between outer & inner bark
+Discoloration, Outer bark, Cambium, Between outer bark
+Discoloration (Brown)
+Insect/Mechanical damage, Discoloration, Outer bark, Sapwood
+Wilted
+Insect/Mechanical damage, Outer bark, Cambium, Sapwood
+Insect/Mechanical damage, Discoloration, Outer bark, Cambium, Sapwood
+Insect/Mechancal damage, Discoloration, Outer bark, Cambium, Sapwood
+Discoloratio, Outer bark, Between outer & inner bark
+Discoloration, Outer bark, Cambium,Between outer & inner bark, Sapwood
+Discoloration, Wilt
+Wilting
+Alive, Wilted
+Discoloration, Cambium, Dry, Dead
+Discoloration, Outer bark, Cambium, Fruiting bodies, Between outer & inner bark
+Too dry
+Discoloration, Cambium, Between outer & inner bark
+Discoloration, Dry
+Healthy, Discoloration, In 10: Outer bark, Cambium, Between outer & inner bark, Sapwood
+Kino/Gum/Resin Exudation, Discoloration, Outer bark, Cambium, Between outer & inner bark, Sapwood
+Very dry
+Discoloration, Outer bark, Cambium Between outer & inner bark
+Discoloration, Outer bark, Cambium Between outer & inner bark, Sapwood
+Kino/Gum/Resin Exudation, Discoloration, Outer bark, Fruiting bodies, Sapwood
+Discoloration, Outer bark, Fruiting bodies, Scales
+Kino/Gum/Resin Exudation, Discoloration, Cambium, Between outer & inner bark
+Discoloraiton, Outer bark, Between inner and outer bark
+Discoloration, uter bark
+Discoloration, Oute bark
+None
+Discoloration, Outer bark, Between outer & iiner bark
+Discoloration, Outer bark, Cambim, Between outer & inner bark, Sapwood
+No root collar
+Discoloration, Outer bark, Cambium, Between outer & inner bark, sapwood
+Discoloration, Outer bark, Swelling, Between inner and outer bark
+Healthy, Discoloration, Outer bark, Swelling, Between outer and inner bark
+Discoloration, Outer bark, Yellowing at root collar
+Girdling, Healthy, Discoloration, Outer bark, Cambium
+Everything is dead
+Discoloration, Outer bark, Girdling
+Girdling, Discoloration, Outer bark
+Discoloration, swelling
+Discoloration, Outer bark, Lots of moss
+Discoloration, Outer bark, Swelling, Bewteen outer and inner bark
+Discoloration, Outer bark, Bewteen outer and inner bark
+Discoloration, Outer bark, Bewteen outer and inner bark, Sapwood
+Discoloration, Outer bark, Bewteen outer and inner bark, Sapwood, Swelling
+Healthy, Swelling
+Discloration, Outer bark, Cambium, Between outer and inner bark
+Discloration, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Discloration, Between outer and inner bark
+Discoloration, Outer bark, Cambium, Swelling
+Discoloration, Outer bark, Cambium, Swelling, Between outer and inner bark
+Girdling, Discoloration, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Discoloration, Cambium, Between outer and inner bark, Swelling
+Discoloration, Outer bark, Healthy
+Discoloration,Outer bark, Fruiting bodies
+Discoloration, Between outer and inner bark, Outer bark, Cambium, Sapwood
+Discolortation, Outer bark, Cambium
+Discolortation, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Discolortation, Outer bark, Between outer and inner bark
+Discolortation, Outer bark, Between outer and inner bark, Cambium, Sapwood
+Discolortation, Outer bark, Between outer and inner bark, Cambium, Swelling
+No staining
+Discolortation, Outer bark
+Discolortation, Cambium, Between outer and inner bark, Sapwood
+Healthy, Girdling, Discoloration, Outer bark, Cambium, Between outer and inner bark, Sapwood
+Girdling, Discoloration, Outer bark, Between outer and inner bark
+Swelling
+Discoloration, Cambium, Between outer and inner bark, Sapwood
+Root collar absent
+No visibe symptoms
+Girdled, Discoloration, Swelling
+Girdled, Swelling
+Girdled
+Discloration
+Discoloration, Between inner and outer bark
+Insect/Mechanical damage, Discoloration, Outer bark, Between outer and inner bark, Cambium, Sapwood
+Girdled, Discoloration, Between outer and inner bark
+Dead, Plug Bound
+Few roots, Dead, Plug Bound
+Well developed, Dead
+Girdled, Insect/Mechanical damage, Discoloration, Outer bark, Between outer and inner bark, Cambium, Sapwood
+Insect/Mechanical damage, Discoloration, Outer bark, Between outer and inner bark, Cambium
+Few roots, Dead
+Girdled, Insect/Mechanical damage, Discoloration, Outer bark
+Girdled, Insect/Mechanical damage, Discoloration, Outer bark, Between outer and inner bark
+Insect/Mechanical damage, Swelling
+Discoloration, Between outer and inner bark, Cambium, Sapwood
+Insect/Mechanical damage, Discoloration, Outer bark, Between outer and inner bark, Cambium Sapwood, Fruiting bodies
+Well developed. Dead
+Girdeled, Discoloration, Outer bark, Between outer and inner bark
+Girdled, Discoloration, Outer bark, Between inner and outer bark
+Girdled, Discoloration, Outer bark, Between outer and inner bark, Cambium, Sapwood
+Girdled, Discoloration, Between outer and inner bark, Cambium, Sapwood
+Discoloration, Between inner and outer bark, Cambium
+Discoloration, Between outer and inner bark, Cambium, Sapwood, Swelling
+Discoloration, Outer Bark, Between outer and inner bark
+Discoloration, Outer Bark, Between outer and inner bark, Cambium, Sapwood
+Discoloration, Outer Bark, Between outer and inner bark, Cambium
+Discoloration, Outer Bark, Between outer and inner bark, Cambium, Sapwood, Swelling, Fruiting bodies
+Girdled, Discoloration, Outer Bark, Between outer and inner bark, Cambium, Sapwood
