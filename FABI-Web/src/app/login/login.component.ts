@@ -124,7 +124,6 @@ export class LoginComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   login() {
-
     this.submitted = true;
 
     // Check if form input is valid 
@@ -144,12 +143,9 @@ export class LoginComponent implements OnInit {
     const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
 
     this.authService.login(details).subscribe((response: any) => {
-
       this.loading = false;
       // API Request successful
-      if (response.success == true && response.code == 200) {
-
-        
+      if (response.success == true && response.code == 200) {        
         // User NOT Authorised
         if (response.title != "AUTHORIZED") {
           //POPUP MESSAGE
