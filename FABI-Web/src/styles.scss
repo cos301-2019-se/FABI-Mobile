@@ -60,6 +60,7 @@
 .navbar {
     z-index: 1005;
 }
+
 .navbar-nav {
     position: block;
 }
@@ -849,7 +850,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     //height: auto;
     height: 100vh;
 
-    overflow:scroll;
+    overflow: scroll;
 
     float: right;
 
@@ -863,7 +864,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     color: #6B746F;
 }
 
-.no-notifications{
+.no-notifications {
     font-family: "Roboto", sans-serif;
     color: #6B746F;
 
@@ -1491,6 +1492,15 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     justify-content: center;
 
     text-align: center;
+}
+
+#confirmDeleteModal .modal-body h4 {
+    color: #72b555;
+    font-family: "Montserrat", sans-serif;
+}
+
+#confirmDeleteModal .modal-body h5 {
+    font-family: "Roboto", sans-serif;
 }
 
 #confirmDeleteModal .modal-body p {
