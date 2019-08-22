@@ -106,6 +106,8 @@ export class DatabaseHandlerComponent implements OnInit {
 
   /** Specifies if the list of databases have been retreived to disable the loading spinner - @type {boolean} */
   databaseTableLoading: boolean = true;
+/** Specifies if the selected database has been retreived to disable the loading spinner - @type {boolean} */
+  viewDatabaseLoading: boolean = true;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -366,6 +368,9 @@ export class DatabaseHandlerComponent implements OnInit {
         });
 
         this.databaseData = response.data.docs;
+
+        //Deactivate loading view database spinners
+        this.viewDatabaseLoading = false;
   
       } 
       else if (response.success == false) {

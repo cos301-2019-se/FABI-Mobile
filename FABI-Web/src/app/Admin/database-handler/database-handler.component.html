@@ -150,8 +150,8 @@
             <tr *ngFor="let DBName of allDatabaseNames">
               <td>{{DBName}}</td>
               <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal"
-                  [id]="DBName" (click)="viewDatabase(DBName)">View</button>
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal" [id]="DBName"
+                  (click)="viewDatabase(DBName)">View</button>
               </td>
             </tr>
           </tbody>
@@ -231,8 +231,10 @@
               <div class="preview-actions">
                 <h6>Is this what the database should look like?</h6>
 
-                <button class="btn btn-default-save" (click)="submitDatabase()" data-toggle="modal" data-dismiss="modal">Yes</button>
-                <button class="btn btn-default-cancel" (click)="removePreview()" data-toggle="modal" data-dismiss="modal" >No</button>
+                <button class="btn btn-default-save" (click)="submitDatabase()" data-toggle="modal"
+                  data-dismiss="modal">Yes</button>
+                <button class="btn btn-default-cancel" (click)="removePreview()" data-toggle="modal"
+                  data-dismiss="modal">No</button>
               </div>
               <!-- Preview Actions -->
 
@@ -280,21 +282,22 @@
         <div class="modal-body">
           <div class="form">
 
-              <!-- Database Dropdown -->
-              <div class="form-group">
-                <select class="custom-select" *ngIf="allDatabaseNames" [(ngModel)]="selectedDatabase">
-                  <option selected>Choose Database</option>
-                  <option *ngFor="let database of allDatabaseNames" [value]="database">
-                    {{database}}
-                  </option>
-                </select>
-              </div>
-              <!-- Database Dropdown -->
+            <!-- Database Dropdown -->
+            <div class="form-group">
+              <select class="custom-select" *ngIf="allDatabaseNames" [(ngModel)]="selectedDatabase">
+                <option selected>Choose Database</option>
+                <option *ngFor="let database of allDatabaseNames" [value]="database">
+                  {{database}}
+                </option>
+              </select>
+            </div>
+            <!-- Database Dropdown -->
 
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal" data-dismiss="modal" >Download</button>
+          <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal"
+            data-dismiss="modal">Download</button>
         </div>
       </div>
     </div>
@@ -379,7 +382,14 @@
             aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchView">
         </div>
 
-        <table class="table table-hover" *ngIf="databaseData" >
+        <!-- Loading Spinner -->
+        <div class="notification-loading">
+          <div class="spinner-grow text-secondary loading-notifications" role="status" *ngIf="viewDatabaseLoading">
+          </div>
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" *ngIf="databaseData">
           <thead>
             <tr>
               <th *ngFor="let field of fields">{{field.name}}</th>
@@ -394,7 +404,8 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal" data-dismiss="modal">Download Database</button>
+        <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal"
+          data-dismiss="modal">Download Database</button>
       </div>
     </div>
   </div>
