@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -298,12 +298,9 @@ export class StaffProfileComponent implements OnInit {
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully changed password. Please login with new password", "Dismiss", {
+        let snackBarRef = this.snackBar.open("Successfully changed password.", "Dismiss", {
           duration: 3000
         });
-
-        this.authService.logoutUser();
-        this.router.navigate(['login']);
       }
       else {
         //Error handling
