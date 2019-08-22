@@ -138,7 +138,6 @@ export class SampleFormComponent implements OnInit {
 
   ngOnInit() {
     let today = new Date();
-    console.log("DATE: " + today);
     this.sampleForm.patchValue( {
       date_sample_sent: today
     });

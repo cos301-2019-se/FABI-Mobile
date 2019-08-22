@@ -20,6 +20,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
+import { Form, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-clinic-admin-view-samples',
@@ -46,6 +47,14 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
   /** The search item the user is looking for in the table -  @type {string} */
   public searchSample: string = "";
 
+  statusTypes = ["complete", "submitted", "diagnosing"];
+
+  updateSampleStatusForm: FormGroup;
+
+  editingSample: any;
+
+  isEditingSample: boolean = false;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -62,8 +71,13 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
     private authService: AuthenticationService, 
     private diagnosticClinicService: DiagnosticClinicAPIService,
     private dialog: MatDialog, 
-    private router: Router
-    ) { }
+    private router: Router,
+    private formBuilder: FormBuilder,
+    ) { 
+      this.updateSampleStatusForm = this.formBuilder.group({
+        sample_status: ['', Validators.required]
+      })
+    }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                           NG ON INIT  
@@ -161,4 +175,15 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
     this.sampleFields = [];
   }
 
+  updatingSampleStatus(sample: any) {
+
+    this.editingSample = sample;
+    this.isEditingSample = true;
+
+  }
+
+  updateSampleStatus(sample: any) {
+    console.log("SAMPLE: " + JSON.stringify(sample));
+    console.log("STATUS: " + this.updateSampleStatusForm.controls.sample_status.value);
+  }
 }
