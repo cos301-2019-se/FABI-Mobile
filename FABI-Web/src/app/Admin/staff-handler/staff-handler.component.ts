@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -67,7 +67,6 @@ export class StaffHandlerComponent implements OnInit {
   userTypes: Interface.UserType[];
   /** Selected user type on dropdown - @type {string} */
   selectedUserType: string;
-
 
   adminTypes: any[];
 
@@ -176,11 +175,8 @@ export class StaffHandlerComponent implements OnInit {
       database_privileges: new FormArray([])
 
     });
-    
 
   };
-
-
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          NG ON INIT  
@@ -193,7 +189,6 @@ export class StaffHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -205,7 +200,6 @@ export class StaffHandlerComponent implements OnInit {
       this.onChanges();
 
       // this.addDatabaseCheckboxes();
-
     });
 
 
@@ -221,8 +215,7 @@ export class StaffHandlerComponent implements OnInit {
     
   }
 
-  private addDatabaseCheckboxes() {
-    
+  private addDatabaseCheckboxes() {    
     this.allDatabaseNames.map((control) => {
       new FormControl(false);
       (this.addStaffForm.controls.orders as FormArray).push(control)
@@ -321,12 +314,11 @@ export class StaffHandlerComponent implements OnInit {
     let LstaffPosition;
 
     if(this.addStaffForm.controls.staff_position.value == "No") {
-       LstaffPosition = "Staff";
-    } else {
-       LstaffPosition = this.addStaffForm.controls.admin_type.value;
+      LstaffPosition = "Staff";
+    } 
+    else {
+      LstaffPosition = this.addStaffForm.controls.admin_type.value;
     }
-
-    console.log("DB: " + this.addStaffForm.controls.database_privileges.value);
 
     
     const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone};
@@ -344,7 +336,6 @@ export class StaffHandlerComponent implements OnInit {
       }
       
     });
-
 
     this.userManagementService.addStaffMember(staff_details, databasePrivileges).subscribe((response: any) => {      
       this.loading = false;
@@ -538,5 +529,17 @@ export class StaffHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET ADD FIELDS 
+  /**
+   * This function will clear the inputs in the Add Staff Modal
+   * 
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetAddFields(){
+    this.addStaffForm.reset();
   }
 }
