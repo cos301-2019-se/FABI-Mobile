@@ -107,8 +107,8 @@ export class StaffViewDatabasesComponent implements OnInit {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginStaff().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
-      this.databases = this.currentUserPrivileges.databases;
+      this.authService.getFABIUserPrivileges();
+      // this.databases = this.currentUserPrivileges.databases;
     });
 
     //******** TO BE USED IN PRODUCTION: ********
