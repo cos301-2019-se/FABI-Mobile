@@ -31,8 +31,6 @@ export class ErrorsHandler implements ErrorHandler {
   constructor(
     private injector: Injector, 
     private authService: AuthenticationService,
-    // private notificationService: NotificationService,
-    // private router: Router 
     ) {}
 
   handleError(error: Error | HttpErrorResponse) {
