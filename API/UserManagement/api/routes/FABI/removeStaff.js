@@ -11,10 +11,10 @@ const log = require('../../sendLogs');
 router.post('/', removeStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Organization Member
+//                                             Remove Staff
 /**
- * @summary Get User assotiated with Organization
- * @description  REQUEST DATA REQUIRED: user email, organization
+ * @summary Delete User assotiated with FABI
+ * @description  REQUEST DATA REQUIRED: user id
  *  1. check that user email and organization are given
  *  2. check that the user exists
  *  3. remove the user from the database (set inactive in future)
@@ -59,7 +59,7 @@ function removeStaff(req, res) {
             qs = doc.data();
             delete qs.password;
             //(3)
-            db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id).delete().then(() => {
+            memRef.delete().then(() => {
                 res.setHeader('Content-Type', 'application/problem+json');
                             res.setHeader('Content-Language', 'en');
                             res.setHeader("Access-Control-Allow-Origin", "*");

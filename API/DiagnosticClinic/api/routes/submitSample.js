@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
 const refNumberGenerator = require('./generateReferenceNumber');
+const buildTree = require('../buildTree');
+const predict = require('../predict');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -10,7 +12,7 @@ const refNumberGenerator = require('./generateReferenceNumber');
 router.post('/', submitForm);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             submit sample
+//                                             Submit Sample
 /**
  * @summary submit a sample to the diagnostic clinic
  * @description  REQUEST DATA REQUIRED: all form data
@@ -61,27 +63,37 @@ function submitForm(req, res)
         });
     }
     else{
-
     
-    refnum = refNumberGenerator();
-    req.body.referenceNumber = refnum;
-    sampleRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(refnum);
-    req.body.status = 'submitted';
-    sampleRef.set(req.body).then(()=>
-    {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-        success: true,
-            code: 200,
-            title: "SUCCESS",
-            message : "form succesfully submitted",
-            data: {
-                referenceNumber : refnum
-            }
+    
+    result = predict(req.body.data).then((result => {
+        refnum = refNumberGenerator(result);
+        req.body.referenceNumber = refnum;
+        sampleRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(refnum);
+        req.body.status = 'submitted';
+        sampleRef.set(req.body).then(()=>
+        {
+            
+            res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+            success: true,
+                code: 200,
+                title: "SUCCESS",
+                message : "form succesfully submitted",
+                data: {
+                    referenceNumber : refnum,
+                    prediagnosis: result
+                }
+            });
         });
     })
+
+    );
+       
+        
+    
+    
 }
 }
 
