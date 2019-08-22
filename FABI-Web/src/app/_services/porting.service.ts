@@ -1,5 +1,3 @@
-import { Component, Injectable } from '@angular/core';
-
 /**
  * File Name: porting.service.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\services\porting.service.ts
@@ -7,13 +5,15 @@ import { Component, Injectable } from '@angular/core';
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 12th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
  * 
  * <<license>>
  */
+
+import { Component, Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +41,11 @@ export class Porting{
   //                                                            CONVERT TO JSON
   /**
    *  This function is used to convert the text sent from the file into JSON
-   *  @param {string} text 
+   * 
+   *  @param {string} text The file to be converted to a database and stored
+   * 
+   *  @returns API response @type any
+   * 
    *  @memberof Porting
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,7 +77,11 @@ export class Porting{
   //                                                            EXTRACT DATABASE
   /**
    *  This function is used to perform reverse porting
-   *  @param {string} dbName
+   * 
+   *  @param {string} dbName The name of the database to be downloaded
+   * 
+   *  @returns API response @type any
+   * 
    *  @memberof Porting
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
