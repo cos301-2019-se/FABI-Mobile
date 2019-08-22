@@ -92,21 +92,6 @@
 /* Form Styling
     ========================================================================== */
 
-.pre-diagnosis {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    width: 85%;
-    min-height: 50vh;
-    height: auto;
-
-    margin-top: 70px;
-
-    z-index: 0;
-
-    transition: all 0.5s;
-
-
+.jumbotron {
+    min-width: 60%;
 }
