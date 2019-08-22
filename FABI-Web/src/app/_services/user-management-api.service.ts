@@ -856,6 +856,8 @@ export class UserManagementAPIService {
       "newPass": newPassword
     }
 
+    console.log(JSON.stringify(postData));
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
