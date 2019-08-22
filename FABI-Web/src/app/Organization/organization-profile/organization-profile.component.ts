@@ -167,15 +167,16 @@ export class OrganizationProfileComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.loadAdminProfileDetails();
-    });
+    // this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.loadAdminProfileDetails();
+    // });
 
     //******** TO BE USED IN PRODUCTION: ********
-    //Calling the neccessary functions as the page loads
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    // this.loadAdminProfileDetails();
+   // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+     // Calling the neccessary functions as the page loads
+    this.loadAdminProfileDetails();
 
     this.adminProfileForm.get('organization_name').disable();
     this.adminProfileForm.get('admin_name').disable();

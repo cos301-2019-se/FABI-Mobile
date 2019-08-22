@@ -164,20 +164,22 @@ export class StaffProfileComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginStaff().subscribe((response: any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.loadStaffProfileDetails();
-    });
+    // this.authService.temporaryLoginStaff().subscribe((response: any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.loadStaffProfileDetails();
+    // });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    // Calling the neccessary functions as the page loads
+    this.loadStaffProfileDetails();
 
     this.staffProfileForm.get('staff_name').disable();
     this.staffProfileForm.get('staff_surname').disable();
     this.staffProfileForm.get('staff_email').disable();
 
-    //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    //Calling the neccessary functions as the page loads
-    // this.loadStaffProfileDetails();
+   
   }
 
 

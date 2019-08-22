@@ -198,16 +198,16 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.viewMembers();
-    });
+    // this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.viewMembers();
+    // });
     
     //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    //Calling the neccessary functions as the page loads
-    // this.viewMembers();
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    // Calling the neccessary functions as the page loads
+    this.viewMembers();
 
   }
 
