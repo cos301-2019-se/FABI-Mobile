@@ -1,4 +1,3 @@
-
 <!-- Dashboard -->
 <div class="dashboard">
 
@@ -56,6 +55,12 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reporting">Reporting</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" (click)="toggleHelpTab()">Help</a>
@@ -206,7 +211,8 @@
         <div class="menu-row">
 
           <!-- Menu Item -->
-          <div class="menu-item" *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'DatabaseAdmin')">
+          <div class="menu-item"
+            *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'DatabaseAdmin')">
             <div class="menu-icon">
               <i class="fas fa-database"></i>
             </div>
@@ -219,7 +225,8 @@
           <!-- / Menu Item -->
 
           <!-- Menu Item -->
-          <div class="menu-item" *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'ClinicAdmin')">
+          <div class="menu-item"
+            *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'ClinicAdmin')">
             <div class="menu-icon">
               <i class="fas fa-stethoscope"></i>
             </div>

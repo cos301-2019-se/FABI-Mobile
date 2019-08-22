@@ -42,27 +42,33 @@
 
           <!-- Navbar Items -->
           <li class="nav-item">
-            <a class="nav-link" routerLink="/admin-dashboard">Home</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" routerLink="/staff-handler">Staff Handler <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/database-handler">Database Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
-          </li>
-          <!-- / Navbar Items -->
+              <a class="nav-link" routerLink="/admin-dashboard">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" routerLink="/staff-handler">Staff Handler <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/database-handler">Database Handler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/reporting">Reporting</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()">Logout</a>
+            </li>
+            <!-- / Navbar Items -->
         </ul>
       </div>
     </div>
@@ -75,7 +81,7 @@
       <!-- / Menu Button -->
 
       <!-- Navbar Title -->
-      <h5>HOME</h5>
+      <h5>STAFF</h5>
       <!-- / Navbar Title -->
 
       <!-- Notification Icons -->
