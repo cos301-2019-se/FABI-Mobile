@@ -1,9 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StaffViewDatabasesComponent } from './staff-view-databases.component';
-import { StaffNotificationComponent } from '../staff-notification/staff-notification.component'
-import { StaffProfileComponent } from '../staff-profile/staff-profile.component'
-import { StaffHelpComponent } from '../staff-help/staff-help.component'
+import { MemberDashboardComponent } from './member-dashboard.component';
+import { MemberViewSamplesComponent } from '../member-view-samples/member-view-samples.component'
+import { MemberNotificationComponent } from '../member-notification/member-notification.component'
+import { MemberProfileComponent } from '../member-profile/member-profile.component'
+import { MemberHelpComponent } from '../member-help/member-help.component'
+
+import { MaterialModule } from '../../materials';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FilterPipe } from '../../_pipes/filter.pipe';
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -11,21 +17,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
-//Http Testing
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-
-//Animation Testing
-import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FilterPipe } from '../../_pipes/filter.pipe';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/_services/authentication.service'
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 
-describe('StaffViewDatabasesComponent', () => {
-  let component: StaffViewDatabasesComponent;
-  let fixture: ComponentFixture<StaffViewDatabasesComponent>;
+describe('MemberDashboardComponent', () => {
+  let component: MemberDashboardComponent;
+  let fixture: ComponentFixture<MemberDashboardComponent>;
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -35,13 +35,14 @@ describe('StaffViewDatabasesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StaffViewDatabasesComponent,
-        StaffNotificationComponent,
-        StaffProfileComponent,
-        StaffHelpComponent,
+      declarations: [ MemberDashboardComponent,
+        MemberViewSamplesComponent,
+        MemberNotificationComponent,
+        MemberProfileComponent,
+        MemberHelpComponent,
         FilterPipe
       ],
-      imports: [MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [ MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
@@ -53,7 +54,7 @@ describe('StaffViewDatabasesComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StaffViewDatabasesComponent);
+    fixture = TestBed.createComponent(MemberDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

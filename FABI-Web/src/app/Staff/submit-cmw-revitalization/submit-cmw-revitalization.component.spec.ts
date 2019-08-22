@@ -1,23 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminNotificationComponent } from './admin-notification.component';
+import { SubmitCmwRevitalizationComponent } from './submit-cmw-revitalization.component';
+
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
+
 //Import form components
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
 //Import the materials component
 import { MaterialModule } from '../../materials';
+
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DebugElement, NgModule } from '@angular/core';
+import { FilterPipe } from '../../_pipes/filter.pipe';
 import { AuthenticationService } from 'src/app/_services/authentication.service'
 
-describe('AdminNotificationComponent', () => {
-  let component: AdminNotificationComponent;
-  let fixture: ComponentFixture<AdminNotificationComponent>;
-  let de : DebugElement;
+describe('SubmitCmwRevitalizationComponent', () => {
+  let component: SubmitCmwRevitalizationComponent;
+  let fixture: ComponentFixture<SubmitCmwRevitalizationComponent>;
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -27,22 +31,26 @@ describe('AdminNotificationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [ SubmitCmwRevitalizationComponent, FilterPipe ],
       imports: [
-         MaterialModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
+        MaterialModule, 
+        NoopAnimationsModule, 
+        BrowserAnimationsModule, 
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
-      declarations: [  AdminNotificationComponent ],
-      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+      providers:[
+        { provide: AuthenticationService, useClass: MockAuthenticationService }
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminNotificationComponent);
+    fixture = TestBed.createComponent(SubmitCmwRevitalizationComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement;
-
-    component.ngOnInit();
-    fixture.autoDetectChanges();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

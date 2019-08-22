@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StaffNotificationComponent } from './staff-notification.component';
+import { MemberSubmitSampleComponent } from './member-submit-sample.component';
+
+import { SampleFormComponent } from '../../sample-form/sample-form.component';
 
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
@@ -17,28 +19,28 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import {MatDialogModule} from '@angular/material/dialog';
-
-describe('StaffNotificationComponent', () => {
-  let component: StaffNotificationComponent;
-  let fixture: ComponentFixture<StaffNotificationComponent>;
+describe('MemberSubmitSampleComponent', () => {
+  let component: MemberSubmitSampleComponent;
+  let fixture: ComponentFixture<MemberSubmitSampleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StaffNotificationComponent ],
-      imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
-      providers: [
-        { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
-      ]
+      declarations: [ MemberSubmitSampleComponent, SampleFormComponent],
+      imports: [
+        MaterialModule,
+        NoopAnimationsModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule],
+      providers: []
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StaffNotificationComponent);
+    fixture = TestBed.createComponent(MemberSubmitSampleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

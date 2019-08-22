@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClinicAdminViewSamplesComponent } from './clinic-admin-view-samples.component';
+import { MapsWindowComponent } from './maps-window.component';
+
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -16,30 +16,31 @@ import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import {MatDialogModule} from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material';
-import { FilterPipe } from '../../_pipes/filter.pipe';
+import { AgmCoreModule, MapsAPILoader } from '@agm/core'
 
-describe('ClinicAdminViewSamplesComponent', () => {
-  let component: ClinicAdminViewSamplesComponent;
-  let fixture: ComponentFixture<ClinicAdminViewSamplesComponent>;
+import {MatDialogModule} from '@angular/material/dialog';
+
+
+
+describe('MapsWindowComponent', () => {
+  let component: MapsWindowComponent;
+  let fixture: ComponentFixture<MapsWindowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterPipe, ClinicAdminViewSamplesComponent ],
-      imports: [ MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      declarations: [ MapsWindowComponent ],
+      imports: [ReactiveFormsModule, AgmCoreModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
+        MapsAPILoader,
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} },
-        { provide: MatSnackBar, useValue: {} }
+        { provide: MatDialogRef, useValue: {} }
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClinicAdminViewSamplesComponent);
+    fixture = TestBed.createComponent(MapsWindowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

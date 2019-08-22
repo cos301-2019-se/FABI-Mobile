@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 
-import { LoadingComponent } from './loading.component';
+import { AuthenticationGuard } from './authentication.guard';
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -14,29 +14,19 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import {MatDialogModule} from '@angular/material/dialog';
 
-describe('LoadingComponent', () => {
-  let component: LoadingComponent;
-  let fixture: ComponentFixture<LoadingComponent>;
-
-  beforeEach(async(() => {
+describe('AuthenticationGuard', () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoadingComponent ],
       imports: [RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+        { provide: MatDialogRef, useValue: {} },
+        AuthenticationGuard
       ]
-    })
-    .compileComponents();
+    });
+  });
+
+  it('should ...', inject([AuthenticationGuard], (guard: AuthenticationGuard) => {
+    expect(guard).toBeTruthy();
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LoadingComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

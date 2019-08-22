@@ -1,12 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import 'jasmine';
 
-import { ClinicAdminViewSamplesComponent } from './clinic-admin-view-samples.component';
+import { StaffProfileComponent } from './staff-profile.component';
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+
+//Import the materials component
+import { MaterialModule } from '../../materials';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -17,29 +20,25 @@ import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import {MatDialogModule} from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material';
-import { FilterPipe } from '../../_pipes/filter.pipe';
 
-describe('ClinicAdminViewSamplesComponent', () => {
-  let component: ClinicAdminViewSamplesComponent;
-  let fixture: ComponentFixture<ClinicAdminViewSamplesComponent>;
+describe('StaffProfileComponent', () => {
+  let component: StaffProfileComponent;
+  let fixture: ComponentFixture<StaffProfileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterPipe, ClinicAdminViewSamplesComponent ],
-      imports: [ MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      declarations: [ StaffProfileComponent ],
+      imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} },
-        { provide: MatSnackBar, useValue: {} }
+        { provide: MatDialogRef, useValue: {} }
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClinicAdminViewSamplesComponent);
+    fixture = TestBed.createComponent(StaffProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
