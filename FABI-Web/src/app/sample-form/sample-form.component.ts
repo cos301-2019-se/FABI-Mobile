@@ -14,7 +14,7 @@
  */
 
 import * as Interface from '../_interfaces/interfaces';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Injector } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -58,6 +58,7 @@ export class SampleFormComponent implements OnInit {
    * @param {MatSnackBar} snackBar Used to create pop-up notifications for the user
    * @param {MatDialog} dialog Used to create pop-up notifications for the user
    * @param {Router} router
+   * @param {Injector} injector Used to pass data between this component and the pre-diagnosis component
    * 
    * @memberof SampleFormComponent
    */
@@ -68,6 +69,7 @@ export class SampleFormComponent implements OnInit {
     private formBuilder: FormBuilder, 
     private snackBar: MatSnackBar, 
     private dialog: MatDialog, 
+    private injector: Injector, 
     private router: Router
     ) {
       this.sampleForm = this.formBuilder.group({
@@ -151,7 +153,6 @@ export class SampleFormComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   sendForm() {
-
     this.submitted = true;
 
     const formDetails: Interface.SampleFormData = {
@@ -215,8 +216,6 @@ export class SampleFormComponent implements OnInit {
       permission_granted: this.sampleForm.controls.permission_granted.value
     };
 
-    console.log("---FORM: " + JSON.stringify(formDetails));
-
     // const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
 
     this.clinicService.submitSampleForm(formDetails).subscribe((response: any) => {
@@ -225,6 +224,9 @@ export class SampleFormComponent implements OnInit {
         let snackBarRef = this.snackBar.open("Successfully Submitted Form", "Dismiss", {
           duration: 3000
         });
+
+        //Set pre-diagnosis
+        localStorage.setItem('pre-diagnosis', response.data.prediagnosis);
 
         //Navigate to the pre-diagnosis 
         this.router.navigate(['/pre-diagnosis']);

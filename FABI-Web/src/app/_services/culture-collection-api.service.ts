@@ -5,7 +5,7 @@
  * Created Date: Monday, July 15th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -25,6 +25,7 @@ import { config } from "../../environments/environment.prod";
 //                                                          GLOBAL VARIABLES
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////// URL'S FOR API //////////////////////////////////////////////////////////////// 
 const getRequestLogsURL = `${config.cultureClinicURL}/getAllRequestForms`;
 const getDepositLogsURL = `${config.cultureClinicURL}/getAllDepositForms`;
 const getRevitalizationLogsURL = `${config.cultureClinicURL}/getAllRevitalizationForms`;
@@ -34,7 +35,6 @@ const submitCMWRequestFormURL = `${config.cultureClinicURL}/submitCMWRequestForm
 const submitCMWRevitalizationFormURL = `${config.cultureClinicURL}/submitCMWRevitalizationForm`;
 const submitProcessedFormURL =  `${config.cultureClinicURL}/submitCMWProcessingForm`;
 const updateDepositFormStatusURL = `${config.cultureClinicURL}/updateDepositStatus`;
-const getPrediagnosisURL = ``;
 
 //Object for defining the CMW deposit form values
 export interface CMWDeposit{
@@ -129,6 +129,7 @@ export class CultureCollectionAPIService {
    * Creates an instance of CultureCollectionAPIService.
    * 
    * @param {HttpClient} http For making calls to the API
+   * 
    * @memberof CultureCollectionAPIService
    */
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,6 +143,7 @@ export class CultureCollectionAPIService {
    *    all the logs with type 'REQUEST'
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,6 +168,7 @@ export class CultureCollectionAPIService {
    *    all the logs with type 'DEPOSIT'
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,6 +194,7 @@ export class CultureCollectionAPIService {
    *    all the logs with type 'REVITALIZATION'
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,6 +218,7 @@ export class CultureCollectionAPIService {
    *    all the logs with type 'PROCESSED'
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -238,6 +243,7 @@ export class CultureCollectionAPIService {
    *    database.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -266,6 +272,7 @@ export class CultureCollectionAPIService {
    *    database.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -292,6 +299,7 @@ export class CultureCollectionAPIService {
    *    database.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -320,6 +328,7 @@ export class CultureCollectionAPIService {
    *    database.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -347,6 +356,7 @@ export class CultureCollectionAPIService {
    *    This function is used to update the status of a deposit form to 'processed'.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -365,32 +375,6 @@ export class CultureCollectionAPIService {
     };
 
     return this.http.request('POST', updateDepositFormStatusURL, options);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET SAMPLE PRE DIAGNOSIS
-  /**
-   * This function is used to get the pre-diagnosis for a sample that has been submitted.
-   *
-   * @returns API response @type any
-   * @memberof CultureCollectionAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getSamplePreDiagnosis(){
-    const options = {
-        method: 'POST',
-        url: getPrediagnosisURL,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-        },
-        // body: data,
-        json: true
-    };
-
-    return this.http.request('POST', getPrediagnosisURL, options);
   }
 
 }
