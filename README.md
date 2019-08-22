@@ -82,11 +82,12 @@
 
 
 ## <a name="Emma-Coetzer">Emma Coetzer</a>
-###### *Front-End Developer*
+###### *Front-End and Back-End Developer*
 
 #### Links
  [GitHub](https://github.com/EmmaBinx)  
  [LinkedIn](https://www.linkedin.com/in/emma-coetzer-85b46317b/)   
+ [CV](https://drive.google.com/file/d/1212zXXFP3k5cvu61BpgsrUBsIEwU0kSQ/view?usp=sharing)   
  
 
 **Current Position:** BSc IT 3rd year
