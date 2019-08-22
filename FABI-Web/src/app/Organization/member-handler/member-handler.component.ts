@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -40,9 +40,6 @@ import { UserManagementAPIService } from 'src/app/_services/user-management-api.
   encapsulation: ViewEncapsulation.None
 })
 export class MemberHandlerComponent implements OnInit {
-
-  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove', 'Action'];
-  dataSource = new MatTableDataSource([]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -127,6 +124,10 @@ export class MemberHandlerComponent implements OnInit {
   /** The search item the user is looking for in the table -  @type {string} */
   public searchMember: string = "";
 
+  /** The column headings to be displayed in the member table -  @type {string[]} */
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove', 'Action'];
+  dataSource = new MatTableDataSource([]);
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
@@ -196,7 +197,6 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -288,7 +288,6 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMemberPrompt(member: Interface.OrganisationMember) {
-
     const memberDetails = member.fname + " " + member.surname + " " + member.email;
 
     this.selectedMember = member;
@@ -325,7 +324,6 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeMember() {
-
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Removing Member" }});
     
     this.userManagementService.removeOrganizationMember(this.selectedMember).subscribe((response: any) => {
@@ -372,7 +370,6 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewMembers() {
-
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Loading" }});
 
     this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
@@ -578,6 +575,18 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET MEMBER FIELDS 
+  /**
+   * This function will clear the inputs in the Add Member modal
+   * 
+   * @memberof MemberHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetMemberFields(){
+    this.addMemberForm.reset();
   }
 
 }
