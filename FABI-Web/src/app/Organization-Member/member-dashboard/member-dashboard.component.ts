@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Friday, August 23rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -111,69 +111,10 @@ export class MemberDashboardComponent implements OnInit {
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
-    this.getNumberOfMemberSamples();
     this.getNumberOfCompletedMemberSamples();
     this.loadNotifications();
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                GET NUMBER OF MEMBER SAMPLES
-  /**
-   *  This function will use an API service to get all the samples of a member. These samples will be read into the
-   *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-   *  HTML page with the number of samples belonging to the member.
-   * 
-   *  This function will also dynamically load all of the samples into the sample section within the HTML page.
-   * 
-   * @memberof MemberDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfMemberSamples() {
-    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
-      if (response.success == true) {
-        //Populating the arrays with the returned data
-        var tempSamples = response.data.samples;
-        for (var i = 0; i < tempSamples.length; i++) {
-          var tempSpecies: Species = { species: tempSamples[i].data.species };
-          var tempSample: Sample = { userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, referenceNumber: tempSamples[i].referenceNumber, data: tempSpecies };
-          this.memberSamples.push(tempSample);
-        }
-
-        //Deactivate loading table spinners
-        this.sampleTableLoading = false;
-        
-        this.numberOfMemberSamples = this.memberSamples.length;
-
-        if (this.memberSamples.length == 0) {
-          //Dynamically loads one div if no samples are returned
-          const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
-          sampleDivRef.instance.Number = 'You currently have no samples.';
-          sampleDivRef.instance.Status = '';
-          sampleDivRef.instance.Details = '';
-        }
-        else {
-          //Dynamically loads all the samples into the HTML page
-          for (var i = 0; i < this.memberSamples.length; i++) {
-            const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
-            sampleDivRef.instance.Number = 'Sample' + (i + 1).toString();
-            sampleDivRef.instance.Status = 'Status: ' + this.memberSamples[i].status;
-            sampleDivRef.instance.Details = 'Species: ' + this.memberSamples[i].data.species;
-          }
-        }
-      }
-      else {
-        //Could not return samples
-        this.numberOfMemberSamples = 0;
-
-        const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
-        sampleDivRef.instance.Number = 'Samples could not be loaded.';
-        sampleDivRef.instance.Status = '';
-        sampleDivRef.instance.Details = '';
-      }
-    });
-  }
 
   logout() {
     this.authService.logoutUser();
