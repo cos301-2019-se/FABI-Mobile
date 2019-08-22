@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 20th 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -487,6 +487,27 @@ export class UserManagementAPIService {
     };
 
     return this.http.request<any>(method, createOrganizationURL, options);
+  }
+
+
+  sendRequestToRegisterOrganization(orgInfo: Interface.Organisation) {
+    let requestToRegisterOrganizationURL = `${config.userManagementURL}/`;
+    let method = 'POST';
+
+    const postData = orgInfo;
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, requestToRegisterOrganizationURL, options);
   }
 
 
