@@ -21,6 +21,7 @@ import { ErrorComponent } from 'src/app/_errors/error-component/error.component'
 import { Router } from '@angular/router';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
 import { Form, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-clinic-admin-view-samples',
@@ -185,5 +186,26 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
   updateSampleStatus(sample: any) {
     console.log("SAMPLE: " + JSON.stringify(sample));
     console.log("STATUS: " + this.updateSampleStatusForm.controls.sample_status.value);
+
+    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Sample Status" }});
+
+    this.diagnosticClinicService.updateSamplesStatus(sample, this.updateSampleStatusForm.controls.sample_status.value).subscribe((response: any) => {
+
+      if (response.success == true && response.code == 200) {
+
+        loadingRef.close();
+        
+        this.viewSamples();
+        
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.viewSamples();
+          }
+        })
+      }
+    });
   }
 }

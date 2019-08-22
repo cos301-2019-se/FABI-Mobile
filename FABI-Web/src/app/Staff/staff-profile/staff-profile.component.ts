@@ -67,7 +67,7 @@ export class StaffProfileComponent implements OnInit {
   @ViewChild("confirmInput") confirmInput: ElementRef;
 
   /** The user that is currently logged in -  @type {any} */
-  currentUser: any;
+  currentUser: any = {};
 
   isEditingProfile: boolean = false;
 
@@ -297,6 +297,8 @@ export class StaffProfileComponent implements OnInit {
 
       loadingRef.close();
 
+      console.log("RESP: " + JSON.stringify(response));
+
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
@@ -305,6 +307,8 @@ export class StaffProfileComponent implements OnInit {
         });
       }
       else {
+
+        console.log("RESP: " + JSON.stringify(response));
         //Error handling
         let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
           duration: 3000
