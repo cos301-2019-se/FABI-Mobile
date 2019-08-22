@@ -462,7 +462,7 @@
             <button type="button" class="btn btn-default-cancel"
               *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
               data-dismiss="modal">{{deleteData.cancel}}</button>
-            <button type="button" class="btn btn-default-confirm" (click)="removeStaffMember()"
+            <button type="button" class="btn btn-default-delete" (click)="removeStaffMember()"
               *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal"
               data-dismiss="modal">{{deleteData.confirm}}</button>
           </div>
