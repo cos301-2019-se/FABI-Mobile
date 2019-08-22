@@ -38,7 +38,7 @@ function updateStaff(req, res) {
         success: false,
         code: 400,
         title: "BAD_REQUEST",
-        message: "THIS FUNCTION IS DEPRECATDED, please use the new addStaff functionality"
+        message: "THIS FUNCTION IS DEPRECATDED, please use the new updateStaff functionality"
     });
     /*
     //(1)

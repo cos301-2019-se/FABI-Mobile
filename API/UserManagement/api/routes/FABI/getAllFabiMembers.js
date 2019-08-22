@@ -10,7 +10,7 @@ const admin = require('firebase-admin');
 router.post('/', getAllStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get All Fabi Admins
+//                                             Get All Fabi Staff
 /**
  * @summary Get all staff assotiated with FABI
  * @description  REQUEST DATA REQUIRED: null
@@ -37,6 +37,16 @@ function getAllStaff(req, res) {
             diagnosticClinicAdmins: []
         }
     //(1)
+    res.setHeader('Content-Type', 'application/problem+json');
+    res.setHeader('Content-Language', 'en');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+        success: false,
+        code: 400,
+        title: "BAD_REQUEST",
+        message: "THIS FUNCTION IS DEPRECATDED, please use the new getAllStaff functionality"
+    });
+    /*
     var adminRef = db.collection('Organizations').doc('FABI').collection('Staff').where('userType','==','SuperUser');
     adminRef.get().then(snapshot => {
             //(2)
@@ -97,5 +107,6 @@ function getAllStaff(req, res) {
             }
         );
     });
+    */
 }
 module.exports = router;

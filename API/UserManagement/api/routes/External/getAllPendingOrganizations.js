@@ -10,9 +10,9 @@ const admin = require('firebase-admin');
 router.post('/', getAllOrganizations);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Org Details of Given Org
+//                                             Get Pending Organizations 
 /**
- * @summary Get all members associated with an organization
+ * @summary Get all organizations pending addition to the system
  * @description  REQUEST DATA REQUIRED: null
  *  
  * 1. retrieve list of orgs from database

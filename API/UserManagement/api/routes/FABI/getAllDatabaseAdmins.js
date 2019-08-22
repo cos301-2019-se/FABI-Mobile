@@ -32,7 +32,7 @@ const db = admin.firestore();
 function getAllStaff(req, res) {
 
     //(1)
-    var staffRef = db.collection('Organizations').doc('FABI').collection('DatabaseAdmin');
+    var staffRef = db.collection(Databases);
     staffRef.get().then(snapshot => {
             var qs = {DatabaseAdmins : []}
 

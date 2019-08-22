@@ -17,7 +17,7 @@ router.post('/', addMember);
 //                                             Add Member
 /**
  * @summary Add Member to orginization
- * @description  REQUEST DATA REQUIRED: Organization name, Member name, email, surname
+ * @description  REQUEST DATA REQUIRED: Organization fname, Member fname, email, surname
  *  1. Check if all required data is received and that it is correct.
  *      - IF NOT: return Error Response
  *  2. Generate and Encrypt Password.
@@ -40,7 +40,7 @@ function addMember(req, res)
 
 // (1)
     var userTypes = ['OrganizationAdmin', 'Member'];
-    if (req.body.member.name == undefined || req.body.member.name == '') {
+    if (req.body.member.fname == undefined || req.body.member.fname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -48,7 +48,7 @@ function addMember(req, res)
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "User name expected"
+            message: "User fname expected"
         });
     }
     else if (req.body.member.surname == undefined || req.body.member.surname == '') {
@@ -111,7 +111,7 @@ function addMember(req, res)
     const salt = bcrypt.genSaltSync(10);
     var pass = generatePassword(10);
     const qs = {
-        fname: req.body.member.name,
+        fname: req.body.member.fname,
         surname: req.body.member.surname,
         email: req.body.member.email,
         password: bcrypt.hashSync(pass, salt),

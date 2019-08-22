@@ -10,9 +10,9 @@ const log = require('../sendLogs');
 router.post('/', submitForm);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             submit sample
+//                                             Submit CMW Request Form
 /**
- * @summary submit a sample to the diagnostic clinic
+ * @summary submit a CWM Request Form
  * @description  REQUEST DATA REQUIRED: all form data
  *
  * @param {*} res Used to send response to the client

@@ -11,16 +11,15 @@ const log = require('../sendLogs');
 router.post('/', getAllStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get All Fabi Admins
+//                                             Get All Deposit Forms
 /**
- * @summary Get all staff assotiated with FABI
+ * @summary Get all CMW deposit forms submitted FABI
  * @description  REQUEST DATA REQUIRED: null
  *
  *  1. Connect to DB.
  *      - IF ERROR: return Error Response
  *  2. Retrieve list from database
- *  3. remove password information from data to be sent
- *  4. Send appropriate response message.
+ *  3. Send appropriate response message.
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)

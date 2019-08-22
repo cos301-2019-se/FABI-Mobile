@@ -12,19 +12,11 @@ const log = require('../sendLogs');
 router.post('/', createDatabase);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Add Organization
+//                                             Create Database
 /**
- * @summary Create a new organization with data recieved
- * @description  REQUEST DATA REQUIRED: organization name, organization details, admin details
- *  1. Check if all required data is received and that it is correct.
- *      - IF NOT: return Error Response
- *  2. Connect to DB.
- *      - IF ERROR: return Error Response
- *  3. Encrypt Password.
- *  4. Add Organization to Organizations collection and create admin within admin collection int that organization
- *      - IF ERROR: return Error Response
- *  5. Send appropriate response message.
- *
+ * @summary Create a new empty database
+ * @description  REQUEST DATA REQUIRED: database name, admin details
+ *  
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
@@ -36,17 +28,7 @@ const db = admin.firestore();
 function createDatabase(req, res)
 {
 // Store request data is qs
-const salt = bcrypt.genSaltSync(10);
-    var pass = generatePassword(10);
-    const qs = {
-        databaseName : req.body.databaseName,
-        admin : {
-            fname: req.body.admin.name,
-            surname: req.body.admin.surname,
-            email: req.body.admin.email,
-            password: bcrypt.hashSync(pass, salt)
-        }
-    }
+
 // (1) Check if all required data is received and that it is correct.
     if (req.body.admin.name == undefined || req.body.admin.name == '') {
         res.setHeader('Content-Type', 'application/problem+json');
@@ -93,6 +75,14 @@ const salt = bcrypt.genSaltSync(10);
         });
     }
 
+    const qs = {
+        databaseName : req.body.databaseName,
+        admin : {
+            fname: req.body.admin.name,
+            surname: req.body.admin.surname,
+            email: req.body.admin.email,
+        }
+    }
 // (2) Connect to DB
     
 
