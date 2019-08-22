@@ -79,10 +79,12 @@ modal {
 
 #addModal .modal-dialog {
   max-width: 85%;
+  min-width: 30%;
+  width: auto;
 }
 
 #addModal .modal-content {
-  min-height: 90vh;
+  min-height: 25vh;
   height: auto;
 }
 
