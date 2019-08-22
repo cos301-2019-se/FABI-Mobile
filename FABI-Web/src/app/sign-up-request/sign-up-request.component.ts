@@ -53,6 +53,10 @@ export class SignUpRequestComponent implements OnInit {
   /** Object for storing all forms that require validation-  @type {HTMLCollectionOf<Element>} */
   forms: HTMLCollectionOf<Element> = null;
 
+  sign_up_form = new FormGroup({
+
+  });
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**

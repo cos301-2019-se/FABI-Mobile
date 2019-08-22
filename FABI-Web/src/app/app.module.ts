@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
@@ -80,8 +81,12 @@ import { FilterPipe } from './_pipes/filter.pipe';
 import { ClinicAdminViewSamplesComponent } from './Admin/clinic-admin-view-samples/clinic-admin-view-samples.component';
 import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
 import { StaffViewDatabasesComponent } from './Staff/staff-view-databases/staff-view-databases.component';
+<<<<<<< HEAD
 import { StaffViewSamplesComponent } from './Staff/staff-view-samples/staff-view-samples.component';
 
+=======
+import {MatInputModule} from '@angular/material';
+>>>>>>> unitTesting
 // import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
@@ -151,7 +156,9 @@ import { StaffViewSamplesComponent } from './Staff/staff-view-samples/staff-view
   ],
   imports: [
     BrowserModule,
+    MatInputModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     MaterialModule,
@@ -172,7 +179,8 @@ import { StaffViewSamplesComponent } from './Staff/staff-view-samples/staff-view
     })
   ],
   providers: [
-    NotificationService
+    NotificationService,
+    FilterPipe
   ],
   bootstrap: [AppComponent]
 })
