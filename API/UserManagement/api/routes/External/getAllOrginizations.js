@@ -10,9 +10,9 @@ const admin = require('firebase-admin');
 router.post('/', getAllOrganizations);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Org Details of Given Org
+//                                             Get all Organizations
 /**
- * @summary Get all members associated with an organization
+ * @summary Get all Organizzations registered with the system
  * @description  REQUEST DATA REQUIRED: null
  *  
  * 1. retrieve list of orgs from database
@@ -52,9 +52,9 @@ function getAllOrganizations(req, res) {
                 data.Organizations.push(doc.data());
             })
             //(3)
-            data.Organizations.forEach(doc => {
-                delete doc.admin;
-            })
+            //data.Organizations.forEach(doc => {
+              //  delete doc.admin;
+            //})
 
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');

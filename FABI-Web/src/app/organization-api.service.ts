@@ -5,9 +5,21 @@ import { registerContentQuery } from '@angular/core/src/render3';
 import { StaticInjector } from '@angular/core/src/di/injector';
 import { BehaviorSubject } from 'rxjs';
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 const addMemberURL: string = '***REMOVED***/addMemberToOrg';
 const submitSampleURL: string = '***REMOVED***/submitSample';
 const retrieveAllOrgSamples: string = '***REMOVED***/retrieveAllOrgSamples';
+=======
+const addMemberURL: string = '***REMOVED***/addMemberToOrg';
+const submitSampleURL: string = '***REMOVED***/submitSample';
+const retrieveAllOrgSamples: string = '***REMOVED***/retrieveAllOrgSamples';
+>>>>>>> API
+=======
+const addMemberURL: string = '***REMOVED***/addMemberToOrg';
+const submitSampleURL: string = '***REMOVED***/submitSample';
+const retrieveAllOrgSamples: string = '***REMOVED***/retrieveAllOrgSamples';
+>>>>>>> API
 
 
 

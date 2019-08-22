@@ -17,7 +17,7 @@ router.post('/', addOrganization);
 //                                             Add Organization
 /**
  * @summary Create a new organization with data recieved
- * @description  REQUEST DATA REQUIRED: organization name, organization details, admin details
+ * @description  REQUEST DATA REQUIRED: organization fname, organization details, admin details
  *  1. Check if all required data is received and that it is correct.
  *      - IF NOT: return Error Response
  *  2. Connect to DB.
@@ -40,7 +40,7 @@ function addOrganization(req, res)
 
 
 // (1) 
-    if (req.body.admin.name == undefined || req.body.admin.name == '') {
+    if (req.body.admin.fname == undefined || req.body.admin.fname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -48,7 +48,7 @@ function addOrganization(req, res)
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "Admin name expected"
+            message: "Admin fname expected"
         });
     }
     if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
@@ -81,56 +81,95 @@ function addOrganization(req, res)
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "Organization Name Expected"
+            message: "Organization fname Expected"
         });
     }
 
         // (2)
         var docRef  = db.collection('Organizations').doc(req.body.orgName);
-        
+        var pendingRef  = db.collection('Organizations').doc('Pending').collection('Organizations').doc(req.body.orgName);
+
         // (3)
         const salt = bcrypt.genSaltSync(10);
         var pass = generatePassword(10);
         const qs = {
             orgName : req.body.orgName,
             admin : {
-                fname: req.body.admin.name,
+                fname: req.body.admin.fname,
                 surname: req.body.admin.surname,
                 email: req.body.admin.email,
-                password: bcrypt.hashSync(pass, salt),
                 id : new Date().getTime().toString(),
                 userType: "OrganizationAdmin"
             }
         }
 
         // (4)
-        docRef.set(qs).then(() => {
-            adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
-                res.setHeader('Content-Type', 'application/problem+json');
-                res.setHeader('Content-Language', 'en');
-                res.setHeader("Access-Control-Allow-Origin", "*");
-                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                success: true,
-                code: 200,
-                title: "SUCCESS",
-                message: "Created Organization",
-                data: {
-                        orgName: req.body.orgName,
-                        tempPassword: pass
-                }
+        pendingRef.get().then(doc => {
+            //(2)
+            if(typeof(doc.data()) === 'undefined')
+            {
+                docRef.set(qs).then(() => {
+                    qs.admin.password = bcrypt.hashSync(pass, salt)
+                    adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                        success: true,
+                        code: 200,
+                        title: "SUCCESS",
+                        message: "Created Organization",
+                        data: {
+                                orgName: req.body.orgName,
+                                tempPassword: pass
+                        }
+                })
+                mail(req.body.orgName + ' Admin', pass);
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: qs.admin.id,
+                    org1: 'FABI',
+                    org2: req.body.orgName,
+                    action: '/createOrganization'
+                });
+            });
+            });
+        }
+        else
+        {
+            pendingRef.delete().then(() => {
+                docRef.set(qs).then(() => {
+                    qs.admin.password = bcrypt.hashSync(pass, salt)
+                    adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                            success: true,
+                            code: 200,
+                            title: "SUCCESS",
+                            message: "Created Organization",
+                            data: {
+                                    orgName: req.body.orgName,
+                                    tempPassword: pass
+                            }
+                        })
+                mail(req.body.orgName + ' Admin', pass);
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: qs.admin.id,
+                    org1: 'FABI',
+                    org2: req.body.orgName,
+                    action: '/createOrganization'
+                });
+            });
+            });
         })
-        mail(req.body.orgName + ' Admin', pass);
-        log({
-            type: 'USER',
-            action: 'AddMemberToOrg',
-            details: '1563355277876',
-            user: qs.admin.id,
-            org1: 'FABI',
-            org2: req.body.orgName,
-            action: '/createOrganization'
-        });
-    });
-        console.log("New Organization Added");
+    }
     }).catch((err) => {
         console.log("Database connection error: " + err);
         res.setHeader('Content-Type', 'application/problem+json');

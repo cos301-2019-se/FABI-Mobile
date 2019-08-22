@@ -39,7 +39,7 @@ function addStaff(req, res)
     userTypes = ['SuperUser', 'ClinicAdmin', 'CultureAdmin', 'Staff'];
 
 // (1)
-    if (req.body.staff.name == undefined || req.body.staff.name == '') {
+    if (req.body.staff.fname == undefined || req.body.staff.fname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -47,7 +47,7 @@ function addStaff(req, res)
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "User name expected"
+            message: "User fname expected"
         });
     }
     else if (req.body.staff.surname == undefined || req.body.staff.surname == '') {
@@ -111,7 +111,7 @@ function addStaff(req, res)
 const salt = bcrypt.genSaltSync(10);
 var pass = generatePassword(10);
 const qs = {
-    fname: req.body.staff.name,
+    fname: req.body.staff.fname,
     surname: req.body.staff.surname,
     email: req.body.staff.email,
     password: bcrypt.hashSync(pass, salt),
