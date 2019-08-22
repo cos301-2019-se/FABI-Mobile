@@ -157,7 +157,7 @@
 #### Links
   [GitHub](https://github.com/KendraRid9)  
   [LinkedIn](https://www.linkedin.com/in/kendra-riddle-700297181/)   
- 
+  [CV](https://zety.com/mycv/Kendra.Riddle) 
 
 **Current Position:** BSc IT 3rd year
 
