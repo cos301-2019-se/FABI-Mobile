@@ -157,7 +157,7 @@
         </div>
         <!-- /Loading Spinner -->
 
-        <table class="table table-hover"  *ngIf="staffMembers && !staffTableLoading">
+        <table class="table table-hover" *ngIf="staffMembers && !staffTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -227,35 +227,34 @@
 
             <!-- Name -->
             <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" placeholder="Enter name" disabled
-                [value]="selectedStaff.fname">
+              <label>Name</label>
+              <p class="form-control form-control-sm">{{selectedStaff.fname}}</p>
             </div>
-            <!-- /Name -->
+            <!-- / Name -->
+
 
             <!-- Surname -->
             <div class="form-group">
-              <label for="surname">Surname</label>
-              <input type="text" class="form-control" id="surname" placeholder="Enter surname" disabled
-                [value]="selectedStaff.surname">
+              <label>Surname</label>
+              <p class="form-control form-control-sm">{{selectedStaff.surname}}</p>
             </div>
-            <!-- /Surname -->
+            <!-- / Surname -->
+
 
             <!-- Email -->
             <div class="form-group">
-              <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
-                disabled [value]="selectedStaff.email">
+              <label>Email</label>
+              <p class="form-control form-control-sm">{{selectedStaff.email}}</p>
             </div>
-            <!-- /Email -->
+            <!-- / Email -->
 
             <!-- Phone -->
             <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="text" class="form-control" id="phone" placeholder="Enter phone" disabled
-                [value]="selectedStaff.phone">
+              <label>Phone</label>
+              <p class="form-control form-control-sm">{{selectedStaff.phone}}</p>
             </div>
-            <!-- /Phone -->
+            <!-- / Phone -->
+
 
             <!-- Delete Action -->
             <button class="btn btn-default-delete" data-toggle="modal" (click)="removeStaffMemberPrompt(selectedStaff)"
@@ -392,8 +391,7 @@
                 <!-- Admin Type Drop Down -->
                 <div class="form-group">
                   <label for="admin_type">Admin Type</label>
-                  <select class="form-control form-control-sm" id="admin_type"
-                    formControlName="admin_type" required>
+                  <select class="form-control form-control-sm" id="admin_type" formControlName="admin_type" required>
                     <option value="" selected>
                       Please select an admin type
                     </option>
@@ -410,13 +408,14 @@
                 <!-- Database Privileges Table -->
 
                 <div class="form-group">
-                    <label for="database_privileges">Database Privileges</label>
-                    <div formArrayName="database_privileges" *ngFor="let database_privilege of allDatabaseNames; let i = index" id="database_privileges">
-                        <input type="checkbox" [formControlName]="i">
-                        {{allDatabaseNames[i]}}
-                    </div>
+                  <label for="database_privileges">Database Privileges</label>
+                  <div formArrayName="database_privileges"
+                    *ngFor="let database_privilege of allDatabaseNames; let i = index" id="database_privileges">
+                    <input type="checkbox" [formControlName]="i">
+                    {{allDatabaseNames[i]}}
+                  </div>
                 </div>
-              
+
                 <!-- / Database Privileges Table -->
 
                 <!-- Submit -->
