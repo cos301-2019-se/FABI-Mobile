@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClinicAdminViewSamplesComponent } from './clinic-admin-view-samples.component';
+import { MemberViewSamplesComponent } from './member-view-samples.component';
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { AuthenticationService } from 'src/app/_services/authentication.service'
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -21,25 +21,32 @@ import { MatFormFieldModule } from '@angular/material';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { FilterPipe } from '../../_pipes/filter.pipe';
 
-describe('ClinicAdminViewSamplesComponent', () => {
-  let component: ClinicAdminViewSamplesComponent;
-  let fixture: ComponentFixture<ClinicAdminViewSamplesComponent>;
+describe('MemberViewSamplesComponent', () => {
+  let component: MemberViewSamplesComponent;
+  let fixture: ComponentFixture<MemberViewSamplesComponent>;
+
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  } 
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterPipe, ClinicAdminViewSamplesComponent ],
+      declarations: [ MemberViewSamplesComponent, FilterPipe ],
       imports: [ MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
-        { provide: MatSnackBar, useValue: {} }
+        { provide: MatSnackBar, useValue: {} },
+        { provide: AuthenticationService, useClass: MockAuthenticationService }
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClinicAdminViewSamplesComponent);
+    fixture = TestBed.createComponent(MemberViewSamplesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
