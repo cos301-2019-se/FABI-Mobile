@@ -11,19 +11,27 @@ import { MaterialModule } from '../../materials';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DebugElement } from '@angular/core';
+import { DebugElement, NgModule } from '@angular/core';
+import { AuthenticationService } from 'src/app/_services/authentication.service'
 
 describe('AdminNotificationComponent', () => {
   let component: AdminNotificationComponent;
   let fixture: ComponentFixture<AdminNotificationComponent>;
   let de : DebugElement;
 
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  } 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MaterialModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
+         MaterialModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
       ],
-      declarations: [ AdminNotificationComponent ]
+      declarations: [  AdminNotificationComponent ],
+      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
     })
     .compileComponents();
   }));

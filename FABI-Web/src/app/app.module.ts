@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
@@ -150,6 +151,7 @@ import { StaffViewDatabasesComponent } from './Staff/staff-view-databases/staff-
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     MaterialModule,
@@ -170,7 +172,8 @@ import { StaffViewDatabasesComponent } from './Staff/staff-view-databases/staff-
     })
   ],
   providers: [
-    NotificationService
+    NotificationService,
+    FilterPipe
   ],
   bootstrap: [AppComponent]
 })
