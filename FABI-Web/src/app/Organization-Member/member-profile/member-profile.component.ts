@@ -171,16 +171,16 @@ export class MemberProfileComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginOrganisationMember().subscribe((response: any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.loadMemberProfileDetails();
-    });
+    // this.authService.temporaryLoginOrganisationMember().subscribe((response: any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.loadMemberProfileDetails();
+    // });
 
     //******** TO BE USED IN PRODUCTION: ********
-    //Calling the neccessary functions as the page loads
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    //Calling the neccessary functions as the page loads
-    // this.loadMemberProfileDetails();
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    // Calling the neccessary functions as the page loads
+    this.loadMemberProfileDetails();
 
     this.memberProfileForm.get('organization_name').disable();
     this.memberProfileForm.get('member_name').disable();

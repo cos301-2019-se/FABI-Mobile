@@ -105,18 +105,19 @@ export class StaffViewDatabasesComponent implements OnInit {
 
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginStaff().subscribe((response : any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
-      this.databases = this.currentUserPrivileges.databases;
-    });
+    // this.authService.temporaryLoginStaff().subscribe((response : any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
+    //   this.databases = this.currentUserPrivileges.databases;
+    // });
 
     //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    // //Calling the neccessary functions as the page loads
-    //Load Databases for Drop Down
-    // this.currentUserPrivileges = this.authService.getFABIUserPrivileges;
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    //Calling the neccessary functions as the page loads
+    // Load Databases for Drop Down
+    this.currentUserPrivileges = this.authService.getFABIUserPrivileges;
+    this.databases = this.currentUserPrivileges.databases;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

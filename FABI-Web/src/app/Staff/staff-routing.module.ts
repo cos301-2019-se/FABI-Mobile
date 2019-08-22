@@ -12,6 +12,9 @@ import { Role } from '../_interfaces/role';
 import { AuthenticationGuard } from '../_guards/authentication.guard';
 import { StaffProfileComponent } from './staff-profile/staff-profile.component';
 import { LoginComponent } from '../login/login.component';
+import { StaffViewDatabasesComponent } from "./staff-view-databases/staff-view-databases.component";
+import { StaffViewSamplesComponent } from "./staff-view-samples/staff-view-samples.component";
+import { StaffHelpComponent } from "./staff-help/staff-help.component";
 
 const routes: Routes = [
   {
@@ -53,6 +56,24 @@ const routes: Routes = [
   {
     path: 'submit-cmw-revitalization', 
     component: SubmitCmwRevitalizationComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'staff-view-databases', 
+    component: StaffViewDatabasesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'staff-view-samples', 
+    component: StaffViewSamplesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'staff-help', 
+    component: StaffHelpComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.Staff] }
   },

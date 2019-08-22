@@ -43,7 +43,7 @@ const routes: Routes = [
     path: 'clinic-handler', 
     component: ClinicHandlerComponent,
     canActivate: [AuthenticationGuard],
-    data: { roles: [Role.ClinicAdmin] }
+    data: { roles: [Role.SuperUser, Role.ClinicAdmin] }
   },
   {
     path: 'organization-dashboard',

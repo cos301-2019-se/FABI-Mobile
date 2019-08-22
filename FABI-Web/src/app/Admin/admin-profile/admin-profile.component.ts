@@ -174,19 +174,18 @@ export class AdminProfileComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.loadAdminProfileDetails();
-    });
+    // this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.loadAdminProfileDetails();
+    // });
 
+    //******** TO BE USED IN PRODUCTION: ********
+    // Calling the neccessary functions as the page loads
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    this.loadAdminProfileDetails();
     this.adminProfileForm.get('admin_name').disable();
     this.adminProfileForm.get('admin_surname').disable();
     this.adminProfileForm.get('admin_email').disable();
-
-    //******** TO BE USED IN PRODUCTION: ********
-    //Calling the neccessary functions as the page loads
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    // this.loadAdminProfileDetails();
   }
   
 

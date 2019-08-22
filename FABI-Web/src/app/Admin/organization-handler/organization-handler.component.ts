@@ -159,16 +159,16 @@ export class OrganizationHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.viewOrganizations();
-    });
+    // this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.viewOrganizations();
+    // });
 
     //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    //Calling the neccessary functions as the page loads
-    // this.viewOrganizations();
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    // Calling the neccessary functions as the page loads
+    this.viewOrganizations();
   }
 
 
@@ -332,11 +332,8 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewOrganizations() {
-    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Loading" } });
 
     this.userManagementService.getAllOrganizations().subscribe((response: any) => {
-
-      loadingRef.close();
 
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;

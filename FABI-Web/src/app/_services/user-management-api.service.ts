@@ -573,6 +573,8 @@ export class UserManagementAPIService {
       "userType": staffInfo.position
     }
 
+    console.log("----- " + JSON.stringify(postData));
+
     const options = {
       headers: {
         'cache-control': 'no-cache',

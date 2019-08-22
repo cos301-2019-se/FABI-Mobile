@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -154,16 +154,16 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.getDBNames();
-    });
+    // this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.getDBNames();
+    // });
     
     //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    // //Calling the neccessary functions as the page loads
-    // this.getDBNames();
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    //Calling the neccessary functions as the page loads
+    this.getDBNames();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -343,6 +343,10 @@ export class DatabaseHandlerComponent implements OnInit {
     });
   }
 
+  refreshDatasource() {
+    this.getDBNames();
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        VIEW DATABASE
@@ -415,6 +419,8 @@ export class DatabaseHandlerComponent implements OnInit {
           });
 
           this.ported = true;
+
+          this.refreshDatasource();
           
         }
         else if (response.success == false) {
