@@ -1,49 +1,48 @@
 <!-- Dashboard -->
 <div class="dashboard">
 
-  <!-- Sidenav -->
-  <div class="sidenav">
-    <div class="top-nav-items">
-      <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
-      <p (click)="toggleProfileTab()">Click to view profile</p>
-      <br />
-      <div class="nav-links">
-        <a class="nav-link" routerLink="/organization-dashboard"><i class="fas fa-home"></i></a>
-        <a class="nav-link active" routerLink="/member-handler"><i class="fas fa-user-friends"></i></a>
-        <a class="nav-link" routerLink="/organization-submit-sample"><i class="fas fa-vial"></i></a>
-        <a class="nav-link" routerLink="/organization-view-sample"><i class="fas fa-search"></i></a>
+    <!-- Sidenav -->
+    <div class="sidenav">
+      <div class="top-nav-items">
+        <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+        <p (click)="toggleProfileTab()">Click to view profile</p>
+        <br />
+        <div class="nav-links">
+          <a class="nav-link" routerLink="/organization-dashboard"><i class="fas fa-home"></i></a>
+          <a class="nav-link active" routerLink="/member-handler"><i class="fas fa-user-friends"></i></a>
+          <a class="nav-link" routerLink="/submit-sample"><i class="fas fa-vial"></i></a>
+        </div>
+      </div>
+      <div class="bottom-nav-items">
+        <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
+        <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
       </div>
     </div>
-    <div class="bottom-nav-items">
-      <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
-      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
-    </div>
-  </div>
-  <!-- / Sidenav -->
-
-  <!-- Navbar -->
-  <div class="pos-f-t">
-    <div class="collapse" id="navbarToggleExternalContent">
-      <div class="bg-dark p-4">
-        <h1 class="brand">ORGANIZATION DASHBOARD</h1>
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <!-- Navbar Items -->
-          <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Samples</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Member Handler <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
-          </li>
-          <!-- / Navbar Items -->
+    <!-- / Sidenav -->
+  
+    <!-- Navbar -->
+    <div class="pos-f-t">
+      <div class="collapse" id="navbarToggleExternalContent">
+        <div class="bg-dark p-4">
+          <h1 class="brand">ORGANIZATION DASHBOARD</h1>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <!-- Navbar Items -->
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/organization-dashboard">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/organization-submit-sample">Submit Sample</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" routerLink="/member-handler">Member Handler <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()">Logout</a>
+            </li>
+            <!-- / Navbar Items -->
         </ul>
       </div>
     </div>
