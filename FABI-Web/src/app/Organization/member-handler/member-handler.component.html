@@ -5,7 +5,7 @@
   <div class="sidenav">
     <div class="top-nav-items">
       <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
-      <p (click)="toggleProfileTab()">Tap to view profile</p>
+      <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
       <div class="nav-links">
         <a class="nav-link" routerLink="/organization-dashboard"><i class="fas fa-home"></i></a>
@@ -119,7 +119,7 @@
         </div>
         <!-- /Loading Spinner -->
 
-        <table class="table table-hover"  *ngIf="orgMembers && !memberTableLoading">
+        <table class="table table-hover" *ngIf="orgMembers && !memberTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -133,11 +133,11 @@
               <td>{{member.surname}}</td>
               <td>{{member.email}}</td>
               <td class="table-action">
-                  <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal" [id]="member.email"
-                    (click)="selectMember(member)">View</button>
-                  <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal"
-                    [id]="member.email" (click)="removeMemberPrompt(member)">Delete</button>
-                </td>
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal" [id]="member.email"
+                  (click)="selectMember(member)">View</button>
+                <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal"
+                  [id]="member.email" (click)="removeMemberPrompt(member)">Delete</button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -179,50 +179,49 @@
         <!-- Modal Body-->
         <div class="modal-body">
 
-            <div class="view-fields">
-  
-              <!-- Name -->
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Enter name" disabled
-                  [value]="selectedMember.fname">
-              </div>
-              <!-- /Name -->
-  
-              <!-- Surname -->
-              <div class="form-group">
-                <label for="surname">Surname</label>
-                <input type="text" class="form-control" id="surname" placeholder="Enter surname" disabled
-                  [value]="selectedMember.surname">
-              </div>
-              <!-- /Surname -->
-  
-              <!-- Email -->
-              <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
-                  disabled [value]="selectedMember.email">
-              </div>
-              <!-- /Email -->
-  
-              <!-- Phone -->
-              <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="text" class="form-control" id="phone" placeholder="Enter phone" disabled
-                  [value]="selectedMember.phone">
-              </div>
-              <!-- /Phone -->
-  
-              <!-- Delete Action -->
-              <button class="btn btn-default-delete" data-toggle="modal" (click)="removeMemberPrompt(selectedMember)" data-target="#confirmDeleteModal">Delete</button>
-              <!-- /Delete Action -->
-  
-            </div>
-  
-          </div>
-          <!-- / Modal Body-->
+          <div class="view-fields">
 
-       
+            <!-- Name -->
+            <div class="form-group">
+              <label>Name</label>
+              <p class="form-control form-control-sm">{{selectedMember.fname}}</p>
+            </div>
+            <!-- / Name -->
+
+
+            <!-- Surname -->
+            <div class="form-group">
+              <label>Surname</label>
+              <p class="form-control form-control-sm">{{selectedMember.surname}}</p>
+            </div>
+            <!-- / Surname -->
+
+
+            <!-- Email -->
+            <div class="form-group">
+              <label>Email</label>
+              <p class="form-control form-control-sm">{{selectedMember.email}}</p>
+            </div>
+            <!-- / Email -->
+
+            <!-- Phone -->
+            <div class="form-group">
+              <label>Phone</label>
+              <p class="form-control form-control-sm">{{selectedMember.phone}}</p>
+            </div>
+            <!-- / Phone -->
+
+            <!-- Delete Action -->
+            <button class="btn btn-default-delete" data-toggle="modal" (click)="removeMemberPrompt(selectedMember)"
+              data-target="#confirmDeleteModal">Delete</button>
+            <!-- /Delete Action -->
+
+          </div>
+
+        </div>
+        <!-- / Modal Body-->
+
+
       </div>
     </div>
   </div>
@@ -254,68 +253,77 @@
                 <!-- Name -->
                 <div class="form-group">
                   <label for="member_name">Name</label>
-                  <input type="text" class="form-control" id="member_name" placeholder="Enter name" formControlName="member_name" required
-                  [ngClass]="{
+                  <input type="text" class="form-control" id="member_name" placeholder="Enter name"
+                    formControlName="member_name" required
+                    [ngClass]="{
                     'is-invalid': addMemberForm.controls['member_name'].invalid && (submitted || addMemberForm.controls['member_name'].dirty), 
-                    'is-valid': addMemberForm.controls['member_name'].valid && (submitted || addMemberForm.controls['member_name'].dirty)}" >
-                   <!-- Error Validation Feedback--> 
-                  <div *ngIf="addMemberForm.controls['member_name'].invalid && (submitted || addMemberForm.controls['member_name'].dirty)" >
+                    'is-valid': addMemberForm.controls['member_name'].valid && (submitted || addMemberForm.controls['member_name'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addMemberForm.controls['member_name'].invalid && (submitted || addMemberForm.controls['member_name'].dirty)">
                     <div *ngFor="let validation of add_member_validators.member_name">
-                        <p *ngIf="addMemberForm.get('member_name').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="addMemberForm.get('member_name').hasError(validation.type)">{{validation.message}}</p>
                     </div>
                   </div>
-                  <!-- / Error Validation Feedback--> 
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Name -->
 
                 <!-- Surname -->
                 <div class="form-group">
                   <label for="member_surname">Surname</label>
-                  <input type="text" class="form-control" id="member_surname" placeholder="Enter surname" formControlName="member_surname" required
-                  [ngClass]="{
+                  <input type="text" class="form-control" id="member_surname" placeholder="Enter surname"
+                    formControlName="member_surname" required
+                    [ngClass]="{
                     'is-invalid': addMemberForm.controls['member_surname'].invalid && (submitted || addMemberForm.controls['member_surname'].dirty), 
-                    'is-valid': addMemberForm.controls['member_surname'].valid && (submitted || addMemberForm.controls['member_surname'].dirty)}" >
-                   <!-- Error Validation Feedback--> 
-                  <div *ngIf="addMemberForm.controls['member_surname'].invalid && (submitted || addMemberForm.controls['member_surname'].dirty)" >
+                    'is-valid': addMemberForm.controls['member_surname'].valid && (submitted || addMemberForm.controls['member_surname'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addMemberForm.controls['member_surname'].invalid && (submitted || addMemberForm.controls['member_surname'].dirty)">
                     <div *ngFor="let validation of add_member_validators.member_surname">
-                        <p *ngIf="addMemberForm.get('member_surname').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="addMemberForm.get('member_surname').hasError(validation.type)">{{validation.message}}
+                      </p>
                     </div>
                   </div>
-                  <!-- / Error Validation Feedback--> 
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Surname -->
 
                 <!-- Email -->
                 <div class="form-group">
                   <label for="member_email">Email address</label>
-                  <input type="email" class="form-control" id="member_email" aria-describedby="emailHelp" placeholder="Enter email" formControlName="member_email" required
-                  [ngClass]="{
+                  <input type="email" class="form-control" id="member_email" aria-describedby="emailHelp"
+                    placeholder="Enter email" formControlName="member_email" required
+                    [ngClass]="{
                     'is-invalid': addMemberForm.controls['member_email'].invalid && (submitted || addMemberForm.controls['member_email'].dirty), 
-                    'is-valid': addMemberForm.controls['member_email'].valid && (submitted || addMemberForm.controls['member_email'].dirty)}" >
-                   <!-- Error Validation Feedback--> 
-                  <div *ngIf="addMemberForm.controls['member_email'].invalid && (submitted || addMemberForm.controls['member_email'].dirty)" >
+                    'is-valid': addMemberForm.controls['member_email'].valid && (submitted || addMemberForm.controls['member_email'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addMemberForm.controls['member_email'].invalid && (submitted || addMemberForm.controls['member_email'].dirty)">
                     <div *ngFor="let validation of add_member_validators.member_email">
-                        <p *ngIf="addMemberForm.get('member_email').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="addMemberForm.get('member_email').hasError(validation.type)">{{validation.message}}</p>
                     </div>
                   </div>
-                  <!-- / Error Validation Feedback--> 
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Email -->
 
                 <!-- Phone -->
                 <div class="form-group">
                   <label for="member_phone">Phone</label>
-                  <input type="text" class="form-control" id="member_phone" placeholder="Enter phone" formControlName="member_phone" required
-                  [ngClass]="{
+                  <input type="text" class="form-control" id="member_phone" placeholder="Enter phone"
+                    formControlName="member_phone" required
+                    [ngClass]="{
                     'is-invalid': addMemberForm.controls['member_phone'].invalid && (submitted || addMemberForm.controls['member_phone'].dirty), 
-                    'is-valid': addMemberForm.controls['member_phone'].valid && (submitted || addMemberForm.controls['member_phone'].dirty)}" >
-                   <!-- Error Validation Feedback--> 
-                  <div *ngIf="addMemberForm.controls['member_phone'].invalid && (submitted || addMemberForm.controls['member_phone'].dirty)" >
+                    'is-valid': addMemberForm.controls['member_phone'].valid && (submitted || addMemberForm.controls['member_phone'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addMemberForm.controls['member_phone'].invalid && (submitted || addMemberForm.controls['member_phone'].dirty)">
                     <div *ngFor="let validation of add_member_validators.member_phone">
-                        <p *ngIf="addMemberForm.get('member_phone').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="addMemberForm.get('member_phone').hasError(validation.type)">{{validation.message}}</p>
                     </div>
                   </div>
-                  <!-- / Error Validation Feedback--> 
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Phone -->
 
@@ -354,36 +362,38 @@
   </div>
   <!-- / Add Member Modal Section -->
 
-   <!-- Delete Member Confirm Modal Section -->
-   <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
-   aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered" role="document">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''">{{deleteData.title}}</h2>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true"><i class="fas fa-times"></i></span>
-         </button>
-       </div>
-       <div class="modal-body">
-         <h4 *ngIf="deleteData.message != null || deleteData.message != ''">{{deleteData.message}}</h4>
-         <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
-         <p><span>All information related to this member will be permantely deleted</span></p>
-         <div class="confirm-actions">
-           <button type="button" class="btn btn-default-cancel" *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal" data-dismiss="modal" >{{deleteData.cancel}}</button>
-           <button type="button" class="btn btn-default-confirm" (click)="removeMember()" *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal" data-dismiss="modal" >{{deleteData.confirm}}</button>
-         </div>
-       </div>
-     </div>
-   </div>
- </div>
- <!-- / Delete Member Confirm Modal Section -->
+  <!-- Delete Member Confirm Modal Section -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''">{{deleteData.title}}</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4 *ngIf="deleteData.message != null || deleteData.message != ''">{{deleteData.message}}</h4>
+          <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
+          <p><span>All information related to this member will be permantely deleted</span></p>
+          <div class="confirm-actions">
+            <button type="button" class="btn btn-default-cancel"
+              *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.cancel}}</button>
+            <button type="button" class="btn btn-default-delete" (click)="removeMember()"
+              *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.confirm}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Delete Member Confirm Modal Section -->
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
     <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
-    <br />
-    <h3>NOTIFICATIONS</h3>
 
     <app-organization-notification></app-organization-notification>
 

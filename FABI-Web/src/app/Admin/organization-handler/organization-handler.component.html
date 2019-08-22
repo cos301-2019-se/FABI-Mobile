@@ -172,26 +172,26 @@
         </div>
         <!-- /Loading Spinner -->
 
-        <table class="table table-hover"  *ngIf="organizations && !organizationTableLoading">
-            <thead>
-              <tr>
-                <th scope="col">Organization</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
+        <table class="table table-hover" *ngIf="organizations && !organizationTableLoading">
+          <thead>
+            <tr>
+              <th scope="col">Organization</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
 
-            <tbody>
-              <tr *ngFor="let organization of organizations | filter : 'organizations' : searchOrganization">
-                <td>{{organization.orgName}}</td>
-                <td class="table-action">
-                  <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
-                    [id]="organization.email" (click)="selectOrganisation(organization)">View</button>
-                  <button class="btn btn-default-delete" data-toggle="modal" [id]="organization.email"
-                    (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <tbody>
+            <tr *ngFor="let organization of organizations | filter : 'organizations' : searchOrganization">
+              <td>{{organization.orgName}}</td>
+              <td class="table-action">
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
+                  [id]="organization.email" (click)="selectOrganisation(organization)">View</button>
+                <button class="btn btn-default-delete" data-toggle="modal" [id]="organization.email"
+                  (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <!-- / Organization Table -->
 
@@ -203,7 +203,7 @@
       <!-- Action Item -->
       <div class="action-item" data-toggle="modal" data-target="#addModal">
         <div class="action-icon">
-            <i class="fas fa-building"></i>
+          <i class="fas fa-building"></i>
         </div>
         <div class="action-heading">
           <h6>Add Organization</h6>
@@ -231,46 +231,42 @@
 
           <div class="view-fields">
 
-            <!-- OrganizationName -->
+            <!-- Organization Name -->
             <div class="form-group">
-              <label for="name">Organization Name</label>
-              <input type="text" class="form-control" id="name" placeholder="Enter organization name" disabled
-                [value]="selectedOrg.orgName">
+              <label>Organization Name</label>
+              <p class="form-control form-control-sm">{{selectedOrg.orgName}}</p>
             </div>
-            <!-- /Organization Name -->
+            <!-- / Organization Name -->
 
             <!-- Name -->
             <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" placeholder="Enter name" disabled
-                [value]="selectedOrg.admin.fname">
+              <label>Name</label>
+              <p class="form-control form-control-sm">{{selectedOrg.admin.fname}}</p>
             </div>
-            <!-- /Name -->
+            <!-- / Name -->
+
 
             <!-- Surname -->
             <div class="form-group">
-              <label for="surname">Surname</label>
-              <input type="text" class="form-control" id="surname" placeholder="Enter surname" disabled
-                [value]="selectedOrg.admin.surname">
+              <label>Surname</label>
+              <p class="form-control form-control-sm">{{selectedOrg.admin.surname}}</p>
             </div>
-            <!-- /Surname -->
+            <!-- / Surname -->
+
 
             <!-- Email -->
             <div class="form-group">
-              <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
-                disabled [value]="selectedOrg.admin.email">
-
+              <label>Email</label>
+              <p class="form-control form-control-sm">{{selectedOrg.admin.email}}</p>
             </div>
-            <!-- /Email -->
+            <!-- / Email -->
 
             <!-- Phone -->
             <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="text" class="form-control" id="phone" placeholder="Enter phone" disabled
-                [value]="selectedOrg.admin.phone">
+              <label>Phone</label>
+              <p class="form-control form-control-sm">{{selectedOrg.admin.phone}}</p>
             </div>
-            <!-- /Phone -->
+            <!-- / Phone -->
 
             <!-- Delete Action -->
             <button class="btn btn-default-delete" data-toggle="modal" (click)="removeOrganizationPrompt(selectedOrg)"
