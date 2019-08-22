@@ -151,6 +151,56 @@
     <!-- Organization Tables -->
     <div class="organization-tables">
 
+      <!-- Requested Organization Table -->
+      <div class="organization-table table-responsive">
+        <h5> Organization Requests </h5>
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!pendingOrganizations && !organizationTableLoading">
+          <h6>There are currently no organizations who have requested to register</h6>
+        </div>
+        <!-- / Extra Table Information -->
+
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="pendingOrganizations && !organizationTableLoading">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchOrganization">
+        </div>
+        <!-- / Search Table -->
+
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-secondary loading" role="status" *ngIf="organizationTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" *ngIf="pendingOrganizations && !organizationTableLoading">
+          <thead>
+            <tr>
+              <th scope="col">Organization</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let pendingOrganization of pendingOrganizations | filter : 'pendingOrganizations' : searchOrganization">
+              <td>{{pendingOrganization.orgName}}</td>
+              <td class="table-action">
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
+                  [id]="pendingOrganization.email" (click)="selectOrganisation(pendingOrganization)">View</button>
+                <button class="btn btn-default-save" data-toggle="modal" [id]="pendingOrganization.email"
+                  (click)="registerPendingOrg(pendingOrganization)" >Verify</button>
+                <button class="btn btn-default-delete" data-toggle="modal" [id]="pendingOrganization.email"
+                 data-target="#confirmDeleteModal">Decline</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Requested Organization Table -->
+
       <!-- Organization Table -->
       <div class="organization-table table-responsive">
         <h5> Organization Table </h5>
