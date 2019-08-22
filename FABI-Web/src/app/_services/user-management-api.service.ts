@@ -496,7 +496,7 @@ export class UserManagementAPIService {
 
 
   sendRequestToRegisterOrganization(orgInfo: Interface.Organisation) {
-    let requestToRegisterOrganizationURL = `${config.userManagementURL}/`;
+    let requestToRegisterOrganizationURL = `${config.loginURL}/registerNewOrganization`;
     let method = 'POST';
 
     const postData = orgInfo;
