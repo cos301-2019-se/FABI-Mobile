@@ -17,6 +17,7 @@ import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
 import { ClinicHandlerComponent } from './Admin/clinic-handler/clinic-handler.component';
+import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
 
 const routes: Routes = [
   {
@@ -93,6 +94,10 @@ const routes: Routes = [
     component: SubmitCmwRevitalizationComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'pre-diagnosis',
+    component: PreDiagnosisComponent
   }
 
 ];

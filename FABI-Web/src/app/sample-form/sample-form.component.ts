@@ -75,63 +75,63 @@ export class SampleFormComponent implements OnInit {
       this.sampleForm = this.formBuilder.group({
 
       // Sample Details
-      sample_plant_species: ['', Validators.required],
-      sample_num_samples: ['', Validators.required],
-      date_sample_collected: ['', Validators.required],
-      date_sample_sent: [Validators.required],
+      sample_plant_species: [''],
+      sample_num_samples: [''],
+      date_sample_collected: [''],
+      date_sample_sent: [],
       
       // Plantation Details
-      sample_street: ['', Validators.required],
-      sample_area: ['', Validators.required],
-      sample_city: ['', Validators.required],
-      sample_farm: ['', Validators.required],
-      sample_province: ['', Validators.required],
-      sample_gps: ['', Validators.required],
+      sample_street: [''],
+      sample_area: [''],
+      sample_city: [''],
+      sample_farm: [''],
+      sample_province: [''],
+      sample_gps: [''],
 
       // Type of Sample
-      sample_type_soil: ['', Validators.required],
-      sample_type_stems: ['', Validators.required],
-      sample_type_roots: ['', Validators.required],
-      sample_type_twigs: ['', Validators.required],
-      sample_type_leaves: ['', Validators.required],
-      sample_type_seedlings: ['', Validators.required],
-      sample_type_media: ['', Validators.required],
-      sample_type_water: ['', Validators.required],
-      sample_type_insect: ['', Validators.required],
-      sample_type_nuts: ['', Validators.required],
+      sample_type_soil: [''],
+      sample_type_stems: [''],
+      sample_type_roots: [''],
+      sample_type_twigs: [''],
+      sample_type_leaves: [''],
+      sample_type_seedlings: [''],
+      sample_type_media: [''],
+      sample_type_water: [''],
+      sample_type_insect: [''],
+      sample_type_nuts: [''],
       sample_type_other: [''],
 
       // Symptoms
-      symptom_wilt: ['', Validators.required],
-      symptom_stunting: ['', Validators.required],
-      symptom_leafspot: ['', Validators.required],
-      symptom_rootrot: ['', Validators.required],
-      symptom_dieback: ['', Validators.required],
-      symptom_cankers: ['', Validators.required],
-      symptom_death: ['', Validators.required],
-      symptom_wood: ['', Validators.required],
+      symptom_wilt: [''],
+      symptom_stunting: [''],
+      symptom_leafspot: [''],
+      symptom_rootrot: [''],
+      symptom_dieback: [''],
+      symptom_cankers: [''],
+      symptom_death: [''],
+      symptom_wood: [''],
       symptom_other: [''],
 
       // Distribution of Symptoms
-      distribution_localized: ['', Validators.required],
-      distributed_scattered: ['', Validators.required],
-      distributed_general: ['', Validators.required],
-      distributed_clumps: ['', Validators.required],
-      distributed_na: ['', Validators.required],
+      distribution_localized: [''],
+      distributed_scattered: [''],
+      distributed_general: [''],
+      distributed_clumps: [''],
+      distributed_na: [''],
       distributed_other: [''],
-      percentage_plants_affected: ['', Validators.required],
+      percentage_plants_affected: [''],
 
       // Conditions
-      conditions_date_problem_noticed: ['', Validators.required],
-      conditions_date_planted: ['', Validators.required],
-      conditions_weather_disturbances: ['', Validators.required],
-      conditions_weather_prior: ['', Validators.required],
-      conditions_others: ['', Validators.required],
-      conditions_additional: ['', Validators.required],
+      conditions_date_problem_noticed: [''],
+      conditions_date_planted: [''],
+      conditions_weather_disturbances: [''],
+      conditions_weather_prior: [''],
+      conditions_others: [''],
+      conditions_additional: [''],
 
       // Permission
       landowner_name: [''],
-      permission_granted: ['', Validators.required] 
+      permission_granted: [''] 
     })
   }
 
@@ -225,6 +225,7 @@ export class SampleFormComponent implements OnInit {
           duration: 3000
         });
 
+        // console.log(JSON.stringify(response));
         //Set pre-diagnosis
         localStorage.setItem('pre-diagnosis', response.data.prediagnosis);
 

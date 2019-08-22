@@ -61,6 +61,7 @@ export class PreDiagnosisComponent implements OnInit {
     }
     else{
       this.diagnosis = localStorage.getItem('pre-diagnosis');
+      // localStorage.removeItem('pre-diagnosis');
     }
   }
 
