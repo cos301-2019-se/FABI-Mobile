@@ -18,19 +18,28 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
+import { FilterPipe } from '../_pipes/filter.pipe';
+import { AuthenticationService } from 'src/app/_services/authentication.service'
 
 describe('UpdateComponent', () => {
   let component: UpdateComponent;
   let fixture: ComponentFixture<UpdateComponent>;
 
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  } 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdateComponent ],
+      declarations: [ UpdateComponent, FilterPipe ],
       imports: [MatSnackBarModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
-        { provide: MatSnackBar, useValue: {} }
+        { provide: MatSnackBar, useValue: {} },
+        { provide: AuthenticationService, useClass: MockAuthenticationService }
       ]
     })
     .compileComponents();

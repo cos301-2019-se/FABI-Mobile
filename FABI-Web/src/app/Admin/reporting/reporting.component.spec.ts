@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FilterPipe } from '../../_pipes/filter.pipe';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,6 +22,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
+
+import { FilterPipe } from '../../_pipes/filter.pipe';
 import { AuthenticationService } from 'src/app/_services/authentication.service'
 
 describe('ReportingComponent', () => {
