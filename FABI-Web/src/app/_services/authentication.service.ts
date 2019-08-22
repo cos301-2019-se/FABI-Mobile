@@ -202,7 +202,7 @@ export class AuthenticationService {
 
   temporaryLoginSuperUser() {    
     const Lemail = "johnsmith@gmail.com";
-    const Lpassw = "ERVIw62TBl";
+    const Lpassw = "johnpassword";
     const Lorg = "FABI";
 
     // User details to be passed to API
