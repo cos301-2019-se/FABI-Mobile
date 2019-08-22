@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Friday, August 23rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -370,11 +370,9 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewMembers() {
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Loading" }});
 
     this.userManagementService.getAllOrganizationMembers().subscribe((response: any) => {
 
-      loadingRef.close();
 
       if (response.success == true && response.code == 200) {
         this.orgMembers = response.data.members;
