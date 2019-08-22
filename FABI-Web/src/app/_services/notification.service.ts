@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, July 29th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -26,8 +26,6 @@ export class NotificationService {
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private toastr: ToastrService) {}
 
   showErrorNotification(title: string, message: string) {
-    console.log("------------------- NOTIFICATION ------------------");
-    console.log("------------------- " + message + " ------------------");
 
     this.toastr.error(message, title);
   }

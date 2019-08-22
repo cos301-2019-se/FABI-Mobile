@@ -71,8 +71,7 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
     );
   }
 
-  private addJWTToken(request: Http.HttpRequest<any>): Http.HttpRequest<any> {
-  
+  private addJWTToken(request: Http.HttpRequest<any>): Http.HttpRequest<any> {  
     if(this.session && this.session != null && this.session != '') {
       let token = this.session.token;
 
