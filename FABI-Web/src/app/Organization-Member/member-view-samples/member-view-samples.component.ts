@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Friday, August 23rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -132,13 +132,16 @@ export class MemberViewSamplesComponent implements OnInit {
         this.sampleTableLoading = false;
         
       } else if (response.success == false) {
+        this.sampleTableLoading = false;
+
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.viewSamples();
-          }
-        })
+        // this.samples = ["You have no samples"];
+        // let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
+        // dialogRef.afterClosed().subscribe((result) => {
+        //   if (result == "Retry") {
+        //     this.viewSamples();
+        //   }
+        // })
       }
     });
   }
