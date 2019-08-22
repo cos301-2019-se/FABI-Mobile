@@ -6,8 +6,18 @@ import { StaticInjector } from '@angular/core/src/di/injector';
 import { BehaviorSubject } from 'rxjs';
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 const getAllOrganizationsURL: string = 'https://user-management-dot-api-fabi.appspot.com/getAllOrganizations';
 const createOrganizationURL: string = 'https://user-management-dot-api-fabi.appspot.com/createOrganization';
+=======
+const getAllOrganizationsURL: string = '***REMOVED***/getAllOrganizations';
+const createOrganizationURL: string = '***REMOVED***/createOrganization';
+>>>>>>> API
+=======
+const getAllOrganizationsURL: string = '***REMOVED***/getAllOrganizations';
+const createOrganizationURL: string = '***REMOVED***/createOrganization';
+>>>>>>> API
 const getOrgDetailsURL: string = '';
 
 const authenticateFABIAdminURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginAdmin';
@@ -16,12 +26,27 @@ const authenticateDataAdminURL: string = 'https://authentication-dot-api-fabi.ap
 const authenticateOrgURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginOrgAdmin';
 const authenticateOrgMemberURL: string = 'https://authentication-dot-api-fabi.appspot.com/loginOrgMember';
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 const addStaffMemberURL: string = 'https://user-management-dot-api-fabi.appspot.com/addStaff';
 
 const addFABIAdminURL: string = 'https://user-management-dot-api-fabi.appspot.com/addFabiAdmin';
 
 
 const portingURL: string = 'https://database-management-dot-api-fabi.appspot.com/porting';
+=======
+=======
+>>>>>>> API
+const addStaffMemberURL: string = '***REMOVED***/addStaff';
+
+const addFABIAdminURL: string = '***REMOVED***/addFabiAdmin';
+
+
+const portingURL: string = '***REMOVED***/porting';
+<<<<<<< HEAD
+>>>>>>> API
+=======
+>>>>>>> API
 
 
 

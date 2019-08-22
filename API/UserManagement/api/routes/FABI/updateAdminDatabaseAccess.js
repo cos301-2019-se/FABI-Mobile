@@ -13,14 +13,12 @@ router.post('/', updateStaff);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                             Update Staff Member
 /**
- * @summary Update a staff memebr associated with FABI
+ * @summary Update database access of a staff memebr associated with FABI 
  * @description  REQUEST DATA REQUIRED: origional email of user to be updated ,fields which are to be changed
  *  
  * 1. check valid details have been submitted
  * 2. check if user to update exists, else return error
- * 3. IF email needs to be changed, delete copy details into new document with new email as the key
- * 4. IF password needs to be changed, encrypt password
- *  5. update the other fields 
+ * 3. update the access 
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
@@ -32,7 +30,17 @@ const db = admin.firestore();
 
 function updateStaff(req, res) {
     
+    res.setHeader('Content-Type', 'application/problem+json');
+    res.setHeader('Content-Language', 'en');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+        success: false,
+        code: 400,
+        title: "BAD_REQUEST",
+        message: "THIS FUNCTION IS DEPRECATDED, please use the new updateStaffDatabase functionality"
+    });
     //(1)
+    /*
     if (req.body.id == undefined || req.body.id == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
@@ -110,6 +118,7 @@ function updateStaff(req, res) {
             });
         
     });
+    */
 
 }
 
