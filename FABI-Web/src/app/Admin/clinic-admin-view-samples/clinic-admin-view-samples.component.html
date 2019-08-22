@@ -35,10 +35,22 @@
             <td>{{sample.referenceNumber}}</td>
             <td>{{sample.orgName}}</td>
             <td>{{sample.userID}}</td>
-            <td>{{sample.status}}</td>
+            <td *ngIf="editingSample != sample" >{{sample.status}}</td>
+            <td  *ngIf="editingSample == sample">
+            <form id="update_sample_status_form" [formGroup]="updateSampleStatusForm" (submit)="updateSampleStatus(sample)"
+            class="needs-validation" >
+                <select class="form-control" formControl="sample_status"> 
+                    <option>Status:</option>
+                    <option *ngFor='let status of statusTypes' [selected]="status === sample.status" [value]="status">{{status}}</option>    
+                </select>
+                <button type="submit" class="btn btn-default update" >Update</button>
+            </form>
+            </td>
             <td class="table-action">
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewSampleModal" [id]="sample"
                     (click)="selectSample(sample)">View</button>
+                <button *ngIf="!isEditingSample" class="btn btn-default-cancel" data-toggle="modal"  [id]="sample"
+                (click)="updatingSampleStatus(sample)">Update Status</button>
             </td>
         </tr>
     </tbody>
