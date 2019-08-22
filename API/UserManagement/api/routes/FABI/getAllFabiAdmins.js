@@ -10,7 +10,7 @@ const admin = require('firebase-admin');
 router.post('/', getAllStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get All Fabi Admins
+//                                             Get All Fabi Admins - should not be used
 /**
  * @summary Get all staff assotiated with FABI
  * @description  REQUEST DATA REQUIRED: null
@@ -32,6 +32,16 @@ const db = admin.firestore();
 function getAllStaff(req, res) {
 
     //(1)
+    res.setHeader('Content-Type', 'application/problem+json');
+    res.setHeader('Content-Language', 'en');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+        success: false,
+        code: 400,
+        title: "BAD_REQUEST",
+        message: "THIS FUNCTION IS DEPRECATDED, please use the new getAllStaff functionality"
+    });
+    /*
     var staffRef = db.collection('Organizations').doc('FABI').collection('Admin');
     staffRef.get().then(snapshot => {
             var qs = {admins : []}
@@ -59,6 +69,6 @@ function getAllStaff(req, res) {
             }
     
         });
-    });
+    });*/
 }
 module.exports = router;

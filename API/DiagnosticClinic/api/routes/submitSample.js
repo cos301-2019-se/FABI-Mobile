@@ -12,7 +12,7 @@ const predict = require('../predict');
 router.post('/', submitForm);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             submit sample
+//                                             Submit Sample
 /**
  * @summary submit a sample to the diagnostic clinic
  * @description  REQUEST DATA REQUIRED: all form data

@@ -14,14 +14,13 @@ router.post('/', updateStaff);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                             Update Staff Member Password
 /**
- * @summary Update a staff memebr associated with FABI
- * @description  REQUEST DATA REQUIRED: new password, old password, userid
+ * @summary Update a memebr associated with Organization
+ * @description  REQUEST DATA REQUIRED: new password, old password, userid, Organization name
  *  
  * 1. check valid details have been submitted
  * 2. check if user to update exists, else return error
- * 3. IF email needs to be changed, delete copy details into new document with new email as the key
- * 4. IF password needs to be changed, encrypt password
- *  5. update the other fields 
+ * 3. Check that submitted password is valid
+ * 4. update password
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
@@ -71,9 +70,10 @@ function updateStaff(req, res) {
 
     else{
         var docRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
-
+        
         docRef.get().then(doc =>{
             //(2)
+            
             if(typeof(doc.data()) === 'undefined')
             {
                 res.setHeader('Content-Type', 'application/problem+json');
@@ -91,13 +91,12 @@ function updateStaff(req, res) {
 
                     //(4)
                     const salt = bcrypt.genSaltSync(10);
-                    req.body.newPass = bcrypt.hashSync(req.body.fields.password, salt);
-
-                    bcrypt.compare(req.body.oldPass, doc.data.password, (err, valid) =>
+                    req.body.newPass = bcrypt.hashSync(req.body.newPass, salt);
+                    bcrypt.compare(req.body.oldPass, doc.data().password, (err, valid) =>
                     {
                         if(valid)
                         {
-                            updateRef.update({password : req.body.newPass}).then(() => {
+                            docRef.update({password : req.body.newPass}).then(() => {
 
                                 db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id).get().then( doc => {
                                     res.setHeader('Content-Type', 'application/problem+json');
