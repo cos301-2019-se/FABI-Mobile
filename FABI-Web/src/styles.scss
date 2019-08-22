@@ -57,6 +57,9 @@
 
 /* Navbar Styling */
 
+.navbar {
+    z-index: 1005;
+}
 .navbar-nav {
     position: block;
 }
