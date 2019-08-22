@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -98,13 +98,13 @@ export class StaffNotificationComponent implements OnInit {
 
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginStaff().subscribe((response : any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-    });
+    // this.authService.temporaryLoginStaff().subscribe((response : any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    // });
 
     //******** TO BE USED IN PRODUCTION: ********
     // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
+    this.currentUser = this.authService.getCurrentSessionValue.user;
 
   }
 

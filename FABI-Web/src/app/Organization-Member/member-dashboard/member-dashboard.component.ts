@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -100,20 +100,20 @@ export class MemberDashboardComponent implements OnInit {
   ngOnInit() {
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginOrganisation().subscribe((response: any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.getNumberOfMemberSamples();
-      this.getNumberOfCompletedMemberSamples();
-      this.loadNotifications();
-    });
+    // this.authService.temporaryLoginOrganisation().subscribe((response: any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.getNumberOfMemberSamples();
+    //   this.getNumberOfCompletedMemberSamples();
+    //   this.loadNotifications();
+    // });
 
     //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    //Calling the neccessary functions as the page loads
-    //  this.getNumberOfMemberSamples();
-    //  this.getNumberOfCompletedMemberSamples();
-    //  this.loadNotifications();
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    // Calling the neccessary functions as the page loads
+    this.getNumberOfMemberSamples();
+    this.getNumberOfCompletedMemberSamples();
+    this.loadNotifications();
   }
 
 

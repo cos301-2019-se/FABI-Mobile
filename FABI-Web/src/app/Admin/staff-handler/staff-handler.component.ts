@@ -190,28 +190,26 @@ export class StaffHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      //Calling the neccessary functions as the page loads  
-      this.viewStaff();
-      this.addStaffForm.get('admin_type').disable();  
-      this.getAdminTypes();
-      this.getDBNames();
-      this.onChanges();
-
-      // this.addDatabaseCheckboxes();
-    });
+    // this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   //Calling the neccessary functions as the page loads  
+    //   this.viewStaff();
+    //   this.addStaffForm.get('admin_type').disable();  
+    //   this.getAdminTypes();
+    //   this.getDBNames();
+    //   this.onChanges();
+    // });
 
 
     //******** TO BE USED IN PRODUCTION: ********
-    //Calling the neccessary functions as the page loads  
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    // this.displayUserTypes();
-    // this.viewStaff();
-    // this.addStaffForm.get('admin_type').disable();  
-    // this.getAdminTypes();
-    // this.getDBNames();
-    // this.onChanges();
+    // Calling the neccessary functions as the page loads  
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    //Calling the neccessary functions as the page loads 
+    this.viewStaff();
+    this.addStaffForm.get('admin_type').disable();  
+    this.getAdminTypes();
+    this.getDBNames();
+    this.onChanges();
     
   }
 

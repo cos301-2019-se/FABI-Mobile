@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -151,23 +151,20 @@ export class AdminDashboardComponent implements OnInit {
     window.addEventListener('scroll', this.scroll, true); //third parameter
 
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Loading" } });
-      this.getNumberOfFABIMembers();
-      this.getNumberOfFABISamples();
-      loadingRef.close();
-      this.currentUserPrivileges = this.authService.getCurrentUserValue;
-
-      console.log("PRIV : " + JSON.stringify(this.currentUserPrivileges));
-    });
+    // this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.getNumberOfFABIMembers();
+    //   this.getNumberOfFABISamples();
+    //   this.currentUserPrivileges = this.authService.getCurrentUserValue;
+    // });
 
     //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    // //Calling the neccessary functions as the page loads
-    // this.getNumberOfFABIMembers();
-    // this.getNumberOfFABISamples();
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    //Calling the neccessary functions as the page loads
+    this.getNumberOfFABIMembers();
+    this.getNumberOfFABISamples();
+    this.currentUserPrivileges = this.authService.getCurrentUserValue;
   }
 
   ngOnDestroy() {

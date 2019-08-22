@@ -80,9 +80,7 @@ export class AuthenticationService {
       'name' : user.fname,
       'surname': user.surname,
       'email': user.email,
-      'permission': user.userType,
-      //REMOVE ASAP:
-      'databases': user.databases
+      'permission': user.userType
     }
 
     let sess = {

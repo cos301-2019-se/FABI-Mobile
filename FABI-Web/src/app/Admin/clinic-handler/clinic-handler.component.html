@@ -42,33 +42,28 @@
 
           <!-- Navbar Items -->
           <li class="nav-item">
-              <a class="nav-link" routerLink="/admin-dashboard">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/database-handler">Database Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/reporting">Reporting</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="toggleHelpTab()">Help</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="logout()">Logout</a>
-            </li>
-            <!-- / Navbar Items -->
+            <a class="nav-link" routerLink="/admin-dashboard" *ngIf="currentUser && currentUser.permission == 'SuperUser'">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/staff-handler" *ngIf="currentUser && currentUser.permission == 'SuperUser'">Staff Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/database-handler" *ngIf="currentUser && currentUser.permission == 'SuperUser'">Database Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/organization-handler" *ngIf="currentUser && currentUser.permission == 'SuperUser'">Organization Handler</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler <span
+                class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Logout</a>
+          </li>
+          <!-- / Navbar Items -->
         </ul>
       </div>
     </div>

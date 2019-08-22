@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -115,20 +115,18 @@ export class StaffDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginStaff().subscribe((response : any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.loadSamples();
-      this.loadDepositForms();
-      this.loadRequestForms();
-    });
+    // this.authService.temporaryLoginStaff().subscribe((response : any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.loadDepositForms();
+    //   this.loadRequestForms();
+    // });
 
     //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-     //Calling the neccessary functions as the page loads
-    //  this.loadSamples();
-    //  this.loadDepositForms();
-    //  this.loadRequestForms();
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    //  Calling the neccessary functions as the page loads
+     this.loadDepositForms();
+     this.loadRequestForms();
 
   }
   
@@ -159,34 +157,6 @@ export class StaffDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleNotificaitonsTab(){
     this.toggle_status = !this.toggle_status; 
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        LOAD SAMPLES
-  /**
-   *  This function will load all the samples associated with the user into the HTML page.
-   *  @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadSamples() {
-    this.diagnosticClinicService.getSamplesForFABIStaff(this.currentUser.ID).subscribe((response: any) => {
-      if(response.success == true){
-        this.submittedSamples = true;
-        var data = response.date.samples;
-
-        //Deactivate loading table spinners
-        this.sampleTableLoading = false;
-
-        for(var i = 0; i < data.length; i++){
-          var tempSample: Sample = {userID: data[i].userID, orgName: data[i].orgName, status: data[i].status, referenceNumber: data[i].referenceNmber, data: data[i].data};
-          this.samples.push(tempSample);
-        }
-      }
-      else{ 
-        //Error handling
-      }
-    });
   }
 
 

@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -164,7 +164,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/admin-dashboard']);
         } else if(response.userDetails.userType == 'ClinicAdmin') {
           this.router.navigate(['/clinic-handler']);
-        } else if(response.userDetails.userType == 'OrganizationAdmin') {
+        }else if(response.userDetails.userType == 'OrganizationAdmin') {
           this.router.navigate(['/organization-dashboard']);
         } else if(response.userDetails.userType == 'Member') {
           this.router.navigate(['/member-dashboard']);
