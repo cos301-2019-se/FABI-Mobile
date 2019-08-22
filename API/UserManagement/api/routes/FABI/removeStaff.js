@@ -59,7 +59,7 @@ function removeStaff(req, res) {
             qs = doc.data();
             delete qs.password;
             //(3)
-            db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id).delete().then(() => {
+            memRef.delete().then(() => {
                 res.setHeader('Content-Type', 'application/problem+json');
                             res.setHeader('Content-Language', 'en');
                             res.setHeader("Access-Control-Allow-Origin", "*");

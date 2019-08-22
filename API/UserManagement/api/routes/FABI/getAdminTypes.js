@@ -41,3 +41,5 @@ function addOrganization(req, res)
         }
     });
 }
+
+module.exports = router

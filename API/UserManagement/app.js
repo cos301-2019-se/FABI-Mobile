@@ -38,6 +38,8 @@ const getUserDetailsRoute = require('./api/routes/External/getUserDetails');
 const removeMemberRoute = require('./api/routes/External/removeMember');
 const updateOrgMemberPasswordRoute = require('./api/routes/External/updateOrgMemberPassword');
 
+const getPendingOrgsRoute = require('./api/routes/External/getAllPendingOrganizations');
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -69,6 +71,7 @@ app.use('/updateStaffDatabaseAccess', updateStaffDatabaseAccessRoute);
 app.use('/getAdminTypes', getAdminTypesRoute);
 app.use('/updateStaffPassword', updateStaffPassowordRoute);
 app.use('/updateOrgMemberPassword', updateOrgMemberPasswordRoute);
+app.use('/getAllPendingOrganizations', getPendingOrgsRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {
