@@ -35,6 +35,7 @@ export interface OrganisationAdmin {
     fname: string;  // First Name of Admin
     surname: string; // Surname of Admin
     email: string; // Email of Admin
+    phone?: number; //Phone No. of Admin
     password?: string; // Passsword of Admin
 }
 
@@ -49,6 +50,7 @@ export interface OrganisationMember {
   fname: string, // First Name of Member
   surname: string, // Surname of Member
   email: string, // Email of Member
+  phone?: number; //Phone No. of Member
   password?: string // Password of Member
 }
 

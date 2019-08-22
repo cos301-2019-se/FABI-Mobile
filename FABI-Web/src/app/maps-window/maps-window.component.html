@@ -23,7 +23,7 @@
   <!-- Map -->
   <agm-map [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="zoom" [mapTypeId]="map_type"
     (mapClick)="selectLocation($event)">
-    <agm-marker [latitude]="location.latitude" [longitude]="location.longitude" [opacity]="alpha"
+    <agm-marker [latitude]="location.latitude" [longitude]="location.longitude" 
       [markerDraggable]="true" (dragEnd)="selectLocation($event)">
       <agm-info-window>
         <h5>{{infoTitle}}</h5>
