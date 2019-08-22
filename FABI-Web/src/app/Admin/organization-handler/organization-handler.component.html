@@ -458,7 +458,7 @@
             <button type="button" class="btn btn-default-cancel"
               *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
               data-dismiss="modal">{{deleteData.cancel}}</button>
-            <button type="button" class="btn btn-default-confirm" (click)="removeOrg()"
+            <button type="button" class="btn btn-default-delete" (click)="removeOrg()"
               *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal"
               data-dismiss="modal">{{deleteData.confirm}}</button>
           </div>
