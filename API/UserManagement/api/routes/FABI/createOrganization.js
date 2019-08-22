@@ -17,7 +17,7 @@ router.post('/', addOrganization);
 //                                             Add Organization
 /**
  * @summary Create a new organization with data recieved
- * @description  REQUEST DATA REQUIRED: organization name, organization details, admin details
+ * @description  REQUEST DATA REQUIRED: organization fname, organization details, admin details
  *  1. Check if all required data is received and that it is correct.
  *      - IF NOT: return Error Response
  *  2. Connect to DB.
@@ -48,7 +48,7 @@ function addOrganization(req, res)
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "Admin name expected"
+            message: "Admin fname expected"
         });
     }
     if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
@@ -81,7 +81,7 @@ function addOrganization(req, res)
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "Organization Name Expected"
+            message: "Organization fname Expected"
         });
     }
 

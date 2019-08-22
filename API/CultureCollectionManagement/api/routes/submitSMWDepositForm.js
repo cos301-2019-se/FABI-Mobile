@@ -12,7 +12,7 @@ router.post('/', submitForm);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                             Submit CMW Deposit Form
 /**
- * @summary submit a CMW request
+ * @summary submit a CMW Deposit Form
  * @description  REQUEST DATA REQUIRED: all form data
  *
  * @param {*} res Used to send response to the client

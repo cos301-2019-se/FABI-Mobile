@@ -44,11 +44,12 @@ function getSample(req, res) {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                 success: false,
-                code: 400,
+                code: 200,
                 title: "NOT FOUND",
-                message: "Sample with given Reference number does not exist"
+                message: "Sample with given Reference number does not exist",
+                data : {}
             });
         }
             res.setHeader('Content-Type', 'application/problem+json');

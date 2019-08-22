@@ -13,9 +13,14 @@ router.post('/', getAllStaff);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                             Get All Processing Forms
 /**
- * @summary Get all Processing Forms submitted
+ * @summary Get all CMW Processing Forms submitted to FABI
  * @description  REQUEST DATA REQUIRED: null
  *
+ *  *  1. Connect to DB.
+ *      - IF ERROR: return Error Response
+ *  2. Retrieve list from database
+ *  3. Send appropriate response message.
+ * 
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
  */

@@ -12,7 +12,7 @@ const mail = require('../sendEmail');
 router.post('/', addAdmin);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Add Admin
+//                                             Add Admin - not in use anymore
 /**
  * @summary Add FABI Superuser to FABI orginization
  * @description  REQUEST DATA REQUIRED: Name and email for now

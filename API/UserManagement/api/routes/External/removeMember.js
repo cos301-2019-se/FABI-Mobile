@@ -11,11 +11,11 @@ const log = require('../../sendLogs');
 router.post('/', removeMember);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Organization Member
+//                                             Remove Organization Member
 /**
- * @summary Get User assotiated with Organization
- * @description  REQUEST DATA REQUIRED: user email, organization
- *  1. check that user email and organization are given
+ * @summary Delete User assotiated with Organization
+ * @description  REQUEST DATA REQUIRED: user ID, organization
+ *  1. check that user ID and organization are given
  *  2. check that the user exists
  *  3. remove the user from the database (set inactive in future)
  * @param {*} res Used to send response to the client

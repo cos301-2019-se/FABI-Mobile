@@ -27,7 +27,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/ACCL';
-            request.post(config.logging + '/ACCL', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
 					console.log(error)
 
@@ -64,7 +65,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/ERRL';
-            request.post(config.logging +'/ERRL', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
                     console.log(error)
                 }
@@ -102,7 +104,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/USER';
-            request.post(config.logging +'/USER', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
                     console.log(error)
 				}
@@ -139,7 +142,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/DBML';
-            request.post(config.logging +'/DBML', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
                     console.log(error)
 				}

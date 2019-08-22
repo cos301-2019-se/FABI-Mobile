@@ -19,9 +19,8 @@ router.post('/', updateStaff);
  *  
  * 1. check valid details have been submitted
  * 2. check if user to update exists, else return error
- * 3. IF email needs to be changed, delete copy details into new document with new email as the key
- * 4. IF password needs to be changed, encrypt password
- * 5. update the other fields 
+ * 3. Check that submitted password is valid
+ * 4. update password
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
