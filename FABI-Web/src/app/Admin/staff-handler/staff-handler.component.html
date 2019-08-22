@@ -392,7 +392,7 @@
                 <!-- Admin Type Drop Down -->
                 <div class="form-group">
                   <label for="admin_type">Admin Type</label>
-                  <select class="form-control form-control-sm" [(ngModel)]="selectedAdminType" id="admin_type"
+                  <select class="form-control form-control-sm" id="admin_type"
                     formControlName="admin_type" required>
                     <option value="" selected>
                       Please select an admin type
@@ -411,7 +411,7 @@
 
                 <div class="form-group">
                     <label for="database_privileges">Database Privileges</label>
-                    <div formArrayName="database_privileges" *ngFor="let database_privilege of addStaffForm.controls.database_privileges.controls; let i = index" id="database_privileges">
+                    <div formArrayName="database_privileges" *ngFor="let database_privilege of allDatabaseNames; let i = index" id="database_privileges">
                         <input type="checkbox" [formControlName]="i">
                         {{allDatabaseNames[i]}}
                     </div>
