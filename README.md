@@ -66,6 +66,8 @@
 #### Links
   [GitHub](https://github.com/tegan-jade) 
   [LinkedIn](https://www.linkedin.com/in/teganjade/)   
+  [CV](https://drive.google.com/file/d/1FSPPzSMprGY_o01bPnYOilSxLFX67KoW/view?usp=sharing) 
+  
 **Current Position:** BSc IT 3rd year
 
 **Interests:** My particular interests range from front-end development to advancements in AI and the impact it has on the legal climate. I am also interested in network security.
