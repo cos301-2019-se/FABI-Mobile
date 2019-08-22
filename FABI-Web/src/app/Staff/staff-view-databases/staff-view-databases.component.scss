@@ -1,0 +1,132 @@
+/* ==========================================================================
+   DATABASE HANDLER
+   ========================================================================== */
+
+
+
+/* Database Tables Subsection */
+.database-tables {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    width: 100%;
+    min-height: 50vh;
+    height: auto;
+  
+    padding: 15px;
+    margin-top: 30px;
+  }
+  
+  .database-table {
+    width: 95%;
+    height: 50%;
+  
+    padding: 15px;
+    margin: 15px 0 15px 0;
+  
+    background-color: #fff;
+  
+    border-left: 5px solid #72B555;
+  
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+  }
+  
+  .database-tables h5 {
+    font-family: "Montserrat", sans-serif;
+    color: #6aa84f;
+  }
+  
+  .table {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .table-action {
+    display: flex;
+  }
+  
+  .search-table {
+    width: 95%;
+  }
+  
+  
+  
+  /* Staff Handler View Staff Modal Section
+       ========================================================================== */
+  
+  .modal-header {
+    background-color: #6aa84f;
+  
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  .modal-header i {
+    color: #fff;
+  }
+  
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  modal {
+    padding-right: 0 !important;
+  }
+  
+  #addModal .modal-dialog {
+    max-width: 85%;
+  }
+  
+  #addModal .modal-content {
+    min-height: 90vh;
+    height: auto;
+  }
+  
+  #viewDatabaseModal .modal-dialog {
+    max-width: 85%;
+  }
+  
+  
+  #viewDatabaseModal .modal-content {
+    min-height: 90vh;
+    height: auto;
+  }
+  
+  .preview-actions {
+    margin-top: 25px;
+  }
+  
+  .preview-actions h6{
+    color: #72b555;
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  .btn.btn-default-save {
+    width: 30%;
+  }
+  
+  .btn.btn-default-cancel {
+    width: 30%;
+  }
+  
+  
+  
+  #confirmDeleteModal .modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  
+    text-align: center;
+  }
+  
+  #confirmDeleteModal .modal-body p {
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .confirm-actions {
+    display: flex;
+    justify-content: center;
+  }

@@ -1,0 +1,36 @@
+/* ==========================================================================
+   ADMIN DASHBOARD STYLING
+   ========================================================================== */
+
+
+/* Table Style
+   ========================================================================== */
+.staff-tables {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+
+    padding: 30px;
+    margin-top: 15px;
+}
+
+.staff-tables h5 {
+    font-family: "Montserrat", sans-serif;
+    color: #6B746F;
+}
+
+
+.table {
+    width: 100%;
+    height: 100%;
+}
+
+/* Loading Spinner
+   ========================================================================== */
+.loading {
+   padding: 15px;
+}
