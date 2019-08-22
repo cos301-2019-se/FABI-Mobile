@@ -208,18 +208,18 @@ export class DiagnosticClinicAPIService {
   submitSampleForm(formDetails: Interface.SampleFormData) {
 
     let tempDetails = {
-      "Locations": "harding",
+      "Location": "harding",
       "Province": "Gauteng",
       "Genus": "eucalyptus",
       "Species": "radiata",
       "SampleType": "root",
       "Asym_Dis": "D",
-      "NurseryFields": "N",
+      "NurseryField": "F",
       "Roots": "dry",
       "Root-Collar": "Wilted, abitDry",
       "Stem": "Girdled",
       "GrowthTip": "Swelling",
-      "Neeldes-Leaves": "healthy"
+      "Needles-Leaves": "healthy"
     }
 
     let submitSampleURL =   `${config.diagnosticClinicURL}/submitSample`;
