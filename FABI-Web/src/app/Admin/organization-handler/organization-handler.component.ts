@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -33,8 +33,6 @@ import * as Interface from '../../_interfaces/interfaces';
 
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
-
-
 
 @Component({
   selector: 'app-organization-handler',
@@ -160,7 +158,6 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
       this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -198,7 +195,6 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   registerOrg() {
-
     this.submitted = true;
 
     if (this.registerOrgForm.invalid) {
@@ -267,7 +263,6 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrganizationPrompt(org: Interface.Organisation) {
-
     const orgDetails = `${org.orgName}`;
 
     this.selectedOrg = org;
@@ -290,7 +285,6 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeOrg() {
-
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Removing Organization" } });
 
     this.userManagementService.removeOrganization(this.selectedOrg).subscribe((response: any) => {
@@ -338,7 +332,6 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewOrganizations() {
-
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Loading" } });
 
     this.userManagementService.getAllOrganizations().subscribe((response: any) => {
@@ -428,6 +421,18 @@ export class OrganizationHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET ADD FIELDS
+  /**
+   * This function will clear the inputs in the Add organization modal
+   * 
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetAddFields(){
+    this.registerOrgForm.reset();
   }
 
 }
