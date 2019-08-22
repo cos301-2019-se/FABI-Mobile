@@ -279,4 +279,28 @@ export class DiagnosticClinicAPIService {
 
     return this.http.request<any>(method, retreiveSampleDetailsURL, options);
   }  
+
+  updateSamplesStatus(sample: any, status: string) {
+    
+    let updateSampleStatusURL =   `${config.diagnosticClinicURL}/updateSampleStatus`;
+    let method = 'POST';
+
+    const postData = {
+      "refNum": sample.referenceNumber,
+      "status": status
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, updateSampleStatusURL, options);
+  }
 }
