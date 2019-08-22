@@ -57,39 +57,39 @@
     }
 }
 
-// .btn.btn-default-submit {
-//     color: #fff;
-//     font-family: "Montserrat", sans-serif;
+.btn-submit {
+    color: #72B555;
+    font-family: "Montserrat", sans-serif;
 
-//     background-color: transparent;
+    background-color: transparent;
 
-//     border: 1px solid #fff;
+    border: 1px solid #72B555;
 
-//     border-radius: 5px;
+    border-radius: 5px;
 
-//     padding: 10px;
+    padding: 10px;
 
-//     width: auto;
+    width: auto;
 
-//     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
-//     transition: all 0.5s;
-// }
+    transition: all 0.5s;
+}
 
-// .btn.btn-default-submit:hover {
-//     color: #fff;
+.btn-submit:hover {
+    color: #fff;
 
-//     background: transparent;
+    background: #72B555;
 
-//     border: none;
+    border: none;
 
-//     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
-//     transform: scale(1.025);
-// }
+    transform: scale(1.025);
+}
 
-@media (min-width: 1024px) and (max-height: 932px){
-    .btn.btn-default-submit {
+@media (min-width: 768px) and (min-height: 1200px){
+    .btn-submit {
         color: #fff;
         font-family: "Montserrat", sans-serif;
 
@@ -108,7 +108,7 @@
         transition: all 0.5s;
     }
 
-    .btn.btn-default-submit:hover {
+    .btn-submit:hover {
         color: #fff;
 
         background-color: #fff;
