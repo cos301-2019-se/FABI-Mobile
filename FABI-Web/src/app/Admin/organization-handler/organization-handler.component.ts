@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Friday, August 23rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -60,6 +60,8 @@ export class OrganizationHandlerComponent implements OnInit {
   selectedOrg: Interface.Organisation = { orgName: "", admin: { fname: "", surname: "", email: "" } };
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
+
+  pendingOrganizations: Interface.Organisation[];
   /** The total number of Organization - @type {number} */
   numberOfOrganizations: number = 0;
   /** The flag which indicates that the numberOfOrganizations has been set - @type {boolean} */
@@ -169,6 +171,7 @@ export class OrganizationHandlerComponent implements OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
     this.viewOrganizations();
+    this.viewPendingOrganizations();
   }
 
 
@@ -359,6 +362,58 @@ export class OrganizationHandlerComponent implements OnInit {
       }
     });
   }
+
+
+  viewPendingOrganizations() {
+
+    this.userManagementService.getPendingOrganizations().subscribe((response: any) => {
+
+      if (response.success == true && response.code == 200) {
+
+        this.pendingOrganizations = response.data.Organizations;
+
+      }
+      else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the pending Organisations", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.ngOnInit();
+          }
+        })
+      }
+    });
+  }
+
+  registerPendingOrg(org: Interface.Organisation) {
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Registering Organization" } });
+
+    this.userManagementService.createOrganization(org).subscribe((response: any) => {
+
+      loadingRef.close();
+
+      if (response.success == true && response.code == 200) {
+        //POPUP MESSAGE
+
+        this.refreshDataSource();
+        let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
+          duration: 6000
+        });
+
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Registering Organization", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.registerOrg();
+          }
+        })
+      }
+    });
+
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            TOGGLE NOTIFICATIONS 
