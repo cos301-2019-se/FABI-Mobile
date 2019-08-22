@@ -39,11 +39,12 @@
             <td  *ngIf="editingSample == sample">
             <form id="update_sample_status_form" [formGroup]="updateSampleStatusForm" (submit)="updateSampleStatus(sample)"
             class="needs-validation" >
-                <select class="form-control" formControl="sample_status"> 
+                <select class="form-control" formControl="sample_status" class="sample-status"> 
                     <option>Status:</option>
                     <option *ngFor='let status of statusTypes' [selected]="status === sample.status" [value]="status">{{status}}</option>    
                 </select>
-                <button type="submit" class="btn btn-default update" >Update</button>
+                <button type="submit" class="update-button"><i class="fas fa-check"></i></button>
+                <button class="cancel-button"><i class="fas fa-times"></i></button>
             </form>
             </td>
             <td class="table-action">
