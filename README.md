@@ -12,6 +12,7 @@
 
 ## Project Documents  
 
+<<<<<<< HEAD
  ### Demo 1
   - [Demo 1 System Requirments Specification](https://drive.google.com/file/d/1-hcnw3aGtpk40dJ0QdBST93czcxZcDcZ/view?usp=sharing)
   -  [Demo 1 Presentation](https://docs.google.com/presentation/d/1bmof9jgFzYWZnmZDaCQ6r9yIChrk1Kb72V8gJIlLYwg/edit?usp=sharing)
@@ -28,6 +29,18 @@
   -  [Demo 2 Organization User Manual](https://drive.google.com/file/d/1_qwIlfbC5OeNFL24gwCwKTY71UnvfJgW/view?usp=sharing)
   -  [Demo 2 Coding Standards Document](https://drive.google.com/file/d/1liZq7CE1cBzKHsayygcGK0k0Mb5Xq0PC/view?usp=sharing)
   - [Demo 2 Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
+=======
+ ### Demo 4
+  - [Demo 4 System Requirments Specification](https://drive.google.com/file/d/1IQsG3Y8RYG4mBOiliqx1OuLn8cWLqKz2/view?usp=sharing)
+  -  [Demo 4 Presentation](https://docs.google.com/presentation/d/1yg4r_f2HJovvV9CC_JhtWAXpcXxN2xFHgSIP6e-MFm8/edit?usp=sharing)
+  -  [Demo 4 Testing Policy](https://drive.google.com/file/d/15WW5d34ztJopDsIem1p5pyZHcwSDtdHm/view?usp=sharing)
+  -  [Demo 4 FABI User Manual](https://drive.google.com/file/d/1ta9JzCUgaeFshSSbbDUElQ-nBfvFTsOC/view?usp=sharing)
+  -  [Demo 4 External Organization User Manual](https://drive.google.com/file/d/1mBWSbnT_KXhwUzANVR8F35AwQFXqII7O/view?usp=sharing)
+  -  [Demo 4 Coding Standards Document](https://drive.google.com/file/d/1R_GNCb9MTFnDl0LwWKLJaw5WB9nTnF9G/view?usp=sharing)
+  - [Demo 4 Notification Subsystem Document](https://drive.google.com/file/d/1CwZw80fKYmPhNCi4wZ1JSh69CRwKTt7v/view?usp=sharing)
+  - [Demo 4 Video Guide](https://drive.google.com/open?id=1_GnB4AD8M_TtIGbHmV41mGmwPm66ZpjF)
+  - [Demo 4 Information Booklet](https://drive.google.com/file/d/1KebJZwYQeaNUqPsp9Y2bldI6_2g14yYA/view?usp=sharing)
+>>>>>>> master
   
 <<<<<<< HEAD
   ### Demo 3
@@ -40,8 +53,20 @@
   - [Demo 3 Video Guide](https://drive.google.com/file/d/1_Xuhwb8hLuq2v_jcmQpYhO0TUQucjAog/view?usp=sharing)
   - [Functional Requirements](https://drive.google.com/open?id=1qVYf5kSegCpn1NUzlQ8V4w83CuUNhwQAAoZtRqEensA)
   
-  ### Demo 4
-  - [Demo 4 Notification Subsystem Document](https://drive.google.com/file/d/1CwZw80fKYmPhNCi4wZ1JSh69CRwKTt7v/view?usp=sharing)
+   ### Demo 2
+  - [Demo 2 System Requirments Specification](https://drive.google.com/file/d/1GUlm56NHmDGSRdwLS6femYdWiH-wPJzK/view?usp=sharing)
+  -  [Demo 2 Presentation](https://docs.google.com/presentation/d/16RmsGRU3QbiqgNaF87FlqfBXETanff4JX61elvecw5s/edit?usp=sharing)
+  -  [Demo 2 Testing Policy](https://drive.google.com/file/d/1cKpRM-BpTHm5TSHKbXVEdhUCf4MpBtTQ/view?usp=sharing)
+  -  [Demo 2 User Manual](https://drive.google.com/file/d/1I6FNHaGJLGD-80RoTnXJmUjKroOFyRqb/view?usp=sharing)
+  -  [Demo 2 Organization User Manual](https://drive.google.com/file/d/1_qwIlfbC5OeNFL24gwCwKTY71UnvfJgW/view?usp=sharing)
+  -  [Demo 2 Coding Standards Document](https://drive.google.com/file/d/1liZq7CE1cBzKHsayygcGK0k0Mb5Xq0PC/view?usp=sharing)
+  - [Demo 2 Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
+  
+  
+ ### Demo 1
+  - [Demo 1 System Requirments Specification](https://drive.google.com/file/d/1-hcnw3aGtpk40dJ0QdBST93czcxZcDcZ/view?usp=sharing)
+  -  [Demo 1 Presentation](https://docs.google.com/presentation/d/1bmof9jgFzYWZnmZDaCQ6r9yIChrk1Kb72V8gJIlLYwg/edit?usp=sharing)
+ 
   
  ## API Documentation
   - [Authentication API Documentation](https://authentication-dot-api-fabi.appspot.com)
@@ -102,6 +127,8 @@
 #### Links
   [GitHub](https://github.com/tegan-jade) 
   [LinkedIn](https://www.linkedin.com/in/teganjade/)   
+  [CV](https://drive.google.com/file/d/1FSPPzSMprGY_o01bPnYOilSxLFX67KoW/view?usp=sharing) 
+  
 **Current Position:** BSc IT 3rd year
 
 **Interests:** My particular interests range from front-end development to advancements in AI and the impact it has on the legal climate. I am also interested in network security.
@@ -118,11 +145,12 @@
 
 
 ## <a name="Emma-Coetzer">Emma Coetzer</a>
-###### *Front-End Developer*
+###### *Front-End and Back-End Developer*
 
 #### Links
  [GitHub](https://github.com/EmmaBinx)  
  [LinkedIn](https://www.linkedin.com/in/emma-coetzer-85b46317b/)   
+ [CV](https://drive.google.com/file/d/1212zXXFP3k5cvu61BpgsrUBsIEwU0kSQ/view?usp=sharing)   
  
 
 **Current Position:** BSc IT 3rd year
@@ -146,7 +174,7 @@
 #### Links
   [GitHub](https://github.com/AeronLand)  
   [LinkedIn](www.linkedin.com/in/aeron-land-4a1167180)   
- 
+  [CV](https://drive.google.com/file/d/1FrHabHyQqVcFHOmFWqiWDtoMbtidlbxO/view?usp=sharing)
 
 **Current Position:** BSc IT 3rd year
 
@@ -169,7 +197,7 @@
 #### Links
   [GitHub](https://github.com/luveshanm)  
   [LinkedIn](https://www.linkedin.com/in/luveshan-marimuthu-ba0785180)   
- 
+  [CV](https://drive.google.com/file/d/1w2AjNxKPwIkcUB6BkdIQ6jSg92uTDLyo/view?usp=sharing)
 
 **Current Position:** BSc Computer Science 3rd year
 
@@ -192,7 +220,7 @@
 #### Links
   [GitHub](https://github.com/KendraRid9)  
   [LinkedIn](https://www.linkedin.com/in/kendra-riddle-700297181/)   
- 
+  [CV](https://zety.com/mycv/Kendra.Riddle) 
 
 **Current Position:** BSc IT 3rd year
 
