@@ -16,16 +16,33 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { FilterPipe } from '../../_pipes/filter.pipe';
+import { AuthenticationService } from 'src/app/_services/authentication.service'
 
 describe('SubmitCmwRevitalizationComponent', () => {
   let component: SubmitCmwRevitalizationComponent;
   let fixture: ComponentFixture<SubmitCmwRevitalizationComponent>;
 
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  } 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubmitCmwRevitalizationComponent ],
-      imports: [MaterialModule, NoopAnimationsModule, BrowserAnimationsModule]
+      declarations: [ SubmitCmwRevitalizationComponent, FilterPipe ],
+      imports: [
+        MaterialModule, 
+        NoopAnimationsModule, 
+        BrowserAnimationsModule, 
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      providers:[
+        { provide: AuthenticationService, useClass: MockAuthenticationService }
+      ]
     })
     .compileComponents();
   }));

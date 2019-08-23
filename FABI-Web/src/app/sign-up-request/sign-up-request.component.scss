@@ -1,0 +1,309 @@
+/* ==========================================================================
+   SIGN UP PAGE STYLING
+   ========================================================================== */
+
+
+/* General Styling
+   ========================================================================== */
+
+
+/* Sign up Styling
+   ========================================================================== */
+
+.sign-up {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+
+    background-color: #FCFCFC;
+
+    position: absolute;
+    z-index: -2;
+}
+
+
+/* Banner Styling
+   ========================================================================== */
+
+.banner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 30vh;
+    background: linear-gradient(to right, #76b852, #8dc26f);
+    transform: skewY(-8deg);
+    transform-origin: top left;
+
+    z-index: -1;
+
+    transition: all 0.5s;
+}
+
+/* Width Responsiveness */
+@media (min-width:768px) and (max-width:1199px) {
+    .banner {
+        height: 85vh;
+        transform: skewY(-9deg);
+    }
+}
+
+@media (min-width:1024px) {
+    .banner {
+        height: 90vh;
+        transform: skewY(-10deg);
+        transform-origin: top right;
+
+        top: 2vh;
+    }
+}
+
+
+/* Sign up Heading Styling
+    ========================================================================== */
+.heading {
+    width: 100%;
+    height: 20vh;
+
+    padding: 50px 0 0 25px;
+}
+
+.heading h5 {
+    color: #F7F7F7;
+    font-family: "Roboto", sans-serif;
+}
+
+.heading h1 {
+    color: #F7F7F7;
+    font-family: "Montserrat", sans-serif;
+    font-size: 48px;
+}
+
+/* Width Responsiveness */
+@media (min-width:768px) and (max-width:1023px) {
+    .heading {
+        width: 50%;
+    }
+}
+
+@media (min-width:1024px) {
+    .heading {
+        width: 100%;
+        height: 20vh;
+
+        padding: 30px 0 0 25px;
+    }
+
+    .heading h5 {
+        color: #72B555;
+        font-size: 36px;
+    }
+
+    .heading h1 {
+        color: #72B555;
+        font-size: 58px;
+    }
+}
+
+
+/* Form Styling
+    ========================================================================== */
+
+.sign-up-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 85%;
+    min-height: 50vh;
+    height: auto;
+
+    margin-top: 150px;
+
+    z-index: 0;
+
+    transition: all 0.5s;
+}
+
+
+/* Width Responsiveness */
+@media (min-width:768px) and (max-width:1023px) {
+    .sign-up-form {
+        margin-top: 0;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sign-up-form .form-group {
+    width: 100%;
+}
+
+.form-group label {
+    color: #444444;
+}
+
+.forgot-password {
+    float: right;
+
+    margin-top: 5px;
+}
+
+a.forgot-password {
+    color: #6B746F;
+}
+
+a.forgot-password:hover {
+    color: #6B746F;
+}
+
+.sign-up a {
+    color: #6B746F;
+}
+
+.sign-up a:hover {
+    color: #6B746F;
+}
+
+/* Width Responsiveness */
+@media (min-width:768px) and (max-width:1199px) {
+    .form-group label {
+        color: #FFF;
+    }
+
+    .form-text.text-muted {
+        color: #FFF !important;
+        opacity: 0.5;
+    }
+
+    .valid-feedback {
+        color: #FFF;
+    }
+
+    a.forgot-password {
+        color: #FFF;
+    }
+
+    a.forgot-password:hover {
+        color: #FFF;
+    }
+}
+
+@media (min-width:1024px) {
+    .form-group label {
+        color: #FFF;
+    }
+
+    .form-text.text-muted {
+        color: #FFF !important;
+        opacity: 0.5;
+    }
+
+    .valid-feedback {
+        color: #FFF;
+    }
+
+    a.forgot-password {
+        color: #FFF;
+    }
+
+    a.forgot-password:hover {
+        color: #FFF;
+    }
+
+    .login a {
+        color: #FFF;
+    }
+
+    .login a:hover {
+        color: #FFF;
+    }
+}
+
+.sign-up-action {
+    width: 100%;
+}
+
+/* Width Responsiveness */
+@media (min-width:768px) and (max-width:1023px) {
+    .sign-up-action {
+        margin-top: 50px;
+    }
+}
+
+
+/* Form Button Styling */
+.btn.btn-default {
+    color: #72b555;
+    font-family: "Montserrat", sans-serif;
+
+    float: right;
+
+    background-color: transparent;
+
+    border: 1px solid #72b555;
+
+    border-radius: 5px;
+
+    padding: 10px;
+
+    width: 50%;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.5s;
+}
+
+.btn.btn-default:hover {
+    color: #FFF;
+
+    background-color: rgba(114, 181, 85, 0.95);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+
+/* Width Responsiveness */
+@media (min-width:1023px) {
+    .btn.btn-default {
+        color: #FFF;
+
+        border: 1px solid #FFF;
+    }
+
+    .btn.btn-default:hover {
+        color: #72B555;
+
+        background-color: rgba(255, 255, 255, 0.95);
+
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+        transform: scale(1.025);
+    }
+}
+
+
+/* Already a Member - Login Styling
+    ========================================================================== */
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 10vh;
+}

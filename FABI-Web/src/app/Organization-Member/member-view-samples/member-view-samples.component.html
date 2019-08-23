@@ -1,18 +1,80 @@
-<h1>View Your Samples</h1>
+<!-- Extra Table Information -->
+<div class="table-information" *ngIf="!samples && !sampleTableLoading">
+  <h6>There are currently no samples</h6>
+  <i class="fas fa-plus-circle" routerLink="/member-submit-sample"></i>
+</div>
+<!-- / Extra Table Information -->
 
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Sample 1
-      </mat-panel-title>
-      <mat-panel-description>
-        Analysis Phase
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+<!-- Search Table -->
+<div class="input-group search-table" *ngIf="samples && !sampleTableLoading">
+  <div class="input-group-prepend ">
+    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+  </div>
+  <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+    aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchSample">
+</div>
+<!-- / Search Table -->
 
-    <p>This is the sample stuff</p>
-  </mat-expansion-panel>
+<!-- Loading Spinner -->
+<div class="spinner-grow text-secondary loading" role="status" *ngIf="sampleTableLoading">
+</div>
+<!-- /Loading Spinner -->
 
+<table class="table table-hover"  *ngIf="samples && !sampleTableLoading">
+  <thead>
+    <tr>
+      <th scope="col">Sample Reference No.</th>
+      <th scope="col">Status</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sample of samples | filter : 'member-samples' : searchSample">
+      <td>{{sample.referenceNumber}}</td>
+      <td>{{sample.status}}</td>
+      <td class="table-action">
+        <button class="btn btn-default-view" data-toggle="modal" data-target="#viewSampleModal" [id]="sample"
+          (click)="selectSample(sample)">View</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-</mat-accordion>
+<!-- View Sample Modal Section -->
+<div class="modal fade" id="viewSampleModal" tabindex="-1" role="dialog" aria-labelledby="viewSampleModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header-->
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalTitle">View Sample</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetSampleFields()">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <!-- / Modal Header-->
+
+      <!-- Modal Body-->
+      <div class="modal-body">
+
+        <div class="view-fields">
+
+          <div class="form-row" *ngFor="let field of sampleFields">
+            <!-- Sample Data -->
+            <div class="form-group col-md-6">
+              <label>{{field.name}}</label>
+              <p class="form-control form-control-sm">{{selectedSampleData[field.name]}}</p>
+            </div>
+            <!-- / Sample Data -->
+          </div>
+
+        </div>
+
+      </div>
+      <!-- / Modal Body-->
+
+    </div>
+  </div>
+</div>
+<!-- / View Sample Modal Section -->

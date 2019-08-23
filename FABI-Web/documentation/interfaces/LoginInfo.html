@@ -61,9 +61,22 @@
             <h3>File</h3>
         </p>
         <p class="comment">
+<<<<<<< HEAD
             <code>src/app/admin-api.service.ts</code>
         </p>
 
+=======
+            <code>src/app/_interfaces/interfaces.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Defines the User&#39;s Login Information</p>
+
+            </p>
+>>>>>>> develop
 
 
         <section>
@@ -82,14 +95,21 @@
                                         <a href="#email">email</a>
                                 </li>
                                 <li>
+<<<<<<< HEAD
                                         <a href="#organization">organization</a>
+=======
+                                        <a href="#orgName">orgName</a>
+>>>>>>> develop
                                 </li>
                                 <li>
                                         <a href="#password">password</a>
                                 </li>
+<<<<<<< HEAD
                                 <li>
                                         <a href="#userType">userType</a>
                                 </li>
+=======
+>>>>>>> develop
                             </ul>
                         </td>
                     </tr>
@@ -134,13 +154,22 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
+<<<<<<< HEAD
                                         <a name="organization"></a>
                                         <span class="name"><b>organization</b><a href="#organization"><span class="icon ion-ios-link"></span></a></span>
+=======
+                                        <a name="orgName"></a>
+                                        <span class="name"><b>orgName</b><a href="#orgName"><span class="icon ion-ios-link"></span></a></span>
+>>>>>>> develop
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
+<<<<<<< HEAD
                                         <code>organization:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+=======
+                                        <code>orgName:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+>>>>>>> develop
 </code>
                                     </td>
                                 </tr>
@@ -188,6 +217,7 @@
 
                         </tbody>
                     </table>
+<<<<<<< HEAD
                     <table class="table table-sm table-bordered">
                         <tbody>
                                 <tr>
@@ -217,11 +247,14 @@
 
                         </tbody>
                     </table>
+=======
+>>>>>>> develop
             </section>
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
+<<<<<<< HEAD
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { HttpClient } from &#x27;@angular/common/http&#x27;;
 import { HttpHeaders } from &#x27;@angular/common/http&#x27;;
@@ -610,10 +643,130 @@ export class AdminAPIService {
 
 }
 </code></pre>
+=======
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Organisation {
+    ID?: string; // ID of Organisation 
+    orgName: string; // Name of Organisation
+    admin?: OrganisationAdmin; // Admin of Organisation
+}
+
+/**
+ * Defines an Admin of an Organisation
+ *
+ * @export
+ * @interface OrganisationAdmin
+ */
+export interface OrganisationAdmin {
+    name?: string;  // First Name of Admin
+    fname?: string;  // First Name of Admin
+    surname: string; // Surname of Admin
+    email: string; // Email of Admin
+    password?: string; // Passsword of Admin
+}
+
+/**
+ * Defines a Organisation&#x27;s Member object
+ *
+ * @export
+ * @interface MemberInfo
+ */
+export interface OrganisationMember {
+  ID?: string, // ID of the Member
+  fname?: string, // First Name of Member
+  name?: string, // First Name of Member
+  surname: string, // Surname of Member
+  email: string, // Email of Member
+  password?: string // Password of Member
+}
+
+/**
+ * Defines a User Type object
+ *
+ * @export
+ * @interface UserType
+ */
+export interface UserType {
+    ID: number; // ID of the User Type
+    Name: string; // Name of the User Type
+}
+
+/**
+ * Defines the User&#x27;s Login Information
+ *
+ * @export
+ * @interface LoginInfo
+ */
+export interface LoginInfo {
+    orgName: string;
+    email: string;
+    password: string;
+}
+  
+/**
+ * Defines a FABI Staff Member object
+ *
+ * @export
+ * @interface StaffInfo
+ */
+export interface StaffInfo {
+    ID?: number,
+    fname?: string,
+    name?: string
+    surname: string,
+    email: string,
+    phone?: number,
+    position?: string
+  }
+
+
+  
+  
+  export interface ClientFormData {
+    tree_species: string;
+    number_samples: string;
+    location1: string;
+    location2: string;
+    compartment: string;
+    gps: string;
+    date_collection: string;
+    date_sent: string;
+    type_soil: string;
+    type_stems: string;
+    type_leaves: string;
+    type_roots: string;
+    type_twigs: string;
+    type_seedlings: string;
+    type_media: string;
+    type_water: string;
+    symptom_wilt: string;
+    symptom_stunting: string;
+    symptom_leafspot: string;
+    symptom_rootrot: string;
+    symptom_dieback: string;
+    symptom_cankers: string;
+    symptom_death: string;
+    symptom_wood: string;
+    symptom_other: string;
+    distribution_localized: string;
+    distribution_scattered: string;
+    distribution_general: string;
+    conditions_affected: string;
+    conditions_problem_noticed: string;
+    conditions_date_planted: string;
+    conditions_weather_disturbance: string;
+    conditions_weather_prior: string;
+    conditions_other: string;
+    conditions_additional: string;
+  }</code></pre>
+>>>>>>> develop
     </div>
 </div>
 
 
+<<<<<<< HEAD
+=======
+                   
+>>>>>>> develop
 
 
 

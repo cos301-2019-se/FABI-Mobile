@@ -2,13 +2,25 @@
     background: #2980B9;
     border: none;
 }
+<<<<<<< HEAD
 .navbar-default .navbar-brand {
     color: #fcfcfc;
 }
+=======
+
+.navbar-default .navbar-brand {
+    color: #fcfcfc;
+}
+
+>>>>>>> develop
 .menu {
     background: #343131;
     color: #fcfcfc;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 .menu ul.list li a {
     color: #fcfcfc;
 }
@@ -26,7 +38,12 @@
     margin-top: 0;
 }
 
+<<<<<<< HEAD
 .menu ul.list li.chapter a, .menu ul.list li.chapter .simple {
+=======
+.menu ul.list li.chapter a,
+.menu ul.list li.chapter .simple {
+>>>>>>> develop
     color: #555;
     text-transform: uppercase;
     text-decoration: none;
@@ -37,6 +54,10 @@
     text-transform: none;
     padding-left: 35px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 .menu ul.list li.chapter ul.links a:hover {
     background: #4E4A4A;
 }
@@ -49,12 +70,22 @@
     background: rgba(255, 255, 255, 0.07);
 }
 
+<<<<<<< HEAD
 #book-search-input input, #book-search-input input:focus, #book-search-input input:hover {
+=======
+#book-search-input input,
+#book-search-input input:focus,
+#book-search-input input:hover {
+>>>>>>> develop
     color: #949494;
 }
 
 .copyright {
     color: #b3b3b3;
+<<<<<<< HEAD
+=======
+    background: #272525;
+>>>>>>> develop
 }
 
 .content {
@@ -64,6 +95,7 @@
 .content a {
     color: #2980B9;
 }
+<<<<<<< HEAD
 .content a:hover {
     color: #3091d1;
 }
@@ -76,6 +108,21 @@
 .menu ul.list li:nth-last-child(2) {
     background: none;
 }
+=======
+
+.content a:hover {
+    color: #3091d1;
+}
+
+.content a:visited {
+    color: #9B59B6;
+}
+
+.menu ul.list li:nth-last-child(2) {
+    background: none;
+}
+
+>>>>>>> develop
 code {
     white-space: nowrap;
     max-width: 100%;
@@ -85,6 +132,10 @@ code {
     overflow-x: auto;
     border-radius: 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 pre {
     white-space: pre;
     margin: 0;
@@ -94,5 +145,9 @@ pre {
     display: block;
     overflow: auto;
     color: #404040;
+<<<<<<< HEAD
     background: rgba(238,238,238,.35);
+=======
+    background: rgba(238, 238, 238, .35);
+>>>>>>> develop
 }

@@ -1,13 +1,268 @@
-<h1>Submit CMW Deposit Form</h1>
-<mat-card>
-  <form class="example-form">
+<form class="view-form needs-validation" novalidate [formGroup]="cmwDepositForm" (submit)="submitCMWDepositForm()">
 
-      <mat-form-field class="example-full-width">
-          <input matInput placeholder="Culture Type">
-        </mat-form-field>
-        <br/>
+  <!-- CMW Culture Number -->
+  <div class="form-group">
+    <label for="cmw_culture_number">CMW Culture Number</label>
+    <input type="text" class="form-control form-control-sm" id="cmw_culture_number" formControlName="cmw_culture_number"
+      placeholder="CMW culture number">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / CMW Culture Number -->
+
+  <!-- Genus-->
+  <div class="form-group">
+    <label for="genus">Genus</label>
+    <input type="text" class="form-control form-control-sm" id="genus" formControlName="genus" placeholder="Genus">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Genus -->
+
+  <!-- Epitheton -->
+  <div class="form-group">
+    <label for="epitheton">Epitheton</label>
+    <input type="text" class="form-control form-control-sm" id="epitheton" formControlName="epitheton" placeholder="epitheton">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Epitheton -->
+
+  <!-- Personal Collection Number-->
+  <div class="form-group">
+    <label for="personal_collection_number">Personal Collection Number</label>
+    <input type="text" class="form-control form-control-sm" id="personal_collection_number"
+      formControlName="personal_collection_number" placeholder="Personal Collection Number">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Personal Collection Number -->
+
+  <!-- International Collection Number -->
+  <div class="form-group">
+    <label for="international_collection_number">International Collection Number</label>
+    <input type="text" class="form-control form-control-sm" id="international_collection_number"
+      formControlName="international_collection_number" placeholder="International Collection Number">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / International Collection Number -->
+
+  <!-- Herbarium Number -->
+  <div class="form-group">
+    <label for="herbarium_number">Herbarium Number</label>
+    <input type="text" class="form-control form-control-sm" id="herbarium_number" formControlName="herbarium_number" placeholder="Herbarium Number">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Herbarium Number -->
+
+  <!-- Other FABI Collections -->
+  <div class="form-group">
+    <label for="other_FABI_collections">Other FABI Collections</label>
+    <input type="text" class="form-control form-control-sm" id="other_FABI_collections" formControlName="other_FABI_collections" placeholder="Other FABI Collections">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Other FABI Collections -->
+
+  <!-- Synonym or Original Name -->
+  <div class="form-group">
+    <label for="name">Synonym or Original Name</label>
+    <input type="text" class="form-control form-control-sm" id="name" formControlName="name" placeholder="Synonym or Original Name">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Synonym or Original Name -->
+
+  <!-- Type Status -->
+  <div class="form-group">
+    <label for="type_status">Type Status</label>
+    <input type="text" class="form-control form-control-sm" id="type_status" formControlName="type_status" placeholder="Type Status">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Type Status -->
+
+  <!-- Host -->
+  <div class="form-group">
+    <label for="host">Host</label>
+    <input type="text" class="form-control form-control-sm" id="host" formControlName="host" placeholder="Host">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Host -->
+
+  <!-- Vector -->
+  <div class="form-group">
+    <label for="vector">Vector</label>
+    <input type="text" class="form-control form-control-sm" id="vector" formControlName="vector" placeholder="Vector">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Vector -->
+
+  <!-- Substrate -->
+  <div class="form-group">
+    <label for="substrate">Substrate</label>
+    <input type="text" class="form-control form-control-sm" id="substrate" formControlName="substrate" placeholder="Substrate">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Substrate -->
+
+  <!-- Continent -->
+  <div class="form-group">
+    <label for="continent">Continent</label>
+    <input type="text" class="form-control form-control-sm" id="continent" formControlName="continent" placeholder="Continent">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Continent -->
+
+  <!-- Country -->
+  <div class="form-group">
+    <label for="country">Country</label>
+    <input type="text" class="form-control form-control-sm" id="country" formControlName="country" placeholder="Country">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Country -->
+
+  <!-- Region -->
+  <div class="form-group">
+    <label for="region">Region</label>
+    <input type="text" class="form-control form-control-sm" id="region" formControlName="region" placeholder="Region">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Region -->
+
+  <!-- Locality -->
+  <div class="form-group">
+    <label for="locality">Locality</label>
+    <input type="text" class="form-control form-control-sm" id="locality" formControlName="locality" placeholder="Locality">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Locality -->
+
+  <!-- GPS -->
+  <div class="form-group">
+    <label for="gps">GPS</label>
+    <input type="text" class="form-control form-control-sm" id="gps" formControlName="gps" placeholder="GPS">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / GPS -->
+
+  <!-- Collected By Name -->
+  <div class="form-group">
+      <label for="requestor">Collected By (Surname, Initials)</label>
+      <select class="form-control form-control-sm" id="collectedByControl" formControlName="collected_by"  required>
+        <option value="" selected>
+          Please select a requestor
+        </option>
+        <option name="searchCollected" *ngFor="let option of staff" [value]="option | filter : searchCollected">
+          {{option}}
+        </option>
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  <!-- / Collected By Name -->
+
+  <!-- Date Collected -->
+  <div class="form-group">
+    <label for="date_collected">Date Collected</label>
+    <input type="date" class="form-control form-control-sm" id="date_collected" formControlName="date_collected"
+      placeholder="Date Collected" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Date Collected -->
+
+  <!-- Isolated By Name -->
+  <div class="form-group">
+    <label for="requestor">Isolated By (Surname, Initials)</label>
+    <select class="form-control form-control-sm" id="isolatedByControl" formControlName="isolated_by" required>
+      <option value="" selected>
+        Please select a requestor
+      </option>
+      <option name="searchIsolated" *ngFor="let option of staff" [value]="option | filter : searchIsolated">
+        {{option}}
+      </option>
+    </select>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Isolated By Name -->
+
+  <!-- Identified By Name -->
+  <div class="form-group">
+    <label for="requestor">Identified By (Surname, Initials)</label>
+    <select class="form-control form-control-sm" id="identifiedByControl" formControlName="identified_by" required>
+      <option value="" selected>
+        Please select a requestor
+      </option>
+      <option name="searchIdentified" *ngFor="let option of staff" [value]="option | filter : searchIdentified">
+        {{option}}
+      </option>
+    </select>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Identified By Name -->
 
 
-            <button id="submit_cmw_deposit" class="btn btn-default" routerLink="/fabi-internal-dashboard">Submit</button>
-  </form>
-</mat-card>
+  <!-- Donated By Name -->
+  <div class="form-group">
+      <label for="requestor">Donated By (Surname, Initials)</label>
+      <select class="form-control form-control-sm" id="identifiedByControl" formControlName="donated_by" required>
+        <option value="" selected>
+          Please select a requestor
+        </option>
+        <option name="searchDonated" *ngFor="let option of staff" [value]="option | filter : searchDonated">
+          {{option}}
+        </option>
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  <!-- / Donated By Name -->
+
+  <!-- Additional Notes -->
+  <div class="form-group">
+    <label for="additional_notes">Additional Notes</label>
+    <input type="text" class="form-control form-control-sm" id="additional_notes" formControlName="additional_notes"
+      placeholder="Additional Notes">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Additional Notes -->
+
+  <button type="submit" class="btn btn-default-submit">Submit</button>
+</form>
