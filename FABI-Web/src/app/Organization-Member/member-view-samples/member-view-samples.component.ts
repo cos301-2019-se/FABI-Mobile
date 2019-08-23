@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Friday, August 23rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -35,12 +35,18 @@ export class MemberViewSamplesComponent implements OnInit {
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  displayedColumns: string[];
-  dataSource = new MatTableDataSource([]);
-  fields: any[] = [];
+  sampleFields: any[] = [];
+  samples: any[];
+  selectedSampleData: any
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
+
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchSample: string = "";
+
+  /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
+  sampleTableLoading: boolean = true;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -62,7 +68,7 @@ export class MemberViewSamplesComponent implements OnInit {
     ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
+  //                                                  TOGGLE NOTIFICATIONS TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -78,7 +84,7 @@ export class MemberViewSamplesComponent implements OnInit {
 
   
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
+  //                                                            NG ON INIT  
   /**
    * This function is called when the page loads
    * 
@@ -108,7 +114,7 @@ export class MemberViewSamplesComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            VIEW_SAMPLES 
+  //                                                            VIEW SAMPLES 
   /**
    * This function will be used to display all the samples associated with the user in the HTML page
    * 
@@ -117,32 +123,53 @@ export class MemberViewSamplesComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
     this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
+
       if (response.success == true && response.code == 200) {
 
-        console.log("---- RESPONSE: " + JSON.stringify(response));
-        
-        Object.keys(response.data.samples[0]).forEach((column) => {
+        this.samples = response.data.samples;
 
-          let obj = {
-            'name': column
-          }
-          this.fields.push(obj);
-
-        });
-
-        this.displayedColumns= this.fields.map(field => field.name);
-        this.dataSource = new MatTableDataSource(response.data.samples);
+        //Deactivate loading table spinners
+        this.sampleTableLoading = false;
         
       } else if (response.success == false) {
+        this.sampleTableLoading = false;
+
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Getting Samples", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.viewSamples();
-          }
-        })
+        // this.samples = ["You have no samples"];
+        // let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
+        // dialogRef.afterClosed().subscribe((result) => {
+        //   if (result == "Retry") {
+        //     this.viewSamples();
+        //   }
+        // })
       }
     });
+  }
+
+  selectSample(sample: any) {
+    this.selectedSampleData = sample.data;
+        
+    Object.keys(this.selectedSampleData).forEach((column) => {
+
+      let obj = {
+        'name': column
+      }
+      this.sampleFields.push(obj);
+
+    });
+        
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET SAMPLE FIELDS 
+  /**
+   * This function will clear the modal contains the selected sample's details
+   * 
+   * @memberof MemberViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetSampleFields() {
+    this.sampleFields = [];
   }
 
 }

@@ -1,448 +1,135 @@
-/* ================================================ */
-/* General Setup                                    */
-/* ================================================ */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ==========================================================================
+   DATABASE HANDLER
+   ========================================================================== */
+
+
+
+/* Database Tables Subsection */
+.database-tables {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 50vh;
+  height: auto;
+
+  padding: 15px;
+  margin-top: 30px;
 }
 
-html {
-    font-family: 'Open Sans', sans-serif;
-    color: #555;
+.database-table {
+  width: 95%;
+  height: 50%;
+
+  padding: 15px;
+  margin: 15px 0 15px 0;
+
+  background-color: #fff;
+
+  border-left: 5px solid #6B746F;
+
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
 }
 
-#dashboard-content{
-   display:flex;
-   flex-direction: column;
-
-   height: 100vh;
-
-   background-color: #F7F9F9;
+.database-tables h5 {
+  font-family: "Montserrat", sans-serif;
+  color: #6B746F;
 }
 
-/* ================================================ */
-/* Navbar Setup and Styling                         */
-/* ================================================ */
-#nav-section {
-    padding: 0;
+.table {
+  width: 100%;
+  height: 100%;
 }
 
-.navbar {
-    min-height: 100px !important;
-
-    padding: 25px;
-
-    background-color: #6B8E4E; 
-
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.30), 0 1px 10px rgba(0, 0, 0, 0.22);
-    border-radius: 2px;
+.table-action {
+  display: flex;
 }
 
-.navbar-brand {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 28px;
-    color: #ffffff;
-}
-
-.nav-item a,i {
-    font-size: 18px;
-    color: #ffffff;
-}
-
-.navbar-nav > a {
-   color: #ffffff;
-}
-
-.nav-item i {
-    padding:5px;
-}
-
-.navbar-nav a:hover {
-   text-decoration: none;
-}
-
-.dropdown-menu {
-    width:200px !important;
-}
-
-.dropdown-toggle{
-    padding:0;
-}
-
-.dropdown-menu a {
-   color: #6B8E4E !important;
-}
-
-.dropdown-menu a:hover {
-   text-decoration: none;
-}
-
-.dropdown-menu i {
-    font-size: 18px;
-    color: #6B8E4E;
-}
-
-.navbar .navbar-toggle .navbar-toggler-icon { color: #ffffff;}
-
-@media(max-width:375px) {
-    .navbar {
-        min-height: 50px !important;
-
-        padding: 15px;
-    }
-
-    .navbar-brand {
-        font-size: 18px;
-    }
-}
-
-@media (min-width:1200px) {
-    .nav-item i {
-        margin-left: 35px;
-    }
+.search-table {
+  width: 95%;
 }
 
 
-/* ================================================ */
-/* Slide Out Notifications Tab	                    */
-/* ================================================ */
-#slideOut {
-    position: fixed;
-    width: 300px;
-    height: 800px;
-    top: 30px;
-    right: -300px;
-    /* Animation  */
-    transition-property: all;
-    transition-duration: .5s;
-    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 
-    z-index: 3;
+/* Staff Handler View Staff Modal Section
+     ========================================================================== */
+
+.modal-header {
+  background-color: #6aa84f;
+
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
 }
 
-/* Display slideOut */
-.showSlideOut {
-    right: 0px !important;
-}
-
-/* Tab */
-.slideOutTab {
-    margin-top: 35vh;
-    position: absolute;
-    left: -40px;
-    height: 200px;
-    width: 40px;
-    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
-    background: #8EBB67;
-    color: white;
-    border-radius: 15px 0px 0px 15px;
-
-    z-index: 3;
-}
-
-.slideOutTab div {
-    text-align: center;
-    position: relative;
-    right: 70px;
-    top: 90px;
-    background: #8EBB67;
-    width: 180px;
-    -webkit-transform: rotate(270deg);
-    -moz-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    writing-mode: lr-tb;
-}
-
-div#slideOut.showSlideOut {
-    width: 30%;
+.modal-header i {
+  color: #fff;
 }
 
 .modal-body {
-    height: 100vh;
-
-    background-color: #F7F9F9;
-
-    overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.modal-header {
-    display: flex;
-    justify-content: center;
-
-    background-color: #8EBB67;
+modal {
+  padding-right: 0 !important;
 }
 
-.modal-title {
-    font-family: 'Roboto', sans-serif;
-    color: #ffffff;
-    font-size: 20px;
-
-    padding: 15px;
+#addModal .modal-dialog {
+  max-width: 85%;
+  min-width: 30%;
+  width: auto;
 }
 
-
-@media (max-width:375px) {
-
-    div#slideOut.showSlideOut {
-        width: 80%;
-    }
+#addModal .modal-content {
+  min-height: 25vh;
+  height: auto;
 }
 
-@media (max-width:575px){
-    .slideOutTab{
-        display: none;
-    }
-}
-
-@media (max-width:768px) {
-
-    div#slideOut.showSlideOut {
-        width: 80%;
-    }
-}
-
-/* ================================================ */
-/* Notifications Section Setup and Styling          */
-/* ================================================ */
-#notifications-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    padding: 15px;
-}
-
-#notifications-section .box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-    height: auto;
-    width: 95%;
-
-    background-color: #ffffff;
-
-    margin: 10px;
-
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.20), 2px 2px 10px rgba(0, 0, 0, 0.12);
-    border-radius: 5px;
-}
-
-.notification-heading {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.notification-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    width: 100%;
-
-    padding-left: 15px;
-    padding-bottom: 15px;
-
-}
-
-#notifications-section .box h2 {
-    font-family: 'Roboto', sans-serif;
-    color: #6B8E4E;
-    font-size: 24px;
-    margin-top: 0;
-    padding: 15px;
-}
-
-#notifications-section .box>i {
-    float: left;
-    color: #ffffff;
-    background-color: #6B8E4E;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 22px;
-}
-
-#notifications-section .box:hover {
-    transform: scale(1.0125);
-    transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* ================================================ */
-/* Database Management Setup and Styling            */
-/* ================================================ */
-.database-management {
-    display: flex;
-
-    background-color: #eceaea;
-    width: 100%;
-    height: 100%;
-
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.30), 0 5px 10px rgba(0, 0, 0, 0.22);
-    border-radius: 5px;
-
-    z-index: 0;
-}
-
-/* ================================================ */
-/* Add Database Form Setup and Styling              */
-/* ================================================ */
-#add_new_database_form{
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 80%;
-    height: 100%;
-
-    margin: 0;
-    padding-top:50px;
-    padding-bottom:15px;
+#viewDatabaseModal .modal-dialog {
+  max-width: 85%;
 }
 
 
-/* ================================================ */
-/* Tab Menu Setup and Styling                       */
-/* ================================================ */
-.mat-ink-bar {
-    background-color: #6B8E4E !important;
+#viewDatabaseModal .modal-content {
+  min-height: 90vh;
+  height: auto;
 }
 
-mat-tab-group {
-    width: 100% !important;
-    height: 100% !important;
+.preview-actions {
+  margin-top: 25px;
 }
 
-mat-tab-group {
-    /deep/ .mat-tab-body-wrapper {
-        height: 100%;
-    }
+.preview-actions h6{
+  color: #72b555;
+  font-family: "Montserrat", sans-serif;
 }
 
-mat-tab {
-    width: 100% !important;
-    height: 100% !important;
+.btn.btn-default-save {
+  width: 30%;
 }
 
-mat-icon {
-    padding-right: 30px;
-}
-
-.tab-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    width: 100% !important;
-    min-height:100vh !important;
-    height: 100% !important;
-
-    margin-top: 5%;
-}
-
-.tab-content h2 {
-    font-family: 'Roboto', sans-serif;
-    color: #6B8E4E;
-    font-size: 28px;
-
-    text-transform: uppercase;
-}
-
-.tab-content hr {
-    width: 250px;
-    height: 2px;
-    background-color: #6B8E4E;
-    border: 0;
-    margin-bottom: 25px;
-}
-
-@media (max-width:425px){
-    .tab-content hr {
-        width: 150px;
-    }
+.btn.btn-default-cancel {
+  width: 30%;
 }
 
 
-#previewTable{
-    width: 95%;
-    padding-bottom: 30px;
+
+#confirmDeleteModal .modal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  text-align: center;
 }
 
-.tableHeading{
-    background-color: #6B8E4E;
-    color: white;
-    padding: 6px;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-family: Arial;
+#confirmDeleteModal .modal-body p {
+  font-family: "Roboto", sans-serif;
 }
 
-th{
-    border-bottom: 1.6px solid #ddd;
-}
-
-.btn.btn-default {
-    background: transparent;
-    border: 2px solid #6B8E4E;
-    color: #6B8E4E;
-    font-size: 12px;
-    letter-spacing: 2px;
-    padding: 7px 10px;
-    text-transform: uppercase;
-
-    border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    border: 1px solid #6B8E4E;
-
-    display: block;
-    margin: 0 auto;
-
-}
-
-.btn.btn-default:hover,
-.btn.btn-default:focus,
-.fileLabel:hover,
-.fileLabel:focus {
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
-}
-
-.inputFile {
-    display: none;
-}
-
-.fileLabel{
-    margin-top: 20px;
-    background-color: #6B8E4E;
-    border: 1px solid #6B8E4E;
-    border-radius: 6px;
-    padding: 6px;
-    color: white;
-    font-size: 12px;
-}
-
-.databaseName{
-    font-size: 18px;
-    margin-bottom: 6px;
-}
-
-.inputSpace{
-    height: 28px;
-    width: 20%;
-}
-
-@media (max-width: 500px) {
-
-    .inputSpace{
-        height: 28px;
-        width: 45%;
-    }
+.confirm-actions {
+  display: flex;
+  justify-content: center;
 }

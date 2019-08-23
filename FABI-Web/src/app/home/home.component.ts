@@ -5,7 +5,7 @@
  * Created Date: Tuesday, June 25th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,8 +15,9 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';
+import { ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+
 
 import { UserManagementAPIService } from "../_services/user-management-api.service";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -24,7 +25,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { ErrorComponent } from '../_errors/error-component/error.component';
-import { ConfirmComponent } from "../confirm/confirm.component";
+import { LoadingComponent } from "../_loading/loading.component";
 
 import * as Interface from '../_interfaces/interfaces';
 
@@ -39,19 +40,34 @@ export class HomeComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /** Object for defining the Create Organisation form -  @type {FormGroup} */
-  registerOrgForm: FormGroup;
-  contactForm: FormGroup;
-  /** To check if form has been submitted - @type {boolean} */
+  contact_form: FormGroup;
+  /** Object for storing all forms that require validation-  @type {HTMLCollectionOf<Element>} */
+  forms: HTMLCollectionOf<Element> = null;
+
+  request_register_org: FormGroup;
+
   submitted: boolean = false;
-  /** To check if form has been submitted correctly - @type {boolean} */
   valid: boolean = false;
-  /** If page is busy loading something - @type {boolean} */
-  loading: boolean = false;
-  /** Selected Organisation from the table - @type {Interface.Organisation} */
-  selectedOrg: Interface.Organisation;
-  /** Array of Organization objects - @type {Organisation[]} */
-  organizations: Interface.Organisation[];
+
+  register_organization_validators = {
+    'organization_name': [
+      { type: 'required', message: 'Organization name is required' },
+    ],
+    'admin_email': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Invalid email' }
+    ],
+    'admin_name': [
+      { type: 'required', message: 'First name is required' }
+    ],
+    'admin_surname': [
+      { type: 'required', message: 'Surname is required' }
+    ],
+    'admin_phone': [
+      { type: 'required', message: 'Phone No. is required' },
+      // { type: 'pattern', message: 'Please enter a valid number' }
+    ],
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -66,94 +82,112 @@ export class HomeComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private userManagementService: UserManagementAPIService, 
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
+    private userManagementService: UserManagementAPIService,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private router: Router
-    ) {
-    this.registerOrgForm = this.formBuilder.group({
-      organization_name: ['', Validators.required],
-      organization_location: ['', Validators.required],
-      admin_name: ['', Validators.required],
-      admin_surname: ['', Validators.required],
-      admin_email: ['', Validators.required],
-      admin_phone: ['', Validators.required]
-    })
-    this.contactForm = this.formBuilder.group({
+  ) {
+    this.contact_form = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
       mesage: ['', Validators.required]
     })
+
+    this.request_register_org = this.formBuilder.group({
+      organization_name: ['', Validators.required],
+      admin_name: ['', Validators.required],
+      admin_surname: ['', Validators.required],
+      admin_email: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
+      admin_phone: ['', Validators.compose([
+        Validators.required,
+        // Validators.pattern('')
+      ])]
+      
+    })
   }
 
   ngOnInit() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.displayLocationInfo(position);
-      });
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-  }
-
-  displayLocationInfo(position) {
-    const lng = position.coords.longitude;
-    const lat = position.coords.latitude;
-
-    console.log(`longitude: ${ lng } | latitude: ${ lat }`);
-    console.log(`Position: ${position}`);
-    console.log(`Coords: ${JSON.stringify(position.coord)}`);
-
+    //-------- Form Validation --------
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    this.forms = document.getElementsByClassName("needs-validation");
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(this.forms, function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REGISTER ORGANIZATION
+  //                                                       CONTACT
   /**
-   * This function calls the *user-management* service to create a new Organisation.
+   * This function sends an email to the admin
    *
    * @returns
-   * @memberof OrganizationHandlerComponent
+   * @memberof HomeComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  registerOrg() {
+  contact() {
 
+
+  }
+
+
+  requestToRegister() {
+    
     this.submitted = true;
 
-    if (this.registerOrgForm.invalid) {
+    if (this.request_register_org.invalid) {
       return;
     }
 
     this.valid = true;
-    this.loading = true;
 
-    const LorgName = this.registerOrgForm.controls.organization_name.value;
-    // const LorgLocation = this.createOrgForm.controls.organization_location.value;
-    const LadminName = this.registerOrgForm.controls.admin_name.value;
-    const LadminSurname = this.registerOrgForm.controls.admin_surname.value;
-    const LadminEmail = this.registerOrgForm.controls.admin_email.value;
-    const LadminPhone = this.registerOrgForm.controls.admin_phone.value;
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Sending Request" } });
 
-    const admin_details: Interface.OrganisationAdmin = { name: LadminName, surname: LadminSurname, email: LadminEmail };
+    const LorgName = this.request_register_org.controls.organization_name.value;
+    const LadminName = this.request_register_org.controls.admin_name.value;
+    const LadminSurname = this.request_register_org.controls.admin_surname.value;
+    const LadminEmail = this.request_register_org.controls.admin_email.value;
+    const LadminPhone = this.request_register_org.controls.admin_phone.value;
+
+    const admin_details: Interface.OrganisationAdmin = { fname: LadminName, surname: LadminSurname, email: LadminEmail };
     const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };
 
-    this.userManagementService.createOrganization(org_details).subscribe((response: any) => {
+    this.userManagementService.sendRequestToRegisterOrganization(org_details).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
+
+        let snackBarRef = this.snackBar.open("Successfully Sent Request", "Dismiss", {
           duration: 6000
         });
 
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Registering Organization", message: response.message, retry: true } });
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Sending Request", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
           if (result == "Retry") {
-            this.registerOrg();
+            this.requestToRegister();
           }
         })
       }
     });
+    
   }
 
 }

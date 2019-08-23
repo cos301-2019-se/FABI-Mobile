@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 8th 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,9 +17,10 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@an
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Router } from '@angular/router';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-staff-profile',
@@ -53,27 +54,55 @@ export class StaffProfileComponent implements OnInit {
   /** The form to display the staff member's details -  @type {FormGroup} */
   staffProfileForm: FormGroup;
 
-  /** Object array for holding all of the logs -  @type {any[]} */ 
-  allNotifications: any[] = [];
-  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
-  newNotifications: any[] = [];
+  /** The form to change the user's password -  @type {FormGroup} */
+  changePasswordForm: FormGroup;
 
-  /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = true; 
-  /** The total number of User Logs - @type {number} */           
-  numberOfUserLogs: number = 0;
-  /** THe number of the notifications - @type {number} */   
-  localNotificationNumber : number = 1;
-  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
-  allLogs: string[] = []; 
+  /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
+  userProfileLoading: boolean = true;
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput : ElementRef;
+  @ViewChild("passwordInput") passwordInput: ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput : ElementRef;
+  @ViewChild("confirmInput") confirmInput: ElementRef;
+
+  /** The user that is currently logged in -  @type {any} */
+  currentUser: any = {};
+
+  isEditingProfile: boolean = false;
+
+  submitted: boolean;
+
+  staff_profile_validators = {
+    'admin_name': [
+      { type: 'required', message: 'First name required' },
+    ],
+    'admin_surname': [
+      { type: 'required', message: 'Surname required' },
+    ],
+    'admin_email': [
+      { type: 'required', message: 'Email required' },
+      { type: 'pattern', message: 'Invalid email' }
+    ]
+  }
+
+
+  change_password_validators = {
+    'current_password': [
+      { type: 'required', message: 'Current password required' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+    ],
+    'new_password': [
+      { type: 'required', message: 'New password required' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      // { type: 'pattern', message: 'Your password must contain at least one uppercase' }
+    ],
+    'confirm_password': [
+      { type: 'required', message: 'Confirm password required' },
+      { type: 'passwordMatch', message: 'Passwords must match' }
+    ]
+  }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,28 +121,70 @@ export class StaffProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private userManagementService: UserManagementAPIService, 
-    private formBuilder: FormBuilder, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private snackBar: MatSnackBar, 
-    private authService: AuthenticationService, 
-    private router: Router
-    ) { 
-      this.staffProfileForm = this.formBuilder.group({
-      
-        organization_name: '',
+    private userManagementService: UserManagementAPIService,
+    private formBuilder: FormBuilder,
+    private notificationLoggingService: NotificationLoggingService,
+    private snackBar: MatSnackBar,
+    private authService: AuthenticationService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
+    this.staffProfileForm = this.formBuilder.group({
       staff_name: '',
       staff_surname: '',
       staff_email: '',
-      staff_type: '',
-      staff_password: '',
-      staff_confirm: ''
+      staff_type: ''
     });
+
+    this.changePasswordForm = this.formBuilder.group({
+      current_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      new_password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])],
+      confirm_password: ['', Validators.required]
+    }, {
+        validator: this.PasswordMatch('new_password', 'confirm_password')
+      });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadStaffProfileDetails() | 2. Call loadNotifications() 
+   * 
+   * @memberof StaffProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    // this.authService.temporaryLoginStaff().subscribe((response: any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.loadStaffProfileDetails();
+    // });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    // Calling the neccessary functions as the page loads
+    this.loadStaffProfileDetails();
+
+    this.staffProfileForm.get('staff_name').disable();
+    this.staffProfileForm.get('staff_surname').disable();
+    this.staffProfileForm.get('staff_email').disable();
+
+   
   }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            LOGOUT 
+  //                                                         LOGOUT 
   /**
    * This function will log the user out of the web application and clear the authentication data stored in the local storage
    * 
@@ -126,392 +197,197 @@ export class StaffProfileComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_DATE
-  /**
-   *  This function will put the string date provided into a more readable format for the notifications
-   * @param {string} date The date of the log
-   * 
-   * @memberof StaffProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getDate(date: string){
-    var tempDate = (date).split(' ');
-    var newDate = '';
-
-    newDate += tempDate[2];
-
-    if(tempDate[0] == 'Mon'){
-      newDate += ' Monday ';
-    }
-    else if(tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues'){
-      newDate += ' Tuesday ';
-    }
-    else if(tempDate[0] == 'Wed'){
-      newDate += ' Wednesday ';
-    }
-    else if(tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs'){
-      newDate += ' Thursday ';
-    }
-    else if(tempDate[0] == 'Fri'){
-      newDate += ' Friday ';
-    }
-    else if(tempDate[0] == 'Sat'){
-      newDate += ' Saturday ';
-    }
-    else if(tempDate[0] == 'Sun'){
-      newDate += ' Sunday ';
-    }
-
-    if(tempDate[1] == 'Jan'){
-      newDate += 'January';
-    }
-    else if(tempDate[1] == 'Feb'){
-      newDate += 'February';
-    }
-    else if(tempDate[1] == 'Mar'){
-      newDate += 'March';
-    }
-    else if(tempDate[1] == 'Apr'){
-      newDate += 'April';
-    }
-    else if(tempDate[1] == 'Jun'){
-      newDate += 'June';
-    }
-    else if(tempDate[1] == 'Jul'){
-      newDate += 'July';
-    }
-    else if(tempDate[1] == 'Aug'){
-      newDate += 'August';
-    }
-    else if(tempDate[1] == 'Sep' || tempDate[1] == 'Sept'){
-      newDate += 'September';
-    }
-    else if(tempDate[1] == 'Oct'){
-      newDate += 'October';
-    }
-    else if(tempDate[1] == 'Nov'){
-      newDate += 'November';
-    }
-    else if(tempDate[1] == 'Dec'){
-      newDate += 'December';
-    }
-
-    newDate += ' ' + tempDate[3];
-
-    return newDate;
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_LOGS
-  /**
-   *  This function will load all of the user's logs into a string array.
-   * 
-   * @memberof StaffProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadLogs(){
-    //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
-      if(response.success == true){
-        var data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          this.allLogs.push(data[i].id);
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_NOTIFICATIONS
-  /**
-   *  This function will load the staff member's notifications into the notification section on the HTML page
-   * 
-   * @memberof StaffProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){
-    //Loading all the logs beloning to the user
-    this.loadLogs();
-
-    //Making a call too the notification logging service to return all USER logs
-    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
-      if(response.success = true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          for(var j = 0; j < this.allLogs.length; j++){
-            if(data[i].date == this.allLogs[j]){
-              //A temporary instance of UserLogs that will be added to the allNotifications array
-              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-              
-              //Getting the name and surname of the users passed using their id numbers
-              const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
-              const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
-  
-              if(tempLogU.Action == 'C'){
-                tempLogU.Action = user1 + ' was added to the system by ' + user2;
-              }
-              else if(tempLogU.Action == 'D'){
-                tempLogU.Action = user1 + ' was removed from the system by ' + user2;
-              }
-  
-              this.allNotifications.push(tempLogU);
-              this.numberOfUserLogs += 1;
-              this.localNotificationNumber += 1;
-            }
-          }          
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REMOVE_NOTIFICATIONS
-  /**
-   *  This function will remove a notification from the notification section on the HTML page.
-   * 
-   * @param {string} id                   //The id of the notification to be removed
-   * @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeNotification(id: string){
-    for(var i =  0; i < this.allNotifications.length; i++){
-      if(this.allNotifications[i].ID == id){
-        this.newNotifications.push(this.allNotifications[i]);
-      }
-    }
-
-    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
-      if(response.success == true){
-        this.loadNotifications();
-      }
-      else{
-        //Error handling
-      }
-    });
-  } 
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_STAFF_PROFILE_DETAILS
+  //                                                  LOAD STAFF PROFILE DETAILS
   /**
    *  This function will use an API service to load all the staff member's details into the elements on the HTML page.
    * 
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadStaffProfileDetails(){
+  loadStaffProfileDetails() {
     //The id number of the user that is currently logged in
-    this.id = localStorage.getItem('userID');
+    this.id = this.currentUser.ID;
     //The organization of the user that is currently logged in
-    this.organization = localStorage.getItem('userOrganization');
-    //The password of the user that is currently logged in
-    this.password = localStorage.getItem('userPassword');
-    //Setting the confirmPassword variable to have the same value as the user's current password
-    this.confirmPassword = this.password;
+    this.organization = this.currentUser.organisation;
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true && response.code == 200) {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
-        //Setting the user type of the user
-        this.userType = data.userType;
-        //Setting the first name of the user
-        this.name = data.fname;
-        //Setting the surname of the user
-        this.surname = data.surname;
-        //Setting the email of the user
-        this.email = data.email;
+        //Deactivate loading spinners
+        this.userProfileLoading = false;
+
+        // Fill the form inputs with the user's details
+        this.staffProfileForm.setValue({
+          staff_name: data.fname,
+          staff_surname: data.surname,
+          staff_email: data.email,
+          staff_type: data.userType
+        });
       }
-      else{
+      else {
         //Error handling
       }
     });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   * 
-   *  @memberof StaffProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        return data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                      SAVE_CHANGES
+  //                                                      SAVE CHANGES
   /**
    *  This function will send the details to the API to save the changed details to the system.
    *  @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
-    //Indicates if the details can be changed based on whether the passwords match or not
-    var valid = true;
+  saveChanges() {
 
-    //Checking to make sure that the passwords are not empty
-    //Checking to make sure that the password and confirmed password match
-    if(this.staffProfileForm.controls.admin_password.value != '' && 
-    this.staffProfileForm.controls.admin_password.value == this.staffProfileForm.controls.admin_confirm.value){
-      this.password = this.staffProfileForm.controls.admin_password.value;
-    }
-    else{
-      //Indicates that the changes cannot be saved
-      valid = false;
+    this.submitted = true;
 
-      //POPUP MESSAGE
-      let snackBarRef = this.snackBar.open("Please make sure that the passwords are the same", "Dismiss", {
-        duration: 3000
-      });
+    // Check if form input is valid 
+    if (this.staffProfileForm.invalid) {
+      return;
     }
 
-    //Indicates that the changes that the user has made to their profile details, can be changed
-    if(valid == true){
-      if(this.staffProfileForm.controls.staff_email.value == ''){
-        this.email = this.email;
-      }
-      else{
-        this.email = this.staffProfileForm.controls.staff_email.value;
-      }
+    var Uemail = this.staffProfileForm.controls.staff_email.value;
+    var Uname = this.staffProfileForm.controls.staff_name.value;
+    var Usurname = this.staffProfileForm.controls.staff_surname.value;
 
-      if(this.staffProfileForm.controls.staff_name.value == ''){
-        this.name = this.name;
-      }
-      else{
-        this.name = this.staffProfileForm.controls.staff_name.value;
-      }
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Profile" } });
 
-      if(this.staffProfileForm.controls.staff_surname.value == ''){
-        this.surname == this.surname;
-      }
-      else{
-        this.surname = this.staffProfileForm.controls.staff_surname.value;
-      }
+    // Making a call to the User Management API Service to save the user's changed profile details
+    this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
-      //Making a call to the User Management API Service to save the user's changed profile details
-      this.userManagementService.updateFABIMemberDetails(this.email, this.name, this.surname, this.id, this.password).subscribe((response: any) => {
-        if(response.success == true){
-          //Making sure that local storage now has the updated password stored
-          localStorage.setItem('userPassword', this.password);
-          //Reloading the updated user's details
-          this.loadStaffProfileDetails();
+      loadingRef.close();
 
-          //Display message to say that details were successfully saved
-          let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-        else{
-          //Error handling
-          let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-            duration: 3000
-          });
-        }
-      });
+      if (response.success == true && response.code == 200) {
+
+        //Reloading the updated user's details
+        this.loadStaffProfileDetails();
+
+        //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
+          duration: 3000
+        });
+      }
+      else {
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+  changePassword() {
+
+    this.submitted = true;
+
+    // Check if form input is valid 
+    if (this.changePasswordForm.invalid) {
+      return;
     }
-    else{
-      //Error handling
-      let snackBarRef = this.snackBar.open("Please make sure that you provide all the information", "Dismiss", {
-        duration: 3000
-      });
+
+    var Ucurrent = this.changePasswordForm.controls.current_password.value;
+    var Unew = this.changePasswordForm.controls.new_password.value;
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
+
+    this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
+
+      loadingRef.close();
+
+      console.log("RESP: " + JSON.stringify(response));
+
+      if (response.success == true && response.code == 200) {
+
+        //Display message to say that details were successfully saved
+        let snackBarRef = this.snackBar.open("Successfully changed password.", "Dismiss", {
+          duration: 3000
+        });
+      }
+      else {
+
+        console.log("RESP: " + JSON.stringify(response));
+        //Error handling
+        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+
+  PasswordMatch(newP: string, confirmP: string) {
+    return (formGroup: FormGroup) => {
+      const newControl = formGroup.controls[newP];
+      const confirmControl = formGroup.controls[confirmP];
+
+      if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+
+      // set error on matchingControl if validation fails
+      if (newControl.value !== confirmControl.value) {
+        confirmControl.setErrors({ passwordMatch: true });
+      } else {
+        confirmControl.setErrors(null);
+      }
     }
   }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SHOW_PASSWORD
+  //                                                        SHOW PASSWORD
   /**
    *  This function will make the users password visible on request. 
    * 
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showPassword(){
-    if(this.passwordInput.nativeElement.type === 'password'){
+  showPassword() {
+    if (this.passwordInput.nativeElement.type === 'password') {
       this.passwordInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.passwordInput.nativeElement.type = 'password';
     }
   }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        SHOW_CONFIRMED_PASSWORD
+  //                                                        SHOW CONFIRMED PASSWORD
   /**
    *  This function will make the users confirmed password visible on request. 
    * 
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  showConfirmedPassword(){
-    if(this.confirmInput.nativeElement.type === 'password'){
+  showConfirmedPassword() {
+    if (this.confirmInput.nativeElement.type === 'password') {
       this.confirmInput.nativeElement.type = 'text';
     }
-    else{
+    else {
       this.confirmInput.nativeElement.type = 'password';
     }
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof StaffProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
+  editProfileToggle() {
+
+    if (this.isEditingProfile) {
+      this.staffProfileForm.get('staff_name').disable();
+      this.staffProfileForm.get('staff_surname').disable();
+      this.staffProfileForm.get('staff_email').disable();
+      this.isEditingProfile = false;
+    } else {
+      this.staffProfileForm.get('staff_name').enable();
+      this.staffProfileForm.get('staff_surname').enable();
+      this.staffProfileForm.get('staff_email').enable();
+      this.isEditingProfile = true;
+    }
+
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Call loadStaffProfileDetails() | 2. Call loadNotifications() 
-   * 
-   * @memberof StaffProfileComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    //Calling the neccessary functions as the page loads
-    this.loadStaffProfileDetails();
-    this.loadNotifications();
-  }
 
 }

@@ -1,6 +1,30 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+import { LoginComponent } from './login/login.component';
+import { SampleFormComponent } from './sample-form/sample-form.component';
+import { AdminDashboardComponent } from "./Admin/admin-dashboard/admin-dashboard.component";
+import { OrganizationDashboardComponent } from "./Organization/organization-dashboard/organization-dashboard.component";
+import { StaffDashboardComponent } from "./Staff/staff-dashboard/staff-dashboard.component";
+import { MemberDashboardComponent } from "./Organization-Member/member-dashboard/member-dashboard.component";
+
+
+
+const routes: Routes = [
+  {path: 'login', component: LoginComponent},
+  {path: 'sample-form', component: SampleFormComponent},
+  {path: '', component: LoginComponent},
+  {path: 'fabi-admin-dashboard', component: AdminDashboardComponent},
+  {path: 'org-admin-dashboard', component: OrganizationDashboardComponent},
+  {path: 'fabi-staff-dashboard', component: StaffDashboardComponent},
+  {path: 'org-member-dashboard', component: MemberDashboardComponent}
+
+
+=======
+>>>>>>> develop
 import { LoginComponent } from "./login/login.component";
 import { HomeComponent } from "./home/home.component";
 import { AdminDashboardComponent } from "./Admin/admin-dashboard/admin-dashboard.component";
@@ -16,6 +40,8 @@ import { ReportingComponent } from './Admin/reporting/reporting.component';
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
+import { ClinicHandlerComponent } from './Admin/clinic-handler/clinic-handler.component';
+import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
 
 const routes: Routes = [
   {
@@ -34,6 +60,12 @@ const routes: Routes = [
   {
     path: 'admin-dashboard', 
     component: AdminDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: { roles: [Role.SuperUser] }
+  },
+  {
+    path: 'clinic-handler', 
+    component: ClinicHandlerComponent,
     canActivate: [AuthenticationGuard],
     data: { roles: [Role.SuperUser, Role.ClinicAdmin] }
   },
@@ -63,7 +95,7 @@ const routes: Routes = [
     path: 'submit-sample', 
     component: SampleFormComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.Member] }
+    data: {roles: [Role.Member, Role.Staff, Role.OrganizationAdmin] }
   },
   {
     path: 'reporting',
@@ -71,16 +103,30 @@ const routes: Routes = [
   },
   {
     path: 'submit-cmw-request',
-    component: SubmitCmwRequestComponent
+    component: SubmitCmwRequestComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
   },
   {
     path: 'submit-cmw-deposit',
-    component: SubmitCmwDepositComponent
+    component: SubmitCmwDepositComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
   },
   {
     path: 'submit-cmw-revitalization',
-    component: SubmitCmwRevitalizationComponent
+    component: SubmitCmwRevitalizationComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'pre-diagnosis',
+    component: PreDiagnosisComponent
   }
+<<<<<<< HEAD
+=======
+>>>>>>> develop
+>>>>>>> develop
 
 ];
 

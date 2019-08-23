@@ -12,7 +12,7 @@ router.post('/', getAllSamples);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                             Get  Samples
 /**
- * @summary Get all samples associated with an organization
+ * @summary Get all samples
  * @description  REQUEST DATA REQUIRED: none
  *  
  *
@@ -33,11 +33,12 @@ function getAllSamples(req, res) {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************                    
+            res.status(200).json({                                  // ******* RESPONSE STATUS? ************                    
                 success: false,
-                code: 400,
+                code: 200,
                 title: "NOT FOUND",
-                message: "No samples found"
+                message: "No samples found",
+                data : {}
             });
         }
         else{

@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 8th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -26,7 +26,7 @@ import { config } from "../../environments/environment.prod";
 //                                                          GLOBAL VARIABLES
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Globals variables used to hold the API call urls
+//////////////////////////////////////////////////////// URL'S FOR API //////////////////////////////////////////////////////////////// 
 const getAllLogsURL = `${config.logsURL}/getLogs`;
 const getUserLogsURL = `${config.logsURL}/getUserLogs`;
 const updateUserLogsURL = `${config.logsURL}/deleteUserLogs`;
@@ -124,6 +124,7 @@ export class NotificationLoggingService {
    * Creates an instance of NotificationLoggingService.
    * 
    * @param {HttpClient} http For making calls to the API
+   * 
    * @memberof NotificationLoggingService
    */
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,12 +132,12 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_USER_LOGS
+  //                                                       GET ALL USER LOGS
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type 'USER'
+   *    This function sends a POST request to the API to retrieve a list containing all the logs with type 'USER'
    *
    * @returns API response @type any
+   * 
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,17 +157,17 @@ export class NotificationLoggingService {
         json: true
     };
 
-        return this.http.request('POST', getAllLogsURL, options);
+    return this.http.request('POST', getAllLogsURL, options);
   }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_DATABASE_MANAGEMENT_LOGS 
+  //                                                 GET ALL DATABASE MANAGEMENT LOGS 
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type 'DBML'
+   *    This function sends a POST request to the API to retrieve a list containing all the logs with type 'DBML'
    *
    * @returns API response @type any
+   * 
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,17 +187,17 @@ export class NotificationLoggingService {
         json: true
     };
 
-        return this.http.request('POST', getAllLogsURL, options);
+    return this.http.request('POST', getAllLogsURL, options);
   }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_ACCESS_LOGS 
+  //                                                         GET ALL ACCESS LOGS 
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type 'ACCL'
+   *    This function sends a POST request to the API to retrieve a list containing all the logs with type 'ACCL'
    *
    * @returns API response @type any
+   * 
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -216,17 +217,17 @@ export class NotificationLoggingService {
         json: true
     };
 
-        return this.http.request('POST', getAllLogsURL, options);
+    return this.http.request('POST', getAllLogsURL, options);
   }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                               GET_ALL_ERROR_LOGS
+  //                                                          GET ALL ERROR LOGS
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type 'ERRL'
+   *    This function sends a POST request to the API to retrieve a list containing all the logs with type 'ERRL'
    *
    * @returns API response @type any
+   * 
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -251,42 +252,14 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_ALL_DIAGNOSTIC_CLINIC_LOGS 
+  //                                                         GET USER LOGS 
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs with type 'DGCL'
-   *
-   * @returns API response @type any
-   * @memberof NotificationLoggingService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllDiagnosticClinicLogs() {
-    var tempLog : Logs = {type: 'DGCL', before: '', after: ''};
-    var data: POSTLog = {Log: tempLog};
-
-    const options = {
-        method: 'POST',
-        url: getAllLogsURL,
-        headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
-    };
-
-    return this.http.request('POST', getAllLogsURL, options);
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET_USER_LOGS 
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the logs for a specific user.
+   *    This function sends a POST request to the API to retrieve a list containing all the logs for a specific user.
    *
    * @param {string} userID The id number of the user whose logs need to be feteched for the notifications.
+   * 
    * @returns API response @type any
+   * 
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,8 +267,6 @@ export class NotificationLoggingService {
     var data: POSTUser = {userID: id};
 
     const options = {
-        method: 'POST',
-        url: getUserLogsURL,
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
@@ -309,11 +280,15 @@ export class NotificationLoggingService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    UPDATE_FABI_MEMBER_NOTIFICATIONS
+  //                                                    UPDATE FABI MEMBER NOTIFICATIONS
   /**
    * Method that sends a request to the API to update the notifications associated with a specific user.
+   * 
    * @param {string} id The ID of the user whose notifications need to be updated
    * @param {string[]} notifications The notifications to be removed from the user's profile
+   * 
+   * @returns API response @type any
+   * 
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
