@@ -7,9 +7,6 @@ import { SampleFormComponent } from '../../sample-form/sample-form.component';
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
-//Import the data service for API calls
-import { APIconnectionService } from '../../apiconnection.service';
-
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -37,7 +34,7 @@ describe('MemberSubmitSampleComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule],
-      providers: [APIconnectionService]
+      providers: []
     })
     .compileComponents();
   }));

@@ -1,42 +1,121 @@
-<div id="organization_handler">
-  <div class="top_banner">
-    <h1 id="organization_heading">Organization Management</h1>
-    <div id="menu_div">
-      <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
+<!-- Dashboard -->
+<div class="dashboard">
+
+  <!-- Sidenav -->
+  <div class="sidenav">
+
+    <!-- Top Sidenav Link -->
+    <div class="top-nav-items">
+      <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+      <p (click)="toggleProfileTab()">Click to view profile</p>
+      <br />
+
+      <div class="nav-links">
+        <a class="nav-link" routerLink="/admin-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/staff-handler"><i class="fas fa-address-card"></i></a>
+        <a class="nav-link active" routerLink="/organization-handler"><i class="fas fa-building"></i></a>
+        <a class="nav-link" routerLink="/database-handler"><i class="fas fa-database"></i></a>
+        <a class="nav-link" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i></a>
+        <a class="nav-link" routerLink="/reporting"><i class="fas fa-chart-bar"></i></a>
+        <a class="nav-link" routerLink="/view-forms"><i class="fas fa-clipboard"></i></a>
+      </div>
+
     </div>
+    <!-- / Top Sidenav Link -->
+
+    <!-- Bottom Sidenav Link -->
+    <div class="bottom-nav-items">
+      <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+    <!-- / Bottom Sidenav Link -->
+
   </div>
+  <!-- / Sidenav -->
 
-  <div id="sidenav_div" class="sidenav">
-    <a class="closebtn" (click)="closeNav()">&times;</a>
-    <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
-    <button id="user_management" routerLink="/staff-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Staff Management</button>
-    <button id="organization_management" routerLink="/organization-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>
-    <button id="diagnostic_clinic_management" routerLink="/clinic-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  Diagnostic Clinic Management</button>
-    <button id="database_management" routerLink="/database-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">storage</mat-icon></span>  Database Management</button>
-    <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
-    <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
-    <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
-    <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
+  <!-- Navbar -->
+  <div class="pos-f-t">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <h1 class="brand">ADMIN DASHBOARD</h1>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+          <!-- Navbar Items -->
+          <li class="nav-item">
+              <a class="nav-link" routerLink="/admin-dashboard">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/database-handler">Database Handler</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" routerLink="/organization-handler">Organization Handler <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/reporting">Reporting</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()">Logout</a>
+            </li>
+            <!-- / Navbar Items -->
+        </ul>
+      </div>
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+      <!-- Menu Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- / Menu Button -->
+
+      <!-- Navbar Title -->
+      <h5>ORGANIZATIONS</h5>
+      <!-- / Navbar Title -->
+
+      <!-- Notification Icons -->
+      <div class="notifications-icon">
+        <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- /Notification Icons -->
+    </nav>
   </div>
+  <!-- / Navbar-->
 
-  <div class="container-fluid">
-    <div class="row">
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <!-- Primary Content -->
+    <div class="primary-content">
 
-      <div id="organization_management_div">
+      <!-- Content Heading -->
+      <div class="content-heading">
+        <h2>Organization Management</h2>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- / Content Heading -->
 
-        <!--Tab Menu-->
-        <mat-tab-group animationDuration="1000ms">
+      <!-- Section Divider -->
+      <div class="section-divider"></div>
+      <!-- / Section Divider -->
 
-          <!--Add Tab Option-->
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon>person_add</mat-icon>
-              Add Organization
-            </ng-template>
-            <div class="tab_content">
-              <h2>Add Organization</h2>
-              <br />
+      <!-- Statistics -->
+      <div class="statistics">
 
+<<<<<<< HEAD
               <form id="add_new_organization_form"  [formGroup]="createOrgForm" (submit)="createOrg()">
 
                 <!--Organization Name Field-->
@@ -73,81 +152,442 @@
                 <mat-form-field class="form_inputs">
                   <input matInput placeholder="Admin Phone Number" matInput type="number" formControlName="admin_phone">
                 </mat-form-field>
-
-
-                <button type="submit" id="add_organization" class="btn btn-default">Add new organization</button>
-
-              </form>
-
+=======
+        <!-- Statistic Box -->
+        <div class="overview-statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Overview Statistics</h5>
             </div>
-          </mat-tab>
-
-          <!--Remove Tab Option-->
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon>delete</mat-icon>
-              Remove Organization
-            </ng-template>
-            <div class="tab_content">
-              <h2>Remove Organization</h2>
-              <br />
-
-              <form id="remove_organization_form">
-
-                <!--Search Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Search for organization">
-                </mat-form-field>
-                <br />
-
-                <button type="submit" id="remove_search_organization" class="btn btn-default">Search</button>
-
-              </form>
-
+            <div class="statistic-box-info">
+              <p *ngIf="setOrganizationLength">Total Organizations: {{numberOfOrganizations}}</p>
             </div>
-          </mat-tab>
+          </div>
+        </div>
+        <!-- Statistic Box -->
 
-          <!--View Tab Option-->
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon>people</mat-icon>
-              View Organizations
-            </ng-template>
-            <div class="tab_content">
-              <h2>View Organizations</h2>
-              <br />
-              <!--TODO
-                      - Retrieve list to all organizations from API
-                  -->
+        <!-- Statistic Box -->
+        <div class="statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Total Organizations</h5>
             </div>
-          </mat-tab>
-
-          <!--Search Tab Option-->
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon>search</mat-icon>
-              Search
-            </ng-template>
-            <div class="tab_content">
-              <h2>Search for an Organization</h2>
-              <br />
-
-              <form id="search_organization_form">
-
-                <!--Search Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Search for organization">
-                </mat-form-field>
-                <br/>
-
-                <button type="submit" id="search_organization" class="btn btn-default">Search</button>
-              
-              </form>
-
+            <div class="statistic-box-info">
+              <p *ngIf="setOrganizationLength">{{numberOfOrganizations}}</p>
             </div>
-          </mat-tab>
-        </mat-tab-group>
+          </div>
+        </div>
+        <!-- Statistic Box -->
 
+      </div>
+      <!-- / Statistics -->
+
+    </div>
+    <!-- / Primary Content -->
+
+>>>>>>> develop
+
+    <!-- Organization Tables -->
+    <div class="organization-tables">
+
+      <!-- Requested Organization Table -->
+      <div class="organization-table table-responsive">
+        <h5> Organization Requests </h5>
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!pendingOrganizations && !organizationTableLoading">
+          <h6>There are currently no organizations who have requested to register</h6>
+        </div>
+        <!-- / Extra Table Information -->
+
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="pendingOrganizations && !organizationTableLoading">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchOrganization">
+        </div>
+        <!-- / Search Table -->
+
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-secondary loading" role="status" *ngIf="organizationTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" *ngIf="pendingOrganizations && !organizationTableLoading">
+          <thead>
+            <tr>
+              <th scope="col">Organization</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let pendingOrganization of pendingOrganizations | filter : 'pendingOrganizations' : searchOrganization">
+              <td>{{pendingOrganization.orgName}}</td>
+              <td class="table-action">
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
+                  [id]="pendingOrganization.email" (click)="selectOrganisation(pendingOrganization)">View</button>
+                <button class="btn btn-default-save" data-toggle="modal" [id]="pendingOrganization.email"
+                  (click)="registerPendingOrg(pendingOrganization)" >Verify</button>
+                <button class="btn btn-default-delete" data-toggle="modal" [id]="pendingOrganization.email"
+                 data-target="#confirmDeleteModal">Decline</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Requested Organization Table -->
+
+      <!-- Organization Table -->
+      <div class="organization-table table-responsive">
+        <h5> Organization Table </h5>
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!organizations && !organizationTableLoading">
+          <h6>There are currently no organizations</h6>
+          <i class="fas fa-plus-circle" data-toggle="modal" data-target="#addModal"></i>
+        </div>
+        <!-- / Extra Table Information -->
+
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="organizations && !organizationTableLoading">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchOrganization">
+        </div>
+        <!-- / Search Table -->
+
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-secondary loading" role="status" *ngIf="organizationTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" *ngIf="organizations && !organizationTableLoading">
+          <thead>
+            <tr>
+              <th scope="col">Organization</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let organization of organizations | filter : 'organizations' : searchOrganization">
+              <td>{{organization.orgName}}</td>
+              <td class="table-action">
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
+                  [id]="organization.email" (click)="selectOrganisation(organization)">View</button>
+                <button class="btn btn-default-delete" data-toggle="modal" [id]="organization.email"
+                  (click)="removeOrganizationPrompt(organization)" data-target="#confirmDeleteModal">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Organization Table -->
+
+    </div>
+    <!-- / Organization Tables -->
+
+    <!-- Handler Actions -->
+    <div class="handler-actions">
+      <!-- Action Item -->
+      <div class="action-item" data-toggle="modal" data-target="#addModal">
+        <div class="action-icon">
+          <i class="fas fa-building"></i>
+        </div>
+        <div class="action-heading">
+          <h6>Add Organization</h6>
+        </div>
+      </div>
+      <!-- / Action Item -->
+    </div>
+    <!-- /Handler Actions -->
+
+  </div>
+  <!-- / Dashboard Content -->
+
+  <!-- View Staff Modal Section -->
+  <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewModalTitle">View Organization</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="view-fields">
+
+            <!-- Organization Name -->
+            <div class="form-group">
+              <label>Organization Name</label>
+              <p class="form-control form-control-sm">{{selectedOrg.orgName}}</p>
+            </div>
+            <!-- / Organization Name -->
+
+            <!-- Name -->
+            <div class="form-group">
+              <label>Name</label>
+              <p class="form-control form-control-sm">{{selectedOrg.admin.fname}}</p>
+            </div>
+            <!-- / Name -->
+
+
+            <!-- Surname -->
+            <div class="form-group">
+              <label>Surname</label>
+              <p class="form-control form-control-sm">{{selectedOrg.admin.surname}}</p>
+            </div>
+            <!-- / Surname -->
+
+
+            <!-- Email -->
+            <div class="form-group">
+              <label>Email</label>
+              <p class="form-control form-control-sm">{{selectedOrg.admin.email}}</p>
+            </div>
+            <!-- / Email -->
+
+            <!-- Phone -->
+            <div class="form-group">
+              <label>Phone</label>
+              <p class="form-control form-control-sm">{{selectedOrg.admin.phone}}</p>
+            </div>
+            <!-- / Phone -->
+
+            <!-- Delete Action -->
+            <button class="btn btn-default-delete" data-toggle="modal" (click)="removeOrganizationPrompt(selectedOrg)"
+              data-target="#confirmDeleteModal">Delete</button>
+            <!-- /Delete Action -->
+
+          </div>
+
+
+        </div>
       </div>
     </div>
   </div>
+  <!-- / View Staff Modal Section -->
+
+  <!-- Add Organizaton Modal Section -->
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addModalTitle">Add Organization</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetAddFields()">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div class="form">
+
+            <!-- Add Organization Form -->
+            <form id="add_new_organization_form" [formGroup]="registerOrgForm" (submit)="registerOrg()"
+              class="needs-validation" novalidate>
+              <div class="row">
+
+
+                <!-- Name -->
+                <div class="form-group">
+                  <label for="organization_name">Organization Name</label>
+                  <input type="text" class="form-control" id="organization_name" placeholder="Enter organization name"
+                    formControlName="organization_name" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty), 
+                    'is-valid': registerOrgForm.controls['organization_name'].valid && (submitted || registerOrgForm.controls['organization_name'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.organization_name">
+                      <p *ngIf="registerOrgForm.get('organization_name').hasError(validation.type)">
+                        {{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
+                </div>
+                <!-- / Name -->
+
+                <!-- Location -->
+                <!-- <div class="form-group">
+                  <label for="organization_location">Organization Location</label>
+                  <input type="text" class="form-control" id="organization_location" placeholder="Enter organization location" formControlName="organization_location" required
+                  [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['organization_location'].invalid && (submitted || registerOrgForm.controls['organization_location'].dirty), 
+                    'is-valid': registerOrgForm.controls['organization_location'].valid && (submitted || registerOrgForm.controls['organization_location'].dirty)}" > -->
+                <!-- Error Validation Feedback-->
+                <!-- <div *ngIf="registerOrgForm.controls['organization_location'].invalid && (submitted || registerOrgForm.controls['organization_location'].dirty)" >
+                    <div *ngFor="let validation of register_organization_validators.organization_location">
+                        <p *ngIf="registerOrgForm.get('organization_location').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
+                  </div> -->
+                <!-- / Error Validation Feedback-->
+                <!-- </div> -->
+                <!-- / Location -->
+
+                <!-- Admin Name -->
+                <div class="form-group">
+                  <label for="admin_name">Admin Name</label>
+                  <input type="text" class="form-control" id="admin_name" placeholder="Enter admin name"
+                    formControlName="admin_name" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_name'].valid && (submitted || registerOrgForm.controls['admin_name'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.admin_name">
+                      <p *ngIf="registerOrgForm.get('admin_name').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
+                </div>
+                <!-- / Admin Name -->
+
+                <!-- Admin Surname -->
+                <div class="form-group">
+                  <label for="admin_surname">Admin Surname</label>
+                  <input type="text" class="form-control" id="admin_surname" placeholder="Enter admin surname"
+                    formControlName="admin_surname" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_surname'].valid && (submitted || registerOrgForm.controls['admin_surname'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.admin_surname">
+                      <p *ngIf="registerOrgForm.get('admin_surname').hasError(validation.type)">{{validation.message}}
+                      </p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
+                </div>
+                <!-- / Admin Surname -->
+
+                <!-- Email -->
+                <div class="form-group">
+                  <label for="admin_email">Email address</label>
+                  <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
+                    placeholder="Enter email" formControlName="admin_email" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_email'].valid && (submitted || registerOrgForm.controls['admin_email'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.admin_email">
+                      <p *ngIf="registerOrgForm.get('admin_email').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
+                </div>
+                <!-- / Email -->
+
+                <!-- Phone -->
+                <div class="form-group">
+                  <label for="admin_phone">Phone</label>
+                  <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone"
+                    formControlName="admin_phone" required
+                    [ngClass]="{
+                    'is-invalid': registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty), 
+                    'is-valid': registerOrgForm.controls['admin_phone'].valid && (submitted || registerOrgForm.controls['admin_phone'].dirty)}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty)">
+                    <div *ngFor="let validation of register_organization_validators.admin_phone">
+                      <p *ngIf="registerOrgForm.get('admin_phone').hasError(validation.type)">{{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
+                </div>
+                <!-- / Phone -->
+
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-default-save">Add Organization</button>
+                <!-- / Submit -->
+
+              </div>
+            </form>
+            <!-- / Add Organization Form -->
+
+          </div>
+        </div>
+        <!-- / Modal Body -->
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Add Organizaton Modal Section -->
+
+  <!-- Delete Organization Confirm Modal Section -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''">{{deleteData.title}}</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4 *ngIf="deleteData.message != null || deleteData.message != ''">{{deleteData.message}}</h4>
+          <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
+          <p><span>All information related to this organization will be permantely deleted</span></p>
+          <div class="confirm-actions">
+            <button type="button" class="btn btn-default-cancel"
+              *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.cancel}}</button>
+            <button type="button" class="btn btn-default-delete" (click)="removeOrg()"
+              *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.confirm}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Delete Organization Confirm Modal Section -->
+
+
+  <!-- Notification Section -->
+  <div id="notifications" *ngIf="notificationsTab">
+    <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
+    <br />
+
+    <app-admin-notification></app-admin-notification>
+
+  </div>
+  <!-- / Notification Section -->
+
+  <!-- Profile Section -->
+  <div id="profile" *ngIf="profileTab">
+    <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
+    <br />
+
+    <app-admin-profile></app-admin-profile>
+
+  </div>
+  <!-- / Profile Section -->
+
+  <!-- Help Section -->
+  <div id="help" *ngIf="helpTab">
+    <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
+    <br />
+
+    <app-admin-help></app-admin-help>
+
+  </div>
+  <!-- / Help Section -->
+
+</div>
+<!-- / Dashboard -->

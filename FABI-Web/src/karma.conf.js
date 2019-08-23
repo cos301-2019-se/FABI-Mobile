@@ -3,6 +3,9 @@
 
 module.exports = function (config) {
   config.set({
+    files: [
+      'https://code.jquery.com/jquery-1.11.2.min.js'
+    ],
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
@@ -20,6 +23,7 @@ module.exports = function (config) {
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },
+    webpack: { node: { fs: 'empty', } },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

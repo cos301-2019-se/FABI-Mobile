@@ -1,0 +1,72 @@
+/* ==========================================================================
+   CMW MENU STYLING
+   ========================================================================== */
+
+
+/* Table Style
+   ========================================================================== */
+
+.cmw-collection-tables {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: auto;
+
+  padding: 15px;
+  margin-top: 30px;
+}
+
+.request-table {
+  width: 95%;
+  height: 50%;
+
+  padding: 15px;
+  margin: 15px 0 15px 0;
+
+  background-color: #fff;
+
+  border-left: 5px solid #72B555;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+}
+
+.deposit-table {
+  width: 95%;
+  height: 50%;
+
+  padding: 15px;
+  margin: 15px 0 15px 0;
+
+  background-color: #fff;
+
+  border-left: 5px solid #72B555;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+}
+
+.revitalization-table {
+  width: 95%;
+  height: 50%;
+
+  padding: 15px;
+  margin: 15px 0 15px 0;
+
+  background-color: #fff;
+
+  border-left: 5px solid #72B555;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+}
+
+.cmw-collection-tables h5 {
+  font-family: "Montserrat", sans-serif;
+  color: #6AA84F;
+}
+
+.table {
+  width: 100%;
+  height: 100%;
+}

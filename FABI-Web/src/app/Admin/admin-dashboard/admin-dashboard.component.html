@@ -1,40 +1,386 @@
-<!--Dashboard-->
-<div id="dashboard">
-  <div class="gradient-overlay"></div>
-  <div class="container-fluid">
-    <div class="row">
+<!-- Dashboard -->
+<div class="dashboard">
 
-      <!--Dashboard Content-->
-      <section id="dashboard">
-        <div id="sidenav_div" class="sidenav">
-          <a class="closebtn" (click)="closeNav()">&times;</a>
-          <button id="dashboard_menu_link" routerLink="/admin-dashboard"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">home</mat-icon></span>  Dashboard</button>
-          <button id="user_management" routerLink="/staff-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">people</mat-icon></span>  Staff Management</button>
-          <button id="organization_management" routerLink="/organization-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">business</mat-icon></span>  Organization Management</button>
-          <button id="diagnostic_clinic_management" routerLink="/clinic-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></span>  Diagnostic Clinic Management</button>
-          <button id="database_management" routerLink="/database-handler"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">storage</mat-icon></span>  Database Management</button>
-          <button id="profile_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">person</mat-icon></span>  Profile</button>
-          <button id="help_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">help</mat-icon></span>  Help</button>
-          <button id="settings_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons">settings</mat-icon></span>  Settings</button>
-          <button id="logout_menu_link" routerLink="/"><span class="icons_div_menu"><mat-icon [inline]="true" class="icons fas fa-sign-out-alt"></mat-icon></span>  Logout</button>
-        </div>
-        <div id="menu_div">
-          <mat-icon (click)="sidenavToggle()" [inline]="true" class="menu_icon">menu</mat-icon>
-        </div>
-        <h1 id="dashboard_heading">Dashboard</h1><br/>
-        <div id="dashboard_content">
-          <button id="user_management" class="btn btn-default" routerLink="/staff-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">people</mat-icon></div><br/>Staff
-            Management</button><button id="organization_management" class="btn btn-default"
-            routerLink="/organization-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">business</mat-icon></div><br/>Organization
-            Management</button><button id="diagnostic_clinic_management" class="btn btn-default"
-            routerLink="/clinic-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">insert_chart</mat-icon></div><br/>Diagnostic Clinic Management</button><button id="database_management" class="btn btn-default" routerLink="/database-handler"><div class="icons_div"><mat-icon [inline]="true" class="icons">storage</mat-icon></div><br/>Database
-            Management</button>
-        </div>
-      </section>
+  <!-- Sidenav -->
+  <div class="sidenav">
 
-      <!--Footer-->
-      <section id="footer"></section>
-      
+    <!-- Top Sidenav Link -->
+    <div class="top-nav-items">
+      <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+      <p (click)="toggleProfileTab()">Click to view profile</p>
+      <br />
+
+      <div class="nav-links">
+        <a class="nav-link active" routerLink="/admin-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/staff-handler"><i class="fas fa-address-card"></i></a>
+        <a class="nav-link" routerLink="/organization-handler"><i class="fas fa-building"></i></a>
+        <a class="nav-link" routerLink="/database-handler"><i class="fas fa-database"></i></a>
+        <a class="nav-link" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i></a>
+        <a class="nav-link" routerLink="/reporting"><i class="fas fa-chart-bar"></i></a>
+        <a class="nav-link" routerLink="/view-forms"><i class="fas fa-clipboard"></i></a>
+      </div>
+
     </div>
+    <!-- / Top Sidenav Link -->
+
+    <!-- Bottom Sidenav Link -->
+    <div class="bottom-nav-items">
+      <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+    <!-- / Bottom Sidenav Link -->
+
   </div>
+  <!-- / Sidenav -->
+
+  <!-- Navbar -->
+  <div class="pos-f-t">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <h1 class="brand">ADMIN DASHBOARD</h1>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+          <!-- Navbar Items -->
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/admin-dashboard">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/database-handler">Database Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reporting">Reporting</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Logout</a>
+          </li>
+          <!-- / Navbar Items -->
+        </ul>
+      </div>
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+      <!-- Menu Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- / Menu Button -->
+
+      <!-- Navbar Title -->
+      <h5>HOME</h5>
+      <!-- / Navbar Title -->
+
+      <!-- Notification Icons -->
+      <div class="notifications-icon">
+        <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- /Notification Icons -->
+    </nav>
+  </div>
+  <!-- / Navbar-->
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <!-- Primary Content -->
+    <div class="primary-content">
+
+      <!-- Content Heading -->
+      <div class="content-heading">
+        <h2>Admin Dashbaord</h2>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- / Content Heading -->
+
+      <!-- Section Divider -->
+      <div class="section-divider"></div>
+      <!-- / Section Divider -->
+
+      <!-- Statistics -->
+      <div class="statistics">
+
+        <!-- Statistic Box -->
+        <div class="overview-statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Overview Statistics</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p #admin_samples_stats id="admin_samples_stats">Number of Samples: {{sampleStats}}</p>
+              <p #admin_completed_samples_stats id="admin_completed_samples_stats">Completed Samples: 75%</p>
+              <p #admin_user_stats id="admin_users_stats">Number of Users: {{userStats}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Number of Samples</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p #admin_samples_stats id="admin_samples_stats">{{sampleStats}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Completed Samples</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p #admin_completed_samples_stats id="admin_completed_samples_stats">75%</p>
+            </div>
+          </div>
+        </div>
+        <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Number of Users</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p #admin_user_stats id="admin_users_stats">{{userStats}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Statistic Box -->
+
+      </div>
+      <!-- / Statistics -->
+
+      <!-- Handler Shortcuts -->
+      <div class="handler-shortcuts">
+
+        <!-- Menu Shortcut Row -->
+        <div class="menu-row">
+
+          <!-- Menu Item -->
+          <div class="menu-item" *ngIf="currentUser && currentUser.permission == 'SuperUser'" routerLink="/staff-handler">
+            <div class="menu-icon">
+              <i class="fas fa-address-card"></i>
+            </div>
+            <div class="menu-heading">
+              <a routerLink="/staff-handler">
+                <h6>Staff Handler</h6>
+              </a>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+          <!-- Menu Item -->
+          <div class="menu-item" *ngIf="currentUser &&  currentUser.permission == 'SuperUser'" routerLink="/organization-handler">
+            <div class="menu-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <div class="menu-heading">
+              <a routerLink="/organization-handler">
+                <h6>Organization Handler</h6>
+              </a>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+        </div>
+        <!-- / Menu Shortcut Row -->
+
+        <!-- Menu Shortcut Row -->
+        <div class="menu-row">
+
+          <!-- Menu Item -->
+          <div class="menu-item"
+            *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'DatabaseAdmin')" routerLink="/database-handler">
+            <div class="menu-icon">
+              <i class="fas fa-database"></i>
+            </div>
+            <div class="menu-heading">
+              <a routerLink="/database-handler">
+                <h6>Database Handler</h6>
+              </a>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+          <!-- Menu Item -->
+          <div class="menu-item"
+            *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'ClinicAdmin')" routerLink="/clinic-handler">
+            <div class="menu-icon">
+              <i class="fas fa-stethoscope"></i>
+            </div>
+            <div class="menu-heading">
+              <a routerLink="/clinic-handler">
+                <h6>Diagnostic Clinic Handler</h6>
+              </a>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+        </div>
+        <!-- / Menu Shortcut Row -->
+
+      </div>
+      <!-- / Handler Shortcuts -->
+
+    </div>
+    <!-- / Primary Content -->
+
+    <!-- Staff Tables -->
+    <div class="staff-tables">
+
+      <!-- Admin Table -->
+      <div class="dashboard-table table-responsive">
+        <h5> Admin List </h5>
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!admins">
+          <h6>There are currently no admin users</h6>
+          <i class="fas fa-plus-circle" routerLink="/staff-handler"></i>
+        </div>
+        <!-- / Extra Table Information -->
+
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="admins && !adminTableLoading">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchAdmins">
+        </div>
+        <!-- / Search Table -->
+
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-secondary loading" role="status" *ngIf="adminTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" *ngIf="admins && !adminTableLoading">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let admin of admins | filter : 'admin-dashboard' : searchAdmins">
+              <td>{{admin.fname}}</td>
+              <td>{{admin.surname}}</td>
+              <td>{{admin.email}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Admin Table -->
+
+      <!-- Staff Table -->
+      <div class="dashboard-table table-responsive">
+        <h5> Staff List </h5>
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!staff">
+          <h6>There are currently no staff members</h6>
+          <i class="fas fa-plus-circle" routerLink="/staff-handler"></i>
+        </div>
+        <!-- / Extra Table Information -->
+
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="staff && !staffTableLoading">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchStaff">
+        </div>
+        <!-- / Search Table -->
+
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-secondary loading" role="status" *ngIf="staffTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <h3 *ngIf="!staff">No staff members found</h3>
+        <table class="table table-hover" *ngIf="staff && !staffTableLoading">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of staff | filter : 'admin-dashboard' : searchStaff">
+              <td>{{s.fname}}</td>
+              <td>{{s.surname}}</td>
+              <td>{{s.email}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Staff Table -->
+
+    </div>
+    <!-- / Staff Tables -->
+
+    <!-- Notification Section -->
+    <div id="notifications" *ngIf="notificationsTab">
+      <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
+      <br />
+
+      <app-admin-notification></app-admin-notification>
+
+    </div>
+    <!-- / Notification Section -->
+
+    <!-- Profile Section -->
+    <div id="profile" *ngIf="profileTab">
+      <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
+      <br />
+
+      <app-admin-profile></app-admin-profile>
+    </div>
+    <!-- / Profile Section -->
+
+    <!-- Help Section -->
+    <div id="help" *ngIf="helpTab">
+      <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
+      <br />
+
+      <app-admin-help></app-admin-help>
+
+    </div>
+    <!-- / Help Section -->
+
+  </div>
+  <!-- / Dashboard Content -->
+
+  <!-- Up Icon -->
+  <div id="scroll-to-top">
+    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
+  </div>
+  <!-- / Up Icon -->
+
 </div>
+<!-- / Dashboard -->

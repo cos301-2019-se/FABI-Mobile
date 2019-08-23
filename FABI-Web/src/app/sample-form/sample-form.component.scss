@@ -1,149 +1,323 @@
-//Sample Submission Design 
+/* ==========================================================================
+   SUBMIT SAMPLE STYLING
+   ========================================================================== */
 
-#sample-form {
-    color: #ffffff;
+/* Submit Sample Container Styling
+   ========================================================================== */
+
+.sample-submission {
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    text-align: center;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-
-    background-image: url('/assets/images/primary_background.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    background-color: #FCFCFC;
+    position: absolute;
+    z-index: -2;
 }
 
-#sample-form .gradient-overlay {
-    background: linear-gradient(to left, #196F3D, black);
-    opacity: 0.8;
+
+/* Banner Styling
+   ========================================================================== */
+
+.banner {
     position: absolute;
     top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
     width: 100%;
-    height: 100vh;
+    height: 40vh;
+    background: linear-gradient(to right, #76b852, #8dc26f);
+    transform: skewY(-8deg);
+    transform-origin: top left;
+
+    z-index: -1;
+
+    transition: all 0.5s;
 }
 
-#submission_div {
+/* Width Responsiveness */
+@media (min-width:768px) and (max-width:1023px) {
+    .banner {
+        height: 90vh;
+        transform: skewY(-9deg);
+    }
+}
+
+@media (min-width:1024px) {
+    .banner {
+        height: 100vh;
+        transform: skewY(-10deg);
+        transform-origin: top right;
+
+        top: 2vh;
+    }
+}
+
+.btn-submit {
+    color: #72B555;
+    font-family: "Montserrat", sans-serif;
+
+    background-color: transparent;
+
+    border: 1px solid #72B555;
+
+    border-radius: 5px;
+
+    padding: 10px;
+
+    width: auto;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.5s;
+}
+
+.btn-submit:hover {
+    color: #fff;
+
+    background: #72B555;
+
+    border: none;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
+}
+
+@media (min-width: 768px) and (min-height: 1200px){
+    .btn-submit {
+        color: #fff;
+        font-family: "Montserrat", sans-serif;
+
+        background-color: transparent;
+
+        border: 1px solid #fff;
+
+        border-radius: 5px;
+
+        padding: 10px;
+
+        width: auto;
+
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+        transition: all 0.5s;
+    }
+
+    .btn-submit:hover {
+        color: #fff;
+
+        background-color: #fff;
+
+        border: none;
+
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+        transform: scale(1.025);
+    }
+}
+
+
+/*  Heading Styling
+    ========================================================================== */
+.heading {
+    width: 100%;
+    height: 15vh;
+
+    padding: 50px 0 0 25px;
+}
+
+.heading h1 {
+    color: #F7F7F7;
+    font-family: "Montserrat", sans-serif;
+    font-size: 40px;
+}
+
+/* Width Responsiveness */
+@media (min-width:1024px) {
+    .heading {
+        width: 100%;
+        height: 20vh;
+
+        padding: 30px 0 0 25px;
+    }
+
+    .heading h1 {
+        color: #72B555;
+        font-size: 52px;
+    }
+}
+
+
+/* Form Styling
+    ========================================================================== */
+
+.submit-sample-form {
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    text-align: center;
-    height: 90vh;
-    width: 80%;
 
-    overflow: auto;
-    position: relative;
+    width: 85%;
+    min-height: 50vh;
+    height: auto;
 
-    top: 5vh;
-    left: 10%;
+    margin-top: 70px;
 
-    background-color: #ffffff;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    z-index: 0;
 
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+    transition: all 0.5s;
+
+
 }
 
-#clinic_information {
-    background-image: url('/assets/images/forest.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+#accordion {
+    width: 100%;
 
-    min-height: 90vh;
-    height: auto;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.card-header {
+    background: #F7F7F7;
+}
+
+.card-body {
+    color: black;
+
+    width: 100%;
+}
+
+.btn-link {
+    color: #6B746F;
+}
+
+.btn-link:hover {
+    color: #6b6b6b;
+    text-decoration: none;
+}
+
+
+/* Height Responsiveness */
+@media (min-height:800px) {
+    .submit-sample-form {
+        margin-top: 30px;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+}
+
+.submit-sample-form .form-group {
+    width: 90%;
+}
+
+
+.form-row {
+    margin-left: 15px;
+} 
+
+.form-group label {
+    color: #444444;
+}
+
+label {
+    width: 100%;
+}
+
+button.btn-map {
+    color: #6b746f !important;
+    font-family: "Montserrat", sans-serif;
+
+    background-color: transparent !important;
+
+    border: 1px solid #6b746f !important;
+
+    border-radius: 5px;
+
+    padding: 5px;
+    margin: 5px;
+
     width: 40%;
 
-    color: #ffffff;
-    padding: 2rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
+    transition: all 0.2s;
 }
 
-#clinic_information h1 {
-    position: relative;
-    top: 10vh;
+button.btn-map:hover {
+    color: #fff !important;
+
+    background-color: rgba(107, 116, 111, 0.95) !important;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+    transform: scale(1.025);
 }
 
-#clinic_information p {
-    font-size: 12px;
-}
+/* Width Responsiveness */
+@media (min-width:768px) and (max-width:1199px) {
 
-
-#sample_div {
-    height: 100%;
-    width: 60%;
-
-    color: #196F3D;
-
-    padding: 2rem;
-
-    text-align: left;
-}
-
-#sample_div h2 {
-    font-size: 14px;
-}
-
-
-//Input Styling 
-.mat-focused .placeholder {
-    color: #196F3D
-}
-
-.mat-form-field-ripple {
-    background-color: #196F3D !important;
-}
-
-
-input#sample_form_submit.btn.btn-default {
-    background: transparent;
-    border: 3px solid #196F3D;
-    color: #196F3D;
-    font-size: 12px;
-    letter-spacing: 2px;
-    padding: 13px 30px;
-    margin-top: 34px;
-    margin-left: 2rem;
-    text-transform: uppercase;
-
-    border-radius: 50px;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    border: 1px solid #196F3D;
-
-}
-
-input#sample_form_submit.btn.btn-default:hover,
-input#sample_form_submit.btn.btn-default:focus {
-    opacity: 0.8;
-    color: #ffffff;
-    background-color: #196F3D;
-}
-
-
-//Responsive Logo Display 
-@media (max-width: 768px) {
-
-
-    #clinic_information{
-        display: none;
+    .form-group label {
+        color: black;
     }
 
-    #sample_div {
-        
-        left:10%;
-        width:90%;
-        
+    .form-text.text-muted {
+        color: black !important;
+        opacity: 0.5;
+    }
+
+    .valid-feedback {
+        color: black;
     }
 }
 
-mat-expansion-panel-header{
-    padding:2rem;
+@media (min-width:1024px) {
+
+    .form-group label {
+        color: black;
+    }
+
+    .form-text.text-muted {
+        color: black !important;
+        opacity: 0.5;
+    }
+
+    .valid-feedback {
+        color: black;
+    }
+
+}
+
+.login-action {
+    display: flex;
+    justify-content: flex-end;
+
+    width: 100%;
+
+    margin: 25px 0 25px 0;
+}
+
+.map-selection {
+    margin-left: 16px;
+}
+
+.map-selection p {
+    color: #72B555;
+}
+
+.distribution-subheading {
+    margin-left: 16px;
+}
+
+.distribution-subheading {
+    color: #72B555;
 }
