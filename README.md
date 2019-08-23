@@ -15,8 +15,12 @@
  ### Demo 1
   - [Demo 1 System Requirments Specification](https://drive.google.com/file/d/1-hcnw3aGtpk40dJ0QdBST93czcxZcDcZ/view?usp=sharing)
   -  [Demo 1 Presentation](https://docs.google.com/presentation/d/1bmof9jgFzYWZnmZDaCQ6r9yIChrk1Kb72V8gJIlLYwg/edit?usp=sharing)
+<<<<<<< HEAD
   
   ### Demo 2
+=======
+<<<<<<< HEAD
+>>>>>>> develop
   - [Demo 2 System Requirments Specification](https://drive.google.com/file/d/1GUlm56NHmDGSRdwLS6femYdWiH-wPJzK/view?usp=sharing)
   -  [Demo 2 Presentation](https://docs.google.com/presentation/d/16RmsGRU3QbiqgNaF87FlqfBXETanff4JX61elvecw5s/edit?usp=sharing)
   -  [Demo 2 Testing Policy](https://drive.google.com/file/d/1cKpRM-BpTHm5TSHKbXVEdhUCf4MpBtTQ/view?usp=sharing)
@@ -25,6 +29,7 @@
   -  [Demo 2 Coding Standards Document](https://drive.google.com/file/d/1liZq7CE1cBzKHsayygcGK0k0Mb5Xq0PC/view?usp=sharing)
   - [Demo 2 Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
   
+<<<<<<< HEAD
   ### Demo 3
   - [Demo 3 System Requirments Specification](https://drive.google.com/open?id=1uAG7aFw4NiGeMVqJzubG-emya5j2DLei)
   -  [Demo 3 Presentation](https://docs.google.com/presentation/d/1_srxPqBm0ErYnZDmh3P9sv13xEf7uaO5rtlEBmX2ags/edit?usp=sharing)
@@ -46,6 +51,39 @@
   - [User Management API Documentation](***REMOVED***)
   - [Logging API Documentation](***REMOVED***)
   - [Culture Collection Management Documentation](https://documenter.getpostman.com/view/7030417/SVYjUhyh)
+=======
+=======
+  
+  ### Demo 2
+  - [Demo 2 System Requirments Specification](https://drive.google.com/file/d/1GUlm56NHmDGSRdwLS6femYdWiH-wPJzK/view?usp=sharing)
+  -  [Demo 2 Presentation](https://docs.google.com/presentation/d/16RmsGRU3QbiqgNaF87FlqfBXETanff4JX61elvecw5s/edit?usp=sharing)
+  -  [Demo 2 Testing Policy](https://drive.google.com/file/d/1cKpRM-BpTHm5TSHKbXVEdhUCf4MpBtTQ/view?usp=sharing)
+  -  [Demo 2 User Manual](https://drive.google.com/file/d/1eGpK43xmKePRt2DQk6c-PcZaWoR5W7eK/view?usp=sharing)
+  -  [Demo 2 Organization User Manual](https://drive.google.com/file/d/1akPpNBxUP95yFKB0HD5fCKWYwKEdAlqK/view?usp=sharing)
+  -  [Demo 2 Coding Standards Document](https://drive.google.com/file/d/1liZq7CE1cBzKHsayygcGK0k0Mb5Xq0PC/view?usp=sharing)
+  - [Demo 2 Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
+  
+  ### Demo 3
+  - [Demo 3 System Requirments Specification]()
+  -  [Demo 3 Presentation]()
+  -  [Demo 3 Testing Policy]()
+  -  [Demo 3 User Manual]()
+  -  [Demo 3 Organization User Manual]()
+  -  [Demo 3 Coding Standards Document]()
+  - [Demo 3 Video Guide]()
+  
+>>>>>>> develop
+ ## API Documentation
+  - [Authentication API Documentation](https://authentication-dot-api-fabi.appspot.com)
+  - [Database Management API Documentation](***REMOVED***)
+  - [Diagnostic Clinic API Documentation](***REMOVED***)
+  - [Login API Documentation](***REMOVED***)
+  - [User Management API Documentation](***REMOVED***)
+<<<<<<< HEAD
+=======
+  - [Logging API Documentation](***REMOVED***)
+>>>>>>> develop
+>>>>>>> develop
   
  ## Project Management
  

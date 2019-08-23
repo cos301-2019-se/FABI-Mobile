@@ -14,14 +14,32 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 
+<<<<<<< HEAD
 import { ReactiveFormsModule } from '@angular/forms';
+=======
+<<<<<<< HEAD
+import {ReactiveFormsModule} from '@angular/forms';
+=======
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+>>>>>>> develop
+>>>>>>> develop
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
 
+<<<<<<< HEAD
 import { ErrorsModule } from "./_errors/errors.module";
 import { NotificationService } from './_services/notification.service';
 
+=======
+<<<<<<< HEAD
+=======
+import { ErrorsModule } from "./_errors/errors.module";
+import { NotificationService } from './_services/notification.service';
+
+>>>>>>> develop
+>>>>>>> develop
 import { OrganizationModule } from './Organization/organization.module';
 import { OrganizationMemberModule } from './Organization-Member/organization-member.module';
 import { DatabaseHandlerComponent } from './Admin/database-handler/database-handler.component';
@@ -43,7 +61,7 @@ import { StaffSubmitSampleComponent } from './Staff/staff-submit-sample/staff-su
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
-import { ConfirmComponent } from './confirm/confirm.component';
+import { LoadingComponent } from './_loading/loading.component';
 
 import { ErrorComponent } from './_errors/error-component/error.component';
 import { HomeComponent } from './home/home.component';
@@ -61,6 +79,32 @@ import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
 import { MapsWindowComponent } from './maps-window/maps-window.component';
 
 import { config } from "../environments/environment.prod";
+import { SignUpRequestComponent } from './sign-up-request/sign-up-request.component';
+import { CmwMenuComponent } from './Staff/cmw-menu/cmw-menu.component';
+import { AdminNotificationComponent } from './Admin/admin-notification/admin-notification.component';
+import { StaffNotificationComponent } from './Staff/staff-notification/staff-notification.component';
+import { OrganizationNotificationComponent } from './Organization/organization-notification/organization-notification.component';
+import { MemberNotificationComponent } from './Organization-Member/member-notification/member-notification.component';
+import { AdminHelpComponent } from './Admin/admin-help/admin-help.component';
+import { StaffHelpComponent } from './Staff/staff-help/staff-help.component';
+import { OrganizationHelpComponent } from './Organization/organization-help/organization-help.component';
+import { MemberHelpComponent } from './Organization-Member/member-help/member-help.component';
+import { AdminMenuComponent } from './Admin/admin-menu/admin-menu.component';
+import { StaffMenuComponent } from './Staff/staff-menu/staff-menu.component';
+import { OrganizationMenuComponent } from './Organization/organization-menu/organization-menu.component';
+import { MemberMenuComponent } from './Organization-Member/member-menu/member-menu.component';
+
+import { FilterPipe } from './_pipes/filter.pipe';
+import { ClinicAdminViewSamplesComponent } from './Admin/clinic-admin-view-samples/clinic-admin-view-samples.component';
+import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
+import { StaffViewDatabasesComponent } from './Staff/staff-view-databases/staff-view-databases.component';
+<<<<<<< HEAD
+import { StaffViewSamplesComponent } from './Staff/staff-view-samples/staff-view-samples.component';
+
+=======
+import {MatInputModule} from '@angular/material';
+>>>>>>> unitTesting
+// import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -87,7 +131,7 @@ import { config } from "../environments/environment.prod";
     SubmitCmwRequestComponent,
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
-    ConfirmComponent,
+    LoadingComponent,
     UpdateComponent,
     AdminDivComponent,
     StaffDivComponent,
@@ -97,10 +141,29 @@ import { config } from "../environments/environment.prod";
     StaffProfileComponent,
     ViewFormsComponent,
     ReportingComponent,
-    MapsWindowComponent
+    MapsWindowComponent,
+    SignUpRequestComponent,
+    CmwMenuComponent,
+    AdminNotificationComponent,
+    StaffNotificationComponent,
+    OrganizationNotificationComponent,
+    MemberNotificationComponent,
+    AdminHelpComponent,
+    StaffHelpComponent,
+    OrganizationHelpComponent,
+    MemberHelpComponent,
+    AdminMenuComponent,
+    StaffMenuComponent,
+    OrganizationMenuComponent,
+    MemberMenuComponent,
+    FilterPipe,
+    ClinicAdminViewSamplesComponent,
+    PreDiagnosisComponent,
+    StaffViewDatabasesComponent,
+    StaffViewSamplesComponent
   ],
   entryComponents: [
-    ConfirmComponent,
+    LoadingComponent,
     AdminDivComponent,
     StaffDivComponent,
     NotificationDivComponent,
@@ -110,7 +173,9 @@ import { config } from "../environments/environment.prod";
   ],
   imports: [
     BrowserModule,
+    MatInputModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     MaterialModule,
@@ -121,6 +186,7 @@ import { config } from "../environments/environment.prod";
     OrganizationMemberModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    // DataTablesModule,
     ErrorsModule,
     LayoutModule,
     MatAutocompleteModule,
@@ -130,8 +196,9 @@ import { config } from "../environments/environment.prod";
     })
   ],
   providers: [
-    NotificationService
+    NotificationService,
+    FilterPipe
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

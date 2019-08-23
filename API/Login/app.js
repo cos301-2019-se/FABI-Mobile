@@ -13,6 +13,10 @@ const displayHTML = require('./api/routes/displayHTML');
 const loginRoute = require("./api/routes/login");
 const getUserTypesRoute = require('./api/routes/getUserTypes');
 const getUserTypesOrgRoute = require('./api/routes/getUserTypesForOrg');
+<<<<<<< HEAD
+=======
+const registerNewOrgRoute = require('./api/routes/registerNewOrg');
+>>>>>>> develop
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -24,6 +28,10 @@ app.use('/',displayHTML);
 app.use('/login', loginRoute);
 app.use('/getUserTypes', getUserTypesRoute);
 app.use('/getUserTypesForOrg', getUserTypesOrgRoute);
+<<<<<<< HEAD
+=======
+app.use('/registerNewOrganization', registerNewOrgRoute);
+>>>>>>> develop
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {

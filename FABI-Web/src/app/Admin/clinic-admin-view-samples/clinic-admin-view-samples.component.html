@@ -1,0 +1,102 @@
+<!-- Extra Table Information -->
+<div class="table-information" *ngIf="!samples">
+    <h6>There are currently no samples</h6>
+    <i class="fas fa-plus-circle" routerLink="/member-handler"></i>
+</div>
+<!-- / Extra Table Information -->
+
+<!-- Search Table -->
+<div class="input-group search-table" *ngIf="samples && !sampleTableLoading">
+    <div class="input-group-prepend ">
+        <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+    </div>
+    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+        aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchSample">
+</div>
+<!-- / Search Table -->
+
+<!-- Loading Spinner -->
+<div class="spinner-grow text-secondary loading" role="status" *ngIf="sampleTableLoading">
+</div>
+<!-- /Loading Spinner -->
+
+<table class="table table-hover"  *ngIf="samples">
+    <thead>
+        <tr>
+            <th scope="col">Sample Reference No.</th>
+            <th scope="col">Organizaion</th>
+            <th scope="col">Submitted By</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let sample of samples">
+            <td>{{sample.referenceNumber}}</td>
+            <td>{{sample.orgName}}</td>
+            <td>{{sample.userID}}</td>
+            <td *ngIf="editingSample != sample" >{{sample.status}}</td>
+            <td  *ngIf="editingSample == sample">
+            <form id="update_sample_status_form" [formGroup]="updateSampleStatusForm" (submit)="updateSampleStatus(sample)"
+            class="needs-validation" >
+                <select class="form-control" formControl="sample_status" class="sample-status"> 
+                    <option>Status:</option>
+                    <option *ngFor='let status of statusTypes' [selected]="status === sample.status" [value]="status"></option>    
+                </select>
+                <button type="submit" class="update-button"><i class="fas fa-check"></i></button>
+                <button class="cancel-button"><i class="fas fa-times"></i></button>
+            </form>
+            </td>
+            <td class="table-action">
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewSampleModal" [id]="sample"
+                    (click)="selectSample(sample)">View</button>
+                <button *ngIf="!isEditingSample" class="btn btn-default-cancel" data-toggle="modal"  [id]="sample"
+                (click)="updatingSampleStatus(sample)">Update Status</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- View Sample Modal Section -->
+<div class="modal fade" id="viewSampleModal" tabindex="-1" role="dialog" aria-labelledby="viewSampleModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="downloadModalTitle">View Sample Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="resetSampleFields()">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
+            </div>
+            <!-- / Modal Header -->
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <div class="view-fields">
+
+                    <div class="form-row" *ngFor="let field of sampleFields">
+                        <!-- Sample Data -->
+                        <div class="form-group col-md-6">
+                            <label>{{field.name}}</label>
+                            <p class="form-control form-control-sm">{{selectedSampleData[field.name]}}</p>
+                        </div>
+                        <!-- / Sample Data -->
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- / Modal Body -->
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+            </div>
+            <!-- / Modal Footer -->
+        </div>
+    </div>
+</div>
+<!-- / View Sample Modal Section -->
