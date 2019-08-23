@@ -115,7 +115,7 @@
 #### Links
   [GitHub](https://github.com/AeronLand)  
   [LinkedIn](www.linkedin.com/in/aeron-land-4a1167180)   
- 
+  [CS](https://drive.google.com/file/d/1FrHabHyQqVcFHOmFWqiWDtoMbtidlbxO/view?usp=sharing)
 
 **Current Position:** BSc IT 3rd year
 
@@ -138,7 +138,7 @@
 #### Links
   [GitHub](https://github.com/luveshanm)  
   [LinkedIn](https://www.linkedin.com/in/luveshan-marimuthu-ba0785180)   
-  [CV](https://drive.google.com/file/d/1w2AjNxKPwIkcUB6BkdIQ6jSg92uTDLyo/view?usp=sharing)
+ 
 
 **Current Position:** BSc Computer Science 3rd year
 
