@@ -144,7 +144,7 @@
 #### Links
   [GitHub](https://github.com/luveshanm)  
   [LinkedIn](https://www.linkedin.com/in/luveshan-marimuthu-ba0785180)   
- 
+  [CV](https://drive.google.com/file/d/1w2AjNxKPwIkcUB6BkdIQ6jSg92uTDLyo/view?usp=sharing)
 
 **Current Position:** BSc Computer Science 3rd year
 
