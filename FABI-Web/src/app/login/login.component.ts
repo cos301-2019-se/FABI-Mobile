@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,6 +15,34 @@
 
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+import { LoginInfo } from '../admin-api.service';
+import { AdminAPIService } from '../admin-api.service';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { ErrorComponent } from '../error/error.component';
+import { Router } from '@angular/router';
+import { forEach } from '@angular/router/src/utils/collection';
+//import { userInfo } from 'os';
+
+
+//Object for defining how a organization is structured
+export interface Organization {
+  ID: string; //This will contain the ID retreived from the DB 
+  Name: string; //This will be the name of the organization
+}
+
+//Object for defining how a userType is structured
+export interface UserType {
+  ID: string; //This will contain the ID retreived from the DB 
+  Name: string; //This will be the name of the type
+}
+=======
+>>>>>>> develop
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
@@ -24,6 +52,10 @@ import { ErrorComponent } from '../_errors/error-component/error.component';
 import * as Interface from '../_interfaces/interfaces';
 import { ToastrService } from 'ngx-toastr';
 
+<<<<<<< HEAD
+=======
+>>>>>>> develop
+>>>>>>> develop
 
 @Component({
   selector: 'app-login',
@@ -34,11 +66,35 @@ import { ToastrService } from 'ngx-toastr';
 
 export class LoginComponent implements OnInit {
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  /*
+    GLOBALS
+  */
+  loginForm: FormGroup;             // FormGroup object to reference add user type form
+  submitted: boolean = false;       // if form has been submitted
+  success: boolean = false;         // if form was succesfully filled out
+  loggedIn: boolean = false;        // to check if user is logged in
+  selectedOrganization: boolean = false;
+  organizations: Object;            //array for Organization dropdown
+  userTypes: Object;                //array for User Type dropdown
+  loading: boolean = false;
+  selectedOrg: string;
+
+  /*
+     CONSTRUCTOR
+   */
+  constructor(private service: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
+=======
+>>>>>>> develop
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /** Object for defining the login form -  @type {FormGroup} */
   loginForm: FormGroup;
+  /** Object for storing all forms that require validation-  @type {HTMLCollectionOf<Element>} */
+  forms: HTMLCollectionOf<Element> = null;
   /** To check if form has been submitted - @type {boolean} */
   submitted: boolean = false;
   /** To check if form has been submitted correctly - @type {boolean} */
@@ -56,15 +112,15 @@ export class LoginComponent implements OnInit {
 
   login_validation_messages = {
     'organization': [
-      { type:  'required', message: 'Please select an Organization'}
+      { type:  'required', message: 'Organization is required'}
     ],
     'email': [
       { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Please enter a valid email' }
+      { type: 'pattern', message: 'Invalid email' }
     ],
     'password': [
       { type: 'required', message: 'Password is required' },
-      // { type: 'minlength', message: 'Password must be at least 5 characters long' },
+      // { type: 'minlength', message: 'Password must be at least 8 characters long' },
       // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
     ],
   }
@@ -100,16 +156,25 @@ export class LoginComponent implements OnInit {
     //   var organization = '';
     // }
 
+<<<<<<< HEAD
+=======
+>>>>>>> develop
+>>>>>>> develop
     this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
-      login_email: ['',Validators.compose([
+      email: ['',Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
-      login_password: ['', Validators.required]
+      password: ['', Validators.required]
     })
   }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                              LOGIN
@@ -121,6 +186,10 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
+=======
+>>>>>>> develop
+>>>>>>> develop
   login() {
 
     this.submitted = true;
@@ -129,26 +198,43 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+<<<<<<< HEAD
 
+<<<<<<< HEAD
+=======
+    this.success = true;
+    this.loading = true;
+
+    const Lemail = this.loginForm.controls.login_email.value;
+    const Lpassw = this.loginForm.controls.login_password.value;
+    const Lorg = this.loginForm.controls.organization.value;
+    const LuserType = this.loginForm.controls.userType.value;
+
+    const details: LoginInfo = { email: Lemail, password: Lpassw, organization: Lorg, userType: LuserType };
+
+    this.service.login(details).subscribe((response: any) => {
+
+      this.loading = false;
+      
+      if (response.success == true) {
+=======
+
+>>>>>>> develop
     this.valid = true;
     this.loading = true;
 
     // Get form details
-    const Lemail = this.loginForm.controls.login_email.value;
-    const Lpassw = this.loginForm.controls.login_password.value;
+    const Lemail = this.loginForm.controls.email.value;
+    const Lpassw = this.loginForm.controls.password.value;
     const Lorg = this.loginForm.controls.organization.value;
 
     // User details to be passed to API
     const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
 
     this.authService.login(details).subscribe((response: any) => {
-
       this.loading = false;
-      console.log("----- RESPONSE 2: " + JSON.stringify(response));
       // API Request successful
-      if (response.success == true && response.code == 200) {
-
-        
+      if (response.success == true && response.code == 200) {        
         // User NOT Authorised
         if (response.title != "AUTHORIZED") {
           //POPUP MESSAGE
@@ -157,20 +243,71 @@ export class LoginComponent implements OnInit {
         }
         // ELSE user Authorised:
 
+<<<<<<< HEAD
         //Setting local storage to hold the users details
         localStorage.setItem('userID', response.userDetails.id);
         localStorage.setItem('userOrganization', Lorg);
         localStorage.setItem('userPassword', Lpassw);
 
+=======
+>>>>>>> develop
+>>>>>>> develop
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Welcome", "Dismiss", {
           duration: 3000
         });
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        this.service.setToken(response.data.token);
+        this.service.setLoggedin();
+
+        if(details.organization == "FABI")
+        {
+          if(details.userType == "Admin" || details.userType == "Database Admin")
+          {
+            try {
+              this.router.navigate(['fabi-admin-dashboard']);
+            } catch(err) {
+              console.log("Could not redirect to dashboard: " + err.message);
+            }
+            
+          }
+          else {
+            try {
+              this.router.navigate(['fabi-staff-dashboard']);
+            } catch(err) {
+              console.log("Could not redirect to dashboard: " + err.message);
+            }
+          }
+        }
+        else
+        {
+          if(details.userType == "Admin")
+          { 
+            try {
+              this.router.navigate(['org-admin-dashboard']);
+            } catch(err) {
+              console.log("Could not redirect to dashboard: " + err.message);
+            }
+          } else
+          {
+            try {
+              this.router.navigate(['org-member-dashboard']);
+            } catch(err) {
+              console.log("Could not redirect to dashboard: " + err.message);
+            }
+          }
+        }
+=======
+>>>>>>> develop
         // Navigate to specific dashboard, based on user's type
-        if(response.userDetails.userType == 'SuperUser'|| response.userDetails.userType == 'ClinicAdmin') {
+        if(response.userDetails.userType == 'SuperUser') {
           this.router.navigate(['/admin-dashboard']);
-        } else if(response.userDetails.userType == 'OrganizationAdmin') {
+        } else if(response.userDetails.userType == 'ClinicAdmin') {
+          this.router.navigate(['/clinic-handler']);
+        }else if(response.userDetails.userType == 'OrganizationAdmin') {
           this.router.navigate(['/organization-dashboard']);
         } else if(response.userDetails.userType == 'Member') {
           this.router.navigate(['/member-dashboard']);
@@ -182,6 +319,10 @@ export class LoginComponent implements OnInit {
           });
         }
         
+<<<<<<< HEAD
+=======
+>>>>>>> develop
+>>>>>>> develop
 
       } else if (response.success == false) {
         //POPUP MESSAGE
@@ -192,23 +333,31 @@ export class LoginComponent implements OnInit {
           }
         })
       }
+<<<<<<< HEAD
     });
     
     this.loading = false;
+=======
+<<<<<<< HEAD
+
+      this.loading = false;
+
+    }, (err: HttpErrorResponse) => {
+      //POPUP MESSAGE
+      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Log In", message: err.message } });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result == "Retry") {
+          this.login();
+        }
+      })
+      console.log("ERROR:" + err.message);
+      this.loading = false;
+    })
+>>>>>>> develop
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Check if user is already logged in | 2. Check if their session ID (Token) is valid | 3. Populate form drop downs 
-   *
-   * @memberof LoginComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+<<<<<<< HEAD
 
     //-------- Load Organisation names for Drop Down --------
     this.userManagementServicee.getAllOrganizations().subscribe((response: any) => {
@@ -228,7 +377,68 @@ export class LoginComponent implements OnInit {
         })
       }
     });
+=======
+    this.loggedIn = this.service.isLoggedIn();
+    if (this.loggedIn == true) {
+      this.router.navigate(['sample-form']);
+    }
+>>>>>>> develop
 
   }
+=======
+    });
+    
+    this.loading = false;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT()  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Check if user is already logged in | 2. Check if their session ID (Token) is valid | 3. Populate form drop downs 
+   *
+   * @memberof LoginComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+    //-------- Load Organisation names for Drop Down --------
+    this.userManagementServicee.getAllOrganizations().subscribe((response: any) => {
+      
+      if (response.success == true && response.code == 200) {
+        this.organizations = response.data.Organizations;
+      } 
+      else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the Organisations", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.ngOnInit();
+          }
+        })
+      }
+    });
+
+    //-------- Form Validation --------
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    this.forms = document.getElementsByClassName("needs-validation");
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(this.forms, function(form) {
+      form.addEventListener(
+        "submit",
+        function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+    
+  }  
+>>>>>>> develop
 
 }

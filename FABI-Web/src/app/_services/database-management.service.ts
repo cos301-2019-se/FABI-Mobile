@@ -5,7 +5,7 @@
  * Created Date: Sunday, July 28th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, July 28th 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -23,6 +23,16 @@ import { config } from "../../environments/environment.prod";
 })
 export class DatabaseManagementService {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //                                                          CONSTRUCTOR
+   /**
+   * Creates an instance of DatabaseManagementService.
+   * 
+   * @param {HttpClient} http For making calls to the API
+   * 
+   * @memberof DatabaseManagementService
+   */
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(private http: HttpClient) { }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,13 +40,14 @@ export class DatabaseManagementService {
   /**
    * Method that sends a request to the API to get the database's data.
    *
-   * @param {string} database
-   * @returns
-   * @memberof HttpService
+   * @param {string} database The name of the database to be retrieved
+   * 
+   * @returns API response @type any
+   * 
+   * @memberof databaseManagementURL
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveDatabase(database: string) {
-
     let retrieveDatabaseURL = `${config.databaseManagementURL}/retrieveDatabase`;
     let method = 'POST';
 
@@ -55,7 +66,6 @@ export class DatabaseManagementService {
     };
 
     return this.http.request<any>(method, retrieveDatabaseURL, options);
-
   }
 
   
@@ -64,13 +74,14 @@ export class DatabaseManagementService {
   /**
    * Method thats sends a request to the API to port a CSV file to a Database 
    *
-   * @param {Object} jsonObject
-   * @returns API response 
-   * @memberof HttpService
+   * @param {Object} jsonObject The database to be ported in the form of a JSON object
+   * 
+   * @returns API response @type any
+   * 
+   * @memberof DatabaseManagementService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  porting(dbname: String, jsonObject: Object) {
-    
+  porting(dbname: String, jsonObject: Object) {    
     const portingURL = `${config.databaseManagementURL}/porting`;
     const method = 'POST';
 
@@ -92,38 +103,4 @@ export class DatabaseManagementService {
 
     return this.http.request<any>(method, portingURL, options);
   }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         REVERSE PORTING
-  /**
-   * Method thats sends a request to the API to get data from the database to create a .csv file 
-   *
-   * @param {String} databaseName
-   * @returns API response 
-   * @memberof HttpService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  reversePorting(databaseName: String) {
-    
-    const portingURL = "";
-    const method = 'POST';
-
-    const postData = {
-      "databaseName": databaseName,
-    };
-
-    const options = {
-      headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*"
-      },
-      body: postData,
-      json: true
-    };
-
-    return this.http.request<any>(method, portingURL, options);
-  }
-
 }

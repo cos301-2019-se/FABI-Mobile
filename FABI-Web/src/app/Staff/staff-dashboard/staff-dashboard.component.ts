@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 8th 2019
+ * Last Modified: Thursday, August 22nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -38,20 +38,6 @@ export class StaffDashboardComponent implements OnInit {
   /** Object array for holding the administrators -  @type {Member[]} */
   admins: Member[] = [];   
 
-  /** Object array for holding all of the logs -  @type {any[]} */ 
-  allNotifications: any[] = [];
-  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
-  newNotifications: any[] = [];
-  
-  /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = true; 
-  /** The total number of User Logs - @type {number} */           
-  numberOfUserLogs: number = 0;
-  /** The number of the notifications - @type {number} */   
-  localNotificationNumber : number = 1;
-  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
-  allLogs: string[] = []; 
-
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
   private toggle_status : boolean = false;
 
@@ -69,6 +55,27 @@ export class StaffDashboardComponent implements OnInit {
   /** Object array for holding the samples associated with the user -  @type {Sample[]} */
   samples: Sample[] = [];
 
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  helpTab: boolean = false;
+
+  /** The user that is currently logged in -  @type {any} */
+  currentUser: any;
+
+  /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */  
+  sampleTableLoading: boolean = true;
+
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchSample: string = "";
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchDeposit: string = "";
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -95,6 +102,33 @@ export class StaffDashboardComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService,
     private cultureCollectionService: CultureCollectionAPIService
     ) { }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      NG ON INIT()  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call loadNotifications() | 2. Call loadSamples() | 3. loadDepositForms() | 4. loadRequestForms()
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
+    // this.authService.temporaryLoginStaff().subscribe((response : any) => {
+    //   this.currentUser = this.authService.getCurrentSessionValue.user;
+    //   this.loadDepositForms();
+    //   this.loadRequestForms();
+    // });
+
+    //******** TO BE USED IN PRODUCTION: ********
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    //  Calling the neccessary functions as the page loads
+     this.loadDepositForms();
+     this.loadRequestForms();
+
+  }
   
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,207 +145,7 @@ export class StaffDashboardComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_DATE
-  /**
-   *  This function will put the string date provided into a more readable format for the notifications
-   * @param {string} date The date of the log
-   * @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getDate(date: string){
-    var tempDate = (date).split(' ');
-    var newDate = '';
-
-    newDate += tempDate[2];
-
-    if(tempDate[0] == 'Mon'){
-      newDate += ' Monday ';
-    }
-    else if(tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues'){
-      newDate += ' Tuesday ';
-    }
-    else if(tempDate[0] == 'Wed'){
-      newDate += ' Wednesday ';
-    }
-    else if(tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs'){
-      newDate += ' Thursday ';
-    }
-    else if(tempDate[0] == 'Fri'){
-      newDate += ' Friday ';
-    }
-    else if(tempDate[0] == 'Sat'){
-      newDate += ' Saturday ';
-    }
-    else if(tempDate[0] == 'Sun'){
-      newDate += ' Sunday ';
-    }
-
-    if(tempDate[1] == 'Jan'){
-      newDate += 'January';
-    }
-    else if(tempDate[1] == 'Feb'){
-      newDate += 'February';
-    }
-    else if(tempDate[1] == 'Mar'){
-      newDate += 'March';
-    }
-    else if(tempDate[1] == 'Apr'){
-      newDate += 'April';
-    }
-    else if(tempDate[1] == 'Jun'){
-      newDate += 'June';
-    }
-    else if(tempDate[1] == 'Jul'){
-      newDate += 'July';
-    }
-    else if(tempDate[1] == 'Aug'){
-      newDate += 'August';
-    }
-    else if(tempDate[1] == 'Sep' || tempDate[1] == 'Sept'){
-      newDate += 'September';
-    }
-    else if(tempDate[1] == 'Oct'){
-      newDate += 'October';
-    }
-    else if(tempDate[1] == 'Nov'){
-      newDate += 'November';
-    }
-    else if(tempDate[1] == 'Dec'){
-      newDate += 'December';
-    }
-
-    newDate += ' ' + tempDate[3];
-
-    return newDate;
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       LOAD_LOGS
-  /**
-   *  This function will load all of the user's logs into a string array.
-   * 
-   * @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadLogs(){
-    //Making a call to the notification logging service to return all logs belonging to the user
-    this.notificationLoggingService.getUserLogs(localStorage.getItem('userID')).subscribe((response: any) => {
-      if(response.success == true){
-        var data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          this.allLogs.push(data[i].id);
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_NOTIFICATIONS
-  /**
-   *  This function will load the staff member's notifications into the notification section on the HTML page
-   * 
-   * @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){
-    //Loading all the logs beloning to the user
-    this.loadLogs();
-
-    //Making a call too the notification logging service to return all USER logs
-    this.notificationLoggingService.getAllAccessLogs().subscribe((response: any) => {
-      if(response.success = true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data.content.data.Logs;
-
-        for(var i = 0; i < data.length; i++){
-          for(var j = 0; j < this.allLogs.length; j++){
-            if(data[i].date == this.allLogs[j]){
-              //A temporary instance of UserLogs that will be added to the allNotifications array
-              var tempLogU: UserLogs = {LogID: data[i].date, Type: 'USER', Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber};
-              
-              //Getting the name and surname of the users passed using their id numbers
-              const user1 = this.loadUserDetails(tempLogU.Organization2, tempLogU.Details);
-              const user2 = this.loadUserDetails(tempLogU.Organization1, tempLogU.User);
-  
-              if(tempLogU.Action == 'C'){
-                tempLogU.Action = user1 + ' was added to the system by ' + user2;
-              }
-              else if(tempLogU.Action == 'D'){
-                tempLogU.Action = user1 + ' was removed from the system by ' + user2;
-              }
-  
-              this.allNotifications.push(tempLogU);
-              this.numberOfUserLogs += 1;
-              this.localNotificationNumber += 1;
-            }
-          }          
-        }
-      }
-      else{
-        //Error handling
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_USER_DETAILS
-  /**
-   *  This function will be called so that the information of a specific user can be fetched
-   *  @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadUserDetails(userOrganization: string, userID: string) {
-    //Making a call to the User Management API Service to retrieve a specific users details
-    this.userManagementService.getUserDetails(userOrganization, userID).subscribe((response: any) => {
-      if(response.success == true){
-        //Temporarily holds the data returned from the API call
-        const data = response.data;
-
-        //Returns the users name and surname as a connected string
-        return data.fname + ' ' + data.surname;
-      } 
-      else{
-        //Error control
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       REMOVE_NOTIFICATIONS
-  /**
-   *  This function will remove a notification from the notification section on the HTML page.
-   * 
-   * @param {string} id                   //The id of the notification to be removed
-   * @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeNotification(id: string){
-    for(var i =  0; i < this.allNotifications.length; i++){
-      if(this.allNotifications[i].ID == id){
-        this.newNotifications.push(this.allNotifications[i]);
-      }
-    }
-
-    this.notificationLoggingService.updateFABIMemberNotifications(localStorage.getItem('userID'), this.newNotifications).subscribe((response: any) => {
-      if(response.success == true){
-        this.loadNotifications();
-      }
-      else{
-        //Error handling
-      }
-    });
-  } 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
+  //                                                    TOGGLE NOTIFICATIONS TAB
   /**
    *  This function is used to toggle the notifications tab.
    *  
@@ -327,32 +161,7 @@ export class StaffDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_SAMPLES
-  /**
-   *  This function will load all the samples associated with the user into the HTML page.
-   *  @memberof StaffDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadSamples() {
-    this.diagnosticClinicService.getSamplesForFABIStaff(localStorage.getItem('userID')).subscribe((response: any) => {
-      if(response.success == true){
-        this.submittedSamples = true;
-        var data = response.date.samples;
-
-        for(var i = 0; i < data.length; i++){
-          var tempSample: Sample = {userID: data[i].userID, orgName: data[i].orgName, status: data[i].status, referenceNumber: data[i].referenceNmber, data: data[i].data};
-          this.samples.push(tempSample);
-        }
-      }
-      else{ 
-        //Error handling
-      }
-    });
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_DEPOSIT_FORMS
+  //                                                      LOAD DEPOSIT FORMS
   /**
    *  This function will load all the deposit forms associated with the user into the HTML page.
    *  @memberof StaffDashboardComponent
@@ -369,9 +178,9 @@ export class StaffDashboardComponent implements OnInit {
             otherFABICollections: data[i].otherFABICollections, name: data[i].name, typeStatus: data[i].typeStatus, host: data[i].host, 
             vector: data[i].vector, substrate: data[i].substrate, continent: data[i].continent, country: data[i].country, region: data[i].region,
             locality: data[i].locality, gps: data[i].gps, collectedBy: data[i].collectedBy, dateCollected: data[i].dateCollected, isolatedBy: data[i].isolatedBy,
-            identifiedBy: data[i].identifiedBy, donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted};
+            identifiedBy: data[i].identifiedBy, donatedBy: data[i].donatedBy, additionalNotes: data[i].additionalNotes, dateSubmitted: data[i].dateSubmitted, formID: data[i].id};
           
-          if(tempDeposit.userID == localStorage.getItem('userID')){
+          if(tempDeposit.userID == this.currentUser.ID){
             this.depositForms = true;
             this.deposits.push(tempDeposit);
           }
@@ -385,7 +194,7 @@ export class StaffDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  LOAD_REQUEST_FORMS
+  //                                                      LOAD REQUEST FORMS
   /**
    *  This function will load all the request forms associated with the user into the HTML page.
    *  @memberof StaffDashboardComponent
@@ -399,8 +208,8 @@ export class StaffDashboardComponent implements OnInit {
         for(var i = 0; i < data.length; i++){
           var tempRequest : CMWRequest = {userID: data[i].userID, requestor: data[i].requestor, taxonName: data[i].taxonName, cultureNumber: data[i].cultureNumber,
             dateRequested: data[i].dateRequested, referenceNumber: data[i].referenceNumber, notes: data[i].notes, dateSubmitted: data[i].dateSubmitted};
-          
-          if(tempRequest.userID == localStorage.getItem('userID')){
+
+          if(tempRequest.userID == this.currentUser.ID){
             this.requestForms = true;
             this.requests.push(tempRequest);
           }
@@ -414,20 +223,64 @@ export class StaffDashboardComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
+  //                                                      TOGGLE NOTIFICATIONS 
   /**
-   * This function is called when the page loads
+   * This function will toggle the display of the notifications side panel
    * 
-   * @description 1. Call loadNotifications() | 2. Call loadSamples() | 3. loadDepositForms() | 4. loadRequestForms()
    * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    //All these functions will be called when the page loads
-    this.loadNotifications();
-    this.loadSamples();
-    this.loadDepositForms();
-    this.loadRequestForms();
+  toggleNotificationsTab(){ 
+    this.notificationsTab = !this.notificationsTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE PROFILE 
+  /**
+   * This function will toggle the display of the profile side panel
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleProfileTab() {
+    this.profileTab = !this.profileTab;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      DISPLAY PROFILE SAVE BUTTON 
+  /**
+   * This function will display the save button option if any details in the profile have been altered
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayProfileSaveBtn() {
+    this.saveBtn = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                   DISPLAY PASSWORD CONFIRM INPUT 
+  /**
+   * This function will display the confirm password input field in the user's password was altered
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  displayConfirmPasswordInput() {
+    this.confirmPasswordInput = true;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            TOGGLE HELP 
+  /**
+   * This function will toggle the display of the help side panel
+   * 
+   * @memberof StaffDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleHelpTab() {
+    this.helpTab = !this.helpTab;
   }
 
 }

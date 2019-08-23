@@ -1,135 +1,286 @@
-<!--Bootstrap Navbar-->
-<div class="container-fluid" id="nav-section">
-  <nav class="navbar navbar-expand-xl">
-    <a class="navbar-brand" href="#">Organization Dashboard</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      <i class="fas fa-bars"></i>
-    </button>
+<!-- Dashboard -->
+<div class="dashboard">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+  <!-- Sidenav -->
+  <div class="sidenav">
+    <div class="top-nav-items">
+      <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+      <p (click)="toggleProfileTab()">Click to view profile</p>
+      <br />
+      <div class="nav-links">
+        <a class="nav-link active" routerLink="/organization-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/member-handler"><i class="fas fa-user-friends"></i></a>
+        <a class="nav-link" routerLink="/submit-sample"><i class="fas fa-vial"></i></a>
+      </div>
+    </div>
+    <div class="bottom-nav-items">
+      <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+  <!-- / Sidenav -->
 
-        <li class="nav-item active">
-          <a id="dashboard_menu_link" routerLink="/organization-dashboard"><i class="fas fa-home"></i>Home</a>
-        </li>
+  <!-- Navbar -->
+  <div class="pos-f-t">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <h1 class="brand">ORGANIZATION DASHBOARD</h1>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <!-- Navbar Items -->
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/organization-dashboard">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/submit-sample">Submit Sample</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/member-handler">Member Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Logout</a>
+          </li>
+          <!-- / Navbar Items -->
+        </ul>
+      </div>
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+      <!-- Menu Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- / Menu Button -->
 
-        <li class="nav-item">
-          <a id="guest_management" routerLink="/member-handler"><i class="fas fa-users"></i>Members</a>
-        </li>
+      <!-- Navbar Title -->
+      <h5>HOME</h5>
+      <!-- / Navbar Title -->
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-vials"></i>Samples
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="view_samples" routerLink="/organization-view-samples"><i class="fas fa-vials"></i>View Samples</a>
-            <br/>
-            <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
+      <!-- Notification Icons -->
+      <div class="notifications-icon">
+        <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- /Notification Icons -->
+    </nav>
+  </div>
+  <!-- / Navbar-->
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <!-- Primary Content -->
+    <div class="primary-content">
+
+      <!-- Content Heading -->
+      <div class="content-heading">
+        <h2>Organization Dashboard</h2>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
+        <i class="far fa-bell" id="no-new-notifications"></i>
+      </div>
+      <!-- / Content Heading -->
+
+      <!-- Section Divider -->
+      <div class="section-divider"></div>
+      <!-- / Section Divider -->
+
+      <!-- Statistics -->
+      <div class="statistics">
+
+        <!-- Statistic Box -->
+        <div class="overview-statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Overview Statistics</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p id="organization_users_stats">Number of Members: {{memberStats}}</p>
+              <p id="organization_completed_samples_stats">Completed Samples: 75%</p>
+              <p id="organization_samples_stats">Number of Samples: {{sampleStats}}</p>
+            </div>
           </div>
-        </li>
+        </div>
+        <!-- Statistic Box -->
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user"></i>Account
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="profile" routerLink="/organization-profile"><i class="fas fa-user-circle"></i>Profile</a>
-            <br/>
-            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
+        <!-- Statistic Box -->
+        <div class="statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Number of Members</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p id="organization_users_stats">{{memberStats}}</p>
+            </div>
           </div>
-        </li>
-
-        <li class="nav-item">
-          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-        </li>
-
-        <li class="nav-item">
-          <a id="logout_menu_link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i>Logout</a>
-        </li>
-
-      </ul>
-    </div>
-  </nav>
-</div>
-
-<!--SlideOut -->
-<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
-  <!--Tab-->
-  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
-    <div>
-      <p>Notifications</p>
-    </div>
-  </div>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">Organization Notifications</h4>
-    </div>
-    <div class="modal-body" id="notifications-section">
-
-      <h2 *ngIf="!notifications">No notifications</h2>
-      <!--*********************************************************************
-              DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
-          *************************************************************************-->
-      <div class="box">
-        <div class="notification-heading">
-          <h2>Notification {{Number}}</h2>
-          <i class="fas fa-times"></i>
         </div>
+        <!-- Statistic Box -->
 
-        <div class="notification-content">
-          <p><b>Type:</b> {{Type}} notification</p>
-          <p><b>Action:</b> {{Action}}</p>
-          <p><b>Date:</b> {{Date}}</p>
-          <p><b>Details:</b> {{Details}}</p>
+        <!-- Statistic Box -->
+        <div class="statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Completed Samples</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p id="organization_completed_samples_stats">75%</p>
+            </div>
+          </div>
         </div>
-      </div>
+        <!-- Statistic Box -->
 
-      <div #notificationContainer></div>
+        <!-- Statistic Box -->
+        <div class="statistic-box">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Number of Samples</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p id="organization_samples_stats">{{sampleStats}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Statistic Box -->
+
+      </div>
+      <!-- / Statistics -->
+
+      <!-- Handler Shortcuts -->
+      <div class="handler-shortcuts">
+
+        <!-- Menu Shortcut Row -->
+        <div class="menu-row">
+
+          <!-- Menu Item -->
+          <div class="menu-item" routerLink="/member-handler">
+            <div class="menu-icon">
+              <i class="fas fa-user-friends"></i>
+            </div>
+            <div class="menu-heading">
+              <h6>Manage Members</h6>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+        </div>
+        <!-- / Menu Shortcut Row -->
+
+        <!-- Menu Shortcut Row -->
+        <div class="menu-row">
+
+          <!-- Menu Item -->
+          <div class="menu-item" routerLink="/submit-sample">
+            <div class="menu-icon">
+              <i class="fas fa-vial"></i>
+            </div>
+            <div class="menu-heading">
+              <h6>Submit Samples</h6>
+            </div>
+          </div>
+          <!-- / Menu Item -->
+
+        </div>
+        <!-- / Menu Shortcut Row -->
+
+      </div>
+      <!-- / Handler Shortcuts -->
 
     </div>
-    <div class="modal-footer"> </div>
+    <!-- / Primary Content -->
+
+    <!-- Member Tables -->
+    <div class="member-tables">
+
+      <!-- Member Table -->
+      <div class="member-table table-responsive">
+        <h5> Member Table </h5>
+
+        <!-- Extra Table Information -->
+        <div class="table-information" *ngIf="!organizationMembers">
+          <h6>There are currently no members</h6>
+          <i class="fas fa-plus-circle" routerLink="/member-handler"></i>
+        </div>
+        <!-- / Extra Table Information -->
+
+        <!-- Search Table -->
+        <div class="input-group search-table" *ngIf="organizationMembers && !memberTableLoading">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchMember">
+        </div>
+        <!-- / Search Table -->
+
+        <!-- Loading Spinner -->
+        <div class="spinner-grow text-secondary loading" role="status" *ngIf="memberTableLoading">
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover"  *ngIf="organizationMembers && !memberTableLoading">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let member of organizationMembers | filter : 'admin-dashboard' : searchMember">
+              <td>{{member.fname}} </td>
+              <td>{{member.surname}}</td>
+              <td>{{member.email}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- / Member Table -->
+
+      <!-- Sample Table -->
+      <div class="member-table table-responsive">
+        <h5> Sample Table </h5>
+ 
+        <app-organization-view-samples></app-organization-view-samples>
+
+      </div>
+      <!-- / Sample Table -->
+
+
+    </div>
+    <!-- / Member Tables -->
   </div>
+  <!-- / Dashboard Content -->
+
+  <!-- Notification Section -->
+  <div id="notifications" *ngIf="notificationsTab">
+    <i class="fas fa-arrow-left" (click)="toggleNotificationsTab()"></i>
+    <br />
+
+    <app-organization-notification></app-organization-notification>
+
+  </div>
+  <!-- / Notification Section -->
+
+  <!-- Profile Section -->
+  <div id="profile" *ngIf="profileTab">
+    <i class="fas fa-arrow-left" (click)="toggleProfileTab()"></i>
+    <br />
+
+    <app-organization-profile></app-organization-profile>
+
+  </div>
+  <!-- / Profile Section -->
+
+  <!-- Help Section -->
+  <div id="help" *ngIf="helpTab">
+    <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
+    <br />
+
+    <app-organization-help></app-organization-help>
+
+  </div>
+  <!-- / Help Section -->
+
 </div>
-
-<div class="container-fluid" id="dashboard-content">
-  <!--Statistics Section -->
-  <section class="statistics-heading">
-    <h1>Statistics</h1>
-  </section>
-  <div class="container-fluid" id="statistics-section">
-    <section class="statistics">
-      <div class="box">
-        <i class="fas fa-users"></i>
-        <h2 id="organization_users_stats" [innerHTML]="memberStats"></h2>
-      </div>
-
-      <div class="box">
-        <i class="fas fa-vial"></i>
-        <h2 id="organization_samples_stats" [innerHTML]="sampleStats"></h2>
-      </div>
-
-      <div class="box">
-        <i class="fas fa-tasks"></i>
-        <h2 id="organization_completed_samples_stats">75%</h2> <!-- percentage of completed (processed) samples -->
-      </div>
-    </section>
-  </div>
-
-  <section class="member-heading">
-    <h1>Members</h1>
-  </section>
-  <div class="container-fluid" id="member-section">
-    <section class="members" *ngIf="organizationMembers">
-      <div class="box" *ngFor="let member of organizationMembers">
-        <i class="fas fa-users"></i>
-        <h2>{{member.fname}} {{member.surname}}</h2>
-        <p>{{member.email}}</p>
-      </div>
-    </section>
-
-  </div>
-</div>
+<!-- / Dashboard -->

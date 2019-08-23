@@ -12,7 +12,7 @@ router.post('/', getUserTypes);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                             Get All User Types
 /**
- * @summary Get all members associated with an organization
+ * @summary Get all usertypes found on the system
  * @description  REQUEST DATA REQUIRED: null
  * 
  *

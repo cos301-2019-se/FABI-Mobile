@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { StaffDashboardComponent } from './staff-dashboard/staff-dashboard.component';
 
-import { SampleFormComponent } from '../sample-form/sample-form.component';
+import { StaffSubmitSampleComponent } from './staff-submit-sample/staff-submit-sample.component';
+import { CmwMenuComponent } from './cmw-menu/cmw-menu.component';
 
 import { SubmitCmwRequestComponent } from './submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwDepositComponent } from './submit-cmw-deposit/submit-cmw-deposit.component';
@@ -10,6 +11,10 @@ import { SubmitCmwRevitalizationComponent } from './submit-cmw-revitalization/su
 import { Role } from '../_interfaces/role';
 import { AuthenticationGuard } from '../_guards/authentication.guard';
 import { StaffProfileComponent } from './staff-profile/staff-profile.component';
+import { LoginComponent } from '../login/login.component';
+import { StaffViewDatabasesComponent } from "./staff-view-databases/staff-view-databases.component";
+import { StaffViewSamplesComponent } from "./staff-view-samples/staff-view-samples.component";
+import { StaffHelpComponent } from "./staff-help/staff-help.component";
 
 const routes: Routes = [
   {
@@ -25,8 +30,14 @@ const routes: Routes = [
     data: {roles: [Role.Staff] }
   },
   {
-    path: 'submit-sample', 
-    component: SampleFormComponent,
+    path: 'staff-submit-sample', 
+    component: StaffSubmitSampleComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'cmw-menu', 
+    component: CmwMenuComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.Staff] }
   },
@@ -47,7 +58,29 @@ const routes: Routes = [
     component: SubmitCmwRevitalizationComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.Staff] }
-  }
+  },
+  {
+    path: 'staff-view-databases', 
+    component: StaffViewDatabasesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'staff-view-samples', 
+    component: StaffViewSamplesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'staff-help', 
+    component: StaffHelpComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [Role.Staff] }
+  },
+  {
+    path: 'login', 
+    component: LoginComponent
+  },
 ];
 
 @NgModule({

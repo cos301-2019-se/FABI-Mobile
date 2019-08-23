@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 1st 2019
+ * Last Modified: Wednesday, August 21st 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -33,17 +33,19 @@ import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-
 
 export class OrganizationViewSamplesComponent implements OnInit {
 
-  displayedColumns: string[];
-  dataSource = new MatTableDataSource([]);
-  fields: any[] = [];
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  sampleFields: any[] = [];
+  samples: any[];
+  selectedSampleData: any;
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
+  /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
+  sampleTableLoading: boolean = true;
+
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchSample: string = "";
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -58,29 +60,14 @@ export class OrganizationViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private router: Router
-    ) { }
+  ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                           TOGGLE_NOTIFICATIONS_TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof OrganizationViewSamplesComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT  
+  //                                                           NG ON INIT  
   /**
    * This function is called when the page loads
    * 
@@ -110,7 +97,7 @@ export class OrganizationViewSamplesComponent implements OnInit {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            VIEW_SAMPLES 
+  //                                                            VIEW SAMPLES 
   /**
    * This function will be used to load all of the samples belonging to the organization into the HTML page
    * 
@@ -118,24 +105,20 @@ export class OrganizationViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
+
     this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
+
       if (response.success == true && response.code == 200) {
-        
-        Object.keys(response.data.samples[0]).forEach((column) => {
 
-          let obj = {
-            'name': column
-          }
-          this.fields.push(obj);
+        this.samples = response.data.samples;
 
-        });
 
-        this.displayedColumns= this.fields.map(field => field.name);
-        this.dataSource = new MatTableDataSource(response.data.samples);
-        
+        //Deactivate loading table spinners
+        this.sampleTableLoading = false;
+
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Getting Samples", message: response.message, retry: true } });
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
         dialogRef.afterClosed().subscribe((result) => {
           if (result == "Retry") {
             this.viewSamples();
@@ -143,6 +126,25 @@ export class OrganizationViewSamplesComponent implements OnInit {
         })
       }
     });
+  }
+
+  selectSample(sample: any) {
+
+    this.selectedSampleData = sample.data;
+
+    Object.keys(this.selectedSampleData).forEach((column) => {
+
+      let obj = {
+        'name': column
+      }
+      this.sampleFields.push(obj);
+
+    });
+        
+  }
+
+  resetSampleFields() {
+    this.sampleFields = [];
   }
 
 }

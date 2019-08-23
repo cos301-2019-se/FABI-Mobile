@@ -31,7 +31,16 @@ router.post('/', updateStaff);
 const db = admin.firestore();
 
 function updateStaff(req, res) {
-    
+    res.setHeader('Content-Type', 'application/problem+json');
+    res.setHeader('Content-Language', 'en');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+        success: false,
+        code: 400,
+        title: "BAD_REQUEST",
+        message: "THIS FUNCTION IS DEPRECATDED, please use the new updateStaff functionality"
+    });
+    /*
     //(1)
     if (req.body.id == undefined || req.body.id == '') {
         res.setHeader('Content-Type', 'application/problem+json');
@@ -116,7 +125,7 @@ function updateStaff(req, res) {
             });
         
     });
-
+    */
 }
 
 module.exports = router;

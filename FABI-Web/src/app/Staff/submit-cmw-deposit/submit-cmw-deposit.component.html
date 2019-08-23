@@ -1,275 +1,268 @@
-<!--Bootstrap Navbar-->
-<div class="container-fluid" id="nav-section">
-  <nav class="navbar navbar-expand-xl">
-    <a class="navbar-brand" href="#">Staff Dashboard</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      <i class="fas fa-bars"></i>
-    </button>
+<form class="view-form needs-validation" novalidate [formGroup]="cmwDepositForm" (submit)="submitCMWDepositForm()">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item active">
-          <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fab fa-wpforms"></i>Culture Collection Forms
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="submit_CMW_request" routerLink="/submit-cmw-request"><i class="fab fa-wpforms"></i>CMW Request
-              Form</a>
-            <br />
-            <a id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><i class="fab fa-wpforms"></i>CMW Deposit
-              Form</a>
-            <br />
-            <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW
-              Revitalization Form</a>
-            <br />
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
-        </li>
-
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user"></i>Account
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="profile_menu_link" routerLink="/staff-profile"><i class="fas fa-user-circle"></i>Profile</a>
-            <br />
-            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-        </li>
-
-        <li class="nav-item">
-          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>
-        </li>
-
-      </ul>
-    </div>
-  </nav>
-</div> 
-
-<!--SlideOut -->
-<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
-  <!--Tab-->
-  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
-    <div>
-      <p>Notifications</p>
+  <!-- CMW Culture Number -->
+  <div class="form-group">
+    <label for="cmw_culture_number">CMW Culture Number</label>
+    <input type="text" class="form-control form-control-sm" id="cmw_culture_number" formControlName="cmw_culture_number"
+      placeholder="CMW culture number">
+    <div class="valid-feedback">
+      Looks good!
     </div>
   </div>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">Staff Notifications</h4>
+  <!-- / CMW Culture Number -->
+
+  <!-- Genus-->
+  <div class="form-group">
+    <label for="genus">Genus</label>
+    <input type="text" class="form-control form-control-sm" id="genus" formControlName="genus" placeholder="Genus">
+    <div class="valid-feedback">
+      Looks good!
     </div>
-    <div class="modal-body" id="notifications-section">
+  </div>
+  <!-- / Genus -->
 
-      <h2 *ngIf="!notifications">No notifications</h2>
-      <!--*********************************************************************
-          DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
-      *************************************************************************-->
-      <div *ngIf="allNotifications">
-        <div class="box" *ngFor="let log of allNotifications">
-          <div class="notification-heading">
-            <h2>Notification {{log.ID}}</h2>
-            <i class="fas fa-times" (click)="removeNotification(log.LogID)"></i>
-          </div>
-
-          <div class="notification-content">
-            <p><b>Type:</b> {{log.Type}} notification</p>
-            <p><b>Action:</b> {{log.Action}}</p>
-            <p><b>Date:</b> {{log.Date}}</p>
-          </div>
-        </div>
-      </div>
-
+  <!-- Epitheton -->
+  <div class="form-group">
+    <label for="epitheton">Epitheton</label>
+    <input type="text" class="form-control form-control-sm" id="epitheton" formControlName="epitheton" placeholder="epitheton">
+    <div class="valid-feedback">
+      Looks good!
     </div>
-    <div class="modal-footer"> </div>
   </div>
-</div>
+  <!-- / Epitheton -->
 
-<!--CMW Deposit Form Content-->
-<div class="content">
-  <div class="color-accent">
-    <h1>CMW Deposit Form</h1>
+  <!-- Personal Collection Number-->
+  <div class="form-group">
+    <label for="personal_collection_number">Personal Collection Number</label>
+    <input type="text" class="form-control form-control-sm" id="personal_collection_number"
+      formControlName="personal_collection_number" placeholder="Personal Collection Number">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
   </div>
+  <!-- / Personal Collection Number -->
 
-  <div class="cmw-deposit">
-    <form class="example-form" [formGroup]="cmwDepositForm" (submit)="submitCMWDepositForm()">
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="CMW Culture Number" type="text" formControlName="cmw_culture_number">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Genus" type="text" formControlName="genus">
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Epitheton" type="text" formControlName="epitheton">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Personal Collection Number" type="text" formControlName="personal_collection_number">
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="International Collection Number" type="text" formControlName="international_collection_number">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Herbarium Number" type="text" formControlName="herbarium_number">
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Other FABI Collections" type="text" formControlName="other_FABI_collections">
-      </mat-form-field>
-      <br />
-
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Synonym or Original Name" type="text" formControlName="name">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Type Status" type="text" formControlName="type_status">
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Host" type="text" formControlName="host">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Vector" type="text" formControlName="vector">
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Substrate" type="text" formControlName="substrate">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Continent" type="text" formControlName="continent">
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Country" type="text" formControlName="country">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Region" type="text" formControlName="region">
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Locality" type="text" formControlName="locality">
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="GPS" type="text" formControlName="gps">
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput [(ngModel)]="collectedBy" placeholder="Collected By (Surname, Initials)" type="text" [formControl]="collectedByControl" formControlName="collected_by" [matAutocomplete]="autoCollectedBy">
-          <mat-autocomplete #autoCollectedBy="matAutocomplete" (optionSelected)="setCollectedBy($event)">
-            <mat-option *ngFor="let option of filteredOptions1 | async" [value]="option">{{option}}</mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Date Collected (dd/mm/yyyy)" type="date" formControlName="date_collected">
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <div>
-        <mat-form-field class="example-full-width">
-          <input matInput [(ngModel)]="isolatedBy" placeholder="Isolated By (Surname, Initials)" type="text" [formControl]="isolatedByControl" formControlName="isolated_by" [matAutocomplete]="autoIsolatedBy">
-          <mat-autocomplete #autoIsolatedBy="matAutocomplete" (optionSelected)="setIsolatedBy($event)">
-            <mat-option *ngFor="let option of filteredOptions3 | async" [value]="option">{{option}}</mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <br />
-
-        <mat-form-field class="example-full-width">
-          <input matInput [(ngModel)]="identifiedBy" placeholder="Identified By (Surname, Initials)" type="text" [formControl]="identifiedByControl" formControlName="identified_by" [matAutocomplete]="autoIdentifiedBy">
-          <mat-autocomplete #autoIdentifiedBy="matAutocomplete" (optionSelected)="setIdentifiedBy($event)">
-            <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option">{{option}}</mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <br />
-      </div>
-      <br/>
-
-      <mat-form-field class="example-full-width">
-        <input matInput [(ngModel)]="donatedBy" placeholder="Donated By (Surname, Initials)" type="text" [formControl]="donatedByControl" formControlName="donated_by" [matAutocomplete]="autoDonatedBy">
-        <mat-autocomplete #autoDonatedBy="matAutocomplete" (optionSelected)="setDonatedBy($event)">
-          <mat-option *ngFor="let option of filteredOptions4 | async" [value]="option">{{option}}</mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <br />  
-
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Additional Notes" type="text" formControlName="additional_notes">
-      </mat-form-field>
-      <br />
-
-      <button id="submit_cmw_deposit" class="btn btn-default">Submit</button>
-    </form>
+  <!-- International Collection Number -->
+  <div class="form-group">
+    <label for="international_collection_number">International Collection Number</label>
+    <input type="text" class="form-control form-control-sm" id="international_collection_number"
+      formControlName="international_collection_number" placeholder="International Collection Number">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
   </div>
+  <!-- / International Collection Number -->
+
+  <!-- Herbarium Number -->
+  <div class="form-group">
+    <label for="herbarium_number">Herbarium Number</label>
+    <input type="text" class="form-control form-control-sm" id="herbarium_number" formControlName="herbarium_number" placeholder="Herbarium Number">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Herbarium Number -->
+
+  <!-- Other FABI Collections -->
+  <div class="form-group">
+    <label for="other_FABI_collections">Other FABI Collections</label>
+    <input type="text" class="form-control form-control-sm" id="other_FABI_collections" formControlName="other_FABI_collections" placeholder="Other FABI Collections">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Other FABI Collections -->
+
+  <!-- Synonym or Original Name -->
+  <div class="form-group">
+    <label for="name">Synonym or Original Name</label>
+    <input type="text" class="form-control form-control-sm" id="name" formControlName="name" placeholder="Synonym or Original Name">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Synonym or Original Name -->
+
+  <!-- Type Status -->
+  <div class="form-group">
+    <label for="type_status">Type Status</label>
+    <input type="text" class="form-control form-control-sm" id="type_status" formControlName="type_status" placeholder="Type Status">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Type Status -->
+
+  <!-- Host -->
+  <div class="form-group">
+    <label for="host">Host</label>
+    <input type="text" class="form-control form-control-sm" id="host" formControlName="host" placeholder="Host">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Host -->
+
+  <!-- Vector -->
+  <div class="form-group">
+    <label for="vector">Vector</label>
+    <input type="text" class="form-control form-control-sm" id="vector" formControlName="vector" placeholder="Vector">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Vector -->
+
+  <!-- Substrate -->
+  <div class="form-group">
+    <label for="substrate">Substrate</label>
+    <input type="text" class="form-control form-control-sm" id="substrate" formControlName="substrate" placeholder="Substrate">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Substrate -->
+
+  <!-- Continent -->
+  <div class="form-group">
+    <label for="continent">Continent</label>
+    <input type="text" class="form-control form-control-sm" id="continent" formControlName="continent" placeholder="Continent">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Continent -->
+
+  <!-- Country -->
+  <div class="form-group">
+    <label for="country">Country</label>
+    <input type="text" class="form-control form-control-sm" id="country" formControlName="country" placeholder="Country">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Country -->
+
+  <!-- Region -->
+  <div class="form-group">
+    <label for="region">Region</label>
+    <input type="text" class="form-control form-control-sm" id="region" formControlName="region" placeholder="Region">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Region -->
+
+  <!-- Locality -->
+  <div class="form-group">
+    <label for="locality">Locality</label>
+    <input type="text" class="form-control form-control-sm" id="locality" formControlName="locality" placeholder="Locality">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Locality -->
+
+  <!-- GPS -->
+  <div class="form-group">
+    <label for="gps">GPS</label>
+    <input type="text" class="form-control form-control-sm" id="gps" formControlName="gps" placeholder="GPS">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / GPS -->
+
+  <!-- Collected By Name -->
+  <div class="form-group">
+      <label for="requestor">Collected By (Surname, Initials)</label>
+      <select class="form-control form-control-sm" id="collectedByControl" formControlName="collected_by"  required>
+        <option value="" selected>
+          Please select a requestor
+        </option>
+        <option name="searchCollected" *ngFor="let option of staff" [value]="option | filter : searchCollected">
+          {{option}}
+        </option>
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  <!-- / Collected By Name -->
+
+  <!-- Date Collected -->
+  <div class="form-group">
+    <label for="date_collected">Date Collected</label>
+    <input type="date" class="form-control form-control-sm" id="date_collected" formControlName="date_collected"
+      placeholder="Date Collected" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Date Collected -->
+
+  <!-- Isolated By Name -->
+  <div class="form-group">
+    <label for="requestor">Isolated By (Surname, Initials)</label>
+    <select class="form-control form-control-sm" id="isolatedByControl" formControlName="isolated_by" required>
+      <option value="" selected>
+        Please select a requestor
+      </option>
+      <option name="searchIsolated" *ngFor="let option of staff" [value]="option | filter : searchIsolated">
+        {{option}}
+      </option>
+    </select>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Isolated By Name -->
+
+  <!-- Identified By Name -->
+  <div class="form-group">
+    <label for="requestor">Identified By (Surname, Initials)</label>
+    <select class="form-control form-control-sm" id="identifiedByControl" formControlName="identified_by" required>
+      <option value="" selected>
+        Please select a requestor
+      </option>
+      <option name="searchIdentified" *ngFor="let option of staff" [value]="option | filter : searchIdentified">
+        {{option}}
+      </option>
+    </select>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Identified By Name -->
 
 
+  <!-- Donated By Name -->
+  <div class="form-group">
+      <label for="requestor">Donated By (Surname, Initials)</label>
+      <select class="form-control form-control-sm" id="identifiedByControl" formControlName="donated_by" required>
+        <option value="" selected>
+          Please select a requestor
+        </option>
+        <option name="searchDonated" *ngFor="let option of staff" [value]="option | filter : searchDonated">
+          {{option}}
+        </option>
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+  <!-- / Donated By Name -->
 
-</div> 
+  <!-- Additional Notes -->
+  <div class="form-group">
+    <label for="additional_notes">Additional Notes</label>
+    <input type="text" class="form-control form-control-sm" id="additional_notes" formControlName="additional_notes"
+      placeholder="Additional Notes">
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <!-- / Additional Notes -->
+
+  <button type="submit" class="btn btn-default-submit">Submit</button>
+</form>

@@ -1,159 +1,205 @@
-<!--Bootstrap Navbar-->
-<div class="container-fluid" id="nav-section">
-  <nav class="navbar navbar-expand-xl">
-    <a class="navbar-brand" href="#">Member Profile</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      <i class="fas fa-bars"></i>
-    </button>
+<h3>PROFILE</h3>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item active">
-          <a id="dashboard_menu_link" routerLink="/member-dashboard"><i class="fas fa-home"></i>Home</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-vials"></i>Samples
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a id="view_samples" routerLink="/member-view-samples"><i class="fas fa-vials"></i>View Samples</a>
-              <br/>
-              <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>
-          </div>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user"></i>Account
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>
-            <br/>
-            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>
-        </li>
-
-        <li class="nav-item">
-          <a id="logout_menu_link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i>Logout</a>
-        </li>
-
-      </ul>
-    </div>
-  </nav>
-</div>
-
-<!--SlideOut -->
-<div id="slideOut" [ngClass]="{'showSlideOut': toggle_status}">
-  <!--Tab-->
-  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">
-    <div>
-      <p>Notifications</p>
-    </div>
+<!-- Profile Details -->
+<div class="profile-details">
+  <div class="profile-icon">
+    <i class="fas fa-user-circle"></i>
   </div>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">Member Notifications</h4>
-    </div>
-    <div class="modal-body" id="notifications-section">
 
-      <h2 *ngIf="!notifications">No notifications</h2>
-      <!--*********************************************************************
-                  DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR
-              *************************************************************************-->
-      <div class="box">
-        <div class="notification-heading">
-          <h2>Notification {{Number}}</h2>
-          <i class="fas fa-times"></i>
-        </div>
+  <!-- Loading Spinner -->
+  <div class="spinner-grow text-secondary loading-profile" role="status" *ngIf="userProfileLoading">
+  </div>
+  <!-- /Loading Spinner -->
 
-        <div class="notification-content">
-          <p><b>Type:</b> {{Type}} notification</p>
-          <p><b>Action:</b> {{Action}}</p>
-          <p><b>Date:</b> {{Date}}</p>
-          <p><b>Details:</b> {{Details}}</p>
+  <!-- Profile Form -->
+  <div class="form" *ngIf="!userProfileLoading">
+    <form class="profile-form needs-validation" novalidate [formGroup]="memberProfileForm" (submit)="saveChanges()">
+      <div class="form-row align-items-center">
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="member_name">Name</label>
+          <input type="text" class="form-control" id="member_name" placeholder="Enter name"
+            formControlName="member_name" required
+            [ngClass]="{
+            'is-invalid': memberProfileForm.controls['member_name'].invalid && (submitted || memberProfileForm.controls['member_name'].dirty), 
+            'is-valid': memberProfileForm.controls['member_name'].valid && (submitted || memberProfileForm.controls['member_name'].dirty)}">
+          <!-- Error Validation Feedback-->
+          <div
+            *ngIf="memberProfileForm.controls['member_name'].invalid && (submitted || memberProfileForm.controls['member_name'].dirty)">
+            <div *ngFor="let validation of member_profile_validators.member_name">
+              <p *ngIf="memberProfileForm.get('member_name').hasError(validation.type)">{{validation.message}}</p>
+            </div>
+          </div>
+          <!-- / Error Validation Feedback-->
         </div>
+        <!-- / Name -->
+
+        <!-- Surname -->
+        <div class="form-group">
+          <label for="member_surname">Surname</label>
+          <input type="text" class="form-control" id="member_surname" placeholder="Enter surname"
+            formControlName="member_surname" required
+            [ngClass]="{
+            'is-invalid': memberProfileForm.controls['member_surname'].invalid && (submitted || memberProfileForm.controls['member_surname'].dirty), 
+            'is-valid': memberProfileForm.controls['member_surname'].valid && (submitted || memberProfileForm.controls['member_surname'].dirty)}">
+          <!-- Error Validation Feedback-->
+          <div
+            *ngIf="memberProfileForm.controls['member_surname'].invalid && (submitted || memberProfileForm.controls['member_surname'].dirty)">
+            <div *ngFor="let validation of member_profile_validators.member_surname">
+              <p *ngIf="memberProfileForm.get('member_surname').hasError(validation.type)">{{validation.message}}</p>
+            </div>
+          </div>
+          <!-- / Error Validation Feedback-->
+        </div>
+        <!-- / Surname -->
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="member_email">Email address</label>
+          <input type="email" class="form-control" id="member_email" aria-describedby="emailHelp"
+            placeholder="Enter email" formControlName="member_email" required
+            [ngClass]="{
+            'is-invalid': memberProfileForm.controls['member_email'].invalid && (submitted || memberProfileForm.controls['member_email'].dirty), 
+            'is-valid': memberProfileForm.controls['member_email'].valid && (submitted || memberProfileForm.controls['member_email'].dirty)}">
+          <!-- Error Validation Feedback-->
+          <div
+            *ngIf="memberProfileForm.controls['member_email'].invalid && (submitted || memberProfileForm.controls['member_email'].dirty)">
+            <div *ngFor="let validation of member_profile_validators.member_email">
+              <p *ngIf="memberProfileForm.get('member_email').hasError(validation.type)">{{validation.message}}</p>
+            </div>
+          </div>
+          <!-- / Error Validation Feedback-->
+        </div>
+        <!-- / Email -->
+
+        <!-- User Type -->
+        <!-- <div class="form-group">
+          <label for="admin_type">User Type</label>
+          <input type="text" class="form-control" id="member_type"  formControlName="member_type" disabled>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div> -->
+        <!-- / User Type -->
+
+        <!-- Profile Actions -->
+        <div class="profile-actions">
+          <button type="button" class="btn btn-default-edit" (click)="editProfileToggle()"
+            [hidden]="isEditingProfile">Edit</button>
+          <button type="button" class="btn btn-default-cancel" (click)="editProfileToggle()"
+            [hidden]="!isEditingProfile">Cancel</button>
+          <button type="button" class="btn btn-default-edit" data-toggle="modal"
+            data-target="#changePasswordModal">Change Password</button>
+          <button type="submit" class="btn btn-default-save" [hidden]="!memberProfileForm.dirty">Save Changes</button>
+        </div>
+        <!-- / Profile Actions -->
+
+
       </div>
 
-      <div #notificationContainer></div>
-
-    </div>
-    <div class="modal-footer"> </div>
-  </div>
-</div>
-
-<!--Organization Profile Content-->
-<div class="container-fluid">
-
-  <div class="member-profile">
-
-    <h2>Member Profile</h2>
-    <hr />
-
-    <form id="member_profile_form" [formGroup]="memberProfileForm" (submit)="saveChanges()">
-      <div class="row">
-        <!--Organization Name Field-->
-        <div class="organization-name">
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Organization Name" formControlName="organization_name" value="{{organization}}" disabled>
-          </mat-form-field>
-          <br />
-        </div>
-
-        <!--Name Field-->
-        <div class="name-inputs">
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Name" formControlName="member_name" value="{{name}}">
-          </mat-form-field>
-          <br />
-
-          <!--Surname Field-->
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname" value={{surname}}>
-          </mat-form-field>
-          <br />
-        </div>
-
-        <!--Email Field-->
-        <div class="contact-inputs">
-          <mat-form-field class="form_inputs" class="col">
-            <input matInput placeholder="Email" formControlName="member_email" value="{{email}}">
-          </mat-form-field>
-          <br />
-
-        </div>
-
-        <!-- Password Field-->
-        <div class="contact-inputs">
-          <mat-form-field class="form_inputs" class="col">
-            <input #passwordInput matInput placeholder="Password" matInput type="password" formControlName="member_password" value="{{password}}"><i class="fas fa-eye-slash" (click)="showPassword()"></i>
-          </mat-form-field>
-          <br />
-
-          <!-- Confirm Password-->
-          <mat-form-field class="form_inputs" class="col">
-            <input #confirmInput matInput placeholder="Confirm Password" matInput type="password" formControlName="member_confirm" value="{{confirmPassword}}"><i class="fas fa-eye-slash" (click)="showConfirmedPassword()"></i>
-          </mat-form-field>
-        </div>
-        <br />
-
-        <div class="submit-input">
-          <button type="submit" id="save" class="btn btn-default">Save Information</button>
-        </div>
-      </div>
     </form>
-
   </div>
-
-
+  <!-- / Profile Form -->
 
 </div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalTitle">Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="form">
+
+          <!-- Change Password Form -->
+          <form id="change_password_form" [formGroup]="changePasswordForm" (submit)="changePassword()"
+            class="needs-validation" novalidate>
+            <div class="row">
+
+
+              <!-- Current Password -->
+              <div class="form-group">
+                <label for="current_password">Current Password</label>
+                <input type="password" class="form-control" id="current_password" placeholder="Enter current password"
+                  formControlName="current_password" required
+                  [ngClass]="{
+                    'is-invalid': changePasswordForm.controls['current_password'].invalid && (submitted || changePasswordForm.controls['current_password'].dirty), 
+                    'is-valid': changePasswordForm.controls['current_password'].valid && (submitted || changePasswordForm.controls['current_password'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="changePasswordForm.controls['current_password'].invalid && (submitted || changePasswordForm.controls['current_password'].dirty)">
+                  <div *ngFor="let validation of change_password_validators.current_password">
+                    <p *ngIf="changePasswordForm.get('current_password').hasError(validation.type)">
+                      {{validation.message}}</p>
+                  </div>
+                </div>
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Current Password -->
+
+              <!-- New Password -->
+              <div class="form-group">
+                <label for="new_password">New Password</label>
+                <input type="password" class="form-control" id="new_password" placeholder="Enter new password"
+                  formControlName="new_password" required
+                  [ngClass]="{
+                    'is-invalid': changePasswordForm.controls['new_password'].invalid && (submitted || changePasswordForm.controls['new_password'].dirty), 
+                    'is-valid': changePasswordForm.controls['new_password'].valid && (submitted || changePasswordForm.controls['new_password'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="changePasswordForm.controls['new_password'].invalid && (submitted || changePasswordForm.controls['new_password'].dirty)">
+                  <div *ngFor="let validation of change_password_validators.new_password">
+                    <p *ngIf="changePasswordForm.get('new_password').hasError(validation.type)">{{validation.message}}
+                    </p>
+                  </div>
+                </div>
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / New Password -->
+
+              <!-- Confirm Password -->
+              <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm new password"
+                  formControlName="confirm_password" required
+                  [ngClass]="{
+                      'is-invalid': changePasswordForm.controls['confirm_password'].invalid && (submitted || changePasswordForm.controls['confirm_password'].dirty), 
+                      'is-valid': changePasswordForm.controls['confirm_password'].valid && (submitted || changePasswordForm.controls['confirm_password'].dirty)}">
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="changePasswordForm.controls['confirm_password'].invalid && (submitted || changePasswordForm.controls['confirm_password'].dirty)">
+                  <div *ngFor="let validation of change_password_validators.confirm_password">
+                    <p *ngIf="changePasswordForm.get('confirm_password').hasError(validation.type)">
+                      {{validation.message}}</p>
+                  </div>
+                </div>
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Confirm Password -->
+
+
+              <!-- Submit -->
+              <button type="submit" class="btn btn-default-save" >Save</button>
+              <!-- / Submit -->
+
+            </div>
+          </form>
+          <!-- / Change Password Form -->
+
+        </div>
+      </div>
+      <!-- / Modal Body -->
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / Change Password Modal -->
