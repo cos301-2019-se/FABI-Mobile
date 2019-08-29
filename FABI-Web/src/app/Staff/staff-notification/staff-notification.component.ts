@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Monday, August 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -68,6 +68,9 @@ export class StaffNotificationComponent implements OnInit {
 
   /** Object array for holding the staff members -  @type {Member[]} */                        
   staff: Member[] = []; 
+
+  /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */
+  notificationsLoading: boolean = true;
   
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +86,7 @@ export class StaffNotificationComponent implements OnInit {
    * @param {Router} router
    * @param {Resolver} resolver
    * 
-   * @memberof ReportingComponent
+   * @memberof StaffNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
@@ -95,7 +98,16 @@ export class StaffNotificationComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService,
     private cultureCollectionService: CultureCollectionAPIService
   ) { }
+  
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      NG ON INIT()  
+  /**
+   * This function is called when the page loads
+   *
+   * @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     // this.authService.temporaryLoginStaff().subscribe((response : any) => {
@@ -113,6 +125,7 @@ export class StaffNotificationComponent implements OnInit {
   //                                                    GET ALL STAFF
   /**
    *  This function will be used to get all the staff members of FABI and load them into an array
+   * 
    *  @memberof StaffNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,7 +157,9 @@ export class StaffNotificationComponent implements OnInit {
   //                                                        GET DATE
   /**
    *  This function will put the string date provided into a more readable format for the notifications
+   * 
    * @param {string} date The date of the log
+   * 
    * @memberof StaffNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -306,6 +321,9 @@ export class StaffNotificationComponent implements OnInit {
             }
           }          
         }
+
+        //Deactivate loading table spinners
+        this.notificationsLoading = false;
       }
       else{
         //Error handling
@@ -317,6 +335,7 @@ export class StaffNotificationComponent implements OnInit {
   //                                                      LOAD USER DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
+   *  @param {string} userID The user id of the user whose details need to be fetched
    * 
    *  @memberof StaffNotificationComponent
    */

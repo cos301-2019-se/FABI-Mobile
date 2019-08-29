@@ -106,7 +106,7 @@ export class DatabaseHandlerComponent implements OnInit {
 
   /** Specifies if the list of databases have been retreived to disable the loading spinner - @type {boolean} */
   databaseTableLoading: boolean = true;
-/** Specifies if the selected database has been retreived to disable the loading spinner - @type {boolean} */
+  /** Specifies if the selected database has been retreived to disable the loading spinner - @type {boolean} */
   viewDatabaseLoading: boolean = true;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,8 +275,6 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getCSV(){  
-
-
     let data = "";
     let dbname = this.selectedDatabase;
 
@@ -321,7 +319,6 @@ export class DatabaseHandlerComponent implements OnInit {
 
 
   getDBNames() {
-
     this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
       if (response.success == true && response.code == 200) {
 
@@ -357,7 +354,6 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public viewDatabase(databaseName : string) {
-
     this.selectedDatabase = databaseName;
     
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Retrieving Database" }});
