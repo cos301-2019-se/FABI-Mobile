@@ -25,6 +25,10 @@ const getRevitalizationRoute = require('./api/routes/getAllRevitalizationForms')
 const updateDepositStatusRoute = require('./api/routes/updateDepositStatus');
 const getProcessingFormsRoute = require('./api/routes/getAllProcessingForms');
 const submitCMWProcessingFormRoute = require('./api/routes/submitCMWProcessingForm');
+const deleteCMWDepositFormRoute = require('./api/routes/deleteCMWDepositForm');
+const deleteCMWProcessingFormRoute = require('./api/routes/deleteCMWProcessingForm');
+const deleteCMWRequestFormRoute = require('./api/routes/deleteCMWRequestForm');
+const deleteCMWRevitalizationFormRoute = require('./api/routes/deleteCMWRevitalizationForm');
 
 app.use('/submitCMWRevitalizationForm', revitalizationRoute);
 app.use('/submitCMWDepositForm', depositRoute);
@@ -35,6 +39,10 @@ app.use('/getAllRevitalizationForms', getRevitalizationRoute);
 app.use('/updateDepositStatus', updateDepositStatusRoute);
 app.use('/getAllProcessingForms', getProcessingFormsRoute);
 app.use('/submitCMWProcessingForm', submitCMWProcessingFormRoute);
+app.use('/deleteCMWRevitalizationForm',deleteCMWRevitalizationFormRoute);
+app.use('/deleteCMWDepositForm',deleteCMWDepositFormRoute);
+app.use('/deleteCMWRequestForm',deleteCMWRequestFormRoute);
+app.use('/deleteCMWProcessingForm',deleteCMWProcessingFormRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {
