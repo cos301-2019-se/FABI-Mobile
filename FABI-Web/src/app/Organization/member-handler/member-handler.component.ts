@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MemberInfo } from '../../organization-api.service';
-import { OrganizationInfo } from '../../organization-api.service';
-import { OrganizationApiService } from '../../organization-api.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../error/error.component';
-import { Router } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
-import { AdminAPIService } from '../../admin-api.service';
-
-
-=======
->>>>>>> develop
 /**
  * File Name: member-handler.component.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Organization\member-handler\member-handler.component.ts
@@ -52,10 +33,6 @@ import { LoadingComponent } from "../../_loading/loading.component";
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 
 
-<<<<<<< HEAD
-=======
->>>>>>> develop
->>>>>>> develop
 @Component({
   selector: 'app-member-handler',
   templateUrl: './member-handler.component.html',
@@ -64,34 +41,6 @@ import { UserManagementAPIService } from 'src/app/_services/user-management-api.
 })
 export class MemberHandlerComponent implements OnInit {
 
-<<<<<<< HEAD
-  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove' ,'Action' ];
-  dataSource = new MatTableDataSource([]);
-
-=======
-<<<<<<< HEAD
-   /*
-    GLOBALS
-  */
- addMemberForm: FormGroup;         // FormGroup object to reference add user type form
- submitted: boolean = false;       // if form has been submitted
- success: boolean = false;         // if form was succesfully filled out
- organizations: Object;            //array for Organization dropdown
-  
-  constructor(private service: OrganizationApiService, private adminService: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router)
-   {
-    this.addMemberForm = this.formBuilder.group({
-      organization: ['', Validators.required],
-      member_name: ['', Validators.required],
-      member_surname: ['', Validators.required],
-      member_location: ['', Validators.required],
-      member_email: ['', Validators.required],
-      member_phone: ['', Validators.required]
-
-    })
-  }
-=======
->>>>>>> develop
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +58,6 @@ export class MemberHandlerComponent implements OnInit {
   organizations: Interface.Organisation[];
   /** Array of Member objects - @type {OrganisationMember[]} */
   orgMembers: Interface.OrganisationMember[];
->>>>>>> develop
 
   /** Object array for holding all of the logs -  @type {any[]} */
   allNotifications: any[] = [];
@@ -249,45 +197,6 @@ export class MemberHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-    this.adminService.getAllOrganizations().subscribe((response:any) => {
-      if(response.success == true) {
-        // var orgs = response.data.content.qs.Organizations;
-        // forEach(var i in orgs)
-        // {
-        //   this.organizations.push(i);
-        // }
-        this.organizations = response.data.content.qs.Organizations;
-        
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: response.error.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        })
-      }    
-    }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: err.message}});
-      dialogRef.afterClosed().subscribe((result) => {
-        if(result == "Retry") {
-          this.ngOnInit();
-        }
-      })
-      console.log("ERROR:" + err.message);
-    })
-
-  }
-
-
-  addMember()
-  {
-=======
     //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
     // this.authService.temporaryLoginOrganisation().subscribe((response : any) => {
     //   this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -298,7 +207,6 @@ export class MemberHandlerComponent implements OnInit {
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
->>>>>>> develop
     this.viewMembers();
 
   }
@@ -312,103 +220,23 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
-  addMember() {    
-=======
+
   addMember() {
->>>>>>> develop
->>>>>>> develop
     this.submitted = true;
 
     if (this.addMemberForm.invalid) {
       return;
     }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    this.success = true;
-
-    const LorgName = this.addMemberForm.controls.organization.value;
-    const LmemberLocation = this.addMemberForm.controls.member_location.value;
-=======
->>>>>>> develop
     this.valid = true;
     this.loading = true;
 
     // const LmemberLocation = this.addMemberForm.controls.member_location.value;
-<<<<<<< HEAD
-=======
->>>>>>> develop
->>>>>>> develop
     const LmemberName = this.addMemberForm.controls.member_name.value;
     const LmemberSurname = this.addMemberForm.controls.member_surname.value;
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
-<<<<<<< HEAD
-    const user = this.authService.getCurrentSessionValue;
-    const org_details: Interface.Organisation = { orgName: user.user.organisation };
-    const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
-
-
-    this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
-
-      console.log("////// RESPONSE: " + response);
-
-      this.loading = false;
-      
-      if (response.success == true && response.code == 200) {
-        //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Member Added", "Dismiss", {
-          duration: 6000
-        });
-        this.refreshDataSource();
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Adding Member", message: response.message } });
-=======
-<<<<<<< HEAD
-    const org_details: OrganizationInfo = { orgName: LorgName };
-    const member_details: MemberInfo = { name: LmemberName, surname: LmemberSurname, location: LmemberLocation , email: LmemberEmail, phone: LmemberPhone};
-
-
-    this.service.addOrgMember(org_details, member_details).subscribe((response: any) => {
-      if (response.success == true) {
-        //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Successfully added member! Temp Password: " + response.data.content.tempPassword, "Dismiss", {
-          duration: 6000
-        });
-
-        console.log("Temp Password: " + response.data.content.tempPassword);
-
-      } else if (response.success == false) {
-        console.log("---- HERE ----");
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could not add member", message: response.message } });
->>>>>>> develop
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.addMember();
-          }
-<<<<<<< HEAD
-=======
-          //Take out when authenication is working - Just for test/demp purposes
-          this.router.navigate(['sample-form']);
-          //
-        })
-      }
-    }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could not add member", message: err.message } });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result == "Retry") {
-          this.addMember();
-        }
-      })
-      console.log("ERROR:" + err.message);
-    })
-=======
     const org_details: Interface.Organisation = { orgName: this.currentUser.organisation };
     const member_details: Interface.OrganisationMember = { fname: LmemberName, surname: LmemberSurname, email: LmemberEmail };
 
@@ -434,7 +262,6 @@ export class MemberHandlerComponent implements OnInit {
           if (result == "Retry") {
             this.addMember();
           }
->>>>>>> develop
         })
       }
     });
@@ -567,8 +394,6 @@ export class MemberHandlerComponent implements OnInit {
         })
       }
     });
-<<<<<<< HEAD
-=======
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -761,8 +586,6 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetMemberFields(){
     this.addMemberForm.reset();
->>>>>>> develop
->>>>>>> develop
   }
 
 }

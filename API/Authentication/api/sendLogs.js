@@ -1,5 +1,5 @@
 const request = require('request');
-
+const config = require('./config');
 module.exports = function(log){
 	
 	if(log.type == "ACCL"){
@@ -10,13 +10,14 @@ module.exports = function(log){
 				statusCode: log.statusCode,
 				details: log.details,
 				user: log.user,
+				moreInfo: log.moreInfo,
 				moreInfo : ''
 			}
 		};
 		
 		var options = {
 			method: 'POST',
-			hostname: 'logging-dot-api-fabi.appspot.com',
+			hostname: config.logging,
 			headers: {
 			  'Content-Type': 'application/json'
 			},
@@ -26,9 +27,11 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/ACCL';
-            request.post('https://logging-dot-api-fabi.appspot.com/ACCL', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
 					console.log(error)
+
                 }
             })
 			
@@ -52,7 +55,7 @@ module.exports = function(log){
 		
 		var options = {
 			method: 'POST',
-			hostname: 'logging-dot-api-fabi.appspot.com',
+			hostname: config.logging,
 			headers: {
 			  'Content-Type': 'application/json'
 			},
@@ -62,7 +65,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/ERRL';
-            request.post('https://logging-dot-api-fabi.appspot.com/ERRL', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
                     console.log(error)
                 }
@@ -90,7 +94,7 @@ module.exports = function(log){
 		
 		var options = {
 			method: 'POST',
-			hostname: 'logging-dot-api-fabi.appspot.com',
+			hostname:config.logging,
 			headers: {
 			  'Content-Type': 'application/json'
 			},
@@ -100,7 +104,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/USER';
-            request.post('https://logging-dot-api-fabi.appspot.com/USER', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
                     console.log(error)
 				}
@@ -127,7 +132,7 @@ module.exports = function(log){
 		
 		var options = {
 			method: 'POST',
-			hostname: 'logging-dot-api-fabi.appspot.com',
+			hostname: config.logging,
 			headers: {
 			  'Content-Type': 'application/json'
 			},
@@ -137,7 +142,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/DBML';
-            request.post('https://logging-dot-api-fabi.appspot.com/DBML', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
                     console.log(error)
 				}

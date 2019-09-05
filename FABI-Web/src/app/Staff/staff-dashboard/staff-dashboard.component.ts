@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Monday, August 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -109,7 +109,8 @@ export class StaffDashboardComponent implements OnInit {
   /**
    * This function is called when the page loads
    * 
-   * @description 1. Call loadNotifications() | 2. Call loadSamples() | 3. loadDepositForms() | 4. loadRequestForms()
+   * @description 1. loadDepositForms() | 2. loadRequestForms()
+   * 
    * @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,6 +165,7 @@ export class StaffDashboardComponent implements OnInit {
   //                                                      LOAD DEPOSIT FORMS
   /**
    *  This function will load all the deposit forms associated with the user into the HTML page.
+   * 
    *  @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,6 +199,7 @@ export class StaffDashboardComponent implements OnInit {
   //                                                      LOAD REQUEST FORMS
   /**
    *  This function will load all the request forms associated with the user into the HTML page.
+   * 
    *  @memberof StaffDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
