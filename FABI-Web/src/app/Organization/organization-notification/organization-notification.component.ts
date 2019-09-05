@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Thursday, August 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -43,13 +43,16 @@ export class OrganizationNotificationComponent implements OnInit {
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /** Contains the member stats that will be dynamically loaded in the HTML page - @type {string} */
-  memberStats: string;
-  /** Contains the sample stats for the organization that will be dynamically loaded in the HTML page - @type {string} */
-  sampleStats: string;
+  /** Object array for holding all of the logs -  @type {any[]} */
+  allNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */
+  newNotifications: string[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */
+  allLogs: string[] = [];
 
   /** Object array for holding the members of the organization -  @type {Member[]} */
   organizationMembers: Member[] = [];     
+  /** Object array for holding the members of the organization -  @type {Member[]} */
   organizationMembersExample: Member[] = [];     
   /** Object array for holding the samples of the organization -  @type {Sample[]} */
   organizationSamples: Sample[] = [];            
@@ -97,6 +100,29 @@ export class OrganizationNotificationComponent implements OnInit {
   /** Indicates if the help tab is hidden/shown - @type {boolean} */  
   helpTab: boolean = false;
 
+  /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */
+  notificationsLoading: boolean = true;
+
+  /** The details of the user currently logged in -  @type {any} */
+  currentUser: any;
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       CONSTRUCTOR
+  /**
+   * Creates an instance of OrganizationNotificationComponent.
+   * 
+   * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API Service
+   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {Router} router
+   * @param {Resolver} resolver
+   * @param {FormBuilder} formBuilder FOr getting the form values from the HTML
+   * 
+   * @memberof OrganizationNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private authService: AuthenticationService, 
     private router: Router, 
@@ -104,7 +130,7 @@ export class OrganizationNotificationComponent implements OnInit {
     private diagnosticClinicService: DiagnosticClinicAPIService, 
     private resolver: ComponentFactoryResolver,
     private formBuilder: FormBuilder, 
-    public sanitizer: DomSanitizer, 
+    public  sanitizer: DomSanitizer, 
     private notificationLoggingService: NotificationLoggingService, 
     private snackBar: MatSnackBar, 
   ) { 
@@ -124,16 +150,27 @@ export class OrganizationNotificationComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications(){}
 
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                              REMOVE NOTIFICATIONS
+  //                                                       REMOVE NOTIFICATIONS
   /**
-   *  This function will remove a notification for the notification section when the user clicks on the 'exit'
-   *  button/icon associated with that notification
+   *  This function will remove a notification from the notification section on the HTML page.
+   * 
+   * @param {string} id                   //The id of the notification to be removed
    * 
    * @memberof OrganizationNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeNotification(){}
+  removeNotification(id: string) {
+    this.newNotifications.push(id);
+
+    this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.ID, this.newNotifications).subscribe((response: any) => {
+      if (response.success == true) {
+
+      }
+      else {
+        //Error handling
+      }
+    });
+  }
 
 }

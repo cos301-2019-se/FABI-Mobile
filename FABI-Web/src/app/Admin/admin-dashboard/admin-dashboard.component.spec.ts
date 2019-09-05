@@ -2,11 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { MaterialModule} from '../../materials';
-<<<<<<< HEAD
-=======
-
-
->>>>>>> develop
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AdminDashboardComponent', () => {
