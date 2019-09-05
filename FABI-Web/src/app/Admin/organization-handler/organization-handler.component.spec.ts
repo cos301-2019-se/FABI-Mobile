@@ -17,14 +17,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 
-
-//Http Testing
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-
-//Router
-import { RouterTestingModule } from '@angular/router/testing';
-
-
 describe('OrganizationHandlerComponent', () => {
   let component: OrganizationHandlerComponent;
   let fixture: ComponentFixture<OrganizationHandlerComponent>;
