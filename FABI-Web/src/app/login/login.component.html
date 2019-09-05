@@ -50,7 +50,6 @@
           <div *ngFor="let validation of login_validation_messages.email">
               <p *ngIf="loginForm.get('email').hasError(validation.type)">{{validation.message}}</p>
           </div>
-
         </div>
         <!-- / Error Validation Feedback--> 
       </div>
