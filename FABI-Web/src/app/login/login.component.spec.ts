@@ -11,7 +11,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DebugElement } from '@angular/core';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule } from 'ngx-toastr';
 
 describe('LoginComponent', () => {
 
@@ -22,10 +22,23 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [
-            MaterialModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
+            MaterialModule, 
+            ReactiveFormsModule, 
+            FormsModule, 
+            HttpClientTestingModule, 
+            RouterTestingModule, 
+            NoopAnimationsModule, 
+            BrowserAnimationsModule,
+            ToastContainerModule,
+            ToastrModule,
+            ToastrComponentlessModule
         ],
         declarations: [ 
             LoginComponent 
+        ],
+        providers :[
+          { provide: ToastContainerModule, useValue: {} },
+          { provide: ToastrModule, useValue: {} }
         ]
     }).compileComponents();
   }));
