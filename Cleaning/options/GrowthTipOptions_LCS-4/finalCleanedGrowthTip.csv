@@ -1,0 +1,114 @@
+x
+1;brown discolouration
+2;Wilted
+3;wilting
+4;Dry??
+5;Dead
+6;Healthy
+7;Discoloration
+8;Alive
+9;aphids
+10;Girdling
+11; Scorch
+12;Resin Exudation
+13;Canker
+14;Insect/Mechanical damage
+15;Kino/Gum/Resin Exudation
+16;Sapwood
+17;hail damage
+18;Cambium
+19;Fruiting bodies
+20; Between outer and inner bark
+21;Mechanical damage
+22;Outer bark
+23;resin soaked
+24;Swelling
+25;Outer bark Cambium
+26; Cambium Sapwood
+27;Dry
+28;Discoloration (1-16)
+29;Healthy (1-20)
+30;Healthy (21-40)
+31;Clean and dry
+32; Almost dead
+33; Between inner and outer bark
+34;Discoloured
+35;Healthy (top)
+36; Discoloration and Outer bark (bottom)
+37;Almost dry
+38; Slight discoloration
+39;Clean
+40;Fresh
+41; Fungal structure
+42;Dead after wilting
+43;Top tips alive
+44; Lower tips dead
+45;Some alive
+46; Some dead
+47;Some are fresh
+48; Some are dry but clean
+49;Small
+50; Small
+51;Slight discoloration
+52;Almost dead
+53; Green
+54; Bark discoloration
+55;Outer bark is discoloured
+56;White mycelia
+57; White mycelia
+58; Water-soaked
+59;No stem
+60; Dark Lesions
+61; White/Grey Fungal Growth
+62; One has no tip
+63;Insect damage
+64; Blue stain
+65; Lesions
+66;Lower stem is brown
+67; Rough marks on bark
+68;White fungal growth
+69;Discoloration (darkened lesions)
+70;Discoloration (blue stains)
+71; White fungal growth
+72;Developed
+73;  Big cambium
+74; Necrotic
+75;Discoloration (Blue Stain)
+76;Discoloration (Water-soaked)
+77;Discoloration (Brown lesions)
+78; White mycelial growth
+79;Discoloration (Brown)
+80;Discoloration (Possibly Blue stain)
+81; White mycelial growth 
+82;Discoloration ( Water-soaked & Blue discoloration)
+83;No tip
+84;Cut
+85;Alive (some)
+86; Dead (some)
+87;Tip die-back
+88;Die-back
+89;Leaf spots
+90; Too dry
+91;Some dying
+92; Others alive
+93;Alive (light green)
+94; Starting to die
+95; Little discoloration on one side
+96;None
+97;K?/Gum/?/Exudation
+98;Everything is dead
+99;Die-back of stem
+100; K?/Gam/?Exudation
+101; Cambium Between outer and inner bark
+102;Insect/Mechanical damage/Discoloration/Outer bark/Between outer and inner bark
+103;Decomposting
+104;Slight staining
+105; Discoloration @ nodes
+106;Discoloured patches
+107;Almost purple discoloration
+108;Purple internal leasions
+109;Internal discoloration
+110;Bottom half healthy
+111; Top half grey/brown
+112;Parts healthy other parts discoloured
+113;Kino/Gum Exudation

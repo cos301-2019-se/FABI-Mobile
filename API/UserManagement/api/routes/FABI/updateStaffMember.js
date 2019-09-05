@@ -12,16 +12,16 @@ const log = require('../../sendLogs');
 router.post('/', updateStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Update Staff Member
+//                                             Update Staff
 /**
- * @summary Update a staff memebr associated with FABI
- * @description  REQUEST DATA REQUIRED: origional email of user to be updated ,fields which are to be changed
+ * @summary Update a Staff Member associated with FABI
+ * @description  REQUEST DATA REQUIRED: origional email of user to be updated ,fields which are to be changed, name of Organization
  *  
  * 1. check valid details have been submitted
- * 2. check if user to update exists, else return error
- * 3. IF email needs to be changed, delete copy details into new document with new email as the key
- * 4. IF password needs to be changed, encrypt password
- *  5. update the other fields 
+ * 2. check if user to update exists, else return error 
+ * 3. IF password needs to be updated, return error response stating password cannot be updated
+ * 4. IF email needs to be changed, delete copy details into new document with new email as the key
+ * 5. update the other fields 
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
@@ -82,8 +82,18 @@ function updateStaff(req, res) {
                 //(4)
                 if(req.body.fields.hasOwnProperty('password'))
                 {
-                    const salt = bcrypt.genSaltSync(10);
-                    req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
+                    res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                            success: true,
+                            code: 200,
+                            title: "FAILURE",
+                            message: "CANNOT UPDATE PASSWORD USING THIS ENDPOINT"
+                        });
+
+                    //const salt = bcrypt.genSaltSync(10);
+                    //req.body.fields.password = bcrypt.hashSync(req.body.fields.password, salt);
                 }
 
                 var updateRef = db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id);
@@ -91,18 +101,19 @@ function updateStaff(req, res) {
                 //(5)
                 updateRef.update(req.body.fields).then(() => {
 
-                    res.setHeader('Content-Type', 'application/problem+json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                        success: true,
-                        code: 200,
-                        title: "SUCCESS",
-                        message: "User Updated",
-                        data: {
-                            
-                        }
-                });
+                    db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id).get().then( doc => {
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                            success: true,
+                            code: 200,
+                            title: "SUCCESS",
+                            message: "User Updated",
+                            data : doc.data()
+                        });
+                    });
+                   
                 log({
                     type: 'USER',
                     action: 'AddMemberToOrg',

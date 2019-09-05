@@ -11,18 +11,10 @@ const log = require('../sendLogs');
 router.post('/', addDoc);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Add Member
+//                                                Porting
 /**
- * @summary Add Member to orginization
- * @description  REQUEST DATA REQUIRED: Organization name, Member name, email, surname
- *  1. Check if all required data is received and that it is correct.
- *      - IF NOT: return Error Response
- *  2. Connect to DB.
- *      - IF ERROR: return Error Response
- *  3. Encrypt Password.
- *  4. Add Member to given organization
- *      - IF ERROR: return Error Response
- *  5. Send appropriate response message.
+ * @summary Submit JSON array into Database
+ * @description  REQUEST DATA REQUIRED: Database name, Data to be submitted
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)

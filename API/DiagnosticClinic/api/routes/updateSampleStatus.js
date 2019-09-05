@@ -11,17 +11,11 @@ const bcrypt = require('bcrypt-nodejs');
 router.post('/', updateMember);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Update Organization Member
+//                                             Update Sample Status
 /**
- * @summary Update a Member memebr associated with Organization
- * @description  REQUEST DATA REQUIRED: origional email of user to be updated ,fields which are to be changed, name of Organization
+ * @summary Update the status of a sample with the given reference numeber
+ * @description  REQUEST DATA REQUIRED: reference number, new status
  *  
- * 1. check valid details have been submitted
- * 2. check if user to update exists, else return error 
- * 3. IF password needs to be updated, encrypt the new password
- * 4. IF email needs to be changed, delete copy details into new document with new email as the key
- * 5. update the other fields 
- *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
@@ -68,11 +62,12 @@ function updateMember(req, res) {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                 success: false,
-                code: 404,
+                code: 200,
                 title: "NOT FOUND",
-                message: "Sample does not exist"
+                message: "Sample does not exist",
+                data : {}
             });
         }
         else{
