@@ -105,7 +105,7 @@
 
 #### Links
   [GitHub](https://github.com/AeronLand)  
-  [LinkedIn](www.linkedin.com/in/aeron-land-4a1167180)   
+  [LinkedIn](www.linkedin.com/in/aeronland)   
   [CV](https://drive.google.com/file/d/1FrHabHyQqVcFHOmFWqiWDtoMbtidlbxO/view?usp=sharing)
 
 **Current Position:** BSc IT 3rd year
