@@ -61,11 +61,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-<<<<<<< HEAD
-    <code>src/app/error/error.component.ts</code>
-=======
     <code>src/app/_errors/error-component/error.component.ts</code>
->>>>>>> develop
 </p>
 
 
@@ -175,11 +171,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-<<<<<<< HEAD
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/error/error.component.ts:8</a></div>
-=======
                                 <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/_errors/error-component/error.component.ts:26</a></div>
->>>>>>> develop
                             </td>
                         </tr>
 
@@ -248,13 +240,8 @@
 
             <tr>
                 <td class="col-md-4">
-<<<<<<< HEAD
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">src/app/error/error.component.ts:12</a></div>
-=======
                     <div class="io-line">Defined in <a href="" data-line="30"
                             class="link-to-prism">src/app/_errors/error-component/error.component.ts:30</a></div>
->>>>>>> develop
                 </td>
             </tr>
 
@@ -306,11 +293,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-<<<<<<< HEAD
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/error/error.component.ts:10</a></div>
-=======
                                     <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/_errors/error-component/error.component.ts:28</a></div>
->>>>>>> develop
                             </td>
                         </tr>
 
@@ -325,19 +308,13 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Inject} from &#x27;@angular/core&#x27;;
 import { MAT_DIALOG_DATA } from &#x27;@angular/material&#x27;;
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 @Component({
   selector: &#x27;app-error&#x27;,
   templateUrl: &#x27;./error.component.html&#x27;,
   styleUrls: [&#x27;./error.component.scss&#x27;]
 })
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 export class ErrorComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -350,14 +327,6 @@ export class ErrorComponent implements OnInit {
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-<<<<<<< HEAD
-        <pre class="line-numbers"><code class="language-html">&lt;h2 mat-dialog-title&gt; Error &lt;/h2&gt;
-&lt;mat-dialog-content&gt;{{data.error}}&lt;/mat-dialog-content&gt;
-&lt;mat-dialog-content&gt;{{data.message}}&lt;/mat-dialog-content&gt;
-&lt;mat-dialog-content&gt;An error has occured&lt;/mat-dialog-content&gt;
-&lt;mat-dialog-actions&gt;
-  &lt;button mat-button mat-dialog-close mat-dialog-close&#x3D;&quot;Retry&quot;&gt;Retry&lt;/button&gt;
-=======
         <pre class="line-numbers"><code class="language-html">&lt;h2 mat-dialog-title&gt;{{data.error_title}}&lt;/h2&gt;
 &lt;mat-dialog-content *ngIf&#x3D;&quot;data.message !&#x3D; null || data.message !&#x3D; &#x27;&#x27;&quot;&gt;{{data.message}}&lt;/mat-dialog-content&gt;
 &lt;br/&gt;
@@ -376,7 +345,6 @@ export class ErrorComponent implements OnInit {
 &lt;/mat-expansion-panel&gt;
 &lt;mat-dialog-actions&gt;
   &lt;button mat-button mat-dialog-close mat-dialog-close&#x3D;&quot;Retry&quot; *ngIf&#x3D;&quot;data.retry &#x3D;&#x3D; true&quot;&gt;Retry&lt;/button&gt;
->>>>>>> develop
   &lt;button mat-button mat-dialog-close mat-dialog-close&#x3D;&quot;Dismiss&quot;&gt;Dismiss&lt;/button&gt;
 &lt;/mat-dialog-actions&gt;</code></pre>
     </div>
@@ -413,13 +381,8 @@ export class ErrorComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-<<<<<<< HEAD
-        var COMPONENT_TEMPLATE = '<div><h2 mat-dialog-title> Error </h2><mat-dialog-content>{{data.error}}</mat-dialog-content><mat-dialog-content>{{data.message}}</mat-dialog-content><mat-dialog-content>An error has occured</mat-dialog-content><mat-dialog-actions>  <button mat-button mat-dialog-close mat-dialog-close="Retry">Retry</button>  <button mat-button mat-dialog-close mat-dialog-close="Dismiss">Dismiss</button></mat-dialog-actions></div>'
-    var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'}];
-=======
         var COMPONENT_TEMPLATE = '<div><h2 mat-dialog-title>{{data.error_title}}</h2><mat-dialog-content *ngIf="data.message != null || data.message != \'\'">{{data.message}}</mat-dialog-content><br/><mat-expansion-panel>  <mat-expansion-panel-header>    <mat-panel-title *ngIf="(data.status != null || data.status != \'\') || (data.type != null || data.type != \'\') || (data.error != null || data.error != \'\')">      Details    </mat-panel-title>  </mat-expansion-panel-header>  <mat-dialog-content *ngIf="data.status != null || data.status != \'\'">{{data.status}}</mat-dialog-content>  <mat-dialog-content *ngIf="data.type != null || data.type != \'\'">{{data.type}}</mat-dialog-content>  <mat-dialog-content *ngIf="data.error != null || data.error != \'\'">{{data.error}}</mat-dialog-content></mat-expansion-panel><mat-dialog-actions>  <button mat-button mat-dialog-close mat-dialog-close="Retry" *ngIf="data.retry == true">Retry</button>  <button mat-button mat-dialog-close mat-dialog-close="Dismiss">Dismiss</button></mat-dialog-actions></div>'
     var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AdminDivComponent', 'selector': 'app-admin-div'},{'name': 'AdminProfileComponent', 'selector': 'app-admin-profile'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'ConfirmComponent', 'selector': 'app-confirm'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'NotificationDivComponent', 'selector': 'app-notification-div'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'ReportingComponent', 'selector': 'app-reporting'},{'name': 'SampleDivComponent', 'selector': 'app-sample-div'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffDivComponent', 'selector': 'app-staff-div'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffProfileComponent', 'selector': 'app-staff-profile'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'},{'name': 'UpdateComponent', 'selector': 'app-update'}];
->>>>>>> develop
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ErrorComponent'};
 </script>
@@ -434,10 +397,7 @@ export class ErrorComponent implements OnInit {
 
 
 
-<<<<<<< HEAD
-=======
                    
->>>>>>> develop
 
 
 

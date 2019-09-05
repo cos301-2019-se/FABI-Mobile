@@ -11,24 +11,14 @@ const log = require('../sendLogs');
 router.post('/', getAllStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
-//                                             Get All Fabi Admins
-/**
- * @summary Get all staff assotiated with FABI
-=======
 //                                             Get All Request Forms
 /**
  * @summary Get all CMW Processing Forms submitted to FABI
->>>>>>> API
  * @description  REQUEST DATA REQUIRED: null
  *
  *  1. Connect to DB.
  *      - IF ERROR: return Error Response
  *  2. Retrieve list from database
-<<<<<<< HEAD
- *  3. remove password information from data to be sent
-=======
->>>>>>> API
  *  4. Send appropriate response message.
  *
  * @param {*} res Used to send response to the client

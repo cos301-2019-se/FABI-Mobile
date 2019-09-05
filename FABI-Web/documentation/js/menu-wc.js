@@ -34,19 +34,11 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <span class="icon ion-ios-paper"></span>README
                             </a>
                         </li>
-<<<<<<< HEAD
-                        <li class="link">
-                            <a href="dependencies.html" data-type="chapter-link">
-                                <span class="icon ion-ios-list"></span>Dependencies
-                            </a>
-                        </li>
-=======
                                 <li class="link">
                                     <a href="dependencies.html" data-type="chapter-link">
                                         <span class="icon ion-ios-list"></span>Dependencies
                                     </a>
                                 </li>
->>>>>>> develop
                     </ul>
                 </li>
                     <li class="chapter modules">
@@ -58,11 +50,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <span class="icon ion-ios-arrow-down"></span>
                             </div>
                         </a>
-<<<<<<< HEAD
-                        <ul class="links collapse" ${ isNormalMode ? 'id="modules-links"' : 'id="xs-modules-links"' }>
-=======
                         <ul class="links collapse " ${ isNormalMode ? 'id="modules-links"' : 'id="xs-modules-links"' }>
->>>>>>> develop
                             <li class="link">
                                 <a href="modules/AdminModule.html" data-type="entity-link">AdminModule</a>
                             </li>
@@ -73,29 +61,18 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-<<<<<<< HEAD
-                                            'data-target="#components-links-module-AppModule-3dc1f1343454d67b287b139979f3464d"' : 'data-target="#xs-components-links-module-AppModule-3dc1f1343454d67b287b139979f3464d"' }>
-=======
                                             'data-target="#components-links-module-AppModule-927cb3f94bf2695939f649427c6a4984"' : 'data-target="#xs-components-links-module-AppModule-927cb3f94bf2695939f649427c6a4984"' }>
->>>>>>> develop
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-<<<<<<< HEAD
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-3dc1f1343454d67b287b139979f3464d"' :
-                                            'id="xs-components-links-module-AppModule-3dc1f1343454d67b287b139979f3464d"' }>
-=======
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-927cb3f94bf2695939f649427c6a4984"' :
                                             'id="xs-components-links-module-AppModule-927cb3f94bf2695939f649427c6a4984"' }>
->>>>>>> develop
                                             <li class="link">
                                                 <a href="components/AdminDashboardComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AdminDashboardComponent</a>
                                             </li>
                                             <li class="link">
-<<<<<<< HEAD
-=======
                                                 <a href="components/AdminDivComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AdminDivComponent</a>
                                             </li>
@@ -104,7 +81,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AdminProfileComponent</a>
                                             </li>
                                             <li class="link">
->>>>>>> develop
                                                 <a href="components/AppComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
                                             </li>
@@ -113,24 +89,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">ClinicHandlerComponent</a>
                                             </li>
                                             <li class="link">
-<<<<<<< HEAD
-=======
                                                 <a href="components/ConfirmComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">ConfirmComponent</a>
                                             </li>
                                             <li class="link">
->>>>>>> develop
                                                 <a href="components/DatabaseHandlerComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">DatabaseHandlerComponent</a>
                                             </li>
                                             <li class="link">
-<<<<<<< HEAD
-                                                <a href="components/ErrorComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ErrorComponent</a>
-=======
                                                 <a href="components/HomeComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">HomeComponent</a>
->>>>>>> develop
                                             </li>
                                             <li class="link">
                                                 <a href="components/LoginComponent.html"
@@ -157,13 +125,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">MemberViewSamplesComponent</a>
                                             </li>
                                             <li class="link">
-<<<<<<< HEAD
-=======
                                                 <a href="components/NotificationDivComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">NotificationDivComponent</a>
                                             </li>
                                             <li class="link">
->>>>>>> develop
                                                 <a href="components/OrganizationDashboardComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">OrganizationDashboardComponent</a>
                                             </li>
@@ -184,8 +149,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">OrganizationViewSamplesComponent</a>
                                             </li>
                                             <li class="link">
-<<<<<<< HEAD
-=======
                                                 <a href="components/ReportingComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">ReportingComponent</a>
                                             </li>
@@ -194,7 +157,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">SampleDivComponent</a>
                                             </li>
                                             <li class="link">
->>>>>>> develop
                                                 <a href="components/SampleFormComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">SampleFormComponent</a>
                                             </li>
@@ -207,24 +169,18 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">StaffDashboardComponent</a>
                                             </li>
                                             <li class="link">
-<<<<<<< HEAD
-=======
                                                 <a href="components/StaffDivComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">StaffDivComponent</a>
                                             </li>
                                             <li class="link">
->>>>>>> develop
                                                 <a href="components/StaffHandlerComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">StaffHandlerComponent</a>
                                             </li>
                                             <li class="link">
-<<<<<<< HEAD
-=======
                                                 <a href="components/StaffProfileComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">StaffProfileComponent</a>
                                             </li>
                                             <li class="link">
->>>>>>> develop
                                                 <a href="components/StaffSubmitSampleComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">StaffSubmitSampleComponent</a>
                                             </li>
@@ -248,10 +204,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                                 <a href="components/SubmitCmwRevitalizationComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">SubmitCmwRevitalizationComponent</a>
                                             </li>
-<<<<<<< HEAD
-                                        </ul>
-                                    </li>
-=======
                                             <li class="link">
                                                 <a href="components/UpdateComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">UpdateComponent</a>
@@ -273,14 +225,11 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         </li>
                                     </ul>
                                 </li>
->>>>>>> develop
                             </li>
                             <li class="link">
                                 <a href="modules/AppRoutingModule.html" data-type="entity-link">AppRoutingModule</a>
                             </li>
                             <li class="link">
-<<<<<<< HEAD
-=======
                                 <a href="modules/ErrorsModule.html" data-type="entity-link">ErrorsModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
@@ -299,7 +248,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                             </li>
                             <li class="link">
->>>>>>> develop
                                 <a href="modules/MaterialModule.html" data-type="entity-link">MaterialModule</a>
                             </li>
                             <li class="link">
@@ -329,12 +277,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <span>Classes</span>
                             <span class="icon ion-ios-arrow-down"></span>
                         </div>
-<<<<<<< HEAD
-                        <ul class="links collapse" ${ isNormalMode ? 'id="classes-links"' : 'id="xs-classes-links"' }>
-                            <li class="link">
-                                <a href="classes/Porting.html" data-type="entity-link">Porting</a>
-                            </li>
-=======
                         <ul class="links collapse " ${ isNormalMode ? 'id="classes-links"' : 'id="xs-classes-links"' }>
                             <li class="link">
                                 <a href="classes/Porting.html" data-type="entity-link">Porting</a>
@@ -342,7 +284,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <li class="link">
                                 <a href="classes/ServerErrorInterceptor.html" data-type="entity-link">ServerErrorInterceptor</a>
                             </li>
->>>>>>> develop
                         </ul>
                     </li>
                         <li class="chapter">
@@ -352,20 +293,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <span>Injectables</span>
                                 <span class="icon ion-ios-arrow-down"></span>
                             </div>
-<<<<<<< HEAD
-                            <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
-                                <li class="link">
-                                    <a href="injectables/AdminAPIService.html" data-type="entity-link">AdminAPIService</a>
-                                </li>
-                                <li class="link">
-                                    <a href="injectables/ApiConnectionService.html" data-type="entity-link">ApiConnectionService</a>
-                                </li>
-                                <li class="link">
-                                    <a href="injectables/APIconnectionService.html" data-type="entity-link">APIconnectionService</a>
-                                </li>
-                                <li class="link">
-                                    <a href="injectables/OrganizationApiService.html" data-type="entity-link">OrganizationApiService</a>
-=======
                             <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
                                     <a href="injectables/DiagnosticClinicAPIService.html" data-type="entity-link">DiagnosticClinicAPIService</a>
@@ -384,13 +311,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/UserManagementAPIService.html" data-type="entity-link">UserManagementAPIService</a>
->>>>>>> develop
                                 </li>
                             </ul>
                         </li>
                     <li class="chapter">
-<<<<<<< HEAD
-=======
                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#guards-links"' :
                             'data-target="#xs-guards-links"' }>
                             <span class="icon ion-ios-lock"></span>
@@ -404,72 +328,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </ul>
                     </li>
                     <li class="chapter">
->>>>>>> develop
                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ? 'data-target="#interfaces-links"' :
                             'data-target="#xs-interfaces-links"' }>
                             <span class="icon ion-md-information-circle-outline"></span>
                             <span>Interfaces</span>
                             <span class="icon ion-ios-arrow-down"></span>
                         </div>
-<<<<<<< HEAD
-                        <ul class="links collapse" ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
-                            <li class="link">
-                                <a href="interfaces/ClientFormData.html" data-type="entity-link">ClientFormData</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/ClientFormData-1.html" data-type="entity-link">ClientFormData</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/ClientFormData-2.html" data-type="entity-link">ClientFormData</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/Error.html" data-type="entity-link">Error</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/Error-1.html" data-type="entity-link">Error</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/FormData.html" data-type="entity-link">FormData</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/FormData-1.html" data-type="entity-link">FormData</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/LoginData.html" data-type="entity-link">LoginData</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/LoginData-1.html" data-type="entity-link">LoginData</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/LoginInfo.html" data-type="entity-link">LoginInfo</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/LoginInfo-1.html" data-type="entity-link">LoginInfo</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/LoginInfo-2.html" data-type="entity-link">LoginInfo</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/MemberInfo.html" data-type="entity-link">MemberInfo</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/Organization.html" data-type="entity-link">Organization</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/OrganizationAdmin.html" data-type="entity-link">OrganizationAdmin</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/OrganizationInfo.html" data-type="entity-link">OrganizationInfo</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/OrganizationInfo-1.html" data-type="entity-link">OrganizationInfo</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/SignupFormData.html" data-type="entity-link">SignupFormData</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/SignupFormData-1.html" data-type="entity-link">SignupFormData</a>
-=======
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
                             <li class="link">
                                 <a href="interfaces/AccessLogs.html" data-type="entity-link">AccessLogs</a>
@@ -527,18 +391,11 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/Species.html" data-type="entity-link">Species</a>
->>>>>>> develop
                             </li>
                             <li class="link">
                                 <a href="interfaces/StaffInfo.html" data-type="entity-link">StaffInfo</a>
                             </li>
                             <li class="link">
-<<<<<<< HEAD
-                                <a href="interfaces/UserInfo.html" data-type="entity-link">UserInfo</a>
-                            </li>
-                            <li class="link">
-                                <a href="interfaces/UserInfo-1.html" data-type="entity-link">UserInfo</a>
-=======
                                 <a href="interfaces/UpdateMember.html" data-type="entity-link">UpdateMember</a>
                             </li>
                             <li class="link">
@@ -546,7 +403,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/UserLogs.html" data-type="entity-link">UserLogs</a>
->>>>>>> develop
                             </li>
                             <li class="link">
                                 <a href="interfaces/UserType.html" data-type="entity-link">UserType</a>
@@ -560,14 +416,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <span>Miscellaneous</span>
                             <span class="icon ion-ios-arrow-down"></span>
                         </div>
-<<<<<<< HEAD
-                        <ul class="links collapse" ${ isNormalMode ? 'id="miscellaneous-links"' : 'id="xs-miscellaneous-links"' }>
-=======
                         <ul class="links collapse " ${ isNormalMode ? 'id="miscellaneous-links"' : 'id="xs-miscellaneous-links"' }>
                             <li class="link">
                                 <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
                             </li>
->>>>>>> develop
                             <li class="link">
                                 <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
                             </li>

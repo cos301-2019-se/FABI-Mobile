@@ -74,11 +74,7 @@
 import { Routes, RouterModule } from &#x27;@angular/router&#x27;;
 import { StaffDashboardComponent } from &#x27;./staff-dashboard/staff-dashboard.component&#x27;;
 
-<<<<<<< HEAD
-import {StaffSubmitSampleComponent} from &#x27;./staff-submit-sample/staff-submit-sample.component&#x27;;
-=======
 import { SampleFormComponent } from &#x27;../sample-form/sample-form.component&#x27;;
->>>>>>> develop
 
 import { SubmitCbsRequestComponent } from &#x27;./submit-cbs-request/submit-cbs-request.component&#x27;;
 import { SubmitCbsDepositComponent } from &#x27;./submit-cbs-deposit/submit-cbs-deposit.component&#x27;;
@@ -86,17 +82,6 @@ import { SubmitCbsDepositComponent } from &#x27;./submit-cbs-deposit/submit-cbs-
 import { SubmitCmwRequestComponent } from &#x27;./submit-cmw-request/submit-cmw-request.component&#x27;;
 import { SubmitCmwDepositComponent } from &#x27;./submit-cmw-deposit/submit-cmw-deposit.component&#x27;;
 import { SubmitCmwRevitalizationComponent } from &#x27;./submit-cmw-revitalization/submit-cmw-revitalization.component&#x27;;
-<<<<<<< HEAD
-
-const routes: Routes &#x3D; [
-  {path: &#x27;staff-dashboard&#x27;, component: StaffDashboardComponent},
-  {path: &#x27;staff-submit-sample&#x27;, component: StaffSubmitSampleComponent},
-  {path: &#x27;submit-cbs-request&#x27;, component: SubmitCbsRequestComponent},
-  {path: &#x27;submit-cbs-deposit&#x27;, component: SubmitCbsDepositComponent},
-  {path: &#x27;submit-cmw-request&#x27;, component: SubmitCmwRequestComponent},
-  {path: &#x27;submit-cmw-deposit&#x27;, component: SubmitCmwDepositComponent},
-  {path: &#x27;submit-cmw-revitalization&#x27;, component: SubmitCmwRevitalizationComponent}
-=======
 import { Role } from &#x27;../_interfaces/role&#x27;;
 import { AuthenticationGuard } from &#x27;../_guards/authentication.guard&#x27;;
 import { StaffProfileComponent } from &#x27;./staff-profile/staff-profile.component&#x27;;
@@ -150,7 +135,6 @@ const routes: Routes &#x3D; [
     canActivate: [AuthenticationGuard],
     data: {roles: [&#x27;Staff&#x27;] }
   }
->>>>>>> develop
 ];
 
 @NgModule({
@@ -171,10 +155,7 @@ export class StaffRoutingModule { }
 
 
 
-<<<<<<< HEAD
-=======
                    
->>>>>>> develop
 
 
 

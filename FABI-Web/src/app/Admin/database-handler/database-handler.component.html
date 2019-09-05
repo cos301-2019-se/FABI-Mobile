@@ -152,7 +152,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let DBName of allDatabaseNames">
+            <tr *ngFor="let DBName of allDatabaseNames | filter : 'database' : searchAdmins">
               <td>{{DBName}}</td>
               <td class="table-action">
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal" [id]="DBName"
@@ -227,12 +227,7 @@
               </div>
               <!-- /File Upload -->
             </div>
-<<<<<<< HEAD
-            <p *ngIf="loading" style="color: black;">Porting File...</p>
-          </mat-tab>
-=======
             <!-- / Database File Upload Section -->
->>>>>>> develop
 
             <!-- Preview Uplaoded Database Section -->
             <div class="preview" *ngIf="preview">

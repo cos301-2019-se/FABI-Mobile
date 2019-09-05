@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Thursday, August 29th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -88,6 +88,7 @@ export class StaffViewDatabasesComponent implements OnInit {
    * @param {DatabaseManagementService} dbService For calling the Database Management API service
    * @param {FormBuilder} formBuilder For building the HTML form to get its values
    * @param {AuthenticationService} authService For authenticating the user
+   * @param {Router} router
    * 
    * @memberof StaffViewDatabasesComponent
    */
@@ -100,7 +101,8 @@ export class StaffViewDatabasesComponent implements OnInit {
     private userManagementService: UserManagementAPIService,
     private dbService: DatabaseManagementService,
     private formBuilder: FormBuilder,
-    private portCSV: Porting
+    private portCSV: Porting,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -300,6 +302,19 @@ export class StaffViewDatabasesComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof StaffViewDatabasesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
 }
