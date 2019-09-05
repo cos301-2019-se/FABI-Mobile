@@ -14,32 +14,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 
-<<<<<<< HEAD
-import { ReactiveFormsModule } from '@angular/forms';
-=======
-<<<<<<< HEAD
-import {ReactiveFormsModule} from '@angular/forms';
-=======
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
->>>>>>> develop
->>>>>>> develop
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
 
-<<<<<<< HEAD
 import { ErrorsModule } from "./_errors/errors.module";
 import { NotificationService } from './_services/notification.service';
 
-=======
-<<<<<<< HEAD
-=======
-import { ErrorsModule } from "./_errors/errors.module";
-import { NotificationService } from './_services/notification.service';
-
->>>>>>> develop
->>>>>>> develop
 import { OrganizationModule } from './Organization/organization.module';
 import { OrganizationMemberModule } from './Organization-Member/organization-member.module';
 import { DatabaseHandlerComponent } from './Admin/database-handler/database-handler.component';
@@ -98,12 +81,8 @@ import { FilterPipe } from './_pipes/filter.pipe';
 import { ClinicAdminViewSamplesComponent } from './Admin/clinic-admin-view-samples/clinic-admin-view-samples.component';
 import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
 import { StaffViewDatabasesComponent } from './Staff/staff-view-databases/staff-view-databases.component';
-<<<<<<< HEAD
 import { StaffViewSamplesComponent } from './Staff/staff-view-samples/staff-view-samples.component';
 
-=======
-import {MatInputModule} from '@angular/material';
->>>>>>> unitTesting
 // import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
@@ -173,7 +152,6 @@ import {MatInputModule} from '@angular/material';
   ],
   imports: [
     BrowserModule,
-    MatInputModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,

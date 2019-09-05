@@ -25,11 +25,8 @@ const getAllFabiMembersRoute = require('./api/routes/FABI/getAllFabiMembers');
 const updateAdminDatabaseAccessRoute = require('./api/routes/FABI/updateAdminDatabaseAccess');
 const updateAdminDetailsRoute = require('./api/routes/FABI/updateAdminDetails');
 const updateStaffDatabaseAccessRoute = require('./api/routes/FABI/updateStaffDatabaseAccess');
-<<<<<<< HEAD
-=======
 const getAdminTypesRoute = require('./api/routes/FABI/getAdminTypes');
 const updateStaffPassowordRoute = require('./api/routes/FABI/updateStaffPassword');
->>>>>>> develop
 
 //External modules
 const addMemberToOrgRoute = require('./api/routes/External/addMemberToOrg');
@@ -71,13 +68,10 @@ app.use('/getAllFabiMembers', getAllFabiMembersRoute);
 app.use('/updateAdminDetails', updateAdminDetailsRoute);
 app.use('/updateAdminDatabaseAccess', updateAdminDatabaseAccessRoute);
 app.use('/updateStaffDatabaseAccess', updateStaffDatabaseAccessRoute);
-<<<<<<< HEAD
-=======
 app.use('/getAdminTypes', getAdminTypesRoute);
 app.use('/updateStaffPassword', updateStaffPassowordRoute);
 app.use('/updateOrgMemberPassword', updateOrgMemberPasswordRoute);
 app.use('/getAllPendingOrganizations', getPendingOrgsRoute);
->>>>>>> develop
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {

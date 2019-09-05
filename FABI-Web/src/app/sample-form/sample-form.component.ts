@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-import { ClientFormData } from '../organization-api.service';
-import { OrganizationInfo } from '../organization-api.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { LoginInfo } from '../api-connection.service';
-import { OrganizationApiService } from '../organization-api.service';
-import { AdminAPIService } from '../admin-api.service';
-=======
 /**
  * File Name: sample-form.component.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\sample-form\sample-form.component.ts
@@ -23,14 +13,9 @@ import { AdminAPIService } from '../admin-api.service';
  * <<license>>
  */
 
->>>>>>> develop
 import * as Interface from '../_interfaces/interfaces';
 import { Component, OnInit, ViewEncapsulation, Injector } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
-<<<<<<< HEAD
-=======
->>>>>>> develop
->>>>>>> develop
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -58,127 +43,6 @@ export class SampleFormComponent implements OnInit {
   sent: boolean = false;                // to check if user is logged in
   errors: boolean = false;
   organizations: Object;            //array for Organization dropdown
-<<<<<<< HEAD
-  plantationAddress: Interface.Address;
-  plantationLocation: Interface.Location;
-
-  constructor(
-    private authService: AuthenticationService, 
-    private clinicService: DiagnosticClinicAPIService,
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
-    private router: Router
-    ) {
-      this.sampleForm = this.formBuilder.group({
-
-      sample_plant_species: ['', Validators.required],
-      sample_num_samples: ['', Validators.required],
-      sample_street: ['', Validators.required],
-      sample_area: ['', Validators.required],
-      sample_city: ['', Validators.required],
-      sample_farm: ['', Validators.required],
-      sample_province: ['', Validators.required],
-      sample_gps: ['', Validators.required],
-      date_sample_collected: ['', Validators.required],
-      date_sample_sent: ['', Validators.required],
-=======
-<<<<<<< HEAD
-
-  // sampleForm = new FormGroup({
-  //   sample_form_name: new FormControl(),
-  //   sample_form_company: new FormControl(),
-  //   sample_form_address: new FormControl(),
-  //   sample_form_contact: new FormControl(),
-  //   sample_form_email: new FormControl(),
-  //   sample_form_tree_species: new FormControl(),
-  //   sample_form_number_samples: new FormControl(),
-  //   sample_form_location1: new FormControl(),
-  //   sample_form_location2: new FormControl(),
-  //   sample_form_compartment: new FormControl(),
-  //   sample_form_gps: new FormControl(),
-  //   sample_form_date_collection: new FormControl(),
-  //   sample_form_date_sent: new FormControl(),
-  //   sample_type_soil: new FormControl(),
-  //   sample_type_stems: new FormControl(),
-  //   sample_type_roots: new FormControl(),
-  //   sample_type_twigs: new FormControl(),
-  //   sample_type_leaves: new FormControl(),
-  //   sample_type_seedlings: new FormControl(),
-  //   sample_type_media: new FormControl(),
-  //   sample_type_water: new FormControl(),
-  //   symptom_wilt: new FormControl(),
-  //   symptom_stunting: new FormControl(),
-  //   symptom_leafspot: new FormControl(),
-  //   symptom_rootrot: new FormControl(),
-  //   symptom_dieback: new FormControl(),
-  //   symptom_cankers: new FormControl(),
-  //   symptom_death: new FormControl(),
-  //   symptom_wood: new FormControl(),
-  //   symptom_other: new FormControl(),
-  //   distribution_localized: new FormControl(),
-  //   distributed_scattered: new FormControl(),
-  //   distributed_general: new FormControl(),
-  //   conditions_affected: new FormControl(),
-  //   conditions_problem_noticed: new FormControl(),
-  //   conditions_date_planted: new FormControl(),
-  //   conditions_weather_disturbances: new FormControl(),
-  //   conditions_weather_prior: new FormControl(),
-  //   conditions_others: new FormControl(),
-  //   conditions_additional: new FormControl(),
-  //   landowner: new FormControl(),
-  //   landowner_signature: new FormControl()
-
-  // });
-
-  // api: APIconnectionService;
-
-  constructor(private service: OrganizationApiService, private adminServce: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
-    this.sampleForm = this.formBuilder.group({
-
-      organization: ['', Validators.required],
-      sample_form_tree_species: ['', Validators.required],
-      sample_form_number_samples: ['', Validators.required],
-      sample_form_location1: ['', Validators.required],
-      sample_form_location2: ['', Validators.required],
-      sample_form_compartment: ['', Validators.required],
-
-      sample_form_gps: ['', Validators.required],
-      sample_form_date_collection: ['', Validators.required],
-      sample_form_date_sent: ['', Validators.required],
->>>>>>> develop
-
-      sample_type_soil: ['', Validators.required],
-      sample_type_stems: ['', Validators.required],
-      sample_type_roots: ['', Validators.required],
-      sample_type_twigs: ['', Validators.required],
-      sample_type_leaves: ['', Validators.required],
-      sample_type_seedlings: ['', Validators.required],
-      sample_type_media: ['', Validators.required],
-      sample_type_water: ['', Validators.required],
-
-      symptom_wilt: ['', Validators.required],
-      symptom_stunting: ['', Validators.required],
-      symptom_leafspot: ['', Validators.required],
-      symptom_rootrot: ['', Validators.required],
-      symptom_dieback: ['', Validators.required],
-      symptom_cankers: ['', Validators.required],
-      symptom_death: ['', Validators.required],
-      symptom_wood: ['', Validators.required],
-      symptom_other: ['', Validators.required],
-
-      distribution_localized: ['', Validators.required],
-      distributed_scattered: ['', Validators.required],
-      distributed_general: ['', Validators.required],
-
-      conditions_affected: ['', Validators.required],
-      conditions_problem_noticed: ['', Validators.required],
-      conditions_date_planted: ['', Validators.required],
-      conditions_weather_disturbances: ['', Validators.required],
-      conditions_weather_prior: ['', Validators.required],
-      conditions_others: ['', Validators.required],
-      conditions_additional: ['', Validators.required]
-=======
   plantationAddress: Interface.Address;
   plantationLocation: Interface.Location;
 
@@ -268,7 +132,6 @@ export class SampleFormComponent implements OnInit {
       // Permission
       landowner_name: [''],
       permission_granted: [''] 
->>>>>>> develop
     })
   }
 
@@ -353,49 +216,23 @@ export class SampleFormComponent implements OnInit {
       permission_granted: this.sampleForm.controls.permission_granted.value
     };
 
-<<<<<<< HEAD
-    const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
-
-
-    this.clinicService.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
-=======
-<<<<<<< HEAD
-    const orgDetails: OrganizationInfo = { orgName: this.sampleForm.controls.organization.value };
-
-
-    this.service.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
->>>>>>> develop
-      console.log("HERE");
-      if (response.success == true) {
-=======
     // const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
 
     this.clinicService.submitSampleForm(formDetails).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
->>>>>>> develop
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Successfully Submitted Form", "Dismiss", {
           duration: 3000
         });
 
-<<<<<<< HEAD
-        console.log("Reference Number : " + response.data.referenceNumber);
-
-      } else if (response.success == false) {
-=======
-<<<<<<< HEAD
-        console.log("Reference Number : " + response.data.content.referenceNumber);
-=======
         // console.log(JSON.stringify(response));
         //Set pre-diagnosis
         localStorage.setItem('pre-diagnosis', response.data.prediagnosis);
->>>>>>> develop
 
         //Navigate to the pre-diagnosis 
         this.router.navigate(['/pre-diagnosis']);
       } 
       else if (response.success == false) {
->>>>>>> develop
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Submit Form", message: response.message } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -422,47 +259,6 @@ export class SampleFormComponent implements OnInit {
 
   }
 
-<<<<<<< HEAD
-  ngOnInit() {
-<<<<<<< HEAD
-    let today = new Date();
-    this.sampleForm.patchValue( {
-      date_sample_sent: today
-    });
-
-=======
-    this.adminServce.getAllOrganizations().subscribe((response:any) => {
-      if(response.success == true) {
-        // var orgs = response.data.content.qs.Organizations;
-        // forEach(var i in orgs)
-        // {
-        //   this.organizations.push(i);
-        // }
-        this.organizations = response.data.content.qs.Organizations;
-        
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: response.error.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        })
-      }    
-    }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: err.message}});
-      dialogRef.afterClosed().subscribe((result) => {
-        if(result == "Retry") {
-          this.ngOnInit();
-        }
-      })
-      console.log("ERROR:" + err.message);
-    })
->>>>>>> develop
-  }
-=======
->>>>>>> develop
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        SELECT LOCATION

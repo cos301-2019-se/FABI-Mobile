@@ -10,10 +10,12 @@ admin.initializeApp({
 
 const displayHTML = require('./api/routes/displayHTML');
 
-const loginRoute = require("./api/routes/login");
-const getUserTypesRoute = require('./api/routes/getUserTypes');
-const getUserTypesOrgRoute = require('./api/routes/getUserTypesForOrg');
-const registerNewOrgRoute = require('./api/routes/registerNewOrg');
+//fabi modules
+const createDatabaseRoute = require('./api/routes/createDatabase');
+const addDocRoute = require('./api/routes/addDoc');
+const portingRoute = require('./api/routes/porting');
+const retrieveDatabaseRoute = require('./api/routes/retrieveDatabase');
+const getDBNamesRoute = require('./api/routes/getDBNames');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -22,10 +24,12 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/',displayHTML);
-app.use('/login', loginRoute);
-app.use('/getUserTypes', getUserTypesRoute);
-app.use('/getUserTypesForOrg', getUserTypesOrgRoute);
-app.use('/registerNewOrganization', registerNewOrgRoute);
+app.use('/createDatabase', createDatabaseRoute);
+app.use('/addDoc', addDocRoute);
+app.use('/porting', portingRoute);
+app.use('/retrieveDatabase', retrieveDatabaseRoute);
+app.use('/getDBNames', getDBNamesRoute);
+
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {
