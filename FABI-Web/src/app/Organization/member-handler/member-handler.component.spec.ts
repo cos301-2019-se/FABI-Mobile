@@ -17,11 +17,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-<<<<<<< HEAD
-
-=======
 import { FilterPipe } from '../../_pipes/filter.pipe';
->>>>>>> develop
 
 describe('MemberHandlerComponent', () => {
   let component: MemberHandlerComponent;

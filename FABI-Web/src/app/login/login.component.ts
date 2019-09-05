@@ -15,34 +15,6 @@
 
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-import { LoginInfo } from '../admin-api.service';
-import { AdminAPIService } from '../admin-api.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../error/error.component';
-import { Router } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
-//import { userInfo } from 'os';
-
-
-//Object for defining how a organization is structured
-export interface Organization {
-  ID: string; //This will contain the ID retreived from the DB 
-  Name: string; //This will be the name of the organization
-}
-
-//Object for defining how a userType is structured
-export interface UserType {
-  ID: string; //This will contain the ID retreived from the DB 
-  Name: string; //This will be the name of the type
-}
-=======
->>>>>>> develop
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
@@ -52,10 +24,6 @@ import { ErrorComponent } from '../_errors/error-component/error.component';
 import * as Interface from '../_interfaces/interfaces';
 import { ToastrService } from 'ngx-toastr';
 
-<<<<<<< HEAD
-=======
->>>>>>> develop
->>>>>>> develop
 
 @Component({
   selector: 'app-login',
@@ -66,28 +34,6 @@ import { ToastrService } from 'ngx-toastr';
 
 export class LoginComponent implements OnInit {
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-  /*
-    GLOBALS
-  */
-  loginForm: FormGroup;             // FormGroup object to reference add user type form
-  submitted: boolean = false;       // if form has been submitted
-  success: boolean = false;         // if form was succesfully filled out
-  loggedIn: boolean = false;        // to check if user is logged in
-  selectedOrganization: boolean = false;
-  organizations: Object;            //array for Organization dropdown
-  userTypes: Object;                //array for User Type dropdown
-  loading: boolean = false;
-  selectedOrg: string;
-
-  /*
-     CONSTRUCTOR
-   */
-  constructor(private service: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
-=======
->>>>>>> develop
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,10 +102,6 @@ export class LoginComponent implements OnInit {
     //   var organization = '';
     // }
 
-<<<<<<< HEAD
-=======
->>>>>>> develop
->>>>>>> develop
     this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
       email: ['',Validators.compose([
@@ -170,11 +112,6 @@ export class LoginComponent implements OnInit {
     })
   }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> develop
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                              LOGIN
@@ -186,40 +123,14 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
-=======
->>>>>>> develop
->>>>>>> develop
   login() {
-
     this.submitted = true;
 
     // Check if form input is valid 
     if (this.loginForm.invalid) {
       return;
     }
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-=======
-    this.success = true;
-    this.loading = true;
-
-    const Lemail = this.loginForm.controls.login_email.value;
-    const Lpassw = this.loginForm.controls.login_password.value;
-    const Lorg = this.loginForm.controls.organization.value;
-    const LuserType = this.loginForm.controls.userType.value;
-
-    const details: LoginInfo = { email: Lemail, password: Lpassw, organization: Lorg, userType: LuserType };
-
-    this.service.login(details).subscribe((response: any) => {
-
-      this.loading = false;
-      
-      if (response.success == true) {
-=======
-
->>>>>>> develop
     this.valid = true;
     this.loading = true;
 
@@ -243,65 +154,11 @@ export class LoginComponent implements OnInit {
         }
         // ELSE user Authorised:
 
-<<<<<<< HEAD
-        //Setting local storage to hold the users details
-        localStorage.setItem('userID', response.userDetails.id);
-        localStorage.setItem('userOrganization', Lorg);
-        localStorage.setItem('userPassword', Lpassw);
-
-=======
->>>>>>> develop
->>>>>>> develop
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Welcome", "Dismiss", {
           duration: 3000
         });
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        this.service.setToken(response.data.token);
-        this.service.setLoggedin();
-
-        if(details.organization == "FABI")
-        {
-          if(details.userType == "Admin" || details.userType == "Database Admin")
-          {
-            try {
-              this.router.navigate(['fabi-admin-dashboard']);
-            } catch(err) {
-              console.log("Could not redirect to dashboard: " + err.message);
-            }
-            
-          }
-          else {
-            try {
-              this.router.navigate(['fabi-staff-dashboard']);
-            } catch(err) {
-              console.log("Could not redirect to dashboard: " + err.message);
-            }
-          }
-        }
-        else
-        {
-          if(details.userType == "Admin")
-          { 
-            try {
-              this.router.navigate(['org-admin-dashboard']);
-            } catch(err) {
-              console.log("Could not redirect to dashboard: " + err.message);
-            }
-          } else
-          {
-            try {
-              this.router.navigate(['org-member-dashboard']);
-            } catch(err) {
-              console.log("Could not redirect to dashboard: " + err.message);
-            }
-          }
-        }
-=======
->>>>>>> develop
         // Navigate to specific dashboard, based on user's type
         if(response.userDetails.userType == 'SuperUser') {
           this.router.navigate(['/admin-dashboard']);
@@ -319,10 +176,6 @@ export class LoginComponent implements OnInit {
           });
         }
         
-<<<<<<< HEAD
-=======
->>>>>>> develop
->>>>>>> develop
 
       } else if (response.success == false) {
         //POPUP MESSAGE
@@ -333,59 +186,6 @@ export class LoginComponent implements OnInit {
           }
         })
       }
-<<<<<<< HEAD
-    });
-    
-    this.loading = false;
-=======
-<<<<<<< HEAD
-
-      this.loading = false;
-
-    }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Log In", message: err.message } });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result == "Retry") {
-          this.login();
-        }
-      })
-      console.log("ERROR:" + err.message);
-      this.loading = false;
-    })
->>>>>>> develop
-  }
-
-  ngOnInit() {
-<<<<<<< HEAD
-
-    //-------- Load Organisation names for Drop Down --------
-    this.userManagementServicee.getAllOrganizations().subscribe((response: any) => {
-      
-      if (response.success == true && response.code == 200) {
-        console.log(response);
-        console.log(response.data);
-        this.organizations = response.data.Organizations;
-
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the Organisations", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
-      }
-    });
-=======
-    this.loggedIn = this.service.isLoggedIn();
-    if (this.loggedIn == true) {
-      this.router.navigate(['sample-form']);
-    }
->>>>>>> develop
-
-  }
-=======
     });
     
     this.loading = false;
@@ -439,6 +239,5 @@ export class LoginComponent implements OnInit {
     });
     
   }  
->>>>>>> develop
 
 }

@@ -5,11 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
-<<<<<<< HEAD
- * Last Modified: Thursday, August 8th 2019
-=======
  * Last Modified: Friday, August 23rd 2019
->>>>>>> develop
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -431,9 +427,6 @@ export class UserManagementAPIService {
 
   }
 
-<<<<<<< HEAD
-
-=======
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    GET ALL USER TYPES 
   /**
@@ -468,7 +461,6 @@ export class UserManagementAPIService {
     return this.http.request<any>('POST', '***REMOVED***/getUserTypes', options);
 
   }
->>>>>>> develop
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                   CREATE NEW ORGANISATION
