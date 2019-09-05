@@ -1,0 +1,2626 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>fabi-web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">fabi-web documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>HttpService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/_services/http.service.ts</code>
+        </p>
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#currentSession">currentSession</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#currentSessionSubject">currentSessionSubject</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#currentUser">currentUser</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addFABIAdmin">addFABIAdmin</a>
+                            </li>
+                            <li>
+                                <a href="#addOrgMember">addOrgMember</a>
+                            </li>
+                            <li>
+                                <a href="#addStaffMember">addStaffMember</a>
+                            </li>
+                            <li>
+                                <a href="#createOrganization">createOrganization</a>
+                            </li>
+                            <li>
+                                <a href="#getAllOrganizationMembers">getAllOrganizationMembers</a>
+                            </li>
+                            <li>
+                                <a href="#getAllOrganizations">getAllOrganizations</a>
+                            </li>
+                            <li>
+                                <a href="#getAllStaffMembers">getAllStaffMembers</a>
+                            </li>
+                            <li>
+                                <a href="#getOrganizationDetails">getOrganizationDetails</a>
+                            </li>
+                            <li>
+                                <a href="#getOrganizationMemberDetails">getOrganizationMemberDetails</a>
+                            </li>
+                            <li>
+                                <a href="#getUserTypes">getUserTypes</a>
+                            </li>
+                            <li>
+                                <a href="#login">login</a>
+                            </li>
+                            <li>
+                                <a href="#porting">porting</a>
+                            </li>
+                            <li>
+                                <a href="#removeFABIStaffMember">removeFABIStaffMember</a>
+                            </li>
+                            <li>
+                                <a href="#removeOrganization">removeOrganization</a>
+                            </li>
+                            <li>
+                                <a href="#removeOrganizationMember">removeOrganizationMember</a>
+                            </li>
+                            <li>
+                                <a href="#retrieveAllSamples">retrieveAllSamples</a>
+                            </li>
+                            <li>
+                                <a href="#retrieveDatabase">retrieveDatabase</a>
+                            </li>
+                            <li>
+                                <a href="#retrieveMemberSamples">retrieveMemberSamples</a>
+                            </li>
+                            <li>
+                                <a href="#reversePorting">reversePorting</a>
+                            </li>
+                            <li>
+                                <a href="#setSessionVariables">setSessionVariables</a>
+                            </li>
+                            <li>
+                                <a href="#submitSampleForm">submitSampleForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#currentSessionValue">currentSessionValue</a>
+                                </li>
+                                <li>
+                                    <a href="#currentUserValue">currentUserValue</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, snackBar: MatSnackBar, dialog: MatDialog)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/_services/http.service.ts:37</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>snackBar</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatSnackBar</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addFABIAdmin"></a>
+                    <span class="name">
+                        <b>
+                            addFABIAdmin
+                        </b>
+                        <a href="#addFABIAdmin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addFABIAdmin(staffInfo: <a href="../interfaces/StaffInfo.html">Interface.StaffInfo</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="426"
+                            class="link-to-prism">src/app/_services/http.service.ts:426</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that send a request to the API to add a new FABI Admin to the database</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>staffInfo</td>
+                                    <td>
+                                                <code><a href="../interfaces/StaffInfo.html" target="_self" >Interface.StaffInfo</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addOrgMember"></a>
+                    <span class="name">
+                        <b>
+                            addOrgMember
+                        </b>
+                        <a href="#addOrgMember"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addOrgMember(orgInfo: <a href="../interfaces/Organisation.html">Interface.Organisation</a>, memberInfo: Interface.OrganisationMember)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="461"
+                            class="link-to-prism">src/app/_services/http.service.ts:461</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to add a new Member to a specific Organisation</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>orgInfo</td>
+                                    <td>
+                                                <code><a href="../interfaces/Organisation.html" target="_self" >Interface.Organisation</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>memberInfo</td>
+                                    <td>
+                                            <code>Interface.OrganisationMember</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addStaffMember"></a>
+                    <span class="name">
+                        <b>
+                            addStaffMember
+                        </b>
+                        <a href="#addStaffMember"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addStaffMember(staffInfo: <a href="../interfaces/StaffInfo.html">Interface.StaffInfo</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="330"
+                            class="link-to-prism">src/app/_services/http.service.ts:330</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to add a new FABI Staff Member to the database</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>staffInfo</td>
+                                    <td>
+                                                <code><a href="../interfaces/StaffInfo.html" target="_self" >Interface.StaffInfo</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createOrganization"></a>
+                    <span class="name">
+                        <b>
+                            createOrganization
+                        </b>
+                        <a href="#createOrganization"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createOrganization(orgInfo: <a href="../interfaces/Organisation.html">Interface.Organisation</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="266"
+                            class="link-to-prism">src/app/_services/http.service.ts:266</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to create a new Organisation </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>orgInfo</td>
+                                    <td>
+                                                <code><a href="../interfaces/Organisation.html" target="_self" >Interface.Organisation</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllOrganizationMembers"></a>
+                    <span class="name">
+                        <b>
+                            getAllOrganizationMembers
+                        </b>
+                        <a href="#getAllOrganizationMembers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllOrganizationMembers()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="708"
+                            class="link-to-prism">src/app/_services/http.service.ts:708</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to get the details of all the organisations&#39; members.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllOrganizations"></a>
+                    <span class="name">
+                        <b>
+                            getAllOrganizations
+                        </b>
+                        <a href="#getAllOrganizations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllOrganizations()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">src/app/_services/http.service.ts:136</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to get the details of all the organisations.</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllStaffMembers"></a>
+                    <span class="name">
+                        <b>
+                            getAllStaffMembers
+                        </b>
+                        <a href="#getAllStaffMembers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllStaffMembers()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="396"
+                            class="link-to-prism">src/app/_services/http.service.ts:396</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to get all FABI Staff Members</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOrganizationDetails"></a>
+                    <span class="name">
+                        <b>
+                            getOrganizationDetails
+                        </b>
+                        <a href="#getOrganizationDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOrganizationDetails()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="638"
+                            class="link-to-prism">src/app/_services/http.service.ts:638</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Function that send a request to retrieve an Organisations&#39; details using their ID</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOrganizationMemberDetails"></a>
+                    <span class="name">
+                        <b>
+                            getOrganizationMemberDetails
+                        </b>
+                        <a href="#getOrganizationMemberDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOrganizationMemberDetails()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="673"
+                            class="link-to-prism">src/app/_services/http.service.ts:673</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Function that send a request to retrieve an Organisations Member&#39;s details using their ID</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserTypes"></a>
+                    <span class="name">
+                        <b>
+                            getUserTypes
+                        </b>
+                        <a href="#getUserTypes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserTypes(orgName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="165"
+                            class="link-to-prism">src/app/_services/http.service.ts:165</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to get the user types associated with a specific organisation.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>orgName</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="login"></a>
+                    <span class="name">
+                        <b>
+                            login
+                        </b>
+                        <a href="#login"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>login(details: <a href="../interfaces/LoginInfo.html">Interface.LoginInfo</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">src/app/_services/http.service.ts:96</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to authenticate a user</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>details</td>
+                                    <td>
+                                                <code><a href="../interfaces/LoginInfo.html" target="_self" >Interface.LoginInfo</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="porting"></a>
+                    <span class="name">
+                        <b>
+                            porting
+                        </b>
+                        <a href="#porting"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>porting(dbname: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">String</a>, jsonObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="200"
+                            class="link-to-prism">src/app/_services/http.service.ts:200</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method thats sends a request to the API to port a CSV file to a Database </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dbname</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank" >String</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>jsonObject</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" >Object</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeFABIStaffMember"></a>
+                    <span class="name">
+                        <b>
+                            removeFABIStaffMember
+                        </b>
+                        <a href="#removeFABIStaffMember"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeFABIStaffMember(staffInfo: <a href="../interfaces/StaffInfo.html">Interface.StaffInfo</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="365"
+                            class="link-to-prism">src/app/_services/http.service.ts:365</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to remove a FABI Staff Member</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>staffInfo</td>
+                                    <td>
+                                                <code><a href="../interfaces/StaffInfo.html" target="_self" >Interface.StaffInfo</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeOrganization"></a>
+                    <span class="name">
+                        <b>
+                            removeOrganization
+                        </b>
+                        <a href="#removeOrganization"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeOrganization(orgInfo: <a href="../interfaces/Organisation.html">Interface.Organisation</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="298"
+                            class="link-to-prism">src/app/_services/http.service.ts:298</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to remove (deregister) an Organisation</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>orgInfo</td>
+                                    <td>
+                                                <code><a href="../interfaces/Organisation.html" target="_self" >Interface.Organisation</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeOrganizationMember"></a>
+                    <span class="name">
+                        <b>
+                            removeOrganizationMember
+                        </b>
+                        <a href="#removeOrganizationMember"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeOrganizationMember(memberInfo: Interface.OrganisationMember)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="498"
+                            class="link-to-prism">src/app/_services/http.service.ts:498</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to remove an Organizations Member</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>memberInfo</td>
+                                    <td>
+                                            <code>Interface.OrganisationMember</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="retrieveAllSamples"></a>
+                    <span class="name">
+                        <b>
+                            retrieveAllSamples
+                        </b>
+                        <a href="#retrieveAllSamples"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>retrieveAllSamples()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="573"
+                            class="link-to-prism">src/app/_services/http.service.ts:573</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to retreive all Samples</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="retrieveDatabase"></a>
+                    <span class="name">
+                        <b>
+                            retrieveDatabase
+                        </b>
+                        <a href="#retrieveDatabase"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>retrieveDatabase(database: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="744"
+                            class="link-to-prism">src/app/_services/http.service.ts:744</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to get the database&#39;s data.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>database</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="retrieveMemberSamples"></a>
+                    <span class="name">
+                        <b>
+                            retrieveMemberSamples
+                        </b>
+                        <a href="#retrieveMemberSamples"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>retrieveMemberSamples()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="606"
+                            class="link-to-prism">src/app/_services/http.service.ts:606</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to retreive all Samples for a member</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reversePorting"></a>
+                    <span class="name">
+                        <b>
+                            reversePorting
+                        </b>
+                        <a href="#reversePorting"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>reversePorting(databaseName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">String</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="234"
+                            class="link-to-prism">src/app/_services/http.service.ts:234</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method thats sends a request to the API to get data from the database to create a .csv file </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>databaseName</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank" >String</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSessionVariables"></a>
+                    <span class="name">
+                        <b>
+                            setSessionVariables
+                        </b>
+                        <a href="#setSessionVariables"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSessionVariables(tokenDetails: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, org: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">src/app/_services/http.service.ts:56</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>tokenDetails</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>user</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>org</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitSampleForm"></a>
+                    <span class="name">
+                        <b>
+                            submitSampleForm
+                        </b>
+                        <a href="#submitSampleForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitSampleForm(orgInfo: <a href="../interfaces/Organisation.html">Interface.Organisation</a>, formDetails: <a href="../interfaces/ClientFormData.html">Interface.ClientFormData</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="537"
+                            class="link-to-prism">src/app/_services/http.service.ts:537</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that send a request to the API to submit a specifc Sample Form</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>orgInfo</td>
+                                    <td>
+                                                <code><a href="../interfaces/Organisation.html" target="_self" >Interface.Organisation</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>formDetails</td>
+                                    <td>
+                                                <code><a href="../interfaces/ClientFormData.html" target="_self" >Interface.ClientFormData</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentSession"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            currentSession</b>
+                            <a href="#currentSession"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Observable&lt;any&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/_services/http.service.ts:37</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentSessionSubject"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            currentSessionSubject</b>
+                            <a href="#currentSessionSubject"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>BehaviorSubject&lt;any&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/_services/http.service.ts:36</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentUser"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            currentUser</b>
+                            <a href="#currentUser"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/_services/http.service.ts:35</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentSessionValue"></a>
+                        <span class="name"><b>currentSessionValue</b><a href="#currentSessionValue"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentSessionValue()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/_services/http.service.ts:76</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentUserValue"></a>
+                        <span class="name"><b>currentUserValue</b><a href="#currentUserValue"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentUserValue()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/_services/http.service.ts:80</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { HttpClient, HttpErrorResponse, HttpHeaders } from &#x27;@angular/common/http&#x27;;
+import * as Interface from &#x27;../_interfaces/interfaces&#x27;;
+import { catchError, retry, map } from &#x27;rxjs/operators&#x27;;
+import { Observable, throwError, BehaviorSubject } from &#x27;rxjs&#x27;;
+import { MatSnackBar } from &#x27;@angular/material&#x27;;
+import { MatDialog } from &#x27;@angular/material&#x27;;
+
+import { OrganisationAdmin } from &quot;../_interfaces/interfaces&quot;;
+import { StickyDirection } from &#x27;@angular/cdk/table&#x27;;
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+
+export class HttpService {
+
+  //////////////////////////// AUTHENTICATION SERVICE VARIABLES /////////////////////////// 
+  private currentUser: any;
+  private currentSessionSubject: BehaviorSubject&lt;any&gt;;
+  public currentSession: Observable&lt;any&gt;;
+
+
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog) {
+    this.currentSessionSubject &#x3D; new BehaviorSubject&lt;any&gt;(JSON.parse(localStorage.getItem(&#x27;sessionDetails&#x27;)));
+    this.currentSession &#x3D; this.currentSessionSubject.asObservable();
+  }
+  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       SET SESSION VARIABLES 
+  /**
+   *
+   *
+   * @param {string} tokenDetails
+   * @param {*} user
+   * @param {string} org
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  setSessionVariables(tokenDetails: string, user: any, org: string) {
+
+    let usersDetails &#x3D; {
+      &#x27;ID&#x27;: user.id,
+      &#x27;organisation&#x27;: org,
+      &#x27;email&#x27;: user.email,
+      &#x27;permission&#x27;: user.userType,
+      //REMOVE ASAP:
+      &#x27;databases&#x27;: user.databases
+    }
+
+    let sess &#x3D; {
+      &#x27;token&#x27;: tokenDetails,
+      &#x27;user&#x27;: usersDetails
+    }
+
+    localStorage.setItem(&#x27;sessionDetails&#x27;, JSON.stringify(sess));
+    this.currentSessionSubject.next(sess);
+  }
+
+  public get currentSessionValue(): any {
+    return this.currentSessionSubject.value;
+  }
+
+  public get currentUserValue(): any {
+    return this.currentUser;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             LOGIN 
+  /**
+   * Method that sends a request to the API to authenticate a user
+   *
+   * @private
+   * @param {Interface.LoginInfo} details
+   * @returns API response @type any
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  login(details: Interface.LoginInfo) {
+
+    let url &#x3D; &quot;***REMOVED***/login&quot;; // Http Request URL
+    let method &#x3D; &#x27;POST&#x27;;  // Http Request Method
+
+    const postData &#x3D; details; // Data to send as JSON
+
+    const options &#x3D; {
+      headers: new HttpHeaders({
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;
+      }),
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, url, options).pipe(map(response &#x3D;&gt; {
+
+      if (response &amp;&amp; (response.token &amp;&amp; response.token !&#x3D; &#x27;&#x27;)) {
+        console.log(&quot;---- RESPONSE: &quot; + JSON.stringify(response));
+        this.setSessionVariables(response.token, response.userDetails, details.orgName);
+        this.currentUser &#x3D; response.userDetails;
+      }
+      return response;
+    }));
+
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET ALL ORGANISATIONS 
+  /**
+   * Method that sends a request to the API to get the details of all the organisations.
+   *
+   * @returns API response
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllOrganizations() {
+
+    const getAllOrganizationsURL &#x3D; &#x27;***REMOVED***/getAllOrganizations&#x27;;
+    const method &#x3D; &#x27;POST&#x27;;
+
+    const options &#x3D; {
+      headers: new HttpHeaders({
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;
+        // &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      }),
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(&quot;POST&quot;, &#x27;***REMOVED***/getAllOrganizations&#x27;, options);
+
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET ALL USER TYPES 
+  /**
+   * Method that sends a request to the API to get the user types associated with a specific organisation.
+   *
+   * @returns API response
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getUserTypes(orgName: string) {
+
+    const getUserTypesURL &#x3D; &#x27;&#x27;;
+    const method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;orgName&quot;: orgName
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(&#x27;POST&#x27;, &#x27;***REMOVED***/getUserTypes&#x27;, options);
+
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          PORTING
+  /**
+   * Method thats sends a request to the API to port a CSV file to a Database 
+   *
+   * @param {Object} jsonObject
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  porting(dbname: String, jsonObject: Object) {
+    const portingURL &#x3D; &#x27;***REMOVED***/porting&#x27;;
+    const method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;databaseName&quot;: dbname,
+      &quot;data&quot;: jsonObject
+    };
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(&#x27;POST&#x27;, &#x27;***REMOVED***/porting&#x27;, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         REVERSE PORTING
+  /**
+   * Method thats sends a request to the API to get data from the database to create a .csv file 
+   *
+   * @param {String} databaseName
+   * @returns API response 
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  reversePorting(databaseName: String) {
+    const portingURL &#x3D; &#x27;***REMOVED***/retrieveDatabase&#x27;;
+    const method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;databaseName&quot;: databaseName,
+    };
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(&#x27;POST&#x27;, &#x27;***REMOVED***/retrieveDatabase&#x27;, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                   CREATE/ADD NEW ORGANISATION
+  /**
+   * Method that sends a request to the API to create a new Organisation 
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  createOrganization(orgInfo: Interface.Organisation) {
+    let createOrganizationURL &#x3D; &#x27;***REMOVED***/createOrganization&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; orgInfo;
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, createOrganizationURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     REMOVE AN ORGANISATION
+  /**
+   * Method that sends a request to the API to remove (deregister) an Organisation
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeOrganization(orgInfo: Interface.Organisation) {
+
+    let removeOrganizationURL &#x3D; &#x27;***REMOVED***/removeOrg&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; orgInfo;
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, removeOrganizationURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    ADD NEW FABI STAFF MEMBER
+  /**
+   * Method that sends a request to the API to add a new FABI Staff Member to the database
+   *
+   * @param {Interface.StaffInfo} staffInfo
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  addStaffMember(staffInfo: Interface.StaffInfo) {
+
+    if (staffInfo.position &#x3D;&#x3D; &quot;Admin&quot;)
+      return this.addFABIAdmin(staffInfo);
+
+    let addStaffMemberURL &#x3D; &#x27;***REMOVED***/addStaff&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;staff&quot;: staffInfo
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, addStaffMemberURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    REMOVE FABI STAFF MEMBER 
+  /**
+   * Method that sends a request to the API to remove a FABI Staff Member
+   *
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeFABIStaffMember(staffInfo: Interface.StaffInfo) {
+
+    let removeStaffMemberURL &#x3D; &#x27;***REMOVED***/removeStaff&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; staffInfo;
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, removeStaffMemberURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET ALL FABI STAFF 
+  /**
+   * Method that sends a request to the API to get all FABI Staff Members
+   *
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllStaffMembers() {
+
+    let getStaffMembersURL &#x3D; &#x27;***REMOVED***/getAllStaff&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, getStaffMembersURL, options);
+
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      ADD NEW FABI ADMIN
+  /**
+   * Method that send a request to the API to add a new FABI Admin to the database
+   *
+   * @param {Interface.StaffInfo} staffInfo
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  addFABIAdmin(staffInfo: Interface.StaffInfo) {
+    let addFABIAdminURL &#x3D; &#x27;***REMOVED***/addFabiAdmin&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;admin&quot;: staffInfo
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, addFABIAdminURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  ADD A NEW ORGANISATION MEMBER
+  /**
+   * Method that sends a request to the API to add a new Member to a specific Organisation
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @param {Interface.OrganisationMember} memberInfo
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  addOrgMember(orgInfo: Interface.Organisation, memberInfo: Interface.OrganisationMember) {
+
+    let addMemberURL &#x3D; &#x27;***REMOVED***/addMemberToOrg&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    console.log(&quot;orgName: &quot; + orgInfo.orgName);
+    const postData &#x3D; {
+      &quot;orgName&quot;: orgInfo.orgName,
+      &quot;member&quot;: memberInfo,
+      &quot;userType&quot;: &quot;Member&quot;
+    }
+
+    console.log(&quot;//// POST: &quot; + JSON.stringify(postData));
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, addMemberURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    REMOVE ORGANIZATION MEMBER
+  /**
+   * Method that sends a request to the API to remove an Organizations Member
+   *
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeOrganizationMember(memberInfo: Interface.OrganisationMember) {
+
+    let removeMemberURL &#x3D; &#x27;***REMOVED***/removeMember&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;orgName&quot;: this.currentSessionValue.user.organisation,
+      &quot;id&quot;: memberInfo.ID
+    }
+
+    console.log(&quot;//// POST: &quot; + JSON.stringify(postData))
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, removeMemberURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT SAMPLE FORM
+  /**
+   * Method that send a request to the API to submit a specifc Sample Form
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @param {Interface.ClientFormData} formDetails
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData) {
+    let submitSampleURL &#x3D; &#x27;***REMOVED***/submitSample&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;orgName&quot;: this.currentSessionValue.user.organisation,
+      &quot;userID&quot;: this.currentSessionValue.user.ID,
+      &quot;data&quot;: formDetails
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, submitSampleURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    RETREIVE ALL SAMPLES
+  /**
+   * Method that sends a request to the API to retreive all Samples
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveAllSamples() {
+    let retrieveAllOrgSamples &#x3D; &#x27;***REMOVED***/retrieveAllOrgSamples&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;orgName&quot;: this.currentSessionValue.user.organisation
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, retrieveAllOrgSamples, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    RETREIVE ALL SAMPLES FOR MEMBER
+  /**
+   * Method that sends a request to the API to retreive all Samples for a member
+   *
+   * @param {Interface.Organisation} orgInfo
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveMemberSamples() {
+    let retrieveAllMemberSamples &#x3D; &#x27;***REMOVED***/retrieveSamplesForMember&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;userID&quot;: this.currentSessionValue.user.ID
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, retrieveAllMemberSamples, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET ORGANIZATION
+  /**
+   * Function that send a request to retrieve an Organisations&#x27; details using their ID
+   *
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getOrganizationDetails() {
+
+    let getOrganizationDetails &#x3D; &#x27;***REMOVED***/getOrgDetails&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      // &quot;ID&quot;: localStorage.getItem(&#x27;ID&#x27;)
+      &quot;orgName&quot;: this.currentSessionValue.user.organisation
+
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, getOrganizationDetails, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET ORGANIZATION MEMBER
+  /**
+   * Function that send a request to retrieve an Organisations Member&#x27;s details using their ID
+   *
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getOrganizationMemberDetails() {
+
+    let getOrganizationMemberDetails &#x3D; &#x27;***REMOVED***/getOrgMember&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;orgName&quot;: this.currentSessionValue.user.organisation
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, getOrganizationMemberDetails, options);
+  }
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET ALL ORGANISATION MEMBERS
+  /**
+   * Method that sends a request to the API to get the details of all the organisations&#x27; members.
+   *
+   * @returns API response
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllOrganizationMembers() {
+
+    let getAllOrganizationsMembersURL &#x3D; &#x27;***REMOVED***/getAllOrgMembers&#x27;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;orgName&quot;: this.currentSessionValue.user.organisation
+    }
+
+    console.log(&quot;postData: &quot; + postData);
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, getAllOrganizationsMembersURL, options);
+
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          RETRIEVE DATABASE 
+  /**
+   * Method that sends a request to the API to get the database&#x27;s data.
+   *
+   * @param {string} database
+   * @returns
+   * @memberof HttpService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveDatabase(database: string) {
+
+      let retrieveDatabaseURL &#x3D; &#x27;***REMOVED***/retrieveDatabase&#x27;;
+      let method &#x3D; &#x27;POST&#x27;;
+
+      const postData &#x3D; {
+        &quot;databaseName&quot;: database
+      }
+
+      const options &#x3D; {
+        headers: {
+          &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+          &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+          &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+          &#x27;Authorization&#x27;: &#x60;Bearer ${this.currentSessionValue.token}&#x60;
+        },
+        body: postData,
+        json: true
+      };
+
+      return this.http.request&lt;any&gt;(method, retrieveDatabaseURL, options);
+
+    }
+
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'HttpService.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

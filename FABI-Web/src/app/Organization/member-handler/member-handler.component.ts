@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MemberInfo } from '../../organization-api.service';
 import { OrganizationInfo } from '../../organization-api.service';
@@ -14,6 +16,7 @@ import { AdminAPIService } from '../../admin-api.service';
 
 
 =======
+>>>>>>> develop
 /**
  * File Name: member-handler.component.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Organization\member-handler\member-handler.component.ts
@@ -49,6 +52,9 @@ import { LoadingComponent } from "../../_loading/loading.component";
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 
 
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 >>>>>>> develop
 @Component({
   selector: 'app-member-handler',
@@ -58,6 +64,11 @@ import { UserManagementAPIService } from 'src/app/_services/user-management-api.
 })
 export class MemberHandlerComponent implements OnInit {
 
+<<<<<<< HEAD
+  displayedColumns: string[] = ['First Name', 'Surname', 'Email', 'Remove' ,'Action' ];
+  dataSource = new MatTableDataSource([]);
+
+=======
 <<<<<<< HEAD
    /*
     GLOBALS
@@ -80,6 +91,7 @@ export class MemberHandlerComponent implements OnInit {
     })
   }
 =======
+>>>>>>> develop
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -238,6 +250,8 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 
     this.adminService.getAllOrganizations().subscribe((response:any) => {
       if(response.success == true) {
@@ -284,6 +298,7 @@ export class MemberHandlerComponent implements OnInit {
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
+>>>>>>> develop
     this.viewMembers();
 
   }
@@ -297,7 +312,11 @@ export class MemberHandlerComponent implements OnInit {
    * @memberof MemberHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
+  addMember() {    
+=======
   addMember() {
+>>>>>>> develop
 >>>>>>> develop
     this.submitted = true;
 
@@ -306,21 +325,49 @@ export class MemberHandlerComponent implements OnInit {
     }
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
     this.success = true;
 
     const LorgName = this.addMemberForm.controls.organization.value;
     const LmemberLocation = this.addMemberForm.controls.member_location.value;
 =======
+>>>>>>> develop
     this.valid = true;
     this.loading = true;
 
     // const LmemberLocation = this.addMemberForm.controls.member_location.value;
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 >>>>>>> develop
     const LmemberName = this.addMemberForm.controls.member_name.value;
     const LmemberSurname = this.addMemberForm.controls.member_surname.value;
     const LmemberEmail = this.addMemberForm.controls.member_email.value;
     const LmemberPhone = this.addMemberForm.controls.member_phone.value;
 
+<<<<<<< HEAD
+    const user = this.authService.getCurrentSessionValue;
+    const org_details: Interface.Organisation = { orgName: user.user.organisation };
+    const member_details: Interface.OrganisationMember = { name: LmemberName, surname: LmemberSurname, email: LmemberEmail };
+
+
+    this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
+
+      console.log("////// RESPONSE: " + response);
+
+      this.loading = false;
+      
+      if (response.success == true && response.code == 200) {
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Member Added", "Dismiss", {
+          duration: 6000
+        });
+        this.refreshDataSource();
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Adding Member", message: response.message } });
+=======
 <<<<<<< HEAD
     const org_details: OrganizationInfo = { orgName: LorgName };
     const member_details: MemberInfo = { name: LmemberName, surname: LmemberSurname, location: LmemberLocation , email: LmemberEmail, phone: LmemberPhone};
@@ -339,10 +386,13 @@ export class MemberHandlerComponent implements OnInit {
         console.log("---- HERE ----");
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could not add member", message: response.message } });
+>>>>>>> develop
         dialogRef.afterClosed().subscribe((result) => {
           if (result == "Retry") {
             this.addMember();
           }
+<<<<<<< HEAD
+=======
           //Take out when authenication is working - Just for test/demp purposes
           this.router.navigate(['sample-form']);
           //
@@ -384,6 +434,7 @@ export class MemberHandlerComponent implements OnInit {
           if (result == "Retry") {
             this.addMember();
           }
+>>>>>>> develop
         })
       }
     });
@@ -516,6 +567,8 @@ export class MemberHandlerComponent implements OnInit {
         })
       }
     });
+<<<<<<< HEAD
+=======
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -708,6 +761,7 @@ export class MemberHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetMemberFields(){
     this.addMemberForm.reset();
+>>>>>>> develop
 >>>>>>> develop
   }
 

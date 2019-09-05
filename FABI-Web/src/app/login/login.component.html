@@ -25,13 +25,21 @@
             <!--Dropdown for Organization selection and Error Handling-->
             <mat-form-field>
               <mat-label>Organization</mat-label>
+<<<<<<< HEAD
+              <mat-select [(ngModel)]="selectedOrg" id="organization" formControlName="organization">
+                <mat-option>--</mat-option>
+=======
               <mat-select [(ngModel)]="selectedOrg" id="organization" formControlName="organization" (click)="displayUserTypes()">
                   <mat-option>--</mat-option>
+>>>>>>> develop
                 <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
                   {{organization.orgName}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
+<<<<<<< HEAD
+          </div>
+=======
             <div *ngIf="submitted && loginForm.controls.organization.errors" class="errors">
               <div *ngIf="loginForm.controls.organization.errors.required">Please select an organization</div>
             </div>
@@ -63,6 +71,7 @@
     <h1>Log In!</h1>
   </div>
   <!-- / Login Heading -->
+>>>>>>> develop
 
   <div class="login-form">
 >>>>>>> develop
@@ -99,6 +108,11 @@
       <!-- /Organization Drop Down -->
 >>>>>>> develop
 
+<<<<<<< HEAD
+            <!--Submit-->
+            <input type="submit" id="continue" class="btn btn-default" value="Login" />
+          </form>
+=======
       <!-- Email -->
       <div class="form-group">
         <label for="email">Email address</label>
@@ -111,6 +125,7 @@
           <div *ngFor="let validation of login_validation_messages.email">
               <p *ngIf="loginForm.get('email').hasError(validation.type)">{{validation.message}}</p>
           </div>
+>>>>>>> develop
         </div>
         <!-- / Error Validation Feedback--> 
       </div>

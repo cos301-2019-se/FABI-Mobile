@@ -1,5 +1,7 @@
 language: node_js
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
   node_js:
     - "8"
 
@@ -16,6 +18,7 @@ language: node_js
   script:
     - ng build --prod --aot
 =======
+>>>>>>> develop
 node_js:
     - 10.9
 
@@ -27,5 +30,9 @@ before_script:
     - npm install @angular/cli
 
 script:
+<<<<<<< HEAD
     - ng build
+=======
+    - ng build
+>>>>>>> develop
 >>>>>>> develop

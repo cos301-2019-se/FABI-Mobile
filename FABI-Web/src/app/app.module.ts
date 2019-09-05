@@ -15,20 +15,30 @@ import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 
 <<<<<<< HEAD
+import { ReactiveFormsModule } from '@angular/forms';
+=======
+<<<<<<< HEAD
 import {ReactiveFormsModule} from '@angular/forms';
 =======
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+>>>>>>> develop
 >>>>>>> develop
 
 import { AdminModule } from './Admin/admin.module';
 import { StaffModule } from './Staff/staff.module';
 
 <<<<<<< HEAD
+import { ErrorsModule } from "./_errors/errors.module";
+import { NotificationService } from './_services/notification.service';
+
+=======
+<<<<<<< HEAD
 =======
 import { ErrorsModule } from "./_errors/errors.module";
 import { NotificationService } from './_services/notification.service';
 
+>>>>>>> develop
 >>>>>>> develop
 import { OrganizationModule } from './Organization/organization.module';
 import { OrganizationMemberModule } from './Organization-Member/organization-member.module';
@@ -96,8 +106,6 @@ import {MatInputModule} from '@angular/material';
 >>>>>>> unitTesting
 // import { DataTablesModule } from 'angular-datatables';
 
-import { ErrorComponent } from './error/error.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -163,7 +171,6 @@ import { ErrorComponent } from './error/error.component';
     ErrorComponent,
     MapsWindowComponent
   ],
-  entryComponents: [ErrorComponent],
   imports: [
     BrowserModule,
     MatInputModule,
