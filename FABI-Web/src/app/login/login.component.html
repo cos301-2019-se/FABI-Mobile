@@ -1,66 +1,3 @@
-<<<<<<< HEAD
-<!--Login-->
-<section id="login">
-  <div class="gradient-overlay"></div>
-  <div class="container-fluid">
-    <div class="row">
-
-      <div id="main_div_login">
-        <div class="col-lg-6 col-md-12 col-sm-12" id="login_information">
-          <h1>WE ARE EXCITED TO WELCOME YOU</h1>
-          <br />
-          <br />
-          <br />
-          <br />
-          <h3>Why do you need to signup?</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique, est at faucibus sodales, nisi
-            est molestie est, eu rhoncus magna dolor at sem. </p>
-        </div>
-        <div class="col-lg-6 col-md-12 col-sm-12" id="login_div">
-          <h1>LOGIN</h1>
-
-          <!--Login Form-->
-          <form id="login_submit" [formGroup]="loginForm" (submit)="login()">
-
-            <!--Dropdown for Organization selection and Error Handling-->
-            <mat-form-field>
-              <mat-label>Organization</mat-label>
-<<<<<<< HEAD
-              <mat-select [(ngModel)]="selectedOrg" id="organization" formControlName="organization">
-                <mat-option>--</mat-option>
-=======
-              <mat-select [(ngModel)]="selectedOrg" id="organization" formControlName="organization" (click)="displayUserTypes()">
-                  <mat-option>--</mat-option>
->>>>>>> develop
-                <mat-option *ngFor="let organization of organizations" [value]="organization.orgName">
-                  {{organization.orgName}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-<<<<<<< HEAD
-          </div>
-=======
-            <div *ngIf="submitted && loginForm.controls.organization.errors" class="errors">
-              <div *ngIf="loginForm.controls.organization.errors.required">Please select an organization</div>
-            </div>
-            <br />
-
-            <!--Dropdown for User Type selection and Error Handling-->
-            <mat-form-field >
-              <mat-label>User Type</mat-label>
-              <mat-select  id="userType" formControlName="userType">
-                  <mat-option>--</mat-option>
-                <mat-option *ngFor="let userType of userTypes" [value]="userType.Name">
-                  {{userType.Name}}
-                </mat-option>
-              </mat-select>
-              <br />
-            </mat-form-field>
-            <div *ngIf="submitted && loginForm.controls.userType.errors" class="errors">
-              <div *ngIf="loginForm.controls.userType.errors.required">Please select a user type</div>
-            </div>
-            <br />
-=======
 <!-- Login -->
 <div class="login">
   
@@ -71,10 +8,8 @@
     <h1>Log In!</h1>
   </div>
   <!-- / Login Heading -->
->>>>>>> develop
 
   <div class="login-form">
->>>>>>> develop
 
     <!-- Login Form -->
     <form id="login_form" [formGroup]="loginForm" (submit)="login()">
@@ -98,21 +33,11 @@
             <div *ngFor="let validation of login_validation_messages.organization">
                 <p *ngIf="loginForm.get('organization').hasError(validation.type)">{{validation.message}}</p>
             </div>
-<<<<<<< HEAD
-            <br />
-            <p *ngIf="loading" class="errors">Logging In...</p>
-=======
           </div>
           <!-- / Error Validation Feedback--> 
       </div>
       <!-- /Organization Drop Down -->
->>>>>>> develop
 
-<<<<<<< HEAD
-            <!--Submit-->
-            <input type="submit" id="continue" class="btn btn-default" value="Login" />
-          </form>
-=======
       <!-- Email -->
       <div class="form-group">
         <label for="email">Email address</label>
@@ -125,15 +50,11 @@
           <div *ngFor="let validation of login_validation_messages.email">
               <p *ngIf="loginForm.get('email').hasError(validation.type)">{{validation.message}}</p>
           </div>
->>>>>>> develop
         </div>
         <!-- / Error Validation Feedback--> 
       </div>
       <!-- / Email -->
 
-<<<<<<< HEAD
-
-=======
       <!-- Password -->
       <div class="form-group" >
         <label for="password">Password</label>
@@ -146,7 +67,6 @@
           <div *ngFor="let validation of login_validation_messages.password">
               <p *ngIf="loginForm.get('password').hasError(validation.type)">{{validation.message}}</p>
           </div>
->>>>>>> develop
         </div>
         <!-- / Error Validation Feedback--> 
         <a href="#" class="forgot-password">Forgot password?</a>

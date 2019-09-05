@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Monday, August 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -20,9 +20,9 @@
  * @interface Organisation
  */
 export interface Organisation {
-    ID?: string; // ID of Organisation 
-    orgName: string; // Name of Organisation
-    admin?: OrganisationAdmin; // Admin of Organisation
+    ID?: string;                                //The id of Organisation 
+    orgName: string;                            //The name of Organisation
+    admin?: OrganisationAdmin;                  //The admin of Organisation
 }
 
 /**
@@ -32,11 +32,11 @@ export interface Organisation {
  * @interface OrganisationAdmin
  */
 export interface OrganisationAdmin {
-    fname: string;  // First Name of Admin
-    surname: string; // Surname of Admin
-    email: string; // Email of Admin
-    phone?: number; //Phone No. of Admin
-    password?: string; // Passsword of Admin
+    fname: string;                              //The first name of Admin
+    surname: string;                            //The surname of Admin
+    email: string;                              //The email of Admin
+    phone?: number;                             //The phone number of Admin
+    password?: string;                          //The passsword of Admin
 }
 
 /**
@@ -46,12 +46,12 @@ export interface OrganisationAdmin {
  * @interface MemberInfo
  */
 export interface OrganisationMember {
-  id?: string, // ID of the Member
-  fname: string, // First Name of Member
-  surname: string, // Surname of Member
-  email: string, // Email of Member
-  phone?: number; //Phone No. of Member
-  password?: string // Password of Member
+  id?: string,                                  //The id of the Member
+  fname: string,                                //The first name of Member
+  surname: string,                              //The surname of Member
+  email: string,                                //The email of Member
+  phone?: number;                               //The phone number of Member
+  password?: string                             //The password of Member
 }
 
 /**
@@ -61,8 +61,8 @@ export interface OrganisationMember {
  * @interface UserType
  */
 export interface UserType {
-    ID: number; // ID of the User Type
-    Name: string; // Name of the User Type
+    ID: number;                                 //The id of the User Type
+    Name: string;                               //The name of the User Type
 }
 
 /**
@@ -72,9 +72,9 @@ export interface UserType {
  * @interface LoginInfo
  */
 export interface LoginInfo {
-    orgName: string;
-    email: string;
-    password: string;
+    orgName: string;                            //The organization fo teh user currently logged in
+    email: string;                              //The email of the suer currently logged in
+    password: string;                           //The password of the user currently logged in
 }
   
 /**
@@ -84,12 +84,12 @@ export interface LoginInfo {
  * @interface StaffInfo
  */
 export interface StaffInfo {
-  ID?: number,
-  fname: string
-  surname: string,
-  email: string,
-  phone?: number,
-  position?: string,
+  ID?: number,                                  //The id number of the staff member
+  fname: string                                 //The first name of the staff member
+  surname: string,                              //The surname of the staff member
+  email: string,                                //The email address fo the staff member
+  phone?: number,                               //The phone number of the staff member
+  position?: string,                            //The positions of the staff member
 }
   
 /**
@@ -99,8 +99,8 @@ export interface StaffInfo {
  * @interface DatabasePrivilege
  */
 export interface DatabasePrivilege {
-  name: string,
-  privileges: string[]
+  name: string,                                 //The database's name
+  privileges: string[]                          //The privileges for the database                          
 }
 
 /**
@@ -110,10 +110,10 @@ export interface DatabasePrivilege {
  * @interface PrivilegeTypes
  */
 export interface PrivilegeTypes {
-  create: boolean,
-  retrieve: boolean,
-  update: boolean,
-  delete: boolean
+  create: boolean,                              //The create privilege
+  retrieve: boolean,                            //The retrieve privilege
+  update: boolean,                              //The update privilege
+  delete: boolean                               //The delete privilege
 }
 
 /**
@@ -123,7 +123,7 @@ export interface PrivilegeTypes {
  * @interface UserPrivileges
  */
 export interface UserPrivileges {
-  databases?: DatabasePrivilege[]
+  databases?: DatabasePrivilege[]               //The database privileges for a database
 }
 
 /**
@@ -133,11 +133,11 @@ export interface UserPrivileges {
  * @interface Confirm
  */
 export interface Confirm {
-  title: string,
-  message: string,
-  info: string,
-  cancel: string,
-  confirm: string
+  title: string,                                //The confirm title
+  message: string,                              //The confirm message
+  info: string,                                 //The confirm information
+  cancel: string,                               //If it has been canceled or not
+  confirm: string                               //If it has been confirmed or not
 } 
 
 /**
@@ -148,63 +148,63 @@ export interface Confirm {
  */  
 export interface SampleFormData {
   // Sample Details
-  sample_plant_species: string,
-  sample_num_samples: number,
-  date_sample_collected: Date,
-  date_sample_sent: Date,
+  sample_plant_species: string,                 //The species of the sample
+  sample_num_samples: number,                   //The number of samples
+  date_sample_collected: Date,                  //The date that the sample was collected
+  date_sample_sent: Date,                       //The date that the sample was sent
 
   // Plantation Details
-  sample_street: string,
-  sample_area: string,
-  sample_city: string,
-  sample_farm: string,
-  sample_province: string,
-  sample_gps: string,
+  sample_street: string,                        //The street name
+  sample_area: string,                          //The area
+  sample_city: string,                          //The city 
+  sample_farm: string,                          //The farm name
+  sample_province: string,                      //The province
+  sample_gps: string,                           //Sample GPS coordinates
 
   // Type of Sample
-  sample_type_soil: string,
-  sample_type_stems: string,
-  sample_type_roots: string,
-  sample_type_twigs: string,
-  sample_type_leaves: string,
-  sample_type_seedlings: string,
-  sample_type_media: string,
-  sample_type_water: string,
-  sample_type_insect: string,
-  sample_type_nuts: string,
-  sample_type_other: string,
+  sample_type_soil: string,                     //Soil sample type
+  sample_type_stems: string,                    //Stems sample type
+  sample_type_roots: string,                    //Roots sample type
+  sample_type_twigs: string,                    //Twigs sample type
+  sample_type_leaves: string,                   //Leaves sample type
+  sample_type_seedlings: string,                //Seedlings sample type
+  sample_type_media: string,                    //Media sample type
+  sample_type_water: string,                    //Water sample type
+  sample_type_insect: string,                   //Insect sample type
+  sample_type_nuts: string,                     //Nuts sample type
+  sample_type_other: string,                    //Other type of sample (if any)
 
   // Symptoms
-  symptom_wilt: string,
-  symptom_stunting: string,
-  symptom_leafspot: string,
-  symptom_rootrot: string,
-  symptom_dieback: string,
-  symptom_cankers: string,
-  symptom_death: string,
-  symptom_wood: string,
-  symptom_other: string,
+  symptom_wilt: string,                         //Wilt symptom
+  symptom_stunting: string,                     //Stunting symptom
+  symptom_leafspot: string,                     //Leafspot symptom
+  symptom_rootrot: string,                      //Rootrot symptom
+  symptom_dieback: string,                      //Dieback symptom
+  symptom_cankers: string,                      //Cankers symptom 
+  symptom_death: string,                        //Death symptom 
+  symptom_wood: string,                         //Wood symptom
+  symptom_other: string,                        //Other symptoms (if any)
 
   // Distribution of Symptoms
-  distribution_localized: string,
-  distributed_scattered: string,
-  distributed_general: string,
-  distributed_clumps: string,
-  distributed_na: string,
-  distributed_other: string,
-  percentage_plants_affected: string,
+  distribution_localized: string,               //The localized distribution
+  distributed_scattered: string,                //The scattered distribution
+  distributed_general: string,                  //The general distribution
+  distributed_clumps: string,                   //The clumps distribution
+  distributed_na: string,                       //The na distribution
+  distributed_other: string,                    //Other distributions (if any)
+  percentage_plants_affected: string,           //The percentage of plants affected
 
   // Conditons
-  conditions_date_problem_noticed: Date,
-  conditions_date_planted: Date,
-  conditions_weather_disturbances: string,
-  conditions_weather_prior: string,
-  conditions_others: string,
-  conditions_additional: string
+  conditions_date_problem_noticed: Date,        //The date the problem was noticed
+  conditions_date_planted: Date,                //The date the plants were planted
+  conditions_weather_disturbances: string,      //The weather disturbances
+  conditions_weather_prior: string,             //The weather conditions prior
+  conditions_others: string,                    //Other weather conditions (if any)
+  conditions_additional: string                 //Additional weather conditions (if any)
 
   // Permissions
-  landowner_name: string,
-  permission_granted: boolean 
+  landowner_name: string,                       //The landowner's name
+  permission_granted: boolean                   //Whether or not the landowner has granted permission
 }
 
 /**
@@ -214,8 +214,8 @@ export interface SampleFormData {
  * @interface Location
  */
 export interface Location {
-  latitude: number,
-  longitude: number
+  latitude: number,                             //The latitude of the location
+  longitude: number                             //The longitude of the location
 }
 
 /**
@@ -225,13 +225,13 @@ export interface Location {
  * @interface Address
  */
 export interface Address {
-  street_number?: number,
-  street: string,
-  estate?: string,
-  area?: string,
-  city: string,
-  province: string,
-  country: string,
-  postal_code?: string,
-  formatted_address: string
+  street_number?: number,                       //The street number of the address (if any)
+  street: string,                               //The street name of the address
+  estate?: string,                              //The estate of the address (if any)
+  area?: string,                                //The area of the address (if any)
+  city: string,                                 //The city of the address
+  province: string,                             //The province of the address
+  country: string,                              //The country of the address
+  postal_code?: string,                         //The postal code of the address (if any)
+  formatted_address: string                     //The formatted address
 }
