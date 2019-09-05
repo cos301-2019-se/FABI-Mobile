@@ -80,39 +80,6 @@
       </button>
       <!-- / Menu Button -->
 
-<<<<<<< HEAD
-    </div>
-    <div class="modal-footer"> </div>
-  </div>
-</div>
-
-<!--Organization Handler Content-->
-<div class="container-fluid">
-
-  <div class="organization-management">
-    <!--Tab Menu-->
-    <mat-tab-group animationDuration="1000ms">
-
-      <!--Add Tab Option-->
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>person_add</mat-icon>
-          Add Organization
-        </ng-template>
-        <div class="tab-content">
-          <h2>Add Organization</h2>
-          <hr />
-
-          <form id="add_new_organization_form" [formGroup]="registerOrgForm" (submit)="registerOrg()">
-            <div class="row">
-              <!--Organization Name Field-->
-              <div class="organization-name">
-                <mat-form-field class="form_inputs" class="col">
-                  <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name">
-                  <mat-error *ngFor="let validation of register_validation_messages.organization_name">
-                    <mat-error class="errors" *ngIf="registerOrgForm.get('organization_name').hasError(validation.type) && (registerOrgForm.get('organization_name').dirty || registerOrgForm.get('organization_name').touched)">{{validation.message}}</mat-error>
-                  </mat-error>
-=======
       <!-- Navbar Title -->
       <h5>ORGANIZATIONS</h5>
       <!-- / Navbar Title -->
@@ -148,62 +115,6 @@
       <!-- Statistics -->
       <div class="statistics">
 
-<<<<<<< HEAD
-              <form id="add_new_organization_form"  [formGroup]="createOrgForm" (submit)="createOrg()">
-
-                <!--Organization Name Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Organization Name" matInput type="text" formControlName="organization_name">
->>>>>>> develop
-                </mat-form-field>
-                <br />
-
-                <!--Location Field-->
-<<<<<<< HEAD
-                <div class="organization-location">
-                <mat-form-field class="form_inputs" class="col">
-                  <input matInput placeholder="Location" matInput type="text" formControlName="organization_location">
-                </mat-form-field>
-                <br />
-              </div>              
-
-              <!--Admin Name Field-->
-              <div class="admin-name-inputs">
-                <mat-form-field class="form_inputs" class="col">
-                  <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name">
-                  <mat-error *ngFor="let validation of register_validation_messages.admin_name">
-                    <mat-error class="errors" *ngIf="registerOrgForm.get('admin_name').hasError(validation.type) && (registerOrgForm.get('admin_name').dirty || registerOrgForm.get('admin_name').touched)">{{validation.message}}</mat-error>
-                  </mat-error>
-=======
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Location" matInput type="text" formControlName="organization_location">
-                </mat-form-field>
-                <br />
-
-                <!--Admin Name Field-->
-                <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Admin Name" matInput type="text" formControlName="admin_name">
-                  </mat-form-field>
-                  <br />
-
-                <!--Admin Surname Field-->
-                <mat-form-field class="form_inputs">
-                    <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
-                  </mat-form-field>
-                  <br />
-
-                <!--Admin Email Field-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Admin Email Address" matInput type="text" formControlName="admin_email">
-                </mat-form-field>
-                <br />
-
-                <!--Admin Phone Number-->
-                <mat-form-field class="form_inputs">
-                  <input matInput placeholder="Admin Phone Number" matInput type="number" formControlName="admin_phone">
->>>>>>> develop
-                </mat-form-field>
-=======
         <!-- Statistic Box -->
         <div class="overview-statistic-box">
           <div class="statistic-box-content">
@@ -217,17 +128,6 @@
         </div>
         <!-- Statistic Box -->
 
-<<<<<<< HEAD
-                <!--Admin Surname Field-->
-                <mat-form-field class="form_inputs" class="col">
-                  <input matInput placeholder="Admin Surname" matInput type="text" formControlName="admin_surname">
-                  <mat-error *ngFor="let validation of register_validation_messages.admin_surname">
-                    <mat-error class="errors" *ngIf="registerOrgForm.get('admin_surname').hasError(validation.type) && (registerOrgForm.get('admin_surname').dirty || registerOrgForm.get('admin_surname').touched)">{{validation.message}}</mat-error>
-                  </mat-error>
-                </mat-form-field>
-                <br />
-              </div>
-=======
         <!-- Statistic Box -->
         <div class="statistic-box">
           <div class="statistic-box-content">
@@ -240,7 +140,6 @@
           </div>
         </div>
         <!-- Statistic Box -->
->>>>>>> develop
 
       </div>
       <!-- / Statistics -->
@@ -248,7 +147,6 @@
     </div>
     <!-- / Primary Content -->
 
->>>>>>> develop
 
     <!-- Organization Tables -->
     <div class="organization-tables">

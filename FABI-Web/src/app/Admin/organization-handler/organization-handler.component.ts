@@ -13,23 +13,6 @@
  * <<license>>
  */
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-import { AdminAPIService } from '../../admin-api.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../error/error.component';
-import { Router } from '@angular/router';
-
-import { OrganizationInfo } from '../../admin-api.service';
-import { OrganizationAdmin } from '../../admin-api.service';
-
-
-=======
->>>>>>> develop
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
@@ -50,11 +33,6 @@ import * as Interface from '../../_interfaces/interfaces';
 
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
->>>>>>> develop
 
 @Component({
   selector: 'app-organization-handler',
@@ -64,32 +42,8 @@ import { UserManagementAPIService } from '../../_services/user-management-api.se
 })
 export class OrganizationHandlerComponent implements OnInit {
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-  /*
-    GLOBALS
-  */
- createOrgForm: FormGroup;          // FormGroup object to reference add user type form
- submitted: boolean = false;       // if form has been submitted
- success: boolean = false;         // if form was succesfully filled out
-  
-  constructor(private service: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) 
-  {
-    this.createOrgForm = this.formBuilder.group({
-      organization_name: ['', Validators.required],
-      organization_location: ['', Validators.required],
-      admin_name: ['', Validators.required],
-      admin_surname: ['', Validators.required],
-      admin_email: ['', Validators.required],
-      admin_phone: ['', Validators.required]
-    })
-  }
-=======
->>>>>>> develop
   displayedColumns: string[] = ['Organization Name', 'Admin', "Remove"];
   dataSource = new MatTableDataSource([]);
->>>>>>> develop
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -117,33 +71,7 @@ export class OrganizationHandlerComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-<<<<<<< HEAD
-  /** Object array for holding all of the logs -  @type {any[]} */ 
-  allNotifications: any[] = [];
-  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
-  newNotifications: any[] = [];
-  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
-  allLogs: string[] = [];
-
-  /** The total number of User Logs - @type {number} */           
-  numberOfUserLogs: number = 0;
-  /** The total number of Database Management Logs - @type {number} */           
-  numberOfDatabaseLogs: number = 0;
-  /** The total number of Access Logs - @type {number} */           
-  numberOfAccessLogs: number = 0;
-
-  /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = true; 
-  /** THe number of the notifications - @type {number} */   
-  localNotificationNumber : number = 1;   
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
-
-  register_validation_messages = {
-=======
   register_organization_validators = {
->>>>>>> develop
     'organization_name': [
       { type: 'required', message: 'Organization name is required' },
     ],
@@ -559,58 +487,4 @@ export class OrganizationHandlerComponent implements OnInit {
     this.registerOrgForm.reset();
   }
 
-  createOrg()
-  {
-    this.submitted = true;
-
-    if (this.createOrgForm.invalid) {
-      return;
-    }
-
-    this.success = true;
-
-    const LorgName = this.createOrgForm.controls.organization_name.value;
-    const LorgLocation = this.createOrgForm.controls.organization_location.value;
-    const LadminName = this.createOrgForm.controls.admin_name.value;
-    const LadminSurname = this.createOrgForm.controls.admin_surname.value;
-    const LadminEmail = this.createOrgForm.controls.admin_email.value;
-    const LadminPhone = this.createOrgForm.controls.admin_phone.value;
-
-    const org_details: OrganizationInfo = { orgName: LorgName, location: LorgLocation };
-    const admin_details: OrganizationAdmin = { name: LadminName, surname: LadminSurname, email: LadminEmail, phone: LadminPhone};
-
-    this.service.createOrganization(org_details, admin_details).subscribe((response: any) => {
-      if (response.success == true) {
-        //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Successfully Created Organization! Temp Password :" + response.data.content.tempPassword, "Dismiss", {
-          duration: 6000
-        });
-
-        console.log("Temp Password: " + response.data.content.tempPassword);
-
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could not create organization ", message: response.message } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.createOrg();
-          }
-        })
-      }
-    }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could not create organization ", message: err.message } });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result == "Retry") {
-          this.createOrg();
-        }
-      })
-      console.log("ERROR:" + err.message);
-    })
-  }
-
-<<<<<<< HEAD
-  
-=======
->>>>>>> develop
 }

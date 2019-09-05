@@ -5,11 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
-<<<<<<< HEAD
- * Last Modified: Thursday, August 8th 2019
-=======
  * Last Modified: Friday, August 23rd 2019
->>>>>>> develop
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -211,10 +207,6 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
-  submitSampleForm(orgInfo: Interface.Organisation, formDetails: Interface.ClientFormData) {
-    let submitSampleURL = `${config.diagnosticClinicURL}/submitSample`;
-=======
   submitSampleForm(formDetails: Interface.SampleFormData) {
 
     let tempDetails = {
@@ -233,7 +225,6 @@ export class DiagnosticClinicAPIService {
     }
 
     let submitSampleURL =   `${config.diagnosticClinicURL}/submitSample`;
->>>>>>> develop
     let method = 'POST';
 
     const postData = {

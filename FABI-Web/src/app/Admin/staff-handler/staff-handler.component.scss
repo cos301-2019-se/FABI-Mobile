@@ -11,22 +11,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-<<<<<<< HEAD
-    text-align: center;
-    color: black;
-
-    height: 80%;
-    width: 90%;
-    overflow: hidden;
-    position: relative;
-
-    left: 5%;
-    top: 15%;
-
-    background-color: white;
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 40px 0 rgba(0, 0, 0, 0.19);
-=======
->>>>>>> develop
 
     width: 100%;
     height: auto;
@@ -40,51 +24,9 @@
     color: #6B746F;
 }
 
-<<<<<<< HEAD
-/* ================================================ */
-/* Tab Menu Setup and Styling                       */
-/* ================================================ */
-.mat-ink-bar {
-    background-color: #6B8E4E !important;
-}
-
-mat-tab-group {
-    width: 100% !important;
-    height: 100% !important;
-}
-
-mat-tab-group {
-    /deep/ .mat-tab-body-wrapper {
-        height: 100%;
-    }
-}
-
-mat-tab {
-    width: 100% !important;
-    height: 100% !important;
-}
-
-mat-icon {
-    padding-right: 30px;
-}
-
-.tab-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    width: 100% !important;
-    min-height:100vh !important;
-    height: 100% !important;
-
-    margin-top: 5%;
-}
-=======
 .staff-handler-table {
     width: 95%;
     height: 50%;
->>>>>>> develop
 
     padding: 15px;
     margin: 15px 0 15px 0;
