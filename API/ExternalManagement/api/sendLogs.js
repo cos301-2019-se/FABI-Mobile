@@ -27,7 +27,11 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/ACCL';
+<<<<<<< HEAD
+            request.post('https://logging-dot-api-fabi.appspot.com/ACCL', options, (error, response, body) => {
+=======
             request.post(options, (error, response, body) => {
+>>>>>>> develop
                 if(error){
 					console.log(error)
 
@@ -64,7 +68,11 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/ERRL';
+<<<<<<< HEAD
+            request.post('https://logging-dot-api-fabi.appspot.com/ERRL', options, (error, response, body) => {
+=======
             request.post(options, (error, response, body) => {
+>>>>>>> develop
                 if(error){
                     console.log(error)
                 }
@@ -102,8 +110,12 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/USER';
+<<<<<<< HEAD
+            request.post('https://logging-dot-api-fabi.appspot.com/USER', options, (error, response, body) => {
+=======
 			url = config.logging + '/USER'
             request.post(options, (error, response, body) => {
+>>>>>>> develop
                 if(error){
                     console.log(error)
 				}
@@ -140,7 +152,11 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/DBML';
+<<<<<<< HEAD
+            request.post('https://logging-dot-api-fabi.appspot.com/DBML', options, (error, response, body) => {
+=======
             request.post(options, (error, response, body) => {
+>>>>>>> develop
                 if(error){
                     console.log(error)
 				}
