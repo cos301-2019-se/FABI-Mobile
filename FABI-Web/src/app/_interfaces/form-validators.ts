@@ -15,34 +15,34 @@
 
 
  export const AdminForm = {
-        'admin_name': [
-          { type:  'required', message: 'Please enter admin name'}
-        ],
-        'admin_surname': [
-            { type:  'required', message: 'Please enter admin surname'}
-        ],
-        'surname_email': [
-            { type:  'required', message: 'Please enter admin email'},
-            { type: 'pattern', message: 'Please enter a valid email' }
-        ],
+    'admin_name': [
+      { type:  'required', message: 'Please enter admin name'}
+    ],
+    'admin_surname': [
+        { type:  'required', message: 'Please enter admin surname'}
+    ],
+    'surname_email': [
+        { type:  'required', message: 'Please enter admin email'},
+        { type: 'pattern', message: 'Please enter a valid email' }
+    ],
  }
 
  export const ChangePasswordFormValidators = {
-    'current_password': [
-        { type: 'required', message: 'Current password required' },
-        // { type: 'minlength', message: 'Password must be at least 5 characters long' },
-        // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
-      ],
-      'new_password': [
-        { type: 'required', message: 'New password required' },
-        // { type: 'minlength', message: 'Password must be at least 5 characters long' },
-        // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
-      ],
-      'confirm_password': [
-        { type: 'required', message: 'Confirm assword required' },
-        { type: 'passwordMatch', message: 'Passwords must match' }
-        // { type: 'minlength', message: 'Password must be at least 5 characters long' },
-        // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
-      ],
+  'current_password': [
+    { type: 'required', message: 'Current password required' },
+    // { type: 'minlength', message: 'Password must be at least 5 characters long' },
+    // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+  ],
+  'new_password': [
+    { type: 'required', message: 'New password required' },
+    // { type: 'minlength', message: 'Password must be at least 5 characters long' },
+    // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+  ],
+  'confirm_password': [
+    { type: 'required', message: 'Confirm assword required' },
+    { type: 'passwordMatch', message: 'Passwords must match' }
+    // { type: 'minlength', message: 'Password must be at least 5 characters long' },
+    // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+  ],
  }
 

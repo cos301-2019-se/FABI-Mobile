@@ -80,13 +80,10 @@
         <tbody>
 
 
-<<<<<<< HEAD
-=======
             <tr>
                 <td class="col-md-3">encapsulation</td>
                 <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
             </tr>
->>>>>>> develop
 
 
 
@@ -128,8 +125,6 @@
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
-<<<<<<< HEAD
-=======
                 <tr>
                     <td class="col-md-4">
                         <h6><b>Properties</b></h6>
@@ -163,7 +158,6 @@
                         </ul>
                     </td>
                 </tr>
->>>>>>> develop
 
                 <tr>
                     <td class="col-md-4">
@@ -174,10 +168,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-<<<<<<< HEAD
-                                <a href="#ngOnInit">ngOnInit</a>
-                            </li>
-=======
                                 <a href="#loadMemberProfileDetails">loadMemberProfileDetails</a>
                             </li>
                             <li>
@@ -189,7 +179,6 @@
                             <li>
                                 <a href="#toggleNotificaitonsTab">toggleNotificaitonsTab</a>
                             </li>
->>>>>>> develop
                         </ul>
                     </td>
                 </tr>
@@ -208,21 +197,11 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<<<<<<< HEAD
-<code>constructor()</code>
-=======
 <code>constructor(service: <a href="../injectables/HttpService.html">HttpService</a>, snackBar: MatSnackBar, dialog: MatDialog, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, userManagementService: <a href="../injectables/UserManagementAPIService.html">UserManagementAPIService</a>)</code>
->>>>>>> develop
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-<<<<<<< HEAD
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/Organization-Member/member-profile/member-profile.component.ts:8</a></div>
-                            </td>
-                        </tr>
-
-=======
                                 <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/Organization-Member/member-profile/member-profile.component.ts:61</a></div>
                             </td>
                         </tr>
@@ -336,7 +315,6 @@
                             </div>
                     </td>
                 </tr>
->>>>>>> develop
             </tbody>
         </table>
 </section>
@@ -354,8 +332,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-<<<<<<< HEAD
-=======
                     <a name="loadMemberProfileDetails"></a>
                     <span class="name">
                         <b>
@@ -397,7 +373,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
->>>>>>> develop
                     <a name="ngOnInit"></a>
                     <span class="name">
                         <b>
@@ -416,10 +391,6 @@
 
             <tr>
                 <td class="col-md-4">
-<<<<<<< HEAD
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">src/app/Organization-Member/member-profile/member-profile.component.ts:12</a></div>
-=======
                     <div class="io-line">Defined in <a href="" data-line="176"
                             class="link-to-prism">src/app/Organization-Member/member-profile/member-profile.component.ts:176</a></div>
                 </td>
@@ -461,15 +432,12 @@
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="133"
                             class="link-to-prism">src/app/Organization-Member/member-profile/member-profile.component.ts:133</a></div>
->>>>>>> develop
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-<<<<<<< HEAD
-=======
                     <div class="io-description"><p>This function will send the details to the API to save the changed details to the system.</p>
 </div>
 
@@ -515,7 +483,6 @@
 <p>If set to true, a class is added which ensures that the notifications tab is displayed. 
 If set to flase, a class is removed which hides the notifications tab.</p>
 </div>
->>>>>>> develop
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -526,8 +493,6 @@ If set to flase, a class is removed which hides the notifications tab.</p>
         </tbody>
     </table>
 </section>
-<<<<<<< HEAD
-=======
     <section>
     
         <h3 id="inputs">
@@ -796,15 +761,11 @@ If set to flase, a class is removed which hides the notifications tab.</p>
             </tbody>
         </table>
 </section>
->>>>>>> develop
 
 </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-<<<<<<< HEAD
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-=======
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewEncapsulation, Inject } from &#x27;@angular/core&#x27;;
 import * as Interface from &quot;../../_interfaces/interfaces&quot;;
 import { FormBuilder, FormGroup, Validators, FormControl } from &#x27;@angular/forms&#x27;;
@@ -821,22 +782,10 @@ import { template } from &#x27;@angular/core/src/render3&#x27;;
 
 import { UserManagementAPIService } from &#x27;src/app/_services/user-management-api.service&#x27;;
 
->>>>>>> develop
 
 @Component({
   selector: &#x27;app-member-profile&#x27;,
   templateUrl: &#x27;./member-profile.component.html&#x27;,
-<<<<<<< HEAD
-  styleUrls: [&#x27;./member-profile.component.scss&#x27;]
-})
-export class MemberProfileComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-=======
   styleUrls: [&#x27;./member-profile.component.scss&#x27;],
   encapsulation: ViewEncapsulation.None
 })
@@ -979,41 +928,11 @@ export class MemberProfileComponent implements OnInit {
   ngOnInit() {
     this.loadMemberProfileDetails();
   }
->>>>>>> develop
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-<<<<<<< HEAD
-        <pre class="line-numbers"><code class="language-html">&lt;h1&gt;User Details&lt;/h1&gt;
-&lt;mat-card&gt;
-  &lt;form class&#x3D;&quot;example-form&quot;&gt;
-
-        &lt;mat-form-field class&#x3D;&quot;example-full-width&quot;&gt;
-            &lt;input matInput placeholder&#x3D;&quot;Name&quot; value&#x3D;&quot;John&quot;&gt;
-          &lt;/mat-form-field&gt;
-          &lt;br/&gt;
-      
-          &lt;mat-form-field class&#x3D;&quot;example-full-width&quot;&gt;
-              &lt;input matInput placeholder&#x3D;&quot;Surname&quot; value&#x3D;&quot;Doe&quot;&gt;
-            &lt;/mat-form-field&gt;
-            &lt;br/&gt;
-
-        &lt;mat-form-field class&#x3D;&quot;example-full-width&quot;&gt;
-            &lt;input matInput placeholder&#x3D;&quot;Email&quot; value&#x3D;&quot;john@org1.co.za&quot;&gt;
-          &lt;/mat-form-field&gt;
-          &lt;br/&gt;
-
-          &lt;mat-form-field class&#x3D;&quot;example-full-width&quot;&gt;
-              &lt;input matInput placeholder&#x3D;&quot;Phone Number&quot; value&#x3D;&quot;0219875367&quot;&gt;
-            &lt;/mat-form-field&gt;
-            &lt;br/&gt;
-
-            &lt;button id&#x3D;&quot;submit_edited_details&quot; class&#x3D;&quot;btn btn-default&quot; routerLink&#x3D;&quot;&quot;&gt;Save Changes&lt;/button&gt;
-  &lt;/form&gt;
-&lt;/mat-card&gt;</code></pre>
-=======
         <pre class="line-numbers"><code class="language-html">&lt;!--Bootstrap Navbar--&gt;
 &lt;div class&#x3D;&quot;container-fluid&quot; id&#x3D;&quot;nav-section&quot;&gt;
   &lt;nav class&#x3D;&quot;navbar navbar-expand-xl&quot;&gt;
@@ -1160,24 +1079,12 @@ export class MemberProfileComponent implements OnInit {
 
 
 &lt;/div&gt;</code></pre>
->>>>>>> develop
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
                 <p class="comment">
                     <code>./member-profile.component.scss</code>
                 </p>
-<<<<<<< HEAD
-                <pre class="line-numbers"><code class="language-scss">.btn.btn-default {
-    background: transparent;
-    border: 3px solid #196F3D;
-    color: #196F3D;
-    font-size: 12px;
-    letter-spacing: 2px;
-    padding: 13px 30px;
-    margin-top: 34px;
-    margin-left: 2rem;
-=======
                 <pre class="line-numbers"><code class="language-scss">/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
 /* General Setup                                    */
 /* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
@@ -1575,19 +1482,11 @@ div#slideOut.showSlideOut {
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
->>>>>>> develop
     text-transform: uppercase;
 
     border-radius: 50px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
-<<<<<<< HEAD
-    border: 1px solid #196F3D;
-
-    display:block;
-
-}</code></pre>
-=======
     border: 1px solid #6B8E4E;
 
     display: block;
@@ -1674,7 +1573,6 @@ div#slideOut.showSlideOut {
 
 
 </code></pre>
->>>>>>> develop
     </div>
 
     <div class="tab-pane fade " id="c-tree">
@@ -1702,13 +1600,8 @@ div#slideOut.showSlideOut {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-<<<<<<< HEAD
-        var COMPONENT_TEMPLATE = '<div><h1>User Details</h1><mat-card>  <form class="example-form">        <mat-form-field class="example-full-width">            <input matInput placeholder="Name" value="John">          </mat-form-field>          <br/>                <mat-form-field class="example-full-width">              <input matInput placeholder="Surname" value="Doe">            </mat-form-field>            <br/>        <mat-form-field class="example-full-width">            <input matInput placeholder="Email" value="john@org1.co.za">          </mat-form-field>          <br/>          <mat-form-field class="example-full-width">              <input matInput placeholder="Phone Number" value="0219875367">            </mat-form-field>            <br/>            <button id="submit_edited_details" class="btn btn-default" routerLink="">Save Changes</button>  </form></mat-card></div>'
-    var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'}];
-=======
         var COMPONENT_TEMPLATE = '<div><!--Bootstrap Navbar--><div class="container-fluid" id="nav-section">  <nav class="navbar navbar-expand-xl">    <a class="navbar-brand" href="#">Member Profile</a>    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">      <span class="navbar-toggler-icon"></span>      <i class="fas fa-bars"></i>    </button>    <div class="collapse navbar-collapse" id="navbarSupportedContent">      <ul class="navbar-nav mr-auto">        <li class="nav-item active">          <a id="dashboard_menu_link" routerLink="/member-dashboard"><i class="fas fa-home"></i>Home</a>        </li>        <li class="nav-item dropdown">          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"            aria-haspopup="true" aria-expanded="false">            <i class="fas fa-vials"></i>Samples          </a>          <div class="dropdown-menu" aria-labelledby="navbarDropdown">              <a id="view_samples" routerLink="/member-view-samples"><i class="fas fa-vials"></i>View Samples</a>              <br/>              <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>          </div>        </li>        <li class="nav-item dropdown">          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"            aria-haspopup="true" aria-expanded="false">            <i class="fas fa-user"></i>Account          </a>          <div class="dropdown-menu" aria-labelledby="navbarDropdown">            <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>            <br/>            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>          </div>        </li>        <li class="nav-item">          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>        </li>        <li class="nav-item">          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>        </li>      </ul>    </div>  </nav></div><!--SlideOut --><div id="slideOut" [ngClass]="{\'showSlideOut\': toggle_status}">  <!--Tab-->  <div class="slideOutTab" (click)="toggleNotificaitonsTab()">    <div>      <p>Notifications</p>    </div>  </div>  <div class="modal-content">    <div class="modal-header">      <h4 class="modal-title">Member Notifications</h4>    </div>    <div class="modal-body" id="notifications-section">      <h2 *ngIf="!notifications">No notifications</h2>      <!--*********************************************************************                  DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR              *************************************************************************-->      <div class="box">        <div class="notification-heading">          <h2>Notification {{Number}}</h2>          <i class="fas fa-times"></i>        </div>        <div class="notification-content">          <p><b>Type:</b> {{Type}} notification</p>          <p><b>Action:</b> {{Action}}</p>          <p><b>Date:</b> {{Date}}</p>          <p><b>Details:</b> {{Details}}</p>        </div>      </div>      <div #notificationContainer></div>    </div>    <div class="modal-footer"> </div>  </div></div><!--Organization Profile Content--><div class="container-fluid">  <div class="member-profile">    <h2>Member Profile</h2>    <hr />    <form id="member_profile_form" [formGroup]="memberProfileForm" (submit)="saveChanges()">      <div class="row">        <!--Organization Name Field-->        <div class="organization-name">          <mat-form-field class="form_inputs" class="col">            <input matInput placeholder="Organization Name" formControlName="organization_name" value="{{organization}}" disabled>          </mat-form-field>          <br />        </div>        <!--Name Field-->        <div class="name-inputs">          <mat-form-field class="form_inputs" class="col">            <input matInput placeholder="Name" formControlName="member_name" value="{{name}}">          </mat-form-field>          <br />          <!--Surname Field-->          <mat-form-field class="form_inputs" class="col">            <input matInput placeholder="Admin Surname" matInput type="text" formControlName="member_surname" value={{surname}}>          </mat-form-field>          <br />        </div>        <!--Email Field-->        <div class="contact-inputs">          <mat-form-field class="form_inputs" class="col">            <input matInput placeholder="Email" formControlName="member_email" value="{{email}}">          </mat-form-field>          <br />        </div>        <br />        <div class="submit-input">          <button type="submit" id="save" class="btn btn-default">Save Information</button>        </div>      </div>    </form>  </div></div></div>'
     var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AdminDivComponent', 'selector': 'app-admin-div'},{'name': 'AdminProfileComponent', 'selector': 'app-admin-profile'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'ConfirmComponent', 'selector': 'app-confirm'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'NotificationDivComponent', 'selector': 'app-notification-div'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'ReportingComponent', 'selector': 'app-reporting'},{'name': 'SampleDivComponent', 'selector': 'app-sample-div'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffDivComponent', 'selector': 'app-staff-div'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffProfileComponent', 'selector': 'app-staff-profile'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'},{'name': 'UpdateComponent', 'selector': 'app-update'}];
->>>>>>> develop
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'MemberProfileComponent'};
 </script>
@@ -1723,10 +1616,7 @@ div#slideOut.showSlideOut {
 
 
 
-<<<<<<< HEAD
-=======
                    
->>>>>>> develop
 
 
 

@@ -14,11 +14,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
-<<<<<<< HEAD
-
-=======
 import { FilterPipe } from '../../_pipes/filter.pipe';
->>>>>>> develop
 
 describe('DatabaseHandlerComponent', () => {
   let component: DatabaseHandlerComponent;
