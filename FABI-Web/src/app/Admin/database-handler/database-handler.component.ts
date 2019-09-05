@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AdminAPIService } from '../../admin-api.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -9,6 +11,7 @@ import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
 import { ErrorComponent } from '../../error/error.component';
 =======
+>>>>>>> develop
 /**
  * File Name: database-handler.component.ts
  * File Path: c:\Users\Kendra\Documents\Varsity\Third Year\COS301\CAPSTONE\Git Repo\FABI-Mobile\FABI-Web\src\app\Admin\database-handler\database-handler.component.ts
@@ -16,18 +19,27 @@ import { ErrorComponent } from '../../error/error.component';
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
+<<<<<<< HEAD
+ * Last Modified: Friday, August 9th 2019
+=======
  * Last Modified: Thursday, August 22nd 2019
+>>>>>>> develop
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
  * 
  * <<license>>
  */
+<<<<<<< HEAD
+
+
+=======
 >>>>>>> develop
 
 
 <<<<<<< HEAD
 =======
+>>>>>>> develop
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { DatabaseManagementService } from "../../_services/database-management.service";
@@ -43,9 +55,12 @@ import { MatTableModule } from '@angular/material/table';
 import { Porting } from '../../_services/porting.service';
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+<<<<<<< HEAD
+=======
 
 import * as Interface  from '../../_interfaces/interfaces';
 import { LoadingComponent } from 'src/app/_loading/loading.component';
+>>>>>>> develop
 >>>>>>> develop
 
 @Component({
@@ -140,8 +155,11 @@ export class DatabaseHandlerComponent implements OnInit {
    * @memberof DatabaseHandlerComponent
    */
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
   loading: boolean = false;
 =======
+>>>>>>> develop
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(private authService: AuthenticationService, 
     private snackBar: MatSnackBar, 
@@ -150,6 +168,85 @@ export class DatabaseHandlerComponent implements OnInit {
     private resolver: ComponentFactoryResolver, 
     private userManagementService: UserManagementAPIService, 
     private notificationLoggingService: NotificationLoggingService,
+<<<<<<< HEAD
+    private dbService: DatabaseManagementService
+    ) { }
+
+  
+  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET_DATE
+  /**
+   *  This function will put the string date provided into a more readable format for the notifications
+   * @param {string} date The date of the log
+   * 
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getDate(date: string){
+    var tempDate = (date).split(' ');
+    var newDate = '';
+
+    newDate += tempDate[2];
+
+    if(tempDate[0] == 'Mon'){
+      newDate += ' Monday ';
+    }
+    else if(tempDate[0] == 'Tue' || tempDate[0] == 'Tu' || tempDate[0] == 'Tues'){
+      newDate += ' Tuesday ';
+    }
+    else if(tempDate[0] == 'Wed'){
+      newDate += ' Wednesday ';
+    }
+    else if(tempDate[0] == 'Thu' || tempDate[0] == 'Thur' || tempDate[0] == 'Thurs'){
+      newDate += ' Thursday ';
+    }
+    else if(tempDate[0] == 'Fri'){
+      newDate += ' Friday ';
+    }
+    else if(tempDate[0] == 'Sat'){
+      newDate += ' Saturday ';
+    }
+    else if(tempDate[0] == 'Sun'){
+      newDate += ' Sunday ';
+    }
+
+    if(tempDate[1] == 'Jan'){
+      newDate += 'January';
+    }
+    else if(tempDate[1] == 'Feb'){
+      newDate += 'February';
+    }
+    else if(tempDate[1] == 'Mar'){
+      newDate += 'March';
+    }
+    else if(tempDate[1] == 'Apr'){
+      newDate += 'April';
+    }
+    else if(tempDate[1] == 'Jun'){
+      newDate += 'June';
+    }
+    else if(tempDate[1] == 'Jul'){
+      newDate += 'July';
+    }
+    else if(tempDate[1] == 'Aug'){
+      newDate += 'August';
+    }
+    else if(tempDate[1] == 'Sep' || tempDate[1] == 'Sept'){
+      newDate += 'September';
+    }
+    else if(tempDate[1] == 'Oct'){
+      newDate += 'October';
+    }
+    else if(tempDate[1] == 'Nov'){
+      newDate += 'November';
+    }
+    else if(tempDate[1] == 'Dec'){
+      newDate += 'December';
+    }
+
+    newDate += ' ' + tempDate[3];
+=======
     private dbService: DatabaseManagementService,
     private formBuilder: FormBuilder, 
     private portCSV: Porting
@@ -159,6 +256,7 @@ export class DatabaseHandlerComponent implements OnInit {
         databaseName: ''
       }      
   }  
+>>>>>>> develop
 >>>>>>> develop
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,6 +295,9 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
+  public submitCSV(input) {
+=======
   public submitCSV(input?) {
     this.dbname = '';
     this.fileInput = '';
@@ -205,6 +306,7 @@ export class DatabaseHandlerComponent implements OnInit {
     this.columns = [];
 >>>>>>> develop
 
+>>>>>>> develop
     this.fileInput = input;
     this.loading = true;
     this.dbname = this.port.nativeElement.value;
@@ -219,17 +321,24 @@ export class DatabaseHandlerComponent implements OnInit {
       let snackBarRef = this.snackBar.open("Please enter a name for the database", "Dismiss", { duration: 3000 });
       return;
     }
+<<<<<<< HEAD
+=======
 
     if(this.portingForm.file == null || this.portingForm.file == '') {
       let snackBarRef = this.snackBar.open("Please select a database to port", "Dismiss", { duration: 3000 });
       return;
     }
+>>>>>>> develop
 
     const reader = new FileReader();
     reader.readAsText(this.portingForm.file.files[0]);
     reader.onload = () => {
       let text = reader.result;
 
+<<<<<<< HEAD
+      console.log("porting data:");
+=======
+>>>>>>> develop
       //converts file to JSON Object
       this.jsonData = this.portCSV.convertToJSON(text);
       

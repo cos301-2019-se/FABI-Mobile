@@ -14,6 +14,8 @@
  */
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 import { AdminAPIService } from '../../admin-api.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -27,6 +29,7 @@ import { OrganizationAdmin } from '../../admin-api.service';
 
 
 =======
+>>>>>>> develop
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
@@ -47,6 +50,10 @@ import * as Interface from '../../_interfaces/interfaces';
 
 import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+<<<<<<< HEAD
+
+=======
+>>>>>>> develop
 >>>>>>> develop
 
 @Component({
@@ -57,6 +64,8 @@ import { UserManagementAPIService } from '../../_services/user-management-api.se
 })
 export class OrganizationHandlerComponent implements OnInit {
 
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
   /*
     GLOBALS
@@ -77,6 +86,7 @@ export class OrganizationHandlerComponent implements OnInit {
     })
   }
 =======
+>>>>>>> develop
   displayedColumns: string[] = ['Organization Name', 'Admin', "Remove"];
   dataSource = new MatTableDataSource([]);
 >>>>>>> develop
@@ -107,7 +117,33 @@ export class OrganizationHandlerComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+<<<<<<< HEAD
+  /** Object array for holding all of the logs -  @type {any[]} */ 
+  allNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */ 
+  newNotifications: any[] = [];
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */ 
+  allLogs: string[] = [];
+
+  /** The total number of User Logs - @type {number} */           
+  numberOfUserLogs: number = 0;
+  /** The total number of Database Management Logs - @type {number} */           
+  numberOfDatabaseLogs: number = 0;
+  /** The total number of Access Logs - @type {number} */           
+  numberOfAccessLogs: number = 0;
+
+  /** Indicates if there are notifications to load - @type {boolean} */           
+  notifications: boolean = true; 
+  /** THe number of the notifications - @type {number} */   
+  localNotificationNumber : number = 1;   
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  private toggle_status : boolean = false;
+
+  register_validation_messages = {
+=======
   register_organization_validators = {
+>>>>>>> develop
     'organization_name': [
       { type: 'required', message: 'Organization name is required' },
     ],
@@ -573,4 +609,8 @@ export class OrganizationHandlerComponent implements OnInit {
     })
   }
 
+<<<<<<< HEAD
+  
+=======
+>>>>>>> develop
 }

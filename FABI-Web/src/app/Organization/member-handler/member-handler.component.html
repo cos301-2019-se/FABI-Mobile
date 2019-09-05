@@ -106,6 +106,16 @@
               <div class="tab_content">
                 <h2>Add Member</h2>
                 <br />
+<<<<<<< HEAD
+
+                <!--Surname Field-->
+                <mat-form-field class="form_inputs" class="col">
+                  <input matInput placeholder="Surname" matInput type="text" formControlName="member_surname">
+                  <mat-error *ngFor="let validation of add_validation_messages.member_surname">
+                    <mat-error class="errors" *ngIf="addMemberForm.get('member_surname').hasError(validation.type) && (addMemberForm.get('member_surname').dirty || addMemberForm.get('member_surname').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-form-field>
+=======
   
                 <form id="add_new_member_form" [formGroup]="addMemberForm" (submit)="addMember()">
 
@@ -169,6 +179,7 @@
               </ng-template>
               <div class="tab_content">
                 <h2>Remove Member</h2>
+>>>>>>> develop
                 <br />
   
                 <form id="remove_member_form">

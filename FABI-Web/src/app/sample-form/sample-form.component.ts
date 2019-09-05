@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 import { ClientFormData } from '../organization-api.service';
 import { OrganizationInfo } from '../organization-api.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
@@ -21,9 +23,13 @@ import { AdminAPIService } from '../admin-api.service';
  * <<license>>
  */
 
+>>>>>>> develop
 import * as Interface from '../_interfaces/interfaces';
 import { Component, OnInit, ViewEncapsulation, Injector } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 >>>>>>> develop
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -52,6 +58,31 @@ export class SampleFormComponent implements OnInit {
   sent: boolean = false;                // to check if user is logged in
   errors: boolean = false;
   organizations: Object;            //array for Organization dropdown
+<<<<<<< HEAD
+  plantationAddress: Interface.Address;
+  plantationLocation: Interface.Location;
+
+  constructor(
+    private authService: AuthenticationService, 
+    private clinicService: DiagnosticClinicAPIService,
+    private formBuilder: FormBuilder, 
+    private snackBar: MatSnackBar, 
+    private dialog: MatDialog, 
+    private router: Router
+    ) {
+      this.sampleForm = this.formBuilder.group({
+
+      sample_plant_species: ['', Validators.required],
+      sample_num_samples: ['', Validators.required],
+      sample_street: ['', Validators.required],
+      sample_area: ['', Validators.required],
+      sample_city: ['', Validators.required],
+      sample_farm: ['', Validators.required],
+      sample_province: ['', Validators.required],
+      sample_gps: ['', Validators.required],
+      date_sample_collected: ['', Validators.required],
+      date_sample_sent: ['', Validators.required],
+=======
 <<<<<<< HEAD
 
   // sampleForm = new FormGroup({
@@ -115,6 +146,7 @@ export class SampleFormComponent implements OnInit {
       sample_form_gps: ['', Validators.required],
       sample_form_date_collection: ['', Validators.required],
       sample_form_date_sent: ['', Validators.required],
+>>>>>>> develop
 
       sample_type_soil: ['', Validators.required],
       sample_type_stems: ['', Validators.required],
@@ -322,10 +354,17 @@ export class SampleFormComponent implements OnInit {
     };
 
 <<<<<<< HEAD
+    const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
+
+
+    this.clinicService.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
+=======
+<<<<<<< HEAD
     const orgDetails: OrganizationInfo = { orgName: this.sampleForm.controls.organization.value };
 
 
     this.service.submitSampleForm(orgDetails, formDetails).subscribe((response: any) => {
+>>>>>>> develop
       console.log("HERE");
       if (response.success == true) {
 =======
@@ -340,6 +379,11 @@ export class SampleFormComponent implements OnInit {
         });
 
 <<<<<<< HEAD
+        console.log("Reference Number : " + response.data.referenceNumber);
+
+      } else if (response.success == false) {
+=======
+<<<<<<< HEAD
         console.log("Reference Number : " + response.data.content.referenceNumber);
 =======
         // console.log(JSON.stringify(response));
@@ -351,6 +395,7 @@ export class SampleFormComponent implements OnInit {
         this.router.navigate(['/pre-diagnosis']);
       } 
       else if (response.success == false) {
+>>>>>>> develop
         //POPUP MESSAGE
         let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Submit Form", message: response.message } });
         dialogRef.afterClosed().subscribe((result) => {
@@ -379,6 +424,13 @@ export class SampleFormComponent implements OnInit {
 
 <<<<<<< HEAD
   ngOnInit() {
+<<<<<<< HEAD
+    let today = new Date();
+    this.sampleForm.patchValue( {
+      date_sample_sent: today
+    });
+
+=======
     this.adminServce.getAllOrganizations().subscribe((response:any) => {
       if(response.success == true) {
         // var orgs = response.data.content.qs.Organizations;
@@ -407,6 +459,7 @@ export class SampleFormComponent implements OnInit {
       })
       console.log("ERROR:" + err.message);
     })
+>>>>>>> develop
   }
 =======
 >>>>>>> develop

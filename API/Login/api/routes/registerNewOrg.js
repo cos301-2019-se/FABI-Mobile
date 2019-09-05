@@ -3,6 +3,11 @@ const router = express.Router();
 const request = require("request");
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
+<<<<<<< HEAD:API/UserManagement/api/routes/FABI/createOrganization.js
+const mail = require('../sendEmail');
+const log = require('../../sendLogs');
+=======
+>>>>>>> develop:API/Login/api/routes/registerNewOrg.js
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -122,7 +127,23 @@ function addOrganization(req, res)
                 data: {
                         orgName: req.body.orgName,
                 }
+<<<<<<< HEAD:API/UserManagement/api/routes/FABI/createOrganization.js
+        })
+        mail(req.body.orgName + ' Admin', pass);
+        log({
+            type: 'USER',
+            action: 'AddMemberToOrg',
+            details: '1563355277876',
+            user: qs.admin.id,
+            org1: 'FABI',
+            org2: req.body.orgName,
+            action: '/createOrganization'
         });
+    });
+        console.log("New Organization Added");
+=======
+        });
+>>>>>>> develop:API/Login/api/routes/registerNewOrg.js
     }).catch((err) => {
         console.log("Database connection error: " + err);
         res.setHeader('Content-Type', 'application/problem+json');

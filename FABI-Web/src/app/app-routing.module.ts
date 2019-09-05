@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 import { LoginComponent } from './login/login.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 import { AdminDashboardComponent } from "./Admin/admin-dashboard/admin-dashboard.component";
@@ -22,6 +24,7 @@ const routes: Routes = [
 
 
 =======
+>>>>>>> develop
 import { LoginComponent } from "./login/login.component";
 import { HomeComponent } from "./home/home.component";
 import { AdminDashboardComponent } from "./Admin/admin-dashboard/admin-dashboard.component";
@@ -120,6 +123,9 @@ const routes: Routes = [
     path: 'pre-diagnosis',
     component: PreDiagnosisComponent
   }
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 >>>>>>> develop
 
 ];

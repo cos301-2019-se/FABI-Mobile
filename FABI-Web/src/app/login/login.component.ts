@@ -16,6 +16,8 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 import { LoginInfo } from '../admin-api.service';
 import { AdminAPIService } from '../admin-api.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -40,6 +42,7 @@ export interface UserType {
   Name: string; //This will be the name of the type
 }
 =======
+>>>>>>> develop
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
@@ -49,6 +52,9 @@ import { ErrorComponent } from '../_errors/error-component/error.component';
 import * as Interface from '../_interfaces/interfaces';
 import { ToastrService } from 'ngx-toastr';
 
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 >>>>>>> develop
 
 @Component({
@@ -60,6 +66,8 @@ import { ToastrService } from 'ngx-toastr';
 
 export class LoginComponent implements OnInit {
 
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
   /*
     GLOBALS
@@ -79,6 +87,7 @@ export class LoginComponent implements OnInit {
    */
   constructor(private service: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
 =======
+>>>>>>> develop
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -147,6 +156,9 @@ export class LoginComponent implements OnInit {
     //   var organization = '';
     // }
 
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 >>>>>>> develop
     this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
@@ -160,6 +172,9 @@ export class LoginComponent implements OnInit {
 
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                              LOGIN
@@ -171,6 +186,9 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 >>>>>>> develop
   login() {
 
@@ -182,6 +200,8 @@ export class LoginComponent implements OnInit {
     }
 <<<<<<< HEAD
 
+<<<<<<< HEAD
+=======
     this.success = true;
     this.loading = true;
 
@@ -199,6 +219,7 @@ export class LoginComponent implements OnInit {
       if (response.success == true) {
 =======
 
+>>>>>>> develop
     this.valid = true;
     this.loading = true;
 
@@ -222,12 +243,22 @@ export class LoginComponent implements OnInit {
         }
         // ELSE user Authorised:
 
+<<<<<<< HEAD
+        //Setting local storage to hold the users details
+        localStorage.setItem('userID', response.userDetails.id);
+        localStorage.setItem('userOrganization', Lorg);
+        localStorage.setItem('userPassword', Lpassw);
+
+=======
+>>>>>>> develop
 >>>>>>> develop
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Welcome", "Dismiss", {
           duration: 3000
         });
 
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
         this.service.setToken(response.data.token);
         this.service.setLoggedin();
@@ -270,6 +301,7 @@ export class LoginComponent implements OnInit {
           }
         }
 =======
+>>>>>>> develop
         // Navigate to specific dashboard, based on user's type
         if(response.userDetails.userType == 'SuperUser') {
           this.router.navigate(['/admin-dashboard']);
@@ -287,6 +319,9 @@ export class LoginComponent implements OnInit {
           });
         }
         
+<<<<<<< HEAD
+=======
+>>>>>>> develop
 >>>>>>> develop
 
       } else if (response.success == false) {
@@ -298,6 +333,11 @@ export class LoginComponent implements OnInit {
           }
         })
       }
+<<<<<<< HEAD
+    });
+    
+    this.loading = false;
+=======
 <<<<<<< HEAD
 
       this.loading = false;
@@ -313,77 +353,37 @@ export class LoginComponent implements OnInit {
       console.log("ERROR:" + err.message);
       this.loading = false;
     })
+>>>>>>> develop
   }
 
   ngOnInit() {
+<<<<<<< HEAD
+
+    //-------- Load Organisation names for Drop Down --------
+    this.userManagementServicee.getAllOrganizations().subscribe((response: any) => {
+      
+      if (response.success == true && response.code == 200) {
+        console.log(response);
+        console.log(response.data);
+        this.organizations = response.data.Organizations;
+
+      } else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the Organisations", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.ngOnInit();
+          }
+        })
+      }
+    });
+=======
     this.loggedIn = this.service.isLoggedIn();
     if (this.loggedIn == true) {
       this.router.navigate(['sample-form']);
     }
+>>>>>>> develop
 
-    this.service.getAllOrganizations().subscribe((response:any) => {
-      if(response.success == true) {
-        // var orgs = response.data.content.qs.Organizations;
-        // forEach(var i in orgs)
-        // {
-        //   this.organizations.push(i);
-        // }
-        this.organizations = response.data.content.qs.Organizations;
-        
-      } else if (response.success == false) {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: response.error.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        })
-      }    
-    }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could Not Load Organizations", message: err.message}});
-      dialogRef.afterClosed().subscribe((result) => {
-        if(result == "Retry") {
-          this.ngOnInit();
-        }
-      })
-      console.log("ERROR:" + err.message);
-    })
-
-  }
-
-  displayUserTypes() 
-  {
-    if(this.selectedOrg == "FABI")
-    {
-      this.userTypes = [
-        {
-          "ID":1,
-          "Name":"Admin"
-        },
-        {
-          "ID":2,
-          "Name":"Staff"
-        },
-        {
-          "ID":3,
-          "Name":"Database Admin"
-        }
-      ]
-
-    }
-    else {
-      this.userTypes = [
-        {
-          "ID":1,
-          "Name":"Admin"
-        },
-        {
-          "ID":2,
-          "Name":"Member"
-        }
-      ]
-    }
   }
 =======
     });

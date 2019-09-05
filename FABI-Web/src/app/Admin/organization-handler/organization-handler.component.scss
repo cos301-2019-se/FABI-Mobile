@@ -24,12 +24,44 @@
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
+<<<<<<< HEAD
+
+    width: 100% !important;
+    min-height:100vh !important;
+    height: 100% !important;
+
+    margin-top: 5%;
+}
+
+.tab-content h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #6B8E4E;
+    font-size: 28px;
+
+    text-transform: uppercase;
+}
+
+.tab-content hr {
+    width: 250px;
+    height: 2px;
+    background-color: #6B8E4E;
+    border: 0;
+    margin-bottom: 25px;
+}
+
+@media (max-width:425px){
+    .tab-content hr {
+        width: 150px;
+    }
+}
+=======
     text-align: center;
     color: black;
 =======
 .organization-table {
   width: 95%;
   height: 50%;
+>>>>>>> develop
 >>>>>>> develop
 
   padding: 15px;
