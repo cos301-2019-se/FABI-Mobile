@@ -152,7 +152,6 @@ import { StaffViewSamplesComponent } from './Staff/staff-view-samples/staff-view
   ],
   imports: [
     BrowserModule,
-    MatInputModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
