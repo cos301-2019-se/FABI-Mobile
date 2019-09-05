@@ -237,21 +237,6 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-<<<<<<< HEAD
-        <pre class="line-numbers"><code class="language-html">&lt;h1&gt;Submit CMW Revitalization Form&lt;/h1&gt;
-&lt;mat-card&gt;
-  &lt;form class&#x3D;&quot;example-form&quot;&gt;
-
-      &lt;mat-form-field class&#x3D;&quot;example-full-width&quot;&gt;
-          &lt;input matInput placeholder&#x3D;&quot;Culture Type&quot;&gt;
-        &lt;/mat-form-field&gt;
-        &lt;br/&gt;
-
-
-            &lt;button id&#x3D;&quot;submit_cmw_revitalization&quot; class&#x3D;&quot;btn btn-default&quot; routerLink&#x3D;&quot;/fabi-internal-dashboard&quot;&gt;Submit&lt;/button&gt;
-  &lt;/form&gt;
-&lt;/mat-card&gt;</code></pre>
-=======
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container&quot;&gt;
 
   &lt;!--Nav Section--&gt;
@@ -308,19 +293,12 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
   &lt;/div&gt;
 
 &lt;/div&gt;</code></pre>
->>>>>>> develop
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
                 <p class="comment">
                     <code>./submit-cmw-revitalization.component.scss</code>
                 </p>
-<<<<<<< HEAD
-                <pre class="line-numbers"><code class="language-scss">.btn.btn-default {
-    background: transparent;
-    border: 3px solid #196F3D;
-    color: #196F3D;
-=======
                 <pre class="line-numbers"><code class="language-scss">/*-------------
     General
 -------------*/
@@ -569,27 +547,16 @@ a i {
     background: #6B8E4E;
     border: 3px solid #6B8E4E;
     color: #ffffff;
->>>>>>> develop
     font-size: 12px;
     letter-spacing: 2px;
     padding: 13px 30px;
     margin-top: 34px;
-<<<<<<< HEAD
-    margin-left: 2rem;
-=======
     margin-bottom: 2rem;
->>>>>>> develop
     text-transform: uppercase;
 
     border-radius: 50px;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
-<<<<<<< HEAD
-    border: 1px solid #196F3D;
-
-    display:block;
-
-=======
     border: 1px solid #6B8E4E;
 
     display: block;
@@ -603,7 +570,6 @@ a i {
 
 .form_inputs {
     width: 25%;
->>>>>>> develop
 }</code></pre>
     </div>
 
@@ -632,13 +598,8 @@ a i {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-<<<<<<< HEAD
-        var COMPONENT_TEMPLATE = '<div><h1>Submit CMW Revitalization Form</h1><mat-card>  <form class="example-form">      <mat-form-field class="example-full-width">          <input matInput placeholder="Culture Type">        </mat-form-field>        <br/>            <button id="submit_cmw_revitalization" class="btn btn-default" routerLink="/fabi-internal-dashboard">Submit</button>  </form></mat-card></div>'
-    var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'}];
-=======
         var COMPONENT_TEMPLATE = '<div><div class="container">  <!--Nav Section-->  <div class="nav">    <section class="top-nav">      <h1>CMW Revitalization Form</h1>      <a id="dashboard_menu_link" routerLink="/staff-dashboard"><i class="fas fa-home"></i>Home</a>      <a id="submit_CMW_request" routerLink="/submit-cmw-request"><i class="fab fa-wpforms"></i>CMW Request        Form</a>      <a id="submit_CMW_deposit" routerLink="/submit-cmw-deposit"><i class="fab fa-wpforms"></i>CMW Deposit        Form</a>      <a id="submit_CMW_revitalization" routerLink="/submit-cmw-revitalization"><i class="fab fa-wpforms"></i>CMW        Revitalization Form</a>      <a id="submit_CBS_request" routerLink="/submit-cbs-request"><i class="fab fa-wpforms"></i>CBS Request        Form</a>      <a id="submit_CBS_deposit" routerLink="/submit-cbs-deposit"><i class="fab fa-wpforms"></i>CBS Deposit        Form</a>      <a id="submit_samples" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>      <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>      <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>      <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>      <a href="" id="notification-bell"><i class="fas fa-bell"></i>Notifications</a>    </section>    <section class="bottom-nav">      <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>    </section>    <a href="" id="menu"><i class="fas fa-bars"></i></a>  </div>  <!--CMW Revitalization Form Content-->  <div class="content">    <div class="color-accent">      <h1>CMW Revitalization Form</h1>    </div>    <div class="cmw-revitalization">      <form class="example-form">        <mat-form-field class="example-full-width">          <input matInput placeholder="Culture Type">        </mat-form-field>        <br />        <button id="submit_cmw_revitalization" class="btn btn-default"          routerLink="/fabi-internal-dashboard">Submit</button>      </form>    </div>  </div></div></div>'
     var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AdminDivComponent', 'selector': 'app-admin-div'},{'name': 'AdminProfileComponent', 'selector': 'app-admin-profile'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'ConfirmComponent', 'selector': 'app-confirm'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'NotificationDivComponent', 'selector': 'app-notification-div'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'ReportingComponent', 'selector': 'app-reporting'},{'name': 'SampleDivComponent', 'selector': 'app-sample-div'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffDivComponent', 'selector': 'app-staff-div'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffProfileComponent', 'selector': 'app-staff-profile'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'},{'name': 'UpdateComponent', 'selector': 'app-update'}];
->>>>>>> develop
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SubmitCmwRevitalizationComponent'};
 </script>
@@ -653,10 +614,7 @@ a i {
 
 
 
-<<<<<<< HEAD
-=======
                    
->>>>>>> develop
 
 
 

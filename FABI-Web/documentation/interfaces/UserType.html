@@ -61,11 +61,6 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-<<<<<<< HEAD
-            <code>src/app/login/login.component.ts</code>
-        </p>
-
-=======
             <code>src/app/_interfaces/interfaces.ts</code>
         </p>
 
@@ -76,7 +71,6 @@
                 <p>Defines a User Type object</p>
 
             </p>
->>>>>>> develop
 
 
         <section>
@@ -118,11 +112,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-<<<<<<< HEAD
-                                        <code>ID:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-=======
                                         <code>ID:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
->>>>>>> develop
 </code>
                                     </td>
                                 </tr>
@@ -130,11 +120,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-<<<<<<< HEAD
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-=======
                                             <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
->>>>>>> develop
 
                                         </td>
                                     </tr>
@@ -179,236 +165,6 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-<<<<<<< HEAD
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewEncapsulation } from &#x27;@angular/core&#x27;;
-import { LoginInfo } from &#x27;../admin-api.service&#x27;;
-import { AdminAPIService } from &#x27;../admin-api.service&#x27;;
-import { FormBuilder, FormGroup, Validators, FormControl } from &#x27;@angular/forms&#x27;;
-import { HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
-import { MatSnackBar } from &#x27;@angular/material&#x27;;
-import { MatDialog } from &#x27;@angular/material&#x27;;
-import { ErrorComponent } from &#x27;../error/error.component&#x27;;
-import { Router } from &#x27;@angular/router&#x27;;
-import { forEach } from &#x27;@angular/router/src/utils/collection&#x27;;
-//import { userInfo } from &#x27;os&#x27;;
-
-
-//Object for defining how a organization is structured
-export interface Organization {
-  ID: string; //This will contain the ID retreived from the DB 
-  Name: string; //This will be the name of the organization
-}
-
-//Object for defining how a userType is structured
-export interface UserType {
-  ID: string; //This will contain the ID retreived from the DB 
-  Name: string; //This will be the name of the type
-}
-
-@Component({
-  selector: &#x27;app-login&#x27;,
-  templateUrl: &#x27;./login.component.html&#x27;,
-  styleUrls: [&#x27;./login.component.scss&#x27;],
-  encapsulation: ViewEncapsulation.None
-})
-export class LoginComponent implements OnInit {
-
-  /*
-    GLOBALS
-  */
-  loginForm: FormGroup;             // FormGroup object to reference add user type form
-  submitted: boolean &#x3D; false;       // if form has been submitted
-  success: boolean &#x3D; false;         // if form was succesfully filled out
-  loggedIn: boolean &#x3D; false;        // to check if user is logged in
-  selectedOrganization: boolean &#x3D; false;
-  organizations: Object;            //array for Organization dropdown
-  userTypes: Object;                //array for User Type dropdown
-  loading: boolean &#x3D; false;
-  selectedOrg: string;
-
-  /*
-     CONSTRUCTOR
-   */
-  constructor(private service: AdminAPIService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router) {
-    this.loginForm &#x3D; this.formBuilder.group({
-      organization: [&#x27;&#x27;, Validators.required],
-      userType: [&#x27;&#x27;, Validators.required],
-      login_email: [&#x27;&#x27;, Validators.required],
-      login_password: [&#x27;&#x27;, Validators.required]
-    })
-  }
-
-  login() {
-
-    this.submitted &#x3D; true;
-
-    if (this.loginForm.invalid) {
-      return;
-    }
-
-    this.success &#x3D; true;
-    this.loading &#x3D; true;
-
-    const Lemail &#x3D; this.loginForm.controls.login_email.value;
-    const Lpassw &#x3D; this.loginForm.controls.login_password.value;
-    const Lorg &#x3D; this.loginForm.controls.organization.value;
-    const LuserType &#x3D; this.loginForm.controls.userType.value;
-
-    const details: LoginInfo &#x3D; { email: Lemail, password: Lpassw, organization: Lorg, userType: LuserType };
-
-    this.service.login(details).subscribe((response: any) &#x3D;&gt; {
-
-      this.loading &#x3D; false;
-      
-      if (response.success &#x3D;&#x3D; true) {
-        //POPUP MESSAGE
-        let snackBarRef &#x3D; this.snackBar.open(&quot;Successfully Logged In&quot;, &quot;Dismiss&quot;, {
-          duration: 3000
-        });
-
-        this.service.setToken(response.data.token);
-        this.service.setLoggedin();
-
-        if(details.organization &#x3D;&#x3D; &quot;FABI&quot;)
-        {
-          if(details.userType &#x3D;&#x3D; &quot;Admin&quot; || details.userType &#x3D;&#x3D; &quot;Database Admin&quot;)
-          {
-            try {
-              this.router.navigate([&#x27;fabi-admin-dashboard&#x27;]);
-            } catch(err) {
-              console.log(&quot;Could not redirect to dashboard: &quot; + err.message);
-            }
-            
-          }
-          else {
-            try {
-              this.router.navigate([&#x27;fabi-staff-dashboard&#x27;]);
-            } catch(err) {
-              console.log(&quot;Could not redirect to dashboard: &quot; + err.message);
-            }
-          }
-        }
-        else
-        {
-          if(details.userType &#x3D;&#x3D; &quot;Admin&quot;)
-          { 
-            try {
-              this.router.navigate([&#x27;org-admin-dashboard&#x27;]);
-            } catch(err) {
-              console.log(&quot;Could not redirect to dashboard: &quot; + err.message);
-            }
-          } else
-          {
-            try {
-              this.router.navigate([&#x27;org-member-dashboard&#x27;]);
-            } catch(err) {
-              console.log(&quot;Could not redirect to dashboard: &quot; + err.message);
-            }
-          }
-        }
-
-      } else if (response.success &#x3D;&#x3D; false) {
-        //POPUP MESSAGE
-        let dialogRef &#x3D; this.dialog.open(ErrorComponent, { data: { error: &quot;Could Not Log In&quot;, message: response.message } });
-        dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
-          if (result &#x3D;&#x3D; &quot;Retry&quot;) {
-            this.login();
-          }
-          //Take out when authenication is working - Just for test/demp purposes
-          this.router.navigate([&#x27;sample-form&#x27;]);
-          //
-        })
-      }
-
-      this.loading &#x3D; false;
-
-    }, (err: HttpErrorResponse) &#x3D;&gt; {
-      //POPUP MESSAGE
-      let dialogRef &#x3D; this.dialog.open(ErrorComponent, { data: { error: &quot;Could Not Log In&quot;, message: err.message } });
-      dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
-        if (result &#x3D;&#x3D; &quot;Retry&quot;) {
-          this.login();
-        }
-      })
-      console.log(&quot;ERROR:&quot; + err.message);
-      this.loading &#x3D; false;
-    })
-  }
-
-  ngOnInit() {
-    this.loggedIn &#x3D; this.service.isLoggedIn();
-    if (this.loggedIn &#x3D;&#x3D; true) {
-      this.router.navigate([&#x27;sample-form&#x27;]);
-    }
-
-    this.service.getAllOrganizations().subscribe((response:any) &#x3D;&gt; {
-      if(response.success &#x3D;&#x3D; true) {
-        // var orgs &#x3D; response.data.content.qs.Organizations;
-        // forEach(var i in orgs)
-        // {
-        //   this.organizations.push(i);
-        // }
-        this.organizations &#x3D; response.data.content.qs.Organizations;
-        
-      } else if (response.success &#x3D;&#x3D; false) {
-        //POPUP MESSAGE
-        let dialogRef &#x3D; this.dialog.open(ErrorComponent, {data: {error: &quot;Could Not Load Organizations&quot;, message: response.error.message}});
-        dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
-          if(result &#x3D;&#x3D; &quot;Retry&quot;) {
-            this.ngOnInit();
-          }
-        })
-      }    
-    }, (err: HttpErrorResponse) &#x3D;&gt; {
-      //POPUP MESSAGE
-      let dialogRef &#x3D; this.dialog.open(ErrorComponent, {data: {error: &quot;Could Not Load Organizations&quot;, message: err.message}});
-      dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
-        if(result &#x3D;&#x3D; &quot;Retry&quot;) {
-          this.ngOnInit();
-        }
-      })
-      console.log(&quot;ERROR:&quot; + err.message);
-    })
-
-  }
-
-  displayUserTypes() 
-  {
-    if(this.selectedOrg &#x3D;&#x3D; &quot;FABI&quot;)
-    {
-      this.userTypes &#x3D; [
-        {
-          &quot;ID&quot;:1,
-          &quot;Name&quot;:&quot;Admin&quot;
-        },
-        {
-          &quot;ID&quot;:2,
-          &quot;Name&quot;:&quot;Staff&quot;
-        },
-        {
-          &quot;ID&quot;:3,
-          &quot;Name&quot;:&quot;Database Admin&quot;
-        }
-      ]
-
-    }
-    else {
-      this.userTypes &#x3D; [
-        {
-          &quot;ID&quot;:1,
-          &quot;Name&quot;:&quot;Admin&quot;
-        },
-        {
-          &quot;ID&quot;:2,
-          &quot;Name&quot;:&quot;Member&quot;
-        }
-      ]
-    }
-  }
-
-}
-</code></pre>
-=======
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Organisation {
     ID?: string; // ID of Organisation 
     orgName: string; // Name of Organisation
@@ -523,15 +279,11 @@ export interface StaffInfo {
     conditions_other: string;
     conditions_additional: string;
   }</code></pre>
->>>>>>> develop
     </div>
 </div>
 
 
-<<<<<<< HEAD
-=======
                    
->>>>>>> develop
 
 
 

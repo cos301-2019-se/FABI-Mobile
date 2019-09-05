@@ -2,26 +2,17 @@
     background: #FFDE00;
     border: none;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 .navbar-default .navbar-brand {
     color: #333;
     font-weight: bold;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 .menu {
     background: #333;
     color: #fcfcfc;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 .menu ul.list li a {
     color: #333;
 }
@@ -36,12 +27,8 @@
     margin-top: 0;
 }
 
-<<<<<<< HEAD
-.menu ul.list li.chapter a, .menu ul.list li.chapter .simple {
-=======
 .menu ul.list li.chapter a,
 .menu ul.list li.chapter .simple {
->>>>>>> develop
     color: white;
     text-decoration: none;
 }
@@ -51,13 +38,9 @@
     text-transform: none;
     padding-left: 35px;
 }
-<<<<<<< HEAD
-.menu ul.list li.chapter ul.links a:hover, .menu ul.list li.chapter ul.links a.active {
-=======
 
 .menu ul.list li.chapter ul.links a:hover,
 .menu ul.list li.chapter ul.links a.active {
->>>>>>> develop
     color: #FFDE00;
 }
 
@@ -69,22 +52,15 @@
     background: rgba(255, 255, 255, 0.07);
 }
 
-<<<<<<< HEAD
-#book-search-input input, #book-search-input input:focus, #book-search-input input:hover {
-=======
 #book-search-input input,
 #book-search-input input:focus,
 #book-search-input input:hover {
->>>>>>> develop
     color: #949494;
 }
 
 .copyright {
     color: #b3b3b3;
-<<<<<<< HEAD
-=======
     background: #272525;
->>>>>>> develop
 }
 
 .content {
@@ -94,18 +70,6 @@
 .content a {
     color: #007DCC;
 }
-<<<<<<< HEAD
-.content a:visited {
-    color: #0165a5;
-}
-.copyright {
-    background: #272525;
-}
-.menu ul.list li:nth-last-child(2) {
-    background: none;
-}
-.list-group-item:first-child, .list-group-item:last-child {
-=======
 
 .content a:visited {
     color: #0165a5;
@@ -117,7 +81,6 @@
 
 .list-group-item:first-child,
 .list-group-item:last-child {
->>>>>>> develop
     border-radius: 0;
 }
 
@@ -125,14 +88,6 @@
     text-decoration: none;
     font-weight: bold;
 }
-<<<<<<< HEAD
-.menu ul.list li.title a:hover {
-    background: rgba(255,255,255,0.1);
-}
-
-.breadcrumb>li+li:before {
-     content: "»\00a0"
-=======
 
 .menu ul.list li.title a:hover {
     background: rgba(255, 255, 255, 0.1);
@@ -140,17 +95,13 @@
 
 .breadcrumb>li+li:before {
     content: "»\00a0"
->>>>>>> develop
 }
 
 .breadcrumb {
     padding-bottom: 15px;
     border-bottom: 1px solid #e1e4e5;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 code {
     white-space: nowrap;
     max-width: 100%;
@@ -160,10 +111,7 @@ code {
     overflow-x: auto;
     border-radius: 0;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 pre {
     white-space: pre;
     margin: 0;
@@ -175,10 +123,7 @@ pre {
     color: #404040;
     background: #f3f3f3;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 pre code.hljs {
     border: none;
     background: inherit;
@@ -202,40 +147,23 @@ hue-6-2: #c18401
 */
 
 .hljs {
-<<<<<<< HEAD
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  color: #383a42;
-  background: #fafafa;
-=======
     display: block;
     overflow-x: auto;
     padding: 0.5em;
     color: #383a42;
     background: #fafafa;
->>>>>>> develop
 }
 
 .hljs-comment,
 .hljs-quote {
-<<<<<<< HEAD
-  color: #a0a1a7;
-  font-style: italic;
-=======
     color: #a0a1a7;
     font-style: italic;
->>>>>>> develop
 }
 
 .hljs-doctag,
 .hljs-keyword,
 .hljs-formula {
-<<<<<<< HEAD
-  color: #a626a4;
-=======
     color: #a626a4;
->>>>>>> develop
 }
 
 .hljs-section,
@@ -243,19 +171,11 @@ hue-6-2: #c18401
 .hljs-selector-tag,
 .hljs-deletion,
 .hljs-subst {
-<<<<<<< HEAD
-  color: #e45649;
-}
-
-.hljs-literal {
-  color: #0184bb;
-=======
     color: #e45649;
 }
 
 .hljs-literal {
     color: #0184bb;
->>>>>>> develop
 }
 
 .hljs-string,
@@ -263,20 +183,12 @@ hue-6-2: #c18401
 .hljs-addition,
 .hljs-attribute,
 .hljs-meta-string {
-<<<<<<< HEAD
-  color: #50a14f;
-=======
     color: #50a14f;
->>>>>>> develop
 }
 
 .hljs-built_in,
 .hljs-class .hljs-title {
-<<<<<<< HEAD
-  color: #c18401;
-=======
     color: #c18401;
->>>>>>> develop
 }
 
 .hljs-attr,
@@ -287,11 +199,7 @@ hue-6-2: #c18401
 .hljs-selector-attr,
 .hljs-selector-pseudo,
 .hljs-number {
-<<<<<<< HEAD
-  color: #986801;
-=======
     color: #986801;
->>>>>>> develop
 }
 
 .hljs-symbol,
@@ -300,21 +208,6 @@ hue-6-2: #c18401
 .hljs-meta,
 .hljs-selector-id,
 .hljs-title {
-<<<<<<< HEAD
-  color: #4078f2;
-}
-
-.hljs-emphasis {
-  font-style: italic;
-}
-
-.hljs-strong {
-  font-weight: bold;
-}
-
-.hljs-link {
-  text-decoration: underline;
-=======
     color: #4078f2;
 }
 
@@ -328,5 +221,4 @@ hue-6-2: #c18401
 
 .hljs-link {
     text-decoration: underline;
->>>>>>> develop
 }

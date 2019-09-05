@@ -80,13 +80,10 @@
         <tbody>
 
 
-<<<<<<< HEAD
-=======
             <tr>
                 <td class="col-md-3">encapsulation</td>
                 <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
             </tr>
->>>>>>> develop
 
 
 
@@ -128,8 +125,6 @@
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
-<<<<<<< HEAD
-=======
                 <tr>
                     <td class="col-md-4">
                         <h6><b>Properties</b></h6>
@@ -154,7 +149,6 @@
                         </ul>
                     </td>
                 </tr>
->>>>>>> develop
 
                 <tr>
                     <td class="col-md-4">
@@ -167,15 +161,12 @@
                             <li>
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
-<<<<<<< HEAD
-=======
                             <li>
                                 <a href="#toggleNotificaitonsTab">toggleNotificaitonsTab</a>
                             </li>
                             <li>
                                 <a href="#viewSamples">viewSamples</a>
                             </li>
->>>>>>> develop
                         </ul>
                     </td>
                 </tr>
@@ -194,21 +185,11 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<<<<<<< HEAD
-<code>constructor()</code>
-=======
 <code>constructor(service: <a href="../injectables/HttpService.html">HttpService</a>, dialog: MatDialog)</code>
->>>>>>> develop
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-<<<<<<< HEAD
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/Organization-Member/member-view-samples/member-view-samples.component.ts:8</a></div>
-                            </td>
-                        </tr>
-
-=======
                                 <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/Organization-Member/member-view-samples/member-view-samples.component.ts:41</a></div>
                             </td>
                         </tr>
@@ -257,7 +238,6 @@
                             </div>
                     </td>
                 </tr>
->>>>>>> develop
             </tbody>
         </table>
 </section>
@@ -293,10 +273,6 @@
 
             <tr>
                 <td class="col-md-4">
-<<<<<<< HEAD
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">src/app/Organization-Member/member-view-samples/member-view-samples.component.ts:12</a></div>
-=======
                     <div class="io-line">Defined in <a href="" data-line="71"
                             class="link-to-prism">src/app/Organization-Member/member-view-samples/member-view-samples.component.ts:71</a></div>
                 </td>
@@ -381,7 +357,6 @@ If set to flase, a class is removed which hides the notifications tab.</p>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="75"
                             class="link-to-prism">src/app/Organization-Member/member-view-samples/member-view-samples.component.ts:75</a></div>
->>>>>>> develop
                 </td>
             </tr>
 
@@ -398,8 +373,6 @@ If set to flase, a class is removed which hides the notifications tab.</p>
         </tbody>
     </table>
 </section>
-<<<<<<< HEAD
-=======
     <section>
     
         <h3 id="inputs">
@@ -530,34 +503,20 @@ If set to flase, a class is removed which hides the notifications tab.</p>
             </tbody>
         </table>
 </section>
->>>>>>> develop
 
 </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-<<<<<<< HEAD
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-=======
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewEncapsulation } from &#x27;@angular/core&#x27;;
 //Include Material Components
 import { MatPaginator, MatTableDataSource, MatDialog } from &#x27;@angular/material&#x27;;
 import { HttpService } from &#x27;src/app/_services/http.service&#x27;;
 import { ErrorComponent } from &#x27;src/app/_errors/error-component/error.component&#x27;;
->>>>>>> develop
 
 @Component({
   selector: &#x27;app-member-view-samples&#x27;,
   templateUrl: &#x27;./member-view-samples.component.html&#x27;,
-<<<<<<< HEAD
-  styleUrls: [&#x27;./member-view-samples.component.scss&#x27;]
-})
-export class MemberViewSamplesComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-=======
   styleUrls: [&#x27;./member-view-samples.component.scss&#x27;],
   encapsulation: ViewEncapsulation.None
 })
@@ -635,7 +594,6 @@ export class MemberViewSamplesComponent implements OnInit {
         })
       }
     });
->>>>>>> develop
   }
 
 }
@@ -643,26 +601,6 @@ export class MemberViewSamplesComponent implements OnInit {
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-<<<<<<< HEAD
-        <pre class="line-numbers"><code class="language-html">&lt;h1&gt;View Your Samples&lt;/h1&gt;
-
-&lt;mat-accordion&gt;
-  &lt;mat-expansion-panel&gt;
-    &lt;mat-expansion-panel-header&gt;
-      &lt;mat-panel-title&gt;
-        Sample 1
-      &lt;/mat-panel-title&gt;
-      &lt;mat-panel-description&gt;
-        Analysis Phase
-      &lt;/mat-panel-description&gt;
-    &lt;/mat-expansion-panel-header&gt;
-
-    &lt;p&gt;This is the sample stuff&lt;/p&gt;
-  &lt;/mat-expansion-panel&gt;
-
-
-&lt;/mat-accordion&gt;</code></pre>
-=======
         <pre class="line-numbers"><code class="language-html">&lt;!--Bootstrap Navbar--&gt;
 &lt;div class&#x3D;&quot;container-fluid&quot; id&#x3D;&quot;nav-section&quot;&gt;
   &lt;nav class&#x3D;&quot;navbar navbar-expand-xl&quot;&gt;
@@ -795,16 +733,12 @@ export class MemberViewSamplesComponent implements OnInit {
   
   
   &lt;/div&gt;</code></pre>
->>>>>>> develop
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
                 <p class="comment">
                     <code>./member-view-samples.component.scss</code>
                 </p>
-<<<<<<< HEAD
-                <pre class="line-numbers"><code class="language-scss"></code></pre>
-=======
                 <pre class="line-numbers"><code class="language-scss">/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
 /* General Setup                                    */
 /* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
@@ -1195,7 +1129,6 @@ div#slideOut.showSlideOut {
 
 
 </code></pre>
->>>>>>> develop
     </div>
 
     <div class="tab-pane fade " id="c-tree">
@@ -1223,13 +1156,8 @@ div#slideOut.showSlideOut {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-<<<<<<< HEAD
-        var COMPONENT_TEMPLATE = '<div><h1>View Your Samples</h1><mat-accordion>  <mat-expansion-panel>    <mat-expansion-panel-header>      <mat-panel-title>        Sample 1      </mat-panel-title>      <mat-panel-description>        Analysis Phase      </mat-panel-description>    </mat-expansion-panel-header>    <p>This is the sample stuff</p>  </mat-expansion-panel></mat-accordion></div>'
-    var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'}];
-=======
         var COMPONENT_TEMPLATE = '<div><!--Bootstrap Navbar--><div class="container-fluid" id="nav-section">  <nav class="navbar navbar-expand-xl">    <a class="navbar-brand" href="#">Member Samples</a>    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">      <span class="navbar-toggler-icon"></span>      <i class="fas fa-bars"></i>    </button>    <div class="collapse navbar-collapse" id="navbarSupportedContent">      <ul class="navbar-nav mr-auto">        <li class="nav-item active">          <a id="dashboard_menu_link" routerLink="/member-dashboard"><i class="fas fa-home"></i>Home</a>        </li>        <li class="nav-item dropdown">          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"            aria-haspopup="true" aria-expanded="false">            <i class="fas fa-vials"></i>Samples          </a>          <div class="dropdown-menu" aria-labelledby="navbarDropdown">              <a id="view_samples" routerLink="/member-view-samples"><i class="fas fa-vials"></i>View Samples</a>              <br/>              <a id="submit_samples" routerLink="/submit-sample"><i class="fas fa-vial"></i>Submit Sample</a>          </div>        </li>        <li class="nav-item dropdown">          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"            aria-haspopup="true" aria-expanded="false">            <i class="fas fa-user"></i>Account          </a>          <div class="dropdown-menu" aria-labelledby="navbarDropdown">            <a id="profile_menu_link" routerLink="/"><i class="fas fa-user-circle"></i>Profile</a>            <br/>            <a id="settings_menu_link" routerLink="/"><i class="fas fa-cogs"></i>Settings</a>          </div>        </li>        <li class="nav-item">          <a id="help_menu_link" routerLink="/"><i class="fas fa-question"></i>Help</a>        </li>        <li class="nav-item">          <a id="logout_menu_link" routerLink="/"><i class="fas fa-sign-out-alt"></i>Logout</a>        </li>      </ul>    </div>  </nav></div>    <!--SlideOut -->  <div id="slideOut" [ngClass]="{\'showSlideOut\': toggle_status}">    <!--Tab-->    <div class="slideOutTab" (click)="toggleNotificaitonsTab()">      <div>        <p>Notifications</p>      </div>    </div>    <div class="modal-content">      <div class="modal-header">        <h4 class="modal-title">Member Notifications</h4>      </div>      <div class="modal-body" id="notifications-section">          <h2 *ngIf="!notifications">No notifications</h2>        <!--*********************************************************************                    DO THE SAME THING HERE AS WITH ADMIN AND STAFF WITH NGIF AND NGFOR                *************************************************************************-->        <div class="box">          <div class="notification-heading">            <h2>Notification {{Number}}</h2>            <i class="fas fa-times"></i>          </div>            <div class="notification-content">            <p><b>Type:</b> {{Type}} notification</p>            <p><b>Action:</b> {{Action}}</p>            <p><b>Date:</b> {{Date}}</p>            <p><b>Details:</b> {{Details}}</p>          </div>        </div>          <div #notificationContainer></div>        </div>      <div class="modal-footer"> </div>    </div>  </div>    <!--Organization Profile Content-->  <div class="container-fluid">      <div class="organization-samples">        <h2>Member Samples</h2>      <hr />        <div class="organization-sample-table">        <!--Search Filter for the Table-->        <div class="search-field">          <mat-form-field>            <input matInput type="text" id="search" onkeyup="searchFunction()" title="Search"><br />            <mat-placeholder class="placeholder">Search Sample</mat-placeholder>            <br />          </mat-form-field>        </div>          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" id="info" *ngIf="dataSource">            <ng-container *ngFor="let field of fields" matColumnDef="{{field.name}}">            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{field.name}}</th>            <td mat-cell *matCellDef="let element"> {{element[field.name]}} </td>          </ng-container>            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>        </table>          <!--Pagination Setup-->        <!-- <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons *ngIf="dataSource"></mat-paginator> -->      </div>        </div>        </div></div>'
     var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AdminDivComponent', 'selector': 'app-admin-div'},{'name': 'AdminProfileComponent', 'selector': 'app-admin-profile'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'ConfirmComponent', 'selector': 'app-confirm'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'NotificationDivComponent', 'selector': 'app-notification-div'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'ReportingComponent', 'selector': 'app-reporting'},{'name': 'SampleDivComponent', 'selector': 'app-sample-div'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffDivComponent', 'selector': 'app-staff-div'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffProfileComponent', 'selector': 'app-staff-profile'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'},{'name': 'UpdateComponent', 'selector': 'app-update'}];
->>>>>>> develop
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'MemberViewSamplesComponent'};
 </script>
@@ -1244,10 +1172,7 @@ div#slideOut.showSlideOut {
 
 
 
-<<<<<<< HEAD
-=======
                    
->>>>>>> develop
 
 
 

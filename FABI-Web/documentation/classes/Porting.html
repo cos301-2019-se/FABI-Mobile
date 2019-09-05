@@ -60,11 +60,6 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-<<<<<<< HEAD
-            <code>src/app/porting.service.ts</code>
-        </p>
-
-=======
             <code>src/app/_services/porting.service.ts</code>
         </p>
 
@@ -85,7 +80,6 @@ Modified By: Team Nova</p>
 <p>&lt;<license>&gt;</p>
 
             </p>
->>>>>>> develop
 
 
 
@@ -120,12 +114,9 @@ Modified By: Team Nova</p>
                             <li>
                                 <a href="#convertToJSON">convertToJSON</a>
                             </li>
-<<<<<<< HEAD
-=======
                             <li>
                                 <a href="#extractDatabase">extractDatabase</a>
                             </li>
->>>>>>> develop
                         </ul>
                     </td>
                 </tr>
@@ -149,12 +140,6 @@ Modified By: Team Nova</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-<<<<<<< HEAD
-                                <div class="io-line">Defined in <a href="" data-line="2" class="link-to-prism">src/app/porting.service.ts:2</a></div>
-                            </td>
-                        </tr>
-
-=======
                                 <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/_services/porting.service.ts:16</a></div>
                             </td>
                         </tr>
@@ -165,7 +150,6 @@ Modified By: Team Nova</p>
 </div>
                     </td>
                 </tr>
->>>>>>> develop
             </tbody>
         </table>
 </section>
@@ -200,12 +184,6 @@ Modified By: Team Nova</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-<<<<<<< HEAD
-                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/porting.service.ts:25</a></div>
-                            </td>
-                        </tr>
-
-=======
                                     <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/_services/porting.service.ts:31</a></div>
                             </td>
                         </tr>
@@ -216,7 +194,6 @@ Modified By: Team Nova</p>
 </div>
                     </td>
                 </tr>
->>>>>>> develop
 
             </tbody>
         </table>
@@ -249,24 +226,16 @@ Modified By: Team Nova</p>
 
             <tr>
                 <td class="col-md-4">
-<<<<<<< HEAD
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">src/app/porting.service.ts:27</a></div>
-=======
                     <div class="io-line">Defined in <a href="" data-line="42"
                             class="link-to-prism">src/app/_services/porting.service.ts:42</a></div>
->>>>>>> develop
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-<<<<<<< HEAD
-=======
                     <div class="io-description"><p>This function is used to convert the text sent from the file into JSON</p>
 </div>
->>>>>>> develop
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -303,57 +272,6 @@ Modified By: Team Nova</p>
             </tr>
         </tbody>
     </table>
-<<<<<<< HEAD
-</section>
-
-
-
-
-
-    </div>
-
-
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class Porting{
-
-    constructor(){}
-
-                                            // ** HOW TO USE ** //
-
-                // in the .html file
-    //&lt;input type&#x3D;&#x27;file&#x27; (change)&#x3D;submitCSV(input) id&#x3D;&#x27;fileInput&#x27; #input&gt;
-
-                // in the .ts file
-    // portCSV : Porting &#x3D; new Porting();
-    //
-    // public submitCSV(input){
-    //     const reader &#x3D; new FileReader();
-    //     reader.onload &#x3D; () &#x3D;&gt; {
-    //         let text &#x3D; reader.result;
-    //         let jsonData &#x3D; this.portCSV.convertToJSON(text); //converts file to JSON Object
-    //         console.log(jsonData);
-    //         // ** place api calls here ** //
-    //     };
-    //     reader.readAsText(input.files[0]);
-    // }
-
-    JSONfile : any &#x3D; null;
-
-    convertToJSON(text){ //converts file to JSON
-
-        var lines &#x3D; text.split(&quot;\n&quot;);
-        var result &#x3D; [];
-        var headers &#x3D; lines[0].split(&quot;;&quot;);
-        // console.log(headers);
-
-        for (var i &#x3D; 1; i &lt; lines.length-1; i++) {
-            var obj &#x3D; {};
-            var currentline &#x3D; lines[i].split(&quot;;&quot;);
-            for (var j &#x3D; 0; j &lt; currentline.length; j++) {
-                if(currentline!&#x3D;&quot;&quot; &amp;&amp; currentline!&#x3D;&quot;null&quot;){
-                    obj[headers[j]] &#x3D; currentline[j];
-                }
-=======
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -483,25 +401,16 @@ Modified By: Team Nova</p>
             var currentline &#x3D; lines[i].split(&quot;;&quot;);
             for (var j &#x3D; 0; j &lt; currentline.length; j++) {
                 obj[headers[j]] &#x3D; currentline[j];
->>>>>>> develop
             }
 
             result.push(obj);
         }
 
-<<<<<<< HEAD
-        //console.log(&quot;in porting&quot;);
-        //console.log(JSON.stringify(result));
-        //console.log(result);
-=======
->>>>>>> develop
         this.JSONfile &#x3D; result;
         
         return result;
     }
 
-<<<<<<< HEAD
-=======
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                EXTRACT_DATABASE
@@ -541,17 +450,13 @@ Modified By: Team Nova</p>
         console.log(CSVdata);
         return CSVdata;        
     }
->>>>>>> develop
 }</code></pre>
     </div>
 </div>
 
 
 
-<<<<<<< HEAD
-=======
                    
->>>>>>> develop
 
 
 
