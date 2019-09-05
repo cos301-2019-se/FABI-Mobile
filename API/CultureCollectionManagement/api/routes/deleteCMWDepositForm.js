@@ -36,17 +36,6 @@ function submitForm(req, res)
             message: "User ID is required"
         });
     }
-    else if (req.body.status == undefined || req.body.status == ''){
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "Status is required"
-        });
-    }
     else if (req.body.formID == undefined || req.body.formID == ''){
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
@@ -85,10 +74,10 @@ function submitForm(req, res)
                                     success: true,
                                     code: 200,
                                     title: "SUCCESS",
-                                    message: "FABI Staff Deleted",
-                                    data: {
-                                        Member : qs
-                                    }
+                                    message: "CMW Deposit Form Deleted",
+                                    data: 
+                                        qs
+                                    
                                 
                             });
                             
