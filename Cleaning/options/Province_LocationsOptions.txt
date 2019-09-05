@@ -1,0 +1,415 @@
+Amsterdam;White River#24
+Amsterdam;White river#1
+Eastern Cape;Cata Holding Nursery#3
+Eastern Cape;Kalmoesfontein#4
+Eastern Cape;Kruisfontein#1
+Eastern Cape;La Motte Wolwekloof#1
+Eastern Cape;Patensie#20
+Eastern Cape;Ugie#1
+Eastern Cape;Umtata#1
+Gauteng;Centurion #1
+Gauteng;Derdepoort#1
+Gauteng;Edenvale#1
+Gauteng;Elandsfontein#1
+Gauteng;Epsom#1
+Gauteng;Fairview#1
+Gauteng;Hatfield#1
+Gauteng;Johannesburg#1
+Gauteng;Parkhurst#3
+Gauteng;Pretoria#2
+Gauteng;Roodeplaat#2
+Gauteng;Rosslyn#2
+Gauteng;Springfield#1
+Heidelburg;Seven oaks#2
+Howick;Comrie#1
+Howick;Shaw Research Center#1
+KwaZulu Natal;Babanango#1
+KwaZulu Natal;Beauvallon sugar estate#19
+KwaZulu Natal;Black umfolozi district#2
+KwaZulu Natal;Commandale#1
+KwaZulu Natal;Commondale#1
+KwaZulu Natal;DWAF#1
+KwaZulu Natal;Ferncliff Est.#4
+KwaZulu Natal;Glenbain plantation#1
+KwaZulu Natal;Hendrieksdaal#1
+KwaZulu Natal;Hiutboschoek plantation#4
+KwaZulu Natal;Howick#1
+KwaZulu Natal;Iswepe#1
+KwaZulu Natal;Ixopo#10
+KwaZulu Natal;Klipkraal nursery#2
+KwaZulu Natal;Kwambonambi#1
+KwaZulu Natal;Longridge estae#1
+KwaZulu Natal;Mtunzini#1
+KwaZulu Natal;Ngodwana#3
+KwaZulu Natal;Nyalasi#1
+KwaZulu Natal;Rosenhaugh#1
+KwaZulu Natal;Sabie#1
+KwaZulu Natal;Sarina plantation#1
+KwaZulu Natal;Scottsville#2
+KwaZulu Natal;Seven oaks#1
+KwaZulu Natal;Shafton#5
+KwaZulu Natal;Teza#1
+KwaZulu Natal;Tweefontien plantation#2
+KwaZulu Natal;Umfuluzame#1
+KwaZulu Natal;Underberg#1
+KwaZulu Natal;Usuthu#1
+KwaZulu Natal;Venus#1
+KwaZulu Natal;Welkom Est.#1
+KwaZulu Natal;dukuduku#1
+KwaZulu Natal;dukuduku reasearch#1
+KwaZulu Natal;sabie#1
+KwaZulu Natal;ugie#1
+KwaZulu Natal;zululand#1
+KwaZulu-Natal;Chillingly estate#5
+KwaZulu-Natal;Clairmont#2
+KwaZulu-Natal;Comrie#1
+KwaZulu-Natal;Dargle#1
+KwaZulu-Natal;Dukuduku#1
+KwaZulu-Natal;Empangeni#2
+KwaZulu-Natal;Good hope estate-Howivk#1
+KwaZulu-Natal;Howick#1
+KwaZulu-Natal;Ingwampisi#3
+KwaZulu-Natal;Ixopo#1
+KwaZulu-Natal;King Williams Town#2
+KwaZulu-Natal;Kwambonambi#1
+KwaZulu-Natal;MacClear Commondale#1
+KwaZulu-Natal;Manzini#1
+KwaZulu-Natal;Mtunzini estate#1
+KwaZulu-Natal;Ngodwana#1
+KwaZulu-Natal;Nyalazi#1
+KwaZulu-Natal;Nylazi#1
+KwaZulu-Natal;Port Edward#1
+KwaZulu-Natal;Richmond#1
+KwaZulu-Natal;Shanduka#1
+KwaZulu-Natal;Shaw research centre#1
+KwaZulu-Natal;Sokulu private growert#2
+KwaZulu-Natal;Ugie#3
+KwaZulu-Natal;Umfolozi#1
+KwaZulu-Natal;Umtata#2
+KwaZulu-Natal;Umvoti#1
+KwaZulu-Natal;Vryheid#1
+KwaZulu-Natal;underberg#1
+KwaZuluNatal;Bainsfield#1
+KwaZuluNatal;Cottingham#2
+KwaZuluNatal;Fountains nursery#9
+KwaZuluNatal;Gilboa#3
+KwaZuluNatal;Hlelo plantation#2
+KwaZuluNatal;Howick#5
+KwaZuluNatal;Kwambonambi#1
+KwaZuluNatal;Melgem#1
+KwaZuluNatal;Melmoth#1
+KwaZuluNatal;Ntojaneni#2
+KwaZuluNatal;Rekwest#2
+KwaZuluNatal;Richmond#5
+KwaZuluNatal;Richmond nursery#23
+KwaZuluNatal;Shanduka#1
+KwaZuluNatal;Ugie#1
+KwaZuluNatal;Umfolozi#1
+KwaZuluNatal;Umgeni#1
+KwaZuluNatal;Underberg#1
+KwaZuluNatal;greytown#4
+KwaZuluNatal;iswepe#1
+Kwazulu Natal;Hilton#2
+Kwazulu-Nata;KwaMbonambi#1
+Kwazulu-Natal;Alton#1
+Kwazulu-Natal;Amsterdam#1
+Kwazulu-Natal;Baynesfield#3
+Kwazulu-Natal;Breeding Orchard#2
+Kwazulu-Natal;Cascades#1
+Kwazulu-Natal;Cramond#1
+Kwazulu-Natal;Demagtenberg#1
+Kwazulu-Natal;Demagtenburg#5
+Kwazulu-Natal;Dukuduku#3
+Kwazulu-Natal;Dukuduku nursery#1
+Kwazulu-Natal;Epsom#1
+Kwazulu-Natal;Eshowe#3
+Kwazulu-Natal;Eston#52
+Kwazulu-Natal;Good hope#3
+Kwazulu-Natal;Greytown#21
+Kwazulu-Natal;Hermannburg#3
+Kwazulu-Natal;Highflats and Palm Ridge#2
+Kwazulu-Natal;Highlands#1
+Kwazulu-Natal;Hilton#1
+Kwazulu-Natal;Himeville#3
+Kwazulu-Natal;Howick#6
+Kwazulu-Natal;Howick #3
+Kwazulu-Natal;Ixopo#1
+Kwazulu-Natal;Ixopo #2
+Kwazulu-Natal;Karatara#2
+Kwazulu-Natal;Kokstad#2
+Kwazulu-Natal;KwaMbombi#1
+Kwazulu-Natal;Kwambonambi#1
+Kwazulu-Natal;Kwambonambi #8
+Kwazulu-Natal;Kwambonambi Nursery#3
+Kwazulu-Natal;Kwambonani#1
+Kwazulu-Natal;Liff Plantation#1
+Kwazulu-Natal;Lion Match Greytown#1
+Kwazulu-Natal;Melmorth#4
+Kwazulu-Natal;Melmoth#3
+Kwazulu-Natal;Munster#1
+Kwazulu-Natal;New Hanover#3
+Kwazulu-Natal;Newcastle#5
+Kwazulu-Natal;Normadien#1
+Kwazulu-Natal;Normandien Farms#1
+Kwazulu-Natal;Paulpetersberg#1
+Kwazulu-Natal;Paulpietersburg#2
+Kwazulu-Natal;Piet Retief#2
+Kwazulu-Natal;Pietermaritzburg#2
+Kwazulu-Natal;Pietermartizburg#1
+Kwazulu-Natal;Port Shepstone#10
+Kwazulu-Natal;Richards Bay#6
+Kwazulu-Natal;Richmond#8
+Kwazulu-Natal;Scottsville#4
+Kwazulu-Natal;Seven Oaks#2
+Kwazulu-Natal;Shaw Research Center#2
+Kwazulu-Natal;Southbroom#2
+Kwazulu-Natal;Sunnyhill farm#2
+Kwazulu-Natal;Tetworth#2
+Kwazulu-Natal;Tweedie#4
+Kwazulu-Natal;Umkomaas#2
+Kwazulu-Natal;Vryheid#2
+Kwazulu-Natal;Willomere#2
+Kwazulu-Natal;Winterton#15
+Kwazulu-Natal;sappi de Magtenberg#2
+Kwazulu-Natal;zululand#2
+Kwazulu-ta;KwaMbombi#2
+KwazuluNatal;Cartonville and Orkney#2
+KwazuluNatal;Commondale#2
+KwazuluNatal;Comrie#4
+KwazuluNatal;DukuDuku#2
+KwazuluNatal;Eshowe#4
+KwazuluNatal;Futululu#4
+KwazuluNatal;Gilboa#2
+KwazuluNatal;Hinze#6
+KwazuluNatal;Howick#2
+KwazuluNatal;Inkwazi#2
+KwazuluNatal;Klipkraal#2
+KwazuluNatal;Kwambonambi#1
+KwazuluNatal;Kwambonambi Nursery#1
+KwazuluNatal;Linwood plantation#2
+KwazuluNatal;Lothair#1
+KwazuluNatal;Montrose plantation#4
+KwazuluNatal;Mountain home#1
+KwazuluNatal;Mountain home nursery#1
+KwazuluNatal;Mtubi#3
+KwazuluNatal;Mtunzini#1
+KwazuluNatal;Ndubazi#2
+KwazuluNatal;Ngodwana nursery#1
+KwazuluNatal;Nyalazi#2
+KwazuluNatal;Port Dunford#1
+KwazuluNatal;Richmond#2
+KwazuluNatal;Richmond nursery#1
+KwazuluNatal;Seven oaks#1
+KwazuluNatal;Sgongona#1
+KwazuluNatal;Sutton#1
+KwazuluNatal;Teza#1
+KwazuluNatal;Twello#1
+KwazuluNatal;Twello & Lothair#1
+KwazuluNatal;Umfolozi#1
+KwazuluNatal;Umtulwana#1
+KwazuluNatal;Umvoti#1
+KwazuluNatal;Umzimkulu#1
+KwazuluNatal;Underberg#1
+KwazuluNatal;Weza#1
+KwazuluNatal;glenthorpe plantation#1
+KwazuluNatal;highlands#1
+KwazuluNatal;ingwe#1
+KwazuluNatal;iswepe#1
+KwazuluNatal;shaw research centre#1
+Kwazulunatal;Commondale#2
+Kwazulunatal;Dukuduku#2
+Kwazulunatal;Greytown#1
+Kwazulunatal;Helvetia#1
+Kwazulunatal;Highflats#1
+Kwazulunatal;Highlands estate#1
+Kwazulunatal;Hlelo#1
+Kwazulunatal;Howick#2
+Kwazulunatal;Kwambonambi#2
+Kwazulunatal;Langeni#1161
+Kwazulunatal;Linwood plantation#100
+Kwazulunatal;Lothair#308
+Kwazulunatal;Mid-illovo#4059
+Kwazulunatal;Mountain home nursery#843
+Kwazulunatal;Mt Home estate#178
+Kwazulunatal;Ngodwana nursery#2
+Kwazulunatal;Richmond#10
+Kwazulunatal;Richmond nursery#8
+Kwazulunatal;Sabie#60
+Kwazulunatal;Tweefontein plantation#40
+Kwazulunatal;Umkomaas#666
+Kwazulunatal;Umvoti#512
+Kwazulunatal;Weza#653
+Kwazulunatal;iswepi#233
+Kwazulunatal;seven oaks#29
+Kwazulunatal;weza#124
+Kwazuu-Natal;Hilton#128
+Kwzulu-Natal;Kwambonambi nusery#2
+Kwzulu-Natal;Louwsberg#2
+Kwzulu-Natal;Natal region#6
+Kwzulu-Natal;Ngodwana#144
+Kwzulu-Natal;Old lands#79
+Kwzulu-Natal;Shafton#15
+Kwzulu-Natal;Uplands estate-Richmond#1
+Kwzulu-Natal;Zululand#52
+Lesotho;Mafeteng Nursery#10
+Lesotho;Maseru#26
+Limpopo;Diepgelegen#150
+Limpopo;Koningskroon#770
+Limpopo;Mtimba power station#54
+Limpopo;Soutpansberg#23
+Limpopo;Tzaneen#25
+Limpopo?;Lois Trichard#3
+Mpmalanga;Sabie#17
+Mpumalana;White River#5
+Mpumalanga;Amsterdam#127
+Mpumalanga;Baberton#3
+Mpumalanga;Badplaas#10
+Mpumalanga;Barberton#6
+Mpumalanga;Barbeton#41
+Mpumalanga;Belfast#10
+Mpumalanga;Caroli#10
+Mpumalanga;Chrissiesmeer#10
+Mpumalanga;Commondale#10
+Mpumalanga;Comrie#10
+Mpumalanga;Cramond#10
+Mpumalanga;De Rust#3
+Mpumalanga;Demach Holding#1
+Mpumalanga;Elandshoogte#1
+Mpumalanga;Elanshoogte#11
+Mpumalanga;Epson#1
+Mpumalanga;Escarpment nursery#12
+Mpumalanga;Graskop#14
+Mpumalanga;Grootgeluk#6
+Mpumalanga;Helvetia#9
+Mpumalanga;Hodgesons#5
+Mpumalanga;Houtboshoek#1
+Mpumalanga;Kalmoesfontein#11
+Mpumalanga;Kalmsfontein#8
+Mpumalanga;Klamsfontein#1
+Mpumalanga;Lothair#2
+Mpumalanga;Lothair Holding Nursery#1
+Mpumalanga;Lydenburg#1
+Mpumalanga;Montrose#2
+Mpumalanga;Mooifontein#1
+Mpumalanga;Mooiplaas#3
+Mpumalanga;Mpumalanga highlands#1
+Mpumalanga;Ndubazi#5
+Mpumalanga;Nelspruit#5
+Mpumalanga;Nelspruit, Satico Plantation#11
+Mpumalanga;Nerston#53
+Mpumalanga;Nggodwana#104
+Mpumalanga;Ngodwa#70
+Mpumalanga;Ngodwana#1
+Mpumalanga;Ngodwana #10
+Mpumalanga;Ngodwana Nursery#20
+Mpumalanga;Ngodwana nursery#3
+Mpumalanga;Nodwana#5
+Mpumalanga;Nogodwana#2
+Mpumalanga;Nooitgedacht#49
+Mpumalanga;Ntonjaneni? White River#3
+Mpumalanga;Paul pietersburg#20
+Mpumalanga;Paulpietersburg#12
+Mpumalanga;Piet Retief#10
+Mpumalanga;Piet Retief #2
+Mpumalanga;Piet Retief/Hlelo#1
+Mpumalanga;Piet Rtetief#22
+Mpumalanga;Piet retief#25
+Mpumalanga;Piet retief #1
+Mpumalanga;Pietermaritzburg#1
+Mpumalanga;Pine Valley#1
+Mpumalanga;Pinewood#2
+Mpumalanga;Pinewoods#5
+Mpumalanga;Rooihoogte#1
+Mpumalanga;Sabey#7
+Mpumalanga;Sabie#28
+Mpumalanga;Safcol Wilgeboom#3
+Mpumalanga;Salma#2
+Mpumalanga;Schagen#6
+Mpumalanga;Shafton#22
+Mpumalanga;Tweefontein plantation#40
+Mpumalanga;Verzameling#3
+Mpumalanga;Vryheid#3
+Mpumalanga;Warburton#5
+Mpumalanga;Welvediend#12
+Mpumalanga;Welverdiend#5
+Mpumalanga;White River#2
+Mpumalanga;White River #12
+Mpumalanga;White river#3
+Mpumalanga;Whiteriver#2
+Mpumalanga;Winterton#3
+Mpumalanga?;Commondale#68
+Mpumalnga;Elandshoogte#1
+Mpumalnga;Hlelo plantation#1
+Mpumalnga;Inkwazi#3
+Mpumalnga;Kalmsfontein#26
+Mpumalnga;Ndubazi#1
+Mpumalnga;Piet Retief#6
+Mpumalnga;Piet Rtetief#1
+Mpumalnga;hlelo estate#57
+Mpumlaga;Sabie#10
+Mpumlanaga;White River#1
+NE;Ugie#2
+Nelspruit;NHL Hall and Sons#1
+Newcastle;Dumblane#1
+Ngodwana;Sappi#5
+Norhtern provenence;White River#3
+Norma ;klipkraal#1
+North West;Cascades#1
+North West?;Cascades#126
+North-West ;Sappi#9
+North-West Province;Renosterhoek#34
+North-West;Cascades#2
+North-West?;Cascades#1
+Northern province;Ugie#1
+Nother Cape;Richmond#7
+Nothern Cape;Richmond#16
+Nothern province;klipkraal#1
+PE;Richards Bay#10
+Pretoria;Gauteng#2
+Swaziland;Mbabane#56
+Swaziland;Mlhabanyatsi#1
+Swaziland;Ngazine#1
+Swaziland;Nhlangano#8
+Swaziland;Pigg's peak#20
+Swaziland;Piggs Peak#2
+Swaziland;Piggs peak nursery#17
+Swaziland;Pigs peak#13
+Swaziland;Shilwesi#8
+Swaziland;Usuthu#54
+Swaziland;Usutu#1
+Tzaneen;Koningskroom#5
+Tzaneen;Norma Nursery#4
+Tzaneen;seedling nursery #9
+Vryheid;Lenjane#20
+Vryheid;Lenjane #3
+Vryheid;Onrecht#4
+Vryheid;Spitzkop#11
+WC;George#20
+Western Cape/Gauteng?;Heidelberg#20
+Western Cape;Calitzdorp#6
+Western Cape;Clairmont#10
+Western Cape;DeHoop#1
+Western Cape;George#4
+Western Cape;George #4
+Western Cape;Jonkersberg#1
+Western Cape;Jonkershoek#1
+Western Cape;Karatara#1
+Western Cape;Knysna#12
+Western Cape;Matieland#5
+Western Cape;Noorder Paarl#12
+Western Cape;Paarl#7
+Western Cape;Scottsviile#2
+Western Cape;Scottsville#10
+Western Cape;Sedgefield#10
+Western Cape;Ugie#5
+Western Cape;Witelbos#9
+Western Province;Karatara#5
+Western Province;Karatara Nursery#6
+Western Province;Scottsville#6
+Western Province;Welgemoed#3
+Western and Eastern Cape;Tsitsikamma#1
+Western cape;Karatara#30
+Western cape;Scottsville#2
+Zimbabwe;Harare#4
+Zimbabwe;Tilburyu Estate#12
+northern province;klipkraal#6

@@ -13,8 +13,8 @@ router.post('/', getMember);
 //                                             Get Organization Member
 /**
  * @summary Get User assotiated with Organization
- * @description  REQUEST DATA REQUIRED: user email, organization
- *  1. check that email of user and organization is recieved
+ * @description  REQUEST DATA REQUIRED: user ID, organization
+ *  1. check that ID of user and organization is recieved
  *  2. retrieve user data of given user
  *  3. remove user password from data to be sent
  * @param {*} res Used to send response to the client

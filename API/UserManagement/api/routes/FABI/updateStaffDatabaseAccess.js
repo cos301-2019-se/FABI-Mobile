@@ -12,16 +12,14 @@ const log  = require('../../sendLogs');
 router.post('/', updateStaff);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Update Staff Member
+//                                             Update Staff Database Access
 /**
- * @summary Update a staff memebr associated with FABI
+ * @summary Update database access of a staff memebr associated with FABI 
  * @description  REQUEST DATA REQUIRED: origional email of user to be updated ,fields which are to be changed
  *  
  * 1. check valid details have been submitted
  * 2. check if user to update exists, else return error
- * 3. IF email needs to be changed, delete copy details into new document with new email as the key
- * 4. IF password needs to be changed, encrypt password
- *  5. update the other fields 
+ * 3. update the access 
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)

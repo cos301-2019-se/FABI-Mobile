@@ -10,13 +10,11 @@ const admin = require('firebase-admin');
 router.post('/', getMember);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Get Organization Member
+//                                             Get Samples for User
 /**
- * @summary Get User assotiated with Organization
- * @description  REQUEST DATA REQUIRED: user email, organization
- *  1. check that email of user and organization is recieved
- *  2. retrieve user data of given user
- *  3. remove user password from data to be sent
+ * @summary Get Samples submitted by given user ID 
+ * @description  REQUEST DATA REQUIRED: userID
+ * 
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)
  */
@@ -48,13 +46,15 @@ function getMember(req, res) {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                 success: false,
-                code: 400,
+                code: 200,
                 title: "NOT FOUND",
-                message: "No samples for given member found"
+                message: "No samples for given member found",
+                data : {}
             });
         }
+        else{
             samples = [];
             doc.forEach(element => {
                 samples.push(element.data());
@@ -69,9 +69,11 @@ function getMember(req, res) {
                 title: "SUCCESS",
                 message: "Samples for member Found",
                 data: {
-                    samples         
+                    samples   
                 }
             });
+        }
     });
+
 }
 module.exports = router;

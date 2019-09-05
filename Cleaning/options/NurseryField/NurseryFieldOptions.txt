@@ -1,0 +1,19 @@
+x;place;count
+1;F;1607
+2;N;5788
+1;f;7
+2;n;4
+1;N and F;1
+0;-;1
+2;G;1
+1;F and N;1
+2;N ;1
+1;F?;1
+2;P;26
+1;D;4
+1;66;1
+2;Nursery;58
+1;Field;9
+2;Company;29
+2;Private;2
+1;A;20
