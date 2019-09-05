@@ -13,8 +13,8 @@ router.post('/', addDoc);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                             Add Document
 /**
- * @summary Add Member to orginization
- * @description  REQUEST DATA REQUIRED: Organization name, Member name, email, surname
+ * @summary Add Document to given database
+ * @description  REQUEST DATA REQUIRED: Database name, Data of document to insert
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)

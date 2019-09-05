@@ -13,12 +13,8 @@ router.post('/', getAllOrgMembers);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                             Retrive Datatabase and Return as JSON Object
 /**
- * @summary Get all members associated with an organization
- * @description  REQUEST DATA REQUIRED: Org Name
- *  1. check that an org name has been provided
- *  2. retrieve all the org members from the database
- *  3. push the details of all the members to a JSON object
- *  4. remove the password details from the data to be sent
+ * @summary Get all data from given database
+ * @description  REQUEST DATA REQUIRED: Database Name
  *
  * @param {*} res Used to send response to the client
  * @param {*} req Used to receive request data ('body' gets request json data)

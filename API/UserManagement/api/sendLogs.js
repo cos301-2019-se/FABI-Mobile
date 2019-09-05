@@ -1,5 +1,5 @@
 const request = require('request');
-
+const config = require('./config');
 module.exports = function(log){
 	
 	if(log.type == "ACCL"){
@@ -17,7 +17,7 @@ module.exports = function(log){
 		
 		var options = {
 			method: 'POST',
-			hostname: 'logging-dot-api-fabi.appspot.com',
+			hostname: config.logging,
 			headers: {
 			  'Content-Type': 'application/json'
 			},
@@ -27,7 +27,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/ACCL';
-            request.post('***REMOVED***/ACCL', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
 					console.log(error)
 
@@ -54,7 +55,7 @@ module.exports = function(log){
 		
 		var options = {
 			method: 'POST',
-			hostname: 'logging-dot-api-fabi.appspot.com',
+			hostname: config.logging,
 			headers: {
 			  'Content-Type': 'application/json'
 			},
@@ -64,7 +65,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/ERRL';
-            request.post('***REMOVED***/ERRL', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
                     console.log(error)
                 }
@@ -92,7 +94,7 @@ module.exports = function(log){
 		
 		var options = {
 			method: 'POST',
-			hostname: 'logging-dot-api-fabi.appspot.com',
+			hostname:config.logging,
 			headers: {
 			  'Content-Type': 'application/json'
 			},
@@ -102,7 +104,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/USER';
-            request.post('***REMOVED***/USER', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
                     console.log(error)
 				}
@@ -129,7 +132,7 @@ module.exports = function(log){
 		
 		var options = {
 			method: 'POST',
-			hostname: 'logging-dot-api-fabi.appspot.com',
+			hostname: config.logging,
 			headers: {
 			  'Content-Type': 'application/json'
 			},
@@ -139,7 +142,8 @@ module.exports = function(log){
 		
 		try{
 			options.path = '/DBML';
-            request.post('***REMOVED***/DBML', options, (error, response, body) => {
+			url =config.logging + options.path
+            request.post(url, options, (error, response, body) => {
                 if(error){
                     console.log(error)
 				}
