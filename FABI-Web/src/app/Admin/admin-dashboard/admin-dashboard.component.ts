@@ -174,9 +174,9 @@ export class AdminDashboardComponent implements OnInit {
   scroll = (event: any): void => {
     
     //Hide the notifications, profile, and help tabs if open
-    this.notificationsTab = false;
-    this.profileTab = false;
-    this.helpTab = false;
+    // this.notificationsTab = false;
+    // this.profileTab = false;
+    // this.helpTab = false;
 
   };
 

@@ -876,6 +876,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 #notifications i {
     color: #6B746F;
     font-size: 28px;
+
+    margin-top: 60px;
 }
 
 .notification-items {
@@ -943,6 +945,9 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 .notification-action i {
     font-size: 18px !important;
+
+    margin: 0;
+    padding: 0;
 }
 
 .notification-heading h6 {
@@ -958,10 +963,23 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 0;
 }
 
-@media (min-width: 395px) {
+@media (min-width: 420px) {
     #notifications {
         width: 60vh;
     }
+
+    #notifications i {
+    
+        margin-top: 75px;
+    }
+    
+}
+
+@media (min-width: 768px) {
+    #notifications i {
+        margin-top: 0;
+    }
+    
 }
 
 .notification-loading {
@@ -1013,6 +1031,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 #profile i {
     color: #6B746F;
     font-size: 28px;
+
+    margin-top: 60px;
 }
 
 .profile-details {
@@ -1060,9 +1080,13 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     font-size: 76px;
 }
 
-@media (min-width: 395px) {
+@media (min-width: 420px) {
     #profile {
         width: 60vh;
+    }
+
+    #profile i {    
+        margin-top: 75px;
     }
 }
 
@@ -1082,6 +1106,13 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
         color: #72B555;
         font-size: 95px;
     }
+}
+
+@media (min-width: 768px) {
+    #profile i {    
+        margin-top: 0;
+    }
+    
 }
 
 @media (min-height: 803px) {
