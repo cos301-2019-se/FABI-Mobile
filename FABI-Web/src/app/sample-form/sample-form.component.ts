@@ -24,6 +24,7 @@ import { ErrorComponent } from '../_errors/error-component/error.component';
 import { Router } from '@angular/router';
 import { DiagnosticClinicAPIService } from '../_services/diagnostic-clinic-api.service';
 import { MapsWindowComponent } from '../maps-window/maps-window.component';
+// import { truncate } from 'fs';
 
 @Component({
   selector: 'app-sample-form',
@@ -46,6 +47,18 @@ export class SampleFormComponent implements OnInit {
   plantationAddress: Interface.Address;
   plantationLocation: Interface.Location;
 
+  /** Specifies what step of the form the user is on - @type {boolean} */  
+  stepOneContent: boolean = false;
+  stepTwoContent: boolean = false;
+  stepThreeContent: boolean = false;
+  stepFourContent: boolean = false;
+  stepFiveContent: boolean = false;
+
+  sampleDetails: boolean = false;
+  sampleType: boolean = false;
+
+  symptoms: boolean = false;
+  symptomDistribution: boolean = false;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -141,6 +154,10 @@ export class SampleFormComponent implements OnInit {
     this.sampleForm.patchValue( {
       date_sample_sent: today
     });
+
+    this.stepOneContent = true;
+    this.sampleDetails = true;
+    this.symptoms = true;
   }
 
 
@@ -270,7 +287,7 @@ export class SampleFormComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectLocation() {
     let mapRef = this.dialog.open(MapsWindowComponent, { height: '80%', width: '80%'});
-    
+
     mapRef.afterClosed().subscribe((data) => {
       this.plantationAddress = data.address;
       this.plantationLocation = data.location; 
@@ -288,7 +305,160 @@ export class SampleFormComponent implements OnInit {
       this.sampleForm.get('sample_city').disable();
       this.sampleForm.get('sample_province').disable();
       this.sampleForm.get('sample_gps').disable();
-      this.sampleForm.get('date_sample_sent').disable();  
+      this.sampleForm.get('date_sample_sent').disable();
     });
   }
+
+  showStepTwo() {
+
+  this.stepOneContent = false;
+  this.stepTwoContent = true;
+  this.stepThreeContent = false;
+  this.stepFourContent = false;
+  this.stepFiveContent = false;
+
+  $('#step-two-number').addClass('active');
+
+  $('#step-one-number').removeClass('active');
+  $('#step-three-number').removeClass('active');
+  $('#step-four-number').removeClass('active');
+  $('#step-five-number').removeClass('active');
+
+  $('#step-two-description').addClass('active');
+
+  $('#step-one-description').removeClass('active');
+  $('#step-three-description').removeClass('active');
+  $('#step-four-description').removeClass('active');
+  $('#step-five-description').removeClass('active');
+
+  }
+
+ showStepOne() {
+
+  this.stepOneContent = true;
+  this.stepTwoContent = false;
+  this.stepThreeContent = false;
+  this.stepFourContent = false;
+  this.stepFiveContent = false;
+
+  $('#step-one-number').addClass('active');
+
+  $('#step-two-number').removeClass('active');
+  $('#step-three-number').removeClass('active');
+  $('#step-four-number').removeClass('active');
+  $('#step-five-number').removeClass('active');
+
+  $('#step-one-description').addClass('active');
+
+  $('#step-two-description').removeClass('active');
+  $('#step-three-description').removeClass('active');
+  $('#step-four-description').removeClass('active');
+  $('#step-five-description').removeClass('active');
+  }
+
+  showSampleDetails() {
+
+    this.sampleDetails = true;
+    this.sampleType  = false;
+
+    $('#sample-type-link').removeClass('active');
+    $('#sample-details-link').addClass('active');
+  }
+
+  showSampleType() {
+
+    this.sampleDetails = false;
+    this.sampleType  = true;
+
+    $('#sample-details-link').removeClass('active');
+    $('#sample-type-link').addClass('active');
+
+  }
+
+  showStepThree() {
+
+    this.stepOneContent = false;
+    this.stepTwoContent = false;
+    this.stepThreeContent = true;
+    this.stepFourContent = false;
+    this.stepFiveContent = false;
+
+    $('#step-three-number').addClass('active');
+
+    $('#step-one-number').removeClass('active');
+    $('#step-two-number').removeClass('active');
+    $('#step-four-number').removeClass('active');
+    $('#step-five-number').removeClass('active');
+
+    $('#step-three-description').addClass('active');
+
+    $('#step-one-description').removeClass('active');
+    $('#step-two-description').removeClass('active');
+    $('#step-four-description').removeClass('active');
+    $('#step-five-description').removeClass('active');
+  }
+
+
+  showSymptoms() {
+    this.symptoms = true;
+    this.symptomDistribution = false;
+
+    $('#symptom-distribution-link').removeClass('active');
+    $('#symptoms-link').addClass('active');
+  }
+
+  showSymptomDistribution() {
+    this.symptoms = false;
+    this.symptomDistribution = true;
+
+    $('#symptoms-link').removeClass('active');
+    $('#symptom-distribution-link').addClass('active');
+  }
+
+  showStepFour() {
+
+    this.stepOneContent = false;
+    this.stepTwoContent = false;
+    this.stepThreeContent = false;
+    this.stepFourContent = true;
+    this.stepFiveContent = false;
+
+    $('#step-four-number').addClass('active');
+
+    $('#step-one-number').removeClass('active');
+    $('#step-two-number').removeClass('active');
+    $('#step-three-number').removeClass('active');
+    $('#step-five-number').removeClass('active');
+
+    $('#step-four-description').addClass('active');
+
+    $('#step-one-description').removeClass('active');
+    $('#step-two-description').removeClass('active');
+    $('#step-three-description').removeClass('active');
+    $('#step-five-description').removeClass('active');
+  }
+
+  showStepFive() {
+
+    this.stepOneContent = false;
+    this.stepTwoContent = false;
+    this.stepThreeContent = false;
+    this.stepFourContent = false;
+    this.stepFiveContent = true;
+
+    $('#step-five-number').addClass('active');
+
+    $('#step-one-number').removeClass('active');
+    $('#step-two-number').removeClass('active'); 
+    $('#step-three-number').removeClass('active');
+    $('#step-four-number').removeClass('active');
+
+    $('#step-five-description').addClass('active');
+
+    $('#step-one-description').removeClass('active');
+    $('#step-two-description').removeClass('active');
+    $('#step-three-description').removeClass('active');
+    $('#step-four-description').removeClass('active');
+  }
+
 }
