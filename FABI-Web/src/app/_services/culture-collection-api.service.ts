@@ -5,7 +5,7 @@
  * Created Date: Monday, July 15th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Thursday, September 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -35,6 +35,10 @@ const submitCMWRequestFormURL = `${config.cultureClinicURL}/submitCMWRequestForm
 const submitCMWRevitalizationFormURL = `${config.cultureClinicURL}/submitCMWRevitalizationForm`;
 const submitProcessedFormURL =  `${config.cultureClinicURL}/submitCMWProcessingForm`;
 const updateDepositFormStatusURL = `${config.cultureClinicURL}/updateDepositStatus`;
+const deleteDepositFormURL = `${config.cultureClinicURL}/deleteCMWDepositForm`;
+const deleteRequestFormURL = `${config.cultureClinicURL}/deleteCMWRequestForm`;
+const deleteRevitalizationFormURL = `${config.cultureClinicURL}/deleteCMWRevitalizationForm`;
+const deleteProcessedFormURL = `${config.cultureClinicURL}/deleteCMWProcessingForm`;
 
 //Object for defining the CMW deposit form values
 export interface CMWDeposit{
@@ -375,6 +379,122 @@ export class CultureCollectionAPIService {
     };
 
     return this.http.request('POST', updateDepositFormStatusURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE DEPOSIT FORM 
+  /**
+   *    This function is used to delete a deposit form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteDepositForm(id: string, form: string){
+    var data = {userID: id, formID: form};
+
+    const options = {
+        method: 'POST',
+        url: deleteDepositFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', deleteDepositFormURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE REQUEST FORM 
+  /**
+   *    This function is used to delete a request form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteRequestForm(id: string, form: string){
+    var data = {userID: id, formID: form};
+
+    const options = {
+        method: 'POST',
+        url: deleteRequestFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', deleteRequestFormURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE REVITALIZATION FORM 
+  /**
+   *    This function is used to delete a revitalization form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteRevitalizationForm(id: string, form: string){
+    var data = {userID: id, formID: form};
+
+    const options = {
+        method: 'POST',
+        url: deleteRevitalizationFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', deleteRevitalizationFormURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE PROCESSED FORM 
+  /**
+   *    This function is used to delete a processed form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteProcessedForm(id: string, form: string){
+    var data = {userID: id, formID: form};
+
+    const options = {
+        method: 'POST',
+        url: deleteProcessedFormURL,
+        headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+        },
+        body: data,
+        json: true
+    };
+
+    return this.http.request('POST', deleteProcessedFormURL, options);
   }
 
 }

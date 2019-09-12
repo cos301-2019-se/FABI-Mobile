@@ -90,8 +90,11 @@ export class ViewFormsComponent implements OnInit {
   additionalNotes: string;                
   /** The date that the form was submitted - @type {string} */
   dateSubmittedDeposit: string; 
-  /** The id number of the deposit form - @type {string} */
+
+  /** The id number of the form - @type {string} */
   formID: string;
+  /** The id number of the processed form - @type {string} */
+  processedFormID: string;
   
   /** The user id of the user submitting the form - @type {string} */ 
   userIDRequest: string; 
@@ -391,6 +394,7 @@ export class ViewFormsComponent implements OnInit {
           tempRequest.push(data[i].referenceNumber);
           tempRequest.push(data[i].notes);
           tempRequest.push(data[i].dateSubmitted);
+          tempRequest.push(data[i].id);
 
           this.requestForms.push(tempRequest);
         }
@@ -430,6 +434,7 @@ export class ViewFormsComponent implements OnInit {
           tempRevitalization.push(data[i].referenceNumber);
           tempRevitalization.push(data[i].dateReturned);
           tempRevitalization.push(data[i].dateSubmitted);
+          tempRevitalization.push(data[i].id);
 
           this.revitalizationForms.push(tempRevitalization);
         }
@@ -472,6 +477,7 @@ export class ViewFormsComponent implements OnInit {
           tempProcessed.push(data[i].microscopeSlides);
           tempProcessed.push(data[i].dateSubmittedProcessedForm);
           tempProcessed.push(data[i].cultureCollectionNumber);
+          tempProcessed.push(data[i].id);
 
           this.processedForms.push(tempProcessed);
         }
@@ -650,6 +656,7 @@ export class ViewFormsComponent implements OnInit {
     this.dateRequestedRequest = tempRequest[4];
     this.notes = tempRequest[6];
     this.dateSubmittedRequest = tempRequest[7];
+    this.formID = tempRequest[8];
 
     if(this.requestFormNumber == 0){
       this.requestFormNumber += 1;
@@ -694,6 +701,7 @@ export class ViewFormsComponent implements OnInit {
     this.dateRequestedRequest = tempRequest[4];
     this.notes = tempRequest[6];
     this.dateSubmittedRequest = tempRequest[7];
+    this.formID = tempRequest[8];
 
     if(this.requestFormNumber == this.requestForms.length){
       this.requestFormNumber -= 1;
@@ -744,6 +752,7 @@ export class ViewFormsComponent implements OnInit {
     this.sequenceDateSubmitted = tempRevitalization[6];
     this.dateReturned = tempRevitalization[9];
     this.dateSubmittedRevitalization = tempRevitalization[10];
+    this.formID = tempRevitalization[11];
 
     if(this.revitalizationFormNumber == 0){
       this.revitalizationFormNumber += 1;
@@ -791,6 +800,7 @@ export class ViewFormsComponent implements OnInit {
     this.sequenceDateSubmitted = tempRevitalization[6];
     this.dateReturned = tempRevitalization[9];
     this.dateSubmittedRevitalization = tempRevitalization[10];
+    this.formID = tempRevitalization[11];
 
     if(this.revitalizationFormNumber == this.revitalizationForms.length){
       this.revitalizationFormNumber -= 1;
@@ -844,6 +854,7 @@ export class ViewFormsComponent implements OnInit {
     this.microscopeSlides = tempProcessed[10];
     this.dateSubmittedProcessedForm = tempProcessed[11];
     this.cmwCultureNumberProcessed = tempProcessed[12];
+    this.processedFormID = tempProcessed[13];
 
     if(this.processedFormNumber == 0){
       this.processedFormNumber += 1;
@@ -896,6 +907,7 @@ export class ViewFormsComponent implements OnInit {
     this.microscopeSlides = tempProcessed[10];
     this.dateSubmittedProcessedForm = tempProcessed[11];
     this.cmwCultureNumberProcessed = tempProcessed[12];
+    this.processedFormID = tempProcessed[13];
 
     if(this.processedFormNumber == this.processedForms.length){
       this.processedFormNumber -= 1;
@@ -1421,7 +1433,23 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   deleteDepositForm() {
-    
+    //Deleting the currently displayed deposit form
+    this.cultureCollectionService.deleteDepositForm(this.currentUser.ID, this.formID).subscribe((response: any) => {
+      if(response.success == true){
+        //Successfully deleted deposit form
+
+        //Deleting the processed form associated with the deposit form deleted
+        for(var i = 0; i < this.processedForms.length; i++){
+          var temp = this.processedForms[i];
+          if(temp[12] == this.cmwCultureNumberDeposit){
+            this.deleteProcessedForm();
+
+            this.loadNextDepositForm();
+            this.loadNextProcessedForm();
+          }
+        }
+      }
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1432,7 +1460,12 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   deleteRequestForm() {
-    
+    //Deleting the currently displayed request form
+    this.cultureCollectionService.deleteRequestForm(this.currentUser.ID, this.formID).subscribe((response: any) => {
+      if(response.success == true){
+        this.loadNextRequestForm();
+      }
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1443,7 +1476,12 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   deleteRevitalizationForm() {
-    
+    //Deleting the currently displayed revitalization form
+    this.cultureCollectionService.deleteRevitalizationForm(this.currentUser.ID, this.formID).subscribe((response: any) => {
+      if(response.success == true){
+        this.loadNextRevitalizationForm();
+      }
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1454,6 +1492,11 @@ export class ViewFormsComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   deleteProcessedForm() {
-    
+    //Deleting the currently displayed processed form
+    this.cultureCollectionService.deleteProcessedForm(this.currentUser.ID, this.processedFormID).subscribe((response: any) => {
+      if(response.success == true){
+        this.loadNextProcessedForm();
+      }
+    });
   }
 }

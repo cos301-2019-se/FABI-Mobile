@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Thursday, September 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -249,20 +249,6 @@ export class AdminDashboardComponent implements OnInit {
       }
     });
   }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                         GET NUMBER OF COMPLETED FABI SAMPLES
-  /**
-   *  This function will use an API service to get all the completed (processed) samples of FABI. These 
-   *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
-   *  populate a 'heading' element on the HTML page with the percentage of completed samples belonging to FABI.
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfCompletedFABISamples() { }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 

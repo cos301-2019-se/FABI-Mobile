@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Thursday, September 12th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -158,7 +158,7 @@ ngOnInit() {
   this.currentUser = this.authService.getCurrentSessionValue.user;
   // Calling the neccessary functions as the page loads
    this.getNumberOfOrganizationMembers();
-   this.getNumberOfCompletedOrganizationSamples();
+   this.loadOrganizationSamples();
    this.loadNotifications();
 }
 
@@ -189,6 +189,29 @@ getNumberOfOrganizationMembers(){
   });
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                            LOAD ORGANIZATION SAMPLES
+/**
+ *  This function will load all the samples belonging to the organization
+ * 
+ * @memberof OrganizationDashboardComponent
+ */
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+loadOrganizationSamples(){
+  this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
+    if(response.success == true){
+      var data = response.data.samples;
+      var num = 0;
+
+      for(var i = 0; i < data.length; i++){
+        num += 1;
+      }
+
+      this.sampleStats = num.toString();
+    }
+  });
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                            LOGOUT 
@@ -202,18 +225,6 @@ logout() {
   this.authService.logoutUser();
   this.router.navigate(['/login']);
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                           GET NUMBER OF COMPLETED ORGANIZATION SAMPLES
-/**
- *  This function will use an API service to get all the completed (processed) samples of an organization. These 
- *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
- *  populate a 'heading' element on the HTML page with the percentage of completed samples belonging to the organization.
- * 
- * @memberof OrganizationDashboardComponent
- */
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-getNumberOfCompletedOrganizationSamples(){ }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
