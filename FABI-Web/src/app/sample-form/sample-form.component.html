@@ -151,7 +151,7 @@
 
       <div class="form-fields">
 
-        <div id="sample-details">
+        <div id="sample-details" *ngIf="sampleDetails">
 
           <div class="form-row">
             <!-- Plant species or common name -->
@@ -199,7 +199,7 @@
           </div>
         </div>
 
-        <div id="sample-type">
+        <div id="sample-type" *ngIf="sampleType">
 
           <div class="form-row">
             <!-- Soil -->
@@ -314,7 +314,7 @@
 
       <div class="form-fields">
 
-        <div id="symptoms">
+        <div id="symptoms"  *ngIf="symptoms">
 
           <div class="form-row">
             <!-- Wilt -->
@@ -396,7 +396,7 @@
 
         </div>
 
-        <div id="symptom-distribution">
+        <div id="symptom-distribution" *ngIf="symptomDistribution">
 
           <div class="form-row">
             <!-- Localized (Single Plant) -->
