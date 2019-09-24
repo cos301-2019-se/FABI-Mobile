@@ -5,7 +5,7 @@
  * Created Date: Wednesday, August 14th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 16th 2019
+ * Last Modified: Tuesday, September 24th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -110,7 +110,7 @@ export class MapsWindowComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                      GET CURRENT LOCATION  
   /**
-   * This function is used to set the current location in the map.
+   * This function is used to set the current location in the map. (When map loads)
    * 
    * @memberof MapsWindowComponent
    */
@@ -139,7 +139,7 @@ export class MapsWindowComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         SET LOCATION
   /**
-   * This function ...
+   * This function is used to change to location based on the user pinning the map
    * 
    * @memberof MapsWindowComponent
    */
@@ -243,6 +243,10 @@ export class MapsWindowComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   select() {
+
+    console.log("ADDRESS : " + this.address);
+    console.log("LOCATION : " + this.location);
+
     this.dialogRef.close( 
       {
         'address': this.address, 
