@@ -4,9 +4,20 @@ const admin = require('firebase-admin');
 
 const db = admin.firestore();
 
-module.exports.getClient = function(clientID, clientSecret, callback){
+/*module.exports = () =>
+{
+    return {
+        getClient: getClient,
+        grantTypeAllowed: grantTypeAllowed,
+        getUser: getUser,
+        saveAccessToken: saveAccessToken,
+        getAccessToken: getAccessToken
+    }
+}*/
+
+module.exports.getClient = function(clientID, clientSecret,callback)
+{
     console.log("getCLient");
-	
     const client = {
         clientID,
         clientSecret,
@@ -19,93 +30,96 @@ module.exports.getClient = function(clientID, clientSecret, callback){
 
 module.exports.grantTypeAllowed = function(clientEmail, grantType, callback) {
     console.log("GrantTypeAllowed");
-	
     callback(false, true);
     /*callback(false ,() => {
-		var docRef  = db.collection('Organizations').doc('FABI').collection('Admin').where('email', '==', clientEmail);
-		
-		docRef.get().then(doc =>
-		{
-			if(doc.empty){
-				return false;
-				
-			}else{
-				var member;
-				doc.forEach(element => {
-					member = element.data();
-				});
-				
-				if(member.userType === superuser){
-					return true;
-				}else{
-					return false;
-				}
-			}
-			
-		}).catch((err) => {
-			console.log(err);
-			return false
-		});
+            var docRef  = db.collection('Organizations').doc('FABI').collection('Admin').where('email', '==', clientEmail);
+
+            //(3)
+            docRef.get().then(doc =>
+            {
+                if(doc.empty)
+                {
+                    return false;
+                }
+                else{
+                    //(4)
+                    var member;
+                    doc.forEach(element => {
+                        member = element.data();
+                    });
+                    
+                    if(member.userType === superuser)
+                        return true;
+                    else
+                        return false;
+                }  
+            }).catch((err) => {
+                console.log(err);
+                return false
+            });
     })*/
     
 }
 
 module.exports.getUser = function(username, password, callback){
     console.log("getUser");
-	
     var docRef  = db.collection('Organizations').doc('FABI').collection('Admin').where('email', '==', username);
     docRef.get().then(doc => {
-        if(docRef.Empty){
+        if(docRef.Empty)
+        {
             callback(false, null);
-			
-        }else {
+        }
+        else
+        {
             var member;
             doc.forEach(element => {
                 member = element.data();
             });
             
             bcrypt.compare(password, member.password, (err, valid) =>
-			{
-                if(!valid){
+            {
+                if(!valid)
+                {
                     callback(false, null);
-					
-                }else{
-                    callback(false, member);
-					
                 }
-            });
+                else
+                {
+                    callback(false, member);
+                }
+            })
         }
-    });
+    })
 }
 
-module.exports.saveAccessToken = function(accessToken, clientID, expires, user, callback){
+module.exports.saveAccessToken = function(accessToken, clientID, expires, user, callback)
+{
     console.log("saveAccessToken");
-	
     expiry_date = new Date();
     expiry_date.setDate(expiry_date.getDate() + 1);
     qs = {
         userID : user.id,
-		clientId: clientID,
         accessToken : accessToken,
-        expires_in : expiry_date.getTime()
+        expires : expiry_date.getTime().toString()
     }
-	console.log(qs);
     var docRef  = db.collection('Authentication').doc('SuperUser').collection('Tokens').doc(user.id);
-    
+        
+        //(4)
     docRef.set(qs).then(() => callback(null)).catch(error => callback(error));
 }
 
-module.exports.getAccessToken = function(token, callback) {
+module.exports.getAccessToken = function(bearerToken, callback) 
+{
     console.log("getAccessToken");
-	
-    var docRef  = db.collection('Authentication').doc('SuperUser').collection('Tokens').where('accessToken','==', token);
+    var docRef  = db.collection('Authentication').doc('SuperUser').collection('Tokens').where('accessToken','==', bearerToken);
     
     docRef.get().then(doc =>
     {
-        if(doc.empty) {	
-            callback(false, { accessToken: token.accessToken, clientId: null, expires: null, user: null, userId: null });
-			
-        }else {
+        if(doc.empty)
+        {
+            callback(false, null);
+        }
+        else
+        {
             var member;
             doc.forEach(element => {
                 member = element.data();
@@ -116,22 +130,22 @@ module.exports.getAccessToken = function(token, callback) {
                 user: {
                     id: member.userID
                 },
-                accessTokenExpiresAt: new Date(member.expires_in).toString() ,
+                accessTokenExpiresAt: (member.expires - now),
                 accessToken: member.accessToken
             };
             console.log(accessToken);
-            callback(false, { accessToken: token.accessToken, clientId: member.clientId, expires: member.expires_in, user: accessToken.user.id, userId: member.userID });
+            callback(false, null);
         }
-		
     }).catch(error => {console.log("ERROR: " + error)});
 
 }
 
-/*function createAccessTokenFrom(userID){
+/*function createAccessTokenFrom(userID)
+{
     return Promise.resolve({
         user: {
             id : userID
         },
         expires: null
-    });
+    })
 }*/
