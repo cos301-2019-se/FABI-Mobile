@@ -27,6 +27,7 @@ const updateAdminDetailsRoute = require('./api/routes/FABI/updateAdminDetails');
 const updateStaffDatabaseAccessRoute = require('./api/routes/FABI/updateStaffDatabaseAccess');
 const getAdminTypesRoute = require('./api/routes/FABI/getAdminTypes');
 const updateStaffPassowordRoute = require('./api/routes/FABI/updateStaffPassword');
+const removePendingOrgRoute = require('./api/routes/FABI/removePendingOrg');
 
 //External modules
 const addMemberToOrgRoute = require('./api/routes/External/addMemberToOrg');
@@ -72,6 +73,7 @@ app.use('/getAdminTypes', getAdminTypesRoute);
 app.use('/updateStaffPassword', updateStaffPassowordRoute);
 app.use('/updateOrgMemberPassword', updateOrgMemberPasswordRoute);
 app.use('/getAllPendingOrganizations', getPendingOrgsRoute);
+app.use('/removePendingOrg', removePendingOrgRoute);
 
 //Error handling when url doesn't exist
 // app.use((req, res, next) => {

@@ -62,4 +62,4 @@ function getDatabaseNames(req, res)
         }
     })
 }
-module.exports = reouter;
+module.exports = router;
