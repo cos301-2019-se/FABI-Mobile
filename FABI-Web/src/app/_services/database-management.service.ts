@@ -5,7 +5,7 @@
  * Created Date: Sunday, July 28th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Wednesday, September 25th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,6 +17,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { config } from "../../environments/environment.prod";
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class DatabaseManagementService {
    * @memberof DatabaseManagementService
    */
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          RETRIEVE DATABASE 
@@ -102,5 +103,40 @@ export class DatabaseManagementService {
     };
 
     return this.http.request<any>(method, portingURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          DROP DATABASE
+  /**
+   * Method thats sends a request to the API to drop a Database 
+   *
+   * @param {string} dbname The name of the database to bedropped
+   * 
+   * @returns API response @type any
+   * 
+   * @memberof DatabaseManagementService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeDatabase(dbname: string) {
+    const dropDBURL = `${config.databaseManagementURL}/`;
+    const method = 'POST';
+
+    const postData = {
+      "databaseName": dbname,
+      "userID": this.authService.getCurrentSessionValue.user.ID
+    };
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json'
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, dropDBURL, options);
   }
 }

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Wednesday, September 25th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -108,6 +108,8 @@ export class DatabaseHandlerComponent implements OnInit {
   databaseTableLoading: boolean = true;
   /** Specifies if the selected database has been retreived to disable the loading spinner - @type {boolean} */
   viewDatabaseLoading: boolean = true;
+
+  deleteData: Interface.Confirm = {title: '', message: '', info: '', cancel: '', confirm: ''};
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -452,6 +454,87 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removePreview(){
     this.preview = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     DROP DATABASE PROMPT 1
+  /**
+   * This function prompts the user to confirm if they wish to remove the selected database
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  dropDatabasePrompt1(dbname: string) {   
+
+    this.selectedDatabase = dbname;
+
+    this.deleteData = {
+      title: "Drop Database",
+      message: "Are you sure you want to remove this database? ",
+      info: `Database : ${dbname}`,
+      cancel: "Cancel",
+      confirm: "Yes"
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     DROP DATABASE PROMPT 2
+  /**
+   * This function prompts the user to confirm if they wish to remove the selected database
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  dropDatabasePrompt2() {   
+
+    this.deleteData = {
+      title: "Destructive Operation",
+      message: "All data will be permanently removed from this system",
+      info: `Database : ${this.selectedDatabase}`,
+      cancel: "Cancel",
+      confirm: "Drop"
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                           DROP DATABASE   
+  /**
+   * This function calls the *database-management* service to remove the selected database
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  dropDatabase() {    
+    this.dbService.removeDatabase(this.selectedDatabase).subscribe((response: any) => {
+      if (response.success == true && response.code == 200) {
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Database Removed", "Dismiss", {
+          duration: 3000
+        });
+        this.refreshDataSource();
+      } 
+      else if (response.success == false) {
+        //POPUP MESSAGE
+        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result == "Retry") {
+            this.dropDatabase();
+          }
+        })
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                                REFRESH
+  /**
+   * This function refreshes the Datasource (in most cases, the table that has changed)
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  refreshDataSource() {
+    this.getDBNames();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
