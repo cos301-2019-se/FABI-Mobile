@@ -51,37 +51,39 @@ function addDoc(req, res)
     }
 
 // (2) Connect to DB
-    var ids = [];
-    req.body.data.forEach(item => {
-        item.id = new Date().getTime().toString();
-        console.log(item);
-        ids.push(item.id);
-        var docRef  = db.collection('Databases').doc(req.body.databaseName).collection('Data').doc(item.id);
-        docRef.set(item).then(() => {
-            console.log("record added");
-        });
-    });
 
-    res.setHeader('Content-Type', 'application/problem+json');
-    res.setHeader('Content-Language', 'en');
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-        success: true,
-        code: 200,
-        title: "SUCCESS",
-        message : "Data submitted to " + req.body.databaseName,
-        data: {
-            databaseName : req.body.databaseName,
-            newIdArray : ids
-        }
-    });
-    
-    log({
-        type: "DBML",
-        action: "/porting",
-        details: req.body.databaseName,
-        user: '1563355277876',
-        org1: 'FABI'
-    });
+    db.collection("Databases").doc(req.body.databaseName).set({name : req.body.databaseName}).then(()=> {
+        var ids = [];
+        req.body.data.forEach(item => {
+            item.id = new Date().getTime().toString();
+            console.log(item);
+            ids.push(item.id);
+            var docRef  = db.collection('Databases').doc(req.body.databaseName).collection('Data').doc(item.id);
+            docRef.set(item).then(() => {
+                console.log("record added");
+            });
+        });
+
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+            success: true,
+            code: 200,
+            title: "SUCCESS",
+            message : "Data submitted to " + req.body.databaseName,
+            data: {
+                databaseName : req.body.databaseName,
+                newIdArray : ids
+            }
+        });
+        log({
+            type: "DBML",
+            action: "/porting",
+            details: req.body.databaseName,
+            user: '1563355277876',
+            org1: 'FABI'
+        });
+    })
 }
 module.exports = router;

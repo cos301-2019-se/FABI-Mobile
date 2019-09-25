@@ -32,7 +32,7 @@ const db = admin.firestore();
 
 function getOrgDetails(req, res) {
     //(1)
-    if (req.body.dbName == undefined || req.body.dbName == '') {
+    if (req.body.databaseName == undefined || req.body.databaseName == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -45,7 +45,7 @@ function getOrgDetails(req, res) {
     }
 
     //(2)
-    var getRef = db.collection('Databases').doc(req.body.dbName);
+    var getRef = db.collection('Databases').doc(req.body.databaseName);
 
     getRef.get().then(doc => {
             //(3)
@@ -64,7 +64,7 @@ function getOrgDetails(req, res) {
             else
             {
                 
-                deleteCollection(db, req.body.dbName, 1000).then(() => {
+                deleteCollection(db, req.body.databaseName, 1000).then(() => {
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
