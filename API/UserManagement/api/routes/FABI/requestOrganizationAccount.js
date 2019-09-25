@@ -4,8 +4,12 @@ const request = require("request");
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
 const mail = require('../sendEmail');
+<<<<<<< HEAD:API/UserManagement/api/routes/FABI/createOrganization.js
+const log = require('../../sendLogs');
+=======
 const EmailTemplate = require('email-templates');
 const nodemailer = require('nodemailer');
+>>>>>>> develop:API/UserManagement/api/routes/FABI/requestOrganizationAccount.js
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -35,9 +39,14 @@ const organization;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                          Request Organization Account
 /**
+<<<<<<< HEAD:API/UserManagement/api/routes/FABI/createOrganization.js
+ * @summary Create a new organization with data recieved
+ * @description  REQUEST DATA REQUIRED: organization fname, organization details, admin details
+=======
  * @summary Create a new organization with data recieved depending on whether the FABI super user
  *          verifies the new account.
  * @description  REQUEST DATA REQUIRED: organization name, organization details, admin details
+>>>>>>> develop:API/UserManagement/api/routes/FABI/requestOrganizationAccount.js
  *  1. Check if all required data is received and that it is correct.
  *      - IF NOT: return Error Response
  *  2. Send verification email.
@@ -54,10 +63,19 @@ const organization;
 // [START config]
 const db = admin.firestore();
 
+<<<<<<< HEAD:API/UserManagement/api/routes/FABI/createOrganization.js
+function addOrganization(req, res)
+{
+
+
+// (1) 
+    if (req.body.admin.fname == undefined || req.body.admin.fname == '') {
+=======
 function requestOrganizationAccount(req, res){
 
 // (1) 
     if (req.body.admin.name == undefined || req.body.admin.name == '') {
+>>>>>>> develop:API/UserManagement/api/routes/FABI/requestOrganizationAccount.js
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -65,7 +83,11 @@ function requestOrganizationAccount(req, res){
             success: false,
             code: 400,
             title: "BAD_REQUEST",
+<<<<<<< HEAD:API/UserManagement/api/routes/FABI/createOrganization.js
+            message: "Admin fname expected"
+=======
             message: "Admin name expected"
+>>>>>>> develop:API/UserManagement/api/routes/FABI/requestOrganizationAccount.js
         });
     }
     if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
@@ -98,6 +120,107 @@ function requestOrganizationAccount(req, res){
             success: false,
             code: 400,
             title: "BAD_REQUEST",
+<<<<<<< HEAD:API/UserManagement/api/routes/FABI/createOrganization.js
+            message: "Organization fname Expected"
+        });
+    }
+
+        // (2)
+        var docRef  = db.collection('Organizations').doc(req.body.orgName);
+        var pendingRef  = db.collection('Organizations').doc('Pending').collection('Organizations').doc(req.body.orgName);
+
+        // (3)
+        const salt = bcrypt.genSaltSync(10);
+        var pass = generatePassword(10);
+        const qs = {
+            orgName : req.body.orgName,
+            admin : {
+                fname: req.body.admin.fname,
+                surname: req.body.admin.surname,
+                email: req.body.admin.email,
+                id : new Date().getTime().toString(),
+                userType: "OrganizationAdmin"
+            }
+        }
+
+        // (4)
+        pendingRef.get().then(doc => {
+            //(2)
+            if(typeof(doc.data()) === 'undefined')
+            {
+                docRef.set(qs).then(() => {
+                    qs.admin.password = bcrypt.hashSync(pass, salt)
+                    adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                        success: true,
+                        code: 200,
+                        title: "SUCCESS",
+                        message: "Created Organization",
+                        data: {
+                                orgName: req.body.orgName,
+                                tempPassword: pass
+                        }
+                })
+                mail(req.body.orgName + ' Admin', pass);
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: qs.admin.id,
+                    org1: 'FABI',
+                    org2: req.body.orgName,
+                    action: '/createOrganization'
+                });
+            });
+            });
+        }
+        else
+        {
+            pendingRef.delete().then(() => {
+                docRef.set(qs).then(() => {
+                    qs.admin.password = bcrypt.hashSync(pass, salt)
+                    adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                            success: true,
+                            code: 200,
+                            title: "SUCCESS",
+                            message: "Created Organization",
+                            data: {
+                                    orgName: req.body.orgName,
+                                    tempPassword: pass
+                            }
+                        })
+                mail(req.body.orgName + ' Admin', pass);
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: qs.admin.id,
+                    org1: 'FABI',
+                    org2: req.body.orgName,
+                    action: '/createOrganization'
+                });
+            });
+            });
+        })
+    }
+    }).catch((err) => {
+        console.log("Database connection error: " + err);
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(500).json({                                  // ******* RESPONSE STATUS? ************
+            success: false,
+            code: 500,
+            title: "INTERNAL SERVER ERROR",
+            message: "Error Connecting to User Database"  
+=======
             message: "Organization Name Expected"
         });
     }
@@ -160,6 +283,7 @@ function loadTemplate(templateName, info) {
             else resolve({
                 email: result
             });
+>>>>>>> develop:API/UserManagement/api/routes/FABI/requestOrganizationAccount.js
         });
     });
 }

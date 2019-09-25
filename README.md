@@ -59,6 +59,8 @@
 #### Links
   [GitHub](https://github.com/tegan-jade) 
   [LinkedIn](https://www.linkedin.com/in/teganjade/)   
+  [CV](https://drive.google.com/file/d/1FSPPzSMprGY_o01bPnYOilSxLFX67KoW/view?usp=sharing) 
+  
 **Current Position:** BSc IT 3rd year
 
 **Interests:** My particular interests range from front-end development to advancements in AI and the impact it has on the legal climate. I am also interested in network security.
@@ -75,11 +77,12 @@
 
 
 ## <a name="Emma-Coetzer">Emma Coetzer</a>
-###### *Front-End Developer*
+###### *Front-End and Back-End Developer*
 
 #### Links
  [GitHub](https://github.com/EmmaBinx)  
  [LinkedIn](https://www.linkedin.com/in/emma-coetzer-85b46317b/)   
+ [CV](https://drive.google.com/file/d/1212zXXFP3k5cvu61BpgsrUBsIEwU0kSQ/view?usp=sharing)   
  
 
 **Current Position:** BSc IT 3rd year
@@ -102,8 +105,8 @@
 
 #### Links
   [GitHub](https://github.com/AeronLand)  
-  [LinkedIn](www.linkedin.com/in/aeron-land-4a1167180)   
- 
+  [LinkedIn](www.linkedin.com/in/aeronland)   
+  [CV](https://drive.google.com/file/d/1FrHabHyQqVcFHOmFWqiWDtoMbtidlbxO/view?usp=sharing)
 
 **Current Position:** BSc IT 3rd year
 
@@ -126,7 +129,7 @@
 #### Links
   [GitHub](https://github.com/luveshanm)  
   [LinkedIn](https://www.linkedin.com/in/luveshan-marimuthu-ba0785180)   
- 
+  [CV](https://drive.google.com/file/d/1w2AjNxKPwIkcUB6BkdIQ6jSg92uTDLyo/view?usp=sharing)
 
 **Current Position:** BSc Computer Science 3rd year
 
@@ -149,7 +152,7 @@
 #### Links
   [GitHub](https://github.com/KendraRid9)  
   [LinkedIn](https://www.linkedin.com/in/kendra-riddle-700297181/)   
- 
+  [CV](https://zety.com/mycv/Kendra.Riddle) 
 
 **Current Position:** BSc IT 3rd year
 
