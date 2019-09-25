@@ -21,33 +21,6 @@ module.exports.grantTypeAllowed = function(clientEmail, grantType, callback) {
     console.log("GrantTypeAllowed");
 	
     callback(false, true);
-    /*callback(false ,() => {
-		var docRef  = db.collection('Organizations').doc('FABI').collection('Admin').where('email', '==', clientEmail);
-		
-		docRef.get().then(doc =>
-		{
-			if(doc.empty){
-				return false;
-				
-			}else{
-				var member;
-				doc.forEach(element => {
-					member = element.data();
-				});
-				
-				if(member.userType === superuser){
-					return true;
-				}else{
-					return false;
-				}
-			}
-			
-		}).catch((err) => {
-			console.log(err);
-			return false
-		});
-    })*/
-    
 }
 
 module.exports.getUser = function(username, password, callback){
@@ -90,7 +63,7 @@ module.exports.saveAccessToken = function(accessToken, clientID, expires, user, 
         expires_in : expiry_date.getTime()
     }
 	console.log(qs);
-    var docRef  = db.collection('Authentication').doc('SuperUser').collection('Tokens').doc(user.id);
+    var docRef  = db.collection('Authentication').doc('ClinicAdmin').collection('Tokens').doc(user.id);
     
     docRef.set(qs).then(() => callback(null)).catch(error => callback(error));
 }
@@ -98,7 +71,7 @@ module.exports.saveAccessToken = function(accessToken, clientID, expires, user, 
 module.exports.getAccessToken = function(token, callback) {
     console.log("getAccessToken");
 	
-    var docRef  = db.collection('Authentication').doc('SuperUser').collection('Tokens').where('accessToken','==', token);
+    var docRef  = db.collection('Authentication').doc('ClinicAdmin').collection('Tokens').where('accessToken','==', token);
     
     docRef.get().then(doc =>
     {
@@ -127,11 +100,3 @@ module.exports.getAccessToken = function(token, callback) {
 
 }
 
-/*function createAccessTokenFrom(userID){
-    return Promise.resolve({
-        user: {
-            id : userID
-        },
-        expires: null
-    });
-}*/
