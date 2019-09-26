@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, September 25th 2019
+ * Last Modified: Thursday, September 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -15,6 +15,7 @@
 
 import * as Interface from '../_interfaces/interfaces';
 import { Component, OnInit, ViewEncapsulation, Injector, NgZone } from '@angular/core';
+import { Location } from '@angular/common';
 import { AuthenticationService } from '../_services/authentication.service';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, FormArray } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -113,6 +114,9 @@ export class SampleFormComponent implements OnInit {
     }
   ]
 
+  /** The details of the user currently logged in -  @type {any} */
+  currentUser: any;
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -120,6 +124,7 @@ export class SampleFormComponent implements OnInit {
    * 
    * @param {AuthenticationService} authService Used for all authentication and session control
    * @param {DiagnosticClinicAPIService} clinicService Used for making calls to the Diagnostic Clinic API Service
+   * @param {Location} pageLocation Used to navigate back to the previous page
    * @param {FormBuilder} formBuilder Used to build the HTML form
    * @param {MatSnackBar} snackBar Used to create pop-up notifications for the user
    * @param {MatDialog} dialog Used to create pop-up notifications for the user
@@ -132,6 +137,7 @@ export class SampleFormComponent implements OnInit {
   constructor(
     private authService: AuthenticationService, 
     private clinicService: DiagnosticClinicAPIService,
+    private pageLocation: Location,
     private formBuilder: FormBuilder, 
     private snackBar: MatSnackBar, 
     private dialog: MatDialog, 
@@ -210,9 +216,9 @@ export class SampleFormComponent implements OnInit {
 
 
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentSessionValue.user;
 
     this.mapLoader.load().then(() => {
-
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position: Position) => {
           if (position) {
@@ -255,13 +261,11 @@ export class SampleFormComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   sendForm() {
-
     this.submitted = true;
 
     if(this.sampleForm.invalid) {
       return;
-    }
-    
+    }    
 
     const formDetails: Interface.SampleFormData = {
       // Sample Details
@@ -343,8 +347,13 @@ export class SampleFormComponent implements OnInit {
         //Set pre-diagnosis
         localStorage.setItem('pre-diagnosis', response.data.prediagnosis);
 
-        //Navigate to the pre-diagnosis 
-        this.router.navigate(['/pre-diagnosis']);
+        if(this.currentUser.organisation == 'FABI'){
+          //Navigate to the pre-diagnosis 
+          this.router.navigate(['/pre-diagnosis']);
+        }
+        else{
+          this.pageLocation.back();
+        }
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
@@ -408,8 +417,7 @@ export class SampleFormComponent implements OnInit {
     });
   }
 
-  showStepTwo() {
-    
+  showStepTwo() {    
     if(this.sampleForm.get('plantation_details').invalid) {
       this.submitted = true;
       return;
@@ -439,7 +447,6 @@ export class SampleFormComponent implements OnInit {
   }
 
  showStepOne() {
-
   this.stepOneContent = true;
   this.stepTwoContent = false;
   this.stepThreeContent = false;
@@ -462,7 +469,6 @@ export class SampleFormComponent implements OnInit {
   }
 
   showSampleDetails() {
-
     this.sampleDetails = true;
     this.sampleType  = false;
 
@@ -471,7 +477,6 @@ export class SampleFormComponent implements OnInit {
   }
 
   showSampleType() {
-
     this.sampleDetails = false;
     this.sampleType  = true;
 
@@ -481,7 +486,6 @@ export class SampleFormComponent implements OnInit {
   }
 
   showStepThree() {
-
     if(this.sampleForm.get('sample_details').invalid || this.sampleForm.get('types').invalid) {
       this.submitted = true;
       return;
@@ -527,7 +531,6 @@ export class SampleFormComponent implements OnInit {
   }
 
   showStepFour() {
-
     if(this.sampleForm.get('symptoms').invalid || this.sampleForm.get('distribution').invalid) {
       this.submitted = true;
       return;
@@ -556,7 +559,6 @@ export class SampleFormComponent implements OnInit {
   }
 
   showStepFive() {
-
     if(this.sampleForm.get('conditions').invalid) {
       this.submitted = true;
       return;
@@ -653,7 +655,6 @@ export class SampleFormComponent implements OnInit {
   }
 
   selectSampleType() {
-
     this.sampleTypesSelected = [];
 
     this.sampleForm.get('types').get('set_types').value.forEach((value, i)=> {
@@ -674,9 +675,6 @@ export class SampleFormComponent implements OnInit {
         }
       }
     }
-
-    console.log(this.sampleTypesSelected);
-
   }
 
   requireCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
