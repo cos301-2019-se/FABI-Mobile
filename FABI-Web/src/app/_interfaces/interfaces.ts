@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 26th 2019
+ * Last Modified: Tuesday, September 24th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -148,63 +148,79 @@ export interface Confirm {
  */  
 export interface SampleFormData {
   // Sample Details
-  sample_plant_species: string,                 //The species of the sample
-  sample_num_samples: number,                   //The number of samples
-  date_sample_collected: Date,                  //The date that the sample was collected
-  date_sample_sent: Date,                       //The date that the sample was sent
+  sample_details: {
+    plant_species: string,                 //The species of the sample
+    plant_genus: string                    //The genus of the sample
+    num_samples: number,                   //The number of samples
+    date_collected: Date,                  //The date that the sample was collected
+    date_sent: Date,                       //The date that the sample was sent
+  }
 
   // Plantation Details
-  sample_street: string,                        //The street name
-  sample_area: string,                          //The area
-  sample_city: string,                          //The city 
-  sample_farm: string,                          //The farm name
-  sample_province: string,                      //The province
-  sample_gps: string,                           //Sample GPS coordinates
+  plantation_details: {
+    street: string,                        //The street name
+    area: string,                          //The area
+    city: string,                          //The city 
+    farm: string,                          //The farm name
+    province: string,                      //The province
+    gps: string,                           //Sample GPS coordinates
+  }
 
   // Type of Sample
-  sample_type_soil: string,                     //Soil sample type
-  sample_type_stems: string,                    //Stems sample type
-  sample_type_roots: string,                    //Roots sample type
-  sample_type_twigs: string,                    //Twigs sample type
-  sample_type_leaves: string,                   //Leaves sample type
-  sample_type_seedlings: string,                //Seedlings sample type
-  sample_type_media: string,                    //Media sample type
-  sample_type_water: string,                    //Water sample type
-  sample_type_insect: string,                   //Insect sample type
-  sample_type_nuts: string,                     //Nuts sample type
-  sample_type_other: string,                    //Other type of sample (if any)
+  types: string[],
+  // types: {
+  //   soil: boolean,                     //Soil sample type
+  //   stems: boolean,                    //Stems sample type
+  //   roots: boolean,                    //Roots sample type
+  //   twigs: boolean,                    //Twigs sample type
+  //   leaves: boolean,                   //Leaves sample type
+  //   seedlings: boolean,                //Seedlings sample type
+  //   media: boolean,                    //Media sample type
+  //   water: boolean,                    //Water sample type
+  //   insect: boolean,                   //Insect sample type
+  //   nuts: boolean,                     //Nuts sample type
+  //   other: boolean,                    //Other type of sample (if any)
+  // }
 
   // Symptoms
-  symptom_wilt: string,                         //Wilt symptom
-  symptom_stunting: string,                     //Stunting symptom
-  symptom_leafspot: string,                     //Leafspot symptom
-  symptom_rootrot: string,                      //Rootrot symptom
-  symptom_dieback: string,                      //Dieback symptom
-  symptom_cankers: string,                      //Cankers symptom 
-  symptom_death: string,                        //Death symptom 
-  symptom_wood: string,                         //Wood symptom
-  symptom_other: string,                        //Other symptoms (if any)
+  symptoms: {
+    wilt: boolean,                         //Wilt symptom
+    stunting: boolean,                     //Stunting symptom
+    leafspot: boolean,                     //Leafspot symptom
+    rootrot: boolean,                      //Rootrot symptom
+    dieback: boolean,                      //Dieback symptom
+    cankers: boolean,                      //Cankers symptom 
+    death: boolean,                        //Death symptom 
+    wood: boolean,                         //Wood symptom
+    other: boolean,                        //Other symptoms (if any)
+  }
 
   // Distribution of Symptoms
-  distribution_localized: string,               //The localized distribution
-  distributed_scattered: string,                //The scattered distribution
-  distributed_general: string,                  //The general distribution
-  distributed_clumps: string,                   //The clumps distribution
-  distributed_na: string,                       //The na distribution
-  distributed_other: string,                    //Other distributions (if any)
-  percentage_plants_affected: string,           //The percentage of plants affected
+  distribution: {
+    localized: boolean,               //The localized distribution
+    scattered: boolean,                //The scattered distribution
+    general: boolean,                  //The general distribution
+    clumps: boolean,                   //The clumps distribution
+    na: boolean,                       //The na distribution
+    other: boolean,                    //Other distributions (if any)
+    percentage_plants_affected: number,           //The percentage of plants affected
+  }
 
   // Conditons
-  conditions_date_problem_noticed: Date,        //The date the problem was noticed
-  conditions_date_planted: Date,                //The date the plants were planted
-  conditions_weather_disturbances: string,      //The weather disturbances
-  conditions_weather_prior: string,             //The weather conditions prior
-  conditions_others: string,                    //Other weather conditions (if any)
-  conditions_additional: string                 //Additional weather conditions (if any)
+  conditions: {
+    date_problem_noticed: Date,        //The date the problem was noticed
+    date_planted: Date,                //The date the plants were planted
+    weather_disturbances: string,      //The weather disturbances
+    weather_prior: string,             //The weather conditions prior
+    others: string,                    //Other weather conditions (if any)
+    additional?: string                 //Additional weather conditions (if any)
+  }
 
   // Permissions
-  landowner_name: string,                       //The landowner's name
-  permission_granted: boolean                   //Whether or not the landowner has granted permission
+  permissions: {
+    landowner_name: string,                       //The landowner's name
+    permission_granted: boolean                   //Whether or not the landowner has granted permission
+  }
 }
 
 /**

@@ -157,6 +157,8 @@
               <td class="table-action">
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal" [id]="DBName"
                   (click)="viewDatabase(DBName)">View</button>
+                  <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal1"
+                  [id]="DBName" (click)="dropDatabasePrompt1(DBName)">Drop</button>
               </td>
             </tr>
           </tbody>
@@ -309,28 +311,62 @@
   </div>
   <!-- / Download Database Modal Section -->
 
-  <!-- Delete Staff Confirm Modal Section -->
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteModalTitle">Are you sure?</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"><i class="fas fa-times"></i></span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Everything related to this member of staff will be permantely deleted</p>
-          <div class="confirm-actions">
-            <button type="button" class="btn btn-default-confirm">Confirm</button>
-            <button type="button" class="btn btn-default-cancel">Cancel</button>
-          </div>
+  <!-- Delete Database Confirm Modal 1 Section -->
+  <div class="modal fade" id="confirmDeleteModal1" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle1"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''" >{{deleteData.title}}</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4 *ngIf="deleteData.message != null || deleteData.message != ''" class="text-danger">{{deleteData.message}}</h4>
+        <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
+        <div class="confirm-actions">
+          <button type="button" class="btn btn-default-cancel"
+            *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
+            data-dismiss="modal">{{deleteData.cancel}}</button>
+          <button type="button" class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal2"
+          [id]="DBName" (click)="dropDatabasePrompt2()"
+            *ngIf="deleteData.confirm != null || deleteData.confirm != ''"
+            data-dismiss="modal">{{deleteData.confirm}}</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- / Delete Staff Confirm Modal Section -->
+</div>
+  <!-- / Delete Database Confirm Modal 1 Section -->
+
+  <!-- Delete Database Confirm Modal 2 Section -->
+  <div class="modal fade" id="confirmDeleteModal2" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle2"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''" >{{deleteData.title}}</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
+        <h4 *ngIf="deleteData.message != null || deleteData.message != ''" class="p-3 mb-2 bg-danger text-white">{{deleteData.message}}</h4>
+        <div class="confirm-actions">
+          <button type="button" class="btn btn-default-cancel"
+            *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
+            data-dismiss="modal">{{deleteData.cancel}}</button>
+          <button type="button" class="btn btn-default-delete" (click)="dropDatabase()"
+            *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal"
+            data-dismiss="modal">{{deleteData.confirm}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- / Delete Database Confirm Modal 2 Section -->
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
