@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
-const mailToOrg = require('../sendRegistrationEmailToOrg')
-const mailToSU = require('../sendRegistrationEmailToSuperUser')
+const mail = require('../SendEmail_RegistrationRequest');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -124,8 +123,8 @@ function addOrganization(req, res)
                 }
         });
 
-        mailToOrg();
-        mailToSU(req.body.orgName);
+        mail.sendOrganizationRequestToOrg(qs.orgName, qs.admin.email);
+        mail.sendOrganizationRequestToFABI(qs.orgName, qs.admin.fname, qs.admin.surname, qs.admin.email);
 
     }).catch((err) => {
         console.log("Database connection error: " + err);

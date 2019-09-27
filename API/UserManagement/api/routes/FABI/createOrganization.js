@@ -3,7 +3,7 @@ const router = express.Router();
 const request = require("request");
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
-const mail = require('../sendEmail');
+const mail = require('../SendEmail_UserManagement');
 const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +124,7 @@ function addOrganization(req, res)
                                 tempPassword: pass
                         }
                 })
-                mail(req.body.orgName + ' Admin', pass);
+                mail.sendOrganizationTemporaryPin(qs.orgName, qs.admin.email, qs.admin.fname, qs.admin.surname, pass);
                 log({
                     type: 'USER',
                     action: 'AddMemberToOrg',
@@ -156,7 +156,7 @@ function addOrganization(req, res)
                                     tempPassword: pass
                             }
                         })
-                mail(req.body.orgName + ' Admin', pass);
+                mail.sendOrganizationTemporaryPin(qs.orgName, qs.admin.email, qs.admin.fname, qs.admin.surname, pass);
                 log({
                     type: 'USER',
                     action: 'AddMemberToOrg',

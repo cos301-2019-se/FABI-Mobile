@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
 const log = require('../../sendLogs');
+const mail = require('../SendEmail_UserManagement');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
@@ -77,6 +78,7 @@ function getOrgDetails(req, res) {
                         }
                     });
                 })
+                mail.sendOrganizationRequestDenied(req.body.orgName, doc.data().admin.email, 'reasoning...');
                 log({
                     type: 'USER',
                     action: 'AddMemberToOrg',

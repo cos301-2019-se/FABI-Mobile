@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
-const mail = require('../sendEmail');
+const mail = require('../SendEmail_UserManagement');
 const log = require('../../sendLogs');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,7 +154,7 @@ checkRef.get().then(doc => {
                 }
             });
 
-            mail('FABI Staff - ' + qs.userType, pass);
+            mail.sendUserTemporaryPin(req.body.orgName, qs.email, qs.fname, qs.surname, pass, qs.userType);
             log({
                 type: 'USER',
                 action: 'AddMemberToOrg',

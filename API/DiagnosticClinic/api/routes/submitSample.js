@@ -4,6 +4,8 @@ const admin = require('firebase-admin');
 const refNumberGenerator = require('./generateReferenceNumber');
 const buildTree = require('../buildTree');
 const predict = require('../predict');
+const mail = require('./SendEmail_Sample');
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +74,7 @@ function submitForm(req, res)
         req.body.status = 'submitted';
         sampleRef.set(req.body).then(()=>
         {
-            
+            mail.sendSampleSubmission(refnume, 'email', 'fname', 'surname', result);
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
