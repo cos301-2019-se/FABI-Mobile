@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
 const log = require('../sendLogs');
+const auth = require('../loginAuth');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,66 +24,80 @@ router.post('/', submitForm);
 // [START config]
 const db = admin.firestore();
 
-function submitForm(req, res)
+async function submitForm(req, res)
 {
-    if (req.body.userID == undefined || req.body.userID == '') {
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "User ID is required"
-        });
-    }
-    else if (req.body.formID == undefined || req.body.formID == ''){
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 400,
-            title: "BAD_REQUEST",
-            message: "Form ID is required"
-        });
-    }
-    else{
-        var memRef = db.collection('CultureCollection').doc('CMWRevitalization').collection('Forms').doc(req.body.formID);
-        memRef.get().then(doc => {
-            //(2)
-            if(typeof(doc.data()) === 'undefined')
-            {
-                res.setHeader('Content-Type', 'application/problem+json');
-                res.setHeader('Content-Language', 'en');
-                res.setHeader("Access-Control-Allow-Origin", "*");
-                res.status(404).json({                                  // ******* RESPONSE STATUS? ************
-                    success: false,
-                    code: 404,
-                    title: "NOT FOUND",
-                    message: "Form does not exist"
-                });
-            }
-                qs = doc.data();
-                delete qs.password;
-                //(3)
-                memRef.delete().then(() => {
+    if(await auth.authCCAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
+        if (req.body.userID == undefined || req.body.userID == '') {
+            res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+                success: false,
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "User ID is required"
+            });
+        }
+        else if (req.body.formID == undefined || req.body.formID == ''){
+            res.setHeader('Content-Type', 'application/problem+json');
+            res.setHeader('Content-Language', 'en');
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+                success: false,
+                code: 400,
+                title: "BAD_REQUEST",
+                message: "Form ID is required"
+            });
+        }
+        else{
+            var memRef = db.collection('CultureCollection').doc('CMWRevitalization').collection('Forms').doc(req.body.formID);
+            memRef.get().then(doc => {
+                //(2)
+                if(typeof(doc.data()) === 'undefined')
+                {
                     res.setHeader('Content-Type', 'application/problem+json');
-                                res.setHeader('Content-Language', 'en');
-                                res.setHeader("Access-Control-Allow-Origin", "*");
-                                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                                    success: true,
-                                    code: 200,
-                                    title: "SUCCESS",
-                                    message: "Deleted CMW Revitalization Form",
-                                    data: 
-                                        qs
+                    res.setHeader('Content-Language', 'en');
+                    res.setHeader("Access-Control-Allow-Origin", "*");
+                    res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                        success: false,
+                        code: 404,
+                        title: "NOT FOUND",
+                        message: "Form does not exist"
+                    });
+                }
+                    qs = doc.data();
+                    delete qs.password;
+                    //(3)
+                    memRef.delete().then(() => {
+                        res.setHeader('Content-Type', 'application/problem+json');
+                                    res.setHeader('Content-Language', 'en');
+                                    res.setHeader("Access-Control-Allow-Origin", "*");
+                                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                                        success: true,
+                                        code: 200,
+                                        title: "SUCCESS",
+                                        message: "Deleted CMW Revitalization Form",
+                                        data: 
+                                            qs
+                                        
                                     
+                                });
                                 
-                            });
-                            
-                });
-                
+                    });
+                    
+            });
+        }
+    }
+    else
+    {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res.setHeader('Content-Language', 'en');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(403).json({                                  // ******* RESPONSE STATUS? ************
+            success: true,
+            code: 403,
+            title: "NOT AUTHORIZED",
+            message: "your authentication token is not valid",
         });
     }
 }

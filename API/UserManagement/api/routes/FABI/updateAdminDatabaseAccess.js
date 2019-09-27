@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
 const bcrypt = require('bcrypt-nodejs');
-
+const auth = require('../../loginAuth');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +30,7 @@ const db = admin.firestore();
 
 function updateStaff(req, res) {
     
+
     res.setHeader('Content-Type', 'application/problem+json');
     res.setHeader('Content-Language', 'en');
     res.setHeader("Access-Control-Allow-Origin", "*");
