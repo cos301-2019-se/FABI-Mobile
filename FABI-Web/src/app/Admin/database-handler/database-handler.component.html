@@ -211,25 +211,58 @@
         <div class="modal-body">
           <div class="form">
 
+            <form id="" [formGroup]="portingForm" (submit)="submitCSV()"
+            class="needs-validation" novalidate >
+
+            
             <!-- Database File Upload Section -->
             <div class="form-row">
               <!-- Database Name -->
               <div class="form-group active2database-name">
-                <label class="databaseName" for="databaseNameInput">Database Name</label>
-                <input type='text' class="form-control form-control-sm" id='databaseNameInput'
-                  placeholder="Database name" #pDBname [(ngModel)]="portingForm.databaseName">
+                <label class="databaseName" for="databaseNameInput"></label>
+                <input formControlName="databaseName" type='text'  id='databaseNameInput'
+                  placeholder="Database name" #pDBname required
+                  [ngClass]="{
+                  'is-invalid': portingForm.controls['databaseName'].invalid && (submitted || portingForm.controls['databaseName'].dirty), 
+                  'is-valid': portingForm.controls['databaseName'].valid}" >
+                  <!-- Error Validation Feedback-->
+                  <div
+                  *ngIf="portingForm.controls['databaseName'].invalid && (submitted || portingForm.controls['databaseName'].dirty)">
+                    <div *ngFor="let validation of porting_validators.databaseName">
+                      <p *ngIf="portingForm.get('databaseName').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
               </div>
+              
               <!-- Database Name -->
 
 
               <!-- File Upload -->
               <div class="form-group custom-file">
                 <label class="custom-file-label">Choose CSV file</label>
-                <input type="file" class="form-control custom-file-input" (change)="submitCSV(input)" #input>
+                <input type="file" class="form-control custom-file-input" formControlName="file" (change)="submitCSV(input)" #input required
+                [ngClass]="{
+                  'is-invalid': portingForm.controls['file'].invalid && (submitted || portingForm.controls['file'].dirty), 
+                  'is-valid': portingForm.controls['file'].valid}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                  *ngIf="portingForm.controls['file'].invalid && (submitted || portingForm.controls['file'].dirty)">
+                    <div *ngFor="let validation of porting_validators.file">
+                      <p *ngIf="portingForm.get('file').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
               </div>
               <!-- /File Upload -->
             </div>
+            <!-- Submit -->
+            <button *ngIf="submitted == true && portingForm.invalid" type="submit" class="btn btn-default-save">Upload</button>
+            <!-- / Submit -->
             <!-- / Database File Upload Section -->
+          </form>
 
             <!-- Preview Uplaoded Database Section -->
             <div class="preview" *ngIf="preview">
@@ -291,7 +324,7 @@
 
             <!-- Database Dropdown -->
             <div class="form-group">
-              <select class="custom-select" *ngIf="allDatabaseNames" [(ngModel)]="selectedDatabase">
+              <select class="custom-select" *ngIf="allDatabaseNames" [(ngModel)]="selectedDatabase" required >
                 <option selected>Choose Database</option>
                 <option *ngFor="let database of allDatabaseNames" [value]="database">
                   {{database}}
@@ -303,7 +336,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal"
+          <button type="button" class="btn btn-default-save" (click)="getCSV()" *ngIf="selectedDatabase != null && selectedDatabase != ''" data-toggle="modal"
             data-dismiss="modal">Download</button>
         </div>
       </div>

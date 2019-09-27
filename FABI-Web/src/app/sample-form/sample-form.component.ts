@@ -152,8 +152,8 @@ export class SampleFormComponent implements OnInit {
         plant_species: ['', Validators.required],
         plant_genus: ['', Validators.required],
         num_samples: ['', Validators.required],
-        date_collected: [Validators.required],
-        date_sent: [Validators.required],
+        date_collected: ['', Validators.required],
+        date_sent: ['', Validators.required],
       }),
       
       // Plantation Details
@@ -192,9 +192,9 @@ export class SampleFormComponent implements OnInit {
         general: [false],
         clumps: [false],
         na: [false],
-        other: [''],
-        percentage_plants_affected: [''],
+        other: [''],  
       }, {validator: this.requireCheckboxesToBeCheckedValidator()}),
+      percentage_plants_affected: ['', Validators.required],
 
       // Conditions
       conditions: this.formBuilder.group({
@@ -237,8 +237,11 @@ export class SampleFormComponent implements OnInit {
     
     
     let today: Date = new Date();
+    
     this.sampleForm.patchValue( {
-      date_sent: today
+      sample_details: {
+        date_sent: today.toISOString().substring(0,10)
+      }
     });
 
     this.sample_types.map(() => {
@@ -311,7 +314,7 @@ export class SampleFormComponent implements OnInit {
         clumps: this.sampleForm.get('distribution').get('clumps').value,
         na: this.sampleForm.get('distribution').get('na').value,
         other: this.sampleForm.get('distribution').get('other').value,
-        percentage_plants_affected: this.sampleForm.get('distribution').get('percentage_plants_affected').value
+        percentage_plants_affected: this.sampleForm.get('percentage_plants_affected').value
       },
 
       // Conditons
@@ -333,7 +336,7 @@ export class SampleFormComponent implements OnInit {
     };
 
     console.log("FormData: " + JSON.stringify(formDetails));
-    return;
+
     // const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
 
     this.clinicService.submitSampleForm(formDetails).subscribe((response: any) => {
@@ -675,6 +678,7 @@ export class SampleFormComponent implements OnInit {
         }
       }
     }
+
   }
 
   requireCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
@@ -684,8 +688,6 @@ export class SampleFormComponent implements OnInit {
       Object.keys(formGroup.controls).forEach(key => {
 
         const control = formGroup.controls[key];
-
-        console.log("KEY: " + key + " " + control.value);
 
         if(((control.value).length > 1)) {
 

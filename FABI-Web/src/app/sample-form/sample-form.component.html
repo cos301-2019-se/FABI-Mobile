@@ -137,7 +137,7 @@
         </div>
 
         <!-- Error Validation Feedback--> 
-        <div *ngIf="sampleForm.get('plantation_details').invalid && (submitted || sampleForm.get('plantation_details').dirty)" >
+        <div *ngIf="sampleForm.get('plantation_details').invalid && (submitted || sampleForm.get('plantation_details').dirty)" class="text-danger">
           <p>Please enter all plantation details</p>
         </div>
         <!-- / Error Validation Feedback--> 
@@ -220,7 +220,7 @@
           </div>
 
           <!-- Error Validation Feedback--> 
-          <div *ngIf="sampleForm.get('sample_details').invalid && (submitted || sampleForm.get('sample_details').dirty)" >
+          <div *ngIf="sampleForm.get('sample_details').invalid && (submitted || sampleForm.get('sample_details').dirty)" class="text-danger">
             <p >Please enter all sample details</p>
           </div>
           <!-- / Error Validation Feedback--> 
@@ -242,13 +242,13 @@
             <!-- Other -->
             <div class="form-group col-md-6">
               <label for="other">Other</label>
-              <input type="text" class="form-control form-control-sm" id="other" formControlName="other" placeholder="Other" (change)="selectSampleType()">
+              <input type="text" class="form-control form-control-sm" id="other" formControlName="other" placeholder="Other" (change)="selectSampleType()" >
             </div>
             <!-- / Other -->
           </div>
 
           <!-- Error Validation Feedback--> 
-          <div *ngIf="sampleForm.get('types').invalid && (submitted || sampleForm.get('types').dirty)" >
+          <div *ngIf="sampleForm.get('types').invalid && (submitted || sampleForm.get('types').dirty)" class="text-danger" >
             <p>Please specify at least 1 type of sample</p>
           </div>
           <!-- / Error Validation Feedback--> 
@@ -361,7 +361,7 @@
           </div>
 
           <!-- Error Validation Feedback--> 
-          <div *ngIf="sampleForm.get('symptoms').invalid && (submitted || sampleForm.get('symptoms').dirty)" >
+          <div *ngIf="sampleForm.get('symptoms').invalid && (submitted || sampleForm.get('symptoms').dirty)" class="text-danger" >
             <p>Please specify at least 1 symptom</p>
           </div>
           <!-- / Error Validation Feedback--> 
@@ -484,7 +484,7 @@
           </div>
 
           <!-- Error Validation Feedback--> 
-          <div *ngIf="sampleForm.get('distribution').invalid && (submitted || sampleForm.get('distribution').dirty)" >
+          <div *ngIf="sampleForm.get('distribution').invalid && (submitted || sampleForm.get('distribution').dirty)" class="text-danger" >
             <p>Please enter all sample distribution details</p>
           </div>
           <!-- / Error Validation Feedback--> 
@@ -581,7 +581,7 @@
         </div>
 
         <!-- Error Validation Feedback--> 
-        <div *ngIf="sampleForm.get('conditions').invalid && (submitted || sampleForm.get('conditions').dirty)" >
+        <div *ngIf="sampleForm.get('conditions').invalid && (submitted || sampleForm.get('conditions').dirty)" class="text-danger">
           <p>Please enter all condition details</p>
         </div>
         <!-- / Error Validation Feedback--> 
@@ -631,7 +631,7 @@
         </div>
 
         <!-- Error Validation Feedback--> 
-        <div *ngIf="sampleForm.get('permissions').invalid && (submitted || sampleForm.get('permissions').dirty)" >
+        <div *ngIf="sampleForm.get('permissions').invalid && (submitted || sampleForm.get('permissions').dirty)" class="text-danger" >
           <p>Please complete permission details</p>
         </div>
         <!-- / Error Validation Feedback--> 

@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Wednesday, September 25th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
     ],
     'password': [
       { type: 'required', message: 'Password is required' },
-      // { type: 'minlength', message: 'Password must be at least 8 characters long' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' },
       // { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
     ],
   }
@@ -108,7 +108,10 @@ export class LoginComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
-      password: ['', Validators.required]
+      password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])]
     })
   }
 

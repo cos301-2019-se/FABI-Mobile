@@ -31,7 +31,7 @@
          <!-- Error Validation Feedback--> 
          <div *ngIf="loginForm.controls['organization'].invalid && (submitted || loginForm.controls['organization'].dirty)" >
             <div *ngFor="let validation of login_validation_messages.organization">
-                <p *ngIf="loginForm.get('organization').hasError(validation.type)">{{validation.message}}</p>
+                <p *ngIf="loginForm.get('organization').hasError(validation.type)" class="text-warning">{{validation.message}}</p>
             </div>
           </div>
           <!-- / Error Validation Feedback--> 
@@ -48,7 +48,7 @@
          <!-- Error Validation Feedback--> 
         <div *ngIf="loginForm.controls['email'].invalid && (submitted || loginForm.controls['email'].dirty)" >
           <div *ngFor="let validation of login_validation_messages.email">
-              <p *ngIf="loginForm.get('email').hasError(validation.type)">{{validation.message}}</p>
+              <p *ngIf="loginForm.get('email').hasError(validation.type)" class="text-warning">{{validation.message}}</p>
           </div>
         </div>
         <!-- / Error Validation Feedback--> 
@@ -65,7 +65,7 @@
          <!-- Error Validation Feedback--> 
         <div *ngIf="loginForm.controls['password'].invalid && (submitted || loginForm.controls['password'].dirty)" >
           <div *ngFor="let validation of login_validation_messages.password">
-              <p *ngIf="loginForm.get('password').hasError(validation.type)">{{validation.message}}</p>
+              <p *ngIf="loginForm.get('password').hasError(validation.type)" class="text-warning">{{validation.message}}</p>
           </div>
         </div>
         <!-- / Error Validation Feedback--> 
