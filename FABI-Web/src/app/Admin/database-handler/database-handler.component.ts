@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, September 25th 2019
+ * Last Modified: Thursday, September 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -101,8 +101,6 @@ export class DatabaseHandlerComponent implements OnInit {
 
   /** The search item the user is looking for in the table -  @type {string} */
   public searchDatabase: string = "";
-  /** The search item the user is looking for in the table -  @type {string} */
-  public searchView: string = "";
 
   /** Specifies if the list of databases have been retreived to disable the loading spinner - @type {boolean} */
   databaseTableLoading: boolean = true;
