@@ -5,7 +5,7 @@
  * Created Date: Sunday, July 28th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, September 25th 2019
+ * Last Modified: Friday, September 27th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -118,13 +118,12 @@ export class DatabaseManagementService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeDatabase(dbname: string) {
-    const dropDBURL = `${config.databaseManagementURL}/`;
+    const dropDBURL = `${config.databaseManagementURL}/dropDatabase`;
     const method = 'POST';
 
     const postData = {
-      "databaseName": dbname,
-      "userID": this.authService.getCurrentSessionValue.user.ID
-    };
+      "databaseName": dbname
+    }
 
     const options = {
       headers: {
