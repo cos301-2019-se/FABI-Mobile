@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, September 25th 2019
+ * Last Modified: Wednesday, October 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -150,9 +150,9 @@ export class LoginComponent implements OnInit {
       // API Request successful
       if (response.success == true && response.code == 200) {        
         // User NOT Authorised
-        if (response.title != "AUTHORIZED") {
+        if (response.title != "SUCCESS") {
           //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: response.data.title, message: response.data.message, retry: false } });
+          let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: response.title, message: response.message, retry: false } });
           return;
         }
         // ELSE user Authorised:
