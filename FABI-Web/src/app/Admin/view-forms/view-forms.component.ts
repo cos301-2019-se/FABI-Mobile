@@ -5,7 +5,7 @@
  * Created Date: Monday, August 5th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Thursday, September 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -284,7 +284,7 @@ export class ViewFormsComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaff(){
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
+    this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
      if(response.success == true){
        //Temporary array to hold the array of admins retuned from the API call
        var data = response.data.qs.admins;
@@ -1329,7 +1329,7 @@ export class ViewFormsComponent implements OnInit {
 
     var report = this.depositFormPDF.nativeElement;
     html2canvas(report).then(canvas => {
-      var imageWidth = 208;
+      var imageWidth = 190;
       var pageHeight = 295;
       var imageHeight = canvas.height * imageWidth / canvas.width;
       var heightLeft = imageHeight;
@@ -1356,7 +1356,7 @@ export class ViewFormsComponent implements OnInit {
 
     var report = this.requestFormPDF.nativeElement;
     html2canvas(report).then(canvas => {
-      var imageWidth = 208;
+      var imageWidth = 180;
       var pageHeight = 295;
       var imageHeight = canvas.height * imageWidth / canvas.width;
       var heightLeft = imageHeight;
@@ -1410,7 +1410,7 @@ export class ViewFormsComponent implements OnInit {
 
     var report = this.processedFormPDF.nativeElement;
     html2canvas(report).then(canvas => {
-      var imageWidth = 208;
+      var imageWidth = 180;
       var pageHeight = 295;
       var imageHeight = canvas.height * imageWidth / canvas.width;
       var heightLeft = imageHeight;

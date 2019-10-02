@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, September 28th 2019
+ * Last Modified: Wednesday, October 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -28,8 +28,7 @@ import { map } from 'rxjs/operators';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////// URL'S FOR API //////////////////////////////////////////////////////////////// 
-const getAllFABIMembersURL = `${config.userManagementURL}/getAllStaff`;
-const getAllFABIAdminsURL = `${config.userManagementURL}/getAllFabiAdmins`;
+const getAllFABIStaffURL = `${config.userManagementURL}/getAllFabiMembers`;
 const getAllOrganizationMembers = `${config.userManagementURL}/getAllOrgMembers`;
 const getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;
 const updateStaffMemberDetailsURL = `${config.userManagementURL}/updateStaffMember`;
@@ -103,17 +102,17 @@ export class UserManagementAPIService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                     GET ALL FABI MEMBERS 
+  //                                                     GET ALL FABI STAFF 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
-   *    all the FABI members
+   *    all the FABI staff
    *
    * @returns API response @type any
    * 
    * @memberof UserManagementAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllFABIMembers() {
+  getAllFABIStaff() {
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "orgName": this.authService.getCurrentSessionValue.user.organisation
@@ -121,7 +120,7 @@ export class UserManagementAPIService {
 
     const options = {
       method: 'POST',
-      url: getAllFABIMembersURL,
+      url: getAllFABIStaffURL,
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
@@ -132,41 +131,7 @@ export class UserManagementAPIService {
       json: true
     };
 
-    return this.http.request('POST', getAllFABIMembersURL, options);
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET ALL FABI ADMINS 
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the FABI administrators
-   *
-   * @returns API response @type any
-   * 
-   * @memberof UserManagementAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllFABIAdmins() {
-    const postData = {
-      "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
-    }
-
-    const options = {
-      method: 'POST',
-      url: getAllFABIAdminsURL,
-      headers: {
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
-      },
-      body: postData,
-      json: true
-    };
-
-    return this.http.request('POST', getAllFABIAdminsURL, options);
+    return this.http.request('POST', getAllFABIStaffURL, options);
   }
 
 

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, September 12th 2019
+ * Last Modified: Wednesday, October 2nd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -197,7 +197,7 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfFABIMembers() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
+    this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
       if (response.success == true) {
         //Temporary array to hold the array of admins retuned from the API call
         this.admins = response.data.qs.admins;
