@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 23rd 2019
+ * Last Modified: Wednesday, September 25th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -28,7 +28,7 @@ import { map } from 'rxjs/operators';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////// URL'S FOR API //////////////////////////////////////////////////////////////// 
-const getAllFABIMembersURL = `${config.userManagementURL}/getAllFabiMembers`;
+const getAllFABIMembersURL = `${config.userManagementURL}/getAllStaff`;
 const getAllFABIAdminsURL = `${config.userManagementURL}/getAllFabiAdmins`;
 const getAllOrganizationMembers = `${config.userManagementURL}/getAllOrgMembers`;
 const getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;

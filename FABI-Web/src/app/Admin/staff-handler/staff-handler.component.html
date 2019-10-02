@@ -321,12 +321,12 @@
                     formControlName="staff_name" required
                     [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty), 
-                    'is-valid': addStaffForm.controls['staff_name'].valid && (submitted || addStaffForm.controls['staff_name'].dirty)}">
+                    'is-valid': addStaffForm.controls['staff_name'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty)">
                     <div *ngFor="let validation of add_staff_validators.staff_name">
-                      <p *ngIf="addStaffForm.get('staff_name').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="addStaffForm.get('staff_name').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -340,12 +340,12 @@
                     formControlName="staff_surname" required
                     [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty), 
-                    'is-valid': addStaffForm.controls['staff_surname'].valid && (submitted || addStaffForm.controls['staff_surname'].dirty)}">
+                    'is-valid': addStaffForm.controls['staff_surname'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty)">
                     <div *ngFor="let validation of add_staff_validators.staff_surname">
-                      <p *ngIf="addStaffForm.get('staff_surname').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="addStaffForm.get('staff_surname').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -359,12 +359,12 @@
                     placeholder="Enter email" formControlName="staff_email" required
                     [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty), 
-                    'is-valid': addStaffForm.controls['staff_email'].valid && (submitted || addStaffForm.controls['staff_email'].dirty)}">
+                    'is-valid': addStaffForm.controls['staff_email'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty)">
                     <div *ngFor="let validation of add_staff_validators.staff_email">
-                      <p *ngIf="addStaffForm.get('staff_email').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="addStaffForm.get('staff_email').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -378,12 +378,12 @@
                     formControlName="staff_phone" required
                     [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty), 
-                    'is-valid': addStaffForm.controls['staff_phone'].valid && (submitted || addStaffForm.controls['staff_phone'].dirty)}">
+                    'is-valid': addStaffForm.controls['staff_phone'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty)">
                     <div *ngFor="let validation of add_staff_validators.staff_phone">
-                      <p *ngIf="addStaffForm.get('staff_phone').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="addStaffForm.get('staff_phone').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -393,24 +393,34 @@
                 <!-- Staff Position Drop Down -->
                 <div class="form-group">
                   <label for="staff_position">Admin?</label>
-                  <select class="form-control form-control-sm" [(ngModel)]="selectedUserType" id="staff_position"
-                    formControlName="staff_position" required>
+                  <select class="form-control form-control-sm" [(ngModel)]="selectedUserType" id="staff_position" formControlName="staff_position" required
+                    [ngClass]="{
+                    'is-invalid': addStaffForm.controls['staff_position'].invalid && (submitted || addStaffForm.controls['staff_position'].dirty), 
+                    'is-valid': addStaffForm.controls['staff_position'].valid && (submitted)}">
                     <option value="" selected>
                       Please indicate whether this member is an Admin
                     </option>
                     <option value="Yes"> Yes </option>
                     <option value="No"> No </option>
                   </select>
-                  <div class="valid-feedback">
-                    Looks good!
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addStaffForm.controls['staff_position'].invalid && (submitted || addStaffForm.controls['staff_position'].dirty)">
+                    <div *ngFor="let validation of add_staff_validators.staff_position">
+                      <p *ngIf="addStaffForm.get('staff_position').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
+                    </div>
                   </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Staff Position Drop Down -->
 
                 <!-- Admin Type Drop Down -->
                 <div class="form-group">
                   <label for="admin_type">Admin Type</label>
-                  <select class="form-control form-control-sm" id="admin_type" formControlName="admin_type" required>
+                  <select class="form-control form-control-sm" id="admin_type" formControlName="admin_type" required
+                  [ngClass]="{
+                  'is-invalid': addStaffForm.controls['admin_type'].invalid && (submitted || addStaffForm.controls['admin_type'].dirty), 
+                  'is-valid': addStaffForm.controls['admin_type'].valid && (submitted)}">
                     <option value="" selected>
                       Please select an admin type
                     </option>
@@ -418,9 +428,14 @@
                       {{adminType}}
                     </option>
                   </select>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
+                   <!-- Error Validation Feedback-->
+                   <div
+                   *ngIf="addStaffForm.controls['admin_type'].invalid && (submitted || addStaffForm.controls['admin_type'].dirty)">
+                   <div *ngFor="let validation of add_staff_validators.admin_type">
+                     <p *ngIf="addStaffForm.get('admin_type').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
+                   </div>
+                 </div>
+                 <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Admin Type Drop Down -->
 

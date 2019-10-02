@@ -364,12 +364,12 @@
                     formControlName="organization_name" required
                     [ngClass]="{
                     'is-invalid': registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty), 
-                    'is-valid': registerOrgForm.controls['organization_name'].valid && (submitted || registerOrgForm.controls['organization_name'].dirty)}">
+                    'is-valid': registerOrgForm.controls['organization_name'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.organization_name">
-                      <p *ngIf="registerOrgForm.get('organization_name').hasError(validation.type)">
+                      <p *ngIf="registerOrgForm.get('organization_name').hasError(validation.type)" class="text-danger">
                         {{validation.message}}</p>
                     </div>
                   </div>
@@ -401,12 +401,12 @@
                     formControlName="admin_name" required
                     [ngClass]="{
                     'is-invalid': registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty), 
-                    'is-valid': registerOrgForm.controls['admin_name'].valid && (submitted || registerOrgForm.controls['admin_name'].dirty)}">
+                    'is-valid': registerOrgForm.controls['admin_name'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.admin_name">
-                      <p *ngIf="registerOrgForm.get('admin_name').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="registerOrgForm.get('admin_name').hasError(validation.type)" class="text-danger">{{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -420,12 +420,12 @@
                     formControlName="admin_surname" required
                     [ngClass]="{
                     'is-invalid': registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty), 
-                    'is-valid': registerOrgForm.controls['admin_surname'].valid && (submitted || registerOrgForm.controls['admin_surname'].dirty)}">
+                    'is-valid': registerOrgForm.controls['admin_surname'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.admin_surname">
-                      <p *ngIf="registerOrgForm.get('admin_surname').hasError(validation.type)">{{validation.message}}
+                      <p *ngIf="registerOrgForm.get('admin_surname').hasError(validation.type)" class="text-danger" >{{validation.message}}
                       </p>
                     </div>
                   </div>
@@ -440,12 +440,12 @@
                     placeholder="Enter email" formControlName="admin_email" required
                     [ngClass]="{
                     'is-invalid': registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty), 
-                    'is-valid': registerOrgForm.controls['admin_email'].valid && (submitted || registerOrgForm.controls['admin_email'].dirty)}">
+                    'is-valid': registerOrgForm.controls['admin_email'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.admin_email">
-                      <p *ngIf="registerOrgForm.get('admin_email').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="registerOrgForm.get('admin_email').hasError(validation.type)" class="text-danger">{{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -455,16 +455,16 @@
                 <!-- Phone -->
                 <div class="form-group">
                   <label for="admin_phone">Phone</label>
-                  <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone"
+                  <input type="tel" class="form-control" id="admin_phone" placeholder="Enter phone"
                     formControlName="admin_phone" required
                     [ngClass]="{
                     'is-invalid': registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty), 
-                    'is-valid': registerOrgForm.controls['admin_phone'].valid && (submitted || registerOrgForm.controls['admin_phone'].dirty)}">
+                    'is-valid': registerOrgForm.controls['admin_phone'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.admin_phone">
-                      <p *ngIf="registerOrgForm.get('admin_phone').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="registerOrgForm.get('admin_phone').hasError(validation.type)" class="text-danger">{{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->

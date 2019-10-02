@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, September 26th 2019
+ * Last Modified: Friday, September 27th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,7 +17,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { DatabaseManagementService } from "../../_services/database-management.service";
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
@@ -65,10 +65,8 @@ export class DatabaseHandlerComponent implements OnInit {
   databaseData: any[];
   fields: any[] = [];
 
-  public portingForm: {
-    file: any,
-    databaseName: string
-  };
+  /** Object for defining the Porting form -  @type {FormGroup} */
+  portingForm: FormGroup;
 
   allDatabaseNames: Interface.DatabasePrivilege[];
   
@@ -109,6 +107,17 @@ export class DatabaseHandlerComponent implements OnInit {
 
   deleteData: Interface.Confirm = {title: '', message: '', info: '', cancel: '', confirm: ''};
 
+  submitted: boolean = false;
+
+  porting_validators = {
+    'databaseName': [
+      { type: 'required', message: 'Database name is required' },
+    ],
+    'file': [
+      { type: 'required', message: 'Please choose a CSV file' }
+    ]
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
@@ -136,10 +145,10 @@ export class DatabaseHandlerComponent implements OnInit {
     private formBuilder: FormBuilder, 
     private portCSV: Porting
     ) {
-      this.portingForm = {
-        file: null,
-        databaseName: ''
-      }      
+      this.portingForm = this.formBuilder.group({
+        databaseName: ['', Validators.required],
+        file: ['', Validators.required]
+      });     
   }  
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,34 +185,46 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public submitCSV(input?) {
+
+    this.submitted = true;
+
+    if(input) {
+      this.fileInput = input;
+    }
+    
+    if(this.fileInput == '' || this.fileInput == null) {
+      return;
+    }
+
+    if(this.portingForm.invalid) {
+      return;
+    }
+
     this.dbname = '';
-    this.fileInput = '';
     this.loading = false;
     this.headings = [];
     this.columns = [];
 
-    this.fileInput = input;
     this.loading = true;
     this.dbname = this.port.nativeElement.value;
 
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "" }});
-    
-    if(input) {
-      this.portingForm.file = input;
-    } 
 
-    if(this.portingForm.databaseName == "" || this.portingForm.databaseName == null){
-      let snackBarRef = this.snackBar.open("Please enter a name for the database", "Dismiss", { duration: 3000 });
-      return;
-    }
+    this.submitted = false;
 
-    if(this.portingForm.file == null || this.portingForm.file == '') {
-      let snackBarRef = this.snackBar.open("Please select a database to port", "Dismiss", { duration: 3000 });
-      return;
-    }
+
+    // if(this.portingForm.databaseName == "" || this.portingForm.databaseName == null){
+    //   let snackBarRef = this.snackBar.open("Please enter a name for the database", "Dismiss", { duration: 3000 });
+    //   return;
+    // }
+
+    // if(this.portingForm.file == null || this.portingForm.file == '') {
+    //   let snackBarRef = this.snackBar.open("Please select a database to port", "Dismiss", { duration: 3000 });
+    //   return;
+    // }
 
     const reader = new FileReader();
-    reader.readAsText(this.portingForm.file.files[0]);
+    reader.readAsText( this.fileInput.files[0]);
     reader.onload = () => {
       let text = reader.result;
 
@@ -275,10 +296,15 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getCSV(){  
+
+    this.submitted = true;
+
     let data = "";
     let dbname = this.selectedDatabase;
 
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Downloading CSV" }});
+
+    this.submitted = false;
     
     this.dbService.retrieveDatabase(dbname).subscribe((response:any) => {
         if(response.success == true && response.code == 200) {
@@ -406,7 +432,7 @@ export class DatabaseHandlerComponent implements OnInit {
     else{
       let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Porting" }});
 
-      this.dbService.porting(this.portingForm.databaseName, this.jsonData).subscribe((response:any) => {
+      this.dbService.porting(this.portingForm.get('databaseName').value, this.jsonData).subscribe((response:any) => {
         loadingRef.close();
         if(response.success == true && response.code == 200) {
           //POPUP MESSAGE
@@ -504,6 +530,8 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   dropDatabase() {    
     this.dbService.removeDatabase(this.selectedDatabase).subscribe((response: any) => {
+
+      console.log(response);
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Database Removed", "Dismiss", {
