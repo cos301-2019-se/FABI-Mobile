@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Saturday, September 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -29,6 +29,7 @@ import { Role } from '../_interfaces/role';
 import { ReportingComponent } from './reporting/reporting.component';
 import { LoginComponent } from '../login/login.component';
 import { ViewFormsComponent } from './view-forms/view-forms.component';
+import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -60,15 +61,17 @@ const routes: Routes = [
     path: 'database-handler', 
     component: DatabaseHandlerComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.SuperUser, Role.ClinicAdmin, Role.Staff]}
+    data: {roles: [Role.SuperUser]}
   },
   {
     path: 'admin-profile', 
-    component: AdminProfileComponent
+    component: AdminProfileComponent,
+    data: {roles: [Role.SuperUser, Role.ClinicAdmin]}
   },
   {
     path: 'reporting', 
-    component: ReportingComponent
+    component: ReportingComponent,
+    data: {roles: [Role.SuperUser]}
   },
   {
     path: 'login', 
@@ -77,8 +80,11 @@ const routes: Routes = [
   {
     path: 'view-forms',
     component: ViewFormsComponent
+  },
+  { 
+    path:"**",
+    component: PageNotFoundComponent
   }
-  
 ];
 
 @NgModule({

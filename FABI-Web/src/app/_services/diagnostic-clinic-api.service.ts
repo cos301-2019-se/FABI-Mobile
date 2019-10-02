@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 23rd 2019
+ * Last Modified: Saturday, September 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -80,12 +80,15 @@ export class DiagnosticClinicAPIService {
    getAllSamples(){
     const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
     const method = "POST";
+
+    console.log("TOken: " + `Bearer ${this.authService.getCurrentSessionValue.token}`);
     
     const options = {
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         json: true
     };
@@ -114,7 +117,8 @@ export class DiagnosticClinicAPIService {
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -149,7 +153,8 @@ export class DiagnosticClinicAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -185,7 +190,8 @@ export class DiagnosticClinicAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -238,7 +244,8 @@ export class DiagnosticClinicAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -273,7 +280,8 @@ export class DiagnosticClinicAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -297,7 +305,8 @@ export class DiagnosticClinicAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true

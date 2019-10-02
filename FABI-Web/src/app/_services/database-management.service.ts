@@ -5,7 +5,7 @@
  * Created Date: Sunday, July 28th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, September 27th 2019
+ * Last Modified: Saturday, September 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -60,7 +60,8 @@ export class DatabaseManagementService {
       headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -96,7 +97,8 @@ export class DatabaseManagementService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -130,7 +132,8 @@ export class DatabaseManagementService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true

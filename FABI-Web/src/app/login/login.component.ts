@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, September 25th 2019
+ * Last Modified: Saturday, September 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -148,17 +148,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(details).subscribe((response: any) => {
       this.loading = false;
       // API Request successful
-      if (response.success == true && response.code == 200) {        
-        // User NOT Authorised
-        if (response.title != "AUTHORIZED") {
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: response.data.title, message: response.data.message, retry: false } });
-          return;
-        }
-        // ELSE user Authorised:
+      if (response.success == true && response.code == 200) {
 
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Welcome", "Dismiss", {
+        let snackBarRef = this.snackBar.open(`Welcome ${response.userDetails.fname} ${response.userDetails.surname}`, "Dismiss", {
           duration: 3000
         });
 

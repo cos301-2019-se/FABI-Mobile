@@ -60,9 +60,12 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
           console.log("Server Error: " + error);
           return throwError(error);
 
+        } else if(error && error.status === 403) {
+          this.authService.logoutUser();
+          this.router.navigate(['/login']);
+          // this.notificationServie.showErrorNotification("Forbidden", "");
         } else if(error && error.status === 404) {
           this.notificationServie.showWarningNotifiction(error.error.title, error.error.message);
-
         } else {
           console.log("Server Error: " + error.message);
           return throwError(error);

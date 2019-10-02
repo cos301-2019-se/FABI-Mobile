@@ -15,6 +15,7 @@ import { LoginComponent } from '../login/login.component';
 import { StaffViewDatabasesComponent } from "./staff-view-databases/staff-view-databases.component";
 import { StaffViewSamplesComponent } from "./staff-view-samples/staff-view-samples.component";
 import { StaffHelpComponent } from "./staff-help/staff-help.component";
+import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -81,6 +82,10 @@ const routes: Routes = [
     path: 'login', 
     component: LoginComponent
   },
+  { 
+    path:"**",
+    component: PageNotFoundComponent
+  }
 ];
 
 @NgModule({

@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Saturday, September 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -21,6 +21,7 @@ import { StaticInjector } from '@angular/core/src/di/injector';
 import { BehaviorSubject } from 'rxjs';
 
 import { config } from "../../environments/environment.prod";
+import { AuthenticationService } from './authentication.service';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                          GLOBAL VARIABLES
@@ -128,7 +129,7 @@ export class NotificationLoggingService {
    * @memberof NotificationLoggingService
    */
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   constructor(private http: HttpClient) { }
+   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +152,8 @@ export class NotificationLoggingService {
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -181,7 +183,8 @@ export class NotificationLoggingService {
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -211,7 +214,8 @@ export class NotificationLoggingService {
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -241,7 +245,8 @@ export class NotificationLoggingService {
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -270,7 +275,8 @@ export class NotificationLoggingService {
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -300,7 +306,8 @@ export class NotificationLoggingService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true

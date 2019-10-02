@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, July 19th 2019
+ * Last Modified: Saturday, September 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,6 +22,7 @@ import { MemberViewSamplesComponent } from './member-view-samples/member-view-sa
 import { SampleFormComponent } from '../sample-form/sample-form.component';
 import { AuthenticationGuard } from '../_guards/authentication.guard';
 import { Role } from '../_interfaces/role';
+import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -48,6 +49,10 @@ const routes: Routes = [
     component: SampleFormComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [Role.Member] }
+  },
+  { 
+    path:"**",
+    component: PageNotFoundComponent
   }
 ];
 

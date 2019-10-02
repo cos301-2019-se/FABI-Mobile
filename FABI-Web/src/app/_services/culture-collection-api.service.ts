@@ -5,7 +5,7 @@
  * Created Date: Monday, July 15th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, September 12th 2019
+ * Last Modified: Saturday, September 28th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -20,6 +20,7 @@ import { registerContentQuery } from '@angular/core/src/render3';
 import { StaticInjector } from '@angular/core/src/di/injector';
 import { BehaviorSubject } from 'rxjs';
 import { config } from "../../environments/environment.prod";
+import { AuthenticationService } from './authentication.service';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                          GLOBAL VARIABLES
@@ -137,7 +138,7 @@ export class CultureCollectionAPIService {
    * @memberof CultureCollectionAPIService
    */
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   constructor(private http: HttpClient) { }
+   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,7 +158,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         json: true
     };
@@ -182,7 +184,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         json: true
     };
@@ -207,7 +210,8 @@ export class CultureCollectionAPIService {
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         json: true
     };
@@ -231,7 +235,8 @@ export class CultureCollectionAPIService {
         headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         json: true
     };
@@ -259,7 +264,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -286,7 +292,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         }),
         body: data,
         json: true
@@ -315,7 +322,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -344,7 +352,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -372,7 +381,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -401,7 +411,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -430,7 +441,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -459,7 +471,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true
@@ -488,7 +501,8 @@ export class CultureCollectionAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
         },
         body: data,
         json: true

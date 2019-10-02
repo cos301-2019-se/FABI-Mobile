@@ -82,6 +82,7 @@ import { ClinicAdminViewSamplesComponent } from './Admin/clinic-admin-view-sampl
 import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
 import { StaffViewDatabasesComponent } from './Staff/staff-view-databases/staff-view-databases.component';
 import { StaffViewSamplesComponent } from './Staff/staff-view-samples/staff-view-samples.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // import { DataTablesModule } from 'angular-datatables';
 
@@ -139,7 +140,8 @@ import { StaffViewSamplesComponent } from './Staff/staff-view-samples/staff-view
     ClinicAdminViewSamplesComponent,
     PreDiagnosisComponent,
     StaffViewDatabasesComponent,
-    StaffViewSamplesComponent
+    StaffViewSamplesComponent,
+    PageNotFoundComponent
   ],
   entryComponents: [
     LoadingComponent,
