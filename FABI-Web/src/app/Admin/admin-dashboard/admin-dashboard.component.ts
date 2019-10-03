@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 2nd 2019
+ * Last Modified: Thursday, October 3rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -34,6 +34,21 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import * as Interface from '../../_interfaces/interfaces';
 import { LoadingComponent } from 'src/app/_loading/loading.component';
 
+export interface AdminMember{
+  fname: string;
+  surname: string;
+  email: string;
+  id: string;
+  type: string;
+}
+
+export interface StaffMember{
+  fname: string;
+  surname: string;
+  email: string;
+  id: string;
+}
+
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -55,16 +70,11 @@ export class AdminDashboardComponent implements OnInit {
   /** Contains the sample stats that will be dynamically loaded in the HTML page - @type {string} */
   sampleStats: string;
 
-  /** Object array for holding the administrators -  @type {Member[]} */
-  admins: Member[] = [];
-  /** Object array for holding the staff members -  @type {Member[]} */
-  staff: Member[] = [];
-  /** Object array for holding the database administrators -  @type {Member[]} */
-  databaseAdmins: Member[] = [];
-  /** Object array for holding the culture curators -  @type {Member[]} */
-  cultureCurators: Member[] = [];
-  /** Object array for holding the diagnostic clinic administrators -  @type {Member[]} */
-  diagnosticClinicAdmins: Member[] = [];
+  /** Object array for holding the administrators -  @type {AdminMember[]} */
+  admins: AdminMember[] = [];
+  /** Object array for holding the staff members -  @type {StaffMember
+   * []} */
+  staff: StaffMember[] = [];
 
   /** Object array for holding all of FABI's samples -  @type {Object[]} */
   samples: Object[] = [];
@@ -199,17 +209,32 @@ export class AdminDashboardComponent implements OnInit {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
       if (response.success == true) {
-        //Temporary array to hold the array of admins retuned from the API call
-        this.admins = response.data.qs.admins;
-        //Temporary array to hold the array of staff returned from the API call
-        this.staff = response.data.qs.staff;
+        var data = response.data.qs.staff;
+        
+        for(var i = 0; i < data.length; i++){
+          if(data[i].userType == "SuperUser"){
+            var tempAdmin : AdminMember = {fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id, type: "Super User"};
+            this.admins.push(tempAdmin);
+          }
+          else if(data[i].userType == "ClinicAdmin"){
+            var tempAdmin : AdminMember = {fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id, type: "Clinic Admin"};
+            this.admins.push(tempAdmin);
+          }
+          else if(data[i].userType == "CultureAdmin"){
+            var tempAdmin : AdminMember = {fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id, type: "Culture Admin"};
+            this.admins.push(tempAdmin);
+          }
+          else if(data[i].userType == "Staff"){
+            var tempStaff : StaffMember = {fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id};
+            this.staff.push(tempStaff);
+          }
+        }
 
         //Deactivate loading table spinners
         this.adminTableLoading = false;
         this.staffTableLoading = false;
 
-
-        this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
+        this.numberOfFABIMembers = this.admins.length + this.staff.length;
         this.userStats = this.numberOfFABIMembers.toString();
       }
       else {

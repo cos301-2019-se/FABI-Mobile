@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 2nd 2019
+ * Last Modified: Thursday, October 3rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -23,6 +23,13 @@ import { CultureCollectionAPIService, CMWDeposit, CMWRequest } from '../../_serv
 import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { Route, Router } from '@angular/router';
+
+export interface StaffMember{
+  fname: string;
+  surname: string;
+  email: string;
+  id: string;
+}
 
 @Component({
   selector: 'app-staff-notification',
@@ -66,8 +73,8 @@ export class StaffNotificationComponent implements OnInit {
   /** The user that is currently logged in -  @type {any} */
   currentUser: any;
 
-  /** Object array for holding the staff members -  @type {Member[]} */                        
-  staff: Member[] = []; 
+  /** Object array for holding the staff members -  @type {StaffMember[]} */                        
+  staff: StaffMember[] = []; 
 
   /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */
   notificationsLoading: boolean = true;
@@ -133,19 +140,12 @@ export class StaffNotificationComponent implements OnInit {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
      if(response.success == true){
-       //Temporary array to hold the array of admins retuned from the API call
-       var data = response.data.qs.admins;
-       for(var i = 0; i < data.length; i++){
-         var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
-         this.staff.push(tempMember);
-       }
-      
-       //Temporary array to hold the array of staff returned from the API call
-       var data = response.data.qs.staff;
-       for(var i = 0; i < data.length; i++){
-         var tempMember : Member = {Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id};
-         this.staff.push(tempMember);
-       }
+      var data = response.data.qs.staff;
+        
+      for(var i = 0; i < data.length; i++){
+        var tempStaff : StaffMember = {fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id};
+        this.staff.push(tempStaff);
+      }
      }
      else{
        //Error handling
@@ -343,8 +343,8 @@ export class StaffNotificationComponent implements OnInit {
   loadUserDetails(userID: string) {
     var person = '';
     for(var i = 0; i < this.staff.length; i++){
-      if(this.staff[i].ID == userID){
-        person = this.staff[i].Name + ' ' + this.staff[i].Surname;
+      if(this.staff[i].id == userID){
+        person = this.staff[i].fname + ' ' + this.staff[i].surname;
       }
     }
 
