@@ -82,7 +82,7 @@
 #### Links
  [GitHub](https://github.com/EmmaBinx)  
  [LinkedIn](https://www.linkedin.com/in/emma-coetzer-85b46317b/)   
- [CV](https://drive.google.com/file/d/1212zXXFP3k5cvu61BpgsrUBsIEwU0kSQ/view?usp=sharing)   
+ [CV](https://drive.google.com/file/d/1X44Tq9HzAg0TwzMJQFD7pPS5MAsm9aV5/view?usp=sharing)   
  
 
 **Current Position:** BSc IT 3rd year
