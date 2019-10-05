@@ -3,6 +3,8 @@ const router = express.Router();
 const admin = require('firebase-admin');
 const log = require('../../sendLogs');
 const auth = require('../../loginAuth');
+const mail = require('../SendEmail_UserManagement');
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,6 +105,7 @@ async function getOrgDetails(req, res) {
         });
     }
     else
+                mail.sendOrganizationRequestDenied(req.body.orgName, doc.data().admin.email, 'reasoning...');
     {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');

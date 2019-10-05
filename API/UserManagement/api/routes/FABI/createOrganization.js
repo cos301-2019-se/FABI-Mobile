@@ -3,7 +3,7 @@ const router = express.Router();
 const request = require("request");
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
-const mail = require('../sendEmail');
+const mail = require('../SendEmail_UserManagement');
 const log = require('../../sendLogs');
 const auth = require('../../loginAuth');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,18 +103,50 @@ async function addOrganization(req, res)
                 }
             }
 
-            // (4)
-            pendingRef.get().then(doc => {
-                //(2)
-                if(typeof(doc.data()) === 'undefined')
-                {
-                    docRef.set(qs).then(() => {
-                        qs.admin.password = bcrypt.hashSync(pass, salt)
-                        adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
-                            res.setHeader('Content-Type', 'application/problem+json');
-                            res.setHeader('Content-Language', 'en');
-                            res.setHeader("Access-Control-Allow-Origin", "*");
-                            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+        // (4)
+        pendingRef.get().then(doc => {
+            //(2)
+            if(typeof(doc.data()) === 'undefined')
+            {
+                docRef.set(qs).then(() => {
+                    qs.admin.password = bcrypt.hashSync(pass, salt)
+                    adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                        success: true,
+                        code: 200,
+                        title: "SUCCESS",
+                        message: "Created Organization",
+                        data: {
+                                orgName: req.body.orgName,
+                                tempPassword: pass
+                        }
+                })
+                mail.sendOrganizationTemporaryPin(qs.orgName, qs.admin.email, qs.admin.fname, qs.admin.surname, pass);
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: qs.admin.id,
+                    org1: 'FABI',
+                    org2: req.body.orgName,
+                    action: '/createOrganization'
+                });
+            });
+            });
+        }
+        else
+        {
+            pendingRef.delete().then(() => {
+                docRef.set(qs).then(() => {
+                    qs.admin.password = bcrypt.hashSync(pass, salt)
+                    adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                             success: true,
                             code: 200,
                             title: "SUCCESS",
@@ -123,17 +155,16 @@ async function addOrganization(req, res)
                                     orgName: req.body.orgName,
                                     tempPassword: pass
                             }
-                    })
-                    mail(req.body.orgName + ' Admin', pass);
-                    log({
-                        type: 'USER',
-                        action: 'AddMemberToOrg',
-                        details: '1563355277876',
-                        user: qs.admin.id,
-                        org1: 'FABI',
-                        org2: req.body.orgName,
-                        action: '/createOrganization'
-                    });
+                        })
+                mail.sendOrganizationTemporaryPin(qs.orgName, qs.admin.email, qs.admin.fname, qs.admin.surname, pass);
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: qs.admin.id,
+                    org1: 'FABI',
+                    org2: req.body.orgName,
+                    action: '/createOrganization'
                 });
                 });
             }

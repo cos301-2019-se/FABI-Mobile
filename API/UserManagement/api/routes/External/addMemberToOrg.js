@@ -3,7 +3,7 @@ const router = express.Router();
 const request = require("request");
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
-const mail = require('../sendEmail');
+const mail = require('../SendEmail_UserManagement');
 const log = require('../../sendLogs');
 const auth = require('../../loginAuth');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,6 +181,69 @@ async function addMember(req, res)
             message: "your authentication token is not valid",
         });
     }
+
+    // (2)
+    const salt = bcrypt.genSaltSync(10);
+    var pass = generatePassword(10);
+    const qs = {
+        fname: req.body.member.fname,
+        surname: req.body.member.surname,
+        email: req.body.member.email,
+        password: bcrypt.hashSync(pass, salt),
+        id : new Date().getTime().toString(),
+        userType: req.body.userType
+    }
+    var checkRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').where('email', '==', qs.email);
+
+    checkRef.get().then(doc => {
+        if(!doc.empty)
+        {
+            res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+                    success: false,
+                    code: 400,
+                    title: "BAD_REQUEST",
+                    message: "User email already exists"
+                });
+        }
+        else{
+            var docRef  = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.id);
+    
+    //(4)
+            docRef.set(qs).then(() => {
+
+            //(5)
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                success: true,
+                code: 200,
+                    title: "SUCCESS",
+                    message: "Added Member",
+                    data: {
+                        message : "Member Added to Organization",
+                        orgName : req.body.orgName,
+                        tempPassword : pass}
+                    
+                });
+                mail.sendUserTemporaryPin(req.body.orgName, qs.email, qs.fname, qs.surname, pass, qs.userType);
+                log({
+                    type: 'USER',
+                    action: 'AddMemberToOrg',
+                    details: '1563355277876',
+                    user: qs.id,
+                    org1: 'FABI',
+                    org2: req.body.orgName,
+                    action: '/addmemberToOrg'
+                });
+            });
+        }
+    });
+    // (3)
+    
 
 }
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
-const mail = require('../sendEmail');
+const mail = require('../SendEmail_UserManagement');
 const log = require('../../sendLogs');
 const auth = require('../../loginAuth');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,6 +120,15 @@ async function addStaff(req, res)
                 userType: req.body.userType
             }
 
+            mail.sendUserTemporaryPin(req.body.orgName, qs.email, qs.fname, qs.surname, pass, qs.userType);
+            log({
+                type: 'USER',
+                action: 'AddMemberToOrg',
+                details: '1563355277876',
+                user: qs.id,
+                org1: 'FABI',
+                org2: 'FABI',
+                action: '/addStaff'
             var checkRef = db.collection('Organizations').doc('FABI').collection('Staff').where('email', '==', qs.email);
 
             checkRef.get().then(doc => {
