@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -150,6 +150,7 @@ export class AuthenticationService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logoutUser() {
+    localStorage.removeItem('pre-diagnosis');
     localStorage.removeItem('sessionDetails');
     localStorage.setItem('loggedIn', JSON.stringify(false));
     this.currentSessionSubject.next(null);
@@ -379,7 +380,6 @@ export class AuthenticationService {
 
     this.http.request<any>(method, getUserDetailsURL, options).subscribe((response: any) => {
 
-      console.log("DETAILS: " + JSON.stringify(response));
       if(response && (response.token && response.token != '')) {
         if(response.data.databases) {
           this.currentUser.databases = response.data.databases;

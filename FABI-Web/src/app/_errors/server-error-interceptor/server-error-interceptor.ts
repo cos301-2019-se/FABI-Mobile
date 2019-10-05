@@ -39,13 +39,13 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
 
   intercept(request: Http.HttpRequest<any>, next: Http.HttpHandler): Observable<Http.HttpEvent<any>> {
 
-    console.log("------------------- INTERCEPTOR ------------------");
-
     request = this.addJWTToken(request);
 
     return next.handle(request).pipe(
       // retry(1),
       catchError((error: Http.HttpErrorResponse) => {
+
+        console.log(error);
         if (error && error.status === 401) {
           
           if(this.authService.isLoggedIn == true) {
@@ -54,20 +54,17 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
             this.authService.logoutUser();
             this.router.navigate(['/login']);
           } else {
-            this.notificationServie.showWarningNotifiction("Invalid Login Details", error.error.message);
+            this.notificationServie.showWarningNotification("Incorrect Login Details", error.error.message);
           }
-          
-          console.log("Server Error: " + error);
           return throwError(error);
 
         } else if(error && error.status === 403) {
           this.authService.logoutUser();
           this.router.navigate(['/login']);
-          // this.notificationServie.showErrorNotification("Forbidden", "");
+          this.notificationServie.showErrorNotification("Unauthorized", error.error.message);
         } else if(error && error.status === 404) {
-          this.notificationServie.showWarningNotifiction(error.error.title, error.error.message);
+          this.notificationServie.showErrorNotification(error.error.title, error.error.message);
         } else {
-          console.log("Server Error: " + error.message);
           return throwError(error);
         }
       })

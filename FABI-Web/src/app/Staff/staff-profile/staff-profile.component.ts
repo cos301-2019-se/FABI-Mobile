@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Saturday, October 5th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -297,8 +297,6 @@ export class StaffProfileComponent implements OnInit {
 
       loadingRef.close();
 
-      console.log("RESP: " + JSON.stringify(response));
-
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
@@ -307,8 +305,6 @@ export class StaffProfileComponent implements OnInit {
         });
       }
       else {
-
-        console.log("RESP: " + JSON.stringify(response));
         //Error handling
         let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
           duration: 3000

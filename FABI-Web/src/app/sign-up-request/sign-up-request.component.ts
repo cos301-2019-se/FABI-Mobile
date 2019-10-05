@@ -133,11 +133,6 @@ export class SignUpRequestComponent implements OnInit {
   displayLocationInfo(position) {
     const lng = position.coords.longitude;
     const lat = position.coords.latitude;
-
-    console.log(`longitude: ${lng} | latitude: ${lat}`);
-    console.log(`Position: ${position}`);
-    console.log(`Coords: ${JSON.stringify(position.coord)}`);
-
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

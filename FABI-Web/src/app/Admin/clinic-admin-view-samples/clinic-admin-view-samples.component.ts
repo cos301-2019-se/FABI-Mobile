@@ -171,15 +171,11 @@ export class ClinicAdminViewSamplesComponent implements OnInit {
   }
 
   updatingSampleStatus(sample: any) {
-
     this.editingSample = sample;
     this.isEditingSample = true;
-
   }
 
   updateSampleStatus(sample: any) {
-    console.log("SAMPLE: " + JSON.stringify(sample));
-    console.log("STATUS: " + this.updateSampleStatusForm.controls.sample_status.value);
 
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Sample Status" }});
 

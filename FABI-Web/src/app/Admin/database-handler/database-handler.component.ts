@@ -495,7 +495,6 @@ export class DatabaseHandlerComponent implements OnInit {
   dropDatabase() {    
     this.dbService.removeDatabase(this.selectedDatabase).subscribe((response: any) => {
 
-      console.log(response);
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open("Database Removed", "Dismiss", {

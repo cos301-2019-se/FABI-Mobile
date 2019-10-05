@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, October 3rd 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -355,8 +355,6 @@ export class UserManagementAPIService {
       "orgName": this.authService.getCurrentSessionValue.user.organisation
     }
 
-    console.log("postData: " + postData);
-
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -569,8 +567,6 @@ export class UserManagementAPIService {
       "userType": staffInfo.position
     }
 
-    console.log("----- " + JSON.stringify(postData));
-
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -708,16 +704,13 @@ export class UserManagementAPIService {
     let addMemberURL = `${config.userManagementURL}/addMemberToOrg`;
     let method = 'POST';
 
-    console.log("orgName: " + orgInfo.orgName);
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "orgName": orgInfo.orgName,
       "member": memberInfo,
       "userType": "Member"
     }
-
-    console.log("//// POST: " + JSON.stringify(postData));
-
+    
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -859,9 +852,7 @@ export class UserManagementAPIService {
       "oldPass": oldPassword,
       "newPass": newPassword
     }
-
-    console.log(JSON.stringify(postData));
-
+    
     const options = {
       headers: {
         'cache-control': 'no-cache',

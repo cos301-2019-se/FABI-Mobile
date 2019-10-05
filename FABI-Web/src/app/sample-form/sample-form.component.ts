@@ -334,11 +334,7 @@ export class SampleFormComponent implements OnInit {
       }
       
     };
-
-    console.log("FormData: " + JSON.stringify(formDetails));
-
-    // const orgDetails: Interface.Organisation = { orgName: this.authService.getCurrentSessionValue.user.organisation };
-
+    
     this.clinicService.submitSampleForm(formDetails).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -346,7 +342,6 @@ export class SampleFormComponent implements OnInit {
           duration: 3000
         });
 
-        // console.log(JSON.stringify(response));
         //Set pre-diagnosis
         localStorage.setItem('pre-diagnosis', response.data.prediagnosis);
 
@@ -644,7 +639,6 @@ export class SampleFormComponent implements OnInit {
 
     this.sampleForm.get('types').get('set_types').value.forEach((value, i)=> {
       if(value == true) {
-        console.log(this.sample_types[i]);
         this.sampleTypesSelected.push(this.sample_types[i].name);
       }
     });

@@ -5,7 +5,7 @@
  * Created Date: Wednesday, August 14th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, September 24th 2019
+ * Last Modified: Saturday, October 5th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -119,12 +119,8 @@ export class MapsWindowComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: Position) => {
         if (position) {
-          console.log("Latitude: " + position.coords.latitude +
-            "Longitude: " + position.coords.longitude);
           this.location.latitude = position.coords.latitude;
           this.location.longitude = position.coords.longitude;
-          console.log(this.location.latitude);
-          console.log(this.location.longitude);
           this.zoom = 15;
           this.infoTitle = "Current Location";
           this.getAddress(this.location.latitude, this.location.longitude);
@@ -145,11 +141,8 @@ export class MapsWindowComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectLocation(event) {
-    console.log(event);
     this.location.latitude = event.coords.lat;
     this.location.longitude = event.coords.lng;
-    console.log(this.location.latitude);
-    console.log(this.location.longitude);
     this.infoTitle = "";
     this.getAddress(this.location.latitude, this.location.longitude);
   }
@@ -165,8 +158,6 @@ export class MapsWindowComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAddress(latitude, longitude) {
     this.geocoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
-      console.log(results);
-      console.log(status);
       if (status === 'OK') {
         if (results[0]) {
           let address_details = results[0];
@@ -199,8 +190,6 @@ export class MapsWindowComponent implements OnInit {
               this.address.postal_code = component.long_name;
             }
           });
-
-          console.log("ADDRESS: " + JSON.stringify(this.address));
           this.zoom = 15;
         } else {
           window.alert('No results found for location address');
@@ -243,10 +232,6 @@ export class MapsWindowComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   select() {
-
-    console.log("ADDRESS : " + this.address);
-    console.log("LOCATION : " + this.location);
-
     this.dialogRef.close( 
       {
         'address': this.address, 
