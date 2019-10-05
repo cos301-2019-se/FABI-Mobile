@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, September 26th 2019
+ * Last Modified: Saturday, October 5th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -252,12 +252,6 @@ export class StaffHandlerComponent implements OnInit {
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Database Names", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.getDBNames();
-          }
-        })
       }
     });
   }
@@ -270,12 +264,6 @@ export class StaffHandlerComponent implements OnInit {
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Admin Types", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.getAdminTypes();
-          }
-        })
       }
     });
   }
@@ -354,12 +342,6 @@ export class StaffHandlerComponent implements OnInit {
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Adding Staff Member", message: response.message, retry: true }});
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.addStaff();
-          }
-        })
       }
     });
   }
@@ -420,12 +402,6 @@ export class StaffHandlerComponent implements OnInit {
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.removeStaffMember();
-          }
-        })
       }
     });
   }
@@ -465,12 +441,6 @@ export class StaffHandlerComponent implements OnInit {
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Staff", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.viewStaff();
-          }
-        })
       }
     });
   }

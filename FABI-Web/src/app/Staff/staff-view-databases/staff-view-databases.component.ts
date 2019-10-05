@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 29th 2019
+ * Last Modified: Saturday, October 5th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -137,6 +137,9 @@ export class StaffViewDatabasesComponent implements OnInit {
     let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Downloading CSV" }});
     
     this.dbService.retrieveDatabase(dbname).subscribe((response:any) => {
+
+        loadingRef.close();
+
         if(response.success == true && response.code == 200) {
           data = response.data.docs;
           let CSVdata = this.portCSV.extractDatabase(data, dbname);
@@ -151,25 +154,11 @@ export class StaffViewDatabasesComponent implements OnInit {
         } 
         else if (response.success == false) {
           //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          })
         }    
 
         loadingRef.close();
       }, (err: HttpErrorResponse) => {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        });
-      
-        loadingRef.close();
+        //Handled in error-handler
     }); 
   }
 
@@ -217,12 +206,6 @@ export class StaffViewDatabasesComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the data", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
       }
 
       loadingRef.close();

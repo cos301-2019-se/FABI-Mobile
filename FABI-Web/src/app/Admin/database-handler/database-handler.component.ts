@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, September 27th 2019
+ * Last Modified: Saturday, October 5th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -321,23 +321,11 @@ export class DatabaseHandlerComponent implements OnInit {
         } 
         else if (response.success == false) {
           //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          })
         }    
 
         loadingRef.close();
       }, (err: HttpErrorResponse) => {
-        //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        });
+        //Handled in error-handler
       
         loadingRef.close();
     }); 
@@ -356,12 +344,6 @@ export class DatabaseHandlerComponent implements OnInit {
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Database Names", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.getDBNames();
-          }
-        })
       }
     });
   }
@@ -401,12 +383,6 @@ export class DatabaseHandlerComponent implements OnInit {
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the data", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
       }
 
       loadingRef.close();
@@ -447,21 +423,9 @@ export class DatabaseHandlerComponent implements OnInit {
         }
         else if (response.success == false) {
           //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          });
         }    
         }, (err: HttpErrorResponse) => {
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          });
+          //Handled in error-handler
       });
     }
   }
@@ -541,12 +505,6 @@ export class DatabaseHandlerComponent implements OnInit {
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.dropDatabase();
-          }
-        })
       }
     });
   }

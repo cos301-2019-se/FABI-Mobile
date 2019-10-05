@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, September 26th 2019
+ * Last Modified: Saturday, October 5th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -360,27 +360,9 @@ export class SampleFormComponent implements OnInit {
       } 
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Submit Form", message: response.message } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.sendForm();
-          }
-          //Take out when authenication is working - Just for test/demp purposes
-          //this.router.navigate(['sample-form']);
-          //
-        })
       }
     }, (err: HttpErrorResponse) => {
-      //POPUP MESSAGE
-      let dialogRef = this.dialog.open(ErrorComponent, { data: { error: "Could Not Submit Form", message: err.message } });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result == "Retry") {
-          this.sendForm();
-        }
-        //Take out when authenication is working - Just for test/demp purposes
-        //this.router.navigate(['sample-form']);
-        //
-      });
+      //Handled in error-handler
     })
 
   }
