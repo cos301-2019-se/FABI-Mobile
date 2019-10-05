@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, September 26th 2019
+ * Last Modified: Saturday, October 5th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -231,12 +231,6 @@ export class OrganizationHandlerComponent implements OnInit {
 
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Registering Organization", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.registerOrg();
-          }
-        })
       }
     });
   }
@@ -303,12 +297,6 @@ export class OrganizationHandlerComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.removeOrg();
-          }
-        })
       }
     });
   }
@@ -353,12 +341,6 @@ export class OrganizationHandlerComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the Organisations", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
       }
     });
   }
@@ -375,12 +357,6 @@ export class OrganizationHandlerComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the pending Organisations", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
       }
     });
   }
@@ -403,12 +379,6 @@ export class OrganizationHandlerComponent implements OnInit {
 
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Registering Organization", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.registerOrg();
-          }
-        })
       }
     });
 
