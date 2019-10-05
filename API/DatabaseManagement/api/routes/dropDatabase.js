@@ -66,16 +66,18 @@ async function getOrgDetails(req, res) {
                 {
                     
                     deleteCollection(db, req.body.databaseName, 1000).then(() => {
-                        res.setHeader('Content-Type', 'application/problem+json');
-                        res.setHeader('Content-Language', 'en');
-                        res.setHeader("Access-Control-Allow-Origin", "*");
-                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                            success: true,
-                            code: 200,
-                            title: "SUCCESS",
-                            message: "Database Succesfully Dropped",
-                            data: {}
-                        });
+                        getRef.delete().then( () => {
+                            res.setHeader('Content-Type', 'application/problem+json');
+                            res.setHeader('Content-Language', 'en');
+                            res.setHeader("Access-Control-Allow-Origin", "*");
+                            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                                success: true,
+                                code: 200,
+                                title: "SUCCESS",
+                                message: "Database Succesfully Dropped",
+                                data: {}
+                            });
+                        })
                     }).catch(err)
                     {
                         res.setHeader('Content-Type', 'application/problem+json');

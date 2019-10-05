@@ -120,15 +120,7 @@ async function addStaff(req, res)
                 userType: req.body.userType
             }
 
-            mail.sendUserTemporaryPin(req.body.orgName, qs.email, qs.fname, qs.surname, pass, qs.userType);
-            log({
-                type: 'USER',
-                action: 'AddMemberToOrg',
-                details: '1563355277876',
-                user: qs.id,
-                org1: 'FABI',
-                org2: 'FABI',
-                action: '/addStaff'
+            
             var checkRef = db.collection('Organizations').doc('FABI').collection('Staff').where('email', '==', qs.email);
 
             checkRef.get().then(doc => {
@@ -163,7 +155,7 @@ async function addStaff(req, res)
                             }
                         });
 
-                        mail('FABI Staff - ' + qs.userType, pass);
+                        mail.sendUserTemporaryPin(req.body.orgName, qs.email, qs.fname, qs.surname, pass, qs.userType);
                         log({
                             type: 'USER',
                             action: 'AddMemberToOrg',
@@ -172,7 +164,7 @@ async function addStaff(req, res)
                             org1: 'FABI',
                             org2: 'FABI',
                             action: '/addStaff'
-                        });
+                        })
                     });
                 }
             });

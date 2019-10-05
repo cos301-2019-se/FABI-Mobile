@@ -5,7 +5,6 @@ const refNumberGenerator = require('./generateReferenceNumber');
 const buildTree = require('../buildTree');
 const predict = require('../predict');
 const auth = require('../loginAuth');
-
 const mail = require('./SendEmail_Sample');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,7 +67,6 @@ async function submitForm(req, res)
             });
         }
         else{
-        
             result = predict(req.body.data).then((result => {
                 refnum = refNumberGenerator(result);
                 req.body.referenceNumber = refnum;
@@ -76,7 +74,7 @@ async function submitForm(req, res)
                 req.body.status = 'submitted';
                 sampleRef.set(req.body).then(()=>
                 {
-                    
+                    mail.sendSampleSubmission(refnume, 'email', 'fname', 'surname', result);
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -91,7 +89,8 @@ async function submitForm(req, res)
                         }
                     });
                 });
-            }));
+            })
+            );
         }
     }
     else
@@ -106,39 +105,7 @@ async function submitForm(req, res)
             message: "your authentication token is not valid",
         });
     }
-    else{
-    
-    
-    result = predict(req.body.data).then((result => {
-        refnum = refNumberGenerator(result);
-        req.body.referenceNumber = refnum;
-        sampleRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(refnum);
-        req.body.status = 'submitted';
-        sampleRef.set(req.body).then(()=>
-        {
-            mail.sendSampleSubmission(refnume, 'email', 'fname', 'surname', result);
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-            success: true,
-                code: 200,
-                title: "SUCCESS",
-                message : "form succesfully submitted",
-                data: {
-                    referenceNumber : refnum,
-                    prediagnosis: result
-                }
-            });
-        });
-    })
-
-    );
-       
-        
-    
-    
-}
+} 
 
 
 module.exports = router;

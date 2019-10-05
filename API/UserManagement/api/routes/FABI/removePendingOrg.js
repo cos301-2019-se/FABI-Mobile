@@ -80,6 +80,7 @@ async function getOrgDetails(req, res) {
                             }
                         });
                     })
+                    mail.sendOrganizationRequestDenied(req.body.orgName, doc.data().admin.email, 'reasoning...');
                     log({
                         type: 'USER',
                         action: 'AddMemberToOrg',
@@ -105,7 +106,6 @@ async function getOrgDetails(req, res) {
         });
     }
     else
-                mail.sendOrganizationRequestDenied(req.body.orgName, doc.data().admin.email, 'reasoning...');
     {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');

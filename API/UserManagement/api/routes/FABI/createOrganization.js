@@ -84,100 +84,37 @@ async function addOrganization(req, res)
                 message: "Organization fname Expected"
             });
         }
+        else{
+                // (2)
+                var docRef  = db.collection('Organizations').doc(req.body.orgName);
+                var pendingRef  = db.collection('Organizations').doc('Pending').collection('Organizations').doc(req.body.orgName);
 
-            // (2)
-            var docRef  = db.collection('Organizations').doc(req.body.orgName);
-            var pendingRef  = db.collection('Organizations').doc('Pending').collection('Organizations').doc(req.body.orgName);
-
-            // (3)
-            const salt = bcrypt.genSaltSync(10);
-            var pass = generatePassword(10);
-            const qs = {
-                orgName : req.body.orgName,
-                admin : {
-                    fname: req.body.admin.fname,
-                    surname: req.body.admin.surname,
-                    email: req.body.admin.email,
-                    id : new Date().getTime().toString(),
-                    userType: "OrganizationAdmin"
+                // (3)
+                const salt = bcrypt.genSaltSync(10);
+                var pass = generatePassword(10);
+                const qs = {
+                    orgName : req.body.orgName,
+                    admin : {
+                        fname: req.body.admin.fname,
+                        surname: req.body.admin.surname,
+                        email: req.body.admin.email,
+                        id : new Date().getTime().toString(),
+                        userType: "OrganizationAdmin"
+                    }
                 }
-            }
 
-        // (4)
-        pendingRef.get().then(doc => {
-            //(2)
-            if(typeof(doc.data()) === 'undefined')
-            {
-                docRef.set(qs).then(() => {
-                    qs.admin.password = bcrypt.hashSync(pass, salt)
-                    adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
-                        res.setHeader('Content-Type', 'application/problem+json');
-                        res.setHeader('Content-Language', 'en');
-                        res.setHeader("Access-Control-Allow-Origin", "*");
-                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                        success: true,
-                        code: 200,
-                        title: "SUCCESS",
-                        message: "Created Organization",
-                        data: {
-                                orgName: req.body.orgName,
-                                tempPassword: pass
-                        }
-                })
-                mail.sendOrganizationTemporaryPin(qs.orgName, qs.admin.email, qs.admin.fname, qs.admin.surname, pass);
-                log({
-                    type: 'USER',
-                    action: 'AddMemberToOrg',
-                    details: '1563355277876',
-                    user: qs.admin.id,
-                    org1: 'FABI',
-                    org2: req.body.orgName,
-                    action: '/createOrganization'
-                });
-            });
-            });
-        }
-        else
-        {
-            pendingRef.delete().then(() => {
-                docRef.set(qs).then(() => {
-                    qs.admin.password = bcrypt.hashSync(pass, salt)
-                    adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
-                        res.setHeader('Content-Type', 'application/problem+json');
-                        res.setHeader('Content-Language', 'en');
-                        res.setHeader("Access-Control-Allow-Origin", "*");
-                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                            success: true,
-                            code: 200,
-                            title: "SUCCESS",
-                            message: "Created Organization",
-                            data: {
-                                    orgName: req.body.orgName,
-                                    tempPassword: pass
-                            }
-                        })
-                mail.sendOrganizationTemporaryPin(qs.orgName, qs.admin.email, qs.admin.fname, qs.admin.surname, pass);
-                log({
-                    type: 'USER',
-                    action: 'AddMemberToOrg',
-                    details: '1563355277876',
-                    user: qs.admin.id,
-                    org1: 'FABI',
-                    org2: req.body.orgName,
-                    action: '/createOrganization'
-                });
-                });
-            }
-            else
-            {
-                pendingRef.delete().then(() => {
-                    docRef.set(qs).then(() => {
-                        qs.admin.password = bcrypt.hashSync(pass, salt)
-                        adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
-                            res.setHeader('Content-Type', 'application/problem+json');
-                            res.setHeader('Content-Language', 'en');
-                            res.setHeader("Access-Control-Allow-Origin", "*");
-                            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+            // (4)
+            pendingRef.get().then(doc => {
+                //(2)
+                    if(typeof(doc.data()) === 'undefined')
+                    {
+                        docRef.set(qs).then(() => {
+                            qs.admin.password = bcrypt.hashSync(pass, salt)
+                            adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
+                                res.setHeader('Content-Type', 'application/problem+json');
+                                res.setHeader('Content-Language', 'en');
+                                res.setHeader("Access-Control-Allow-Origin", "*");
+                                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                                 success: true,
                                 code: 200,
                                 title: "SUCCESS",
@@ -186,33 +123,67 @@ async function addOrganization(req, res)
                                         orgName: req.body.orgName,
                                         tempPassword: pass
                                 }
-                            })
-                    mail(req.body.orgName + ' Admin', pass);
-                    log({
-                        type: 'USER',
-                        action: 'AddMemberToOrg',
-                        details: '1563355277876',
-                        user: qs.admin.id,
-                        org1: 'FABI',
-                        org2: req.body.orgName,
-                        action: '/createOrganization'
+                        })
+                        mail.sendOrganizationTemporaryPin(qs.orgName, qs.admin.email, qs.admin.fname, qs.admin.surname, pass);
+                        log({
+                            type: 'USER',
+                            action: 'AddMemberToOrg',
+                            details: '1563355277876',
+                            user: qs.admin.id,
+                            org1: 'FABI',
+                            org2: req.body.orgName,
+                            action: '/createOrganization'
+                        });
                     });
-                });
-                });
+                    });
+                    }
+                    else
+                    {
+                        pendingRef.delete().then(() => {
+                            docRef.set(qs).then(() => {
+                                qs.admin.password = bcrypt.hashSync(pass, salt)
+                                adminRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(qs.admin.id).set(qs.admin).then(()=>{
+                                    res.setHeader('Content-Type', 'application/problem+json');
+                                    res.setHeader('Content-Language', 'en');
+                                    res.setHeader("Access-Control-Allow-Origin", "*");
+                                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                                        success: true,
+                                        code: 200,
+                                        title: "SUCCESS",
+                                        message: "Created Organization",
+                                        data: {
+                                                orgName: req.body.orgName,
+                                                tempPassword: pass
+                                        }
+                                    })
+                            mail.sendOrganizationTemporaryPin(qs.orgName, qs.admin.email, qs.admin.fname, qs.admin.surname, pass);
+                            log({
+                                type: 'USER',
+                                action: 'AddMemberToOrg',
+                                details: '1563355277876',
+                                user: qs.admin.id,
+                                org1: 'FABI',
+                                org2: req.body.orgName,
+                                action: '/createOrganization'
+                            });
+
+                        })
+                        }).catch((err) => {
+                            console.log("Database connection error: " + err);
+                            res.setHeader('Content-Type', 'application/problem+json');
+                            res.setHeader('Content-Language', 'en');
+                            res.setHeader("Access-Control-Allow-Origin", "*");
+                            res.status(500).json({                                  // ******* RESPONSE STATUS? ************
+                                success: false,
+                                code: 500,
+                                title: "INTERNAL SERVER ERROR",
+                                message: "Error Connecting to User Database"  
+                            });
+                        });
+                    })
+                }
             })
         }
-        }).catch((err) => {
-            console.log("Database connection error: " + err);
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(500).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                code: 500,
-                title: "INTERNAL SERVER ERROR",
-                message: "Error Connecting to User Database"  
-            });
-        });
     }
     else
     {
@@ -226,8 +197,8 @@ async function addOrganization(req, res)
             message: "your authentication token is not valid",
         });
     }
-
 }
+
 
 function generatePassword(length) {
     var result           = '';
