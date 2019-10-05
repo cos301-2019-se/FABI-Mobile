@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 2nd 2019
+ * Last Modified: Thursday, October 3rd 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -232,11 +232,6 @@ export class SubmitCmwRevitalizationComponent implements OnInit {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
       if(response.success == true){
-        
-        for(var i = 0; i < response.data.qs.admins.length; i++){
-          this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
-        }
-
         for(var i = 0; i < response.data.qs.staff.length; i++){
           this.staff.push(response.data.qs.staff[i].surname + ', ' + response.data.qs.staff[i].fname[0]);
         }
