@@ -1,37 +1,54 @@
 /* BACKGROUND */
 .background {
-  position: absolute;
 
   width: 100%;
-  min-height: 180vh;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  min-height: 100vh;
   height: auto;
 
   background: #f7f7f7;
 }
 
-@media (min-width: 768px) {
-  .background {
-
-    min-height: 100vh;
-    height: auto;
-
-  }
-}
 
 /* SIDE ACCENT */
 .side-accent {
-  height: 100%;
-  position: absolute;
-  left: 0px;
-  right: 80px;
-  top: 0px;
-  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 
+  min-height: 130vh;
+  height: auto;
+
+  position: absolute;
   background: #72b555;
   border-radius: 0px 50px 50px 0px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 50px;
+}
 
-  min-height: 180vh;
-  height: auto;
+
+@media (min-width: 400px) {
+  .side-accent  {
+     right: 60px;
+  }
+}
+
+@media (min-height: 768px) {
+  .side-accent  {
+    min-height: 130vh;
+  }
+}
+
+@media (min-height: 1024px) {
+  .side-accent  {
+    min-height: 100vh;
+  }
 }
 
 
@@ -202,18 +219,20 @@
   top: 130px;
   bottom: 29px;
 
-  min-height: 150vh;
+  min-height: 110vh;
   height: auto;
 
   padding: 50px;
 
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  overflow: auto;
 }
 
 @media (min-width: 768px) {
   .form-card {
-    min-height: 100vh;
+    min-height: 105vh;
     height: auto;
   }
 }
@@ -222,9 +241,6 @@
 @media (min-width: 960px) {
   .form-card {
     left: 350px;
-
-    min-height: 130vh;
-    height: auto;
   }
 
   .step-number.active {
@@ -233,6 +249,18 @@
 
   .step-number {
     left: 320px;
+  }
+}
+
+@media (min-height: 768px) {
+  .form-card  {
+    min-height: 105vh;
+  }
+}
+
+@media (min-height: 1024px) {
+  .form-card  {
+    min-height: 80vh;
   }
 }
 
@@ -284,13 +312,43 @@
   margin-top: 50px;
 
   width: 100%;
+
+  position: relative;
+
+  height: 100%;
 }
+
+#symptoms.form-fields {
+  margin-top: 50px;
+
+  width: 100%;
+
+  position: relative;
+
+  height: auto;
+}
+
+// #symptom-distribution.form-fields {
+//   margin-top: 50px;
+
+//   width: 100%;
+
+//   position: relative;
+
+//   height: 100%;
+// }
 
 label {
   min-width: 100%;
   max-width: 100%;
 
   overflow-wrap: break-word;
+}
+
+.action{
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
 }
 
 .next-btn {
