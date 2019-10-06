@@ -23,7 +23,7 @@
   -  [User Manual](https://drive.google.com/file/d/1EgdAPcsHrDcNzohiTi_7zqJWIXzOErp2/view?usp=sharing)
   - [Organization User Manual](https://drive.google.com/file/d/1WmnunZhpUSGRUS0GgtiQSTbBFvjNjuDb/view?usp=sharing)
   - [Overview Presentation](https://docs.google.com/presentation/d/1VbTXs8X7zrWnlnVac4awau8aMn8qUsw_FhL8Fp3rc6I/edit?usp=sharing)
-  - [System Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
+  - [System Video Guide](https://drive.google.com/file/d/1_GnB4AD8M_TtIGbHmV41mGmwPm66ZpjF/view?usp=sharing)
   
  ### Project Management
   - [Trello Board](https://trello.com/b/8eHApP3L)
