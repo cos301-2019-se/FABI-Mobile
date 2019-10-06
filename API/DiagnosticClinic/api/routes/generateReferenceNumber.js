@@ -35,20 +35,6 @@ function generate(result) {
       let refNum ='ref-' + new Date().getTime();
 
       /// TEMPORAORY  ////////////////////////////////
-      const mailObject = {
-            from: 'FABI_WepApp',
-            to: 'novacapstone@gmail.com',
-            subject: "Sample Reference Number",
-            text: `Thank you for your sample submission. Your reference number is: ${refNum}. Your prediagnosis is ${result}.` 
-      }
-
-      transporter.sendMail(mailObject, (error, info) => {
-        if (error)
-          console.log(error);
-        else
-          console.log('Email sent: ' + info.response);
-      });
-
       return refNum;
       /////////////////////////////////////////////////////
 

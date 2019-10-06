@@ -33,7 +33,7 @@ const db = admin.firestore();
 async function getOrgDetails(req, res) {
     if(await auth.authSuperUser(req.headers.authorization)){
         //(1)
-        if (req.body.databaseName == undefined || req.body.databaseName == '') {
+        if (req.body.dbName == undefined || req.body.dbName == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
@@ -44,9 +44,9 @@ async function getOrgDetails(req, res) {
                 message: "dbName of database to drop is required"
             });
         }
-
+        else{
         //(2)
-        var getRef = db.collection('Databases').doc(req.body.databaseName);
+        var getRef = db.collection('Databases').doc(req.body.dbName);
 
         getRef.get().then(doc => {
                 //(3)
@@ -65,7 +65,7 @@ async function getOrgDetails(req, res) {
                 else
                 {
                     
-                    deleteCollection(db, req.body.databaseName, 1000).then(() => {
+                    deleteCollection(db, req.body.dbName, 1000).then(() => {
                         getRef.delete().then( () => {
                             res.setHeader('Content-Type', 'application/problem+json');
                             res.setHeader('Content-Language', 'en');
@@ -95,24 +95,25 @@ async function getOrgDetails(req, res) {
                     log({
                         type: "DBML",
                         action: "/dropDatabase",
-                        details: req.body.databaseName,
+                        details: req.body.dbName,
                         user: '1563355277876',
                         org1: 'FABI'
                     })
                 }  
-        })/*.catch((err) =>
-        {
-            console.log("Database connection error: " + err);
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(500).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                code: 500,
-                title: "INTERNAL SERVER ERROR",
-                message: "Error Connecting to User Database"
-            });
-        });*/
+            })/*.catch((err) =>
+            {
+                console.log("Database connection error: " + err);
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(500).json({                                  // ******* RESPONSE STATUS? ************
+                    success: false,
+                    code: 500,
+                    title: "INTERNAL SERVER ERROR",
+                    message: "Error Connecting to User Database"
+                });
+            });*/
+        }
     }
     else
     {

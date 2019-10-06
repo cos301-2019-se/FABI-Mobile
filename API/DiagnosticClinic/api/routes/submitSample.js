@@ -74,19 +74,32 @@ async function submitForm(req, res)
                 req.body.status = 'submitted';
                 sampleRef.set(req.body).then(()=>
                 {
-                    mail.sendSampleSubmission(refnume, 'email', 'fname', 'surname', result);
-                    res.setHeader('Content-Type', 'application/problem+json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                    success: true,
-                        code: 200,
-                        title: "SUCCESS",
-                        message : "form succesfully submitted",
-                        data: {
-                            referenceNumber : refnum,
-                            prediagnosis: result
-                        }
+                    console.log("Hello");
+                    if(req.body.orgName == 'FABI')
+                    {
+                        mailRef = db.collection('Organizations').doc(req.body.orgName).collection('Staff').doc(req.body.userID);
+                    }
+                    else
+                    {
+                        mailRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').doc(req.body.userID);
+                    }
+
+                    mailRef.get().then(doc => {
+                        console.log(doc.data());
+                        mail.sendSampleSubmission(refnum, doc.data().email, doc.data().fname, doc.data().surname, result);
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                        success: true,
+                            code: 200,
+                            title: "SUCCESS",
+                            message : "form succesfully submitted",
+                            data: {
+                                referenceNumber : refnum,
+                                prediagnosis: result
+                            }
+                        });
                     });
                 });
             })

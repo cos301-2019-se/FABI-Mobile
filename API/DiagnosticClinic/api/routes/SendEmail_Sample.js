@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-handlebars');
 const path = require('path');
+const config = require('../config');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            EMAIL SETTINGS 
