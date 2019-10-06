@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 26th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,40 +14,38 @@
  */
 
 
-import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
-import { OnInit} from '@angular/core';
-import { Injectable } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { DomSanitizer } from '@angular/platform-browser';
-import { sharedStylesheetJitUrl } from '@angular/compiler';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import * as core from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-clinic-handler',
   templateUrl: './clinic-handler.component.html',
   styleUrls: ['./clinic-handler.component.scss']
 })
-export class ClinicHandlerComponent implements OnInit { 
-  
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
-  profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
-  saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
-  confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
-  helpTab: boolean = false;
+export class ClinicHandlerComponent implements core.OnInit {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
+  helpTab: boolean = false;
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
@@ -59,25 +57,25 @@ export class ClinicHandlerComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {core.ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {DomSanitizer} sanitizer
-   * @param {ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {core.ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * 
    * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    public sanitizer: DomSanitizer, 
+    public sanitizer: DomSanitizer,
     private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private resolver: ComponentFactoryResolver, 
-    private authService: AuthenticationService, 
+    private diagnosticClinicService: DiagnosticClinicAPIService,
+    private notificationLoggingService: NotificationLoggingService,
+    private resolver: core.ComponentFactoryResolver,
+    private authService: AuthenticationService,
     private router: Router,
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    ) {}
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+  ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          NG ON INIT  
@@ -89,8 +87,8 @@ export class ClinicHandlerComponent implements OnInit {
    * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() { 
-    this.currentUser = this.authService.getCurrentSessionValue.user;    
+  ngOnInit() {
+    this.currentUser = this.authService.getCurrentSessionValue.user;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +112,7 @@ export class ClinicHandlerComponent implements OnInit {
    * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
+  toggleNotificationsTab() {
     this.notificationsTab = !this.notificationsTab;
   }
 

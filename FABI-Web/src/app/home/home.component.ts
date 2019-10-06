@@ -5,7 +5,7 @@
  * Created Date: Tuesday, June 25th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, October 5th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,28 +14,24 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
-import { ViewEncapsulation } from '@angular/core';
+import * as core from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-
-
-import { UserManagementAPIService } from "../_services/user-management-api.service";
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../_errors/error-component/error.component';
-import { LoadingComponent } from "../_loading/loading.component";
-
 import * as Interface from '../_interfaces/interfaces';
+import { LoadingComponent } from "../_loading/loading.component";
+import { UserManagementAPIService } from "../_services/user-management-api.service";
 
-@Component({
+
+
+
+@core.Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -43,12 +39,14 @@ export class HomeComponent implements OnInit {
   contact_form: FormGroup;
   /** Object for storing all forms that require validation-  @type {HTMLCollectionOf<Element>} */
   forms: HTMLCollectionOf<Element> = null;
-
   request_register_org: FormGroup;
-
   submitted: boolean = false;
   valid: boolean = false;
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VAIDATORS
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   register_organization_validators = {
     'organization_name': [
       { type: 'required', message: 'Organization name is required' },
@@ -77,8 +75,8 @@ export class HomeComponent implements OnInit {
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
-   * @param {Router} router For navigating to other modules/components
-   * @memberof OrganizationHandlerComponent
+   * @param {Router} router for routing/navigating to other components
+   * @memberof HomeComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
@@ -106,10 +104,18 @@ export class HomeComponent implements OnInit {
         Validators.required,
         // Validators.pattern('')
       ])]
-      
+
     })
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @memberof HomeComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     //-------- Form Validation --------
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -145,8 +151,17 @@ export class HomeComponent implements OnInit {
   }
 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       REQUEST TO REGISTER
+  /**
+   * This function allwos an organizaion to request to register for the system
+   *
+   * @returns
+   * @memberof HomeComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   requestToRegister() {
-    
+
     this.submitted = true;
 
     if (this.request_register_org.invalid) {
@@ -181,7 +196,7 @@ export class HomeComponent implements OnInit {
         //POPUP MESSAGE
       }
     });
-    
+
   }
 
 }

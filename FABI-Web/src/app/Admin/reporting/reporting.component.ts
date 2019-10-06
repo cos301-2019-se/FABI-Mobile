@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, October 3rd 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,61 +13,48 @@
  * <<license>>
  */
 
-import {
-  Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef, Renderer2,
-  Pipe, PipeTransform } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { DomSanitizer } from '@angular/platform-browser';
-import { sharedStylesheetJitUrl } from '@angular/compiler';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import * as core from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
-import { CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
-
+import { Router } from '@angular/router';
+import html2canvas from 'html2canvas';
 //These imports are used to created a downloadable PDF of the reports
 import * as jspdf from 'jspdf';
 import 'jspdf-autotable';
-import html2canvas from 'html2canvas';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-//Imports used for creating the data table for the pagination and search functionality 
-import * as $ from 'jquery';
 
-export interface userLogInterface{
+export interface userLogInterface {
   action: string;
   date: string;
   user1: string;
   user2: string;
 }
 
-export interface databaseLogInterface{
+export interface databaseLogInterface {
   action: string;
   date: string;
   user: string;
   details: string;
 }
 
-export interface accessLogInterface{
+export interface accessLogInterface {
   details: string;
   date: string;
   user: string;
 }
 
-export interface errorLogInterface{
+export interface errorLogInterface {
   code: string;
   date: string;
   details: string;
   user: string;
 }
 
-export interface requestReportInterface{
+export interface requestReportInterface {
   user: string;
   requestor: string;
   cultureNumber: string;
@@ -77,7 +64,7 @@ export interface requestReportInterface{
   dateSubmitted: string;
 }
 
-export interface depositReportInterface{
+export interface depositReportInterface {
   user: string;
   cultureNumber: string;
   name: string;
@@ -88,7 +75,7 @@ export interface depositReportInterface{
   dateSubmitted: string;
 }
 
-export interface revitalizationReportInterface{
+export interface revitalizationReportInterface {
   user: string;
   requestor: string;
   cultureNumber: string;
@@ -99,19 +86,19 @@ export interface revitalizationReportInterface{
   dateSubmitted: string;
 }
 
-export interface StaffMember{
+export interface StaffMember {
   fname: string;
   surname: string;
   email: string;
   id: string;
 }
 
-@Component({
+@core.Component({
   selector: 'app-reporting',
   templateUrl: './reporting.component.html',
   styleUrls: ['./reporting.component.scss']
 })
-export class ReportingComponent implements OnInit {
+export class ReportingComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -131,7 +118,6 @@ export class ReportingComponent implements OnInit {
   depositLogs: boolean = false;
   /** Indicates if there are logs of type REVITALIZATION - @type {boolean} */
   revitalizationLogs: boolean = false;
-
   /** Indicates if the error report has been generated - @type {boolean} */
   errorReport: boolean = false;
   /** Indicates if the request report has been generated - @type {boolean} */
@@ -140,10 +126,8 @@ export class ReportingComponent implements OnInit {
   depositReport: boolean = false;
   /** Indicates if the revitalization report has been generated - @type {boolean} */
   revitalizationReport: boolean = false;
-
   /** The current date in string format - @type {string} */
   date: string;
-
   /** Array holding the user logs - @type {userLogInterface} */
   userLogsArray: userLogInterface[] = [];
   /** Array holding the database logs - @type {databaseLogInterface} */
@@ -160,13 +144,13 @@ export class ReportingComponent implements OnInit {
   revitalizationLogsArray: revitalizationReportInterface[] = [];
 
   /** Holds the table element (errorReportPDF) from the HTML page - @type {ElementRef} */
-  @ViewChild("errorReportPDF") errorReportPDF: ElementRef;
+  @core.ViewChild("errorReportPDF") errorReportPDF: core.ElementRef;
   /** Holds the table element (requestReportPDF) from the HTML page - @type {ElementRef} */
-  @ViewChild("requestReportPDF") requestReportPDF: ElementRef;
+  @core.ViewChild("requestReportPDF") requestReportPDF: core.ElementRef;
   /** Holds the table element (depositReportPDF) from the HTML page - @type {ElementRef} */
-  @ViewChild("depositReportPDF") depositReportPDF: ElementRef;
+  @core.ViewChild("depositReportPDF") depositReportPDF: core.ElementRef;
   /** Holds the table element (revitalizationReportPDF) from the HTML page - @type {ElementRef} */
-  @ViewChild("revitalizationReportPDF") revitalizationReportPDF: ElementRef;
+  @core.ViewChild("revitalizationReportPDF") revitalizationReportPDF: core.ElementRef;
 
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
@@ -182,16 +166,12 @@ export class ReportingComponent implements OnInit {
   reportingTab: boolean = false;
   /** Indicates if the log tab is hidden/shown - @type {boolean} */
   logsTab: boolean = false;
-
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
-
-  /** Object array for holding the staff members -  @type {StaffMember[]} */                        
-  staff: StaffMember[] = []; 
-
+  /** Object array for holding the staff members -  @type {StaffMember[]} */
+  staff: StaffMember[] = [];
   /** Stores the data table -  @type {string} */
   public tableWidget: any;
-
   /** The search item the user is looking for in the table -  @type {string} */
   public searchItem: string = "";
   /** The search item the user is looking for in the table -  @type {string} */
@@ -206,9 +186,9 @@ export class ReportingComponent implements OnInit {
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API Service
    * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {Router} router
-   * @param {Renderer2} renderer Used for creating the PDF documents to download
+   * @param {core.Renderer2} renderer Used for creating the PDF documents to download
    * 
    * @memberof ReportingComponent
    */
@@ -216,7 +196,7 @@ export class ReportingComponent implements OnInit {
   constructor(
     private notificationLoggingService: NotificationLoggingService,
     private userManagementService: UserManagementAPIService,
-    private renderer: Renderer2,
+    private renderer: core.Renderer2,
     private authService: AuthenticationService,
     private router: Router,
     private cultureCollectionService: CultureCollectionAPIService,
@@ -224,7 +204,31 @@ export class ReportingComponent implements OnInit {
     private snackBar: MatSnackBar
   ) { }
 
-  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @memberof ReportingComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    this.getAllStaff();
+
+    //Calling the neccessary functions as the page loads
+    var currentDate = new Date();
+    this.date = ('0' + currentDate.getDate()).slice(-2) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
+    this.loadAllLogs();
+
+    //Generate first displayed report so that it is ready to load
+    this.generateRequestReport();
+
+    //Generate first displayed log so that it is ready to load
+    this.setUserLogTable();
+  }
+
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    GET ALL STAFF
   /**
@@ -232,20 +236,20 @@ export class ReportingComponent implements OnInit {
    *  @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllStaff(){
-     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-     this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
-      if(response.success == true){
+  getAllStaff() {
+    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+    this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
+      if (response.success == true) {
         var data = response.data.qs.staff;
-        
-        for(var i = 0; i < data.length; i++){
-          var tempStaff : StaffMember = {fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id};
+
+        for (var i = 0; i < data.length; i++) {
+          var tempStaff: StaffMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id };
           this.staff.push(tempStaff);
         }
       }
-      else{
+      else {
         //Error handling
-        }
+      }
     });
   }
 
@@ -258,8 +262,8 @@ export class ReportingComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadUserDetails(userID: string) {
     var person = '';
-    for(var i = 0; i < this.staff.length; i++){
-      if(this.staff[i].id == userID){
+    for (var i = 0; i < this.staff.length; i++) {
+      if (this.staff[i].id == userID) {
         person = this.staff[i].fname + ' ' + this.staff[i].surname;
       }
     }
@@ -287,9 +291,9 @@ export class ReportingComponent implements OnInit {
 
         for (var i = 0; i < data.length; i++) {
           // var tempArray: any = [];
-          var tempArray: userLogInterface = {action: "", date: "", user1: "", user2: ""};
+          var tempArray: userLogInterface = { action: "", date: "", user1: "", user2: "" };
 
-          if(data[i].action == "/createOrganization"){
+          if (data[i].action == "/createOrganization") {
             tempArray.action = "New organization was added";
 
             tempArray.date = this.getDate(data[i].dateString);
@@ -298,7 +302,7 @@ export class ReportingComponent implements OnInit {
             tempArray.user1 = this.loadUserDetails(data[i].details);
             tempArray.user2 = data[i].org2;
           }
-          else if(data[i].action == "/removeOrg"){
+          else if (data[i].action == "/removeOrg") {
             tempArray.action = "Organization removed";
 
             tempArray.date = this.getDate(data[i].dateString);
@@ -307,7 +311,7 @@ export class ReportingComponent implements OnInit {
             tempArray.user1 = this.loadUserDetails(data[i].details);
             tempArray.user2 = data[i].org2;
           }
-          else if(data[i].action == '/addStaff'){
+          else if (data[i].action == '/addStaff') {
             tempArray.action = 'Added new user';
 
             tempArray.date = this.getDate(data[i].dateString);
@@ -316,7 +320,7 @@ export class ReportingComponent implements OnInit {
             tempArray.user1 = this.loadUserDetails(data[i].details);
             tempArray.user2 = this.loadUserDetails(data[i].user);
           }
-          else if(data[i].action == '/updateStaffMember'){
+          else if (data[i].action == '/updateStaffMember') {
             tempArray.action = 'Updated user details';
 
             tempArray.date = this.getDate(data[i].dateString);
@@ -325,7 +329,7 @@ export class ReportingComponent implements OnInit {
             tempArray.user1 = this.loadUserDetails(data[i].details);
             tempArray.user2 = this.loadUserDetails(data[i].user);
           }
-          else if(data[i].action == '/removeStaff'){
+          else if (data[i].action == '/removeStaff') {
             tempArray.action = 'Removed user from system';
 
             tempArray.date = this.getDate(data[i].dateString);
@@ -334,7 +338,7 @@ export class ReportingComponent implements OnInit {
             tempArray.user1 = this.loadUserDetails(data[i].details);
             tempArray.user2 = this.loadUserDetails(data[i].user);
           }
-          else if(data[i].action == "/udateStaffDatabaseAccess" || data[i].action == "/updateStaffDatabaseAccess"){
+          else if (data[i].action == "/udateStaffDatabaseAccess" || data[i].action == "/updateStaffDatabaseAccess") {
             tempArray.action = 'User database access updated';
 
             tempArray.date = this.getDate(data[i].dateString);
@@ -357,20 +361,20 @@ export class ReportingComponent implements OnInit {
       if (response.success = true) {
         //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
-        
-        for(var i = 0; i < data.length; i++){
-          var tempArray: databaseLogInterface = {action: "", date: "", user: "", details: ""};
-          
-          if(data[i].action == '/createDatabase' || data[i].action == 'C'){
+
+        for (var i = 0; i < data.length; i++) {
+          var tempArray: databaseLogInterface = { action: "", date: "", user: "", details: "" };
+
+          if (data[i].action == '/createDatabase' || data[i].action == 'C') {
             tempArray.action = 'Added new database';
           }
-          else if(data[i].action == '/addDoc'){
+          else if (data[i].action == '/addDoc') {
             tempArray.action = 'Document added to database';
           }
-          else if(data[i].action == '/porting'){
+          else if (data[i].action == '/porting') {
             tempArray.action = 'Database was ported';
           }
-          else if(data[i].action == '/retrieveDatabase'){
+          else if (data[i].action == '/retrieveDatabase') {
             tempArray.action = 'Database was retrieved';
           }
 
@@ -396,7 +400,7 @@ export class ReportingComponent implements OnInit {
         var data = response.data.content.data.Logs;
 
         for (var i = 0; i < data.length; i++) {
-          var tempArray: accessLogInterface = {details: '', date: '', user: ''};
+          var tempArray: accessLogInterface = { details: '', date: '', user: '' };
 
           tempArray.details = data[i].details;
           tempArray.date = this.getDate(data[i].dateString);
@@ -418,9 +422,9 @@ export class ReportingComponent implements OnInit {
       if (response.success = true) {
         //Temporarily holds the data returned from the API call
         var data = response.data.content.data.Logs;
-        
-        for(var i = 0; i < data.length; i++){
-          var tempArray: errorLogInterface = {code: '', date: '', details: '', user: ''};
+
+        for (var i = 0; i < data.length; i++) {
+          var tempArray: errorLogInterface = { code: '', date: '', details: '', user: '' };
 
           tempArray.code = data[i].statusCode;
           tempArray.date = this.getDate(data[i].dateString);
@@ -478,7 +482,7 @@ export class ReportingComponent implements OnInit {
         var data = response.data.content.data.Logs;
 
         for (var i = 0; i < data.length; i++) {
-          var tempArray: errorLogInterface = {code: '', date: '', details: '', user: ''};
+          var tempArray: errorLogInterface = { code: '', date: '', details: '', user: '' };
 
           tempArray.code = data[i].statusCode;
           tempArray.date = this.getDate(data[i].dateString);
@@ -540,9 +544,11 @@ export class ReportingComponent implements OnInit {
         var data = response.data.qs.forms;
 
         for (var i = 0; i < data.length; i++) {
-          var tempArray: requestReportInterface = {user: '', requestor: '', cultureNumber: '', taxonName: '',
-            referenceNumber: '', dateRequested: '', dateSubmitted: ''};
-          
+          var tempArray: requestReportInterface = {
+            user: '', requestor: '', cultureNumber: '', taxonName: '',
+            referenceNumber: '', dateRequested: '', dateSubmitted: ''
+          };
+
           tempArray.user = this.loadUserDetails(data[i].userID);
           tempArray.requestor = data[i].requestor;
           tempArray.cultureNumber = data[i].cultureNumber;
@@ -608,17 +614,19 @@ export class ReportingComponent implements OnInit {
         var data = response.data.qs.forms;
 
         for (var i = 0; i < data.length; i++) {
-          var tempArray: depositReportInterface = {user: '', cultureNumber: '', name: '', collectedBy: '',
-            dateCollected: '', isolatedBy : '', identifiedBy: '', dateSubmitted: ''};
-          
+          var tempArray: depositReportInterface = {
+            user: '', cultureNumber: '', name: '', collectedBy: '',
+            dateCollected: '', isolatedBy: '', identifiedBy: '', dateSubmitted: ''
+          };
+
           tempArray.user = this.loadUserDetails(data[i].userID);
           tempArray.cultureNumber = data[i].cmwCultureNumber;
           tempArray.name = data[i].name;
-          
-          if(!data[i].collected_by){
+
+          if (!data[i].collected_by) {
             tempArray.collectedBy = data[i].collectedBy;
           }
-          else{
+          else {
             tempArray.collectedBy = data[i].collected_by;
           }
 
@@ -684,9 +692,11 @@ export class ReportingComponent implements OnInit {
         var data = response.data.qs.forms;
 
         for (var i = 0; i < data.length; i++) {
-          var tempArray: revitalizationReportInterface = {user: '', requestor: '', cultureNumber: '', cultureName: '',
-            referenceNumber: '', dateRequested: '', dateReturned: '', dateSubmitted: ''};
-          
+          var tempArray: revitalizationReportInterface = {
+            user: '', requestor: '', cultureNumber: '', cultureName: '',
+            referenceNumber: '', dateRequested: '', dateReturned: '', dateSubmitted: ''
+          };
+
           tempArray.user = this.loadUserDetails(data[i].userID);
           tempArray.requestor = data[i].requestor;
           tempArray.cultureNumber = data[i].cultureNumber;
@@ -809,30 +819,6 @@ export class ReportingComponent implements OnInit {
     return newDate;
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            NG ON INIT  
-  /**
-   * This function is called when the page loads
-   * 
-   * @memberof ReportingComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    this.currentUser = this.authService.getCurrentSessionValue.user;
-    this.getAllStaff();
-
-    //Calling the neccessary functions as the page loads
-    var currentDate = new Date();
-    this.date = ('0' + currentDate.getDate()).slice(-2) + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
-    this.loadAllLogs();
-
-    //Generate first displayed report so that it is ready to load
-    this.generateRequestReport();
-
-    //Generate first displayed log so that it is ready to load
-    this.setUserLogTable();
-  }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 
@@ -916,7 +902,7 @@ export class ReportingComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleReportSection() {
-    this.reportingTab = !this.reportingTab;    
+    this.reportingTab = !this.reportingTab;
     this.logsTab = false;
 
     //Generate the Request report so that it is ready to be displayed when the report menu option is clicked
@@ -952,7 +938,7 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setUserLogTable(){
+  setUserLogTable() {
     this.userLogs = true;
     this.databaseLogs = false;
     this.accessLogs = false;
@@ -967,7 +953,7 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setDatabaseLogTable(){
+  setDatabaseLogTable() {
     this.userLogs = false;
     this.databaseLogs = true;
     this.accessLogs = false;
@@ -982,7 +968,7 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setAccessLogTable(){
+  setAccessLogTable() {
     this.userLogs = false;
     this.databaseLogs = false;
     this.accessLogs = true;
@@ -997,7 +983,7 @@ export class ReportingComponent implements OnInit {
    * @memberof ReportingComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  setErrorLogTable(){
+  setErrorLogTable() {
     this.userLogs = false;
     this.databaseLogs = false;
     this.accessLogs = false;

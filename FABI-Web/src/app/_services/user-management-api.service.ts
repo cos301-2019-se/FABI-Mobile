@@ -93,7 +93,7 @@ export class UserManagementAPIService {
   * Creates an instance of UserManagementAPIService.
   * 
   * @param {HttpClient} http For making calls to the API
-  * @param {AuthenticationService} authService Used for all authentication and session control
+  * @param {AuthenticationService} authService for calling the *authentication* service
   * 
   * @memberof UserManagementAPIService
   */

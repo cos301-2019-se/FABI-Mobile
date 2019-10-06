@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, September 28th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,55 +14,56 @@
  */
 
 
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import * as core from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
+import { SampleFormComponent } from '../sample-form/sample-form.component';
+import { AuthenticationGuard } from '../_guards/authentication.guard';
+import { Role } from '../_interfaces/role';
+import { MemberHandlerComponent } from "./member-handler/member-handler.component";
 import { OrganizationDashboardComponent } from './organization-dashboard/organization-dashboard.component';
 // import { MemberHandlerComponent } from './member-handler/member-handler.component';
 import { OrganizationProfileComponent } from './organization-profile/organization-profile.component';
 import { OrganizationViewSamplesComponent } from './organization-view-samples/organization-view-samples.component';
-import { SampleFormComponent } from '../sample-form/sample-form.component';
-import { MemberHandlerComponent } from "./member-handler/member-handler.component";
-import { AuthenticationGuard } from '../_guards/authentication.guard';
-import { Role } from '../_interfaces/role';
-import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
-    path: 'organization-dashboard', 
+    path: 'organization-dashboard',
     component: OrganizationDashboardComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.OrganizationAdmin] }
+    data: { roles: [Role.OrganizationAdmin] }
   },
   {
-    path: 'member-handler', 
+    path: 'member-handler',
     component: MemberHandlerComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.OrganizationAdmin] }
+    data: { roles: [Role.OrganizationAdmin] }
   },
   {
-    path: 'organization-profile', 
+    path: 'organization-profile',
     component: OrganizationProfileComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.OrganizationAdmin] }
+    data: { roles: [Role.OrganizationAdmin] }
   },
   {
-    path: 'organization-view-samples', 
+    path: 'organization-view-samples',
     component: OrganizationViewSamplesComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.OrganizationAdmin] }
+    data: { roles: [Role.OrganizationAdmin] }
   },
   {
-    path: 'submit-sample', 
+    path: 'submit-sample',
     component: SampleFormComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.OrganizationAdmin] }
+    data: { roles: [Role.OrganizationAdmin] }
   },
-  { path:"**",
+  {
+    path: "**",
     component: PageNotFoundComponent
   }
 ];
 
-@NgModule({
+@core.NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

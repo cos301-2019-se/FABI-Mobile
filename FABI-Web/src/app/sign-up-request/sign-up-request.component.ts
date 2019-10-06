@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, October 5th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,23 +14,20 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { UserManagementAPIService } from "../_services/user-management-api.service";
+import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../_errors/error-component/error.component';
-
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import * as Interface from '../_interfaces/interfaces';
+import { UserManagementAPIService } from "../_services/user-management-api.service";
 
-@Component({
+
+@core.Component({
   selector: 'app-sign-up-request',
   templateUrl: './sign-up-request.component.html',
   styleUrls: ['./sign-up-request.component.scss']
 })
-export class SignUpRequestComponent implements OnInit {
+export class SignUpRequestComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -53,10 +50,6 @@ export class SignUpRequestComponent implements OnInit {
   /** Object for storing all forms that require validation-  @type {HTMLCollectionOf<Element>} */
   forms: HTMLCollectionOf<Element> = null;
 
-  sign_up_form = new FormGroup({
-
-  });
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
   /**
@@ -65,7 +58,7 @@ export class SignUpRequestComponent implements OnInit {
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
-   * @param {Router} router For navigating to other modules/components
+   * @param {Router} router for routing/navigating to other components
    * @memberof SignUpRequestComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,6 +84,15 @@ export class SignUpRequestComponent implements OnInit {
     })
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @memberof SignUpRequestComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     //-------- Location --------
     if (navigator.geolocation) {
@@ -105,10 +107,10 @@ export class SignUpRequestComponent implements OnInit {
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     this.forms = document.getElementsByClassName("needs-validation");
     // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(this.forms, function(form) {
+    var validation = Array.prototype.filter.call(this.forms, function (form) {
       form.addEventListener(
         "submit",
-        function(event) {
+        function (event) {
           if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();

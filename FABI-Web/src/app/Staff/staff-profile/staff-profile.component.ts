@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, October 5th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,22 +13,22 @@
  * <<license>>
  */
 
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
-import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar, MatDialog } from '@angular/material';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { LoadingComponent } from 'src/app/_loading/loading.component';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
 
-@Component({
+@core.Component({
   selector: 'app-staff-profile',
   templateUrl: './staff-profile.component.html',
   styleUrls: ['./staff-profile.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class StaffProfileComponent implements OnInit {
+export class StaffProfileComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -50,29 +50,28 @@ export class StaffProfileComponent implements OnInit {
   password: string = '';
   /** The staff member's confirmed password -  @type {string} */
   confirmPassword: string = '';
-
   /** The form to display the staff member's details -  @type {FormGroup} */
   staffProfileForm: FormGroup;
-
   /** The form to change the user's password -  @type {FormGroup} */
   changePasswordForm: FormGroup;
-
   /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
   userProfileLoading: boolean = true;
-
-
-  /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput: ElementRef;
-  /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput: ElementRef;
-
   /** The user that is currently logged in -  @type {any} */
   currentUser: any = {};
-
+  /** if the user is editing their profile details - @type {boolean} */
   isEditingProfile: boolean = false;
-
+  /** if the form has been submitted - @type {boolean} */
   submitted: boolean;
 
+  /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
+  @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
+  /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
+  @core.ViewChild("confirmInput") confirmInput: core.ElementRef;
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VALIDATORS
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   staff_profile_validators = {
     'admin_name': [
       { type: 'required', message: 'First name required' },
@@ -85,7 +84,6 @@ export class StaffProfileComponent implements OnInit {
       { type: 'pattern', message: 'Invalid email' }
     ]
   }
-
 
   change_password_validators = {
     'current_password': [
@@ -113,7 +111,7 @@ export class StaffProfileComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {FormBuilder} formBuilder Used to get the form elements from the HTML page
    * @param {Router} router
    * 
@@ -147,8 +145,8 @@ export class StaffProfileComponent implements OnInit {
       ])],
       confirm_password: ['', Validators.required]
     }, {
-        validator: this.PasswordMatch('new_password', 'confirm_password')
-      });
+      validator: this.PasswordMatch('new_password', 'confirm_password')
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,20 +154,12 @@ export class StaffProfileComponent implements OnInit {
   /**
    * This function is called when the page loads
    * 
-   * @description 1. Call loadStaffProfileDetails() | 2. Call loadNotifications() 
+   * @description 1. Call loadStaffProfileDetails() 
    * 
    * @memberof StaffProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    // this.authService.temporaryLoginStaff().subscribe((response: any) => {
-    //   this.currentUser = this.authService.getCurrentSessionValue.user;
-    //   this.loadStaffProfileDetails();
-    // });
-
-    //******** TO BE USED IN PRODUCTION: ********
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
@@ -179,7 +169,7 @@ export class StaffProfileComponent implements OnInit {
     this.staffProfileForm.get('staff_surname').disable();
     this.staffProfileForm.get('staff_email').disable();
 
-   
+
   }
 
 
@@ -279,6 +269,15 @@ export class StaffProfileComponent implements OnInit {
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        CHANGE PASSWORD
+  /**
+   * This function is used to change the users password
+   *
+   * @returns
+   * @memberof StaffProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   changePassword() {
 
     this.submitted = true;
@@ -314,6 +313,18 @@ export class StaffProfileComponent implements OnInit {
   }
 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     PASSWORD MATCH CHECK
+  /**
+   * This function will check that the *new password* and the *confirm password* fields are the same for the `change password` method.
+   *  This function is used for the form validators.
+   *
+   * @param {string} newP
+   * @param {string} confirmP
+   * @returns
+   * @memberof StaffProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   PasswordMatch(newP: string, confirmP: string) {
     return (formGroup: FormGroup) => {
       const newControl = formGroup.controls[newP];
@@ -384,6 +395,5 @@ export class StaffProfileComponent implements OnInit {
     }
 
   }
-
 
 }

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, October 5th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,22 +13,20 @@
  * <<license>>
  */
 
-import * as Interface from '../_interfaces/interfaces';
-import { Component, OnInit, ViewEncapsulation, Injector, NgZone } from '@angular/core';
+import * as core from '@agm/core';
 import { Location } from '@angular/common';
-import { AuthenticationService } from '../_services/authentication.service';
-import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, FormArray } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../_errors/error-component/error.component';
+import { Component, Injector, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { DiagnosticClinicAPIService } from '../_services/diagnostic-clinic-api.service';
 import { MapsWindowComponent } from '../maps-window/maps-window.component';
-import { MapsAPILoader } from '@agm/core';
+import * as Interface from '../_interfaces/interfaces';
+import { AuthenticationService } from '../_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../_services/diagnostic-clinic-api.service';
+
 /** Global declaration of 'google' so that it can be used throught this page - @type {any} */
 declare var google: any;
-// import { truncate } from 'fs';
 
 @Component({
   selector: 'app-sample-form',
@@ -49,27 +47,23 @@ export class SampleFormComponent implements OnInit {
   errors: boolean = false;
   plantationAddress: Interface.Address;
   plantationLocation: Interface.Location;
+  sampleDetails: boolean = false;
+  sampleType: boolean = false;
+  symptoms: boolean = false;
+  symptomDistribution: boolean = false;
+  /** The location in longitude and latitude - @type {Interface.Location} */
+  public location: Interface.Location = { latitude: 0, longitude: 0 };
+  /** The address that contains the street name, city, province, and country - @type {Interface.Address} */
+  public address: Interface.Address = { street: '', city: '', province: '', country: '', formatted_address: '' };
+  private geocoder: any;
+  sampleTypesSelected: string[] = [];
 
-  /** Specifies what step of the form the user is on - @type {boolean} */  
+  /** Specifies what step of the form the user is on - @type {boolean} */
   stepOneContent: boolean = false;
   stepTwoContent: boolean = false;
   stepThreeContent: boolean = false;
   stepFourContent: boolean = false;
   stepFiveContent: boolean = false;
-
-  sampleDetails: boolean = false;
-  sampleType: boolean = false;
-
-  symptoms: boolean = false;
-  symptomDistribution: boolean = false;
-
-  /** The location in longitude and latitude - @type {Interface.Location} */
-  public location: Interface.Location = {latitude: 0, longitude: 0};
-  /** The address that contains the street name, city, province, and country - @type {Interface.Address} */
-  public address: Interface.Address = {street: '', city: '', province: '', country: '', formatted_address: ''};
-  private geocoder: any;
-
-  sampleTypesSelected: string[] = [];
 
   sample_types: any = [
     {
@@ -122,7 +116,7 @@ export class SampleFormComponent implements OnInit {
   /**
    * Creates an instance of SampleFormComponent.
    * 
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {DiagnosticClinicAPIService} clinicService Used for making calls to the Diagnostic Clinic API Service
    * @param {Location} pageLocation Used to navigate back to the previous page
    * @param {FormBuilder} formBuilder Used to build the HTML form
@@ -135,17 +129,17 @@ export class SampleFormComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     private clinicService: DiagnosticClinicAPIService,
     private pageLocation: Location,
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private router: Router,
-    private mapLoader: MapsAPILoader, 
+    private mapLoader: core.MapsAPILoader,
     private ngZone: NgZone
-    ) {
-      this.sampleForm = this.formBuilder.group({
+  ) {
+    this.sampleForm = this.formBuilder.group({
 
       // Sample Details
       sample_details: this.formBuilder.group({
@@ -155,7 +149,7 @@ export class SampleFormComponent implements OnInit {
         date_collected: ['', Validators.required],
         date_sent: ['', Validators.required],
       }),
-      
+
       // Plantation Details
       plantation_details: this.formBuilder.group({
         street: ['', Validators.required],
@@ -170,7 +164,7 @@ export class SampleFormComponent implements OnInit {
       types: this.formBuilder.group({
         set_types: new FormArray([]),
         other: [''],
-      }, {validator: this.requireCheckboxesToBeCheckedValidator()}),   
+      }, { validator: this.requireCheckboxesToBeCheckedValidator() }),
 
       // Symptoms
       symptoms: this.formBuilder.group({
@@ -183,7 +177,7 @@ export class SampleFormComponent implements OnInit {
         death: [false],
         wood: [false],
         other: [''],
-      }, {validator: this.requireCheckboxesToBeCheckedValidator()}),
+      }, { validator: this.requireCheckboxesToBeCheckedValidator() }),
 
       // Distribution of Symptoms
       distribution: this.formBuilder.group({
@@ -192,8 +186,8 @@ export class SampleFormComponent implements OnInit {
         general: [false],
         clumps: [false],
         na: [false],
-        other: [''],  
-      }, {validator: this.requireCheckboxesToBeCheckedValidator()}),
+        other: [''],
+      }, { validator: this.requireCheckboxesToBeCheckedValidator() }),
       percentage_plants_affected: ['', Validators.required],
 
       // Conditions
@@ -209,12 +203,20 @@ export class SampleFormComponent implements OnInit {
       // Permission
       permissions: this.formBuilder.group({
         landowner_name: ['', Validators.required],
-        permission_granted: ['', Validators.required] 
+        permission_granted: ['', Validators.required]
       })
     })
   }
 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @memberof SampleFormComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.currentUser = this.authService.getCurrentSessionValue.user;
 
@@ -224,28 +226,28 @@ export class SampleFormComponent implements OnInit {
           if (position) {
             this.location.latitude = position.coords.latitude;
             this.location.longitude = position.coords.longitude;
-            this.plantationLocation = this.location; 
+            this.plantationLocation = this.location;
             this.getAddress(this.location.latitude, this.location.longitude);
           }
-        },(error: PositionError) => console.log(error));
+        }, (error: PositionError) => console.log(error));
       } else {
         alert("Geolocation is not supported by this browser.");
       }
 
       this.geocoder = new google.maps.Geocoder;
     });
-    
-    
+
+
     let today: Date = new Date();
-    
-    this.sampleForm.patchValue( {
+
+    this.sampleForm.patchValue({
       sample_details: {
-        date_sent: today.toISOString().substring(0,10)
+        date_sent: today.toISOString().substring(0, 10)
       }
     });
 
     this.sample_types.map(() => {
-      const control = new FormControl(false); 
+      const control = new FormControl(false);
       (this.sampleForm.get('types').get('set_types') as FormArray).push(control)
     });
 
@@ -266,9 +268,9 @@ export class SampleFormComponent implements OnInit {
   sendForm() {
     this.submitted = true;
 
-    if(this.sampleForm.invalid) {
+    if (this.sampleForm.invalid) {
       return;
-    }    
+    }
 
     const formDetails: Interface.SampleFormData = {
       // Sample Details
@@ -289,7 +291,7 @@ export class SampleFormComponent implements OnInit {
         province: this.sampleForm.get('plantation_details').get('province').value,
         gps: this.sampleForm.get('plantation_details').get('gps').value
       },
-      
+
       // Type of Sample
       types: this.sampleTypesSelected,
 
@@ -332,9 +334,9 @@ export class SampleFormComponent implements OnInit {
         landowner_name: this.sampleForm.get('permissions').get('landowner_name').value,
         permission_granted: this.sampleForm.get('permissions').get('permission_granted').value
       }
-      
+
     };
-    
+
     this.clinicService.submitSampleForm(formDetails).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -345,14 +347,14 @@ export class SampleFormComponent implements OnInit {
         //Set pre-diagnosis
         localStorage.setItem('pre-diagnosis', response.data.prediagnosis);
 
-        if(this.currentUser.organisation == 'FABI'){
+        if (this.currentUser.organisation == 'FABI') {
           //Navigate to the pre-diagnosis 
           this.router.navigate(['/pre-diagnosis']);
         }
-        else{
+        else {
           this.pageLocation.back();
         }
-      } 
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
       }
@@ -372,15 +374,15 @@ export class SampleFormComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectLocation() {
-    let mapRef = this.dialog.open(MapsWindowComponent, { height: '80%', width: '80%'});
+    let mapRef = this.dialog.open(MapsWindowComponent, { height: '80%', width: '80%' });
 
     mapRef.afterClosed().subscribe((data) => {
 
-      if(data.address && data.location) {
+      if (data.address && data.location) {
         this.plantationAddress = data.address;
-        this.plantationLocation = data.location; 
+        this.plantationLocation = data.location;
 
-        this.sampleForm.patchValue( {
+        this.sampleForm.patchValue({
           plantation_details: {
             street: this.plantationAddress.street,
             area: this.plantationAddress.area,
@@ -393,12 +395,163 @@ export class SampleFormComponent implements OnInit {
         this.sampleForm.get('plantation_details').disable();
         this.sampleForm.get('plantation_details').get('farm').enable();
       }
-      
+
     });
   }
 
-  showStepTwo() {    
-    if(this.sampleForm.get('plantation_details').invalid) {
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET ADDRESS  
+  /**
+   * This function is used to get the address based on the longitude and latitude provided.
+   * 
+   * @memberof MapsWindowComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAddress(latitude, longitude) {
+    this.geocoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+      if (status === 'OK') {
+        if (results[0]) {
+          let address_details = results[0];
+
+          this.address.formatted_address = address_details.formatted_address;
+
+          address_details.address_components.forEach(component => {
+            if (component.types[0] == "street_number") {
+              this.address.street_number = component.long_name;
+
+            } else if (component.types[0] == "route") {
+              this.address.street = component.long_name;
+
+            } else if (component.types[0] == "sublocality" || component.types[0] == "political") {
+
+              if (component.types[1] == "sublocality") {
+                this.address.area = component.long_name;
+              }
+
+            } else if (component.types[0] == "locality") {
+              this.address.city = component.long_name;
+
+            } else if (component.types[0] == "administrative_area_level_1") {
+              this.address.province = component.long_name;
+
+            } else if (component.types[0] == "country") {
+              this.address.country = component.long_name;
+
+            } else if (component.types[0] == "postal_code") {
+              this.address.postal_code = component.long_name;
+            }
+          });
+
+          this.plantationAddress = this.address;
+
+          this.sampleForm.patchValue({
+            plantation_details: {
+              street: this.plantationAddress.street,
+              area: this.plantationAddress.area,
+              city: this.plantationAddress.city,
+              province: this.plantationAddress.province,
+              gps: `${this.plantationLocation.latitude},${this.plantationLocation.longitude}`
+            }
+          });
+
+          this.sampleForm.get('plantation_details').disable();
+          this.sampleForm.get('plantation_details').get('farm').enable();
+
+        } else {
+          window.alert('No results found for location address');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          SELECT SAMPLE TYPES
+  /**
+   * This functions  dynamically adds the users selected sample types to the symptoms section on the form, so a user can select 
+   *  symptoms for each type
+   *
+   * @memberof SampleFormComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  selectSampleType() {
+    this.sampleTypesSelected = [];
+
+    this.sampleForm.get('types').get('set_types').value.forEach((value, i) => {
+      if (value == true) {
+        this.sampleTypesSelected.push(this.sample_types[i].name);
+      }
+    });
+
+    let types = this.sampleForm.get('types').value;
+
+    for (const key in types) {
+      if (types.hasOwnProperty(key)) {
+        if (key == 'other' && (types[key] != '' && types[key] != ' ' && types[key] != null)) {
+          this.sampleTypesSelected.push(types[key]);
+        } else if (types[key] == true) {
+          this.sampleTypesSelected.push(key);
+        }
+      }
+    }
+
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          CHECKBOX VALIDATOR
+  /**
+   * This function validates if the minimum nymber of checkboxes have been checked on the sample form.
+   *
+   * @param {number} [minRequired=1]
+   * @returns {ValidatorFn}
+   * @memberof SampleFormComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  requireCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
+    return function validate(formGroup: FormGroup) {
+      let checked = 0;
+
+      Object.keys(formGroup.controls).forEach(key => {
+
+        const control = formGroup.controls[key];
+
+        if (((control.value).length > 1)) {
+
+          for (const key in control.value) {
+
+            if (control.value.hasOwnProperty(key)) {
+              if (control.value[key] === true || (control.value[key] != '' && control.value[key] != ' ' && control.value[key] != null)) {
+                checked++;
+              }
+            }
+          }
+        } else {
+          if (control.value == true || (control.value != '' && control.value != ' ' && control.value != null)) {
+            checked++;
+          }
+        }
+      });
+
+      if (checked < minRequired) {
+        return {
+          requireCheckboxesToBeChecked: true,
+        };
+      }
+
+      return null;
+    };
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        FORM INTERFACE CHANGES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  showStepTwo() {
+    if (this.sampleForm.get('plantation_details').invalid) {
       this.submitted = true;
       return;
     }
@@ -426,31 +579,31 @@ export class SampleFormComponent implements OnInit {
 
   }
 
- showStepOne() {
-  this.stepOneContent = true;
-  this.stepTwoContent = false;
-  this.stepThreeContent = false;
-  this.stepFourContent = false;
-  this.stepFiveContent = false;
+  showStepOne() {
+    this.stepOneContent = true;
+    this.stepTwoContent = false;
+    this.stepThreeContent = false;
+    this.stepFourContent = false;
+    this.stepFiveContent = false;
 
-  $('#step-one-number').addClass('active');
+    $('#step-one-number').addClass('active');
 
-  $('#step-two-number').removeClass('active');
-  $('#step-three-number').removeClass('active');
-  $('#step-four-number').removeClass('active');
-  $('#step-five-number').removeClass('active');
+    $('#step-two-number').removeClass('active');
+    $('#step-three-number').removeClass('active');
+    $('#step-four-number').removeClass('active');
+    $('#step-five-number').removeClass('active');
 
-  $('#step-one-description').addClass('active');
+    $('#step-one-description').addClass('active');
 
-  $('#step-two-description').removeClass('active');
-  $('#step-three-description').removeClass('active');
-  $('#step-four-description').removeClass('active');
-  $('#step-five-description').removeClass('active');
+    $('#step-two-description').removeClass('active');
+    $('#step-three-description').removeClass('active');
+    $('#step-four-description').removeClass('active');
+    $('#step-five-description').removeClass('active');
   }
 
   showSampleDetails() {
     this.sampleDetails = true;
-    this.sampleType  = false;
+    this.sampleType = false;
 
     $('#sample-type-link').removeClass('active');
     $('#sample-details-link').addClass('active');
@@ -458,7 +611,7 @@ export class SampleFormComponent implements OnInit {
 
   showSampleType() {
     this.sampleDetails = false;
-    this.sampleType  = true;
+    this.sampleType = true;
 
     $('#sample-details-link').removeClass('active');
     $('#sample-type-link').addClass('active');
@@ -466,7 +619,7 @@ export class SampleFormComponent implements OnInit {
   }
 
   showStepThree() {
-    if(this.sampleForm.get('sample_details').invalid || this.sampleForm.get('types').invalid) {
+    if (this.sampleForm.get('sample_details').invalid || this.sampleForm.get('types').invalid) {
       this.submitted = true;
       return;
     }
@@ -511,7 +664,7 @@ export class SampleFormComponent implements OnInit {
   }
 
   showStepFour() {
-    if(this.sampleForm.get('symptoms').invalid || this.sampleForm.get('distribution').invalid) {
+    if (this.sampleForm.get('symptoms').invalid || this.sampleForm.get('distribution').invalid) {
       this.submitted = true;
       return;
     }
@@ -539,7 +692,7 @@ export class SampleFormComponent implements OnInit {
   }
 
   showStepFive() {
-    if(this.sampleForm.get('conditions').invalid) {
+    if (this.sampleForm.get('conditions').invalid) {
       this.submitted = true;
       return;
     }
@@ -554,7 +707,7 @@ export class SampleFormComponent implements OnInit {
     $('#step-five-number').addClass('active');
 
     $('#step-one-number').removeClass('active');
-    $('#step-two-number').removeClass('active'); 
+    $('#step-two-number').removeClass('active');
     $('#step-three-number').removeClass('active');
     $('#step-four-number').removeClass('active');
 
@@ -564,132 +717,6 @@ export class SampleFormComponent implements OnInit {
     $('#step-two-description').removeClass('active');
     $('#step-three-description').removeClass('active');
     $('#step-four-description').removeClass('active');
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET ADDRESS  
-  /**
-   * This function is used to get the address based on the longitude and latitude provided.
-   * 
-   * @memberof MapsWindowComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAddress(latitude, longitude) {
-    this.geocoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
-      if (status === 'OK') {
-        if (results[0]) {
-          let address_details = results[0];
-
-          this.address.formatted_address = address_details.formatted_address;
-          
-          address_details.address_components.forEach(component => {
-            if(component.types[0] == "street_number") {
-              this.address.street_number = component.long_name;
-
-            } else if(component.types[0] == "route") {
-              this.address.street = component.long_name;
-
-            } else if(component.types[0] == "sublocality" || component.types[0] == "political") {
-                
-              if(component.types[1] == "sublocality") {
-                this.address.area = component.long_name;
-              }
-
-            } else if(component.types[0] == "locality") {
-              this.address.city = component.long_name;
-              
-            } else if(component.types[0] == "administrative_area_level_1") {
-              this.address.province = component.long_name;
-              
-            } else if(component.types[0] == "country") {
-              this.address.country = component.long_name;
-              
-            } else if(component.types[0] == "postal_code") {
-              this.address.postal_code = component.long_name;
-            }
-          });
-
-          this.plantationAddress = this.address;
-
-          this.sampleForm.patchValue( {
-            plantation_details: {
-              street: this.plantationAddress.street,
-              area: this.plantationAddress.area,
-              city: this.plantationAddress.city,
-              province: this.plantationAddress.province,
-              gps: `${this.plantationLocation.latitude},${this.plantationLocation.longitude}`
-            }
-          });
-
-          this.sampleForm.get('plantation_details').disable();
-          this.sampleForm.get('plantation_details').get('farm').enable();
-
-        } else {
-          window.alert('No results found for location address');
-        }
-      } else {
-        window.alert('Geocoder failed due to: ' + status);
-      }
-
-    });
-  }
-
-  selectSampleType() {
-    this.sampleTypesSelected = [];
-
-    this.sampleForm.get('types').get('set_types').value.forEach((value, i)=> {
-      if(value == true) {
-        this.sampleTypesSelected.push(this.sample_types[i].name);
-      }
-    });
-
-    let types = this.sampleForm.get('types').value;
-
-    for (const key in types) {
-      if (types.hasOwnProperty(key)) {
-        if(key == 'other' && (types[key] != '' && types[key] != ' ' && types[key] != null)) {
-          this.sampleTypesSelected.push(types[key]);
-        } else if(types[key] == true) {
-          this.sampleTypesSelected.push(key);
-        }
-      }
-    }
-
-  }
-
-  requireCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
-    return function validate (formGroup: FormGroup) {
-      let checked = 0;
-  
-      Object.keys(formGroup.controls).forEach(key => {
-
-        const control = formGroup.controls[key];
-
-        if(((control.value).length > 1)) {
-
-          for (const key in control.value) {
-            
-            if (control.value.hasOwnProperty(key)) {
-              if (control.value[key] === true || (control.value[key] != '' && control.value[key] != ' ' && control.value[key] != null)) {
-                checked ++;
-              } 
-            }
-          }
-        } else {
-          if (control.value == true || (control.value != '' && control.value != ' ' && control.value != null)) {
-            checked ++;
-          }
-        }
-      });
-  
-      if (checked < minRequired) {
-        return {
-          requireCheckboxesToBeChecked: true,
-        };
-      }
-  
-      return null;
-    };
   }
 
 }

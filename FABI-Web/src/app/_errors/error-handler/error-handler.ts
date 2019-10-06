@@ -34,7 +34,7 @@ export class ErrorsHandler implements core.ErrorHandler {
   /**
    * Creates an instance of ErrorsHandler.
    * @param {core.Injector} injector 
-   * @param {AuthenticationService} authService used to call the *authentication* service
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @memberof ErrorsHandler
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

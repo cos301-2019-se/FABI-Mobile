@@ -5,7 +5,7 @@
  * Created Date: Thursday, August 22nd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, October 5th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,20 +14,19 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
-
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
-import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
+import * as core from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-staff-view-samples',
   templateUrl: './staff-view-samples.component.html',
   styleUrls: ['./staff-view-samples.component.scss']
 })
-export class StaffViewSamplesComponent implements OnInit {
+export class StaffViewSamplesComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -36,22 +35,19 @@ export class StaffViewSamplesComponent implements OnInit {
   sampleFields: any[] = [];
   samples: any[];
   selectedSampleData: any
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
-
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  private toggle_status: boolean = false;
   /** The search item the user is looking for in the table -  @type {string} */
   public searchSample: string = "";
-
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
   sampleTableLoading: boolean = true;
 
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of MemberViewSamplesComponent.
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {MatDialog} dialog
    * @param {Router} router
@@ -60,11 +56,11 @@ export class StaffViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private router: Router
-    ) { }
+  ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  TOGGLE NOTIFICATIONS TAB
@@ -74,14 +70,14 @@ export class StaffViewSamplesComponent implements OnInit {
    *  If set to true, a class is added which ensures that the notifications tab is displayed. 
    *  If set to flase, a class is removed which hides the notifications tab.
    * 
-   * @memberof MemberViewSamplesComponent
+   * @memberof StaffViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
+  toggleNotificaitonsTab() {
+    this.toggle_status = !this.toggle_status;
   }
 
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG ON INIT  
   /**
@@ -89,7 +85,7 @@ export class StaffViewSamplesComponent implements OnInit {
    * 
    * @description 1. Call viewSamples()
    * 
-   * @memberof MemberViewSamplesComponent
+   * @memberof StaffViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
@@ -103,7 +99,7 @@ export class StaffViewSamplesComponent implements OnInit {
   /**
    * This function will log the user out of the web application and clear the authentication data stored in the local storage
    * 
-   * @memberof MemberViewSamplesComponent
+   * @memberof StaffViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logout() {
@@ -117,7 +113,7 @@ export class StaffViewSamplesComponent implements OnInit {
   /**
    * This function will be used to display all the samples associated with the user in the HTML page
    * 
-   * @memberof MemberViewSamplesComponent
+   * @memberof StaffViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
@@ -129,16 +125,26 @@ export class StaffViewSamplesComponent implements OnInit {
 
         //Deactivate loading table spinners
         this.sampleTableLoading = false;
-        
+
       } else if (response.success == false) {
         //POPUP MESSAGE
       }
     });
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SELECT SAMPLE 
+  /**
+   * Called when a user selects a sample and sets the selected sample as well as it's data fields
+   *
+   * @param {*} sample
+   * @memberof StaffViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectSample(sample: any) {
     this.selectedSampleData = sample.data;
-        
+
     Object.keys(this.selectedSampleData).forEach((column) => {
 
       let obj = {
@@ -147,7 +153,7 @@ export class StaffViewSamplesComponent implements OnInit {
       this.sampleFields.push(obj);
 
     });
-        
+
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,12 +161,12 @@ export class StaffViewSamplesComponent implements OnInit {
   /**
    * This function will clear the modal contains the selected sample's details
    * 
-   * @memberof MemberViewSamplesComponent
+   * @memberof StaffViewSamplesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetSampleFields() {
     this.sampleFields = [];
   }
-  
+
 
 }

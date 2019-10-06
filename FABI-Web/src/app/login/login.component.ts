@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, October 5th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,25 +14,25 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import * as Interface from '../_interfaces/interfaces';
+import { LoadingComponent } from "../_loading/loading.component";
 import { AuthenticationService } from '../_services/authentication.service';
 import { UserManagementAPIService } from "../_services/user-management-api.service";
-import { ErrorComponent } from '../_errors/error-component/error.component';
-import * as Interface from '../_interfaces/interfaces';
-import { ToastrService } from 'ngx-toastr';
 
 
-@Component({
+@core.Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -56,9 +56,13 @@ export class LoginComponent implements OnInit {
   /** Selected organisation on dropdown. Used to adjust login form according to organisation selected - @type {string} */
   selectedOrg: string;
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VALIDATION
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   login_validation_messages = {
     'organization': [
-      { type:  'required', message: 'Organization is required'}
+      { type: 'required', message: 'Organization is required' }
     ],
     'email': [
       { type: 'required', message: 'Email is required' },
@@ -80,19 +84,19 @@ export class LoginComponent implements OnInit {
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
-   * @param {Router} router For navigating to other modules/components
+   * @param {Router} router for routing/navigating to other components
    * @memberof LoginComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
-    private router: Router, 
+    private authService: AuthenticationService,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private router: Router,
     private toaster: ToastrService,
-    private userManagementServicee: UserManagementAPIService
-    ) {
+    private userManagementServicee: UserManagementAPIService,
+  ) {
 
     // if(!this.previousUserData.email && this.previousUserData.email == null) {
     //   var email = '';
@@ -104,7 +108,7 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = this.formBuilder.group({
       organization: ['', Validators.required],
-      email: ['',Validators.compose([
+      email: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
@@ -113,6 +117,48 @@ export class LoginComponent implements OnInit {
         Validators.minLength(8)
       ])]
     })
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    NG_ON_INIT()  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Check if user is already logged in | 2. Check if their session ID (Token) is valid | 3. Populate form drop downs 
+   *
+   * @memberof LoginComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+    //-------- Load Organisation names for Drop Down --------
+    this.userManagementServicee.getAllOrganizations().subscribe((response: any) => {
+
+      if (response.success == true && response.code == 200) {
+        this.organizations = response.data.Organizations;
+      }
+      else if (response.success == false) {
+        //POPUP MESSAGE
+      }
+    });
+
+    //-------- Form Validation --------
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    this.forms = document.getElementsByClassName("needs-validation");
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(this.forms, function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+
   }
 
 
@@ -135,7 +181,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.valid = true;
-    this.loading = true;
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Logging in..." } });
 
     // Get form details
     const Lemail = this.loginForm.controls.email.value;
@@ -146,82 +193,41 @@ export class LoginComponent implements OnInit {
     const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
 
     this.authService.login(details).subscribe((response: any) => {
-      this.loading = false;
+
+      loadingRef.close();
+
       // API Request successful
       if (response.success == true && response.code == 200) {
 
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open(`Welcome ${response.userDetails.fname} ${response.userDetails.surname}`, "Dismiss", {
+        let snackBarRef = this.snackBar.open(`Welcome ${response.userDetails.fname}`, "Dismiss", {
           duration: 3000
         });
 
         // Navigate to specific dashboard, based on user's type
-        if(response.userDetails.userType == 'SuperUser') {
+        if (response.userDetails.userType == 'SuperUser') {
           this.router.navigate(['/admin-dashboard']);
-        } else if(response.userDetails.userType == 'ClinicAdmin') {
+        } else if (response.userDetails.userType == 'ClinicAdmin') {
           this.router.navigate(['/clinic-handler']);
-        }else if(response.userDetails.userType == 'OrganizationAdmin') {
+        } else if (response.userDetails.userType == 'OrganizationAdmin') {
           this.router.navigate(['/organization-dashboard']);
-        } else if(response.userDetails.userType == 'Member') {
+        } else if (response.userDetails.userType == 'Member') {
           this.router.navigate(['/member-dashboard']);
-        } else if(response.userDetails.userType == 'Staff') {
+        } else if (response.userDetails.userType == 'Staff') {
           this.router.navigate(['/staff-dashboard']);
         } else {
           let snackBarRef = this.snackBar.open("User not supported", "Dismiss", {
             duration: 3000
           });
         }
-        
+
 
       } else if (response.success == false) {
         //POPUP MESSAGE
       }
     });
-    
+
     this.loading = false;
   }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    NG_ON_INIT()  
-  /**
-   * This function is called when the page loads
-   * 
-   * @description 1. Check if user is already logged in | 2. Check if their session ID (Token) is valid | 3. Populate form drop downs 
-   *
-   * @memberof LoginComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() {
-    //-------- Load Organisation names for Drop Down --------
-    this.userManagementServicee.getAllOrganizations().subscribe((response: any) => {
-      
-      if (response.success == true && response.code == 200) {
-        this.organizations = response.data.Organizations;
-      } 
-      else if (response.success == false) {
-        //POPUP MESSAGE
-      }
-    });
-
-    //-------- Form Validation --------
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    this.forms = document.getElementsByClassName("needs-validation");
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(this.forms, function(form) {
-      form.addEventListener(
-        "submit",
-        function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add("was-validated");
-        },
-        false
-      );
-    });
-    
-  }  
 
 }

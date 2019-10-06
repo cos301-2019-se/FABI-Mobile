@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, October 5th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,33 +14,27 @@
  */
 
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ViewEncapsulation } from '@angular/core';
-
-import { AuthenticationService } from '../../_services/authentication.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../_errors/error-component/error.component';
+import * as core from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
-import { LoadingComponent } from "../../_loading/loading.component";
-
-//Include Material Components
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-
 import * as Interface from '../../_interfaces/interfaces';
-
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { LoadingComponent } from "../../_loading/loading.component";
+import { AuthenticationService } from '../../_services/authentication.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-@Component({
+
+
+
+
+@core.Component({
   selector: 'app-organization-handler',
   templateUrl: './organization-handler.component.html',
   styleUrls: ['./organization-handler.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class OrganizationHandlerComponent implements OnInit {
+export class OrganizationHandlerComponent implements core.OnInit {
 
   displayedColumns: string[] = ['Organization Name', 'Admin', "Remove"];
   dataSource = new MatTableDataSource([]);
@@ -60,16 +54,34 @@ export class OrganizationHandlerComponent implements OnInit {
   selectedOrg: Interface.Organisation = { orgName: "", admin: { fname: "", surname: "", email: "" } };
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
-
   pendingOrganizations: Interface.Organisation[];
   /** The total number of Organization - @type {number} */
   numberOfOrganizations: number = 0;
   /** The flag which indicates that the numberOfOrganizations has been set - @type {boolean} */
   setOrganizationLength: boolean = false;
-
   deleteData: Interface.Confirm = { title: '', message: '', info: '', cancel: '', confirm: '' };
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
+  helpTab: boolean = false;
+  /** The details of the user currently logged in -  @type {any} */
+  currentUser: any;
+  /** Specifies if the list of organizations have been retreived to disable the loading spinner - @type {boolean} */
+  organizationTableLoading: boolean = true;
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchOrganization: string = "";
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @core.ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VALIDATORS
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   register_organization_validators = {
     'organization_name': [
@@ -91,25 +103,6 @@ export class OrganizationHandlerComponent implements OnInit {
     ],
   }
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
-  notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
-  profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
-  saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
-  confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */
-  helpTab: boolean = false;
-  /** The details of the user currently logged in -  @type {any} */
-  currentUser: any;
-
-  /** Specifies if the list of organizations have been retreived to disable the loading spinner - @type {boolean} */
-  organizationTableLoading: boolean = true;
-
-  /** The search item the user is looking for in the table -  @type {string} */
-  public searchOrganization: string = "";
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -119,7 +112,7 @@ export class OrganizationHandlerComponent implements OnInit {
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
-   * @param {Router} router For navigating to other modules/components
+   * @param {Router} router for routing/navigating to other components 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * 
@@ -160,13 +153,7 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    // this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
-    //   this.currentUser = this.authService.getCurrentSessionValue.user;
-    //   this.viewOrganizations();
-    // });
 
-    //******** TO BE USED IN PRODUCTION: ********
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
@@ -345,7 +332,15 @@ export class OrganizationHandlerComponent implements OnInit {
     });
   }
 
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    VIEW PENDING ORGANIZATIONS
+  /**
+   * This function is used to retrieve all organzaitions who have send a request to register. They're *pending* their acceptance 
+   *  or denial.
+   *
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewPendingOrganizations() {
 
     this.userManagementService.getPendingOrganizations().subscribe((response: any) => {
@@ -361,6 +356,15 @@ export class OrganizationHandlerComponent implements OnInit {
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    REGISTER PENDING ORGANIZATIONS
+  /**
+   * This function is used to accept the organizations request to register by registering them.
+   *
+   * @param {Interface.Organisation} org
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   registerPendingOrg(org: Interface.Organisation) {
 
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Registering Organization" } });
@@ -453,7 +457,7 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  resetAddFields(){
+  resetAddFields() {
     this.registerOrgForm.reset();
   }
 

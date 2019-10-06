@@ -21,7 +21,8 @@
     "types": [
       "node",
       "mocha",
-      "jasmine"
+      "jasmine",
+      "jquery"
     ]
   }
 }
