@@ -1,5 +1,10 @@
  # FABI Mobile
  
+ <div style="height:50px;" align="center">
+<img src="https://drive.google.com/uc?export=view&id=1zuoms4mLG9tGefRy9OVbY9WGuxMRr6cw" alt="FABI Logo" title="FABI" style="width:100px; height:50px; text-align:center;" />
+<img src="https://drive.google.com/uc?export=view&id=114zeT9UmmtfVQtCq4B2y449ur8A2SSgP" alt="FABI Logo" title="FABI" style="width:100px; height:50px; text-align:center;" />
+</div>
+ 
 ## Project Description:
 
 ##### FABI mobile is a project which consists of a web application intended to drastically modernise FABI’s existing system as well as to compliment the roll-out of their Diagnostic Clinic to the forestry and agriculture sector. The Diagnostic Clinic allows users (both internal and external) to submit samples of various plant diseases and pests so that they can be readily identified and solutions to these problems sought. 
