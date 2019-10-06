@@ -195,7 +195,7 @@ a.forgot-password:hover {
 
 /* Width Responsiveness */
 @media (min-width:768px) and (max-width:1199px) {
-    .form-group label {
+    #login_form .form-group label {
         color: #FFF;
     }
 

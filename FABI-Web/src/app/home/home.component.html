@@ -13,7 +13,7 @@
       <div class="home-nav">
         <a class="nav-link" href="#">Home</a>
 
-        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" [routerLink]="['/']" fragment="about">About</a>
 
         <a class="nav-link" href="#">Services</a>
 
@@ -35,7 +35,7 @@
         <h2>Forestry and Agricultural Biotechnology Institute</h2>
       </div>
       <div class="content-actions">
-        <button type="button" class="btn btn-default-login" routerLink="/login">Login</button>
+        <button type="button" class="btn btn-home-login" routerLink="/login">Login</button>
         <button type="button" class="btn btn-default-register" data-toggle="modal"
           data-target="#requestToRegisterModal">Register</button>
       </div>
@@ -48,7 +48,7 @@
   </div>
 </div>
 
-<div class="about-us">
+<div class="about-us" id="about">
 
   <div class="section-heading">
     <h3>About FABI</h3>
@@ -805,7 +805,7 @@ QmCC" transform="matrix(0.2097 0 0 0.2097 636.49 92.1886)">
     </div>
     <div class="section-content">
 
-      <table class="table table-borderless">
+      <table class="table table-responsive table-borderless">
         <thead>
           <tr>
             <th scope="col">Contact Details</th>
@@ -817,7 +817,9 @@ QmCC" transform="matrix(0.2097 0 0 0.2097 636.49 92.1886)">
           <tr>
             <td>
               <strong>Telephone:</strong> +27 (12) 420-3937 or 3938
+              <br/>
               <strong>FAX:</strong> +27 (12) 420-3960
+              <br/>
               <strong>Email:</strong> madelein.vanheerden@fabi.up.ac.za
             </td>
             <td>
@@ -847,7 +849,7 @@ QmCC" transform="matrix(0.2097 0 0 0.2097 636.49 92.1886)">
 
     <!-- Contact Form -->
     <br />
-    <form>
+    <form id="contact_us">
       <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" class="form-control" id="email" placeholder="name@example.com">
@@ -886,7 +888,7 @@ QmCC" transform="matrix(0.2097 0 0 0.2097 636.49 92.1886)">
         </button>
       </div>
       <!-- Modal Body -->
-      <div class="modal-body">
+      <div class="modal-body" id="request_to_register">
         <div class="form">
 
           <!-- Add Organization Form -->
@@ -1025,8 +1027,6 @@ QmCC" transform="matrix(0.2097 0 0 0.2097 636.49 92.1886)">
         </div>
       </div>
       <!-- / Modal Body -->
-      <div class="modal-footer">
-      </div>
     </div>
   </div>
 </div>
