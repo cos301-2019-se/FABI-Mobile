@@ -7,43 +7,32 @@
 
 ## Project Description:
 
-##### In collaboration with the Institute of Commercial Forestry Research (ICFR), this project will deal with the creation of a central database or repository, as well as the development of web-based data curation portal and a mobile application for use by the South African forestry industry. This entails the implementation of a new database management system as well as both a mobile and web application. A central manager will therefore also need to be created to manage all of the databases. Due to the sensitive nature of their data, a user management system will also need to built to provide mandatory access control (MAC). The mobile and web applications will provide similar functionality, however, the web application will primarily cater for all administrative tasks. The mobile application will mainly be used by FABI’s clients (forestry organizations) to submit a diagnostic clinic sample form as well as send images of the sample that they are submitting. 
+##### FABI mobile is a project which consists of a web application intended to drastically modernise FABI’s existing system as well as to compliment the roll-out of their Diagnostic Clinic to the forestry and agriculture sector. The Diagnostic Clinic allows users (both internal and external) to submit samples of various plant diseases and pests so that they can be readily identified and solutions to these problems sought. 
+
+Another aspect of this project is to provide a central user management system whereby FABI administrators, staff, external organisations, and their respective members can be managed. The implementation of the user management system is complimented by an access control system which ensures that only authorised users have access to the system.
+
+Yet another aspect of the product is the inclusion of a pre-diagnosis system which will enable the Diagnostic Clinic administrator to receive a preliminary diagnosis from the Diagnostic Clinic regarding a sample submission. This will be used internally by FABI to aid in their analysis of the diseased plant or pest.
  
 
-## Project Documents  
+## Links  
 
- ### Demo 1
-  - [Demo 1 System Requirments Specification](https://drive.google.com/file/d/1-hcnw3aGtpk40dJ0QdBST93czcxZcDcZ/view?usp=sharing)
-  -  [Demo 1 Presentation](https://docs.google.com/presentation/d/1bmof9jgFzYWZnmZDaCQ6r9yIChrk1Kb72V8gJIlLYwg/edit?usp=sharing)
-  
-  ### Demo 2
-  - [Demo 2 System Requirments Specification](https://drive.google.com/file/d/1GUlm56NHmDGSRdwLS6femYdWiH-wPJzK/view?usp=sharing)
-  -  [Demo 2 Presentation](https://docs.google.com/presentation/d/16RmsGRU3QbiqgNaF87FlqfBXETanff4JX61elvecw5s/edit?usp=sharing)
-  -  [Demo 2 Testing Policy](https://drive.google.com/file/d/1cKpRM-BpTHm5TSHKbXVEdhUCf4MpBtTQ/view?usp=sharing)
-  -  [Demo 2 User Manual](https://drive.google.com/file/d/1eGpK43xmKePRt2DQk6c-PcZaWoR5W7eK/view?usp=sharing)
-  -  [Demo 2 Organization User Manual](https://drive.google.com/file/d/1akPpNBxUP95yFKB0HD5fCKWYwKEdAlqK/view?usp=sharing)
-  -  [Demo 2 Coding Standards Document](https://drive.google.com/file/d/1liZq7CE1cBzKHsayygcGK0k0Mb5Xq0PC/view?usp=sharing)
-  - [Demo 2 Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
-  
-  ### Demo 3
-  - [Demo 3 System Requirments Specification]()
-  -  [Demo 3 Presentation]()
-  -  [Demo 3 Testing Policy]()
-  -  [Demo 3 User Manual]()
-  -  [Demo 3 Organization User Manual]()
-  -  [Demo 3 Coding Standards Document]()
-  - [Demo 3 Video Guide]()
+ ### Project Links
+  - [System Requirments Specification](https://drive.google.com/file/d/1E7IQ1AnOAoHywCSzPf8s_ZMcr_qK20vg/view?usp=sharing)
+  -  [Presentation](https://docs.google.com/presentation/d/1VbTXs8X7zrWnlnVac4awau8aMn8qUsw_FhL8Fp3rc6I/edit?usp=sharing)
+  -  [Testing Policy](https://drive.google.com/file/d/1H4AtkIDqoH1Hfrqd5O1skBzIjzo98yrY/view?usp=sharing)
+  -  [User Manual](https://drive.google.com/file/d/1EgdAPcsHrDcNzohiTi_7zqJWIXzOErp2/view?usp=sharing)
+  - [Organization User Manual](https://drive.google.com/file/d/1WmnunZhpUSGRUS0GgtiQSTbBFvjNjuDb/view?usp=sharing)
+  - [Coding Standards Document](https://drive.google.com/file/d/17qzn81O7YsrfYEGfqcfM2fBYbwJtOBNR/view?usp=sharing)
+  - [Video Guide](https://drive.google.com/file/d/1-9oYAXDn4bT1qi8bOS63N1nhu-VkYTxQ/view?usp=sharing)
   
  ## API Documentation
-  - [Authentication API Documentation](https://authentication-dot-api-fabi.appspot.com)
-  - [Database Management API Documentation](***REMOVED***)
-  - [Diagnostic Clinic API Documentation](***REMOVED***)
-  - [Login API Documentation](***REMOVED***)
-  - [User Management API Documentation](***REMOVED***)
-  - [Logging API Documentation](***REMOVED***)
+  - [Database Management API Documentation](https://database-management-dot-fabi-dev.appspot.com )
+  - [Diagnostic Clinic API Documentation](https://diagnostic-clinic-dot-fabi-dev.appspot.com )
+  - [Login API Documentation](https://login-dot-fabi-dev.appspot.com )
+  - [User Management API Documentation](https://user-management-dot-fabi-dev.appspot.com)
+  - [Culture Collection API Management](https://culture-collection-management-dot-fabi-dev.appspot.com)
   
  ## Project Management
- 
   - [Trello Board](https://trello.com/b/8eHApP3L)
 
 # Team Members
