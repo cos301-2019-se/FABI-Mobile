@@ -111,6 +111,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+
     //-------- Form Validation --------
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     this.forms = document.getElementsByClassName("needs-validation");

@@ -851,14 +851,12 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     display: flex;
     flex-direction: column;
 
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
 
     background-color: #F7F7F7;
     width: 100%;
-    //min-height: 100vh;
-    //height: auto;
     height: 100vh;
 
     overflow: scroll;
@@ -974,7 +972,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 @media (min-width: 420px) {
     #notifications {
-        width: 60vh;
+        width: 80vh;
     }
 
     #notifications i {
@@ -1016,20 +1014,22 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     display: flex;
     flex-direction: column;
 
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
 
     background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
-    height: auto;
+    height: 100%;
 
     float: right;
 
     padding: 50px 15px 50px 15px;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    overflow: scroll;
 }
 
 #profile h3 {
@@ -1091,7 +1091,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 @media (min-width: 420px) {
     #profile {
-        width: 60vh;
+        width: 80vh;
     }
 
     #profile i {    
@@ -1188,20 +1188,22 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     display: flex;
     flex-direction: column;
 
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
 
     background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
-    height: auto;
+    height: 100%;
 
     float: right;
 
     padding: 50px 15px 15px 15px;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    overflow: scroll;
 }
 
 #help h3 {
@@ -1325,7 +1327,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 @media (min-width: 395px) {
     #help {
-        width: 60vh;
+        width: 80vh;
     }
 }
 
