@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import * as Interface from '../_interfaces/interfaces';
 import { LoadingComponent } from "../_loading/loading.component";
 import { UserManagementAPIService } from "../_services/user-management-api.service";
-
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -84,7 +84,8 @@ export class HomeComponent implements core.OnInit {
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {
     this.contact_form = this.formBuilder.group({
       name: ['', Validators.required],
@@ -117,6 +118,8 @@ export class HomeComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+
+    this.cookieService.set('SameSite', 'None');
 
     //-------- Form Validation --------
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
