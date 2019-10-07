@@ -4,6 +4,8 @@ import { OrganizationSubmitSampleComponent } from './organization-submit-sample.
 
 import { SampleFormComponent } from '../../sample-form/sample-form.component';
 
+import { MapsWindowComponent } from '../../maps-window/maps-window.component';
+
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -26,7 +28,7 @@ describe('OrganizationSubmitSampleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganizationSubmitSampleComponent, SampleFormComponent ],
+      declarations: [ OrganizationSubmitSampleComponent, SampleFormComponent, MapsWindowComponent],
       imports: [MaterialModule,HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, ReactiveFormsModule, RouterTestingModule]
     })
     .compileComponents();

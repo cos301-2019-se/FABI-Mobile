@@ -5,6 +5,8 @@ import { StaffSubmitSampleComponent } from './staff-submit-sample.component';
 
 import { SampleFormComponent } from '../../sample-form/sample-form.component';
 
+import { MapsWindowComponent } from '../../maps-window/maps-window.component';
+
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -27,7 +29,7 @@ describe('StaffSubmitSampleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StaffSubmitSampleComponent, SampleFormComponent ],
+      declarations: [ StaffSubmitSampleComponent, SampleFormComponent, MapsWindowComponent ],
       imports: [HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule,MaterialModule, ReactiveFormsModule, RouterTestingModule ]
     })
     .compileComponents();

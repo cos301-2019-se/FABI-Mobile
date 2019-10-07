@@ -12,6 +12,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DebugElement } from '@angular/core';
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 describe('LoginComponent', () => {
 
@@ -31,14 +32,16 @@ describe('LoginComponent', () => {
             BrowserAnimationsModule,
             ToastContainerModule,
             ToastrModule,
-            ToastrComponentlessModule
+            ToastrComponentlessModule,
+            
         ],
         declarations: [ 
             LoginComponent 
         ],
         providers :[
           { provide: ToastContainerModule, useValue: {} },
-          { provide: ToastrModule, useValue: {} }
+          { provide: ToastrModule, useValue: {} },
+          ToastrService
         ]
     }).compileComponents();
   }));

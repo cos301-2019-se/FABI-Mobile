@@ -4,6 +4,8 @@ import { MemberSubmitSampleComponent } from './member-submit-sample.component';
 
 import { SampleFormComponent } from '../../sample-form/sample-form.component';
 
+import { MapsWindowComponent } from '../../maps-window/maps-window.component';
+
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -26,7 +28,7 @@ describe('MemberSubmitSampleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MemberSubmitSampleComponent, SampleFormComponent],
+      declarations: [ MemberSubmitSampleComponent, SampleFormComponent, MapsWindowComponent],
       imports: [
         MaterialModule,
         NoopAnimationsModule,

@@ -5,6 +5,7 @@ import { SampleFormComponent } from '../../sample-form/sample-form.component';
 import { StaffNotificationComponent } from '../staff-notification/staff-notification.component'
 import { StaffProfileComponent } from '../staff-profile/staff-profile.component'
 import { StaffHelpComponent } from '../staff-help/staff-help.component'
+import { StaffViewSamplesComponent } from '../staff-view-samples/staff-view-samples.component';
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -32,7 +33,8 @@ describe('StaffDashboardComponent', () => {
         SampleFormComponent,
         StaffNotificationComponent,
         StaffProfileComponent,
-        StaffHelpComponent
+        StaffHelpComponent,
+        StaffViewSamplesComponent
       ],
       imports: [ReactiveFormsModule, RouterTestingModule, MaterialModule, NoopAnimationsModule, BrowserAnimationsModule, HttpClientTestingModule]
     })

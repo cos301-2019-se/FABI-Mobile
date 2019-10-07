@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminNotificationComponent } from './admin-notification.component';
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 //Import form components
@@ -12,7 +11,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DebugElement, NgModule } from '@angular/core';
-import { AuthenticationService } from 'src/app/_services/authentication.service'
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+
+import { AdminNotificationComponent } from './admin-notification.component';
 
 describe('AdminNotificationComponent', () => {
   let component: AdminNotificationComponent;

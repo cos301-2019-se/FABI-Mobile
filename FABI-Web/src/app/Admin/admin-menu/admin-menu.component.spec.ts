@@ -1,21 +1,56 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+//Router
+import { RouterTestingModule } from '@angular/router/testing';
+//Import form components
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+//Import the materials component
+import { MaterialModule } from '../../materials';
+//Http Testing
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+//Animation Testing
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DebugElement } from '@angular/core';
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule } from 'ngx-toastr';
+
+
 import { AdminMenuComponent } from './admin-menu.component';
 
 describe('AdminMenuComponent', () => {
   let component: AdminMenuComponent;
   let fixture: ComponentFixture<AdminMenuComponent>;
+  let de: DebugElement;
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminMenuComponent ]
+      imports: [
+        MaterialModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        NoopAnimationsModule,
+        BrowserAnimationsModule,
+        ToastContainerModule,
+        ToastrModule,
+        ToastrComponentlessModule
+      ],
+      declarations: [AdminMenuComponent],
+      providers: [
+        { provide: ToastContainerModule, useValue: {} },
+        { provide: ToastrModule, useValue: {} }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminMenuComponent);
     component = fixture.componentInstance;
+    de = fixture.debugElement;
+
+    component.ngOnInit();
     fixture.detectChanges();
   });
 
