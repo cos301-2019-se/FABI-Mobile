@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Monday, October 7th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -908,4 +908,26 @@ export class UserManagementAPIService {
     return this.http.request<any>(method, updateOrganizationMemberPasswordURL, options);
   }
 
+  getFABIAdmins() {
+    let getFABIAdminURL = `${config.userManagementURL}/getAllFabiMembers`;
+    let method = 'POST';
+
+    const postData = {
+      "id": this.authService.getCurrentSessionValue.user.ID
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, getFABIAdminURL, options);
+  }
 }

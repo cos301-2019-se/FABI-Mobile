@@ -197,55 +197,85 @@
   </div>
   <!-- / View Staff Modal Section -->
 
-  <!-- Add Staff Modal Section -->
-  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addModalTitle">Update Admin</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetStaffFields()">
-            <span aria-hidden="true"><i class="fas fa-times"></i></span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form">
-            <form>
-              <div class="form-row align-items-center">
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Enter name"
-                    onchange="displaySaveButton()">
-                </div>
-                <div class="form-group">
-                  <label for="surname">Surname</label>
-                  <input type="text" class="form-control" id="surname" placeholder="Enter surname"
-                    onchange="displaySaveButton()">
-                </div>
-                <div class="form-group">
-                  <label for="email">Email address</label>
-                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                    placeholder="Enter email" onchange="displaySaveButton()">
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" placeholder="Password"
-                    onchange="changedPassword()">
-                </div>
-                <div class="form-group" id="confirm-password">
-                  <label for="confirm-password">Confirm Password</label>
-                  <input type="password" class="form-control" placeholder="Password" onchange="displaySaveButton()">
+ <!-- Add Clinic Admin Modal Section -->
+ <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header-->
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalTitle">Add Clinic Admin</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetAddFields()">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <!-- / Modal Header-->
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="form">
+
+          <!-- Add Staff Form -->
+          <form id="add_new_member_form" class="needs-validation" [formGroup]="addStaffForm" (submit)="addStaff()"
+            novalidate>
+            <div class="row">
+
+              <div class="form-group">
+                <label for="staff">Select User</label>
+                <select class="form-control form-control-sm"  id="user" formControlName="user" required
+                [ngClass]="{
+                  'is-invalid': addStaffForm.controls['user'].invalid && (submitted || addStaffForm.controls['user'].dirty), 
+                  'is-valid': addStaffForm.controls['user'].valid && (submitted || addStaffForm.controls['user'].dirty)}" >
+                  <option value="" selected>
+                    Please select a user
+                  </option>
+                  <option *ngFor="let user of adminUsers" [value]="user">
+                    {{user.fname}} {{user.surname}} {{user.email}}
+                  </option>
+                </select>
+                 <!-- Error Validation Feedback--> 
+                 <div *ngIf="addStaffForm.controls['user'].invalid && (submitted || addStaffForm.controls['user'].dirty)" >
+                    <div *ngFor="let validation of login_validation_messages.user">
+                        <p *ngIf="addStaffForm.get('user').hasError(validation.type)" class="text-warning">{{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback--> 
+              </div>
+
+              <!-- Database Privileges Table -->
+              <div class="form-group">
+                <label for="database_privileges">Database Privileges</label>
+                <div formArrayName="database_privileges"
+                  *ngFor="let database_privilege of allDatabaseNames; let i = index" id="database_privileges">
+                  <input type="checkbox" [formControlName]="i">
+                  {{allDatabaseNames[i]}}
                 </div>
               </div>
-            </form>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default-save">Add Staff Member</button>
+              <!-- / Database Privileges Table -->
+
+              <!-- Submit -->
+              <button type="submit" class="btn btn-default-save">Add Clinic Admin</button>
+              <!-- / Submit -->
+
+            </div>
+          </form>
+          <!-- / Add Staff Form -->
+
         </div>
       </div>
+      <!-- / Modal Body -->
+
     </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+
+    </div>
+    <!-- /Modal Footer -->
+
   </div>
-  <!-- / Add Staff Modal Section -->
+</div>
+<!-- / Add Clinic Admin Modal Section -->
 
   <!-- Delete Staff Confirm Modal Section -->
   <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
