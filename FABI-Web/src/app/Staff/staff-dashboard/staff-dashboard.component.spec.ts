@@ -18,6 +18,10 @@ import { MaterialModule } from '../../materials';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+
+import { FilterPipe } from '../../_pipes/filter.pipe';
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import {MatDialogModule} from '@angular/material/dialog';
@@ -25,6 +29,12 @@ import {MatDialogModule} from '@angular/material/dialog';
 describe('StaffDashboardComponent', () => {
   let component: StaffDashboardComponent;
   let fixture: ComponentFixture<StaffDashboardComponent>;
+
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,9 +44,11 @@ describe('StaffDashboardComponent', () => {
         StaffNotificationComponent,
         StaffProfileComponent,
         StaffHelpComponent,
-        StaffViewSamplesComponent
+        StaffViewSamplesComponent,
+        FilterPipe
       ],
-      imports: [ReactiveFormsModule, RouterTestingModule, MaterialModule, NoopAnimationsModule, BrowserAnimationsModule, HttpClientTestingModule]
+      imports: [ReactiveFormsModule, RouterTestingModule, MaterialModule, NoopAnimationsModule, BrowserAnimationsModule, HttpClientTestingModule],
+      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
     })
     .compileComponents();
   }));

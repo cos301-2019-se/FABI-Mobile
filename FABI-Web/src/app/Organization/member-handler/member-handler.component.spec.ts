@@ -17,11 +17,18 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { FilterPipe } from '../../_pipes/filter.pipe';
 
 describe('MemberHandlerComponent', () => {
   let component: MemberHandlerComponent;
   let fixture: ComponentFixture<MemberHandlerComponent>;
+
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,7 +40,8 @@ describe('MemberHandlerComponent', () => {
       ],
       imports: [MaterialModule,
         NoopAnimationsModule,
-        BrowserAnimationsModule, RouterTestingModule, HttpClientTestingModule ]
+        BrowserAnimationsModule, RouterTestingModule, HttpClientTestingModule ],
+        providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
     })
     .compileComponents();
   }));
