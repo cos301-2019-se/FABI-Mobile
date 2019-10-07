@@ -54,4 +54,66 @@ describe('OrganizationHandlerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it("Empty form expect invalid", () => {
+    component.registerOrgForm.controls.organization_name.setValue("");
+    component.registerOrgForm.controls.admin_name.setValue("");
+    component.registerOrgForm.controls.admin_surname.setValue("");
+    component.registerOrgForm.controls.admin_email.setValue("");
+    component.registerOrgForm.controls.admin_phone.setValue("");
+
+    expect(component.registerOrgForm.valid).toBeFalsy();
+  });
+
+  it("Empty admin name expect admin name invalid", () => {
+    component.registerOrgForm.controls.organization_name.setValue("TestOrg");
+    component.registerOrgForm.controls.admin_name.setValue("");
+    component.registerOrgForm.controls.admin_surname.setValue("");
+    component.registerOrgForm.controls.admin_email.setValue("");
+    component.registerOrgForm.controls.admin_phone.setValue("");
+
+    expect(component.registerOrgForm.controls.admin_name.valid).toBeFalsy();
+  });
+
+  it("Empty admin surname expect admin surname invalid", () => {
+    component.registerOrgForm.controls.organization_name.setValue("TestOrg");
+    component.registerOrgForm.controls.admin_name.setValue("TesterFName");
+    component.registerOrgForm.controls.admin_surname.setValue("");
+    component.registerOrgForm.controls.admin_email.setValue("");
+    component.registerOrgForm.controls.admin_phone.setValue("");
+
+    expect(component.registerOrgForm.controls.admin_surname.valid).toBeFalsy();
+  });
+
+  it("Empty admin email expect admin email invalid", () => {
+    component.registerOrgForm.controls.organization_name.setValue("TestOrg");
+    component.registerOrgForm.controls.admin_name.setValue("TesterFName");
+    component.registerOrgForm.controls.admin_surname.setValue("TesterLName");
+    component.registerOrgForm.controls.admin_email.setValue("");
+    component.registerOrgForm.controls.admin_phone.setValue("");
+
+    expect(component.registerOrgForm.controls.admin_email.valid).toBeFalsy();
+  });
+
+  it("Empty admin phone expect admin phone invalid", () => {
+    component.registerOrgForm.controls.organization_name.setValue("TestOrg");
+    component.registerOrgForm.controls.admin_name.setValue("TesterFName");
+    component.registerOrgForm.controls.admin_surname.setValue("TesterLName");
+    component.registerOrgForm.controls.admin_email.setValue("tester@gmail.com");
+    component.registerOrgForm.controls.admin_phone.setValue("");
+
+    expect(component.registerOrgForm.controls.admin_phone.valid).toBeFalsy();
+  });
+
+  it("Valid form expect true", () => {
+    component.registerOrgForm.controls.organization_name.setValue("TestOrg");
+    component.registerOrgForm.controls.admin_name.setValue("TesterFName");
+    component.registerOrgForm.controls.admin_surname.setValue("TesterLName");
+    component.registerOrgForm.controls.admin_email.setValue("tester@gmail.com");
+    component.registerOrgForm.controls.admin_phone.setValue("0000000000");
+
+    expect(component.registerOrgForm.valid).toBeTruthy();
+  });
+  
+  
 });

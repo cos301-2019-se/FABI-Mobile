@@ -41,4 +41,42 @@ describe('MemberProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it("Empty form expect invalid", () => {
+    component.memberProfileForm.controls.organization_name.setValue("");
+    component.memberProfileForm.controls.member_name.setValue("");
+    component.memberProfileForm.controls.member_surname.setValue("");
+    component.memberProfileForm.controls.member_email.setValue("");
+
+    expect(component.memberProfileForm.valid).toBeFalsy();
+  });
+
+  it("Empty member name expect member name invalid", () => {
+    component.memberProfileForm.controls.organization_name.setValue("Test");
+    component.memberProfileForm.controls.member_name.setValue("");
+    component.memberProfileForm.controls.member_surname.setValue("");
+    component.memberProfileForm.controls.member_email.setValue("");
+
+    expect(component.memberProfileForm.controls.member_name.valid).toBeFalsy();
+  });
+
+  it("Empty member surname expect member surname invalid", () => {
+    component.memberProfileForm.controls.organization_name.setValue("Test");
+    component.memberProfileForm.controls.member_name.setValue("TesterFName");
+    component.memberProfileForm.controls.member_surname.setValue("");
+    component.memberProfileForm.controls.member_email.setValue("");
+
+    expect(component.memberProfileForm.controls.member_surname.valid).toBeFalsy();
+  });
+
+  it("Empty member email expect member email invalid", () => {
+    component.memberProfileForm.controls.organization_name.setValue("Test");
+    component.memberProfileForm.controls.member_name.setValue("TesterFName");
+    component.memberProfileForm.controls.member_surname.setValue("TesterLName");
+    component.memberProfileForm.controls.member_email.setValue("");
+
+    expect(component.memberProfileForm.controls.member_email.valid).toBeFalsy();
+  });
+
+  
 });

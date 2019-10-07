@@ -54,4 +54,50 @@ describe('StaffProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it("Empty form expect invalid", () => {
+    component.staffProfileForm.controls.staff_name.setValue("");
+    component.staffProfileForm.controls.staff_surname.setValue("");
+    component.staffProfileForm.controls.staff_email.setValue("");
+    component.staffProfileForm.controls.staff_type.setValue("");
+
+    expect(component.staffProfileForm.valid).toBeTruthy();
+  });
+
+  it("Empty staff surname expect staffsurname name invalid", () => {
+    component.staffProfileForm.controls.staff_name.setValue("Test");
+    component.staffProfileForm.controls.staff_surname.setValue("");
+    component.staffProfileForm.controls.staff_email.setValue("");
+    component.staffProfileForm.controls.staff_type.setValue("");
+
+    expect(component.staffProfileForm.controls.staff_surname.valid).toBeFalsy();
+  });
+
+  it("Empty staff email expect staff email invalid", () => {
+    component.staffProfileForm.controls.staff_name.setValue("Test");
+    component.staffProfileForm.controls.staff_surname.setValue("TesterFName");
+    component.staffProfileForm.controls.staff_email.setValue("");
+    component.staffProfileForm.controls.staff_type.setValue("");
+
+    expect(component.staffProfileForm.controls.staff_email.valid).toBeFalsy();
+  });
+
+  it("Empty staff type expect staff type invalid", () => {
+    component.staffProfileForm.controls.staff_name.setValue("Test");
+    component.staffProfileForm.controls.staff_surname.setValue("TesterFName");
+    component.staffProfileForm.controls.staff_email.setValue("TesterLName");
+    component.staffProfileForm.controls.staff_type.setValue("");
+
+    expect(component.staffProfileForm.controls.staff_type.valid).toBeFalsy();
+  });
+
+  it("Valid form expect true", () => {
+    component.staffProfileForm.controls.staff_name.setValue("TesterFName");
+    component.staffProfileForm.controls.staff_surname.setValue("TesterLName");
+    component.staffProfileForm.controls.staff_email.setValue("tester@gmail.com");
+    component.staffProfileForm.controls.staff_type.setValue("super");
+
+    expect(component.staffProfileForm.valid).toBeTruthy();
+  });
+
 });

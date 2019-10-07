@@ -41,14 +41,46 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("Empty organization name expect email organization name invalid", () => {
+  it("Empty form expect invalid", () => {
+    component.contact_form.controls.name.setValue("");
+    component.contact_form.controls.email.setValue("");
+    component.contact_form.controls.message.setValue("");
+
+    expect(component.contact_form.valid).toBeFalsy();
+  });
+
+  it("Empty email expect email invalid", () => {
+    component.contact_form.controls.name.setValue("Tester");
+    component.contact_form.controls.email.setValue("");
+    component.contact_form.controls.message.setValue("");
+
+    expect(component.contact_form.controls.email.valid).toBeFalsy();
+  });
+
+  it("Empty message expect message invalid", () => {
+    component.contact_form.controls.name.setValue("Tester");
+    component.contact_form.controls.email.setValue("tester@gmail.com");
+    component.contact_form.controls.message.setValue("");
+
+    expect(component.contact_form.controls.message.valid).toBeFalsy();
+  });
+
+  it("Valid request expect true", () => {
+    component.contact_form.controls.name.setValue("Tester");
+    component.contact_form.controls.email.setValue("tester@gmail.com");
+    component.contact_form.controls.message.setValue("xxxxxxxxxxxxxxx");
+
+    expect(component.contact_form.valid).toBeTruthy();
+  });
+
+  it("Empty form expect invalid", () => {
     component.request_register_org.controls.organization_name.setValue("");
     component.request_register_org.controls.admin_name.setValue("");
     component.request_register_org.controls.admin_surname.setValue("");
     component.request_register_org.controls.admin_email.setValue("");
     component.request_register_org.controls.admin_phone.setValue("");
 
-    expect(component.request_register_org.controls.organization_name.valid).toBeFalsy();
+    expect(component.request_register_org.valid).toBeFalsy();
   });
 
   it("Empty admin name expect email admin name invalid", () => {
@@ -91,8 +123,7 @@ describe('HomeComponent', () => {
 
     expect(component.request_register_org.controls.admin_phone.valid).toBeFalsy();
   });
-
-
+  
   it("Valid request expect true", () => {
     component.request_register_org.controls.organization_name.setValue("TestOrg");
     component.request_register_org.controls.admin_name.setValue("TesterFName");
