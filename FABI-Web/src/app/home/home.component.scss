@@ -1,6 +1,9 @@
-/* Admin Dashboard Navbar Section
+/* ==========================================================================
+   HOME
    ========================================================================== */
 
+/* Button Style
+   ========================================================================== */
 .btn.btn-default-login {
   color: #fff;
   font-family: "Montserrat", sans-serif;
@@ -117,7 +120,8 @@
   transform: scale(1.025);
 }
 
-/* Navbar Heading Styling */
+/* Navbar Style
+   ========================================================================== */
 .pos-f-t {
   display: block;
 }
@@ -132,7 +136,7 @@
 /* Notification Icon Styling */
 .home-nav {
   display: none;
-  
+
 }
 
 .home-nav a {
@@ -200,7 +204,7 @@ div#navbarToggleExternalContent div nav.navbar.home.p-4 {
   color: #fff;
 }
 
-img.brand-logo{
+img.brand-logo {
   width: 6rem;
   height: 2.5rem;
 }
@@ -234,6 +238,8 @@ img.brand-logo{
   width: 100%;
 }
 
+/* Hero Style
+   ========================================================================== */
 .hero {
 
   position: relative;
@@ -482,12 +488,12 @@ hr {
   margin-top: 50px;
 }
 
-.process-infographic{
+.process-infographic {
   height: 50vh;
   width: 100%;
 }
 
-.process-infographic svg{
+.process-infographic svg {
   height: 100%;
   width: 100%;
 }
@@ -589,9 +595,6 @@ hr {
   }
 }
 
-/* Home Contatc us Section
-     ========================================================================== */
-
 .contact-us {
   display: flex;
   justify-content: center;
@@ -656,9 +659,6 @@ hr {
   transform: scale(1.025);
 }
 
-/* Home Bottom Navbar Section
-     ========================================================================== */
-
 div.bg-dark.p-4 {
   background-color: #72b555 !important;
 }
@@ -675,7 +675,7 @@ div.bg-dark.p-4 {
 
 @media (min-width:1024px) {
   #request_to_register .form-group label {
-      color: #444444;
+    color: #444444;
   }
 }
 
@@ -697,7 +697,7 @@ div.bg-dark.p-4 {
 
 @media (min-width:1024px) {
   #contact_us .form-group label {
-      color: #444444;
+    color: #444444;
   }
 }
 

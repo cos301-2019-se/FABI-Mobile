@@ -3,7 +3,8 @@
    ========================================================================== */
 
 
-/* Log Tables Subsection */
+/* Table Style
+   ========================================================================== */
 .log-tables {
   display: flex;
   flex-direction: column;
@@ -72,8 +73,8 @@ a.nav-link.active {
   height: 100%;
 }
 
-/* Download Button 
-     ========================================================================== */
+/* Download Report
+   ========================================================================== */
 .btn.btn-default-report-download {
   color: #6B746F;
   font-family: "Montserrat", sans-serif;
@@ -104,8 +105,6 @@ a.nav-link.active {
   transform: scale(1.025);
 }
 
-/* Download Button 
-     ========================================================================== */
 .btn.btn-default-report-download {
   color: #6B746F;
   font-family: "Montserrat", sans-serif;
@@ -135,14 +134,3 @@ a.nav-link.active {
 
   transform: scale(1.025);
 }
-
-
-// /*-----------------------
-//     Database Management
-// -------------------------*/
-// #userCollapse,
-// #databaseCollapse,
-// #accessCollapse,
-// #errorCollapse {
-//   display: none;
-// }

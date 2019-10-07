@@ -1,9 +1,15 @@
+/* ==========================================================================
+   GOOGLE MAPS
+   ========================================================================== */
+
+/* Map Window Style
+   ========================================================================== */
 .map-window-heading {
     font-family: "Montserrat", sans-serif;
     color: #72b555;
 }
 
-.map-window{
+.map-window {
     display: flex;
     flex-direction: column;
 
@@ -17,6 +23,8 @@
     margin-top: 15px;
 }
 
+/* Map Button Style
+   ========================================================================== */
 button.btn-map {
     color: #6b746f !important;
     font-family: "Montserrat", sans-serif;
@@ -57,7 +65,7 @@ agm-map {
 .map-actions {
     width: 100%;
 
-    margin-top: 25px;    
+    margin-top: 25px;
     padding: 25px;
 }
 

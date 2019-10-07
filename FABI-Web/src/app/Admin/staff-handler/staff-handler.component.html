@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Staff Handler -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -42,33 +42,33 @@
 
           <!-- Navbar Items -->
           <li class="nav-item">
-              <a class="nav-link" routerLink="/admin-dashboard">Home</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" routerLink="/staff-handler">Staff Handler <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/database-handler">Database Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/reporting">Reporting</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="toggleHelpTab()">Help</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="logout()">Logout</a>
-            </li>
-            <!-- / Navbar Items -->
+            <a class="nav-link" routerLink="/admin-dashboard">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/staff-handler">Staff Handler <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/database-handler">Database Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reporting">Reporting</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Logout</a>
+          </li>
+          <!-- / Navbar Items -->
         </ul>
       </div>
     </div>
@@ -318,15 +318,15 @@
                 <div class="form-group">
                   <label for="staff_name">Name</label>
                   <input type="text" class="form-control" id="staff_name" placeholder="Enter name"
-                    formControlName="staff_name" required
-                    [ngClass]="{
+                    formControlName="staff_name" required [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty), 
                     'is-valid': addStaffForm.controls['staff_name'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="addStaffForm.controls['staff_name'].invalid && (submitted || addStaffForm.controls['staff_name'].dirty)">
                     <div *ngFor="let validation of add_staff_validators.staff_name">
-                      <p *ngIf="addStaffForm.get('staff_name').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
+                      <p *ngIf="addStaffForm.get('staff_name').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -337,15 +337,15 @@
                 <div class="form-group">
                   <label for="staff_surname">Surname</label>
                   <input type="text" class="form-control" id="staff_surname" placeholder="Enter surname"
-                    formControlName="staff_surname" required
-                    [ngClass]="{
+                    formControlName="staff_surname" required [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty), 
                     'is-valid': addStaffForm.controls['staff_surname'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="addStaffForm.controls['staff_surname'].invalid && (submitted || addStaffForm.controls['staff_surname'].dirty)">
                     <div *ngFor="let validation of add_staff_validators.staff_surname">
-                      <p *ngIf="addStaffForm.get('staff_surname').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
+                      <p *ngIf="addStaffForm.get('staff_surname').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -356,15 +356,15 @@
                 <div class="form-group">
                   <label for="staff_email">Email address</label>
                   <input type="email" class="form-control" id="staff_email" aria-describedby="emailHelp"
-                    placeholder="Enter email" formControlName="staff_email" required
-                    [ngClass]="{
+                    placeholder="Enter email" formControlName="staff_email" required [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty), 
                     'is-valid': addStaffForm.controls['staff_email'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="addStaffForm.controls['staff_email'].invalid && (submitted || addStaffForm.controls['staff_email'].dirty)">
                     <div *ngFor="let validation of add_staff_validators.staff_email">
-                      <p *ngIf="addStaffForm.get('staff_email').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
+                      <p *ngIf="addStaffForm.get('staff_email').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -375,15 +375,15 @@
                 <div class="form-group">
                   <label for="staff_phone">Phone</label>
                   <input type="number" class="form-control" id="staff_phone" placeholder="Enter phone"
-                    formControlName="staff_phone" required
-                    [ngClass]="{
+                    formControlName="staff_phone" required [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty), 
                     'is-valid': addStaffForm.controls['staff_phone'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="addStaffForm.controls['staff_phone'].invalid && (submitted || addStaffForm.controls['staff_phone'].dirty)">
                     <div *ngFor="let validation of add_staff_validators.staff_phone">
-                      <p *ngIf="addStaffForm.get('staff_phone').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
+                      <p *ngIf="addStaffForm.get('staff_phone').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -393,8 +393,8 @@
                 <!-- Staff Position Drop Down -->
                 <div class="form-group">
                   <label for="staff_position">Admin?</label>
-                  <select class="form-control form-control-sm" [(ngModel)]="selectedUserType" id="staff_position" formControlName="staff_position" required
-                    [ngClass]="{
+                  <select class="form-control form-control-sm" [(ngModel)]="selectedUserType" id="staff_position"
+                    formControlName="staff_position" required [ngClass]="{
                     'is-invalid': addStaffForm.controls['staff_position'].invalid && (submitted || addStaffForm.controls['staff_position'].dirty), 
                     'is-valid': addStaffForm.controls['staff_position'].valid && (submitted)}">
                     <option value="" selected>
@@ -407,7 +407,8 @@
                   <div
                     *ngIf="addStaffForm.controls['staff_position'].invalid && (submitted || addStaffForm.controls['staff_position'].dirty)">
                     <div *ngFor="let validation of add_staff_validators.staff_position">
-                      <p *ngIf="addStaffForm.get('staff_position').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
+                      <p *ngIf="addStaffForm.get('staff_position').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -418,7 +419,7 @@
                 <div class="form-group">
                   <label for="admin_type">Admin Type</label>
                   <select class="form-control form-control-sm" id="admin_type" formControlName="admin_type" required
-                  [ngClass]="{
+                    [ngClass]="{
                   'is-invalid': addStaffForm.controls['admin_type'].invalid && (submitted || addStaffForm.controls['admin_type'].dirty), 
                   'is-valid': addStaffForm.controls['admin_type'].valid && (submitted)}">
                     <option value="" selected>
@@ -428,14 +429,15 @@
                       {{adminType}}
                     </option>
                   </select>
-                   <!-- Error Validation Feedback-->
-                   <div
-                   *ngIf="addStaffForm.controls['admin_type'].invalid && (submitted || addStaffForm.controls['admin_type'].dirty)">
-                   <div *ngFor="let validation of add_staff_validators.admin_type">
-                     <p *ngIf="addStaffForm.get('admin_type').hasError(validation.type)" class="text-danger" >{{validation.message}}</p>
-                   </div>
-                 </div>
-                 <!-- / Error Validation Feedback-->
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="addStaffForm.controls['admin_type'].invalid && (submitted || addStaffForm.controls['admin_type'].dirty)">
+                    <div *ngFor="let validation of add_staff_validators.admin_type">
+                      <p *ngIf="addStaffForm.get('admin_type').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
                 </div>
                 <!-- / Admin Type Drop Down -->
 
@@ -596,4 +598,4 @@
   <!-- / Help Section -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Staff Handler -->

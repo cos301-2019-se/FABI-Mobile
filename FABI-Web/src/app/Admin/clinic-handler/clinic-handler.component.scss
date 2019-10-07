@@ -2,9 +2,8 @@
    CLINIC HANDLER
    ========================================================================== */
 
-
-
-/* Clinic Tables Subsection */
+/* Table Style
+   ========================================================================== */
 .clinic-tables {
   display: flex;
   flex-direction: column;
@@ -32,7 +31,6 @@
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
-
 .clinic-tables h5 {
   font-family: "Montserrat", sans-serif;
   color: #6B746F;
@@ -52,9 +50,8 @@
 }
 
 
-/* Staff Handler View Staff Modal Section
+/* Modal Style
      ========================================================================== */
-
 .modal-header {
   background-color: #6aa84f;
 

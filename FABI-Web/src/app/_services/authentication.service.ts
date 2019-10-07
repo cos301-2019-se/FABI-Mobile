@@ -215,7 +215,7 @@ export class AuthenticationService {
     const postData = details;
 
     const options = {
-      headers: new HttpHeaders({
+      headers: new http.HttpHeaders({
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",

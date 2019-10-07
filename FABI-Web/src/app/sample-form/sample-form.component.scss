@@ -1,4 +1,9 @@
-/* BACKGROUND */
+/* ==========================================================================
+   SAMPLE FORM 
+   ========================================================================== */
+
+/* Background Style
+   ========================================================================== */
 .background {
 
   width: 100%;
@@ -13,8 +18,8 @@
   background: #f7f7f7;
 }
 
-
-/* SIDE ACCENT */
+/* Side Accent Style
+   ========================================================================== */
 .side-accent {
   display: flex;
   flex-direction: column;
@@ -34,25 +39,22 @@
 
 
 @media (min-width: 400px) {
-  .side-accent  {
-     right: 60px;
+  .side-accent {
+    right: 60px;
   }
 }
 
 @media (min-height: 768px) {
-  .side-accent  {
+  .side-accent {
     min-height: 130vh;
   }
 }
 
 @media (min-height: 1024px) {
-  .side-accent  {
+  .side-accent {
     min-height: 100vh;
   }
 }
-
-
-/* SUBMIT SAMPLE HEADING */
 
 .accent-heading {
   position: absolute;
@@ -74,7 +76,8 @@
   display: none;
 }
 
-/* FORM CARD */
+/* Form Card Style
+   ========================================================================== */
 @media (min-width: 960px) {
   .step-info {
     display: block;
@@ -207,7 +210,6 @@
   color: #bebebe;
 }
 
-/* FORM CARD */
 .form-card {
   display: flex;
   flex-direction: column;
@@ -253,13 +255,13 @@
 }
 
 @media (min-height: 768px) {
-  .form-card  {
+  .form-card {
     min-height: 105vh;
   }
 }
 
 @media (min-height: 1024px) {
-  .form-card  {
+  .form-card {
     min-height: 80vh;
   }
 }
@@ -268,6 +270,8 @@
   margin-left: 25px;
 }
 
+/* Navbar Style
+   ========================================================================== */
 .nav {
   position: absolute;
   width: auto;
@@ -328,16 +332,6 @@
   height: auto;
 }
 
-// #symptom-distribution.form-fields {
-//   margin-top: 50px;
-
-//   width: 100%;
-
-//   position: relative;
-
-//   height: 100%;
-// }
-
 label {
   min-width: 100%;
   max-width: 100%;
@@ -345,12 +339,14 @@ label {
   overflow-wrap: break-word;
 }
 
-.action{
+.action {
   position: absolute;
   right: 25px;
   bottom: 25px;
 }
 
+/* Button Style
+   ========================================================================== */
 .next-btn {
   position: absolute;
   right: 25px;

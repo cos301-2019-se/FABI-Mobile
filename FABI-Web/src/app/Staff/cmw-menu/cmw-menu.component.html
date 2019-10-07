@@ -1,52 +1,52 @@
-<!-- Dashboard -->
+<!-- CMW Menu -->
 <div class="dashboard">
 
-    <!-- Sidenav -->
-    <div class="sidenav">
-      <div class="top-nav-items">
-        <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
-        <p (click)="toggleProfileTab()">Click to view profile</p>
-        <br />
-        <div class="nav-links">
-          <a class="nav-link" routerLink="/staff-dashboard"><i class="fas fa-home"></i></a>
-          <a class="nav-link" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i></a>
-          <a class="nav-link active" routerLink="/cmw-menu"><i class="fas fa-vials"></i></a>
-          <a class="nav-link" routerLink="/staff-view-databases"><i class="fas fa-database"></i></a>
-        </div>
-      </div>
-      <div class="bottom-nav-items">
-        <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
-        <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+  <!-- Sidenav -->
+  <div class="sidenav">
+    <div class="top-nav-items">
+      <i class="fas fa-user-circle" (click)="toggleProfileTab()"></i>
+      <p (click)="toggleProfileTab()">Click to view profile</p>
+      <br />
+      <div class="nav-links">
+        <a class="nav-link" routerLink="/staff-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i></a>
+        <a class="nav-link active" routerLink="/cmw-menu"><i class="fas fa-vials"></i></a>
+        <a class="nav-link" routerLink="/staff-view-databases"><i class="fas fa-database"></i></a>
       </div>
     </div>
-    <!-- / Sidenav -->
-  
-    <!-- Navbar -->
-    <div class="pos-f-t">
-      <div class="collapse" id="navbarToggleExternalContent">
-        <div class="bg-dark p-4">
-          <h1 class="brand">STAFF DASHBOARD</h1>
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <!-- Navbar Items -->
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/staff-dashboard">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/staff-submit-sample">Submit Sample</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" routerLink="/cmw-menu">CMW Culture Collection <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/staff-view-databases">Databases</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="toggleHelpTab()">Help</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="logout()">Logout</a>
-            </li>
-            <!-- / Navbar Items -->
+    <div class="bottom-nav-items">
+      <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </div>
+  <!-- / Sidenav -->
+
+  <!-- Navbar -->
+  <div class="pos-f-t">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <h1 class="brand">STAFF DASHBOARD</h1>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <!-- Navbar Items -->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/staff-dashboard">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/staff-submit-sample">Submit Sample</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/cmw-menu">CMW Culture Collection <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/staff-view-databases">Databases</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Logout</a>
+          </li>
+          <!-- / Navbar Items -->
         </ul>
       </div>
     </div>
@@ -73,7 +73,7 @@
   </div>
   <!-- / Navbar-->
 
-  <!-- Dashboard Content -->
+  <!-- CMW Menu Content -->
   <div class="dashboard-content">
     <!-- Primary Content -->
     <div class="primary-content">
@@ -223,7 +223,7 @@
     <!-- / CMW Revitalization Modal Section -->
 
   </div>
-  <!-- / Dashboard Content -->
+  <!-- / CMW Menu Content -->
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
@@ -255,11 +255,5 @@
   </div>
   <!-- / Help Section -->
 
-  <!-- Up Icon -->
-  <!-- <div id="scroll-to-top">
-    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
-  </div> -->
-  <!-- / Up Icon -->
-
 </div>
-<!-- / Dashboard -->
+<!-- / CMW Menu -->

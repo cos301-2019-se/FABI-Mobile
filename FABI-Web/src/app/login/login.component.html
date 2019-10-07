@@ -1,6 +1,6 @@
 <!-- Login -->
 <div class="login">
-  
+
   <!-- Login Heading -->
   <div class="banner"></div>
   <div class="heading">
@@ -17,10 +17,11 @@
       <!-- Organization Drop Down -->
       <div class="form-group">
         <label for="organization">Organization</label>
-        <select class="form-control form-control-sm" [(ngModel)]="selectedOrg" id="organization" formControlName="organization" required
-        [ngClass]="{
+        <select class="form-control form-control-sm" [(ngModel)]="selectedOrg" id="organization"
+          formControlName="organization" required
+          [ngClass]="{
           'is-invalid': loginForm.controls['organization'].invalid && (submitted || loginForm.controls['organization'].dirty), 
-          'is-valid': loginForm.controls['organization'].valid && (submitted || loginForm.controls['organization'].dirty)}" >
+          'is-valid': loginForm.controls['organization'].valid && (submitted || loginForm.controls['organization'].dirty)}">
           <option value="" selected>
             Please select an organization
           </option>
@@ -28,47 +29,50 @@
             {{organization.orgName}}
           </option>
         </select>
-         <!-- Error Validation Feedback--> 
-         <div *ngIf="loginForm.controls['organization'].invalid && (submitted || loginForm.controls['organization'].dirty)" >
-            <div *ngFor="let validation of login_validation_messages.organization">
-                <p *ngIf="loginForm.get('organization').hasError(validation.type)" class="text-warning">{{validation.message}}</p>
-            </div>
+        <!-- Error Validation Feedback-->
+        <div
+          *ngIf="loginForm.controls['organization'].invalid && (submitted || loginForm.controls['organization'].dirty)">
+          <div *ngFor="let validation of login_validation_messages.organization">
+            <p *ngIf="loginForm.get('organization').hasError(validation.type)" class="text-warning">
+              {{validation.message}}</p>
           </div>
-          <!-- / Error Validation Feedback--> 
+        </div>
+        <!-- / Error Validation Feedback-->
       </div>
       <!-- /Organization Drop Down -->
 
       <!-- Email -->
       <div class="form-group">
         <label for="email">Email address</label>
-        <input type="email" class="form-control form-control-sm" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Enter email" required
-        [ngClass]="{
+        <input type="email" class="form-control form-control-sm" id="email" formControlName="email"
+          aria-describedby="emailHelp" placeholder="Enter email" required [ngClass]="{
           'is-invalid': loginForm.controls['email'].invalid && (submitted || loginForm.controls['email'].dirty), 
-          'is-valid': loginForm.controls['email'].valid && (submitted || loginForm.controls['email'].dirty)}" >
-         <!-- Error Validation Feedback--> 
-        <div *ngIf="loginForm.controls['email'].invalid && (submitted || loginForm.controls['email'].dirty)" >
+          'is-valid': loginForm.controls['email'].valid && (submitted || loginForm.controls['email'].dirty)}">
+        <!-- Error Validation Feedback-->
+        <div *ngIf="loginForm.controls['email'].invalid && (submitted || loginForm.controls['email'].dirty)">
           <div *ngFor="let validation of login_validation_messages.email">
-              <p *ngIf="loginForm.get('email').hasError(validation.type)" class="text-warning">{{validation.message}}</p>
+            <p *ngIf="loginForm.get('email').hasError(validation.type)" class="text-warning">{{validation.message}}</p>
           </div>
         </div>
-        <!-- / Error Validation Feedback--> 
+        <!-- / Error Validation Feedback-->
       </div>
       <!-- / Email -->
 
       <!-- Password -->
-      <div class="form-group" >
+      <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control form-control-sm" id="password" formControlName="password" placeholder="Password" required 
-        [ngClass]="{
+        <input type="password" class="form-control form-control-sm" id="password" formControlName="password"
+          placeholder="Password" required [ngClass]="{
           'is-invalid': loginForm.controls['password'].invalid && (submitted || loginForm.controls['password'].dirty), 
-          'is-valid': loginForm.controls['password'].valid && (submitted || loginForm.controls['password'].dirty)}" >
-         <!-- Error Validation Feedback--> 
-        <div *ngIf="loginForm.controls['password'].invalid && (submitted || loginForm.controls['password'].dirty)" >
+          'is-valid': loginForm.controls['password'].valid && (submitted || loginForm.controls['password'].dirty)}">
+        <!-- Error Validation Feedback-->
+        <div *ngIf="loginForm.controls['password'].invalid && (submitted || loginForm.controls['password'].dirty)">
           <div *ngFor="let validation of login_validation_messages.password">
-              <p *ngIf="loginForm.get('password').hasError(validation.type)" class="text-warning">{{validation.message}}</p>
+            <p *ngIf="loginForm.get('password').hasError(validation.type)" class="text-warning">{{validation.message}}
+            </p>
           </div>
         </div>
-        <!-- / Error Validation Feedback--> 
+        <!-- / Error Validation Feedback-->
         <a href="#" class="forgot-password">Forgot password?</a>
       </div>
       <!-- / Password -->
