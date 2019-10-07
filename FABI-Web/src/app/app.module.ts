@@ -51,7 +51,6 @@ import { OrganizationModule } from './Organization/organization.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PreDiagnosisComponent } from './pre-diagnosis/pre-diagnosis.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
-import { SignUpRequestComponent } from './sign-up-request/sign-up-request.component';
 import { CmwMenuComponent } from './Staff/cmw-menu/cmw-menu.component';
 import { StaffDashboardComponent } from './Staff/staff-dashboard/staff-dashboard.component';
 import { StaffHelpComponent } from './Staff/staff-help/staff-help.component';
@@ -65,7 +64,6 @@ import { StaffModule } from './Staff/staff.module';
 import { SubmitCmwDepositComponent } from './Staff/submit-cmw-deposit/submit-cmw-deposit.component';
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
 import { SubmitCmwRevitalizationComponent } from './Staff/submit-cmw-revitalization/submit-cmw-revitalization.component';
-import { UpdateComponent } from './update/update.component';
 import { ErrorComponent } from './_errors/error-component/error.component';
 import { ErrorsModule } from "./_errors/errors.module";
 import { LoadingComponent } from './_loading/loading.component';
@@ -102,7 +100,6 @@ import { CookieService } from "ngx-cookie-service";
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
     LoadingComponent,
-    UpdateComponent,
     AdminDivComponent,
     StaffDivComponent,
     NotificationDivComponent,
@@ -112,7 +109,6 @@ import { CookieService } from "ngx-cookie-service";
     ViewFormsComponent,
     ReportingComponent,
     MapsWindowComponent,
-    SignUpRequestComponent,
     CmwMenuComponent,
     AdminNotificationComponent,
     StaffNotificationComponent,

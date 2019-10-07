@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Organization Dashboard -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -69,7 +69,7 @@
   </div>
   <!-- / Navbar-->
 
-  <!-- Dashboard Content -->
+  <!-- Organization Dashboard Content -->
   <div class="dashboard-content">
     <!-- Primary Content -->
     <div class="primary-content">
@@ -204,7 +204,7 @@
         </div>
         <!-- /Loading Spinner -->
 
-        <table class="table table-hover"  *ngIf="organizationMembers && !memberTableLoading">
+        <table class="table table-hover" *ngIf="organizationMembers && !memberTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -226,7 +226,7 @@
       <!-- Sample Table -->
       <div class="member-table table-responsive">
         <h5> Sample Table </h5>
- 
+
         <app-organization-view-samples></app-organization-view-samples>
 
       </div>
@@ -236,7 +236,7 @@
     </div>
     <!-- / Member Tables -->
   </div>
-  <!-- / Dashboard Content -->
+  <!-- / Organization Dashboard Content -->
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
@@ -269,4 +269,4 @@
   <!-- / Help Section -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Organization Dashboard -->

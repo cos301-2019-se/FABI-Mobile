@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Reporting -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -42,33 +42,33 @@
 
           <!-- Navbar Items -->
           <li class="nav-item">
-              <a class="nav-link" routerLink="/admin-dashboard">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/database-handler">Database Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" routerLink="/reporting">Reporting <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="toggleHelpTab()">Help</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="logout()">Logout</a>
-            </li>
-            <!-- / Navbar Items -->
+            <a class="nav-link" routerLink="/admin-dashboard">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/database-handler">Database Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/organization-handler">Organization Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/reporting">Reporting <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Logout</a>
+          </li>
+          <!-- / Navbar Items -->
         </ul>
       </div>
     </div>
@@ -95,7 +95,7 @@
   </div>
   <!-- / Navbar-->
 
-  <!-- Dashboard Content -->
+  <!-- Reporting Content -->
   <div class="dashboard-content">
     <!-- Primary Content -->
     <div class="primary-content">
@@ -198,8 +198,8 @@
             <div class="input-group-prepend ">
               <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="searchReports"
-              aria-describedby="basic-addon1" id="search-table" [(ngModel)]="searchReports">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+              name="searchReports" aria-describedby="basic-addon1" id="search-table" [(ngModel)]="searchReports">
           </div>
 
           <!-- FABI System Request Report Table -->
@@ -227,7 +227,7 @@
                     <th>Date Submitted</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='requestReport'>                     
+                <tbody *ngIf='requestReport'>
                   <tr *ngFor="let row of requestLogsArray | filter : 'request-report' : searchReports; let i = index">
                     <td>{{row.user}}</td>
                     <td>{{row.requestor}}</td>
@@ -244,7 +244,7 @@
             <!-- Tab Content -->
 
             <!-- Pagination -->
-            
+
             <!-- /Pagination -->
 
           </div>
@@ -371,7 +371,7 @@
             </div>
             <!-- Tab Content -->
 
-            
+
 
           </div>
           <!-- / FABI System Error Report Table -->
@@ -437,7 +437,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let log of userLogsArray | filter : 'user-log' : searchItem; let i = index">
+                  <tr class="tableRow" scope="row"
+                    *ngFor="let log of userLogsArray | filter : 'user-log' : searchItem; let i = index">
                     <td>{{log.action}}</td>
                     <td>{{log.date}}</td>
                     <td>{{log.user1}}</td>
@@ -473,7 +474,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let log of databaseLogsArray | filter : 'database-log' : searchItem; let i = index">
+                  <tr class="tableRow" scope="row"
+                    *ngFor="let log of databaseLogsArray | filter : 'database-log' : searchItem; let i = index">
                     <td>{{log.action}}</td>
                     <td>{{log.date}}</td>
                     <td>{{log.user}}</td>
@@ -508,7 +510,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let log of accessLogsArray | filter : 'access-log' : searchItem; let i = index">
+                  <tr class="tableRow" scope="row"
+                    *ngFor="let log of accessLogsArray | filter : 'access-log' : searchItem; let i = index">
                     <td>{{log.details}}</td>
                     <td>{{log.date}}</td>
                     <td>{{log.user}}</td>
@@ -543,7 +546,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let log of errorLogsArray | filter : 'error-log' : searchItem; let i = index">
+                  <tr class="tableRow" scope="row"
+                    *ngFor="let log of errorLogsArray | filter : 'error-log' : searchItem; let i = index">
                     <td>{{log.code}}</td>
                     <td>{{log.date}}</td>
                     <td>{{log.details}}</td>
@@ -599,13 +603,7 @@
     <!-- / Help Section -->
 
   </div>
-  <!-- / Dashboard Content -->
-
-  <!-- Up Icon -->
-  <!-- <div id="scroll-to-top">
-    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
-  </div> -->
-  <!-- / Up Icon -->
+  <!-- / Reporting Content -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Reporting -->

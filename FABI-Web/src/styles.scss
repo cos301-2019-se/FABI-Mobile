@@ -6,11 +6,6 @@
 
 @import "../node_modules/ngx-toastr/toastr.css";
 
-// body {
-//     min-width: 458px;
-//     min-height: 500px;
-// }
-
 /* ==========================================================================
    TOP NAV STYLING [GENERAL]
    ========================================================================== */
@@ -260,7 +255,6 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
    BUTTON STYLING [GENERAL]
    ========================================================================== */
 
-
 /* Default Button 
      ========================================================================== */
 .btn.btn-default {
@@ -393,8 +387,6 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     transform: scale(1.025);
 }
 
-
-
 /* Edit Button 
      ========================================================================== */
 
@@ -427,8 +419,6 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     transform: scale(1.025);
 }
-
-
 
 /* Save Button 
      ========================================================================== */
@@ -1331,57 +1321,6 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     }
 }
 
-
-/* ==========================================================================
-   SCROLL TO TOP ICON STYLING [GENERAL]
-   ========================================================================== */
-
-#scroll-to-top {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background-color: #989C94;
-
-    border-radius: 50%;
-
-    height: 50px;
-    width: 50px;
-
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
-
-    position: fixed;
-
-    right: 25px;
-    bottom: 25px;
-
-    transition: all 0.5s;
-
-    animation: jump 1s infinite;
-}
-
-#scroll-to-top:hover {
-    transform: scale(1.05);
-}
-
-#scroll-to-top i {
-    color: #fff;
-    font-size: 20px;
-}
-
-@keyframes jump {
-    0% {
-        bottom: 10px;
-    }
-
-    50% {
-        bottom: 15px;
-    }
-
-    100% {
-        bottom: 10px;
-    }
-}
-
 /* ==========================================================================
    HANDLER STYLING [GENERAL]
    ========================================================================== */
@@ -1490,6 +1429,11 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     margin-left: 25px;
 }
+
+
+/* ==========================================================================
+   MODAL STYLING [GENERAL]
+   ========================================================================== */
 
 /* Handler Modals
      ========================================================================== */
