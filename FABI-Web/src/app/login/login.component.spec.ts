@@ -12,7 +12,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DebugElement } from '@angular/core';
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule } from 'ngx-toastr';
-import { ToastrService } from 'ngx-toastr';
+import { Toast, ToastrService, ToastPackage } from 'ngx-toastr';
 
 describe('LoginComponent', () => {
 
@@ -33,6 +33,7 @@ describe('LoginComponent', () => {
             ToastContainerModule,
             ToastrModule,
             ToastrComponentlessModule,
+            ToastrModule.forRoot()
             
         ],
         declarations: [ 
