@@ -32,11 +32,11 @@ const sendOrganizationRequestToOrg = function(orgName, email) {
 
     transporter.use('compile', hbs({
         viewEngine: {
-            viewPath: path.resolve(__dirname, 'templates', 'RequestSent_Organization'),
+            viewPath: path.resolve(__dirname,'routes', 'templates' ,'RequestSent_Organization'),
             extName: '.hbs',
             defaultLayout: false
         },
-        viewPath: path.resolve(__dirname, 'templates', 'RequestSent_Organization'),
+        viewPath: path.resolve(__dirname, 'routes' ,'templates','RequestSent_Organization'),
         extName: '.hbs'
     }));
     
@@ -78,11 +78,11 @@ const sendOrganizationRequestToFABI = function(orgName, fname, surname, email) {
 
     transporter.use('compile', hbs({
         viewEngine: {
-            viewPath: path.resolve(__dirname, 'templates', 'RequestReceived_FABI'),
+            viewPath: path.resolve(__dirname,'routes', 'templates' ,'RequestReceived_FABI'),
             extName: '.hbs',
             defaultLayout: false
         },
-        viewPath: path.resolve(__dirname, 'templates', 'RequestReceived_FABI'),
+        viewPath: path.resolve(__dirname, 'routes', 'templates' ,'RequestReceived_FABI'),
         extName: '.hbs'
     }));
     
