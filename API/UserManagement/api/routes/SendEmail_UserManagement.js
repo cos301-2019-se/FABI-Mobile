@@ -135,7 +135,7 @@ const sendUserTemporaryPin = function(orgName, email, fname, surname, pass, role
             extName: '.hbs',
             defaultLayout: false
         },
-        viewPath: path.resolve(__dirname, 'templates', 'RequestSuccess_Organization'),
+        viewPath: path.resolve(__dirname, 'templates', 'MemberRegistration'),
         extName: '.hbs'
     }));
     

@@ -67,14 +67,16 @@ async function submitForm(req, res)
             });
         }
         else{
-            result = predict(req.body.data).then((result => {
+            console.log(req.body);
+            
+            result = predict(getPredictionData(req)).then((result => {
                 refnum = refNumberGenerator(result);
                 req.body.referenceNumber = refnum;
                 sampleRef = db.collection('Diagnostic').doc('Samples').collection('Processing').doc(refnum);
                 req.body.status = 'submitted';
                 sampleRef.set(req.body).then(()=>
                 {
-                    console.log("Hello");
+                    
                     if(req.body.orgName == 'FABI')
                     {
                         mailRef = db.collection('Organizations').doc(req.body.orgName).collection('Staff').doc(req.body.userID);
@@ -85,7 +87,6 @@ async function submitForm(req, res)
                     }
 
                     mailRef.get().then(doc => {
-                        console.log(doc.data());
                         mail.sendSampleSubmission(refnum, doc.data().email, doc.data().fname, doc.data().surname, result);
                         res.setHeader('Content-Type', 'application/problem+json');
                         res.setHeader('Content-Language', 'en');
@@ -120,5 +121,55 @@ async function submitForm(req, res)
     }
 } 
 
+function getPredictionData(req)
+{
+    FormData = {
+        Location : req.body.data.sample.plantation_details.farm,
+        Province : req.body.data.sample.plantation_details.province,
+        Genus : req.body.data.sample.sample_details.plant_genus,
+        Species : req.body.data.sample.sample_details.plant_species,
+        Asym_Dis : 'D',
+        NurseryField : 'N',
+    }
+    var root = req.body.data.sample.types.filter( function(item){return (item.type=='root');} );
+    var collar = req.body.data.sample.types.filter( function(item){return (item.type=='Root-Collar');} );
+    var stem = req.body.data.sample.types.filter( function(item){return (item.type=='Stem');} );
+    var growth = req.body.data.sample.types.filter( function(item){return (item.type=='Growth-Tip');} );
+    var neeldes = req.body.data.sample.types.filter( function(item){return (item.type=='Needles/Leaves');} );
+    var type = ''
+    req.body.data.sample.types.forEach( doc => {
+        type += doc.type + ',';
+    })
+    type = type.substring(0, type.length - 1);
+    
+    if(!root.length)
+        FormData.Roots = 'Healthy'
+    else
+        FormData.Roots = root[0].symptoms
+    
+    if(!collar.length)
+        FormData['Root-Collar'] = 'Healthyy'
+    else
+        FormData['Root-Collar'] = collar[0].symptoms
+
+    if(!stem.length)
+        FormData.Stem = 'Health'
+    else
+        FormData.Stem = stem[0].symptoms
+
+    if(!growth.length)
+        FormData.GrowthTip = 'Healthy'
+    else
+        FormData.GrowthTip = growth[0].symptoms
+
+    if(!neeldes.length)
+        FormData['Needles-Leaves'] = 'Alive'
+    else
+        FormData['Needles-Leaves'] = neeldes[0].symptoms
+
+    FormData.SampleType = type
+    console.log(FormData)
+    return FormData
+}
 
 module.exports = router;
