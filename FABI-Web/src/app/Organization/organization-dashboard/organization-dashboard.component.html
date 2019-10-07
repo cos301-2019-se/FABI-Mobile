@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Organization Dashboard -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -69,7 +69,7 @@
   </div>
   <!-- / Navbar-->
 
-  <!-- Dashboard Content -->
+  <!-- Organization Dashboard Content -->
   <div class="dashboard-content">
     <!-- Primary Content -->
     <div class="primary-content">
@@ -97,7 +97,6 @@
             </div>
             <div class="statistic-box-info">
               <p id="organization_users_stats">Number of Members: {{memberStats}}</p>
-              <p id="organization_completed_samples_stats">Completed Samples: 75%</p>
               <p id="organization_samples_stats">Number of Samples: {{sampleStats}}</p>
             </div>
           </div>
@@ -112,19 +111,6 @@
             </div>
             <div class="statistic-box-info">
               <p id="organization_users_stats">{{memberStats}}</p>
-            </div>
-          </div>
-        </div>
-        <!-- Statistic Box -->
-
-        <!-- Statistic Box -->
-        <div class="statistic-box">
-          <div class="statistic-box-content">
-            <div class="statistic-box-heading">
-              <h5>Completed Samples</h5>
-            </div>
-            <div class="statistic-box-info">
-              <p id="organization_completed_samples_stats">75%</p>
             </div>
           </div>
         </div>
@@ -218,7 +204,7 @@
         </div>
         <!-- /Loading Spinner -->
 
-        <table class="table table-hover"  *ngIf="organizationMembers && !memberTableLoading">
+        <table class="table table-hover" *ngIf="organizationMembers && !memberTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -240,7 +226,7 @@
       <!-- Sample Table -->
       <div class="member-table table-responsive">
         <h5> Sample Table </h5>
- 
+
         <app-organization-view-samples></app-organization-view-samples>
 
       </div>
@@ -250,7 +236,7 @@
     </div>
     <!-- / Member Tables -->
   </div>
-  <!-- / Dashboard Content -->
+  <!-- / Organization Dashboard Content -->
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
@@ -283,4 +269,4 @@
   <!-- / Help Section -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Organization Dashboard -->

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,36 +14,23 @@
  */
 
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {ViewEncapsulation} from '@angular/core';
-
-import { AuthenticationService } from '../../_services/authentication.service';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../_errors/error-component/error.component';
+import * as core from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { LoadingComponent } from "../../_loading/loading.component";
-
-//Include Material Components
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-
-
 import * as Interface from '../../_interfaces/interfaces';
+import { AuthenticationService } from '../../_services/authentication.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
-import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 
-
-@Component({
+@core.Component({
   selector: 'app-staff-handler',
   templateUrl: './staff-handler.component.html',
   styleUrls: ['./staff-handler.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class StaffHandlerComponent implements OnInit {
+export class StaffHandlerComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -57,21 +44,17 @@ export class StaffHandlerComponent implements OnInit {
   /** If page is busy loading something - @type {boolean} */
   loading: boolean = false;
   /** Selected Staff Member from the table - @type {Interface.StaffInfo} */
-  selectedStaff: Interface.StaffInfo = {fname: '', surname: '', email: ''};
+  selectedStaff: Interface.StaffInfo = { fname: '', surname: '', email: '' };
   /** Array of Staff Member objects - @type {StaffInfo[]} */
   staffMembers: Interface.StaffInfo[];
-  /** The number of the staff members - @type {number} */   
-  numberOfStaffMembers : number = 0;
-
+  /** The number of the staff members - @type {number} */
+  numberOfStaffMembers: number = 0;
   /** Array of User Type objects for form dropdown - @type {UserType[]} */
   userTypes: Interface.UserType[];
   /** Selected user type on dropdown - @type {string} */
   selectedUserType: string;
-
   adminTypes: any[];
-
   allDatabaseNames: any[];
-
   privileges: any = [
     {
       name: "Add",
@@ -95,25 +78,27 @@ export class StaffHandlerComponent implements OnInit {
     }
   ];
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
   profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
   saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
   confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
-
-  deleteData: Interface.Confirm = {title: '', message: '', info: '', cancel: '', confirm: ''};
-
+  deleteData: Interface.Confirm = { title: '', message: '', info: '', cancel: '', confirm: '' };
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
-
-  /** Specifies if the list of staff have been retreived to disable the loading spinner - @type {boolean} */  
+  /** Specifies if the list of staff have been retreived to disable the loading spinner - @type {boolean} */
   staffTableLoading: boolean = true;
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchStaff: string = "";
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        FORM VALIDATORS
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   add_staff_validators = {
     'staff_name': [
       { type: 'required', message: 'First name required' },
@@ -127,11 +112,16 @@ export class StaffHandlerComponent implements OnInit {
     ],
     'staff_phone': [
       { type: 'required', message: 'Phone No. is required' },
+      { type: 'pattern', message: 'Please enter a valid number' }
+    ],
+    'staff_position': [
+      { type: 'required', message: 'Please indicate whether the user is an admin' }
+    ],
+    'admin_type': [
+      { type: 'required', message: 'Please indicate admin type' }
     ]
   }
 
-  /** The search item the user is looking for in the table -  @type {string} */
-  public searchStaff: string = "";
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          CONSTRUCTOR
@@ -141,21 +131,21 @@ export class StaffHandlerComponent implements OnInit {
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
-   * @param {Router} router For navigating to other modules/components
+   * @param {Router} router for routing/navigating to other components
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
-    private router: Router, 
-    private userManagementService: UserManagementAPIService, 
+    private authService: AuthenticationService,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private router: Router,
+    private userManagementService: UserManagementAPIService,
     private notificationLoggingService: NotificationLoggingService
-    )  {
+  ) {
 
     // const formControls = this.privileges.map(control => new FormControl(false));
 
@@ -168,7 +158,7 @@ export class StaffHandlerComponent implements OnInit {
       ])],
       staff_phone: ['', Validators.compose([
         Validators.required,
-        // Validators.pattern('')
+        Validators.pattern('^(([\+]{1}[0-9]{1,3}[\ ]{1}[0-9]{1,2}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\-]{1}[0-9]{4}[\-]{1}[0-9]{4})|([\(]{1}[0]{1}[0-9]{1}[\)]{1}[\ ]{1}[0-9]{4}([\ ]|[\-]){1}[0-9]{4})|([0-9]{4}([\ ]|[\-])?[0-9]{4})|([0]{1}[0-9]{3}[\ ]{1}[0-9]{3}[\ ]{1}[0-9]{3})|([0]{1}[0-9]{9})|([\(]{1}[0-9]{3}[\)]{1}[\ ]{1}[0-9]{3}[\-]{1}[0-9]{4})|([0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[\-]?[0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[0-9]{9}[0-9]?)|([0-9]{3}[\.]{1}[0-9]{3}[\.]{1}[0-9]{4})|([\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\.]|[\-]){1}[0-9]{4}(([\ ]?(x|ext|extension)?)([\ ]?[0-9]{3,4}))?)|([1]{1}[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\-]){1}[0-9]{4})|([\+]{1}[1]{1}[\ ]{1}[0-9]{3}[\.]{1}[0-9]{3}[\-]{1}[0-9]{4})|([\+]{1}[1]{1}[\ ]?[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}[\-]{1}[0-9]{4}))$')
       ])],
       staff_position: ['', Validators.required],
       admin_type: ['', Validators.required],
@@ -177,7 +167,7 @@ export class StaffHandlerComponent implements OnInit {
     });
 
   };
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          NG ON INIT  
   /**
@@ -189,86 +179,86 @@ export class StaffHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    // this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
-    //   this.currentUser = this.authService.getCurrentSessionValue.user;
-    //   //Calling the neccessary functions as the page loads  
-    //   this.viewStaff();
-    //   this.addStaffForm.get('admin_type').disable();  
-    //   this.getAdminTypes();
-    //   this.getDBNames();
-    //   this.onChanges();
-    // });
-
-
-    //******** TO BE USED IN PRODUCTION: ********
     // Calling the neccessary functions as the page loads  
     this.currentUser = this.authService.getCurrentSessionValue.user;
     //Calling the neccessary functions as the page loads 
     this.viewStaff();
-    this.addStaffForm.get('admin_type').disable();  
+    this.addStaffForm.get('admin_type').disable();
     this.getAdminTypes();
     this.getDBNames();
     this.onChanges();
-    
+
   }
 
-  private addDatabaseCheckboxes() {    
-    this.allDatabaseNames.map((control) => {
-      new FormControl(false);
-      (this.addStaffForm.controls.orders as FormArray).push(control)
-    });
-  }
+  // private addDatabaseCheckboxes() {
+  //   this.allDatabaseNames.map((control) => {
+  //     new FormControl(false);
+  //     (this.addStaffForm.controls.orders as FormArray).push(control)
+  //   });
+  // }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          ON FORM CHANGES
+  /**
+   * This function changes the form inputs upon changing the staffs positions input
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   onChanges() {
     this.addStaffForm.get('staff_position').valueChanges
-    .subscribe(selectedStaffPosition => {      
+      .subscribe(selectedStaffPosition => {
         if (selectedStaffPosition == 'Yes') {
           this.addStaffForm.get('admin_type').enable();
         } else {
           this.addStaffForm.get('admin_type').reset();
           this.addStaffForm.get('admin_type').disable();
         }
-    });
+      });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET DATABASE NAMES
+  /**
+   * This functions is used to get all the database names from the server
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getDBNames() {
-    this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
+    this.userManagementService.getDatabaseNames().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.allDatabaseNames = response.data.docs;
 
         this.allDatabaseNames.map(() => {
-          const control = new FormControl(false); 
+          const control = new FormControl(false);
           (this.addStaffForm.controls.database_privileges as FormArray).push(control)
         });
-        
-      } 
+
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Database Names", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.getDBNames();
-          }
-        })
       }
     });
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET ADMIN TYPES
+  /**
+   * This function gets all the admin types for a FABI user
+   *
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAdminTypes() {
-    this.userManagementService.getFABIAdminTypes().subscribe( (response:any) => {
+    this.userManagementService.getFABIAdminTypes().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.adminTypes = response.data.adminTypes;
         this.onChanges();
-      } 
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Admin Types", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.getAdminTypes();
-          }
-        })
       }
     });
   }
@@ -295,7 +285,7 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  addStaff(){
+  addStaff() {
     this.submitted = true;
 
     if (this.addStaffForm.invalid) {
@@ -311,31 +301,31 @@ export class StaffHandlerComponent implements OnInit {
     const LstaffPhone = this.addStaffForm.controls.staff_phone.value;
     let LstaffPosition;
 
-    if(this.addStaffForm.controls.staff_position.value == "No") {
+    if (this.addStaffForm.controls.staff_position.value == "No") {
       LstaffPosition = "Staff";
-    } 
+    }
     else {
       LstaffPosition = this.addStaffForm.controls.admin_type.value;
     }
 
-    
-    const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone};
 
-    var databasePrivileges : Interface.DatabasePrivilege[] = [];
+    const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone };
 
-    this.addStaffForm.controls.database_privileges.value.forEach((value, i)=> {
+    var databasePrivileges: Interface.DatabasePrivilege[] = [];
 
-      if(value == true) {
-        let dbPrivilege : Interface.DatabasePrivilege = {
+    this.addStaffForm.controls.database_privileges.value.forEach((value, i) => {
+
+      if (value == true) {
+        let dbPrivilege: Interface.DatabasePrivilege = {
           name: this.allDatabaseNames[i],
           privileges: ['retrieve']
         };
         databasePrivileges.push(dbPrivilege);
       }
-      
+
     });
 
-    this.userManagementService.addStaffMember(staff_details, databasePrivileges).subscribe((response: any) => {      
+    this.userManagementService.addStaffMember(staff_details, databasePrivileges).subscribe((response: any) => {
       this.loading = false;
 
       if (response.success == true && response.code == 200) {
@@ -344,15 +334,9 @@ export class StaffHandlerComponent implements OnInit {
           duration: 6000
         });
         this.refreshDataSource();
-      } 
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Adding Staff Member", message: response.message, retry: true }});
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.addStaff();
-          }
-        })
       }
     });
   }
@@ -370,7 +354,7 @@ export class StaffHandlerComponent implements OnInit {
   selectStaffMember(staffMem: Interface.StaffInfo) {
     this.selectedStaff = staffMem;
   }
-  
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                     REMOVE STAFF MEMBER PROMPT
@@ -380,7 +364,7 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeStaffMemberPrompt(member: Interface.StaffInfo) {   
+  removeStaffMemberPrompt(member: Interface.StaffInfo) {
     const staffDetails = member.fname + " " + member.surname + " " + member.email;
 
     this.selectedStaff = member;
@@ -402,7 +386,7 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removeStaffMember() {    
+  removeStaffMember() {
     this.userManagementService.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -410,15 +394,9 @@ export class StaffHandlerComponent implements OnInit {
           duration: 3000
         });
         this.refreshDataSource();
-      } 
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.removeStaffMember();
-          }
-        })
       }
     });
   }
@@ -443,7 +421,7 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  viewStaff() {    
+  viewStaff() {
     this.userManagementService.getAllStaffMembers().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         this.staffMembers = response.data.qs.staff;
@@ -453,22 +431,16 @@ export class StaffHandlerComponent implements OnInit {
 
         //Deactivate loading table spinners
         this.staffTableLoading = false;
-        
 
-      } 
+
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Staff", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.viewStaff();
-          }
-        })
       }
     });
   }
 
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            TOGGLE NOTIFICATIONS 
   /**
@@ -477,7 +449,7 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
+  toggleNotificationsTab() {
     this.notificationsTab = !this.notificationsTab;
   }
 
@@ -537,7 +509,7 @@ export class StaffHandlerComponent implements OnInit {
    * @memberof StaffHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  resetAddFields(){
+  resetAddFields() {
     this.addStaffForm.reset();
   }
 }

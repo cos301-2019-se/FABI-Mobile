@@ -1,14 +1,20 @@
+<!-- Hero -->
 <div class="hero">
   <!-- Navbar -->
   <div class="pos-f-t">
-    
+
     <nav class="navbar home">
+
+      <div class="brand">
+        <a class="nav-link" href="#"><img class="brand-logo" src="assets/images/FABI_logo_white.png"></a>
+      </div>
+
 
       <!-- Notification Icons -->
       <div class="home-nav">
         <a class="nav-link" href="#">Home</a>
 
-        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" [routerLink]="['/']" fragment="about">About</a>
 
         <a class="nav-link" href="#">Services</a>
 
@@ -30,7 +36,7 @@
         <h2>Forestry and Agricultural Biotechnology Institute</h2>
       </div>
       <div class="content-actions">
-        <button type="button" class="btn btn-default-login" routerLink="/login">Login</button>
+        <button type="button" class="btn btn-home-login" routerLink="/login">Login</button>
         <button type="button" class="btn btn-default-register" data-toggle="modal"
           data-target="#requestToRegisterModal">Register</button>
       </div>
@@ -42,21 +48,45 @@
     </div>
   </div>
 </div>
+<!-- / Hero -->
 
-<div class="about-us">
+<!-- About Us -->
+<div class="about-us" id="about">
 
   <div class="section-heading">
     <h3>About FABI</h3>
   </div>
 
   <div class="section-content">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla. Donec
-      quis scelerisque orci, at rutrum turpis. Ut pretium mauris urna, non pharetra ante ultrices eget.</p>
+    <p>FABI, the Forestry and Agricultural Biotechnology Institute, at the University of Pretoria, is a post-graduate
+      research institute that was established in 1997, based on a recognition that the future of forestry and
+      agriculture in South Africa will strongly depend on the incorporation of new and emerging technologies into these
+      industries. Major opportunities for these industries have emerged in recent times, from the applications of
+      biotechnology and bioinformatics, amongst many others. FABI scientists undertake goal-directed research, in
+      partnership with major players in the forestry and agricultural sectors in South Africa and in so doing, promote
+      both human capital and industrial development in the country.
+      <br />
+      <br />
+      Being based at the University of Pretoria provides FABI with the capacity to build future human resources in
+      biotechnology, that are crucial to the future of forestry and agriculture in South Africa. It also enables
+      collaboration and linkage with the majority of statutory bodies undertaking research in the plant and animal
+      sciences. Additional value comes from training grants, participation of students in research programmes, and an
+      enormous human and technological resource associated with this University.
+      <br />
+      <br />
+      Staff at the University of Pretoria linked to FABI, have also had long-term associations with the fruit tree
+      industry as well as with many other programmes linked to agricultural and forestry crops. Since its establishment,
+      FABI has grown rapidly. FABI is made up of about 240 people including, more than 20 academic staff, 150+
+      postgraduate (Hons, MSc, PhD) students, postdoctoral fellows, research visitors, and a small core of technical and
+      support staff. Approximately 30 languages are spoken by members of the FABI Team, illustrating a remarkably
+      multinational and multicultural group.</p>
   </div>
 
 </div>
+<!-- / About Us -->
 
 
+<!-- Services -->
 <div class="services">
 
   <div class="service-item">
@@ -67,8 +97,11 @@
       <h5>Diagnostic Clinic</h5>
     </div>
     <div class="service-content">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla. Donec
-        quis scelerisque orci, at rutrum turpis.</p>
+      <p>The clinic is a free disease diagnostic service to its members and partners. In this way, plant diseases and
+        pest problems can be readily identified and solutions to these problems sought
+        <br />
+        <a href="https://www.fabinet.up.ac.za/index.php/hosted-sites/diagnostic-clinic">Read more</a>
+      </p>
     </div>
   </div>
 
@@ -80,8 +113,11 @@
       <h5>Research</h5>
     </div>
     <div class="service-content">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla. Donec
-        quis scelerisque orci, at rutrum turpis.</p>
+      <p>Goal-directed research in the field of plant and animal sciences, as well as our close affiliation with the
+        University of Pretoria greatly sets us apart from other research institutes
+        <br />
+        <a href="https://www.fabinet.up.ac.za/index.php/research-groups">Read more</a>
+      </p>
     </div>
   </div>
 
@@ -90,16 +126,18 @@
       <i class="fas fa-info"></i>
     </div>
     <div class="service-heading">
-      <h5>Infographics</h5>
+      <h5>Information Access</h5>
     </div>
     <div class="service-content">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla. Donec
-        quis scelerisque orci, at rutrum turpis.</p>
+      <p>We provide access to information regarding the forestry and agricultural sectors to all our registered members
+      </p>
     </div>
   </div>
 
 </div>
+<!-- / Services -->
 
+<!-- How it works -->
 <div class="how-it-works">
 
   <div class="section-heading-how">
@@ -117,8 +155,8 @@
           <h5>Register</h5>
         </div>
         <div class="how-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla.
-            Donec quis scelerisque orci, at rutrum turpis.</p>
+          <p>Organizations in the industry send a request to register to FABI with details regarding the organization.
+            FABI will there approve or deny the request</p>
         </div>
       </div>
 
@@ -130,8 +168,8 @@
           <h5>Login</h5>
         </div>
         <div class="how-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla.
-            Donec quis scelerisque orci, at rutrum turpis.</p>
+          <p>Upon approval, the administrator of the organization will receive temporary login details with which they
+            may access their account on the system</p>
         </div>
       </div>
     </div>
@@ -142,11 +180,12 @@
           <h3>3</h3>
         </div>
         <div class="how-heading">
-          <h5>Submit Samples</h5>
+          <h5>Add Organization Members</h5>
         </div>
         <div class="how-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla.
-            Donec quis scelerisque orci, at rutrum turpis.</p>
+          <p>Once the organization administrator has accessed their account they may add members which belong within the
+            respective organization. These members submit samples to the diagnostic clinic on behalf of the oragnization
+          </p>
         </div>
       </div>
 
@@ -155,18 +194,615 @@
           <h3>4</h3>
         </div>
         <div class="how-heading">
-          <h5>Get Results</h5>
+          <h5>Submit Samples</h5>
         </div>
         <div class="how-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique mauris in aliquet fringilla.
-            Donec quis scelerisque orci, at rutrum turpis.</p>
+          <p>Organization administrators or members may submit diseased plant specimens to the diagnostic clinic. They
+            will receive results after FABI has investigated the sample</p>
         </div>
       </div>
     </div>
 
   </div>
 
+  <div class="process-infographic">
+    <!-- Generator: Adobe Illustrator 23.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      x="0px" y="0px" viewBox="0 0 819.98 302.19" style="enable-background:new 0 0 819.98 302.19;" xml:space="preserve">
+      <style type="text/css">
+        .st0 {
+          fill: #7CC244;
+        }
+
+        .st1 {
+          fill: #FDFEFF;
+        }
+
+        .st2 {
+          fill: none;
+        }
+
+        .st3 {
+          opacity: 0.1;
+          fill: #010101;
+        }
+
+        .st4 {
+          font-family: 'Montserrat-Regular';
+        }
+
+        .st5 {
+          font-size: 5.3448px;
+        }
+
+        .st6 {
+          fill: none;
+          stroke: #454545;
+          stroke-width: 5;
+          stroke-miterlimit: 10;
+        }
+
+        .st7 {
+          fill: none;
+          stroke: #C4C0C0;
+          stroke-width: 6;
+          stroke-miterlimit: 10;
+        }
+
+        .st8 {
+          fill: #A09E9F;
+        }
+
+        .st9 {
+          fill: #E5F1D9;
+        }
+
+        .st10 {
+          fill: none;
+          stroke: #7CC244;
+          stroke-miterlimit: 10;
+        }
+
+        .st11 {
+          font-size: 7.4682px;
+        }
+
+        .st12 {
+          fill: #82C341;
+        }
+
+        .st13 {
+          opacity: 0.1;
+          fill: none;
+          stroke: #53574F;
+          stroke-width: 24;
+          stroke-miterlimit: 10;
+        }
+
+        .st14 {
+          fill: #D9DDD8;
+        }
+
+        .st15 {
+          fill: #888988;
+        }
+
+        .st16 {
+          fill: none;
+          stroke: #5B5B85;
+          stroke-width: 4;
+          stroke-miterlimit: 10;
+        }
+
+        .st17 {
+          fill: #E9EECE;
+        }
+
+        .st18 {
+          fill: #404040;
+        }
+
+        .st19 {
+          fill: #636463;
+        }
+
+        .st20 {
+          fill: #7CC243;
+        }
+
+        .st21 {
+          fill: #F9F9FA;
+        }
+
+        .st22 {
+          fill: #FFFFFF;
+        }
+
+        .st23 {
+          font-family: 'Roboto-Regular';
+        }
+
+        .st24 {
+          font-size: 18.4365px;
+        }
+
+        .st25 {
+          font-size: 16px;
+        }
+      </style>
+      <polygon class="st0" points="463.16,42.34 404.33,11.64 341.33,44.55 399.23,78.45 " />
+      <g>
+        <rect x="21.23" y="58.74" class="st1" width="164.62" height="109.35" />
+        <rect x="26.5" y="62.61" class="st2" width="153.88" height="100.69" />
+        <text transform="matrix(1 0 0 1 28.1425 66.5717)">
+          <tspan x="0" y="0" class="st3 st4 st5">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </tspan>
+          <tspan x="2.73" y="6.41" class="st3 st4 st5">sed diam nonummy nibh euismod tincidunt ut laoreet </tspan>
+          <tspan x="5.18" y="12.83" class="st3 st4 st5">dolore magna aliquam erat volutpat. Ut wisi enim ad </tspan>
+          <tspan x="3.65" y="19.24" class="st3 st4 st5">minim veniam, quis nostrud exerci tation ullamcorper </tspan>
+          <tspan x="13.41" y="25.66" class="st3 st4 st5">suscipit lobortis nisl ut aliquip ex ea commodo </tspan>
+          <tspan x="-1.43" y="32.07" class="st3 st4 st5">consequat. Duis autem vel eum iriure dolor in hendrerit in
+          </tspan>
+          <tspan x="1.13" y="38.48" class="st3 st4 st5">vulputate velit esse molestie consequat, vel illum dolore
+          </tspan>
+          <tspan x="0.06" y="44.9" class="st3 st4 st5">eu feugiat nulla facilisis at vero eros et accumsan et iusto
+          </tspan>
+          <tspan x="28.1" y="51.31" class="st3 st4 st5">odio dignissim qui blandit praesent </tspan>
+          <tspan x="0" y="57.72" class="st3 st4 st5">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, </tspan>
+          <tspan x="2.73" y="64.14" class="st3 st4 st5">sed diam nonummy nibh euismod tincidunt ut laoreet </tspan>
+          <tspan x="5.18" y="70.55" class="st3 st4 st5">dolore magna aliquam erat volutpat. Ut wisi enim ad </tspan>
+          <tspan x="3.65" y="76.97" class="st3 st4 st5">minim veniam, quis nostrud exerci tation ullamcorper </tspan>
+          <tspan x="13.41" y="83.38" class="st3 st4 st5">suscipit lobortis nisl ut aliquip ex ea commodo </tspan>
+          <tspan x="-1.43" y="89.79" class="st3 st4 st5">consequat. Duis autem vel eum iriure dolor in hendrerit in
+          </tspan>
+          <tspan x="1.13" y="96.21" class="st3 st4 st5">vulputate velit esse molestie consequat, vel illum dolore
+          </tspan>
+        </text>
+        <path class="st6" d="M186.91,170.25V64.06c0-1.49-0.52-2.94-1.46-4.09l-0.25-0.3c-1-1.22-2.5-1.93-4.08-1.93H27.54
+		c-1.13,0-2.24,0.33-3.19,0.94l-0.58,0.37c-1.92,1.23-3.07,3.35-3.07,5.63v105.58H186.91z" />
+        <line class="st7" x1="204.81" y1="175.37" x2="6.08" y2="175.37" />
+        <rect x="81.7" y="172.11" class="st8" width="47.49" height="2.18" />
+
+        <rect x="96.92" y="85.06" transform="matrix(0.6377 0.7703 -0.7703 0.6377 135.9817 -49.7219)" class="st9"
+          width="47.86" height="69.27" />
+        <circle class="st9" cx="132.76" cy="143.13" r="19.53" />
+        <rect x="62.41" y="73.5" class="st9" width="61.44" height="75.6" />
+
+        <rect x="93.03" y="80.21" transform="matrix(0.6377 0.7703 -0.7703 0.6377 131.9121 -48.0217)" class="st2"
+          width="47.96" height="72.03" />
+        <g>
+          <rect x="69.79" y="103.23" class="st10" width="74.14" height="27.95" />
+          <text transform="matrix(1 0 0 1 81.1762 114.8359)">
+            <tspan x="0" y="0" class="st0 st4 st11">REGISTRATION </tspan>
+            <tspan x="5.89" y="8.96" class="st0 st4 st11">REQUESTED</tspan>
+          </text>
+        </g>
+        <circle class="st9" cx="62.41" cy="83.7" r="19.53" />
+      </g>
+      <g>
+        <rect x="234.47" y="117.38" class="st12" width="61.34" height="15.19" />
+        <polygon class="st12" points="294.08,108.47 294.09,141.49 315.37,124.97 	" />
+      </g>
+      <path class="st13" d="M438.93,106.84c5.61,6.87,11.21,13.75,16.82,20.62c4.98,6.1,10.04,12.34,13.19,19.98
+	c4.49,10.87,4.59,24.16,0.28,35.13c-4.31,10.97-12.95,19.4-22.84,22.27c-11.71,3.4-23.9-0.71-35.6-4.18
+	c-21.01-6.23-42.85-10.47-64.28-6.79c-21.43,3.68-42.55,16.19-54.51,37.66" />
+      <polygon class="st14" points="399.23,134.91 463.16,99.5 463.16,44.55 399.23,80.22 " />
+      <polygon class="st9" points="442.82,43.17 399.62,68.39 360.15,45.15 404.4,21.95 " />
+      <polygon class="st15" points="400.36,80.22 400.36,134.91 341.33,99.68 341.33,47.5 " />
+      <path class="st16" d="M397.55,79.77" />
+      <path class="st16" d="M463.16,41.28" />
+      <g>
+        <polygon class="st17" points="385.67,81.17 385.22,94.24 353.97,76.16 353.97,62.4 	" />
+        <polygon class="st18" points="355.06,62.99 353.79,62.11 353.33,77.28 385.29,95.48 385.29,93.95 354.63,76.7 	" />
+      </g>
+      <g>
+        <polygon class="st17" points="384.57,101.68 384.12,114.75 352.86,96.67 352.86,82.91 	" />
+        <polygon class="st18" points="353.96,83.5 352.68,82.62 352.22,97.79 384.18,116 384.18,114.47 353.53,97.22 	" />
+      </g>
+      <polygon class="st18" points="399.23,78.45 399.23,81.87 341.33,47.5 341.33,44.55 " />
+      <polygon class="st18" points="463.16,42.34 463.16,45.47 399.23,81.87 399.23,78.45 " />
+      <polygon class="st19" points="404.4,21.95 404.4,23.48 442.02,43.64 442.82,43.17 " />
+      <polygon class="st19" points="404.4,21.95 404.4,23.48 361.63,45.99 360.15,45.15 " />
+      <g>
+        <polygon class="st17" points="417.88,75.01 409.13,79.3 409.13,102.57 418.41,96.97 	" />
+        <polygon class="st18" points="409.13,101.01 409.13,102.29 419.35,96.8 417.88,96.32 	" />
+        <polygon class="st18" points="419.35,96.8 417.88,96.32 416.78,75.53 417.88,75.01 	" />
+      </g>
+      <g>
+        <polygon class="st17" points="434.36,65.98 425.61,70.28 425.61,93.55 434.88,87.95 	" />
+        <polygon class="st18" points="425.61,91.99 425.61,93.27 435.83,87.77 434.36,87.3 	" />
+        <polygon class="st18" points="435.83,87.77 434.36,87.3 433.25,66.51 434.36,65.98 	" />
+      </g>
+      <g>
+        <polygon class="st17" points="452.93,56.65 444.18,60.94 444.18,84.22 453.45,78.61 	" />
+        <polygon class="st18" points="444.18,82.65 444.18,83.94 454.4,78.44 452.93,77.96 	" />
+        <polygon class="st18" points="454.4,78.44 452.93,77.96 451.82,57.18 452.93,56.65 	" />
+      </g>
+      <g>
+        <polygon class="st20" points="388.43,141.22 361.83,140.64 361.18,170.34 369.74,170.53 370.07,159.39 380.22,159.61 383.13,153.3 
+		370.04,153.1 370.08,147.22 385.69,147.47 	" />
+        <polygon class="st20" points="383.5,170.83 388.36,159.79 396.92,159.98 401.46,171.22 408.76,171.37 397.74,141.42 389.77,141.25 
+		376.37,170.67 	" />
+        <path class="st20" d="M405.47,162.44l0.45-20.84l21.1,0.46c4.69,0.13,7.93,4.3,7.3,8.07c-0.53,3.16-3.75,5.79-7.59,5.63
+		c4.83-0.26,8.77,3.75,8.55,8.25c-0.21,4.34-4.24,7.91-8.89,7.45c-5.88-0.02-11.75-0.05-17.63-0.07L405.47,162.44z" />
+        <path class="st21" d="M414.23,147.59l-0.14,6.21l8.73,0.19c1.46-0.47,2.42-1.85,2.34-3.31c-0.07-1.29-0.94-2.44-2.2-2.9
+		C420.05,147.72,417.14,147.65,414.23,147.59z" />
+        <path class="st21" d="M413.98,159.17l-0.13,6.21l8.73,0.19c2.14,0.32,3.93-1.35,3.93-3.1c-0.01-1.7-1.71-3.33-3.79-3.1
+		C419.8,159.3,416.89,159.23,413.98,159.17z" />
+
+        <rect x="435.44" y="142.33" transform="matrix(0.9998 0.0217 -0.0217 0.9998 3.5198 -9.5109)" class="st20"
+          width="7.81" height="29.7" />
+        <path class="st20" d="M361.18,170.34" />
+        <polygon class="st22" points="395.05,153.39 393.07,147.97 390.77,153.29 	" />
+      </g>
+      <g>
+        <g>
+          <path class="st0" d="M511.54,66.45c-11.63,7.79-11.23,22.18-6.24,29.01c2.56,3.5,7.41,4.42,11.08,2.11
+			C526.73,91.02,521.17,70.76,511.54,66.45" />
+          <rect x="510.18" y="98.14" class="st0" width="3.56" height="14.86" />
+        </g>
+        <g>
+          <path class="st0" d="M485.24,36.52c-12.55,11.62-12.12,33.08-6.74,43.25c2.76,5.22,8,6.6,11.96,3.14
+			C501.63,73.15,495.63,42.94,485.24,36.52" />
+          <rect x="483.77" y="83.77" class="st0" width="3.85" height="22.16" />
+        </g>
+        <g>
+          <path class="st0" d="M464.14,76.19c-9.32,6.24-9,17.78-5,23.25c2.05,2.81,5.94,3.55,8.88,1.69
+			C476.31,95.88,471.86,79.65,464.14,76.19" />
+          <rect x="463.05" y="101.59" class="st0" width="2.85" height="11.91" />
+        </g>
+      </g>
+      <g>
+        <g>
+
+          <image style="overflow:visible;opacity:0.2;enable-background:new    ;" width="829" height="321" xlink:href="data:image/png;base64,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
+QmCC" transform="matrix(0.2097 0 0 0.2097 636.49 92.1886)">
+          </image>
+          <g>
+            <path class="st15" d="M774.62,139.4H666.98c-5.79,0-10.54-4.74-10.54-10.54v-1.2c0-5.79,4.74-10.54,10.54-10.54h107.63
+				c5.79,0,10.54,4.74,10.54,10.54v1.2C785.15,134.66,780.41,139.4,774.62,139.4z" />
+          </g>
+        </g>
+        <text transform="matrix(1.011 0 0 1 679.5856 137.4485)" class="st22 st23 st24">**********</text>
+      </g>
+      <g>
+        <text transform="matrix(1 0 0 1 48.5535 255.17)">
+          <tspan x="0" y="0" class="st15 st4 st25">Request to </tspan>
+          <tspan x="10.46" y="19.2" class="st15 st4 st25">Register </tspan>
+        </text>
+      </g>
+      <text transform="matrix(1 0 0 1 356.182 254.0856)">
+        <tspan x="0" y="0" class="st15 st4 st25">Request is </tspan>
+        <tspan x="4.08" y="19.2" class="st15 st4 st25">Reviewed</tspan>
+      </text>
+      <text transform="matrix(1 0 0 1 651.3456 254.2103)">
+        <tspan x="0" y="0" class="st15 st4 st25">Temporary Login </tspan>
+        <tspan x="42.22" y="19.2" class="st15 st4 st25">Details</tspan>
+      </text>
+      <g>
+        <rect x="531.98" y="123.58" class="st12" width="61.34" height="15.19" />
+        <polygon class="st12" points="591.59,114.67 591.6,147.69 612.88,131.17 	" />
+      </g>
+    </svg>
+
+
+  </div>
+
 </div>
+<!-- / How it works -->
 
 <!-- Contact us Section -->
 <div class="contact-us">
@@ -176,14 +812,52 @@
       <h3>Contact Us</h3>
     </div>
     <div class="section-content">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+      <table class="table table-responsive table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">Contact Details</th>
+            <th scope="col">Postal Address</th>
+            <th scope="col">Physical Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong>Telephone:</strong> +27 (12) 420-3937 or 3938
+              <br />
+              <strong>FAX:</strong> +27 (12) 420-3960
+              <br />
+              <strong>Email:</strong> madelein.vanheerden@fabi.up.ac.za
+            </td>
+            <td>
+              Forestry and Agricultural Biotechnology Institute (FABI)
+              University of Pretoria
+              Private bag X20
+              Hatfield
+              0028
+              South Africa
+            </td>
+            <td>
+              Forestry and Agricultural Biotechnology Institute (FABI)
+              University of Pretoria
+              Lunnon Street Entrance
+              Hatfield
+              0083
+              Pretoria
+              South Africa
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
     </div>
 
 
 
     <!-- Contact Form -->
     <br />
-    <form>
+    <form id="contact_us">
       <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" class="form-control" id="email" placeholder="name@example.com">
@@ -211,154 +885,157 @@
 <!-- / Contact us Section -->
 
 <!-- Request to Register Modal Section -->
-  <div class="modal fade" id="requestToRegisterModal" tabindex="-1" role="dialog" aria-labelledby="requestToRegisterModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="requestToRegisterModalTitle">Request To Register</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"><i class="fas fa-times"></i></span>
-          </button>
-        </div>
-        <!-- Modal Body -->
-        <div class="modal-body">
-          <div class="form">
+<div class="modal fade" id="requestToRegisterModal" tabindex="-1" role="dialog"
+  aria-labelledby="requestToRegisterModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="requestToRegisterModalTitle">Request To Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body" id="request_to_register">
+        <div class="form">
 
-            <!-- Add Organization Form -->
-            <form id="request_register_org" [formGroup]="request_register_org" (submit)="requestToRegister()"
-              class="needs-validation" novalidate>
-              <div class="row">
+          <!-- Add Organization Form -->
+          <form id="request_register_org" [formGroup]="request_register_org" (submit)="requestToRegister()"
+            class="needs-validation" novalidate>
+            <div class="row">
 
 
-                <!-- Name -->
-                <div class="form-group">
-                  <label for="organization_name">Organization Name</label>
-                  <input type="text" class="form-control" id="organization_name" placeholder="Enter organization name"
-                    formControlName="organization_name" required
-                    [ngClass]="{
+              <!-- Name -->
+              <div class="form-group">
+                <label for="organization_name">Organization Name</label>
+                <input type="text" class="form-control" id="organization_name" placeholder="Enter organization name"
+                  formControlName="organization_name" required
+                  [ngClass]="{
                     'is-invalid': request_register_org.controls['organization_name'].invalid && (submitted || request_register_org.controls['organization_name'].dirty), 
                     'is-valid': request_register_org.controls['organization_name'].valid && (submitted || request_register_org.controls['organization_name'].dirty)}">
-                  <!-- Error Validation Feedback-->
-                  <div
-                    *ngIf="request_register_org.controls['organization_name'].invalid && (submitted || request_register_org.controls['organization_name'].dirty)">
-                    <div *ngFor="let validation of register_organization_validators.organization_name">
-                      <p *ngIf="request_register_org.get('organization_name').hasError(validation.type)">
-                        {{validation.message}}</p>
-                    </div>
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="request_register_org.controls['organization_name'].invalid && (submitted || request_register_org.controls['organization_name'].dirty)">
+                  <div *ngFor="let validation of register_organization_validators.organization_name">
+                    <p *ngIf="request_register_org.get('organization_name').hasError(validation.type)">
+                      {{validation.message}}</p>
                   </div>
-                  <!-- / Error Validation Feedback-->
                 </div>
-                <!-- / Name -->
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Name -->
 
-                <!-- Location -->
-                <!-- <div class="form-group">
+              <!-- Location -->
+              <!-- <div class="form-group">
                   <label for="organization_location">Organization Location</label>
                   <input type="text" class="form-control" id="organization_location" placeholder="Enter organization location" formControlName="organization_location" required
                   [ngClass]="{
                     'is-invalid': request_register_org.controls['organization_location'].invalid && (submitted || request_register_org.controls['organization_location'].dirty), 
                     'is-valid': request_register_org.controls['organization_location'].valid && (submitted || request_register_org.controls['organization_location'].dirty)}" > -->
-                <!-- Error Validation Feedback-->
-                <!-- <div *ngIf="request_register_org.controls['organization_location'].invalid && (submitted || request_register_org.controls['organization_location'].dirty)" >
+              <!-- Error Validation Feedback-->
+              <!-- <div *ngIf="request_register_org.controls['organization_location'].invalid && (submitted || request_register_org.controls['organization_location'].dirty)" >
                     <div *ngFor="let validation of register_organization_validators.organization_location">
                         <p *ngIf="request_register_org.get('organization_location').hasError(validation.type)">{{validation.message}}</p>
                     </div>
                   </div> -->
-                <!-- / Error Validation Feedback-->
-                <!-- </div> -->
-                <!-- / Location -->
+              <!-- / Error Validation Feedback-->
+              <!-- </div> -->
+              <!-- / Location -->
 
-                <!-- Admin Name -->
-                <div class="form-group">
-                  <label for="admin_name">Admin Name</label>
-                  <input type="text" class="form-control" id="admin_name" placeholder="Enter admin name"
-                    formControlName="admin_name" required
-                    [ngClass]="{
+              <!-- Admin Name -->
+              <div class="form-group">
+                <label for="admin_name">Admin Name</label>
+                <input type="text" class="form-control" id="admin_name" placeholder="Enter admin name"
+                  formControlName="admin_name" required
+                  [ngClass]="{
                     'is-invalid': request_register_org.controls['admin_name'].invalid && (submitted || request_register_org.controls['admin_name'].dirty), 
                     'is-valid': request_register_org.controls['admin_name'].valid && (submitted || request_register_org.controls['admin_name'].dirty)}">
-                  <!-- Error Validation Feedback-->
-                  <div
-                    *ngIf="request_register_org.controls['admin_name'].invalid && (submitted || request_register_org.controls['admin_name'].dirty)">
-                    <div *ngFor="let validation of register_organization_validators.admin_name">
-                      <p *ngIf="request_register_org.get('admin_name').hasError(validation.type)">{{validation.message}}</p>
-                    </div>
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="request_register_org.controls['admin_name'].invalid && (submitted || request_register_org.controls['admin_name'].dirty)">
+                  <div *ngFor="let validation of register_organization_validators.admin_name">
+                    <p *ngIf="request_register_org.get('admin_name').hasError(validation.type)">{{validation.message}}
+                    </p>
                   </div>
-                  <!-- / Error Validation Feedback-->
                 </div>
-                <!-- / Admin Name -->
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Admin Name -->
 
-                <!-- Admin Surname -->
-                <div class="form-group">
-                  <label for="admin_surname">Admin Surname</label>
-                  <input type="text" class="form-control" id="admin_surname" placeholder="Enter admin surname"
-                    formControlName="admin_surname" required
-                    [ngClass]="{
+              <!-- Admin Surname -->
+              <div class="form-group">
+                <label for="admin_surname">Admin Surname</label>
+                <input type="text" class="form-control" id="admin_surname" placeholder="Enter admin surname"
+                  formControlName="admin_surname" required
+                  [ngClass]="{
                     'is-invalid': request_register_org.controls['admin_surname'].invalid && (submitted || request_register_org.controls['admin_surname'].dirty), 
                     'is-valid': request_register_org.controls['admin_surname'].valid && (submitted || request_register_org.controls['admin_surname'].dirty)}">
-                  <!-- Error Validation Feedback-->
-                  <div
-                    *ngIf="request_register_org.controls['admin_surname'].invalid && (submitted || request_register_org.controls['admin_surname'].dirty)">
-                    <div *ngFor="let validation of register_organization_validators.admin_surname">
-                      <p *ngIf="request_register_org.get('admin_surname').hasError(validation.type)">{{validation.message}}
-                      </p>
-                    </div>
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="request_register_org.controls['admin_surname'].invalid && (submitted || request_register_org.controls['admin_surname'].dirty)">
+                  <div *ngFor="let validation of register_organization_validators.admin_surname">
+                    <p *ngIf="request_register_org.get('admin_surname').hasError(validation.type)">
+                      {{validation.message}}
+                    </p>
                   </div>
-                  <!-- / Error Validation Feedback-->
                 </div>
-                <!-- / Admin Surname -->
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Admin Surname -->
 
-                <!-- Email -->
-                <div class="form-group">
-                  <label for="admin_email">Email address</label>
-                  <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-                    placeholder="Enter email" formControlName="admin_email" required
-                    [ngClass]="{
+              <!-- Email -->
+              <div class="form-group">
+                <label for="admin_email">Email address</label>
+                <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
+                  placeholder="Enter email" formControlName="admin_email" required
+                  [ngClass]="{
                     'is-invalid': request_register_org.controls['admin_email'].invalid && (submitted || request_register_org.controls['admin_email'].dirty), 
                     'is-valid': request_register_org.controls['admin_email'].valid && (submitted || request_register_org.controls['admin_email'].dirty)}">
-                  <!-- Error Validation Feedback-->
-                  <div
-                    *ngIf="request_register_org.controls['admin_email'].invalid && (submitted || request_register_org.controls['admin_email'].dirty)">
-                    <div *ngFor="let validation of register_organization_validators.admin_email">
-                      <p *ngIf="request_register_org.get('admin_email').hasError(validation.type)">{{validation.message}}</p>
-                    </div>
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="request_register_org.controls['admin_email'].invalid && (submitted || request_register_org.controls['admin_email'].dirty)">
+                  <div *ngFor="let validation of register_organization_validators.admin_email">
+                    <p *ngIf="request_register_org.get('admin_email').hasError(validation.type)">{{validation.message}}
+                    </p>
                   </div>
-                  <!-- / Error Validation Feedback-->
                 </div>
-                <!-- / Email -->
+                <!-- / Error Validation Feedback-->
+              </div>
+              <!-- / Email -->
 
-                <!-- Phone -->
-                <div class="form-group">
-                  <label for="admin_phone">Phone</label>
-                  <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone"
-                    formControlName="admin_phone" required
-                    [ngClass]="{
+              <!-- Phone -->
+              <div class="form-group">
+                <label for="admin_phone">Phone</label>
+                <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone"
+                  formControlName="admin_phone" required
+                  [ngClass]="{
                     'is-invalid': request_register_org.controls['admin_phone'].invalid && (submitted || request_register_org.controls['admin_phone'].dirty), 
                     'is-valid': request_register_org.controls['admin_phone'].valid && (submitted || request_register_org.controls['admin_phone'].dirty)}">
-                  <!-- Error Validation Feedback-->
-                  <div
-                    *ngIf="request_register_org.controls['admin_phone'].invalid && (submitted || request_register_org.controls['admin_phone'].dirty)">
-                    <div *ngFor="let validation of register_organization_validators.admin_phone">
-                      <p *ngIf="request_register_org.get('admin_phone').hasError(validation.type)">{{validation.message}}</p>
-                    </div>
+                <!-- Error Validation Feedback-->
+                <div
+                  *ngIf="request_register_org.controls['admin_phone'].invalid && (submitted || request_register_org.controls['admin_phone'].dirty)">
+                  <div *ngFor="let validation of register_organization_validators.admin_phone">
+                    <p *ngIf="request_register_org.get('admin_phone').hasError(validation.type)">{{validation.message}}
+                    </p>
                   </div>
-                  <!-- / Error Validation Feedback-->
                 </div>
-                <!-- / Phone -->
-
-
-                <!-- Submit -->
-                <button type="submit" class="btn btn-default-save">Send Request</button>
-                <!-- / Submit -->
-
+                <!-- / Error Validation Feedback-->
               </div>
-            </form>
-            <!-- / Add Organization Form -->
+              <!-- / Phone -->
 
-          </div>
-        </div>
-        <!-- / Modal Body -->
-        <div class="modal-footer">
+
+              <!-- Submit -->
+              <button type="submit" class="btn btn-default-save">Send Request</button>
+              <!-- / Submit -->
+
+            </div>
+          </form>
+          <!-- / Add Organization Form -->
+
         </div>
       </div>
+      <!-- / Modal Body -->
     </div>
   </div>
+</div>
 <!-- / Request to Register ModalSection -->
