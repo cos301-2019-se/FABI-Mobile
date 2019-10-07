@@ -26,16 +26,15 @@ describe('OrganizationProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ OrganizationProfileComponent ],
       imports: [
-        NoopAnimationsModule, 
-        BrowserAnimationsModule, 
-        MaterialModule, 
-        HttpClientTestingModule, 
-        MatSnackBarModule, 
+        NoopAnimationsModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        HttpClientTestingModule,
+        MatSnackBarModule,
         MatDialogModule,
         RouterTestingModule
       ],
       providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
-    
     })
     .compileComponents();
   }));
@@ -49,4 +48,50 @@ describe('OrganizationProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it("Empty form expect invalid", () => {
+    component.adminProfileForm.controls.organization_name.setValue("");
+    component.adminProfileForm.controls.admin_name.setValue("");
+    component.adminProfileForm.controls.admin_surname.setValue("");
+    component.adminProfileForm.controls.admin_email.setValue("");
+
+    expect(component.adminProfileForm.valid).toBeFalsy();
+  });
+
+  it("Empty admin name expect admin name invalid", () => {
+    component.adminProfileForm.controls.organization_name.setValue("Test");
+    component.adminProfileForm.controls.admin_name.setValue("");
+    component.adminProfileForm.controls.admin_surname.setValue("");
+    component.adminProfileForm.controls.admin_email.setValue("");
+
+    expect(component.adminProfileForm.controls.admin_name.valid).toBeFalsy();
+  });
+
+  it("Empty admin surname expect admin surname invalid", () => {
+    component.adminProfileForm.controls.organization_name.setValue("Test");
+    component.adminProfileForm.controls.admin_name.setValue("TesterFName");
+    component.adminProfileForm.controls.admin_surname.setValue("");
+    component.adminProfileForm.controls.admin_email.setValue("");
+
+    expect(component.adminProfileForm.controls.admin_surname.valid).toBeFalsy();
+  });
+
+  it("Empty admin email expect admin email invalid", () => {
+    component.adminProfileForm.controls.organization_name.setValue("Test");
+    component.adminProfileForm.controls.admin_name.setValue("TesterFName");
+    component.adminProfileForm.controls.admin_surname.setValue("TesterLName");
+    component.adminProfileForm.controls.admin_email.setValue("");
+
+    expect(component.adminProfileForm.controls.admin_email.valid).toBeFalsy();
+  });
+
+  // it("Valid form expect true", () => {
+  //   component.adminProfileForm.controls.organization_name.setValue("Test");
+  //   component.adminProfileForm.controls.admin_name.setValue("TesterFName");
+  //   component.adminProfileForm.controls.admin_surname.setValue("TesterLName");
+  //   component.adminProfileForm.controls.admin_email.setValue("tester@gmail.com");
+
+  //   expect(component.adminProfileForm.valid).toBeTruthy();
+  // });
+
 });
