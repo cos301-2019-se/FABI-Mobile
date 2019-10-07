@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Monday, October 7th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -180,7 +180,7 @@ export class LoginComponent implements core.OnInit {
       return;
     }
 
-    this.valid = true;
+    this.valid = true;            
 
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Logging in..." } });
 

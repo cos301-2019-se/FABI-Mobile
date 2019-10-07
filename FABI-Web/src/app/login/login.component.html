@@ -17,9 +17,8 @@
       <!-- Organization Drop Down -->
       <div class="form-group">
         <label for="organization">Organization</label>
-        <select class="form-control form-control-sm" [(ngModel)]="selectedOrg" id="organization"
-          formControlName="organization" required
-          [ngClass]="{
+        <select class="form-control form-control-sm"  id="organization" formControlName="organization" required
+        [ngClass]="{
           'is-invalid': loginForm.controls['organization'].invalid && (submitted || loginForm.controls['organization'].dirty), 
           'is-valid': loginForm.controls['organization'].valid && (submitted || loginForm.controls['organization'].dirty)}">
           <option value="" selected>

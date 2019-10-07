@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Monday, October 7th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -206,6 +206,7 @@ export class AuthenticationService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   login(details: Interface.LoginInfo) {
+
     // Http Request URL
     let url = `${config.loginURL}/login`;
     // Http Request Method

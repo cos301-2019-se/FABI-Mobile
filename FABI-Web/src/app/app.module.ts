@@ -71,6 +71,7 @@ import { ErrorsModule } from "./_errors/errors.module";
 import { LoadingComponent } from './_loading/loading.component';
 import { FilterPipe } from './_pipes/filter.pipe';
 import { NotificationService } from './_services/notification.service';
+import { CookieService } from "ngx-cookie-service";
 
 
 // import { DataTablesModule } from 'angular-datatables';
@@ -166,7 +167,8 @@ import { NotificationService } from './_services/notification.service';
   ],
   providers: [
     NotificationService,
-    FilterPipe
+    FilterPipe,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
