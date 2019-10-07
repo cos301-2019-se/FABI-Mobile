@@ -72,16 +72,6 @@ function loginAdmin(req, res)
         orgName : req.body.orgName
     };
     
-    var options = {
-        method: 'POST',
-        hostname: 'authentication-dot-api-fabi.appspot.com',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body : qs,
-        json : true
-      };
-    
     try{
         if(req.body.orgName === 'FABI')
         {
@@ -93,9 +83,9 @@ function loginAdmin(req, res)
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                         success: false,
-                        code: 404,
+                        code: 200,
                         title: "NOT FOUND",
                         message: "User does not exist"
                     });
@@ -111,7 +101,7 @@ function loginAdmin(req, res)
                     switch(member.userType)
                     {
                         case 'SuperUser':
-
+                                console.log(member)
                                 login.loginSuperUser(req.body).then(response => {
                                     if(response.statusCode != '200')
                                     {
