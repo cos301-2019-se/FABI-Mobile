@@ -13,6 +13,7 @@ import { MaterialModule } from '../../materials';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +25,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 describe('StaffNotificationComponent', () => {
   let component: StaffNotificationComponent;
   let fixture: ComponentFixture<StaffNotificationComponent>;
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,7 +37,8 @@ describe('StaffNotificationComponent', () => {
       imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+        { provide: MatDialogRef, useValue: {} },
+        { provide: AuthenticationService, useClass: MockAuthenticationService }
       ]
     })
     .compileComponents();

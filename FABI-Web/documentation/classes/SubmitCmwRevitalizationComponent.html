@@ -1,0 +1,1341 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>fabi-web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">fabi-web documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>SubmitCmwRevitalizationComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts</code>
+        </p>
+
+
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                        <code></code>
+            </p>
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#bionumericsName">bionumericsName</a>
+                            </li>
+                            <li>
+                                <a href="#cmwRevitalizationForm">cmwRevitalizationForm</a>
+                            </li>
+                            <li>
+                                <a href="#cultureCondition">cultureCondition</a>
+                            </li>
+                            <li>
+                                <a href="#cultureNumber">cultureNumber</a>
+                            </li>
+                            <li>
+                                <a href="#currentName">currentName</a>
+                            </li>
+                            <li>
+                                <a href="#currentUser">currentUser</a>
+                            </li>
+                            <li>
+                                <a href="#dateRequested">dateRequested</a>
+                            </li>
+                            <li>
+                                <a href="#dateReturned">dateReturned</a>
+                            </li>
+                            <li>
+                                <a href="#referenceNumber">referenceNumber</a>
+                            </li>
+                            <li>
+                                <a href="#requestor">requestor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#searchItem">searchItem</a>
+                            </li>
+                            <li>
+                                <a href="#sequence">sequence</a>
+                            </li>
+                            <li>
+                                <a href="#staff">staff</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#toggle_status">toggle_status</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getAllStaff">getAllStaff</a>
+                            </li>
+                            <li>
+                                <a href="#logout">logout</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#submitCMWRevitalizationForm">submitCMWRevitalizationForm</a>
+                            </li>
+                            <li>
+                                <a href="#toggleNotificaitonsTab">toggleNotificaitonsTab</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, snackBar: MatSnackBar, userManagementService: <a href="../classes/UserManagementAPIService.html">UserManagementAPIService</a>, cultureCollectionService: <a href="../injectables/CultureCollectionAPIService.html">CultureCollectionAPIService</a>, authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, notificationLoggingService: <a href="../injectables/NotificationLoggingService.html">NotificationLoggingService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:68</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Creates an instance of SubmitCmwRevitalizationComponent.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>formBuilder</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Used to build the form from the HTML page</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>snackBar</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatSnackBar</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>For snack-bar pop-up messages</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>userManagementService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/UserManagementAPIService.html" target="_self" >UserManagementAPIService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>For making calls to the User Management API Service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cultureCollectionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CultureCollectionAPIService.html" target="_self" >CultureCollectionAPIService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>for making calls to the Culture Collection API Service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthenticationService.html" target="_self" >AuthenticationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>for calling the <em>authentication</em> service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>notificationLoggingService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationLoggingService.html" target="_self" >NotificationLoggingService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>For calling the Notification Logging API service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="bionumericsName"></a>
+                        <span class="name">
+                            <b>
+                            bionumericsName</b>
+                            <a href="#bionumericsName"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The bionumerics name of the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="cmwRevitalizationForm"></a>
+                        <span class="name">
+                            <b>
+                            cmwRevitalizationForm</b>
+                            <a href="#cmwRevitalizationForm"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The form to submit a CMW revitalization form -  @type {FormGroup} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="cultureCondition"></a>
+                        <span class="name">
+                            <b>
+                            cultureCondition</b>
+                            <a href="#cultureCondition"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:51</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The culture condition of the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="cultureNumber"></a>
+                        <span class="name">
+                            <b>
+                            cultureNumber</b>
+                            <a href="#cultureNumber"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:49</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The culture number of the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentName"></a>
+                        <span class="name">
+                            <b>
+                            currentName</b>
+                            <a href="#currentName"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:45</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The current name of the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentUser"></a>
+                        <span class="name">
+                            <b>
+                            currentUser</b>
+                            <a href="#currentUser"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:65</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The details of the user currently logged in -  @type {any} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dateRequested"></a>
+                        <span class="name">
+                            <b>
+                            dateRequested</b>
+                            <a href="#dateRequested"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:57</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The date requested of the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dateReturned"></a>
+                        <span class="name">
+                            <b>
+                            dateReturned</b>
+                            <a href="#dateReturned"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:59</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The date returned of the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="referenceNumber"></a>
+                        <span class="name">
+                            <b>
+                            referenceNumber</b>
+                            <a href="#referenceNumber"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:55</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The reference number of the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="requestor"></a>
+                        <span class="name">
+                            <b>
+                            requestor</b>
+                            <a href="#requestor"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:43</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The requestor of the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="searchItem"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            searchItem</b>
+                            <a href="#searchItem"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:68</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The search item the user is looking for in the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sequence"></a>
+                        <span class="name">
+                            <b>
+                            sequence</b>
+                            <a href="#sequence"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:53</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The sequence of the form -  @type {string} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="staff"></a>
+                        <span class="name">
+                            <b>
+                            staff</b>
+                            <a href="#staff"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>string[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:40</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Object array for holding the staff members -  @type {string[]} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="toggle_status"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            toggle_status</b>
+                            <a href="#toggle_status"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if the notifications tab is hidden/shown - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllStaff"></a>
+                    <span class="name">
+                        <b>
+                            getAllStaff
+                        </b>
+                        <a href="#getAllStaff"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllStaff()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="231"
+                            class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:231</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will load of the FABI staff members and administrators into an array so that they can be selected when filling out
+the form to submit.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logout"></a>
+                    <span class="name">
+                        <b>
+                            logout
+                        </b>
+                        <a href="#logout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>logout()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="117"
+                            class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:117</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will log the user out of the web application and clear the authentication data stored in the local storage</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="267"
+                            class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:267</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is called when the page loads</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitCMWRevitalizationForm"></a>
+                    <span class="name">
+                        <b>
+                            submitCMWRevitalizationForm
+                        </b>
+                        <a href="#submitCMWRevitalizationForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitCMWRevitalizationForm()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="130"
+                            class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:130</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will submit a CMW Revitalization form based on the information provided in the form on the HTML page.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleNotificaitonsTab"></a>
+                    <span class="name">
+                        <b>
+                            toggleNotificaitonsTab
+                        </b>
+                        <a href="#toggleNotificaitonsTab"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleNotificaitonsTab()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="253"
+                            class="link-to-prism">src/app/Staff/submit-cmw-revitalization/submit-cmw-revitalization.component.ts:253</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to toggle the notifications tab.</p>
+<p>If set to true, a class is added which ensures that the notifications tab is displayed. 
+If set to flase, a class is removed which hides the notifications tab.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as core from &#x27;@angular/core&#x27;;
+import { FormBuilder, FormGroup } from &#x27;@angular/forms&#x27;;
+import { MatSnackBar } from &#x27;@angular/material&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { AuthenticationService } from &#x27;src/app/_services/authentication.service&#x27;;
+import { CMWRevitalization, CultureCollectionAPIService } from &#x27;../../_services/culture-collection-api.service&#x27;;
+import { NotificationLoggingService } from &#x27;../../_services/notification-logging.service&#x27;;
+import { UserManagementAPIService } from &#x27;../../_services/user-management-api.service&#x27;;
+
+@core.Component({
+  selector: &#x27;app-submit-cmw-revitalization&#x27;,
+  templateUrl: &#x27;./submit-cmw-revitalization.component.html&#x27;,
+  styleUrls: [&#x27;./submit-cmw-revitalization.component.scss&#x27;]
+})
+export class SubmitCmwRevitalizationComponent implements core.OnInit {
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /** The form to submit a CMW revitalization form -  @type {FormGroup} */
+  cmwRevitalizationForm: FormGroup;
+
+  /** Object array for holding the staff members -  @type {string[]} */
+  staff: string[] &#x3D; [];
+
+  /** The requestor of the form -  @type {string} */
+  requestor: string;
+  /** The current name of the form -  @type {string} */
+  currentName: string;
+  /** The bionumerics name of the form -  @type {string} */
+  bionumericsName: string;
+  /** The culture number of the form -  @type {string} */
+  cultureNumber: string;
+  /** The culture condition of the form -  @type {string} */
+  cultureCondition: string;
+  /** The sequence of the form -  @type {string} */
+  sequence: string;
+  /** The reference number of the form -  @type {string} */
+  referenceNumber: string;
+  /** The date requested of the form -  @type {string} */
+  dateRequested: string;
+  /** The date returned of the form -  @type {string} */
+  dateReturned: string;
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  private toggle_status: boolean &#x3D; false;
+
+  /** The details of the user currently logged in -  @type {any} */
+  currentUser: any;
+
+  /** The search item the user is looking for in the form -  @type {string} */
+  public searchItem: string;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                             CONSTRUCTOR
+  /**
+   * Creates an instance of SubmitCmwRevitalizationComponent.
+   * 
+   * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
+   * @param {CultureCollectionAPIService} cultureCollectionService for making calls to the Culture Collection API Service
+   * @param {notificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {MatSnackBar} snackBar For snack-bar pop-up messages
+   * @param {AuthenticationService} authService for calling the *authentication* service
+   * @param {FormBuilder} formBuilder Used to build the form from the HTML page
+   * @param {Router} router
+   * 
+   * @memberof SubmitCmwRevitalizationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private userManagementService: UserManagementAPIService,
+    private cultureCollectionService: CultureCollectionAPIService,
+    private authService: AuthenticationService,
+    private router: Router,
+    private notificationLoggingService: NotificationLoggingService
+  ) {
+    this.cmwRevitalizationForm &#x3D; this.formBuilder.group({
+      requestor: &#x27;&#x27;,
+      current_name: &#x27;&#x27;,
+      name_bionumerics: &#x27;&#x27;,
+      culture_number: &#x27;&#x27;,
+      culture_condition: &#x27;&#x27;,
+      sequence_data_submitted: &#x27;&#x27;,
+      reference_number: &#x27;&#x27;,
+      date_requested: null,
+      date_returned: null
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof SubmitCmwRevitalizationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate([&#x27;/login&#x27;]);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  SUBMIT CMW REVITALIZATION FORM
+  /**
+   * This function will submit a CMW Revitalization form based on the information provided in the form on the HTML page.
+   * @memberof SubmitCmwRevitalizationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCMWRevitalizationForm() {
+    if (this.cmwRevitalizationForm.controls.requestor.value &#x3D;&#x3D; null || this.cmwRevitalizationForm.controls.requestor.value &#x3D;&#x3D; &quot;&quot;) {
+      this.requestor &#x3D; &quot;N/A&quot;;
+    }
+    else {
+      this.requestor &#x3D; this.cmwRevitalizationForm.controls.requestor.value;
+    }
+
+    if (this.cmwRevitalizationForm.controls.current_name.value &#x3D;&#x3D; null || this.cmwRevitalizationForm.controls.current_name.value &#x3D;&#x3D; &quot;&quot;) {
+      this.currentName &#x3D; &quot;N/A&quot;;
+    }
+    else {
+      this.currentName &#x3D; this.cmwRevitalizationForm.controls.current_name.value;
+    }
+
+    if (this.cmwRevitalizationForm.controls.name_bionumerics.value &#x3D;&#x3D; null || this.cmwRevitalizationForm.controls.name_bionumerics.value &#x3D;&#x3D; &quot;&quot;) {
+      this.bionumericsName &#x3D; &quot;N/A&quot;;
+    }
+    else {
+      this.bionumericsName &#x3D; this.cmwRevitalizationForm.controls.name_bionumerics.value;
+    }
+
+    if (this.cmwRevitalizationForm.controls.culture_number.value &#x3D;&#x3D; null || this.cmwRevitalizationForm.controls.culture_number.value &#x3D;&#x3D; &quot;&quot;) {
+      this.cultureNumber &#x3D; &quot;N/A&quot;;
+    }
+    else {
+      this.cultureNumber &#x3D; this.cmwRevitalizationForm.controls.culture_number.value;
+    }
+
+    if (this.cmwRevitalizationForm.controls.culture_condition.value &#x3D;&#x3D; null || this.cmwRevitalizationForm.controls.culture_condition.value &#x3D;&#x3D; &quot;&quot;) {
+      this.cultureCondition &#x3D; &quot;N/A&quot;;
+    }
+    else {
+      this.cultureCondition &#x3D; this.cmwRevitalizationForm.controls.culture_condition.value;
+    }
+
+    if (this.cmwRevitalizationForm.controls.sequence.value &#x3D;&#x3D; null || this.cmwRevitalizationForm.controls.sequence.value &#x3D;&#x3D; &quot;&quot;) {
+      this.sequence &#x3D; &quot;N/A&quot;;
+    }
+    else {
+      this.sequence &#x3D; this.cmwRevitalizationForm.controls.sequence.value;
+    }
+
+    if (this.cmwRevitalizationForm.controls.reference_number.value &#x3D;&#x3D; null || this.cmwRevitalizationForm.controls.reference_number.value &#x3D;&#x3D; &quot;&quot;) {
+      this.referenceNumber &#x3D; &quot;N/A&quot;;
+    }
+    else {
+      this.referenceNumber &#x3D; this.cmwRevitalizationForm.controls.reference_number.value;
+    }
+
+    var temp &#x3D; (this.cmwRevitalizationForm.controls.date_requested.value).toString();
+    var year &#x3D; temp[0] + temp[1] + temp[2] + temp[3];
+    var month &#x3D; temp[5] + temp[6];
+    var day &#x3D; temp[8] + temp[9];
+    this.dateRequested &#x3D; day + &#x27;/&#x27; + month + &#x27;/&#x27; + year;
+
+    var temp &#x3D; (this.cmwRevitalizationForm.controls.date_requested.value).toString();
+    var year &#x3D; temp[0] + temp[1] + temp[2] + temp[3];
+    var month &#x3D; temp[5] + temp[6];
+    var day &#x3D; temp[8] + temp[9];
+    this.dateReturned &#x3D; day + &#x27;/&#x27; + month + &#x27;/&#x27; + year;
+
+    var date &#x3D; new Date();
+    var currentDate &#x3D; (&#x27;0&#x27; + date.getDate()).slice(-2) + &#x27;/&#x27; + (date.getMonth() + 1) + &#x27;/&#x27; + date.getFullYear();
+
+    var revitalization: CMWRevitalization &#x3D; {
+      userID: this.currentUser.ID, requestor: this.requestor, currentName: this.currentName, nameBionumerics: this.bionumericsName, cultureNumber: this.cultureNumber,
+      cultureCondition: this.cultureCondition, sequenceDateSubmitted: this.sequence, referenceNumber: this.referenceNumber, dateRequested: this.dateRequested,
+      dateReturned: this.dateReturned, dateSubmitted: currentDate
+    };
+
+    this.cultureCollectionService.submitCMWRevitalizationForm(revitalization).subscribe((response: any) &#x3D;&gt; {
+      if (response.success &#x3D;&#x3D; true) {
+        //Successfully submitted form
+        this.cmwRevitalizationForm.reset();
+
+        //POPUP MESSAGE
+        let snackBarRef &#x3D; this.snackBar.open(&quot;CMW Revitalization form successfully submitted.&quot;, &quot;Dismiss&quot;, {
+          duration: 3000
+        });
+      }
+      else {
+        //Error handling
+
+        //POPUP MESSAGE
+        let snackBarRef &#x3D; this.snackBar.open(&quot;Could not submit CMW Revitalization form. Please try again.&quot;, &quot;Dismiss&quot;, {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET ALL STAFF
+  /**
+   *  This function will load of the FABI staff members and administrators into an array so that they can be selected when filling out
+   *  the form to submit.
+   * @memberof SubmitCmwRevitalizationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllStaff() {
+    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+    this.userManagementService.getAllFABIStaff().subscribe((response: any) &#x3D;&gt; {
+      if (response.success &#x3D;&#x3D; true) {
+        for (var i &#x3D; 0; i &lt; response.data.qs.staff.length; i++) {
+          this.staff.push(response.data.qs.staff[i].surname + &#x27;, &#x27; + response.data.qs.staff[i].fname[0]);
+        }
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      TOGGLE NOTIFICATIONS TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof SubmitCmwRevitalizationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab() {
+    this.toggle_status &#x3D; !this.toggle_status;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                           NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 1. Call getAllStaff()
+   * 
+   * @memberof SubmitCmwRevitalizationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+    this.currentUser &#x3D; this.authService.getCurrentSessionValue.user;
+
+    this.getAllStaff();
+  }
+
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'SubmitCmwRevitalizationComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

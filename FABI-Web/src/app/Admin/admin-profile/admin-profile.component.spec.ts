@@ -13,6 +13,7 @@ import { MaterialModule } from '../../materials';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +25,12 @@ import {MatDialogModule} from '@angular/material/dialog';
 describe('AdminProfileComponent', () => {
   let component: AdminProfileComponent;
   let fixture: ComponentFixture<AdminProfileComponent>;
+
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  } 
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -39,7 +46,8 @@ describe('AdminProfileComponent', () => {
       declarations: [ AdminProfileComponent ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+        { provide: MatDialogRef, useValue: {} },
+        { provide: AuthenticationService, useClass: MockAuthenticationService }
       ]
     })
     .compileComponents();
