@@ -26,12 +26,20 @@ describe('MapsWindowComponent', () => {
   let component: MapsWindowComponent;
   let fixture: ComponentFixture<MapsWindowComponent>;
 
+  class MockMapsAPILoader {
+    public load(): Promise<boolean> {
+      return new Promise(() => {
+        return true;
+      });
+    }
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MapsWindowComponent ],
-      imports: [ReactiveFormsModule, AgmCoreModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [ReactiveFormsModule, AgmCoreModule.forRoot(), RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
-        MapsAPILoader,
+        { provide: MapsAPILoader, useClass: MockMapsAPILoader },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
       ]

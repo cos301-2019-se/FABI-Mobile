@@ -15,6 +15,7 @@ import { MaterialModule } from '../materials';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,17 +24,36 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import {MatDialogModule} from '@angular/material/dialog';
 
+import { AgmCoreModule } from '@agm/core';
+import { MapsAPILoader } from '@agm/core';
+
 describe('SampleFormComponent', () => {
   let component: SampleFormComponent;
   let fixture: ComponentFixture<SampleFormComponent>;
 
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  } 
+
+  class MockMapsAPILoader {
+    public load(): Promise<boolean> {
+      return new Promise(() => {
+        return true;
+      });
+    }
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SampleFormComponent ],
-      imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule, MapsWindowComponent],
+      declarations: [ SampleFormComponent, MapsWindowComponent ],
+      imports: [ReactiveFormsModule, AgmCoreModule.forRoot(), MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MapsAPILoader, useClass: MockMapsAPILoader },
+        { provide: AuthenticationService, useClass: MockAuthenticationService }
     ]
     })
     .compileComponents();

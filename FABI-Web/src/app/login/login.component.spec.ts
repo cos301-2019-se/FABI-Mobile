@@ -35,7 +35,6 @@ describe('LoginComponent', () => {
             ToastrModule,
             ToastrComponentlessModule,
             ToastrModule.forRoot()
-            
         ],
         declarations: [ 
             LoginComponent,

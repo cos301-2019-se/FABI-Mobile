@@ -70,7 +70,7 @@ import { LoadingComponent } from './_loading/loading.component';
 import { FilterPipe } from './_pipes/filter.pipe';
 import { NotificationService } from './_services/notification.service';
 import { CookieService } from "ngx-cookie-service";
-
+import { AgmCoreModule } from '@agm/core';
 
 // import { DataTablesModule } from 'angular-datatables';
 
@@ -156,7 +156,7 @@ import { CookieService } from "ngx-cookie-service";
     ErrorsModule,
     LayoutModule,
     MatAutocompleteModule,
-    core.AgmCoreModule.forRoot({
+    AgmCoreModule.forRoot({
       apiKey: config.APIKEy,
       libraries: ["places"]
     })
