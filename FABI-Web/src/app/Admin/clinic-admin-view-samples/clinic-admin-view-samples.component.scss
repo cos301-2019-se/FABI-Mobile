@@ -1,0 +1,32 @@
+/* ==========================================================================
+   CLINIC ADMIN STYLING
+   ========================================================================== */
+
+
+/* Form Style
+   ========================================================================== */
+.form-row {
+    width: 80%;
+}
+
+/* Button Style
+   ========================================================================== */
+.update-button {
+    background: transparent;
+    border: none;
+}
+
+.update-button i.fas.fa-check {
+    color: #72b555;
+    font-size: 24px;
+}
+
+.cancel-button {
+    background: transparent;
+    border: none;
+}
+
+.cancel-button i.fas.fa-times {
+    color: darkred;
+    font-size: 24px;
+}

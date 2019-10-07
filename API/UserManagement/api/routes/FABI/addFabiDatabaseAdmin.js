@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
-const mail = require('../sendEmail');
-
+const auth = require('../../loginAuth');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -12,7 +11,7 @@ const mail = require('../sendEmail');
 router.post('/', addAdmin);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Add Admin
+//                                             Add Admin - not in use anymore
 /**
  * @summary Add FABI Superuser to FABI orginization
  * @description  REQUEST DATA REQUIRED: Name and email for now

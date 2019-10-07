@@ -16,11 +16,11 @@
 <!-- / Search Table -->
 
 <!-- Loading Spinner -->
-<div class="spinner-grow text-success loading" role="status" *ngIf="sampleTableLoading">
+<div class="spinner-grow text-secondary loading" role="status" *ngIf="sampleTableLoading">
 </div>
 <!-- /Loading Spinner -->
 
-<table class="table table-hover"  *ngIf="samples">
+<table class="table table-hover" *ngIf="samples">
     <thead>
         <tr>
             <th scope="col">Sample Reference No.</th>
@@ -31,14 +31,28 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let sample of samples | filter : 'clinic-admin' : searchSample">
+        <tr *ngFor="let sample of samples">
             <td>{{sample.referenceNumber}}</td>
             <td>{{sample.orgName}}</td>
             <td>{{sample.userID}}</td>
-            <td>{{sample.status}}</td>
+            <td *ngIf="editingSample != sample">{{sample.status}}</td>
+            <td *ngIf="editingSample == sample">
+                <form id="update_sample_status_form" [formGroup]="updateSampleStatusForm"
+                    (submit)="updateSampleStatus(sample)" class="needs-validation">
+                    <select class="form-control" formControl="sample_status" class="sample-status">
+                        <option>Status:</option>
+                        <option *ngFor='let status of statusTypes' [selected]="status === sample.status"
+                            [value]="status"></option>
+                    </select>
+                    <button type="submit" class="update-button"><i class="fas fa-check"></i></button>
+                    <button class="cancel-button"><i class="fas fa-times"></i></button>
+                </form>
+            </td>
             <td class="table-action">
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewSampleModal" [id]="sample"
                     (click)="selectSample(sample)">View</button>
+                <button *ngIf="!isEditingSample" class="btn btn-default-cancel" data-toggle="modal" [id]="sample"
+                    (click)="updatingSampleStatus(sample)">Update Status</button>
             </td>
         </tr>
     </tbody>

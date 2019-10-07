@@ -1,11 +1,10 @@
 /* ==========================================================================
-   SUBMIT SAMPLE STYLING
+   PRE-DIAGNOSIS STYLING
    ========================================================================== */
 
-/* Submit Sample Container Styling
+/* Submit Sample Style
    ========================================================================== */
-
-   .sample-submission {
+.sample-submission {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -19,9 +18,8 @@
 }
 
 
-/* Banner Styling
+/* Banner Style
    ========================================================================== */
-
 .banner {
     position: absolute;
     top: 0;
@@ -58,7 +56,7 @@
 }
 
 
-/*  Heading Styling
+/*  Heading Style
     ========================================================================== */
 .heading {
     width: 100%;
@@ -89,24 +87,8 @@
 }
 
 
-/* Form Styling
+/* Form Style
     ========================================================================== */
-
-.pre-diagnosis {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    width: 85%;
-    min-height: 50vh;
-    height: auto;
-
-    margin-top: 70px;
-
-    z-index: 0;
-
-    transition: all 0.5s;
-
-
+.jumbotron {
+    min-width: 60%;
 }

@@ -3,7 +3,8 @@
    ========================================================================== */
 
 
-/* Log Tables Subsection */
+/* Table Style
+   ========================================================================== */
 .log-tables {
   display: flex;
   flex-direction: column;
@@ -57,14 +58,14 @@ a.nav-link.active {
 
   background-color: #fff;
 
-  border-left: 5px solid #72B555;
+  border-left: 5px solid #6B746F;
 
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
 .log-tables h5 {
   font-family: "Montserrat", sans-serif;
-  color: #6AA84F;
+  color: #6B746F;
 }
 
 .table {
@@ -72,8 +73,8 @@ a.nav-link.active {
   height: 100%;
 }
 
-/* Download Button 
-     ========================================================================== */
+/* Download Report
+   ========================================================================== */
 .btn.btn-default-report-download {
   color: #6B746F;
   font-family: "Montserrat", sans-serif;
@@ -104,8 +105,6 @@ a.nav-link.active {
   transform: scale(1.025);
 }
 
-/* Download Button 
-     ========================================================================== */
 .btn.btn-default-report-download {
   color: #6B746F;
   font-family: "Montserrat", sans-serif;
@@ -134,15 +133,4 @@ a.nav-link.active {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
   transform: scale(1.025);
-}
-
-
-// /*-----------------------
-//     Database Management
-// -------------------------*/
-#userCollapse,
-#databaseCollapse,
-#accessCollapse,
-#errorCollapse {
-  display: none;
 }

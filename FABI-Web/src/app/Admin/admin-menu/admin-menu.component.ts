@@ -5,7 +5,7 @@
  * Created Date: Wednesday, August 14th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 14th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,18 +13,27 @@
  * <<license>>
  */
 
-import { Component, OnInit } from '@angular/core';
+import * as core from '@angular/core';
+import { AuthenticationService } from '../../_services/authentication.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-admin-menu',
   templateUrl: './admin-menu.component.html',
   styleUrls: ['./admin-menu.component.scss']
 })
-export class AdminMenuComponent implements OnInit {
+export class AdminMenuComponent implements core.OnInit {
 
-  constructor() { }
+  /** The details of the user currently logged in -  @type {any} */
+  currentUser: any;
+  currentUserPrivileges: any
 
-  ngOnInit() {
-  }
+  constructor(
+    private authService: AuthenticationService,
+    private userManagementService: UserManagementAPIService,
+  ) { }
+
+  ngOnInit() { }
 
 }

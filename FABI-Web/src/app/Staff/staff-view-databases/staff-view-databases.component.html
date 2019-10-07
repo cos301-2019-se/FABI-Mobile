@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Staff View Database -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -8,17 +8,15 @@
       <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
       <div class="nav-links">
-        <a class="nav-link" href="#"><i class="fas fa-home"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-vial"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-vials"></i></a>
-        <a class="nav-link active" href="#"><i class="fas fa-database"></i></a>
-        <a class="nav-link" href="#"> <i class="fas fa-plus-circle"></i></a>
+        <a class="nav-link" routerLink="/staff-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i></a>
+        <a class="nav-link" routerLink="/cmw-menu"><i class="fas fa-vials"></i></a>
+        <a class="nav-link active" routerLink="/staff-view-databases"><i class="fas fa-database"></i></a>
       </div>
     </div>
     <div class="bottom-nav-items">
       <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
-      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </div>
   <!-- / Sidenav -->
@@ -31,22 +29,22 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <!-- Navbar Items -->
           <li class="nav-item">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" routerLink="/staff-dashboard">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Samples</a>
+            <a class="nav-link" routerLink="/staff-submit-sample">Submit Sample</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">CMW Culture Collection</a>
+            <a class="nav-link" routerLink="/cmw-menu">CMW Culture Collection</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/staff-view-databases">Databases <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Databases <span class="sr-only">(current)</span></a>
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -61,7 +59,7 @@
       <!-- / Menu Button -->
 
       <!-- Navbar Title -->
-      <h5>Databases</h5>
+      <h5>DATABASES</h5>
       <!-- / Navbar Title -->
 
       <!-- Notification Icons -->
@@ -75,7 +73,7 @@
   </div>
   <!-- / Navbar-->
 
-  <!-- Dashboard Content -->
+  <!-- Staff View Database Content -->
   <div class="dashboard-content">
     <!-- Primary Content -->
     <div class="primary-content">
@@ -83,7 +81,7 @@
       <!-- Content Heading -->
       <div class="content-heading">
         <h2>View Databases</h2>
-        <i class="fas fa-bell" id="new-notifications" (click)="showNotifications()"></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
         <i class="far fa-bell" id="no-new-notifications"></i>
       </div>
       <!-- / Content Heading -->
@@ -125,7 +123,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let database of databases | filter : 'staff-database' : searchDatabase">
+            <tr *ngFor="let database of databases">
               <td>{{database.name}}</td>
               <td class="table-action">
                 <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal"
@@ -143,7 +141,7 @@
 
 
   </div>
-  <!-- / Dashboard Content -->
+  <!-- / Staff View Database Content -->
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
@@ -173,16 +171,9 @@
     <app-staff-help></app-staff-help>
 
   </div>
-  <!-- / Help Section -->
-
-  <!-- Up Icon -->
-  <!-- <div id="scroll-to-top">
-    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
-  </div> -->
-  <!-- / Up Icon -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Staff View Database -->
 
 <!-- View Database Modal -->
 <div class="modal fade" id="viewDatabaseModal" tabindex="-1" role="dialog" aria-labelledby="viewDatabaseModalTitle"
@@ -212,7 +203,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of databaseData | filter : 'database-view' : searchView">
+            <tr *ngFor="let data of databaseData">
               <td *ngFor="let field of fields">{{data[field.name]}}</td>
             </tr>
           </tbody>
@@ -220,7 +211,8 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal" data-dismiss="modal" >Download Database</button>
+        <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal"
+          data-dismiss="modal">Download Database</button>
       </div>
     </div>
   </div>

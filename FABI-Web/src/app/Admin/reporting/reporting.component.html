@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Reporting -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -41,8 +41,8 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
           <!-- Navbar Items -->
-          <li class="nav-item active">
-            <a class="nav-link" routerLink="/admin-dashboard">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin-dashboard">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
@@ -56,11 +56,17 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/reporting">Reporting <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -89,7 +95,7 @@
   </div>
   <!-- / Navbar-->
 
-  <!-- Dashboard Content -->
+  <!-- Reporting Content -->
   <div class="dashboard-content">
     <!-- Primary Content -->
     <div class="primary-content">
@@ -192,8 +198,8 @@
             <div class="input-group-prepend ">
               <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="searchReports"
-              aria-describedby="basic-addon1" id="search-table" [(ngModel)]="searchReports">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+              name="searchReports" aria-describedby="basic-addon1" id="search-table" [(ngModel)]="searchReports">
           </div>
 
           <!-- FABI System Request Report Table -->
@@ -209,7 +215,7 @@
                 Request
                 Report</button>
 
-              <table class="table table-hover" *ngIf="requestLogs" id="previewTableRequestLogs" >
+              <table class="table table-hover" *ngIf="requestLogs" id="previewTableRequestLogs">
                 <thead>
                   <tr>
                     <th>Person</th>
@@ -221,9 +227,15 @@
                     <th>Date Submitted</th>
                   </tr>
                 </thead>
-                <tbody *ngIf='requestReport'>                     
-                  <tr *ngFor="let row of requestLogsArray | filter : 'reporting' : searchReports; let i = index">
-                    <td *ngFor="let key of row; let j = index">{{ row[j] }}</td>
+                <tbody *ngIf='requestReport'>
+                  <tr *ngFor="let row of requestLogsArray | filter : 'request-report' : searchReports; let i = index">
+                    <td>{{row.user}}</td>
+                    <td>{{row.requestor}}</td>
+                    <td>{{row.cultureNumber}}</td>
+                    <td>{{row.taxonName}}</td>
+                    <td>{{row.referenceNumber}}</td>
+                    <td>{{row.dateRequested}}</td>
+                    <td>{{row.dateSubmitted}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -232,7 +244,7 @@
             <!-- Tab Content -->
 
             <!-- Pagination -->
-            
+
             <!-- /Pagination -->
 
           </div>
@@ -264,8 +276,15 @@
                   </tr>
                 </thead>
                 <tbody *ngIf='depositReport'>
-                  <tr *ngFor="let row of depositLogsArray | filter : 'reporting' : searchReports; let i = index">
-                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
+                  <tr *ngFor="let row of depositLogsArray | filter : 'deposit-report' : searchReports; let i = index">
+                    <td>{{row.user}}</td>
+                    <td>{{row.cultureNumber}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.collectedBy}}</td>
+                    <td>{{row.dateCollected}}</td>
+                    <td>{{row.isolatedBy}}</td>
+                    <td>{{row.identifiedBy}}</td>
+                    <td>{{row.dateSubmitted}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -296,8 +315,11 @@
                   </tr>
                 </thead>
                 <tbody *ngIf='errorReport'>
-                  <tr *ngFor="let row of errorLogsArray | filter : 'reporting' : searchReports; let i = index">
-                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
+                  <tr *ngFor="let row of errorLogsArray | filter : 'error-log' : searchReports; let i = index">
+                    <td>{{row.code}}</td>
+                    <td>{{row.date}}</td>
+                    <td>{{row.details}}</td>
+                    <td>{{row.user}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -335,14 +357,21 @@
                 </thead>
                 <tbody *ngIf='revitalizationReport'>
                   <tr *ngFor="let row of revitalizationLogsArray | filter : 'reporting' : searchReports; let i = index">
-                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
+                    <td>{{row.user}}</td>
+                    <td>{{row.requestor}}</td>
+                    <td>{{row.cultureNumber}}</td>
+                    <td>{{row.cultureName}}</td>
+                    <td>{{row.referenceNumber}}</td>
+                    <td>{{row.dateRequested}}</td>
+                    <td>{{row.dateReturned}}</td>
+                    <td>{{row.dateSubmitted}}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <!-- Tab Content -->
 
-            
+
 
           </div>
           <!-- / FABI System Error Report Table -->
@@ -408,8 +437,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let row of userLogsArray | filter : 'reporting' : searchItem; let i = index">
-                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
+                  <tr class="tableRow" scope="row"
+                    *ngFor="let log of userLogsArray | filter : 'user-log' : searchItem; let i = index">
+                    <td>{{log.action}}</td>
+                    <td>{{log.date}}</td>
+                    <td>{{log.user1}}</td>
+                    <td>{{log.user2}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -441,8 +474,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let row of databaseLogsArray | filter : 'reporting' : searchItem; let i = index">
-                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
+                  <tr class="tableRow" scope="row"
+                    *ngFor="let log of databaseLogsArray | filter : 'database-log' : searchItem; let i = index">
+                    <td>{{log.action}}</td>
+                    <td>{{log.date}}</td>
+                    <td>{{log.user}}</td>
+                    <td>{{log.details}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -473,8 +510,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let row of accessLogsArray | filter : 'reporting' : searchItem; let i = index">
-                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
+                  <tr class="tableRow" scope="row"
+                    *ngFor="let log of accessLogsArray | filter : 'access-log' : searchItem; let i = index">
+                    <td>{{log.details}}</td>
+                    <td>{{log.date}}</td>
+                    <td>{{log.user}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -506,8 +546,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="tableRow" scope="row" *ngFor="let row of errorLogsArray | filter : 'reporting' : searchItem; let i = index">
-                    <td *ngFor="let key of row; let j = index">{{ row[j] }} </td>
+                  <tr class="tableRow" scope="row"
+                    *ngFor="let log of errorLogsArray | filter : 'error-log' : searchItem; let i = index">
+                    <td>{{log.code}}</td>
+                    <td>{{log.date}}</td>
+                    <td>{{log.details}}</td>
+                    <td>{{log.user}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -559,13 +603,7 @@
     <!-- / Help Section -->
 
   </div>
-  <!-- / Dashboard Content -->
-
-  <!-- Up Icon -->
-  <!-- <div id="scroll-to-top">
-    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
-  </div> -->
-  <!-- / Up Icon -->
+  <!-- / Reporting Content -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Reporting -->

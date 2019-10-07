@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- View Forms -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -16,8 +16,8 @@
         <a class="nav-link" routerLink="/organization-handler"><i class="fas fa-building"></i></a>
         <a class="nav-link" routerLink="/database-handler"><i class="fas fa-database"></i></a>
         <a class="nav-link" routerLink="/clinic-handler"><i class="fas fa-stethoscope"></i></a>
-        <a class="nav-link active" routerLink="/reporting"><i class="fas fa-chart-bar"></i></a>
-        <a class="nav-link" routerLink="/view-forms"><i class="fas fa-clipboard"></i></a>
+        <a class="nav-link" routerLink="/reporting"><i class="fas fa-chart-bar"></i></a>
+        <a class="nav-link active" routerLink="/view-forms"><i class="fas fa-clipboard"></i></a>
       </div>
 
     </div>
@@ -41,8 +41,8 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
           <!-- Navbar Items -->
-          <li class="nav-item active">
-            <a class="nav-link" routerLink="/admin-dashboard">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin-dashboard">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
@@ -57,10 +57,16 @@
             <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" routerLink="/reporting">Reporting</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/view-forms">CMW Forms <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -89,7 +95,7 @@
   </div>
   <!-- / Navbar-->
 
-  <!-- Dashboard Content -->
+  <!-- View Forms Content -->
   <div class="dashboard-content">
     <!-- Primary Content -->
     <div class="primary-content">
@@ -187,7 +193,8 @@
       <div class="tab" *ngIf="depositFormTab" #depositFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousDepositForm()" *ngIf="downloadDeposit"></i>
+          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousDepositForm()"
+            *ngIf="downloadDeposit"></i>
           <h6>DEPOSIT FORM DETAILS</h6>
           <i class="fas fa-download" title="Download form" (click)="downloadDepositForm()" *ngIf="downloadDeposit"></i>
           <i class="fas fa-trash-alt" title="Delete form" (click)="deleteDepositForm()" *ngIf="downloadDeposit"></i>
@@ -408,7 +415,8 @@
       <div class="tab" *ngIf="requestFormTab" #requestFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousRequestForm()" *ngIf="downloadRequest"></i>
+          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousRequestForm()"
+            *ngIf="downloadRequest"></i>
           <h6>REQUEST FORM DETAILS</h6>
           <i class="fas fa-download" title="Download form" (click)="downloadRequestForm()" *ngIf="downloadRequest"></i>
           <i class="fas fa-trash-alt" title="Delete form" (click)="deleteRequestForm()" *ngIf="downloadRequest"></i>
@@ -486,11 +494,15 @@
       <div class="tab" *ngIf="revitalizationFormTab" #revitalizationFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousRevitalizationForm()" *ngIf="downloadRevitalization"></i>
+          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousRevitalizationForm()"
+            *ngIf="downloadRevitalization"></i>
           <h6>REVITALIZATION FORM DETAILS</h6>
-          <i class="fas fa-download" title="Download form" (click)="downloadRevitalizationForm()" *ngIf="downloadRevitalization"></i>
-          <i class="fas fa-trash-alt" title="Delete form" (click)="deleteRevitalizationForm()" *ngIf="downloadRevitalization"></i>
-          <i class="fas fa-arrow-right" title="Next form" (click)="loadNextRevitalizationForm()" *ngIf="downloadRevitalization"></i>
+          <i class="fas fa-download" title="Download form" (click)="downloadRevitalizationForm()"
+            *ngIf="downloadRevitalization"></i>
+          <i class="fas fa-trash-alt" title="Delete form" (click)="deleteRevitalizationForm()"
+            *ngIf="downloadRevitalization"></i>
+          <i class="fas fa-arrow-right" title="Next form" (click)="loadNextRevitalizationForm()"
+            *ngIf="downloadRevitalization"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div3" ng-controller="refresh_control3">
@@ -589,11 +601,14 @@
       <div class="tab" *ngIf="processedFormTab" #processedFormPDF>
 
         <div class="view-form-actions">
-          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousProcessedForm()" *ngIf="downloadProcessed"></i>
+          <i class="fas fa-arrow-left" title="Previous form" (click)="loadPreviousProcessedForm()"
+            *ngIf="downloadProcessed"></i>
           <h6>PROCESSED FORM DETAILS</h6>
-          <i class="fas fa-download" title="Download form" (click)="downloadProcessedForm()" *ngIf="downloadProcessed"></i>
+          <i class="fas fa-download" title="Download form" (click)="downloadProcessedForm()"
+            *ngIf="downloadProcessed"></i>
           <i class="fas fa-trash-alt" title="Delete form" (click)="deleteProcessedForm()" *ngIf="downloadProcessed"></i>
-          <i class="fas fa-arrow-right" title="Next form" (click)="loadNextProcessedForm()" *ngIf="downloadProcessed"></i>
+          <i class="fas fa-arrow-right" title="Next form" (click)="loadNextProcessedForm()"
+            *ngIf="downloadProcessed"></i>
         </div>
 
         <div class="tab-content" ng-app="refresh_div4" ng-controller="refresh_control4">
@@ -705,7 +720,8 @@
             <!-- / Microscope Slides -->
           </div>
 
-          <button (click)="viewAssociatedDepositForm()" class="btn btn-default-save" *ngIf="downloadProcessed">View Associated Deposit
+          <button (click)="viewAssociatedDepositForm()" class="btn btn-default-save" *ngIf="downloadProcessed">View
+            Associated Deposit
             Form</button>
 
         </div>
@@ -1123,13 +1139,7 @@
     <!-- / Help Section -->
 
   </div>
-  <!-- / Dashboard Content -->
-
-  <!-- Up Icon -->
-  <!-- <div id="scroll-to-top">
-      <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
-    </div> -->
-  <!-- / Up Icon -->
+  <!-- / View Forms Content -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / View Forms -->

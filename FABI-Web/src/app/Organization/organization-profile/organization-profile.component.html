@@ -28,15 +28,15 @@
         <div class="form-group">
           <label for="admin_name">Admin Name</label>
           <input type="text" class="form-control" id="admin_name" placeholder="Admin name" formControlName="admin_name"
-            required
-            [ngClass]="{
+            required [ngClass]="{
             'is-invalid': adminProfileForm.controls['admin_name'].invalid && (submitted || adminProfileForm.controls['admin_name'].dirty), 
-            'is-valid': adminProfileForm.controls['admin_name'].valid && (submitted || adminProfileForm.controls['admin_name'].dirty)}">
+            'is-valid': adminProfileForm.controls['admin_name'].valid && (submitted)}">
           <!-- Error Validation Feedback-->
           <div
             *ngIf="adminProfileForm.controls['admin_name'].invalid && (submitted || adminProfileForm.controls['admin_name'].dirty)">
             <div *ngFor="let validation of admin_profile_validators.admin_name">
-              <p *ngIf="adminProfileForm.get('admin_name').hasError(validation.type)">{{validation.message}}</p>
+              <p *ngIf="adminProfileForm.get('admin_name').hasError(validation.type)" class="text-danger">
+                {{validation.message}}</p>
             </div>
           </div>
           <!-- / Error Validation Feedback-->
@@ -47,15 +47,15 @@
         <div class="form-group">
           <label for="admin_surname">Surname</label>
           <input type="text" class="form-control" id="admin_surname" placeholder="Admin surname"
-            formControlName="admin_surname" required
-            [ngClass]="{
+            formControlName="admin_surname" required [ngClass]="{
             'is-invalid': adminProfileForm.controls['admin_surname'].invalid && (submitted || adminProfileForm.controls['admin_surname'].dirty), 
-            'is-valid': adminProfileForm.controls['admin_surname'].valid && (submitted || adminProfileForm.controls['admin_surname'].dirty)}">
+            'is-valid': adminProfileForm.controls['admin_surname'].valid && (submitted)}">
           <!-- Error Validation Feedback-->
           <div
             *ngIf="adminProfileForm.controls['admin_surname'].invalid && (submitted || adminProfileForm.controls['admin_surname'].dirty)">
             <div *ngFor="let validation of admin_profile_validators.admin_surname">
-              <p *ngIf="adminProfileForm.get('admin_surname').hasError(validation.type)">{{validation.message}}</p>
+              <p *ngIf="adminProfileForm.get('admin_surname').hasError(validation.type)" class="text-danger">
+                {{validation.message}}</p>
             </div>
           </div>
           <!-- / Error Validation Feedback-->
@@ -66,15 +66,15 @@
         <div class="form-group">
           <label for="admin_email">Email address</label>
           <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-            placeholder="Enter email" formControlName="admin_email" required
-            [ngClass]="{
+            placeholder="Enter email" formControlName="admin_email" required [ngClass]="{
             'is-invalid': adminProfileForm.controls['admin_email'].invalid && (submitted || adminProfileForm.controls['admin_email'].dirty), 
-            'is-valid': adminProfileForm.controls['admin_email'].valid && (submitted || adminProfileForm.controls['admin_email'].dirty)}">
+            'is-valid': adminProfileForm.controls['admin_email'].valid && (submitted)}">
           <!-- Error Validation Feedback-->
           <div
             *ngIf="adminProfileForm.controls['admin_email'].invalid && (submitted || adminProfileForm.controls['admin_email'].dirty)">
             <div *ngFor="let validation of admin_profile_validators.admin_email">
-              <p *ngIf="adminProfileForm.get('admin_email').hasError(validation.type)">{{validation.message}}</p>
+              <p *ngIf="adminProfileForm.get('admin_email').hasError(validation.type)" class="text-danger">
+                {{validation.message}}</p>
             </div>
           </div>
           <!-- / Error Validation Feedback-->
@@ -127,15 +127,14 @@
               <div class="form-group">
                 <label for="current_password">Current Password</label>
                 <input type="password" class="form-control" id="current_password" placeholder="Enter current password"
-                  formControlName="current_password" required
-                  [ngClass]="{
+                  formControlName="current_password" required [ngClass]="{
                     'is-invalid': changePasswordForm.controls['current_password'].invalid && (submitted || changePasswordForm.controls['current_password'].dirty), 
-                    'is-valid': changePasswordForm.controls['current_password'].valid && (submitted || changePasswordForm.controls['current_password'].dirty)}">
+                    'is-valid': changePasswordForm.controls['current_password'].valid && (submitted)}">
                 <!-- Error Validation Feedback-->
                 <div
                   *ngIf="changePasswordForm.controls['current_password'].invalid && (submitted || changePasswordForm.controls['current_password'].dirty)">
                   <div *ngFor="let validation of change_password_validators.current_password">
-                    <p *ngIf="changePasswordForm.get('current_password').hasError(validation.type)">
+                    <p *ngIf="changePasswordForm.get('current_password').hasError(validation.type)" class="text-danger">
                       {{validation.message}}</p>
                   </div>
                 </div>
@@ -147,15 +146,15 @@
               <div class="form-group">
                 <label for="new_password">New Password</label>
                 <input type="password" class="form-control" id="new_password" placeholder="Enter new password"
-                  formControlName="new_password" required
-                  [ngClass]="{
+                  formControlName="new_password" required [ngClass]="{
                     'is-invalid': changePasswordForm.controls['new_password'].invalid && (submitted || changePasswordForm.controls['new_password'].dirty), 
-                    'is-valid': changePasswordForm.controls['new_password'].valid && (submitted || changePasswordForm.controls['new_password'].dirty)}">
+                    'is-valid': changePasswordForm.controls['new_password'].valid && (submitted)}">
                 <!-- Error Validation Feedback-->
                 <div
                   *ngIf="changePasswordForm.controls['new_password'].invalid && (submitted || changePasswordForm.controls['new_password'].dirty)">
                   <div *ngFor="let validation of change_password_validators.new_password">
-                    <p *ngIf="changePasswordForm.get('new_password').hasError(validation.type)">{{validation.message}}
+                    <p *ngIf="changePasswordForm.get('new_password').hasError(validation.type)" class="text-danger">
+                      {{validation.message}}
                     </p>
                   </div>
                 </div>
@@ -175,7 +174,7 @@
                 <div
                   *ngIf="changePasswordForm.controls['confirm_password'].invalid && (submitted || changePasswordForm.controls['confirm_password'].dirty)">
                   <div *ngFor="let validation of change_password_validators.confirm_password">
-                    <p *ngIf="changePasswordForm.get('confirm_password').hasError(validation.type)">
+                    <p *ngIf="changePasswordForm.get('confirm_password').hasError(validation.type)" class="text-danger">
                       {{validation.message}}</p>
                   </div>
                 </div>
@@ -185,7 +184,7 @@
 
 
               <!-- Submit -->
-              <button type="submit" class="btn btn-default-save">Save</button>
+              <button type="submit" class="btn btn-default-save" data-toggle="modal" data-dismiss="modal">Save</button>
               <!-- / Submit -->
 
             </div>

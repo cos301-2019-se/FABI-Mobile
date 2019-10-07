@@ -5,7 +5,7 @@
  * Created Date: Monday, July 15th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,18 +13,16 @@
  * <<license>>
  */
 
+import * as http from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import { registerContentQuery } from '@angular/core/src/render3';
-import { StaticInjector } from '@angular/core/src/di/injector';
-import { BehaviorSubject } from 'rxjs';
 import { config } from "../../environments/environment.prod";
+import { AuthenticationService } from './authentication.service';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                          GLOBAL VARIABLES
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////// URL'S FOR API //////////////////////////////////////////////////////////////// 
 const getRequestLogsURL = `${config.cultureClinicURL}/getAllRequestForms`;
 const getDepositLogsURL = `${config.cultureClinicURL}/getAllDepositForms`;
 const getRevitalizationLogsURL = `${config.cultureClinicURL}/getAllRevitalizationForms`;
@@ -32,12 +30,24 @@ const getProcessedLogsURL = `${config.cultureClinicURL}/getAllProcessingForms`;
 const submitCMWDepositFormURL = `${config.cultureClinicURL}/submitCMWDepositForm`;
 const submitCMWRequestFormURL = `${config.cultureClinicURL}/submitCMWRequestForm`;
 const submitCMWRevitalizationFormURL = `${config.cultureClinicURL}/submitCMWRevitalizationForm`;
-const submitProcessedFormURL =  `${config.cultureClinicURL}/submitCMWProcessingForm`;
+const submitProcessedFormURL = `${config.cultureClinicURL}/submitCMWProcessingForm`;
 const updateDepositFormStatusURL = `${config.cultureClinicURL}/updateDepositStatus`;
-const getPrediagnosisURL = ``;
+const deleteDepositFormURL = `${config.cultureClinicURL}/deleteCMWDepositForm`;
+const deleteRequestFormURL = `${config.cultureClinicURL}/deleteCMWRequestForm`;
+const deleteRevitalizationFormURL = `${config.cultureClinicURL}/deleteCMWRevitalizationForm`;
+const deleteProcessedFormURL = `${config.cultureClinicURL}/deleteCMWProcessingForm`;
 
-//Object for defining the CMW deposit form values
-export interface CMWDeposit{
+
+///////////////////////////////////////////////////////////////////////
+//                            CMW DEPOSIT
+/**
+ *  Object for defining the CMW deposit form values
+ *
+ * @export
+ * @interface CMWDeposit
+ */
+///////////////////////////////////////////////////////////////////////
+export interface CMWDeposit {
   userID: string;                         //The user id of the user submitting the form
   cmwCultureNumber: string;               //The culture number
   genus: string;                          //The genus of the culture
@@ -66,8 +76,17 @@ export interface CMWDeposit{
   formID: string;                         //The id number for the actual form
 }
 
-//Object for defining the CMW request form values
-export interface CMWRequest{
+
+///////////////////////////////////////////////////////////////////////
+//                            CMW REQUEST
+/**
+ *  Object for defining the CMW request form values
+ *
+ * @export
+ * @interface CMWRequest
+ */
+///////////////////////////////////////////////////////////////////////
+export interface CMWRequest {
   userID: string;                         //The user id of the user submitting the form
   requestor: string;                      //The user who is requesting the culture
   taxonName: string;                      //The taxon name of the culture
@@ -78,8 +97,16 @@ export interface CMWRequest{
   dateSubmitted: string;                  //The date that the form was submitted
 }
 
-//Object for defining the CMW revitalization form values
-export interface CMWRevitalization{
+///////////////////////////////////////////////////////////////////////
+//                            CMW REVILIZATION
+/**
+ * Object for defining the CMW revitalization form values
+ *
+ * @export
+ * @interface CMWRevitalization
+ */
+///////////////////////////////////////////////////////////////////////
+export interface CMWRevitalization {
   userID: string;                         //The user id of the user submitting the form
   requestor: string;                      //The user who is requesting the culture
   currentName: string;                    //The current name of the culture
@@ -93,8 +120,17 @@ export interface CMWRevitalization{
   dateSubmitted: string;                  //The date that the form was submitted
 }
 
-//Object for defining the processed deposit form values
-export interface ProcessedForm{
+
+///////////////////////////////////////////////////////////////////////
+//                            PROCESSED FORM
+/**
+ * Object for defining the processed deposit form values
+ *
+ * @export
+ * @interface ProcessedForm
+ */
+///////////////////////////////////////////////////////////////////////
+export interface ProcessedForm {
   userID: string;                         //The user id of the user submitting the form
   statusOfCulture: string;               //The status of the culture for the processed form
   agarSlants: string;                     //The agar slants for the processed form
@@ -110,50 +146,68 @@ export interface ProcessedForm{
   cultureCollectionNumber: string;        //The culture collection number for the processed form
 }
 
-//Object for defining the object for updating the status of a deposit form
-export interface UpdateDepositForm{
+
+///////////////////////////////////////////////////////////////////////
+//                          UPDATED DEPOSIT FORM
+/**
+ * Object for defining the object for updating the status of a deposit form
+ *
+ * @export
+ * @interface UpdateDepositForm
+ */
+///////////////////////////////////////////////////////////////////////
+export interface UpdateDepositForm {
   userID: string;                         //The user id off the user submitting the form
   status: string;                         //The new status of the deposit form
   formID: string;                         //The id of the form to be updated
 }
 
-@Injectable({
-    providedIn: 'root'
-})
 
+/**
+ * Used to handled all `culture collection` requests and functions
+ *
+ * @export
+ * @class CultureCollectionAPIService
+ */
+@Injectable({
+  providedIn: 'root'
+})
 export class CultureCollectionAPIService {
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   //                                                          CONSTRUCTOR
-   /**
-   * Creates an instance of CultureCollectionAPIService.
-   * 
-   * @param {HttpClient} http For making calls to the API
-   * @memberof CultureCollectionAPIService
-   */
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   constructor(private http: HttpClient) { }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          CONSTRUCTOR
+  /**
+  * Creates an instance of CultureCollectionAPIService.
+  * 
+  * @param {http.HttpClient} http for making http calls to the API
+  * @param {AuthenticationService} authService for calling the *authentication* service
+  * @memberof CultureCollectionAPIService
+  */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(private http: http.HttpClient, private authService: AuthenticationService) { }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         GET ALL REQUEST LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing
    *    all the logs with type 'REQUEST'
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllRequestLogs() {
     const options = {
-        headers: {
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-        },
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      json: true
     };
 
     return this.http.request('POST', getRequestLogsURL, options);
@@ -166,18 +220,20 @@ export class CultureCollectionAPIService {
    *    all the logs with type 'DEPOSIT'
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllDepositLogs() {
     const options = {
-        headers: {
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-        },
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      json: true
     };
 
     return this.http.request('POST', getDepositLogsURL, options);
@@ -191,17 +247,19 @@ export class CultureCollectionAPIService {
    *    all the logs with type 'REVITALIZATION'
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllRevitalizationLogs() {
     const options = {
-        headers: {
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      json: true
     };
 
     return this.http.request('POST', getRevitalizationLogsURL, options);
@@ -214,17 +272,19 @@ export class CultureCollectionAPIService {
    *    all the logs with type 'PROCESSED'
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllProcessedLogs() {
     const options = {
-        headers: {
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      json: true
     };
 
     return this.http.request('POST', getProcessedLogsURL, options);
@@ -238,21 +298,23 @@ export class CultureCollectionAPIService {
    *    database.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCMWDepositForm(data: CMWDeposit){
+  submitCMWDepositForm(data: CMWDeposit) {
     const options = {
-        method: 'POST',
-        url: submitCMWDepositFormURL,
-        headers: {
+      method: 'POST',
+      url: submitCMWDepositFormURL,
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: data,
+      json: true
     };
 
     return this.http.request('POST', submitCMWDepositFormURL, options);
@@ -266,19 +328,21 @@ export class CultureCollectionAPIService {
    *    database.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCMWRequestForm(data: CMWRequest){
+  submitCMWRequestForm(data: CMWRequest) {
     const options = {
-        headers: new HttpHeaders({
+      headers: new http.HttpHeaders({
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-        }),
-        body: data,
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      }),
+      body: data,
+      json: true
     };
 
     return this.http.request('POST', submitCMWRequestFormURL, options);
@@ -292,21 +356,23 @@ export class CultureCollectionAPIService {
    *    database.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCMWRevitalizationForm(data: CMWRevitalization){
+  submitCMWRevitalizationForm(data: CMWRevitalization) {
     const options = {
-        method: 'POST',
-        url: submitCMWRevitalizationFormURL,
-        headers: {
+      method: 'POST',
+      url: submitCMWRevitalizationFormURL,
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: data,
+      json: true
     };
 
     return this.http.request('POST', submitCMWRevitalizationFormURL, options);
@@ -320,21 +386,23 @@ export class CultureCollectionAPIService {
    *    database.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitProcessedForm(data: ProcessedForm){
+  submitProcessedForm(data: ProcessedForm) {
     const options = {
-        method: 'POST',
-        url: submitProcessedFormURL,
-        headers: {
+      method: 'POST',
+      url: submitProcessedFormURL,
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: data,
+      json: true
     };
 
     return this.http.request('POST', submitProcessedFormURL, options);
@@ -347,50 +415,146 @@ export class CultureCollectionAPIService {
    *    This function is used to update the status of a deposit form to 'processed'.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  updateDepositFormStatus(data: UpdateDepositForm){
+  updateDepositFormStatus(data: UpdateDepositForm) {
     const options = {
-        method: 'POST',
-        url: updateDepositFormStatusURL,
-        headers: {
+      method: 'POST',
+      url: updateDepositFormStatusURL,
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: data,
+      json: true
     };
 
     return this.http.request('POST', updateDepositFormStatusURL, options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET SAMPLE PRE DIAGNOSIS
+  //                                                    DELETE DEPOSIT FORM 
   /**
-   * This function is used to get the pre-diagnosis for a sample that has been submitted.
+   *    This function is used to delete a deposit form on request.
    *
    * @returns API response @type any
+   * 
    * @memberof CultureCollectionAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getSamplePreDiagnosis(){
+  deleteDepositForm(id: string, form: string) {
+    var data = { userID: id, formID: form };
+
     const options = {
-        method: 'POST',
-        url: getPrediagnosisURL,
-        headers: {
+      method: 'POST',
+      url: deleteDepositFormURL,
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-        },
-        // body: data,
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: data,
+      json: true
     };
 
-    return this.http.request('POST', getPrediagnosisURL, options);
+    return this.http.request('POST', deleteDepositFormURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE REQUEST FORM 
+  /**
+   *    This function is used to delete a request form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteRequestForm(id: string, form: string) {
+    var data = { userID: id, formID: form };
+
+    const options = {
+      method: 'POST',
+      url: deleteRequestFormURL,
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request('POST', deleteRequestFormURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE REVITALIZATION FORM 
+  /**
+   *    This function is used to delete a revitalization form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteRevitalizationForm(id: string, form: string) {
+    var data = { userID: id, formID: form };
+
+    const options = {
+      method: 'POST',
+      url: deleteRevitalizationFormURL,
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request('POST', deleteRevitalizationFormURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE PROCESSED FORM 
+  /**
+   *    This function is used to delete a processed form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteProcessedForm(id: string, form: string) {
+    var data = { userID: id, formID: form };
+
+    const options = {
+      method: 'POST',
+      url: deleteProcessedFormURL,
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request('POST', deleteProcessedFormURL, options);
   }
 
 }

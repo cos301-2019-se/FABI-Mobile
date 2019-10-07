@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,32 +14,28 @@
  */
 
 
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
+import * as core from '@angular/core';
 import { Router } from '@angular/router';
-
-import { SampleDivComponent } from '../../Dynamic-Components/sample-div/sample-div.component';
-import { DiagnosticClinicAPIService, Sample, Species } from '../../_services/diagnostic-clinic-api.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService, Sample } from '../../_services/diagnostic-clinic-api.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-member-dashboard',
   templateUrl: './member-dashboard.component.html',
   styleUrls: ['./member-dashboard.component.scss']
 })
 
-export class MemberDashboardComponent implements OnInit {
+export class MemberDashboardComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   /** Holds the div element (sampleContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('sampleContainer', { read: ViewContainerRef }) sampleContainer;
+  @core.ViewChild('sampleContainer', { read: core.ViewContainerRef }) sampleContainer;
   /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('notificationContainer', { read: ViewContainerRef }) notificationContainer;
+  @core.ViewChild('notificationContainer', { read: core.ViewContainerRef }) notificationContainer;
 
   /** The ID of the logged in member - @type {string} */
   memberID: string = '1234';
@@ -47,10 +43,8 @@ export class MemberDashboardComponent implements OnInit {
   numberOfMemberSamples: number;
   /** Indicates if there are notifications to load - @type {boolean} */
   notifications: boolean = false;
-
   /** Object array for holding the samples for the member -  @type {Sample[]} */
   memberSamples: Sample[] = [];
-
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
   /** Indicates if the profile tab is hidden/shown - @type {boolean} */
@@ -61,9 +55,7 @@ export class MemberDashboardComponent implements OnInit {
   confirmPasswordInput: boolean = false;
   /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
-
   currentUser: any;
-
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
   sampleTableLoading: boolean = true;
 
@@ -72,9 +64,9 @@ export class MemberDashboardComponent implements OnInit {
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of MemberDashboardComponent.
-   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {core.ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service Used for all authentication and session control
    * @param {Router} router
    * @memberof MemberDashboardComponent
    */
@@ -82,7 +74,7 @@ export class MemberDashboardComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private resolver: ComponentFactoryResolver,
+    private resolver: core.ComponentFactoryResolver,
     private diagnosticClinicService: DiagnosticClinicAPIService
   ) { }
 
@@ -98,82 +90,13 @@ export class MemberDashboardComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginOrganisation().subscribe((response: any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.getNumberOfMemberSamples();
-      this.getNumberOfCompletedMemberSamples();
-      this.loadNotifications();
-    });
-
-    //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    //Calling the neccessary functions as the page loads
-    //  this.getNumberOfMemberSamples();
-    //  this.getNumberOfCompletedMemberSamples();
-    //  this.loadNotifications();
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    // Calling the neccessary functions as the page loads
+    this.getNumberOfCompletedMemberSamples();
+    this.loadNotifications();
   }
 
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                GET NUMBER OF MEMBER SAMPLES
-  /**
-   *  This function will use an API service to get all the samples of a member. These samples will be read into the
-   *  'samples' Object. The function does not receive any parameters but it will populate a 'heading' element on the
-   *  HTML page with the number of samples belonging to the member.
-   * 
-   *  This function will also dynamically load all of the samples into the sample section within the HTML page.
-   * 
-   * @memberof MemberDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfMemberSamples() {
-    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
-      if (response.success == true) {
-        //Populating the arrays with the returned data
-        var tempSamples = response.data.samples;
-        for (var i = 0; i < tempSamples.length; i++) {
-          var tempSpecies: Species = { species: tempSamples[i].data.species };
-          var tempSample: Sample = { userID: tempSamples[i].userID, orgName: tempSamples[i].orgName, status: tempSamples[i].status, referenceNumber: tempSamples[i].referenceNumber, data: tempSpecies };
-          this.memberSamples.push(tempSample);
-        }
-
-        //Deactivate loading table spinners
-        this.sampleTableLoading = false;
-        
-        this.numberOfMemberSamples = this.memberSamples.length;
-
-        if (this.memberSamples.length == 0) {
-          //Dynamically loads one div if no samples are returned
-          const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
-          sampleDivRef.instance.Number = 'You currently have no samples.';
-          sampleDivRef.instance.Status = '';
-          sampleDivRef.instance.Details = '';
-        }
-        else {
-          //Dynamically loads all the samples into the HTML page
-          for (var i = 0; i < this.memberSamples.length; i++) {
-            const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
-            sampleDivRef.instance.Number = 'Sample' + (i + 1).toString();
-            sampleDivRef.instance.Status = 'Status: ' + this.memberSamples[i].status;
-            sampleDivRef.instance.Details = 'Species: ' + this.memberSamples[i].data.species;
-          }
-        }
-      }
-      else {
-        //Could not return samples
-        this.numberOfMemberSamples = 0;
-
-        const sampleDivRef = this.sampleContainer.createComponent(this.resolver.resolveComponentFactory(SampleDivComponent));
-        sampleDivRef.instance.Number = 'Samples could not be loaded.';
-        sampleDivRef.instance.Status = '';
-        sampleDivRef.instance.Details = '';
-      }
-    });
-  }
 
   logout() {
     this.authService.logoutUser();

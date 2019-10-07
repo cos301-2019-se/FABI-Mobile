@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- CMW Menu -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -8,17 +8,15 @@
       <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
       <div class="nav-links">
-        <a class="nav-link" href="#"><i class="fas fa-home"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-vial"></i></a>
-        <a class="nav-link active" href="#"><i class="fas fa-vials"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-database"></i></a>
-        <a class="nav-link" href="#"> <i class="fas fa-plus-circle"></i></a>
+        <a class="nav-link" routerLink="/staff-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i></a>
+        <a class="nav-link active" routerLink="/cmw-menu"><i class="fas fa-vials"></i></a>
+        <a class="nav-link" routerLink="/staff-view-databases"><i class="fas fa-database"></i></a>
       </div>
     </div>
     <div class="bottom-nav-items">
       <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
-      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </div>
   <!-- / Sidenav -->
@@ -31,22 +29,22 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <!-- Navbar Items -->
           <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" routerLink="/staff-dashboard">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Samples</a>
+            <a class="nav-link" routerLink="/staff-submit-sample">Submit Sample</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/cmw-menu">CMW Culture Collection <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">CMW Culture Collection <span class="sr-only">(current)</span></a>
+            <a class="nav-link" routerLink="/staff-view-databases">Databases</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Databases</a>
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -75,7 +73,7 @@
   </div>
   <!-- / Navbar-->
 
-  <!-- Dashboard Content -->
+  <!-- CMW Menu Content -->
   <div class="dashboard-content">
     <!-- Primary Content -->
     <div class="primary-content">
@@ -83,7 +81,7 @@
       <!-- Content Heading -->
       <div class="content-heading">
         <h2>CMW Culture Collection</h2>
-        <i class="fas fa-bell" id="new-notifications" (click)="showNotifications()"></i>
+        <i class="fas fa-bell" id="new-notifications" (click)="toggleNotificationsTab()"></i>
         <i class="far fa-bell" id="no-new-notifications"></i>
       </div>
       <!-- / Content Heading -->
@@ -133,17 +131,6 @@
             </div>
             <div class="menu-heading">
               <h6>Submit Revitalization Form</h6>
-            </div>
-          </div>
-          <!-- / Menu Item -->
-
-          <!-- Menu Item -->
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fas fa-print"></i>
-            </div>
-            <div class="menu-heading">
-              <h6>Print Collection List</h6>
             </div>
           </div>
           <!-- / Menu Item -->
@@ -236,7 +223,7 @@
     <!-- / CMW Revitalization Modal Section -->
 
   </div>
-  <!-- / Dashboard Content -->
+  <!-- / CMW Menu Content -->
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
@@ -268,11 +255,5 @@
   </div>
   <!-- / Help Section -->
 
-  <!-- Up Icon -->
-  <!-- <div id="scroll-to-top">
-    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
-  </div> -->
-  <!-- / Up Icon -->
-
 </div>
-<!-- / Dashboard -->
+<!-- / CMW Menu -->

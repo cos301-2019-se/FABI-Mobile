@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
+const admin = require('firebase-admin');
+const db = admin.firestore();
+const login = require('../loginAuth.js');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,46 +72,265 @@ function loginAdmin(req, res)
         orgName : req.body.orgName
     };
     
-    var options = {
-        method: 'POST',
-        hostname: 'authentication-dot-api-fabi.appspot.com',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body : qs,
-        json : true
-      };
-    
     try{
         if(req.body.orgName === 'FABI')
         {
-            options.path = '/loginAdmin';
-            request.post('https://authentication-dot-api-fabi.appspot.com/loginAdmin', options, (error, response, body) => {
-                if(error)
-                {
-                    console.log(error)
-                }
-                else{
-                    res.setHeader('Content-Type', 'application/json');
+            orgRef = db.collection('Organizations').doc('FABI').collection('Staff').where('email', '==', req.body.email);
+
+            orgRef.get().then(snapshot => {
+                
+                if(snapshot.empty){
+                    res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(response.statusCode).json(body);
+                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                        success: false,
+                        code: 200,
+                        title: "NOT FOUND",
+                        message: "User does not exist"
+                    });
+                }
+                else{
+                    member = {}
+                    snapshot.forEach(doc => {
+                        member = doc.data();
+                    })
+
+                    var token = null;
+                    delete member.password
+                    switch(member.userType)
+                    {
+                        case 'SuperUser':
+                                console.log(member)
+                                login.loginSuperUser(req.body).then(response => {
+                                    if(response.statusCode != '200')
+                                    {
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(401).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 401,
+                                            title: "NOT AUTHENTICATED",
+                                            message: "LOGIN FAILED",
+                                            data : JSON.parse(response.body)
+                                        })
+                                    }
+                                    else{
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 200,
+                                            title: "SUCCESS",
+                                            message: "LOGGED IN",
+                                            token : JSON.parse(response.body).access_token,
+                                            userDetails : member
+                                        })
+
+                                    }
+                                });
+                            break;
+
+                        case 'ClinicAdmin':
+
+                                login.loginClinicAdmin(req.body).then(response => {
+                                    if(response.statusCode != '200')
+                                    {
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(401).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 401,
+                                            title: "NOT AUTHENTICATED",
+                                            message: "LOGIN FAILED",
+                                            data : JSON.parse(response.body)
+                                        })
+                                    }
+                                    else{
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 200,
+                                            title: "SUCCESS",
+                                            message: "LOGGED IN",
+                                            token : JSON.parse(response.body).access_token,
+                                            userDetails : member
+                                        })
+                                        
+                                    }
+                                });
+                            break;
+
+                        case 'Staff':
+
+                                login.loginStaff(req.body).then(response => {
+                                    
+                                    if(response.statusCode != '200')
+                                    {
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(401).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 401,
+                                            title: "NOT AUTHENTICATED",
+                                            message: "LOGIN FAILED",
+                                            data : JSON.parse(response.body)
+                                        })
+                                    }
+                                    else{
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 200,
+                                            title: "SUCCESS",
+                                            message: "LOGGED IN",
+                                            token : JSON.parse(response.body).access_token,
+                                            userDetails : member
+                                        })
+                                        
+                                    }
+                                });
+                            break;
+
+                        case 'CultureAdmin':
+
+                                login.loginCCAdmin(req.body).then(response => {
+                                    if(response.statusCode != '200')
+                                    {
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(401).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 401,
+                                            title: "NOT AUTHENTICATED",
+                                            message: "LOGIN FAILED",
+                                            data : JSON.parse(response.body)
+                                        })
+                                    }
+                                    else{
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 200,
+                                            title: "SUCCESS",
+                                            message: "LOGGED IN",
+                                            token : JSON.parse(response.body).access_token,
+                                            userDetails : member
+                                        })
+                                        
+                                    }
+                                });
+                            break;
+
+                    }
+
                 }
             })
         }
         else
         {
-            options.path = '/loginOrgMember';
-            request.post('https://authentication-dot-api-fabi.appspot.com/loginOrgMember', options, (error, response, body) => {
-                if(error)
-                {
-                    console.log(error)
-                }
-                else{
-                    res.setHeader('Content-Type', 'application/json');
+            orgRef = db.collection('Organizations').doc(req.body.orgName).collection('Members').where('email', '==', req.body.email);
+
+            orgRef.get().then(snapshot => {
+                
+                if(snapshot.empty){
+                    res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(response.statusCode).json(body);
+                    res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                        success: false,
+                        code: 404,
+                        title: "NOT FOUND",
+                        message: "User does not exist"
+                    });
+                }
+                else{
+                    member = {}
+                    snapshot.forEach(doc => {
+                        member = doc.data()
+                    })
+                    delete member.password;
+                    req.body.email = req.body.email + ',' + req.body.orgName;
+                    switch(member.userType)
+                    {
+                        case 'OrganizationAdmin':
+
+                                login.loginOrgAdmin(req.body).then(response => {
+                                    if(response.statusCode != '200')
+                                    {
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(401).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 401,
+                                            title: "NOT AUTHENTICATED",
+                                            message: "LOGIN FAILED",
+                                            data : JSON.parse(response.body)
+                                        })
+                                    }
+                                    else{
+                                        res.setHeader('Content-Type', 'application/problem+json');
+                                        res.setHeader('Content-Language', 'en');
+                                        res.setHeader("Access-Control-Allow-Origin", "*");
+                                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                                            success: true,
+                                            code: 200,
+                                            title: "SUCCESS",
+                                            message: "LOGGED IN",
+                                            token : JSON.parse(response.body).access_token,
+                                            userDetails : member
+                                        })
+
+                                    }
+                                });
+                            break;
+                        
+                            case 'Member':
+
+                                    login.loginOrgMember(req.body).then(response => {
+                                        if(response.statusCode != '200')
+                                        {
+                                            res.setHeader('Content-Type', 'application/problem+json');
+                                            res.setHeader('Content-Language', 'en');
+                                            res.setHeader("Access-Control-Allow-Origin", "*");
+                                            res.status(401).json({                                  // ******* RESPONSE STATUS? ************
+                                                success: true,
+                                                code: 401,
+                                                title: "NOT AUTHENTICATED",
+                                                message: "LOGIN FAILED",
+                                                data : JSON.parse(response.body)
+                                            })
+                                        }
+                                        else{
+                                            res.setHeader('Content-Type', 'application/problem+json');
+                                            res.setHeader('Content-Language', 'en');
+                                            res.setHeader("Access-Control-Allow-Origin", "*");
+                                            res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                                                success: true,
+                                                code: 200,
+                                                title: "SUCCESS",
+                                                message: "LOGGED IN",
+                                                token : JSON.parse(response.body).access_token,
+                                                userDetails : member
+                                            })
+    
+                                        }
+                                    });
+                                break;
+                    }
+
                 }
             })
         }

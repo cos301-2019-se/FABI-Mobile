@@ -5,7 +5,7 @@
  * Created Date: Friday, August 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, September 26th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -40,9 +40,71 @@ export class FilterPipe implements PipeTransform {
       return items;
     }
 
-    if(type == "reporting"){
+    if(type == "request-report"){
       //If the search is being requested from the Reporting component
-      return items.filter((item: string) => this.applyFilter(item, value));
+      return items.filter((val) => {
+        let temp = (val.user.toLocaleLowerCase().includes(value)) || 
+        (val.requestor.toLocaleLowerCase().includes(value)) ||
+        (val.cultureNumber.toLocaleLowerCase().includes(value)) ||
+        (val.taxonName.toLocaleLowerCase().includes(value)) ||
+        (val.referenceNumber.toLocaleLowerCase().includes(value)) ||
+        (val.dateRequested.toLocaleLowerCase().includes(value)) ||
+        (val.dateSubmitted.toLocaleLowerCase().includes(value));
+        return temp;
+      });
+    }
+    else if(type == "deposit-report"){
+      //If the search is being requested from the Reporting component
+      return items.filter((val) => {
+        let temp = (val.user.toLocaleLowerCase().includes(value)) || 
+        (val.cultureNumber.toLocaleLowerCase().includes(value)) ||
+        (val.name.toLocaleLowerCase().includes(value)) ||
+        (val.collectedBy.toLocaleLowerCase().includes(value)) ||
+        (val.dateCollected.toLocaleLowerCase().includes(value)) ||
+        (val.isolatedBy.toLocaleLowerCase().includes(value)) ||
+        (val.identifiedBy.toLocaleLowerCase().includes(value)) ||
+        (val.dateSubmitted.toLocaleLowerCase().includes(value));
+        return temp;
+      });
+    }
+    else if(type == "user-log"){
+      //If the search is being requested from the Reporting page
+      return items.filter((val) => {
+        let temp = (val.action.toLocaleLowerCase().includes(value)) || 
+        (val.date.toLocaleLowerCase().includes(value)) ||
+        (val.user1.toLocaleLowerCase().includes(value)) ||
+        (val.user2.toLocaleLowerCase().includes(value));
+        return temp;
+      });
+    }
+    else if(type == "database-log"){
+      //If the search is being requested from the Reporting page
+      return items.filter((val) => {
+        let temp = (val.action.toLocaleLowerCase().includes(value)) || 
+        (val.date.toLocaleLowerCase().includes(value)) ||
+        (val.user.toLocaleLowerCase().includes(value)) ||
+        (val.details.toLocaleLowerCase().includes(value));
+        return temp;
+      });
+    }
+    else if(type == "access-log"){
+      //If the search is being requested from the Reporting page
+      return items.filter((val) => {
+        let temp = (val.details.toLocaleLowerCase().includes(value)) || 
+        (val.date.toLocaleLowerCase().includes(value)) ||
+        (val.user.toLocaleLowerCase().includes(value));
+        return temp;
+      });
+    }
+    else if(type == "error-log"){
+      //If the search is being requested from the Reporting page
+      return items.filter((val) => {
+        let temp = (val.code.toLocaleLowerCase().includes(value)) || 
+        (val.date.toLocaleLowerCase().includes(value)) ||
+        (val.details.toLocaleLowerCase().includes(value)) ||
+        (val.user.toLocaleLowerCase().includes(value));
+        return temp;
+      });
     }
     else if(type == "admin-dashboard"){
       //If the search is being requested from the Admin dashboard (or any other dashboard)
@@ -62,13 +124,6 @@ export class FilterPipe implements PipeTransform {
     }
     else if(type == "staff-database"){
       //If the search is requested form the Staff View Databases component
-      return items.filter((val) => {
-        let temp = (val.name.toLocaleLowerCase().includes(value));
-        return temp;
-      });
-    }
-    else if(type == "database-view"){
-      //If the search is requested from the Database Handler component
       return items.filter((val) => {
         let temp = (val.name.toLocaleLowerCase().includes(value));
         return temp;
@@ -126,18 +181,5 @@ export class FilterPipe implements PipeTransform {
         return temp;
       });
     }
-  }
-
-  applyFilter(field: string, value: string){
-    for(var i = 0; i < field.length; i++){
-      var array = field[i].split(' ');
-      for(var j = 0; j < array.length; j++){
-        if(array[j].toLowerCase() == value.toLowerCase()){
-          return true;
-        }
-      }
-    }
-
-    return false;
   }
 }

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,58 +13,58 @@
  * <<license>>
  */
 
-import {
-  Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef
-} from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
+import * as core from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatSnackBar, MatDialog } from '@angular/material';
-
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-import * as Interface from '../../_interfaces/interfaces';
-import { LoadingComponent } from 'src/app/_loading/loading.component';
 
-@Component({
+export interface AdminMember {
+  fname: string;
+  surname: string;
+  email: string;
+  id: string;
+  type: string;
+}
+
+export interface StaffMember {
+  fname: string;
+  surname: string;
+  email: string;
+  id: string;
+}
+
+@core.Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss']
 })
 
-export class AdminDashboardComponent implements OnInit {
+export class AdminDashboardComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //Retriving an HTML element from the HTML page
-  @ViewChild('adminContainer', { read: ViewContainerRef }) adminContainer;
-  @ViewChild('staffContainer', { read: ViewContainerRef }) staffContainer;
+  @core.ViewChild('adminContainer', { read: core.ViewContainerRef }) adminContainer;
+  @core.ViewChild('staffContainer', { read: core.ViewContainerRef }) staffContainer;
 
   /** Contains the user stats that will be dynamically loaded in the HTML page - @type {string} */
   userStats: string;
   /** Contains the sample stats that will be dynamically loaded in the HTML page - @type {string} */
   sampleStats: string;
 
-  /** Object array for holding the administrators -  @type {Member[]} */
-  admins: Member[] = [];
-  /** Object array for holding the staff members -  @type {Member[]} */
-  staff: Member[] = [];
-  /** Object array for holding the database administrators -  @type {Member[]} */
-  databaseAdmins: Member[] = [];
-  /** Object array for holding the culture curators -  @type {Member[]} */
-  cultureCurators: Member[] = [];
-  /** Object array for holding the diagnostic clinic administrators -  @type {Member[]} */
-  diagnosticClinicAdmins: Member[] = [];
+  /** Object array for holding the administrators -  @type {AdminMember[]} */
+  admins: AdminMember[] = [];
+  /** Object array for holding the staff members -  @type {StaffMember
+   * []} */
+  staff: StaffMember[] = [];
 
   /** Object array for holding all of FABI's samples -  @type {Object[]} */
   samples: Object[] = [];
@@ -96,14 +96,16 @@ export class AdminDashboardComponent implements OnInit {
   staffTableLoading: boolean = true;
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput: ElementRef;
+  @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput: ElementRef;
+  @core.ViewChild("confirmInput") confirmInput: core.ElementRef;
 
   /** The search item the user is looking for in the table -  @type {string} */
   public searchAdmins: string = "";
   /** The search item the user is looking for in the table -  @type {string} */
   public searchStaff: string = "";
+
+  currentUserPrivileges: any;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -113,10 +115,10 @@ export class AdminDashboardComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {core.ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {DomSanitizer} sanitizer
-   * @param {ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {core.ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * 
    * @memberof AdminDashboardComponent
    */
@@ -126,7 +128,7 @@ export class AdminDashboardComponent implements OnInit {
     private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
     private notificationLoggingService: NotificationLoggingService,
-    private resolver: ComponentFactoryResolver,
+    private resolver: core.ComponentFactoryResolver,
     private authService: AuthenticationService,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -139,8 +141,6 @@ export class AdminDashboardComponent implements OnInit {
   /**
    * This function is called when the page loads
    * 
-   * @description 1. Call getNumberOfFABISamples() | 2. Call getNumberOfFABIMembers()
-   * 
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,21 +148,12 @@ export class AdminDashboardComponent implements OnInit {
 
     window.addEventListener('scroll', this.scroll, true); //third parameter
 
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Loading" } });
-      this.getNumberOfFABIMembers();
-      this.getNumberOfFABISamples();
-      loadingRef.close();
-    });
-
-    //******** TO BE USED IN PRODUCTION: ********
-    // // Set current user logged in
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    // //Calling the neccessary functions as the page loads
-    // this.getNumberOfFABIMembers();
-    // this.getNumberOfFABISamples();
+    // Set current user logged in
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    //Calling the neccessary functions as the page loads
+    this.getNumberOfFABIMembers();
+    this.getNumberOfFABISamples();
+    this.currentUserPrivileges = this.authService.getCurrentUserValue;
   }
 
   ngOnDestroy() {
@@ -170,11 +161,11 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   scroll = (event: any): void => {
-    
+
     //Hide the notifications, profile, and help tabs if open
-    this.notificationsTab = false;
-    this.profileTab = false;
-    this.helpTab = false;
+    // this.notificationsTab = false;
+    // this.profileTab = false;
+    // this.helpTab = false;
 
   };
 
@@ -195,19 +186,34 @@ export class AdminDashboardComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getNumberOfFABIMembers() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
+    this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
       if (response.success == true) {
-        //Temporary array to hold the array of admins retuned from the API call
-        this.admins = response.data.qs.admins;
-        //Temporary array to hold the array of staff returned from the API call
-        this.staff = response.data.qs.staff;
+        var data = response.data.qs.staff;
+
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].userType == "SuperUser") {
+            var tempAdmin: AdminMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id, type: "Super User" };
+            this.admins.push(tempAdmin);
+          }
+          else if (data[i].userType == "ClinicAdmin") {
+            var tempAdmin: AdminMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id, type: "Clinic Admin" };
+            this.admins.push(tempAdmin);
+          }
+          else if (data[i].userType == "CultureAdmin") {
+            var tempAdmin: AdminMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id, type: "Culture Admin" };
+            this.admins.push(tempAdmin);
+          }
+          else if (data[i].userType == "Staff") {
+            var tempStaff: StaffMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id };
+            this.staff.push(tempStaff);
+          }
+        }
 
         //Deactivate loading table spinners
         this.adminTableLoading = false;
         this.staffTableLoading = false;
 
-
-        this.numberOfFABIMembers = this.admins.length + this.staff.length + this.databaseAdmins.length + this.cultureCurators.length + this.diagnosticClinicAdmins.length;
+        this.numberOfFABIMembers = this.admins.length + this.staff.length;
         this.userStats = this.numberOfFABIMembers.toString();
       }
       else {
@@ -247,20 +253,6 @@ export class AdminDashboardComponent implements OnInit {
       }
     });
   }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                         GET NUMBER OF COMPLETED FABI SAMPLES
-  /**
-   *  This function will use an API service to get all the completed (processed) samples of FABI. These 
-   *  samples will be read into the 'completedSamples' Object. The function does not receive any parameters but it will 
-   *  populate a 'heading' element on the HTML page with the percentage of completed samples belonging to FABI.
-   * 
-   * @memberof AdminDashboardComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getNumberOfCompletedFABISamples() { }
-
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 

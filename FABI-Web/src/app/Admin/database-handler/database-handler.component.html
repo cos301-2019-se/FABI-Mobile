@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Database Handler -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -58,6 +58,12 @@
             <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" routerLink="/reporting">Reporting</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
@@ -76,7 +82,7 @@
       <!-- / Menu Button -->
 
       <!-- Navbar Title -->
-      <h5>HOME</h5>
+      <h5>DATABASES</h5>
       <!-- / Navbar Title -->
 
       <!-- Notification Icons -->
@@ -147,11 +153,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let DBName of allDatabaseNames | filter : 'database' : searchDatabase">
+            <tr *ngFor="let DBName of allDatabaseNames | filter : 'database' : searchAdmins">
               <td>{{DBName}}</td>
               <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal"
-                  [id]="DBName" (click)="viewDatabase(DBName)">View</button>
+                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewDatabaseModal" [id]="DBName"
+                  (click)="viewDatabase(DBName)">View</button>
+                <button class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal1"
+                  [id]="DBName" (click)="dropDatabasePrompt1(DBName)">Drop</button>
               </td>
             </tr>
           </tbody>
@@ -204,25 +212,57 @@
         <div class="modal-body">
           <div class="form">
 
-            <!-- Database File Upload Section -->
-            <div class="form-row">
-              <!-- Database Name -->
-              <div class="form-group active2database-name">
-                <label class="databaseName" for="databaseNameInput">Database Name</label>
-                <input type='text' class="form-control form-control-sm" id='databaseNameInput'
-                  placeholder="Database name" #pDBname [(ngModel)]="portingForm.databaseName">
-              </div>
-              <!-- Database Name -->
+            <form id="" [formGroup]="portingForm" (submit)="submitCSV()" class="needs-validation" novalidate>
 
 
-              <!-- File Upload -->
-              <div class="form-group custom-file">
-                <label class="custom-file-label">Choose CSV file</label>
-                <input type="file" class="form-control custom-file-input" (change)="submitCSV(input)" #input>
+              <!-- Database File Upload Section -->
+              <div class="form-row">
+                <!-- Database Name -->
+                <div class="form-group active2database-name">
+                  <label class="databaseName" for="databaseNameInput"></label>
+                  <input formControlName="databaseName" type='text' id='databaseNameInput' placeholder="Database name"
+                    #pDBname required [ngClass]="{
+                  'is-invalid': portingForm.controls['databaseName'].invalid && (submitted || portingForm.controls['databaseName'].dirty), 
+                  'is-valid': portingForm.controls['databaseName'].valid}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="portingForm.controls['databaseName'].invalid && (submitted || portingForm.controls['databaseName'].dirty)">
+                    <div *ngFor="let validation of porting_validators.databaseName">
+                      <p *ngIf="portingForm.get('databaseName').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
+                </div>
+
+                <!-- Database Name -->
+
+
+                <!-- File Upload -->
+                <div class="form-group custom-file">
+                  <label class="custom-file-label">Choose CSV file</label>
+                  <input type="file" class="form-control custom-file-input" formControlName="file"
+                    (change)="submitCSV(input)" #input required [ngClass]="{
+                  'is-invalid': portingForm.controls['file'].invalid && (submitted || portingForm.controls['file'].dirty), 
+                  'is-valid': portingForm.controls['file'].valid}">
+                  <!-- Error Validation Feedback-->
+                  <div
+                    *ngIf="portingForm.controls['file'].invalid && (submitted || portingForm.controls['file'].dirty)">
+                    <div *ngFor="let validation of porting_validators.file">
+                      <p *ngIf="portingForm.get('file').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
+                    </div>
+                  </div>
+                  <!-- / Error Validation Feedback-->
+                </div>
+                <!-- /File Upload -->
               </div>
-              <!-- /File Upload -->
-            </div>
-            <!-- / Database File Upload Section -->
+              <!-- Submit -->
+              <button *ngIf="submitted == true && portingForm.invalid" type="submit"
+                class="btn btn-default-save">Upload</button>
+              <!-- / Submit -->
+              <!-- / Database File Upload Section -->
+            </form>
 
             <!-- Preview Uplaoded Database Section -->
             <div class="preview" *ngIf="preview">
@@ -231,8 +271,10 @@
               <div class="preview-actions">
                 <h6>Is this what the database should look like?</h6>
 
-                <button class="btn btn-default-save" (click)="submitDatabase()" data-toggle="modal" data-dismiss="modal">Yes</button>
-                <button class="btn btn-default-cancel" (click)="removePreview()" data-toggle="modal" data-dismiss="modal" >No</button>
+                <button class="btn btn-default-save" (click)="submitDatabase()" data-toggle="modal"
+                  data-dismiss="modal">Yes</button>
+                <button class="btn btn-default-cancel" (click)="removePreview()" data-toggle="modal"
+                  data-dismiss="modal">No</button>
               </div>
               <!-- Preview Actions -->
 
@@ -280,49 +322,87 @@
         <div class="modal-body">
           <div class="form">
 
-              <!-- Database Dropdown -->
-              <div class="form-group">
-                <select class="custom-select" *ngIf="allDatabaseNames" [(ngModel)]="selectedDatabase">
-                  <option selected>Choose Database</option>
-                  <option *ngFor="let database of allDatabaseNames" [value]="database">
-                    {{database}}
-                  </option>
-                </select>
-              </div>
-              <!-- Database Dropdown -->
+            <!-- Database Dropdown -->
+            <div class="form-group">
+              <select class="custom-select" *ngIf="allDatabaseNames" [(ngModel)]="selectedDatabase" required>
+                <option selected>Choose Database</option>
+                <option *ngFor="let database of allDatabaseNames" [value]="database">
+                  {{database}}
+                </option>
+              </select>
+            </div>
+            <!-- Database Dropdown -->
 
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal" data-dismiss="modal" >Download</button>
+          <button type="button" class="btn btn-default-save" (click)="getCSV()"
+            *ngIf="selectedDatabase != null && selectedDatabase != ''" data-toggle="modal"
+            data-dismiss="modal">Download</button>
         </div>
       </div>
     </div>
   </div>
   <!-- / Download Database Modal Section -->
 
-  <!-- Delete Staff Confirm Modal Section -->
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
-    aria-hidden="true">
+  <!-- Delete Database Confirm Modal 1 Section -->
+  <div class="modal fade" id="confirmDeleteModal1" tabindex="-1" role="dialog"
+    aria-labelledby="confirmDeleteModalTitle1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteModalTitle">Are you sure?</h5>
+          <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''">{{deleteData.title}}</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fas fa-times"></i></span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Everything related to this member of staff will be permantely deleted</p>
+          <h4 *ngIf="deleteData.message != null || deleteData.message != ''" class="text-danger">{{deleteData.message}}
+          </h4>
+          <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
           <div class="confirm-actions">
-            <button type="button" class="btn btn-default-confirm">Confirm</button>
-            <button type="button" class="btn btn-default-cancel">Cancel</button>
+            <button type="button" class="btn btn-default-cancel"
+              *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.cancel}}</button>
+            <button type="button" class="btn btn-default-delete" data-toggle="modal" data-target="#confirmDeleteModal2"
+              [id]="DBName" (click)="dropDatabasePrompt2()"
+              *ngIf="deleteData.confirm != null || deleteData.confirm != ''"
+              data-dismiss="modal">{{deleteData.confirm}}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- / Delete Staff Confirm Modal Section -->
+  <!-- / Delete Database Confirm Modal 1 Section -->
+
+  <!-- Delete Database Confirm Modal 2 Section -->
+  <div class="modal fade" id="confirmDeleteModal2" tabindex="-1" role="dialog"
+    aria-labelledby="confirmDeleteModalTitle2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 mat-dialog-title *ngIf="deleteData.title != null || deleteData.title != ''">{{deleteData.title}}</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
+          <h4 *ngIf="deleteData.message != null || deleteData.message != ''" class="p-3 mb-2 bg-danger text-white">
+            {{deleteData.message}}</h4>
+          <div class="confirm-actions">
+            <button type="button" class="btn btn-default-cancel"
+              *ngIf="deleteData.cancel != null || deleteData.cancel != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.cancel}}</button>
+            <button type="button" class="btn btn-default-delete" (click)="dropDatabase()"
+              *ngIf="deleteData.confirm != null || deleteData.confirm != ''" data-toggle="modal"
+              data-dismiss="modal">{{deleteData.confirm}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Delete Database Confirm Modal 2 Section -->
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
@@ -355,7 +435,7 @@
   <!-- / Help Section -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Database Handler  -->
 
 
 <!-- View Database Modal -->
@@ -371,22 +451,29 @@
       </div>
       <div class="modal-body">
 
-        <div class="input-group search-table">
+        <!-- <div class="input-group search-table">
           <div class="input-group-prepend ">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
             aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchView">
-        </div>
+        </div> -->
 
-        <table class="table table-hover" *ngIf="databaseData" >
+        <!-- Loading Spinner -->
+        <div class="notification-loading">
+          <div class="spinner-grow text-secondary loading-notifications" role="status" *ngIf="viewDatabaseLoading">
+          </div>
+        </div>
+        <!-- /Loading Spinner -->
+
+        <table class="table table-hover" *ngIf="databaseData">
           <thead>
             <tr>
               <th *ngFor="let field of fields">{{field.name}}</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of databaseData | filter : 'database-view' : searchView">
+            <tr *ngFor="let data of databaseData">
               <td *ngFor="let field of fields">{{data[field.name]}}</td>
             </tr>
           </tbody>
@@ -394,7 +481,8 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal" data-dismiss="modal">Download Database</button>
+        <button type="button" class="btn btn-default-save" (click)="getCSV()" data-toggle="modal"
+          data-dismiss="modal">Download Database</button>
       </div>
     </div>
   </div>

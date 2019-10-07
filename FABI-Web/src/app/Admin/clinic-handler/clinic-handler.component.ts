@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, August 13th 2019
+ * Last Modified: Monday, October 7th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,42 +14,63 @@
  */
 
 
-import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
-import { OnInit} from '@angular/core';
-import { Injectable } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { DomSanitizer } from '@angular/platform-browser';
-import { sharedStylesheetJitUrl } from '@angular/compiler';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import * as core from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import * as Interface from '../../_interfaces/interfaces';
 
-@Component({
+
+@core.Component({
   selector: 'app-clinic-handler',
   templateUrl: './clinic-handler.component.html',
   styleUrls: ['./clinic-handler.component.scss']
 })
-export class ClinicHandlerComponent implements OnInit { 
-  
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
-  profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
-  saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
-  confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
-  helpTab: boolean = false;
+export class ClinicHandlerComponent implements core.OnInit {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
+  helpTab: boolean = false;
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+  /** Object for defining the Add Staff form -  @type {FormGroup} */
+  addStaffForm: FormGroup;
+  /** To check if form has been submitted - @type {boolean} */
+  submitted: boolean = false;
+  /** To check if form has been submitted correctly - @type {boolean} */
+  valid: boolean = false;
+  /** Array of User Type objects for form dropdown - @type {UserType[]} */
+  userTypes: Interface.UserType[];
+  /** Selected user type on dropdown - @type {string} */
+  selectedUserType: string;
+  adminTypes: any[];
+  allDatabaseNames: any[];
+  adminUsers: any[];
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        FORM VALIDATORS
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  add_staff_validators = {
+    'user': [
+      { type: 'required', message: 'Please select a user' },
+    ]
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -59,25 +80,30 @@ export class ClinicHandlerComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {core.ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {DomSanitizer} sanitizer
-   * @param {ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {core.ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * 
    * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    public sanitizer: DomSanitizer, 
+    public sanitizer: DomSanitizer,
     private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private resolver: ComponentFactoryResolver, 
-    private authService: AuthenticationService, 
+    private diagnosticClinicService: DiagnosticClinicAPIService,
+    private notificationLoggingService: NotificationLoggingService,
+    private resolver: core.ComponentFactoryResolver,
+    private authService: AuthenticationService,
     private router: Router,
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    ) {}
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+  ) { 
+    this.addStaffForm = this.formBuilder.group({
+      user: ['', Validators.required],
+      database_privileges: new FormArray([])
+    });
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          NG ON INIT  
@@ -89,8 +115,51 @@ export class ClinicHandlerComponent implements OnInit {
    * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() { 
-    this.currentUser = this.authService.getCurrentSessionValue.user;    
+  ngOnInit() {
+    this.getDBNames();
+    this.userManagementService.getFABIAdmins().subscribe((response: any) => {
+
+      if (response.success == true && response.code == 200) {
+
+        this.adminUsers = response.data.qs.admins;
+        
+        //POPUP MESSAGE
+      }
+      else if (response.success == false) {
+        //POPUP MESSAGE
+      }
+    });
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+  }
+
+  getDBNames() {
+    this.userManagementService.getDatabaseNames().subscribe((response: any) => {
+      if (response.success == true && response.code == 200) {
+        this.allDatabaseNames = response.data.docs;
+
+        this.allDatabaseNames.map(() => {
+          const control = new FormControl(false);
+          (this.addStaffForm.controls.database_privileges as FormArray).push(control)
+        });
+
+      }
+      else if (response.success == false) {
+        //POPUP MESSAGE
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            LOGOUT 
+  /**
+   * This function will log the user out of the web application and clear the authentication data stored in the local storage
+   * 
+   * @memberof OrganizationDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate(['/login']);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +170,7 @@ export class ClinicHandlerComponent implements OnInit {
    * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
+  toggleNotificationsTab() {
     this.notificationsTab = !this.notificationsTab;
   }
 
@@ -151,6 +220,77 @@ export class ClinicHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   toggleHelpTab() {
     this.helpTab = !this.helpTab;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET STAFF FIELDS 
+  /**
+   * This function is used to clear the input fields in the modal
+   * 
+   * @memberof ClinicHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetStaffFields() {
+    this.helpTab = !this.helpTab;
+  }
+
+  addStaff() {
+    this.submitted = true;
+
+    if (this.addStaffForm.invalid) {
+      return;
+    }
+
+    this.valid = true;
+
+    
+
+    const LstaffName = this.addStaffForm.controls.user.value.fname;
+    const LstaffSurname = this.addStaffForm.controls.user.value.surname;
+    const LstaffEmail = this.addStaffForm.controls.user.value.email;
+    const LstaffPhone = 1234567890;
+    const LstaffPosition = "ClinicAdmin";
+
+    const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone };
+
+    var databasePrivileges: Interface.DatabasePrivilege[] = [];
+
+    this.addStaffForm.controls.database_privileges.value.forEach((value, i) => {
+
+      if (value == true) {
+        let dbPrivilege: Interface.DatabasePrivilege = {
+          name: this.allDatabaseNames[i],
+          privileges: ['retrieve']
+        };
+        databasePrivileges.push(dbPrivilege);
+      }
+
+    });
+
+    this.userManagementService.addStaffMember(staff_details, databasePrivileges).subscribe((response: any) => {
+
+      if (response.success == true && response.code == 200) {
+        //POPUP MESSAGE
+        let snackBarRef = this.snackBar.open("Clinic Admin Added", "Dismiss", {
+          duration: 6000
+        });
+      }
+      else if (response.success == false) {
+        //POPUP MESSAGE
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET ADD FIELDS 
+  /**
+   * This function will clear the inputs in the Add Staff Modal
+   * 
+   * @memberof StaffHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetAddFields() {
+    this.addStaffForm.reset();
   }
 
 }

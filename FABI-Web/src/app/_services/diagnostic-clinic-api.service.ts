@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 19th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,43 +13,48 @@
  * <<license>>
  */
 
+import * as http from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AuthenticationService } from "./authentication.service";
-import * as Interface from "../_interfaces/interfaces";
-
-import { POSTOrganization } from './user-management-api.service';
-
 import { config } from "../../environments/environment.prod";
+import * as Interface from "../_interfaces/interfaces";
+import { AuthenticationService } from "./authentication.service";
 
-//Globals variables used to hold the API call urls
-const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                          GLOBAL VARIABLES
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////// URL'S FOR API //////////////////////////////////////////////////////////////// 
 const getAllSamplesForMemberURL = `${config.diagnosticClinicURL}/retrieveSamplesForMember`;
-const getStaffMembersSamplesURL = `${config.diagnosticClinicURL}/getStaffMembersSamples`;
-const getOrganizationSamplesURL = `${config.diagnosticClinicURL}/retrieveAllOrgSamples`;
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
-    userID: string;                         //The user id of the user to be submitted
+  userID: string;                         //The user id of the user to be submitted
 }
 
 //Object for defining the samples received from the API call
 export interface Sample{
-    userID: string;                         //The id of the user who submitted the sample
-    orgName: string;                        //The organization that the user belongs to
-    status: string;                         //The status of the sample
-    referenceNumber: string;                //The reference number that was generated for the sample
-    data: Species;                          //The data within the sample which is the species
+  userID: string;                         //The id of the user who submitted the sample
+  orgName: string;                        //The organization that the user belongs to
+  status: string;                         //The status of the sample
+  referenceNumber: string;                //The reference number that was generated for the sample
+  data: Species;                          //The data within the sample which is the species
 }
 
 export interface Species{
-    species: string;                        //The species of a sample
+  species: string;                        //The species of a sample
 }
 
-@Injectable({
-    providedIn: 'root'
-})
 
+/**
+ * Used for handling all `diagnostic clinic` requests and functions
+ *
+ * @export
+ * @class DiagnosticClinicAPIService
+ */
+@Injectable({
+  providedIn: 'root'
+})
 export class DiagnosticClinicAPIService {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,41 +62,42 @@ export class DiagnosticClinicAPIService {
   /**
    * Creates an instance of DiagnosticClinicAPIService.
    * 
-   * @param {HttpClient} http For making calls to the API
+   * @param {http.HttpClient} http For making calls to the API
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @memberof DiagnosticClinicAPIService
    */
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   constructor(private http: HttpClient, private authService: AuthenticationService) { }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(private http: http.HttpClient, private authService: AuthenticationService) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        GET ALL SAMPLES 
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the samples that FABI is currently processing
+   *    This function sends a POST request to the API to retrieve a list containing all the samples that FABI is currently processing
    *
    * @returns API response @type any
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   getAllSamples(){
+  getAllSamples() {
     const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
     const method = "POST";
-    
+
     const options = {
-        headers: {
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      json: true
     };
 
-    return this.http.request('POST', getAllSamplesURL, options);
-   }
+    return this.http.request(method, getAllSamplesURL, options);
+  }
 
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                     GET SAMPLES FOR FABI STAFF 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
@@ -102,34 +108,34 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getSamplesForFABIStaff(id: string){
-    const data : POSTMember = {userID: id};
+  getSamplesForFABIStaff(id: string) {
+    const data: POSTMember = { userID: id };
 
     const options = {
-        headers: {
+      headers: {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
-        body: data,
-        json: true
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: data,
+      json: true
     };
 
     return this.http.request('POST', getAllSamplesForMemberURL, options);
-   }
+  }
 
-     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    RETREIVE ALL SAMPLES
   /**
    * Method that sends a request to the API to retreive all Samples
    *
-   * @param {Interface.Organisation} orgInfo
-   * @returns
+   * @returns API response @type any
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   retrieveAllOrganizationSamples() {
-
     let retrieveAllOrgSamples = `${config.diagnosticClinicURL}/retrieveAllOrgSamples`;
     let method = 'POST';
 
@@ -142,7 +148,8 @@ export class DiagnosticClinicAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -156,8 +163,7 @@ export class DiagnosticClinicAPIService {
   /**
    * Method that sends a request to the API to retreive all Samples for a member
    *
-   * @param {Interface.Organisation} orgInfo
-   * @returns
+   * @returns API response @type any
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +180,8 @@ export class DiagnosticClinicAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -183,25 +190,41 @@ export class DiagnosticClinicAPIService {
     return this.http.request<any>(method, retrieveAllMemberSamples, options);
   }
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        SUBMIT SAMPLE FORM
   /**
    * Method that send a request to the API to submit a specifc Sample Form
    *
-   * @param {Interface.Organisation} orgInfo
-   * @param {Interface.ClientFormData} formDetails
-   * @returns
+   * @param {Interface.SampleFormData} formDetails The details of the sample to be submitted
+   * @returns API response @type any
+   * 
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitSampleForm(formDetails: Interface.SampleFormData) {
-    let submitSampleURL =   `${config.diagnosticClinicURL}/submitSample`;
+
+    let tempDetails = {
+      "Location": "harding",
+      "Province": "Gauteng",
+      "Genus": "eucalyptus",
+      "Species": "radiata",
+      "SampleType": "root",
+      "Asym_Dis": "D",
+      "NurseryField": "F",
+      "Roots": "dry",
+      "Root-Collar": "Wilted, abitDry",
+      "Stem": "Girdled",
+      "GrowthTip": "Swelling",
+      "Needles-Leaves": "healthy"
+    }
+
+    let submitSampleURL = `${config.diagnosticClinicURL}/submitSample`;
     let method = 'POST';
 
     const postData = {
       "orgName": this.authService.getCurrentSessionValue.user.organisation,
       "userID": this.authService.getCurrentSessionValue.user.ID,
-      "data": formDetails
+      "data": tempDetails
     }
 
     const options = {
@@ -209,7 +232,8 @@ export class DiagnosticClinicAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
@@ -218,9 +242,19 @@ export class DiagnosticClinicAPIService {
     return this.http.request<any>(method, submitSampleURL, options);
   }
 
-  retrieveSampleDetails(sampleRefNum: string) {
 
-    let retreiveSampleDetailsURL =   `${config.diagnosticClinicURL}/retrieveSample`;
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        RETRIEVE SAMPLE DETAILS
+  /**
+   * This function is used to fetch a specific sample form
+   *
+   * @param {string} sampleRefNum The reference number of the sample to be retrieved
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveSampleDetails(sampleRefNum: string) {
+    let retreiveSampleDetailsURL = `${config.diagnosticClinicURL}/retrieveSample`;
     let method = 'POST';
 
     const postData = {
@@ -232,14 +266,49 @@ export class DiagnosticClinicAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
       body: postData,
       json: true
     };
 
     return this.http.request<any>(method, retreiveSampleDetailsURL, options);
-
   }
-  
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        UPDATE SAMPLE STATUS
+  /**
+   * Method used to update the status of the sample
+   *
+   * @param {*} sample
+   * @param {string} status
+   * @returns
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateSamplesStatus(sample: any, status: string) {
+
+    let updateSampleStatusURL = `${config.diagnosticClinicURL}/updateSampleStatus`;
+    let method = 'POST';
+
+    const postData = {
+      "refNum": sample.referenceNumber,
+      "status": status
+    }
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, updateSampleStatusURL, options);
+  }
 }

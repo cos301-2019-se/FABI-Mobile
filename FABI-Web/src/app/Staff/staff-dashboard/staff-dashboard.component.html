@@ -8,17 +8,15 @@
       <p (click)="toggleProfileTab()">Click to view profile</p>
       <br />
       <div class="nav-links">
-        <a class="nav-link active" href="#"><i class="fas fa-home"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-vial"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-vials"></i></a>
-        <a class="nav-link" href="#"><i class="fas fa-database"></i></a>
-        <a class="nav-link" href="#"> <i class="fas fa-plus-circle"></i></a>
+        <a class="nav-link active" routerLink="/staff-dashboard"><i class="fas fa-home"></i></a>
+        <a class="nav-link" routerLink="/staff-submit-sample"><i class="fas fa-vial"></i></a>
+        <a class="nav-link" routerLink="/cmw-menu"><i class="fas fa-vials"></i></a>
+        <a class="nav-link" routerLink="/staff-view-databases"><i class="fas fa-database"></i></a>
       </div>
     </div>
     <div class="bottom-nav-items">
       <a class="nav-link" (click)="toggleHelpTab()"><i class="fas fa-question"></i></a>
-      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i></a>
     </div>
   </div>
   <!-- / Sidenav -->
@@ -30,23 +28,23 @@
         <h1 class="brand">STAFF DASHBOARD</h1>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <!-- Navbar Items -->
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/staff-dashboard">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Samples</a>
+            <a class="nav-link" routerLink="/staff-submit-sample">Submit Sample</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">CMW Culture Collection</a>
+            <a class="nav-link" routerLink="/cmw-menu">CMW Culture Collection</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Databases</a>
+            <a class="nav-link" routerLink="/staff-view-databases">Databases</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" (click)="toggleHelpTab()">Help</a>
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" (click)="logout()">Logout</a>
           </li>
           <!-- / Navbar Items -->
         </ul>
@@ -99,18 +97,7 @@
         <div class="menu-row">
 
           <!-- Menu Item -->
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fas fa-search"></i>
-            </div>
-            <div class="menu-heading">
-              <h6>View Samples</h6>
-            </div>
-          </div>
-          <!-- / Menu Item -->
-
-          <!-- Menu Item -->
-          <div class="menu-item">
+          <div class="menu-item" routerLink="/staff-submit-sample">
             <div class="menu-icon">
               <i class="fas fa-vial"></i>
             </div>
@@ -127,23 +114,12 @@
         <div class="menu-row">
 
           <!-- Menu Item -->
-          <div class="menu-item">
+          <div class="menu-item" routerLink="/cmw-menu">
             <div class="menu-icon">
               <i class="fas fa-vials"></i>
             </div>
             <div class="menu-heading">
               <h6>CMW Culture Collection</h6>
-            </div>
-          </div>
-          <!-- / Menu Item -->
-
-          <!-- Menu Item -->
-          <div class="menu-item">
-            <div class="menu-icon">
-              <i class="fas fa-plus-circle"></i>
-            </div>
-            <div class="menu-heading">
-              <h6>Data Gatherer</h6>
             </div>
           </div>
           <!-- / Menu Item -->
@@ -162,49 +138,14 @@
 
       <!-- Samples Table -->
       <div class="dashboard-table table-responsive">
-        <h5> Samples </h5>
+        <h5> Sample Table </h5>
 
-        <!-- Extra Table Information -->
-        <div class="table-information" *ngIf="!submittedSamples && !sampleTableLoading">
-          <h6>You currently have no samples</h6>
-          <i class="fas fa-plus-circle" routerLink="staff-submit-sample"></i>
-        </div>
-        <!-- / Extra Table Information -->
+        <app-staff-view-samples></app-staff-view-samples>
 
-        <!-- Search Table -->
-        <div class="input-group search-table" *ngIf="submittedSamples && !sampleTableLoading">
-          <div class="input-group-prepend ">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-          </div>
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1" id="search" title="Search" [(ngModel)]="searchSample">
-        </div>
-        <!-- / Search Table -->
-
-        <!-- Loading Spinner -->
-        <div class="spinner-grow text-secondary loading" role="status" *ngIf="sampleTableLoading">
-        </div>
-        <!-- /Loading Spinner -->
-
-        <table class="table table-hover" id="info" *ngIf="submittedSamples && !sampleTableLoading">
-          <thead>
-            <tr>
-              <th scope="col">Reference Number</th>
-              <th scope="col">Processing Stage</th>
-              <th scope="col">Date Submitted</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="submittedSamples">
-            <tr ngFor="let sample of samples | filter : 'staff-samples' : searchSample">
-              <td>{{sample.referenceNumber}}</td>
-              <td>{{sample.status}}</td>
-              <td>{{sample.dateSubmitted}}</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
-      <!-- / Samples Table -->
-      
+      <!-- / Sample Table -->
+
+
     </div>
     <!-- / Staff Tables -->
   </div>
@@ -238,12 +179,6 @@
     <app-staff-help></app-staff-help>
 
   </div>
-
-  <!-- Up Icon -->
-  <!-- <div id="scroll-to-top">
-    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
-  </div> -->
-  <!-- / Up Icon -->
 
 </div>
 <!-- / Dashboard -->

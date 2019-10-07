@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,22 +14,21 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import * as core from '@angular/core';
 //Include Material Components
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
-import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-member-view-samples',
   templateUrl: './member-view-samples.component.html',
   styleUrls: ['./member-view-samples.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class MemberViewSamplesComponent implements OnInit {
+export class MemberViewSamplesComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -38,13 +37,10 @@ export class MemberViewSamplesComponent implements OnInit {
   sampleFields: any[] = [];
   samples: any[];
   selectedSampleData: any
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
-
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  private toggle_status: boolean = false;
   /** The search item the user is looking for in the table -  @type {string} */
   public searchSample: string = "";
-
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
   sampleTableLoading: boolean = true;
 
@@ -52,7 +48,7 @@ export class MemberViewSamplesComponent implements OnInit {
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of MemberViewSamplesComponent.
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {MatDialog} dialog
    * @param {Router} router
@@ -61,28 +57,13 @@ export class MemberViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private router: Router
-    ) { }
+  ) { }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  TOGGLE NOTIFICATIONS TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof MemberViewSamplesComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
-  }
 
-  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG ON INIT  
   /**
@@ -96,6 +77,22 @@ export class MemberViewSamplesComponent implements OnInit {
   ngOnInit() {
     //Calling the neccessary functions as the page loads
     this.viewSamples();
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  TOGGLE NOTIFICATIONS TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof MemberViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab() {
+    this.toggle_status = !this.toggle_status;
   }
 
 
@@ -122,7 +119,6 @@ export class MemberViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewSamples() {
-
     this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
 
       if (response.success == true && response.code == 200) {
@@ -131,23 +127,27 @@ export class MemberViewSamplesComponent implements OnInit {
 
         //Deactivate loading table spinners
         this.sampleTableLoading = false;
-        
+
       } else if (response.success == false) {
+        this.sampleTableLoading = false;
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.viewSamples();
-          }
-        })
       }
     });
   }
 
-  selectSample(sample: any) {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SELECT SAMPLE 
+  /**
+   * Called when a user selects a sample and sets the selected sample as well as it's data fields
+   *
+   * @param {*} sample
+   * @memberof MemberViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  selectSample(sample: any) {
     this.selectedSampleData = sample.data;
-        
+
     Object.keys(this.selectedSampleData).forEach((column) => {
 
       let obj = {
@@ -156,9 +156,17 @@ export class MemberViewSamplesComponent implements OnInit {
       this.sampleFields.push(obj);
 
     });
-        
+
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET SAMPLE FIELDS 
+  /**
+   * This function will clear the modal contains the selected sample's details
+   * 
+   * @memberof MemberViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetSampleFields() {
     this.sampleFields = [];
   }

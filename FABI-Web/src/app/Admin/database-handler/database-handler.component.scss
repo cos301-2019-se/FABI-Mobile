@@ -2,9 +2,8 @@
    DATABASE HANDLER
    ========================================================================== */
 
-
-
-/* Database Tables Subsection */
+/* Table Style
+   ========================================================================== */
 .database-tables {
   display: flex;
   flex-direction: column;
@@ -28,14 +27,14 @@
 
   background-color: #fff;
 
-  border-left: 5px solid #72B555;
+  border-left: 5px solid #6B746F;
 
   box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
 }
 
 .database-tables h5 {
   font-family: "Montserrat", sans-serif;
-  color: #6aa84f;
+  color: #6B746F;
 }
 
 .table {
@@ -53,8 +52,8 @@
 
 
 
-/* Staff Handler View Staff Modal Section
-     ========================================================================== */
+/* Modal Style
+   ========================================================================== */
 
 .modal-header {
   background-color: #6aa84f;
@@ -70,6 +69,7 @@
 .modal-body {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 modal {
@@ -78,10 +78,12 @@ modal {
 
 #addModal .modal-dialog {
   max-width: 85%;
+  min-width: 30%;
+  width: auto;
 }
 
 #addModal .modal-content {
-  min-height: 90vh;
+  min-height: 25vh;
   height: auto;
 }
 
@@ -99,7 +101,7 @@ modal {
   margin-top: 25px;
 }
 
-.preview-actions h6{
+.preview-actions h6 {
   color: #72b555;
   font-family: "Montserrat", sans-serif;
 }
@@ -111,8 +113,6 @@ modal {
 .btn.btn-default-cancel {
   width: 30%;
 }
-
-
 
 #confirmDeleteModal .modal-body {
   display: flex;

@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Organization Dashboard -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -11,7 +11,6 @@
         <a class="nav-link active" routerLink="/organization-dashboard"><i class="fas fa-home"></i></a>
         <a class="nav-link" routerLink="/member-handler"><i class="fas fa-user-friends"></i></a>
         <a class="nav-link" routerLink="/submit-sample"><i class="fas fa-vial"></i></a>
-        <a class="nav-link" routerLink="/organization-view-samples"><i class="fas fa-search"></i></a>
       </div>
     </div>
     <div class="bottom-nav-items">
@@ -32,7 +31,7 @@
             <a class="nav-link" routerLink="/organization-dashboard">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/organization-view-samples">Samples</a>
+            <a class="nav-link" routerLink="/submit-sample">Submit Sample</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/member-handler">Member Handler</a>
@@ -70,7 +69,7 @@
   </div>
   <!-- / Navbar-->
 
-  <!-- Dashboard Content -->
+  <!-- Organization Dashboard Content -->
   <div class="dashboard-content">
     <!-- Primary Content -->
     <div class="primary-content">
@@ -98,7 +97,6 @@
             </div>
             <div class="statistic-box-info">
               <p id="organization_users_stats">Number of Members: {{memberStats}}</p>
-              <p id="organization_completed_samples_stats">Completed Samples: 75%</p>
               <p id="organization_samples_stats">Number of Samples: {{sampleStats}}</p>
             </div>
           </div>
@@ -113,19 +111,6 @@
             </div>
             <div class="statistic-box-info">
               <p id="organization_users_stats">{{memberStats}}</p>
-            </div>
-          </div>
-        </div>
-        <!-- Statistic Box -->
-
-        <!-- Statistic Box -->
-        <div class="statistic-box">
-          <div class="statistic-box-content">
-            <div class="statistic-box-heading">
-              <h5>Completed Samples</h5>
-            </div>
-            <div class="statistic-box-info">
-              <p id="organization_completed_samples_stats">75%</p>
             </div>
           </div>
         </div>
@@ -154,7 +139,7 @@
         <div class="menu-row">
 
           <!-- Menu Item -->
-          <div class="menu-item">
+          <div class="menu-item" routerLink="/member-handler">
             <div class="menu-icon">
               <i class="fas fa-user-friends"></i>
             </div>
@@ -171,7 +156,7 @@
         <div class="menu-row">
 
           <!-- Menu Item -->
-          <div class="menu-item">
+          <div class="menu-item" routerLink="/submit-sample">
             <div class="menu-icon">
               <i class="fas fa-vial"></i>
             </div>
@@ -219,7 +204,7 @@
         </div>
         <!-- /Loading Spinner -->
 
-        <table class="table table-hover"  *ngIf="organizationMembers && !memberTableLoading">
+        <table class="table table-hover" *ngIf="organizationMembers && !memberTableLoading">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -241,7 +226,7 @@
       <!-- Sample Table -->
       <div class="member-table table-responsive">
         <h5> Sample Table </h5>
- 
+
         <app-organization-view-samples></app-organization-view-samples>
 
       </div>
@@ -251,7 +236,7 @@
     </div>
     <!-- / Member Tables -->
   </div>
-  <!-- / Dashboard Content -->
+  <!-- / Organization Dashboard Content -->
 
   <!-- Notification Section -->
   <div id="notifications" *ngIf="notificationsTab">
@@ -284,4 +269,4 @@
   <!-- / Help Section -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Organization Dashboard -->

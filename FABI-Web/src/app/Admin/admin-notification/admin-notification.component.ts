@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,32 +14,24 @@
  */
 
 
-import {
-  Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef
-} from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { DomSanitizer } from '@angular/platform-browser';
-import { sharedStylesheetJitUrl } from '@angular/compiler';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import * as core from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { DatabaseManagementLogs, NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 
-import * as Interface from '../../_interfaces/interfaces';
 
-@Component({
+
+@core.Component({
   selector: 'app-admin-notification',
   templateUrl: './admin-notification.component.html',
   styleUrls: ['./admin-notification.component.scss']
 })
-export class AdminNotificationComponent implements OnInit {
+export class AdminNotificationComponent implements core.OnInit {
 
   /** Object array for holding all of the logs -  @type {any[]} */
   allNotifications: any[] = [];
@@ -81,10 +73,10 @@ export class AdminNotificationComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {core.ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {DomSanitizer} sanitizer
-   * @param {ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {core.ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * 
    * @memberof AdminDashboardComponent
    */
@@ -94,25 +86,29 @@ export class AdminNotificationComponent implements OnInit {
     private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
     private notificationLoggingService: NotificationLoggingService,
-    private resolver: ComponentFactoryResolver,
+    private resolver: core.ComponentFactoryResolver,
     private authService: AuthenticationService,
     private router: Router,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar
   ) { }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.loadNotifications();
-    });
 
     this.getAllStaff();
 
-    //******** TO BE USED IN PRODUCTION: ********
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    // this.loadNotifications();
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    this.loadNotifications();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +120,7 @@ export class AdminNotificationComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaff() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
+    this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
       if (response.success == true) {
         //Temporary array to hold the array of admins retuned from the API call
         var data = response.data.qs.admins;

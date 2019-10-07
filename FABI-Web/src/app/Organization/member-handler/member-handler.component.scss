@@ -1,40 +1,39 @@
 /* ==========================================================================
-   MEMBER HANDLER
+   MEMBER HANDLER 
    ========================================================================== */
 
-
-/* Member Tables Subsection */
-.member-tables {  
-  display: flex; 
+/* Table Style
+   ========================================================================== */
+.member-tables {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
   width: 100%;
-  height: auto; 
-  
+  height: auto;
+
   padding: 15px;
   margin-top: 15px;
 }
 
-.member-table {  
+.member-table {
   width: 95%;
   height: auto;
-  
+
   padding: 15px;
   margin: 15px 0 15px 0;
-  
+
   background-color: #fff;
-  
-  border-left: 5px solid #72B555;
-  
+
+  border-left: 5px solid #6B746F;
+
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
-
 .member-tables h5 {
   font-family: "Montserrat", sans-serif;
-  color: #6AA84F;
+  color: #6B746F;
 }
 
 .table {
@@ -47,13 +46,12 @@
 }
 
 .search-table {
-   width: 95%;
+  width: 95%;
 }
 
 
-/* Staff Handler View Staff Modal Section
+/* Modal Style
    ========================================================================== */
-
 .modal-header {
   background-color: #6aa84f;
 
@@ -86,4 +84,3 @@
   display: flex;
   justify-content: center;
 }
-

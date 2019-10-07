@@ -1,0 +1,726 @@
+x
+1;Humicola
+2;P. ancanthophoron
+3;S. sapinea
+4;A. tumefaciens
+5;FSP
+6;Cylindrocladium
+7; B cinerea
+8;Helminthosporum
+9; b. cinerea
+10;B. cinerea
+11;F. sub
+12;F. oxy. F. sub
+13;Cryphonectra
+14;Phytophthora
+15;F. oxy
+16;S.sapniea
+17;Pythium
+18; Phytophthora spp.
+19;Botryitis
+20; Cylindrocladium
+21;penicillium
+22;insect damage
+23;Penicillium
+24; Alternaria
+25; Pestalotiopsis
+26;aphids
+27;Phaeosptoria
+28;Collectrichum
+29;Endothia gyrosa
+30;E. gyrosa
+31; B. dothidea
+32; Conithyrium
+33;P. cinnamomi
+34;Fusarium spp. S. sapinea
+35; S. sapinea
+36; F sub
+37; F. semitectium
+38; F. oxy
+39;phytophthora
+40;sapro[hytes
+41;Mycosphaerella
+42;Botrysphearia
+43;pachpasa
+44;Pythium irregulare
+45; P arrhenomanes
+46;Collybia
+47;Sporothrix eucalypti
+48;saprophytes
+49; botryitis
+50;Spharopsis
+51; fusarium
+52; phytophthora
+53; pythium
+54;Rhizinia undulata
+55;Diplodia
+56;hylastes angustatus
+57;Coniothyrium
+58;f. oxy
+59;Fusarium spp.
+60;Acremonium
+61;M. molleriana
+62; phyophthora
+63;Cerambycidae
+64; cylindrocladium
+65;verticilium
+66; acremonium
+67;p. irregularae
+68;P. irregulare
+69; P. rostratum
+70; P. perplexum
+71; P. echnulatum
+72;Dothiostoma
+73; saprophytes
+74;s. sapinea
+75;Hainesia lythuri
+76;Phaeoseptoria
+77;Botryospheria dothidea
+78;diplodia
+79; FSP
+80;P. eucalypti
+81;P. splendens
+82; C. cubensis
+83;Pestaliopsis
+84; Fusarium sp.
+85;P. eucalyptii
+86;B. dothidea
+87;Orthotomicus erosus
+88;Macrophomopsis
+89;Aureobasidium pullulans
+90; trichoderma sp.
+91; Cladosporium sp.
+92; Alternaria sp.
+93; phoma sp.
+94;Harknessia
+95;L. theobromae
+96;Marchantia sp.
+97;saprophytic
+98;Fusarium sp. Trichoderma sp.
+99; Pestalopsis sp.
+100; Pythium sp.
+101;C. gleosporiodes
+102; verirticillium sp.
+103; Hainesia lythuri
+104;Saprophytes
+105;Cylindrocladium 
+106;Pestalotiopsis sp.
+107; graphium sp.
+108;penicillium sp.
+109; Epicoccum
+110;ophiostoma querci
+111; Penicillium sp.
+112; Pestaltiopsis sp.
+113; Sphaeroteca sp.
+114;Alternaria and botryitis
+115;oomycete
+116;Pseudomonas
+117;veriticillum
+118;Armilaria
+119;Pythium or phytophthora
+120;Cylindrcladium sp.
+121;F. moniliforme
+122;botrytis sp.
+123;oomycetes
+124;Botrytis sp.
+125;Fusarium sp.
+126;pythium sp.
+127;cylindrcladium
+128;mycosphaerella
+129;Phytophthora sp.
+130;Armillaria
+131;Bostryosphearia
+132;B dothidea
+133;fusarium sp. and S. sapinea
+134;Nuemacyclus minor
+135;Aulographina eucalyptii
+136; trichoderma
+137;xanthomonas campestris pv juglandis
+138;thrips
+139;Powdery mildew
+140;Rhizinia
+141;Cylindrocladium sp.
+142;F. oxy & F. sub
+143; Botrytis sp
+144; Alternara sp.
+145;too dry
+146;Mycosphaerella 
+147;Pestalotiopsis
+148; botrytis 
+149;Bot.
+150;Phaeseptoria eucalyptii
+151;Phytophthora & Pythium spp.
+152;white grub
+153; Botrytis
+154; Cladiosporium
+155; Fudsarium sp.
+156;Pythium sp.
+157;Kirramyces epicoccoides
+158;Botryo
+159;Colletotrichium gleosporoides
+160;P. ecalyptii
+161;C. gleosporoides
+162;Myccosphaerella sp.
+163;Pythium & Phytophthora sp.
+164;insects
+165;Alternaria
+166;Epicoccum
+167;Chaetomium
+168; Cytospora sp.
+169;environmental factors
+170;Xanthomonas sp.
+171;Pestaltiopsis & Botrytis
+172;inconclusive
+173;Sphaeriopsis
+174;Phoma sp.
+175;Xanthomonas
+176;Bot. sp. & cylindrocladium sp.
+177;Coniothyrium sp.
+178;bacterium
+179;nutrient deficiency
+180;Rhizina undulata
+181;physiological
+182;fusarium
+183;cylindrocladium
+184;-0
+185;Fusarium
+186; sphaeriopsis
+187;B. dohtidea
+188;Phytium sp.
+189; Cylindrocladium sp. & Bot sp.
+190;Psuedophaeolus
+191; Bot
+192;Armillaria spp.
+193;Fusarium solani
+194;Fusarium & nematodes
+195;Alternaria sp. & phomopsis sp.
+196;Coniothyrium zuluense
+197;Armillaria sp.
+198;C. albifundus
+199;Mycospaerella
+200;pestalotiopsis
+201;Pestalotiopsis & Epicoccum
+202;bacteria
+203;powdery mildew
+204;Bot. sp.
+205; mycosphaerella and cytospora
+206;fusarium sp. and bot. sp.
+207;cytospora
+208;bot and fusarium sp.
+209;F. oxysporum and F. subglutinans
+210;saprophtyes
+211;Phomas sp.
+212;fusarium spp.
+213;bacterial sp.
+214;F. oxysporum 
+215;non-sporulating fungus
+216;F. oxysporum and FSP
+217;root nematodes and fusarium sp.
+218;Bot. sp. and phytophthora sp.
+219;Phaesepotoria eucalyptii
+220;sporothrix eucalypti
+221;cylindrocladium sp. and botrytis cinerea
+222;F. oxysporum and F. subglutinana
+223;cylindrocladium sp. and botrytis 
+224;F. poliferum
+225;Mycosphaerella sp.
+226;Mycospaerella sp. and P. eucalyptii
+227;Pisolithus tinctorius
+228;sooty mould
+229;cyprus aphid
+230;F. subglutinans
+231;Botrytis
+232; Cladosporium
+233; alternaria
+234;F. oxysporum
+235;bactrerial blight
+236;Phtyophtora sp.
+237;bacterial blight
+238;Geotrichum sp.
+239;catepillar
+240;Cryptosporiopsis and Acremonium
+241;Bacterial wilt 
+242;Cytospora
+243;bot and fusarium sp
+244;Pantoea sp. 
+245;Pantoea sp. and P. eucalyptii
+246;F. suibglutinans
+247;Alternaria sp.
+248; Restolotiopsis sp.
+249; Botrysphaeria sp.
+250;Kiramyces destructans
+251;Bot. 
+252;Bacteria
+253; Nectria sp.
+254;Botryosphearia
+255; C. albifundus
+256;Phytophtora
+257;S. eucalyptii
+258;C. gloeosporoides
+259;Mycospharella
+260;F. cir
+261;Botryotis
+262; Glomerella sp.
+263;red spider mite
+264;P. nucotianae
+265;Astylus
+266;termites
+267;Fusarium sp
+268;Pantoea
+269;Mycosphearella sp.
+270;Collectotrichium sp.
+271; Drechsler sp.
+272;phytopthora
+273; pytthium
+274; pestaltiopsis
+275;Trichoderma spp.
+276;Pantoea sp.
+277; Phytophthora sp.
+278; Pythium irregulare
+279; Phytophthora
+280; Botryosphearia sp.
+281; Phaeophleopspora sp.
+282; Pessoides
+283; F. oxysporum var. redolens
+284;Pantoea sp
+285; Phaeophleopsis sp.
+286; Mycosphaerella sp.
+287;Botryosphaeria sp.
+288;Pantoea sp. and Mycosphaerella sp.
+289;black pine aphids
+290;S sapinea
+291;Bostryospheria sp.
+292;insects and S. sapinea
+293;Pantoea sp. and Botryosphaeria
+294;Fuarium sp.
+295;Fusaruim and Sphaeropsis
+296; Cylindrocladium sp.
+297;colletotrichium
+298; pyhtium
+299; pythium sp.
+300; phytophthora sp.
+301; Collectrichium
+302;Imbrasia cytherea
+303; Pestalioopsis
+304; Phomopsis
+305; Bot.
+306;Mucor sp.
+307;Phytophthora & Pythium
+308; Pestalotia
+309; Hainedssia
+310; Mycosphaerella
+311; Hainessia
+312; Pestalotriopsis
+313; penicilium
+314; Aspergillus
+315;Basidiomycetes
+316;Bot. & Ceratocystis
+317;Bot
+318; Pythium
+319;Cylindrocladium pauciramosum
+320; Collectorichium
+321; Mycospaerella
+322; Alternarisa
+323; Sphaeriopsis
+324;blue stain & white rot
+325;P. anananatis
+326;P. ananatis
+327;Mtcosphaerella sp.
+328; Pantoea sp.
+329; Phaeo[hleospora sp.
+330;fungi in soil
+331;negative
+332;Ceraricystis sp.
+333;S. saoinea
+334;F. oxy & Fusarium sp.
+335;dead
+336;Oidium sp.
+337;brown rot
+338; Phytophthors
+339; bot.
+340;Bot sp.
+341; penicillium
+342;F. graminiarium
+343;Basidiomycete
+344; F. sub
+345;F.oxy
+346;F.cir
+347;Sphaeropsis sapinea
+348;Ralstonia solacearum
+349;Collectrichium sp.
+350;Pectobacterium
+351;Bot. sp. and Mycospearella sp.
+352;Phytophthora sp. and Chalara sp.
+353;Chalara sp.
+354;Bot spp.
+355;Cylindocladium
+356;Bot. sp
+357; Cylindrocladium sp
+358; Pyhtium sp.
+359; Phytophthora sp. asnd fusarium sp.
+360;S. pineae
+361;coelomycetes
+362;Ralstonia solanacearum
+363;Botrytis cinerea
+364;F. cir and sphaeriopsis
+365;Powedry mildew
+366;Pythium and phytophthora sp.
+367;Bot. and phytophthora sp.
+368;fusarium and trichoderma
+369;sphaeriopsis anf fusarium
+370;Trichoderma
+371;Phytphthora sp.
+372;Pachypasa capensis
+373;Sirex noctilio
+374;Phytopthora sp.
+375;Phaephleospora
+376;Phyopthora
+377;Collectotrichium sp. diplodia
+378;Phytophtora and Botryosphearia
+379;C. eucalyptii
+380; Boytryosphearia sp.
+381;Botryosphearia sp.
+382; Pythiun sp.
+383;Mycospheraella
+384;Fusarium sp[.
+385;Pythium and Cylindrocladfium
+386;pythium and cylidrocladium sp.
+387;Pythium and Cylindrocladium
+388;Phytophtora sp.
+389; Botryotis sp.
+390; Botryospheareia sp.
+391; Colectrichium sp.
+392;Phaeophleospora sp.
+393;Gonipterus beetles
+394;D. pinea
+395;Phaeocercospoora
+396;Ralstonia
+397;N/A
+398;secondary fungi and Bot.
+399;inoclusive
+400;inconlusive
+401;botrytis
+402;Mycosphaeralla
+403;Diplodea pinea
+404;Ralstonia sp.
+405;C. albifundus and P. nicitianeae
+406;Chrysalis of butterfly
+407;Dothistroma septospora
+408;leptographium sp.
+409;Phaeophleospora
+410;Diplodea sepinae
+411; Botryspheria spp.
+412;Diplodia pinea
+413; F. cir
+414;saprophyte
+415;Cylindrocladium spp.
+416;Botrysphaeria sp.
+417;cylindrocladium sp.
+418;diplodea pinea
+419;Cytospora sp.
+420; Botrysphearia sp.
+421; Phaeophleospora sp.
+422;severe J rooting
+423;Imbrosia wahlberi
+424;Penicilium
+425;Colletogloeopsis zuluense
+426; Pissodes nemorensis
+427;botryspheara sp.
+428;diplodea sp.
+429;Botrysphearia spp
+430;Botryosphaeria spp.
+431; Diplodea pinea
+432;Botryospheria sp.
+433; f. cir
+434; Diplodia
+435; F.oxy
+436; Botryosphaeria
+437;f. cir
+438;Botrysphaeria
+439;Secondary saprophytes
+440;Fusarium sp. screening
+441;Disease screening
+442;NO DISEASE REPORT
+443;Pythium sp. and Phytophthora sp. screening
+444;Larvae analyses
+445;Fusarium screening
+446;Fusarium sp. and Phytophthora sp. screening
+447; Pythium sp. and Phytophthora sp. screening
+448;Screening for Bacterial blight
+449;Ceraocystis sp. screening
+450; Phytophthora sp. and Fusarium sp. screening
+451;Screening for bacterial blight
+452;Fusariunm sp. screening
+453;Leptocybe sp. screening
+454;Samples to dry for analyses
+455;Fusarium circinarum
+456;Secondary Fungi/Bacteria
+457;Fusarium circinatum
+458;Fusarium circintaum
+459;Fusarium circiantum
+460;Secondary bacteria/Fungi
+461;Botryospearia spp.
+462; Diplodia pinea
+463;Pythium spp.
+464;Fusarium circinatum detected on all samples
+465;Fusarium oxysporum
+466; Phytopthora sp.
+467;1/5 (1) Fusarium circinatum
+468;3/5 (1
+469;2
+470;5) Fusarium circinatum
+471;4/5 samples positive forFusarium circinatum
+472;no pathogens
+473;Phanerocheate crassa
+474;8/10 positive for Fusarium circiantum
+475;Teratosphearia sp.(Mycosphaeria)
+476;No desired growth on PDA/FSM
+477;No growth tips
+478;Petalitiopsis
+479;Cytospora sp. Botryosphearia sp.
+480;Possible Neofusicoccum
+481;Teratosphearia sp. Kirramyces sp.
+482;Neofusicoccum (Botryosphaeria)
+483;Diplodia pinea (tip)
+484; Fusarium circinatum (root)
+485;9 isolates of Fusarium circinatum
+486;10 isolates of Fusarium circinatum
+487;Fusarium circinatum isolated from two seedlings
+488; cylindrocladium sp.
+489;Fusarium circinatum and Diplodia pinea
+490;10 Fusarium circinatum detected
+491;9 Fusarium circinatum detected
+492;3 Fusarium cicinatum and 1 Diplodia pinea 
+493; Fusarium circinatum
+494;No pathogens
+495;Bacterial contamination
+496; Fusarium circinatm
+497; Bacteria
+498; 
+499; Trichoderma
+500;D.pinea
+501; Penicilium
+502; Botryosphaeria sp.
+503;Cylindorcladium sp.
+504; Fusarium oxysporum
+505;Neofussicoccum spp.
+506;Teratosphaeria sp.
+507;Calonectria sp.
+508;Quambilaria sp. leaf blight
+509;Diplodia sp.
+510; Lasiodiplodia
+511;Phtyophthora sp.
+512;Leptocybe invasa
+513; Phytophtora sp.
+514;Fusarium ciricnatum
+515;Tetratosphaeria
+516;No growth
+517;Secondary Bacteria/Fungi
+518;Pestalatiopsis
+519;Trichoderma and other secondary Fungi
+520;Secondary/general fungi & bacteria
+521;No plate received
+522;TL0196 RC
+523; TL0202 S
+524;TL0203 S Fusarium circinatum
+525;Holocryphia eucalypti
+526;Botryosphaeria spp
+527;General bacteria and fungi
+528; Colletotrichum
+529;No Fusarium circinatum identified
+530; Diplodia spp
+531;Fusarium circinatum not identified
+532;Identified as Fusarium circinatum
+533;General fungi and bacteria
+534; 2 cultures positive for Fusarium circinatum
+535;Cultures tested negative for Fusarium circinatum
+536;Fusarium circinatumcinatum identified in one plant
+537;Fusarium circinatumcinatum identified in two plants
+538;Fusarium circinatumcinatum not identified
+539; Diplodia sp.
+540; General fungi & bacteria
+541;Fusarium circinatumcinatum identified
+542;"Fusarium circinatumcinatum identified from 3 root and root collar samples#1
+543;Secondary fungi#1
+544;All seeds tested negative for Fusarium circinatum#9
+545;General fungi and bacteria#3
+546;General fungi and bacteria identified#14
+547;Botryosphaeriaceae#1
+548;Fusarium circinatumcinatum identified in 3 trees"
+549;Fusarium circinatumcinatum identified from 2 isolates
+550;Fusarium circinatumcinatum identified in TC 00245
+551; 00246
+552; 00251
+553; 00257
+554;Fusarium circinatumcinatum identified in TC 00272 (S
+555;T)
+556; TC00273 (RC)
+557; TC 00275
+558;No Fusarium or Diplodia
+559;Identified as Fusarium oxysporum
+560;Identified as Diplodia pinea
+561;General fungi & bacteria
+562; Botryosphaeriaceae isolate identified
+563;No Fusarium circinatum
+564;General fungi
+565;Leptocybe
+566;Fusarium circinatum identified in TC00280T
+567;All samples tested negative for Fusarium circinatum
+568;Secondary/general fungi & bacteria identified
+569;Phytophthora was not identified
+570;Pythium and Phytophthora were identified
+571;Fusarum circinatum was identified
+572;Fusarum circinatum was identified in one sample
+573; General fungi & bacteria were identified
+574; Diplodia & Botryosphaeria spp. Were no identified
+575;Identiifed as Fusarium oxyspporum
+576;"Fusarium circinatum was identified in TL0340 (R
+577; RC)#1
+578;Fusarium circinatum was identified from 6 isolates#1
+579;Fusarium circinatum was not identified#3
+580;Fusarium circinatum was not identified
+581; Secondary/general fungi & bacteria#1
+582;All seed samples tested negative for Fusarium circinatum#8
+583;Identified as Fusarium oxysporum (Stem)"
+584;"Identified as Fusarium oxysporum (Root
+585; Root Collar)#1
+586;Identified as Fusarium circinatum (Root
+587; Stem)"
+588;TL00380 RC
+589; TL00397 T
+590; TL00403 RC were identified as Fusarium circinatum
+591;No Phytophthora or Pythium were identified
+592; Fusarium circinatum & Botryosphaeria spp. were identified 
+593; Fusarium circinatum & Botryosphaeria spp were identified
+594;Phytophthora & Pythium were identified.
+595;Fusarium circinatum was identified in 5 of the 11 isolates
+596;No pathogens were identified
+597; No fungal or bacterial growth was observed
+598;Insect damage identified as Thaumastocoris
+599; General/Secondary fungi & bacteria
+600;Diplodia and Fusarium circinatum were identified
+601;Fusarium circinatum was identified
+602;Secondary/General fungi and bacteria were identified
+603;Diplodia and General/Secondary fungi & bacteria were identified
+604;Powdery mildew-causing fungus
+605;No Fusarium or Diplodia 
+606;Identfied as Fusarium circinatum
+607; Identified as Diplodia pinea
+608;All of the samples tested negative for Fusarium circinatum
+609;9/10 samples tested positive for Fusarium circinatum
+610;Secondary/General fungi and bacteria
+611;4/9 samples tested positive for Fusarium circinatum
+612;General/Secondary fungi and bacteria
+613;7/16  samples tested positive for Fusarium circinatum
+614;All seed samples tested negative for Fusariam circinatum
+615;Identified as Fusarium oxysporum & Diplodia pinea
+616;Identified as Fusarium oxysporum (RC)
+617;1/3 samples tested positive for Fusarium circinatum
+618;2/3 samples tested positive for Fusarium circinatum
+619;No Fusarium
+620;Identified as Fusarium oxysporum (RC) & Diplodia pinea (S)
+621;Identified as Fusarium circinatum (S
+622;T) & Fusarium oxysporum (S)
+623;Fusarium circinatum identified in samples TL00505-00509
+624; TL00515
+625; TL00517-00518
+626; TL00528
+627; TL00536
+628; TL00543
+629; TL00553
+630;TL00567
+631;"All samples from M20a tested positive for Fusarium circinatum#2
+632;7/10 P.rad Klein tonnel Sick samples tested positive for Fusariumcircinatum"
+633;2/10 P.rad Klein tonnel Healthy samples tested positive for Fusarium circinatum & Pythium
+634; Phytophthora & Pythium
+635;"Phytophthora isolated from GU 15#2
+636;6/18 samples tested positive for Fusarium circinatum"
+637;P.pat x tec 2 & P.pat x tec 4 tested positive for Fusarium circinatum
+638;Cytospora identified in E.nitens
+639;5/13 samples tsted positive for Fusarium circinatum
+640;P.ptl 012.2
+641; P.ptl 014
+642; P.ptl 019
+643; P.poh 007.5
+644; P.poh 008.1-1
+645; P.poh 008.1-2 tested positive for Fusarium circinaum
+646;Secondary fungi & bacteria were isolated
+647;Secondary fungi & bacteria were isolated 
+648; Diplodia pinea (S)
+649;Identified as Fusarium oxysporum (RC
+650;Identified as Fusarium circinatum (RC)
+651; Fusarium oxysporum (S)
+652;Identified as Fusarium circinatum (RC
+653; S)
+654;Samples TL00577- TL 0067 were identified as Fusarium circinatum
+655;Seed samples tested negative for the presence of Fusarium circinatum
+656;One isolate tested positive for Fusarium circinatum
+657; Diplodia sp. Not identified
+658;Samples infected with Phytophthora
+659;No causal agent isolated
+660;No primary pathogens were identified
+661;Poor root systems
+662;No Diplodia
+663;No Fusarium or Diplodia identified
+664;Identified as Fusarium oxysporum (Root
+665; Stem)
+666; Diplodia pinea (Stem)
+667;Identified as Fusarium oxyxporum
+668;Identified as Fusarium circinatum 
+669;Identified as Fusarium circinatum (Root collar)
+670; Fusarium oxysporum (Root)
+671; Fusarium oxysporum (Stem)
+672; Pythium or Phytophthora
+673;4/12 samples identifed as Fusarium circinatum
+674; Root collar)
+675;Identified as Fusarium oxysporum (Root collar
+676; Root)
+677;Identified as Fusarium circinatum (Root)
+678;Identified as Fusarium oxysporum 
+679;Identified as Fusarium oxysporum (Root collar)
+680; Diplodia pinea ( Stem)
+681;Identified as Fusarium circinatum (Root collar
+682; Diplodia pinea (Root)
+683;Phytophthora identified on all samples
+684;One sample tested positive for Fusarium circinatum
+685;Two samples tested positive for Fusarium circinatum
+686; No Fusarium identified
+687;No Fusarium isolated
+688; Fusarium circinatum (Stem)
+689;Two samples identified as Fusarium circinatum
+690; Secondary fungi & bacteria identified
+691;Fungal endophytes & secondary saprophytes were identified
+692;Identified as Phytophthera
+693;Identified as Fusarium oxysporum & Phytophthera
+694;Identified as Fusarium circinatum & Phytophthera
+695;Phytophthora & Fusarium circinatum identified
+696;No plant in insert
+697;Identified as Phytophthora
+698;Identified Fusarium sp. and Phytophthera 
+699;Chrysoporthe was not identified. Fusarium & Phythophthora were identified
+700;Secondary/general Fusarium sp. were isolated
+701;All samples tested negative for Phytophthora
+702;Samples tested positive for Phytophthora and negative for Fusarium
+703;"All samples tested negative for Fusarium circinatum#15
+704;No Fusarium 
+705; Secondary fungi & bacteria isolated#4
+706;Secondary fungi & bacteria isolated#1
+707; Pythium or Phytophthora#68
+708;Identified Fusarium circinatum & Fusarium oxysporum#13
+709;Identified Fusarium circinatum#58
+710;Identified Fusarium circinatum
+711; Fusarium oxysporum & Phytophthora#1
+712;Identified Fusarium circinatum & Rhizoctonia sp.#1
+713;Identified Phytophthora sp.#1
+714;Identified Fusarium circinatum #1
+715;Isolated Fusarium sp. but not Fusarium circinatum#8
+716;Samples from Pack 4 tested positive for Fusarium circinatum#31
+717;No pathogens identified
+718; Secondary fungi isolated#4
+719;No Phytophthora was identified#1
+720; Phytophthora or Pythium#1
+721;Identified Diplodia and Rhizoctonia#2
+722;Identified secondary fungi#2
+723;8/11 P. greggii samples tested positive for Fusarium circinatum#11
+724;2/10 P. patula samples tested positive for Fusarium circinatum#10
+725;Botrytis identified on Eucalyptus samples"

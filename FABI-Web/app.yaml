@@ -1,0 +1,15 @@
+# [start app_yaml]
+
+service: default
+
+runtime: nodejs10
+#env: flex
+
+handlers:
+
+  - url: /
+    static_files: dist/FABI-Web/index.html
+    upload: dist/FABI-Web/index.html
+  
+  - url: /
+    static_dir: dist/FABI-Web

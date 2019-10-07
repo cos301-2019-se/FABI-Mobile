@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt-nodejs');
 const admin = require('firebase-admin');
-const mail = require('../sendEmail');
-
+const auth = require('../../loginAuth');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            GET/POST REQUEST HANDLER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -12,10 +11,10 @@ const mail = require('../sendEmail');
 router.post('/', addAdmin);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                             Add Admin
+//                                             Add Admin - Not in use anymore
 /**
  * @summary Add FABI Superuser to FABI orginization
- * @description  REQUEST DATA REQUIRED: Name and email for now
+ * @description  REQUEST DATA REQUIRED: fname and email for now
  *  1. Check if all required data is received and that it is correct.
  *      - IF NOT: return Error Response
  *  2. Encrypt Password.
@@ -44,7 +43,7 @@ function addAdmin(req, res)
     });
 /*
 // (1)
-    if (req.body.admin.name == undefined || req.body.admin.name == '') {
+    if (req.body.admin.fname == undefined || req.body.admin.fname == '') {
         res.setHeader('Content-Type', 'application/problem+json');
         res.setHeader('Content-Language', 'en');
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -52,7 +51,7 @@ function addAdmin(req, res)
             success: false,
             code: 400,
             title: "BAD_REQUEST",
-            message: "User name expected"
+            message: "User fname expected"
         });
     }
     else if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
@@ -104,7 +103,7 @@ function addAdmin(req, res)
         const salt = bcrypt.genSaltSync(10);
         var pass = generatePassword(10);
         const qs = {
-            fname: req.body.admin.name,
+            fname: req.body.admin.fname,
             surname: req.body.admin.surname,
             email: req.body.admin.email,
             password: bcrypt.hashSync(pass, salt),

@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 19th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,21 +14,22 @@
  */
 
 
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { StaffHandlerComponent } from './staff-handler/staff-handler.component';
-import { OrganizationHandlerComponent } from './organization-handler/organization-handler.component';
-import { ClinicHandlerComponent } from './clinic-handler/clinic-handler.component';
-import { DatabaseHandlerComponent } from './database-handler/database-handler.component';
-import { AdminProfileComponent } from "./admin-profile/admin-profile.component";
-
+import * as core from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from '../login/login.component';
+import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 import { AuthenticationGuard } from '../_guards/authentication.guard';
 import { Role } from '../_interfaces/role';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminProfileComponent } from "./admin-profile/admin-profile.component";
+import { ClinicHandlerComponent } from './clinic-handler/clinic-handler.component';
+import { DatabaseHandlerComponent } from './database-handler/database-handler.component';
+import { OrganizationHandlerComponent } from './organization-handler/organization-handler.component';
 import { ReportingComponent } from './reporting/reporting.component';
-import { LoginComponent } from '../login/login.component';
+import { StaffHandlerComponent } from './staff-handler/staff-handler.component';
 import { ViewFormsComponent } from './view-forms/view-forms.component';
+
+
 
 
 const routes: Routes = [
@@ -36,52 +37,57 @@ const routes: Routes = [
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.ClinicAdmin, Role.SuperUser] }
+    data: { roles: [Role.ClinicAdmin, Role.SuperUser] }
   },
   {
-    path: 'staff-handler', 
+    path: 'staff-handler',
     component: StaffHandlerComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.SuperUser]}
+    data: { roles: [Role.SuperUser] }
   },
   {
     path: 'organization-handler',
     component: OrganizationHandlerComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.SuperUser]}
+    data: { roles: [Role.SuperUser] }
   },
   {
-    path: 'clinic-handler', 
+    path: 'clinic-handler',
     component: ClinicHandlerComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.ClinicAdmin] }
+    data: { roles: [Role.SuperUser, Role.ClinicAdmin] }
   },
   {
-    path: 'database-handler', 
+    path: 'database-handler',
     component: DatabaseHandlerComponent,
     canActivate: [AuthenticationGuard],
-    data: {roles: [Role.SuperUser, Role.ClinicAdmin, Role.Staff]}
+    data: { roles: [Role.SuperUser] }
   },
   {
-    path: 'admin-profile', 
-    component: AdminProfileComponent
+    path: 'admin-profile',
+    component: AdminProfileComponent,
+    data: { roles: [Role.SuperUser, Role.ClinicAdmin] }
   },
   {
-    path: 'reporting', 
-    component: ReportingComponent
+    path: 'reporting',
+    component: ReportingComponent,
+    data: { roles: [Role.SuperUser] }
   },
   {
-    path: 'login', 
+    path: 'login',
     component: LoginComponent
   },
   {
     path: 'view-forms',
     component: ViewFormsComponent
+  },
+  {
+    path: "**",
+    component: PageNotFoundComponent
   }
-  
 ];
 
-@NgModule({
+@core.NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
