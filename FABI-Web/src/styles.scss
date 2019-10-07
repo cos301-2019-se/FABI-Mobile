@@ -199,6 +199,10 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     justify-content: flex-end;
     align-items: center;
 
+    position: sticky;
+    bottom: 5px;
+
+
     text-align: center;
 
     width: 100%;
@@ -250,7 +254,6 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 /* ==========================================================================
    BUTTON STYLING [GENERAL]
    ========================================================================== */
-
 
 /* Default Button 
      ========================================================================== */
@@ -333,7 +336,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: 50%;
+    width: auto;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -367,7 +370,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: 50%;
+    width: auto;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -383,8 +386,6 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     transform: scale(1.025);
 }
-
-
 
 /* Edit Button 
      ========================================================================== */
@@ -402,7 +403,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: 50%;
+    width: auto;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -418,8 +419,6 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     transform: scale(1.025);
 }
-
-
 
 /* Save Button 
      ========================================================================== */
@@ -437,7 +436,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: 50%;
+    width: auto;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -470,7 +469,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: 50%;
+    width: auto;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -504,7 +503,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: 50%;
+    width: auto;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -842,14 +841,12 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     display: flex;
     flex-direction: column;
 
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
 
     background-color: #F7F7F7;
     width: 100%;
-    //min-height: 100vh;
-    //height: auto;
     height: 100vh;
 
     overflow: scroll;
@@ -876,6 +873,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 #notifications i {
     color: #6B746F;
     font-size: 28px;
+
+    margin-top: 60px;
 }
 
 .notification-items {
@@ -943,6 +942,9 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 .notification-action i {
     font-size: 18px !important;
+
+    margin: 0;
+    padding: 0;
 }
 
 .notification-heading h6 {
@@ -958,10 +960,23 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 0;
 }
 
-@media (min-width: 395px) {
+@media (min-width: 420px) {
     #notifications {
-        width: 60vh;
+        width: 80vh;
     }
+
+    #notifications i {
+    
+        margin-top: 75px;
+    }
+    
+}
+
+@media (min-width: 768px) {
+    #notifications i {
+        margin-top: 0;
+    }
+    
 }
 
 .notification-loading {
@@ -989,20 +1004,22 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     display: flex;
     flex-direction: column;
 
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
 
     background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
-    height: auto;
+    height: 100%;
 
     float: right;
 
     padding: 50px 15px 50px 15px;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    overflow: scroll;
 }
 
 #profile h3 {
@@ -1013,6 +1030,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 #profile i {
     color: #6B746F;
     font-size: 28px;
+
+    margin-top: 60px;
 }
 
 .profile-details {
@@ -1060,9 +1079,13 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     font-size: 76px;
 }
 
-@media (min-width: 395px) {
+@media (min-width: 420px) {
     #profile {
-        width: 60vh;
+        width: 80vh;
+    }
+
+    #profile i {    
+        margin-top: 75px;
     }
 }
 
@@ -1082,6 +1105,13 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
         color: #72B555;
         font-size: 95px;
     }
+}
+
+@media (min-width: 768px) {
+    #profile i {    
+        margin-top: 0;
+    }
+    
 }
 
 @media (min-height: 803px) {
@@ -1148,20 +1178,22 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     display: flex;
     flex-direction: column;
 
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
 
     background-color: #F7F7F7;
     width: 100%;
     min-height: 100vh;
-    height: auto;
+    height: 100%;
 
     float: right;
 
     padding: 50px 15px 15px 15px;
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+    overflow: scroll;
 }
 
 #help h3 {
@@ -1248,6 +1280,14 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     font-family: "Roboto", sans-serif;
 }
 
+.help-content a {
+    color: #fff;
+}
+
+.help-content a:hover {
+    color: #6B746F;
+}
+
 .help-icon {
     display: flex;
     justify-content: center;
@@ -1277,58 +1317,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
 @media (min-width: 395px) {
     #help {
-        width: 60vh;
-    }
-}
-
-
-/* ==========================================================================
-   SCROLL TO TOP ICON STYLING [GENERAL]
-   ========================================================================== */
-
-#scroll-to-top {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background-color: #989C94;
-
-    border-radius: 50%;
-
-    height: 50px;
-    width: 50px;
-
-    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
-
-    position: fixed;
-
-    right: 25px;
-    bottom: 25px;
-
-    transition: all 0.5s;
-
-    animation: jump 1s infinite;
-}
-
-#scroll-to-top:hover {
-    transform: scale(1.05);
-}
-
-#scroll-to-top i {
-    color: #fff;
-    font-size: 20px;
-}
-
-@keyframes jump {
-    0% {
-        bottom: 10px;
-    }
-
-    50% {
-        bottom: 15px;
-    }
-
-    100% {
-        bottom: 10px;
+        width: 80vh;
     }
 }
 
@@ -1440,6 +1429,11 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     margin-left: 25px;
 }
+
+
+/* ==========================================================================
+   MODAL STYLING [GENERAL]
+   ========================================================================== */
 
 /* Handler Modals
      ========================================================================== */

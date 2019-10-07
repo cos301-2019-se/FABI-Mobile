@@ -1,6 +1,9 @@
-/* Admin Dashboard Navbar Section
+/* ==========================================================================
+   HOME
    ========================================================================== */
 
+/* Button Style
+   ========================================================================== */
 .btn.btn-default-login {
   color: #fff;
   font-family: "Montserrat", sans-serif;
@@ -17,10 +20,39 @@
 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
-  transition: all 0.5s;
+  transition: all 0.1s;
 }
 
 .btn.btn-default-login:hover {
+  color: #72b555;
+
+  background-color: #fff;
+
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+  transform: scale(1.025);
+}
+
+.btn.btn-home-login {
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+
+  background-color: transparent;
+
+  border: 1px solid #fff;
+
+  border-radius: 5px;
+
+  padding: 10px;
+
+  width: 40%;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+  transition: all 0.1s;
+}
+
+.btn.btn-home-login:hover {
   color: #72b555;
 
   background-color: #fff;
@@ -46,7 +78,7 @@
 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
-  transition: all 0.5s;
+  transition: all 0.1s;
 }
 
 .btn.btn-default-register:hover {
@@ -75,7 +107,7 @@
 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
-  transition: all 0.5s;
+  transition: all 0.1s;
 }
 
 .btn.btn-default-register-nav:hover {
@@ -88,7 +120,8 @@
   transform: scale(1.025);
 }
 
-/* Navbar Heading Styling */
+/* Navbar Style
+   ========================================================================== */
 .pos-f-t {
   display: block;
 }
@@ -103,7 +136,7 @@
 /* Notification Icon Styling */
 .home-nav {
   display: none;
-  
+
 }
 
 .home-nav a {
@@ -157,7 +190,7 @@ div nav.navbar.home {
   height: 12vh !important;
 
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 div#navbarToggleExternalContent div nav.navbar.home.p-4 {
@@ -169,6 +202,11 @@ div#navbarToggleExternalContent div nav.navbar.home.p-4 {
 .brand {
   font-family: "Montserrat", sans-serif;
   color: #fff;
+}
+
+img.brand-logo {
+  width: 6rem;
+  height: 2.5rem;
 }
 
 .navbar-nav .nav-item a {
@@ -200,6 +238,8 @@ div#navbarToggleExternalContent div nav.navbar.home.p-4 {
   width: 100%;
 }
 
+/* Hero Style
+   ========================================================================== */
 .hero {
 
   position: relative;
@@ -269,6 +309,8 @@ div#navbarToggleExternalContent div nav.navbar.home.p-4 {
 .content-headings h2 {
   color: #fff;
   font-family: "Montserrat", sans-serif;
+
+  font-size: 2.3rem;
 }
 
 
@@ -340,6 +382,8 @@ div#navbarToggleExternalContent div nav.navbar.home.p-4 {
 .section-content p {
   color: #6B746F;
   font-family: "Roboto", sans-serif;
+
+  width: 90%;
 }
 
 .section-content {
@@ -357,23 +401,20 @@ hr {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  min-height: 60vh;
+  align-items: flex-start;
+  min-height: 40vh;
   height: auto;
   width: 100%;
-
   padding: 25px;
-
   background-color: #f7f9f9;
 }
 
 .service-item {
   display: flex;
   flex-direction: column;
-
   height: auto;
+  min-height: 40vh;
   width: 90%;
-
   margin: 15px;
   padding: 15px;
 }
@@ -403,12 +444,25 @@ hr {
 
   margin-top: 15px;
 
+  overflow-wrap: break-word;
+
 }
 
 .service-content p {
   color: #6B746F;
   font-family: "Roboto", sans-serif;
+
+  min-height: 150px;
 }
+
+.service-content a {
+  color: #72B555;
+}
+
+.service-content a:hover {
+  color: #6B746F;
+}
+
 
 @media (min-width: 540px) {
   .services {
@@ -432,6 +486,16 @@ hr {
 
   padding: 25px;
   margin-top: 50px;
+}
+
+.process-infographic {
+  height: 50vh;
+  width: 100%;
+}
+
+.process-infographic svg {
+  height: 100%;
+  width: 100%;
 }
 
 .section-heading-how {
@@ -531,9 +595,6 @@ hr {
   }
 }
 
-/* Home Contatc us Section
-     ========================================================================== */
-
 .contact-us {
   display: flex;
   justify-content: center;
@@ -556,6 +617,7 @@ hr {
 
   padding: 10%;
 }
+
 
 .contact-us-actions {
   display: flex;
@@ -584,7 +646,7 @@ hr {
 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
-  transition: all 0.5s;
+  transition: all 0.1s;
 }
 
 .btn.btn-default-contact:hover {
@@ -597,9 +659,49 @@ hr {
   transform: scale(1.025);
 }
 
-/* Home Bottom Navbar Section
-     ========================================================================== */
-
 div.bg-dark.p-4 {
   background-color: #72b555 !important;
+}
+
+#request_to_register .form-group label {
+  color: #444444;
+}
+
+@media (min-width:768px) and (max-width:1199px) {
+  #request_to_register .form-group label {
+    color: #444444;
+  }
+}
+
+@media (min-width:1024px) {
+  #request_to_register .form-group label {
+    color: #444444;
+  }
+}
+
+#contact_us form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#contact_us .form-group label {
+  color: #444444;
+}
+
+@media (min-width:768px) and (max-width:1199px) {
+  #contact_us .form-group label {
+    color: #444444;
+  }
+}
+
+@media (min-width:1024px) {
+  #contact_us .form-group label {
+    color: #444444;
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  width: 100%;
 }

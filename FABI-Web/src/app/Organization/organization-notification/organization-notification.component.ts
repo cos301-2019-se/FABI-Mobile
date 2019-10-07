@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 29th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,30 +14,24 @@
  */
 
 
-import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService, Sample, Species } from '../../_services/diagnostic-clinic-api.service';
-import { AdminDivComponent } from '../../Dynamic-Components/admin-div/admin-div.component'; 
-import { AuthenticationService } from 'src/app/_services/authentication.service';
-
-import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
-import { OnInit} from '@angular/core';
-import { Injectable } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { DomSanitizer } from '@angular/platform-browser';
-import { sharedStylesheetJitUrl } from '@angular/compiler';
-import { Router } from '@angular/router';
+import * as core from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService, Sample } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
 
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-organization-notification',
   templateUrl: './organization-notification.component.html',
   styleUrls: ['./organization-notification.component.scss']
 })
-export class OrganizationNotificationComponent implements OnInit {
+export class OrganizationNotificationComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -49,27 +43,25 @@ export class OrganizationNotificationComponent implements OnInit {
   newNotifications: string[] = [];
   /** Object array for holding all of the logs that have not been read -  @type {string[]} */
   allLogs: string[] = [];
-
   /** Object array for holding the members of the organization -  @type {Member[]} */
-  organizationMembers: Member[] = [];     
+  organizationMembers: Member[] = [];
   /** Object array for holding the members of the organization -  @type {Member[]} */
-  organizationMembersExample: Member[] = [];     
+  organizationMembersExample: Member[] = [];
   /** Object array for holding the samples of the organization -  @type {Sample[]} */
-  organizationSamples: Sample[] = [];            
-
+  organizationSamples: Sample[] = [];
   /** The total number of members in the organization - @type {number} */
-  numberOfOrganizationMembers: number; 
+  numberOfOrganizationMembers: number;
   /** The total number of samples belonging to the organization - @type {number} */
-  numberOfOrganizationSamples: number;  
-  /** The name of the logged in organization - @type {string} */                 
+  numberOfOrganizationSamples: number;
+  /** The name of the logged in organization - @type {string} */
   organizationName: string = 'TestOrg4';
-  /** Indicates if there are notifications to load - @type {boolean} */           
+  /** Indicates if there are notifications to load - @type {boolean} */
   notifications: boolean = false;
-  
+
   /** Holds the div element (membersContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('membersContainer', {read: ViewContainerRef}) membersContainer;
+  @core.ViewChild('membersContainer', { read: core.ViewContainerRef }) membersContainer;
   /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
+  @core.ViewChild('notificationContainer', { read: core.ViewContainerRef }) notificationContainer;
 
   /** The staff member's email address -  @type {string} */
   email: string = '';
@@ -85,24 +77,20 @@ export class OrganizationNotificationComponent implements OnInit {
   password: string = '';
   /** The staff member's confirmed password -  @type {string} */
   confirmPassword: string = '';
-
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
   profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
   saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
   confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
-
   /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */
   notificationsLoading: boolean = true;
-
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
@@ -115,7 +103,7 @@ export class OrganizationNotificationComponent implements OnInit {
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API Service
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {Router} router
    * @param {Resolver} resolver
    * @param {FormBuilder} formBuilder FOr getting the form values from the HTML
@@ -124,16 +112,16 @@ export class OrganizationNotificationComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
-    private router: Router, 
-    private userManagementService: UserManagementAPIService, 
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
-    private resolver: ComponentFactoryResolver,
-    private formBuilder: FormBuilder, 
-    public  sanitizer: DomSanitizer, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private snackBar: MatSnackBar, 
-  ) { 
+    private authService: AuthenticationService,
+    private router: Router,
+    private userManagementService: UserManagementAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService,
+    private resolver: core.ComponentFactoryResolver,
+    private formBuilder: FormBuilder,
+    public sanitizer: DomSanitizer,
+    private notificationLoggingService: NotificationLoggingService,
+    private snackBar: MatSnackBar,
+  ) {
 
   }
 
@@ -148,7 +136,7 @@ export class OrganizationNotificationComponent implements OnInit {
    * @memberof OrganizationNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){}
+  loadNotifications() { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       REMOVE NOTIFICATIONS

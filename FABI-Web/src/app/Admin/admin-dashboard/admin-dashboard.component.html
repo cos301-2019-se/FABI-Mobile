@@ -123,12 +123,11 @@
             </div>
             <div class="statistic-box-info">
               <p #admin_samples_stats id="admin_samples_stats">Number of Samples: {{sampleStats}}</p>
-              <p #admin_completed_samples_stats id="admin_completed_samples_stats">Completed Samples: 75%</p>
               <p #admin_user_stats id="admin_users_stats">Number of Users: {{userStats}}</p>
             </div>
           </div>
         </div>
-        <!-- Statistic Box -->
+        <!-- / Statistic Box -->
 
         <!-- Statistic Box -->
         <div class="statistic-box">
@@ -141,20 +140,7 @@
             </div>
           </div>
         </div>
-        <!-- Statistic Box -->
-
-        <!-- Statistic Box -->
-        <div class="statistic-box">
-          <div class="statistic-box-content">
-            <div class="statistic-box-heading">
-              <h5>Completed Samples</h5>
-            </div>
-            <div class="statistic-box-info">
-              <p #admin_completed_samples_stats id="admin_completed_samples_stats">75%</p>
-            </div>
-          </div>
-        </div>
-        <!-- Statistic Box -->
+        <!-- / Statistic Box -->
 
         <!-- Statistic Box -->
         <div class="statistic-box">
@@ -167,7 +153,7 @@
             </div>
           </div>
         </div>
-        <!-- Statistic Box -->
+        <!-- / Statistic Box -->
 
       </div>
       <!-- / Statistics -->
@@ -179,7 +165,8 @@
         <div class="menu-row">
 
           <!-- Menu Item -->
-          <div class="menu-item" *ngIf="currentUser && currentUser.permission == 'SuperUser'" routerLink="/staff-handler">
+          <div class="menu-item" *ngIf="currentUser && currentUser.permission == 'SuperUser'"
+            routerLink="/staff-handler">
             <div class="menu-icon">
               <i class="fas fa-address-card"></i>
             </div>
@@ -192,7 +179,8 @@
           <!-- / Menu Item -->
 
           <!-- Menu Item -->
-          <div class="menu-item" *ngIf="currentUser &&  currentUser.permission == 'SuperUser'" routerLink="/organization-handler">
+          <div class="menu-item" *ngIf="currentUser &&  currentUser.permission == 'SuperUser'"
+            routerLink="/organization-handler">
             <div class="menu-icon">
               <i class="fas fa-building"></i>
             </div>
@@ -212,7 +200,8 @@
 
           <!-- Menu Item -->
           <div class="menu-item"
-            *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'DatabaseAdmin')" routerLink="/database-handler">
+            *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'DatabaseAdmin')"
+            routerLink="/database-handler">
             <div class="menu-icon">
               <i class="fas fa-database"></i>
             </div>
@@ -226,7 +215,8 @@
 
           <!-- Menu Item -->
           <div class="menu-item"
-            *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'ClinicAdmin')" routerLink="/clinic-handler">
+            *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'ClinicAdmin')"
+            routerLink="/clinic-handler">
             <div class="menu-icon">
               <i class="fas fa-stethoscope"></i>
             </div>
@@ -282,6 +272,7 @@
               <th scope="col">Name</th>
               <th scope="col">Surname</th>
               <th scope="col">Email</th>
+              <th scope="col">Admin Type</th>
             </tr>
           </thead>
           <tbody>
@@ -289,6 +280,7 @@
               <td>{{admin.fname}}</td>
               <td>{{admin.surname}}</td>
               <td>{{admin.email}}</td>
+              <td>{{admin.type}}</td>
             </tr>
           </tbody>
         </table>
@@ -375,12 +367,6 @@
 
   </div>
   <!-- / Dashboard Content -->
-
-  <!-- Up Icon -->
-  <div id="scroll-to-top">
-    <a href="#"><i class="fas fa-chevron-circle-up"></i></a>
-  </div>
-  <!-- / Up Icon -->
 
 </div>
 <!-- / Dashboard -->

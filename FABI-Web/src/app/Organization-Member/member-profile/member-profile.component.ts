@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,30 +14,22 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation, Inject, ViewChild, ElementRef } from '@angular/core';
-import * as Interface from "../../_interfaces/interfaces";
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../_errors/error-component/error.component';
+import * as core from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
-import { AuthenticationService } from '../../_services/authentication.service';
-import { LoadingComponent } from "../../_loading/loading.component";
-import { UpdateComponent } from "../../update/update.component";
-import { template } from '@angular/core/src/render3';
-
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
+import { LoadingComponent } from "../../_loading/loading.component";
+import { AuthenticationService } from '../../_services/authentication.service';
 
 
-@Component({
+@core.Component({
   selector: 'app-member-profile',
   templateUrl: './member-profile.component.html',
   styleUrls: ['./member-profile.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class MemberProfileComponent implements OnInit {
+export class MemberProfileComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -57,30 +49,29 @@ export class MemberProfileComponent implements OnInit {
   password: string = '';
   /** The staff member's confirmed password -  @type {string} */
   confirmPassword: string = '';
-
   /** The form to display the admin member's details -  @type {FormGroup} */
   memberProfileForm: FormGroup;
-
   /** The form to change the user's password -  @type {FormGroup} */
   changePasswordForm: FormGroup;
-
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   private toggle_status: boolean = false;
-
-  /** The user that is currently logged in - @type {boolean} */  
+  /** The user that is currently logged in - @type {boolean} */
   currentUser: any;
-
+  /** if the user is editing their profile details - @type {boolean} */
   isEditingProfile: boolean = false;
-
+  /** if the form has been submitted - @type {boolean} */
   submitted: boolean;
-
   /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
   userProfileLoading: boolean = true;
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput: ElementRef;
+  @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput: ElementRef;
+  @core.ViewChild("confirmInput") confirmInput: core.ElementRef;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VALIDATORS
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   member_profile_validators = {
     'member_name': [
@@ -94,7 +85,6 @@ export class MemberProfileComponent implements OnInit {
       { type: 'pattern', message: 'Invalid email' }
     ]
   }
-
 
   change_password_validators = {
     'current_password': [
@@ -121,7 +111,7 @@ export class MemberProfileComponent implements OnInit {
    * 
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {Router} router
    * @param {FormBuilder} formBuilder Used to get the form elements from the HTML page
    * 
@@ -154,8 +144,8 @@ export class MemberProfileComponent implements OnInit {
       ])],
       confirm_password: ['', Validators.required]
     }, {
-        validator: this.PasswordMatch('new_password', 'confirm_password')
-      });
+      validator: this.PasswordMatch('new_password', 'confirm_password')
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,14 +159,6 @@ export class MemberProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    // this.authService.temporaryLoginOrganisationMember().subscribe((response: any) => {
-    //   this.currentUser = this.authService.getCurrentSessionValue.user;
-    //   this.loadMemberProfileDetails();
-    // });
-
-    //******** TO BE USED IN PRODUCTION: ********
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
@@ -302,6 +284,15 @@ export class MemberProfileComponent implements OnInit {
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        CHANGE PASSWORD
+  /**
+   * This function is used to change the users password
+   *
+   * @returns
+   * @memberof MemberProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   changePassword() {
 
     this.submitted = true;
@@ -338,6 +329,18 @@ export class MemberProfileComponent implements OnInit {
   }
 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     PASSWORD MATCH CHECK
+  /**
+   * This function will check that the *new password* and the *confirm password* fields are the same for the `change password` method.
+   *  This function is used for the form validators.
+   *
+   * @param {string} newP
+   * @param {string} confirmP
+   * @returns
+   * @memberof MemberProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   PasswordMatch(newP: string, confirmP: string) {
     return (formGroup: FormGroup) => {
       const newControl = formGroup.controls[newP];

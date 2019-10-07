@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Saturday, October 5th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -103,7 +103,6 @@ export class Porting{
         for(var i =0; i<dbJSON.length; i++){
             var columnsIn = dbJSON[i];
             for(var key in headings){
-               // console.log(key);
                 if(dbJSON[i][ headings[key] ] != null){
                     CSVdata += dbJSON[i][ headings[key] ] +";";
                 }
@@ -115,7 +114,6 @@ export class Porting{
             CSVdata += "\r\n";
         }
 
-        //console.log(CSVdata);
         return CSVdata;
         
     }

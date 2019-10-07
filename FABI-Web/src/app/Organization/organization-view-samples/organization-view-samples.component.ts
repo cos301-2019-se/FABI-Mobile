@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,24 +14,23 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import * as core from '@angular/core';
 //Include Material Components
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
-import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-organization-view-samples',
   templateUrl: './organization-view-samples.component.html',
   styleUrls: ['./organization-view-samples.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
 
 
-export class OrganizationViewSamplesComponent implements OnInit {
+export class OrganizationViewSamplesComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -40,10 +39,8 @@ export class OrganizationViewSamplesComponent implements OnInit {
   sampleFields: any[] = [];
   samples: any[];
   selectedSampleData: any;
-
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
   sampleTableLoading: boolean = true;
-
   /** The search item the user is looking for in the table -  @type {string} */
   public searchSample: string = "";
 
@@ -51,7 +48,7 @@ export class OrganizationViewSamplesComponent implements OnInit {
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of OrganizationViewSamplesComponent.
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {MatDialog} dialog
    * @param {Router} router
@@ -65,6 +62,7 @@ export class OrganizationViewSamplesComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router
   ) { }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                           NG ON INIT  
@@ -118,16 +116,19 @@ export class OrganizationViewSamplesComponent implements OnInit {
 
       } else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.viewSamples();
-          }
-        })
       }
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SELECT SAMPLE 
+  /**
+   * Called when a user selects a sample and sets the selected sample as well as it's data fields
+   *
+   * @param {*} sample
+   * @memberof OrganizationViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectSample(sample: any) {
 
     this.selectedSampleData = sample.data;
@@ -140,9 +141,17 @@ export class OrganizationViewSamplesComponent implements OnInit {
       this.sampleFields.push(obj);
 
     });
-        
+
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET SAMPLE FIELDS 
+  /**
+   * Resets the display fields for the sample
+   *
+   * @memberof OrganizationViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetSampleFields() {
     this.sampleFields = [];
   }
