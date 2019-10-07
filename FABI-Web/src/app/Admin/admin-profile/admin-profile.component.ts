@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Monday, October 7th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -21,6 +21,8 @@ import { LoadingComponent } from 'src/app/_loading/loading.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { NotificationService } from "../../_services/notification.service";
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @core.Component({
@@ -128,7 +130,8 @@ export class AdminProfileComponent implements core.OnInit {
     private snackBar: MatSnackBar,
     private authService: AuthenticationService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService
   ) {
     this.adminProfileForm = this.formBuilder.group({
       admin_name: ['', Validators.required],
@@ -206,7 +209,7 @@ export class AdminProfileComponent implements core.OnInit {
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if (response.success == true) {
+      if (response.success == true && response.code == 200) {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
@@ -220,10 +223,15 @@ export class AdminProfileComponent implements core.OnInit {
           admin_email: data.email,
           admin_type: data.userType
         });
+        this.notificationService.showWarningNotification('', 'Could not load profile details.');
       }
       else {
         //Error handling
+        this.notificationService.showWarningNotification('', 'Could not load profile details.');
       }
+    }, (err: HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('', 'Could not load profile details.');
+      //Handled in error-handler
     });
   }
 
@@ -254,12 +262,10 @@ export class AdminProfileComponent implements core.OnInit {
 
       loadingRef.close();
 
-      if (response.success == true) {
+      if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Profile Updated', '');
 
         //Reloading the updated user's details
         this.loadAdminProfileDetails();
@@ -267,11 +273,13 @@ export class AdminProfileComponent implements core.OnInit {
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details.');
       }
-    });
+    }, (err: HttpErrorResponse) => {
+      loadingRef.close();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
+      //Handled in error-handler
+  });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,18 +312,18 @@ export class AdminProfileComponent implements core.OnInit {
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully changed password.", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Password Changed', '');
 
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
       }
-    });
+    }, (err: HttpErrorResponse) => {
+      loadingRef.close();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
+      //Handled in error-handler
+  });
   }
 
 

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Monday, October 7th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -187,7 +187,7 @@ export class AdminDashboardComponent implements core.OnInit {
   getNumberOfFABIMembers() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
-      if (response.success == true) {
+      if (response.success == true && response.code == 200) {
         var data = response.data.qs.staff;
 
         for (var i = 0; i < data.length; i++) {
@@ -240,7 +240,7 @@ export class AdminDashboardComponent implements core.OnInit {
   getNumberOfFABISamples() {
     //Subscribing to the DiagnosticClinicAPIService to get a list containing all of FABI's samples
     this.diagnosticClinicService.getAllSamples().subscribe((response: any) => {
-      if (response.success == true) {
+      if (response.success == true && response.code == 200) {
         //Populating the sample array with the returned data
         this.samples = response.data.samples;
 

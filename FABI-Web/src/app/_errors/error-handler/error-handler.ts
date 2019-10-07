@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Monday, October 7th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -72,7 +72,7 @@ export class ErrorsHandler implements core.ErrorHandler {
         notificationService.showWarningNotification('Offline', 'Please check your internet connection');
       }
       // Http Error
-      // notificationService.showErrorNotification(`${error.error.code} ${error.error.title}`, `${error.error.message} - ${error.message}`);
+      notificationService.showErrorNotification(`Error`, 'Sorry, an error occured. Please try again.');
 
     } else {
       // Client Error Happend     

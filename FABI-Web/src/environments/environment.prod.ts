@@ -3,12 +3,12 @@ export const environment = {
 };
 
 export const config = {
-  loginURL: "https://login-dot-api-fabi.appspot.com",
-  databaseManagementURL: "https://database-management-dot-api-fabi.appspot.com",
-  userManagementURL: "https://user-management-dot-api-fabi.appspot.com",
-  cultureClinicURL: "https://culture-collection-management-dot-api-fabi.appspot.com",
-  logsURL: "https://logging-dot-api-fabi.appspot.com",
-  diagnosticClinicURL: "https://diagnostic-clinic-dot-api-fabi.appspot.com",
+  loginURL: 'https://login-dot-fabi-dev.appspot.com',
+  databaseManagementURL: 'https://database-management-dot-fabi-dev.appspot.com',
+  userManagementURL: 'https://user-management-dot-fabi-dev.appspot.com',
+  cultureClinicURL: 'https://culture-collection-management-dot-fabi-dev.appspot.com',
+  logsURL: 'https://logging-dot-fabi-dev.appspot.com',
+  diagnosticClinicURL: 'https://diagnostic-clinic-dot-fabi-dev.appspot.com',
   
-  APIKEy: ''
+  APIKEy: 'AIzaSyCO9bq9xt6Uuq5DwNipBRf0Hz8bx1OxD_M'
 }

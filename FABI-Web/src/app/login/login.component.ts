@@ -14,6 +14,7 @@
  */
 
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -23,7 +24,7 @@ import * as Interface from '../_interfaces/interfaces';
 import { LoadingComponent } from "../_loading/loading.component";
 import { AuthenticationService } from '../_services/authentication.service';
 import { UserManagementAPIService } from "../_services/user-management-api.service";
-
+import { NotificationService } from "../_services/notification.service";
 
 @core.Component({
   selector: 'app-login',
@@ -96,6 +97,7 @@ export class LoginComponent implements core.OnInit {
     private router: Router,
     private toaster: ToastrService,
     private userManagementServicee: UserManagementAPIService,
+    private notificationService: NotificationService
   ) {
 
     // if(!this.previousUserData.email && this.previousUserData.email == null) {
@@ -136,10 +138,14 @@ export class LoginComponent implements core.OnInit {
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
       }
-      else if (response.success == false) {
+      else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'There was an error loading the organizations');
       }
-    });
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'There was an error loading the organizations');
+      //Handled in error-handler
+  });
 
     //-------- Form Validation --------
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -180,7 +186,7 @@ export class LoginComponent implements core.OnInit {
       return;
     }
 
-    this.valid = true;            
+    this.valid = true;
 
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Logging in..." } });
 
@@ -216,18 +222,17 @@ export class LoginComponent implements core.OnInit {
         } else if (response.userDetails.userType == 'Staff') {
           this.router.navigate(['/staff-dashboard']);
         } else {
-          let snackBarRef = this.snackBar.open("User not supported", "Dismiss", {
-            duration: 3000
-          });
+          this.notificationService.showErrorNotification('User not supported', '');
         }
 
-
-      } else if (response.success == false) {
+      } else  {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Login Failed', 'An error occured while logging in. \n Please try again.');
       }
+    }, (err: http.HttpErrorResponse) => {
+        loadingRef.close();
+        this.notificationService.showErrorNotification('Login Failed', 'An error occured while logging in. \n Please try again.');
+        //Handled in error-handler
     });
-
-    this.loading = false;
   }
-
 }
