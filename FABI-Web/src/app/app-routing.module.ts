@@ -10,7 +10,6 @@ import { MemberDashboardComponent } from "./Organization-Member/member-dashboard
 
 import { Role } from "./_interfaces/role";
 import { AuthenticationGuard } from './_guards/authentication.guard';
-import { UpdateComponent } from './update/update.component';
 import { SampleFormComponent } from './sample-form/sample-form.component';
 import { ReportingComponent } from './Admin/reporting/reporting.component';
 import { SubmitCmwRequestComponent } from './Staff/submit-cmw-request/submit-cmw-request.component';
@@ -51,10 +50,6 @@ const routes: Routes = [
   {
     path: 'login', 
     component: LoginComponent
-  },
-  {
-    path: 'update',
-    component: UpdateComponent,
   },
   {
     path: 'submit-sample', 
