@@ -27,6 +27,13 @@ module.exports.getUser = function(username, password, callback){
     console.log("getUser");
 	var user = username.split(",");
 	
+	var docOrgRef  = db.collection('Organizations').doc(user[1]);
+	docOrgRef.get().then(doc => {
+		if(docOrgRef.Empty){
+            callback(false, null);
+        }
+	}).catch(error => callback(error));
+	
     var docRef  = db.collection('Organizations').doc(user[1]).collection('Members').where('email', '==', user[0]);
     docRef.get().then(doc => {
         if(docRef.Empty){

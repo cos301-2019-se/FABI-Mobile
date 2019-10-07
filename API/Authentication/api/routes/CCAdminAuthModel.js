@@ -26,7 +26,7 @@ module.exports.grantTypeAllowed = function(clientEmail, grantType, callback) {
 module.exports.getUser = function(username, password, callback){
     console.log("getUser");
 	
-    var docRef  = db.collection('Organizations').doc('FABI').collection('Admin').where('email', '==', username);
+    var docRef  = db.collection('Organizations').doc('FABI').collection('Staff').where('email', '==', username);
     docRef.get().then(doc => {
         if(docRef.Empty){
             callback(false, null);

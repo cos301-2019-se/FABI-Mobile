@@ -25,9 +25,10 @@ router.post('/', getUserTypes);
 userTypes = {
     1 : "SuperUser",
     2 : "ClinicAdmin",
-    3 : "Staff", 
-    4 : "Member",
-    5 : "OrganizationAdmin"
+    3 : "Staff",
+    4 : "CultureAdmin",
+    5 : "Member",
+    6 : "OrganizationAdmin"
 }
 
 function getUserTypes(req, res) {

@@ -6,3 +6,11 @@ API/CultureCollectionManagement/api/config.js
 API/DatabaseManagement/api/config.js
 
 API/Login/api/config.js
+
+API/Login/api/routes/loginTester.js
+
+API/Login/api/routes/AuthTester.js
+
+API/Authentication/.vscode/settings.json
+
+User Manual/app.yaml
