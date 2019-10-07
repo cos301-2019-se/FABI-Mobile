@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
+import { LoadingComponent } from "../_loading/loading.component";
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 //Import form components
@@ -37,7 +38,8 @@ describe('LoginComponent', () => {
             
         ],
         declarations: [ 
-            LoginComponent 
+            LoginComponent,
+            LoadingComponent 
         ],
         providers :[
           { provide: ToastContainerModule, useValue: {} },
@@ -61,13 +63,13 @@ describe('LoginComponent', () => {
   });
 
   it("Empty login email is invalid", () => {
-    component.loginForm.controls.login_email.setValue("");
-    expect(component.loginForm.controls.login_email.valid).toBeFalsy();
+    component.loginForm.controls.email.setValue("");
+    expect(component.loginForm.controls.email.valid).toBeFalsy();
   });
 
   it("Empty login password is invalid", () => {
-    component.loginForm.controls.login_password.setValue("");
-    expect(component.loginForm.controls.login_password.valid).toBeFalsy();
+    component.loginForm.controls.password.setValue("");
+    expect(component.loginForm.controls.password.valid).toBeFalsy();
   });
 
   it("Empty login organization is invalid", () => {
@@ -76,45 +78,40 @@ describe('LoginComponent', () => {
   });
 
   it("Empty login user type is invalid", () => {
-    component.loginForm.controls.userType.setValue("");
-    expect(component.loginForm.controls.userType.valid).toBeFalsy();
+    expect(component.loginForm.controls.userType).toBeUndefined();
   });
 
   it("Login with all empty details should fail", () => {
-        component.loginForm.controls.login_email.setValue("");
-        component.loginForm.controls.login_password.setValue("");
+        component.loginForm.controls.email.setValue("");
+        component.loginForm.controls.password.setValue("");
         component.loginForm.controls.organization.setValue("");
-        component.loginForm.controls.userType.setValue("");
         expect(component.loginForm.valid).toBeFalsy();
         
         expect(component.login()).toBeUndefined();
   });
 
   it("Login with valid details should pass", () =>{
-    component.loginForm.controls.login_email.setValue("johndoe@gmail.com");
-    component.loginForm.controls.login_password.setValue("Tr7hs8BjuX");
+    component.loginForm.controls.email.setValue("johndoe@gmail.com");
+    component.loginForm.controls.password.setValue("Tr7hs8BjuX");
     component.loginForm.controls.organization.setValue("FABI");
-    component.loginForm.controls.userType.setValue("Admin");
     expect(component.loginForm.valid).toBeTruthy();
 
     expect(component.login()).not.toBeNull();
   });
 
   it("Login with invalid email should fail", () =>{
-    component.loginForm.controls.login_email.setValue("invalidemail@gmail.com");
-    component.loginForm.controls.login_password.setValue("Tr7hs8BjuX");
+    component.loginForm.controls.email.setValue("invalidemail@gmail.com");
+    component.loginForm.controls.password.setValue("Tr7hs8BjuX");
     component.loginForm.controls.organization.setValue("FABI");
-    component.loginForm.controls.userType.setValue("Admin");
     expect(component.loginForm.valid).toBeTruthy();
 
     expect(component.login()).toBeUndefined();
   });
 
   it("Login with invalid password should fail", () =>{
-    component.loginForm.controls.login_email.setValue("johndoe@gmail.com");
-    component.loginForm.controls.login_password.setValue("thewrongpassword");
+    component.loginForm.controls.email.setValue("johndoe@gmail.com");
+    component.loginForm.controls.password.setValue("thewrongpassword");
     component.loginForm.controls.organization.setValue("FABI");
-    component.loginForm.controls.userType.setValue("Admin");
     expect(component.loginForm.valid).toBeTruthy();
 
     expect(component.login()).toBeUndefined();
@@ -122,20 +119,18 @@ describe('LoginComponent', () => {
 
 
   it("Login with invalid organization should fail", () =>{
-    component.loginForm.controls.login_email.setValue("johndoe@gmail.com");
-    component.loginForm.controls.login_password.setValue("Tr7hs8BjuX");
+    component.loginForm.controls.email.setValue("johndoe@gmail.com");
+    component.loginForm.controls.password.setValue("Tr7hs8BjuX");
     component.loginForm.controls.organization.setValue("notFABI");
-    component.loginForm.controls.userType.setValue("Admin");
     expect(component.loginForm.valid).toBeTruthy();
 
     expect(component.login()).toBeUndefined();
   });
 
   it("Login with invalid user type should fail", () =>{
-    component.loginForm.controls.login_email.setValue("johndoe@gmail.com");
-    component.loginForm.controls.login_password.setValue("Tr7hs8BjuX");
+    component.loginForm.controls.email.setValue("johndoe@gmail.com");
+    component.loginForm.controls.password.setValue("Tr7hs8BjuX");
     component.loginForm.controls.organization.setValue("FABI");
-    component.loginForm.controls.userType.setValue("Hokage");
     expect(component.loginForm.valid).toBeTruthy();
 
     expect(component.login()).toBeUndefined();
