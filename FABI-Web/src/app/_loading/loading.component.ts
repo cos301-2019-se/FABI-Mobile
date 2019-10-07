@@ -5,7 +5,7 @@
  * Created Date: Monday, June 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Saturday, August 17th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,17 +14,25 @@
  */
 
 
-import { Component, OnInit, Inject } from '@angular/core';
+import * as core from '@angular/core';
 import { MAT_DIALOG_DATA } from "@angular/material";
 
-@Component({
+
+/**
+ *  used to display a loading bar pop-up
+ *
+ * @export
+ * @class LoadingComponent
+ * @implements {core.OnInit}
+ */
+@core.Component({
   selector: 'app-loading',
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.scss']
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent implements core.OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(@core.Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }

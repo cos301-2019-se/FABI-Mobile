@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,26 +13,23 @@
  * <<license>>
  */
 
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
-import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar, MatDialog } from '@angular/material';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { DISABLED } from '@angular/forms/src/model';
-
-import { ChangePasswordFormValidators } from "../../_interfaces/form-validators";
 import { LoadingComponent } from 'src/app/_loading/loading.component';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-admin-profile',
   templateUrl: './admin-profile.component.html',
   styleUrls: ['./admin-profile.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class AdminProfileComponent implements OnInit {
-
+export class AdminProfileComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -54,31 +51,30 @@ export class AdminProfileComponent implements OnInit {
   password: string = '';
   /** The staff member's confirmed password -  @type {string} */
   confirmPassword: string = '';
-
   /** The form to display the admin member's details -  @type {FormGroup} */
   adminProfileForm: FormGroup;
-
   /** The form to change the user's password -  @type {FormGroup} */
   changePasswordForm: FormGroup;
-
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
   profileTab: boolean = false;
-
-  submitted: boolean;
-
-  /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */  
+  /** To check if form has been submitted - @type {boolean} */
+  submitted: boolean = false;
+  /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
   userProfileLoading: boolean = true;
-
-  /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput : ElementRef;
-  /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput : ElementRef;
-
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
-
+  /** Check if user is editing their profile - @type {boolean} */
   isEditingProfile: boolean = false;
 
+  /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
+  @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
+  /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
+  @core.ViewChild("confirmInput") confirmInput: core.ElementRef;
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VALIDATORS
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   admin_profile_validators = {
     'admin_name': [
       { type: 'required', message: 'First name required' },
@@ -91,7 +87,6 @@ export class AdminProfileComponent implements OnInit {
       { type: 'pattern', message: 'Invalid email' }
     ]
   }
-
 
   change_password_validators = {
     'current_password': [
@@ -120,21 +115,21 @@ export class AdminProfileComponent implements OnInit {
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {FormBuilder} formBuilder Used to get the form elements from the HTML page
-   * @param {AuthenticationService} authService Used for all authentication and session control
-   * @param {Router} router
+   * @param {AuthenticationService} authService for calling the *authentication* service
+   * @param {Router} router for routing/navigating to other components
    * 
    * @memberof AdminProfileComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private userManagementService: UserManagementAPIService, 
-    private formBuilder: FormBuilder, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private snackBar: MatSnackBar, 
-    private authService: AuthenticationService, 
+    private userManagementService: UserManagementAPIService,
+    private formBuilder: FormBuilder,
+    private notificationLoggingService: NotificationLoggingService,
+    private snackBar: MatSnackBar,
+    private authService: AuthenticationService,
     private router: Router,
     private dialog: MatDialog
-    ) { 
+  ) {
     this.adminProfileForm = this.formBuilder.group({
       admin_name: ['', Validators.required],
       admin_surname: ['', Validators.required],
@@ -173,13 +168,6 @@ export class AdminProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
 
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    // this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
-    //   this.currentUser = this.authService.getCurrentSessionValue.user;
-    //   this.loadAdminProfileDetails();
-    // });
-
-    //******** TO BE USED IN PRODUCTION: ********
     // Calling the neccessary functions as the page loads
     this.currentUser = this.authService.getCurrentSessionValue.user;
     this.loadAdminProfileDetails();
@@ -187,7 +175,7 @@ export class AdminProfileComponent implements OnInit {
     this.adminProfileForm.get('admin_surname').disable();
     this.adminProfileForm.get('admin_email').disable();
   }
-  
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                         TOGGLE PROFILE 
@@ -210,7 +198,7 @@ export class AdminProfileComponent implements OnInit {
    * @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadAdminProfileDetails(){
+  loadAdminProfileDetails() {
     //The id number of the user that is currently logged in
     this.id = this.currentUser.ID;
     //The organization of the user that is currently logged in
@@ -218,7 +206,7 @@ export class AdminProfileComponent implements OnInit {
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true) {
         //Temporarily holds the data returned from the API call
         const data = response.data;
 
@@ -226,14 +214,14 @@ export class AdminProfileComponent implements OnInit {
         this.userProfileLoading = false;
 
         // Fill the form inputs with the user's details
-        this.adminProfileForm.setValue( {
+        this.adminProfileForm.setValue({
           admin_name: data.fname,
           admin_surname: data.surname,
           admin_email: data.email,
           admin_type: data.userType
         });
       }
-      else{
+      else {
         //Error handling
       }
     });
@@ -242,11 +230,11 @@ export class AdminProfileComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        SAVE CHANGES
   /**
-   *  This function will send the details to the API to save the changed details to the system.
+   *  This function will send the details to the API to save the changed profile details to the system.
    *  @memberof AdminDashboardComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  saveChanges(){
+  saveChanges() {
 
     this.submitted = true;
 
@@ -254,21 +242,21 @@ export class AdminProfileComponent implements OnInit {
     if (this.adminProfileForm.invalid) {
       return;
     }
-      
+
     var Uemail = this.adminProfileForm.controls.admin_email.value;
     var Uname = this.adminProfileForm.controls.admin_name.value;
     var Usurname = this.adminProfileForm.controls.admin_surname.value;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Profile Details" }});
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Profile Details" } });
 
     //Making a call to the User Management API Service to save the user's changed profile details
     this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
 
-      if(response.success == true){
-        
-         //Display message to say that details were successfully saved
+      if (response.success == true) {
+
+        //Display message to say that details were successfully saved
         let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
           duration: 3000
         });
@@ -277,7 +265,7 @@ export class AdminProfileComponent implements OnInit {
         this.loadAdminProfileDetails();
 
       }
-      else{
+      else {
         //Error handling
         let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
           duration: 3000
@@ -286,6 +274,15 @@ export class AdminProfileComponent implements OnInit {
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        CHANGE PASSWORD
+  /**
+   * This function is used to change the users password
+   *
+   * @returns
+   * @memberof AdminProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   changePassword() {
 
     this.submitted = true;
@@ -294,17 +291,17 @@ export class AdminProfileComponent implements OnInit {
     if (this.changePasswordForm.invalid) {
       return;
     }
-      
+
     var Ucurrent = this.changePasswordForm.controls.current_password.value;
     var Unew = this.changePasswordForm.controls.new_password.value;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Updating Password" }});
-    
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
+
     this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
 
-      if(response.success == true && response.code == 200){
+      if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
         let snackBarRef = this.snackBar.open("Successfully changed password.", "Dismiss", {
@@ -312,7 +309,7 @@ export class AdminProfileComponent implements OnInit {
         });
 
       }
-      else{
+      else {
         //Error handling
         let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
           duration: 3000
@@ -321,26 +318,38 @@ export class AdminProfileComponent implements OnInit {
     });
   }
 
-  
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     PASSWORD MATCH CHECK
+  /**
+   * This function will check that the *new password* and the *confirm password* fields are the same for the `change password` method.
+   *  This function is used for the form validators.
+   *
+   * @param {string} newP
+   * @param {string} confirmP
+   * @returns
+   * @memberof AdminProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   PasswordMatch(newP: string, confirmP: string) {
-      return (formGroup: FormGroup) => {
-        const newControl = formGroup.controls[newP];
-        const confirmControl = formGroup.controls[confirmP];
+    return (formGroup: FormGroup) => {
+      const newControl = formGroup.controls[newP];
+      const confirmControl = formGroup.controls[confirmP];
 
-        if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
-            // return if another validator has already found an error on the matchingControl
-            return;
-        }
+      if (confirmControl.errors && !confirmControl.errors.passwordMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
 
-        // set error on matchingControl if validation fails
-        if (newControl.value !== confirmControl.value) {
-          confirmControl.setErrors({ passwordMatch: true });
-        } else {
-          confirmControl.setErrors(null);
-        }
+      // set error on matchingControl if validation fails
+      if (newControl.value !== confirmControl.value) {
+        confirmControl.setErrors({ passwordMatch: true });
+      } else {
+        confirmControl.setErrors(null);
+      }
     }
   }
- 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            LOGOUT 
   /**
@@ -356,7 +365,7 @@ export class AdminProfileComponent implements OnInit {
 
   editProfileToggle() {
 
-    if(this.isEditingProfile) {
+    if (this.isEditingProfile) {
       this.adminProfileForm.get('admin_name').disable();
       this.adminProfileForm.get('admin_surname').disable();
       this.adminProfileForm.get('admin_email').disable();
@@ -367,7 +376,7 @@ export class AdminProfileComponent implements OnInit {
       this.adminProfileForm.get('admin_email').enable();
       this.isEditingProfile = true;
     }
-    
+
   }
 
 }

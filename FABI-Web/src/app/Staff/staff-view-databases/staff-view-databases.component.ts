@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 29th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,24 +14,18 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import * as http from '@angular/common/http';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
+import * as Interface from '../../_interfaces/interfaces';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { DatabaseManagementService } from "../../_services/database-management.service";
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar, MatTableDataSource } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
-import { ErrorComponent } from '../../_errors/error-component/error.component';
-import { MatTableModule } from '@angular/material/table';
-
 import { Porting } from '../../_services/porting.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-import * as Interface from '../../_interfaces/interfaces';
-import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 @Component({
   selector: 'app-staff-view-databases',
@@ -46,7 +40,6 @@ export class StaffViewDatabasesComponent implements OnInit {
 
   /** Indicates if a file is loading or not - @type {boolean} */
   loading: boolean = false;
-
   /** The data source of the HTML table - @type {MatTableDataSource([])} */
   databaseData: any[];
   fields: any[] = [];
@@ -56,7 +49,6 @@ export class StaffViewDatabasesComponent implements OnInit {
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
   currentUserPrivileges: any;
-
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
   /** Indicates if the profile tab is hidden/shown - @type {boolean} */
@@ -67,7 +59,6 @@ export class StaffViewDatabasesComponent implements OnInit {
   confirmPasswordInput: boolean = false;
   /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
-
   /** The search item the user is looking for in the table -  @type {string} */
   public searchDatabase: string = "";
   /** The search item the user is looking for in the table -  @type {string} */
@@ -87,7 +78,7 @@ export class StaffViewDatabasesComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DatabaseManagementService} dbService For calling the Database Management API service
    * @param {FormBuilder} formBuilder For building the HTML form to get its values
-   * @param {AuthenticationService} authService For authenticating the user
+   * @param {AuthenticationService} authService for calling the *authentication* serviceFor authenticating the user
    * @param {Router} router
    * 
    * @memberof StaffViewDatabasesComponent
@@ -105,15 +96,16 @@ export class StaffViewDatabasesComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    // this.authService.temporaryLoginStaff().subscribe((response : any) => {
-    //   this.currentUser = this.authService.getCurrentSessionValue.user;
-    //   this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
-    //   this.databases = this.currentUserPrivileges.databases;
-    // });
 
-    //******** TO BE USED IN PRODUCTION: ********
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @memberof StaffViewDatabasesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     //Calling the neccessary functions as the page loads
@@ -130,47 +122,36 @@ export class StaffViewDatabasesComponent implements OnInit {
    *  @memberof StaffViewDatabasesComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getCSV(){  
+  getCSV() {
     let data = "";
     let dbname = this.selectedDatabase;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Downloading CSV" }});
-    
-    this.dbService.retrieveDatabase(dbname).subscribe((response:any) => {
-        if(response.success == true && response.code == 200) {
-          data = response.data.docs;
-          let CSVdata = this.portCSV.extractDatabase(data, dbname);
-          
-          //Save data in csv file and show download dialog
-          var blob = new Blob([CSVdata], {type: 'text/csv;charset=utf-8'});
-          var downloadLink = document.createElement('a');
-          downloadLink.setAttribute('download', dbname+".csv" );
-          downloadLink.setAttribute('href', window.URL.createObjectURL(blob) );
-          var event = new MouseEvent("click");
-          downloadLink.dispatchEvent(event);
-        } 
-        else if (response.success == false) {
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          })
-        }    
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Downloading CSV" } });
 
-        loadingRef.close();
-      }, (err: HttpErrorResponse) => {
+    this.dbService.retrieveDatabase(dbname).subscribe((response: any) => {
+
+      loadingRef.close();
+
+      if (response.success == true && response.code == 200) {
+        data = response.data.docs;
+        let CSVdata = this.portCSV.extractDatabase(data, dbname);
+
+        //Save data in csv file and show download dialog
+        var blob = new Blob([CSVdata], { type: 'text/csv;charset=utf-8' });
+        var downloadLink = document.createElement('a');
+        downloadLink.setAttribute('download', dbname + ".csv");
+        downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
+        var event = new MouseEvent("click");
+        downloadLink.dispatchEvent(event);
+      }
+      else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        });
-      
-        loadingRef.close();
-    }); 
+      }
+
+      loadingRef.close();
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+    });
   }
 
 
@@ -217,12 +198,6 @@ export class StaffViewDatabasesComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the data", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
       }
 
       loadingRef.close();

@@ -45,15 +45,15 @@
     "jasmine": "^3.4.0",
     "jquery": "^3.4.1",
     "jspdf": "^1.5.3",
+    "jspdf-autotable": "^3.2.4",
     "ng-pipe-filter": "^1.0.4",
+    "ngx-cookie-service": "^2.2.0",
     "ngx-toastr": "^10.0.4",
     "rxjs": "~6.3.3",
     "tar": "^4.4.8",
     "toastr": "^2.1.4",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.26"
-  },
-  "devDependencies": {
+    "zone.js": "~0.8.26",
     "@angular-devkit/build-angular": "^0.13.9",
     "@angular/cli": "^7.3.9",
     "@angular/compiler-cli": "~7.2.0",
@@ -77,5 +77,8 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"
+  },
+  "devDependencies": {
+    
   }
 }

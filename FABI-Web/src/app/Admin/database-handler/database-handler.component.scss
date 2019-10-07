@@ -2,9 +2,8 @@
    DATABASE HANDLER
    ========================================================================== */
 
-
-
-/* Database Tables Subsection */
+/* Table Style
+   ========================================================================== */
 .database-tables {
   display: flex;
   flex-direction: column;
@@ -53,8 +52,8 @@
 
 
 
-/* Staff Handler View Staff Modal Section
-     ========================================================================== */
+/* Modal Style
+   ========================================================================== */
 
 .modal-header {
   background-color: #6aa84f;
@@ -102,7 +101,7 @@ modal {
   margin-top: 25px;
 }
 
-.preview-actions h6{
+.preview-actions h6 {
   color: #72b555;
   font-family: "Montserrat", sans-serif;
 }
@@ -114,8 +113,6 @@ modal {
 .btn.btn-default-cancel {
   width: 30%;
 }
-
-
 
 #confirmDeleteModal .modal-body {
   display: flex;
