@@ -78,5 +78,7 @@
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "karma-spec-reporter": "0.0.32"
+  }
 }

@@ -8,6 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { UserManagementAPIService } from "../_services/user-management-api.service";
 
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
@@ -41,6 +42,16 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  //Check if services are defined
+  it('should be defined', () => {
+    expect(UserManagementAPIService).toBeTruthy();
+  });
+
+  it('should be defined', () => {
+    expect(CookieService).toBeTruthy();
+  });
+
+  //Contact Form Tests
   it("Empty form expect invalid", () => {
     component.contact_form.controls.name.setValue("");
     component.contact_form.controls.email.setValue("");
@@ -73,6 +84,7 @@ describe('HomeComponent', () => {
     expect(component.contact_form.valid).toBeTruthy();
   });
 
+  //Request to Register Form Tests
   it("Empty form expect invalid", () => {
     component.request_register_org.controls.organization_name.setValue("");
     component.request_register_org.controls.admin_name.setValue("");
