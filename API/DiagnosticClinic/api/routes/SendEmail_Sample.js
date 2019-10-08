@@ -35,7 +35,7 @@ const sendSampleSubmission = function(refNumber, email, fname, surname, prediagn
         to: email,                              
         subject: "FABI Mobile | Sample Submission",
         text: "",
-        template: 'html',
+        template: 'sampleSent',
         context: {
             refNumber: refNumber,
             fname: fname,
