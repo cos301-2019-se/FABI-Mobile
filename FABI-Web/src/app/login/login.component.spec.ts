@@ -136,7 +136,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.email.setValue('invalidemail@gmail.com');
     component.loginForm.controls.password.setValue('Tr7hs8BjuX');
     component.loginForm.controls.organization.setValue('FABI');
-    expect(component.loginForm.valid).toBeTruthy();
+    expect(component.loginForm.valid).toBeFalsy();
 
     expect(component.login()).toBeUndefined();
   });
@@ -145,7 +145,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.email.setValue('johndoe@gmail.com');
     component.loginForm.controls.password.setValue('thewrongpassword');
     component.loginForm.controls.organization.setValue('FABI');
-    expect(component.loginForm.valid).toBeTruthy();
+    expect(component.loginForm.valid).toBeFalsy();
 
     expect(component.login()).toBeUndefined();
   });
@@ -154,7 +154,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.email.setValue('johndoe@gmail.com');
     component.loginForm.controls.password.setValue('Tr7hs8BjuX');
     component.loginForm.controls.organization.setValue('notFABI');
-    expect(component.loginForm.valid).toBeTruthy();
+    expect(component.loginForm.valid).toBeFalsy();
 
     expect(component.login()).toBeUndefined();
   });
