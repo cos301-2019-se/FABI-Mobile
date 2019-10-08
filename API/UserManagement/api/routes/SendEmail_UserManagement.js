@@ -46,7 +46,7 @@ const sendOrganizationRequestDenied = function(orgName, email, reason) {
         to: email,                             
         subject: "FABI Mobile | Registration Denied",
         text: "",
-        template: 'html',
+        template: 'requestDenied',
         context: {
             orgName: orgName,
             reason: reason
@@ -81,11 +81,11 @@ const sendOrganizationTemporaryPin = function(orgName, email, fname, surname, pa
 
     transporter.use('compile', hbs({
         viewEngine: {
-            viewPath: path.resolve(__dirname, 'templates', 'RequestSuccess_Organization'),
+            viewPath: path.resolve(__dirname, 'templates', 'OrganizationRegistration'),
             extName: '.hbs',
             defaultLayout: false
         },
-        viewPath: path.resolve(__dirname, 'templates', 'RequestSuccess_Organization'),
+        viewPath: path.resolve(__dirname, 'templates', 'OrganizationRegistration'),
         extName: '.hbs'
     }));
     
@@ -95,7 +95,7 @@ const sendOrganizationTemporaryPin = function(orgName, email, fname, surname, pa
         to: email,                              
         subject: "FABI Mobile | Registration Success",
         text: "",
-        template: 'html',
+        template: 'organizationRegistration',
         context: {
             orgName: orgName,
             fname: fname,
@@ -145,7 +145,7 @@ const sendUserTemporaryPin = function(orgName, email, fname, surname, pass, role
         to: email,                              
         subject: "FABI Mobile | Temporary Password",
         text: "",
-        template: 'html',
+        template: 'memberRegistration',
         context: {
             details: `Organization: ${orgName}. Role: ${role}`,
             fname: fname,

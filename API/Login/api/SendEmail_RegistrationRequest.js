@@ -46,7 +46,7 @@ const sendOrganizationRequestToOrg = function(orgName, email) {
         to: email,
         subject: "FABI Mobile | Request Sent",
         text: "",
-        template: 'html',
+        template: 'requestSent',
         context: {
             orgName: orgName
         }
@@ -78,11 +78,11 @@ const sendOrganizationRequestToFABI = function(orgName, fname, surname, email) {
 
     transporter.use('compile', hbs({
         viewEngine: {
-            viewPath: path.resolve(__dirname, 'routes', 'templates', 'RequestReceived_FABI'),
+            viewPath: path.resolve(__dirname, 'routes', 'templates', 'OrganizationRequestReceived_FABI'),
             extName: '.hbs',
             defaultLayout: false
         },
-        viewPath: path.resolve(__dirname, 'routes', 'templates', 'RequestReceived_FABI'),
+        viewPath: path.resolve(__dirname, 'routes', 'templates', 'OrganizationRequestReceived_FABI'),
         extName: '.hbs'
     }));
     
@@ -92,7 +92,7 @@ const sendOrganizationRequestToFABI = function(orgName, fname, surname, email) {
         to: 'novacapstone@gmail.com',                               /////////////////////////////////// change to super user ////////////////////////////////
         subject: "FABI Mobile | Organization Requested to Register",
         text: "",
-        template: 'html',
+        template: 'requestReceived',
         context: {
             orgName: orgName,
             details: `Administrator: \n Name: ${fname} ${surname} \n Email: ${email} `
