@@ -76,8 +76,8 @@ export class SampleFormComponent implements OnInit {
       name: "Stems"
     },
     {
-      value: "roots",
-      name: "roots"
+      value: "root",
+      name: "root"
     },
     {
       value: "twigs",
@@ -88,8 +88,9 @@ export class SampleFormComponent implements OnInit {
       name: "Leaves/Needles"
     },
     {
-      value: "sedlings",
+      value: "seedlings",
       name: "Seedlings/Cuttings"
+      // name: "Seed/Cuttings"
     },
     {
       value: "media",
@@ -108,44 +109,48 @@ export class SampleFormComponent implements OnInit {
       name: "Nuts"
     },
     {
-      value: "root",
+      value: "rootcollar",
       name: "Root-Collar"
     }
   ]
 
   type_symptoms: any = [
     {
-      value: false,
-      name: "Wilt"
+      value: "wilted",
+      name: "Wilted"
     },
     {
-      value: false,
+      value: "Stunting",
       name: "Stunting"
     },
     {
-      value: false,
+      value: "Dry",
+      name: "Dry"
+    },
+    {
+      value: "Leaf Spot",
       name: "Leaf Spot"
     },
     {
-      value: false,
+      value: "Root Rot",
       name: "Root Rot"
     },
     {
-      value: false,
-      name: "Die-Back"
+      value: "Die-back",
+      name: "Die-back"
     },
     {
-      value: false,
+      value: "Cankers",
       name: "Cankers"
     },
     {
-      value: false,
+      value: "Death",
       name: "Death"
     },
     {
-      value: false,
+      value: "Wood Borer Damage/Holes/Tunnels/Frass(sawdust)",
       name: "Wood Borer Damage/Holes/Tunnels/Frass(sawdust)"
-    },
+    }
   ]
 
   /** The details of the user currently logged in -  @type {any} */
@@ -211,7 +216,7 @@ export class SampleFormComponent implements OnInit {
       symptoms: this.formBuilder.group({
         soil: new FormArray([]),
         stems: new FormArray([]),
-        roots: new FormArray([]),
+        root: new FormArray([]),
         twigs: new FormArray([]),
         leaves: new FormArray([]),
         seedlings: new FormArray([]),
@@ -219,7 +224,7 @@ export class SampleFormComponent implements OnInit {
         water: new FormArray([]),
         insect: new FormArray([]),
         nuts: new FormArray([]),
-        root: new FormArray([]),
+        rootcollar: new FormArray([]),
         // other: new FormArray([]),
       }, { validator: this.requireCheckboxesToBeCheckedValidator() }),
 
@@ -307,7 +312,7 @@ export class SampleFormComponent implements OnInit {
     });
     this.type_symptoms.map(() => {
       const control = new FormControl(false);
-      (this.sampleForm.get('symptoms').get('roots') as FormArray).push(control)
+      (this.sampleForm.get('symptoms').get('root') as FormArray).push(control)
     });
     this.type_symptoms.map(() => {
       const control = new FormControl(false);
@@ -339,7 +344,7 @@ export class SampleFormComponent implements OnInit {
     });
     this.type_symptoms.map(() => {
       const control = new FormControl(false);
-      (this.sampleForm.get('symptoms').get('root') as FormArray).push(control)
+      (this.sampleForm.get('symptoms').get('rootcollar') as FormArray).push(control)
     });
 
     this.stepOneContent = true;
@@ -373,7 +378,7 @@ export class SampleFormComponent implements OnInit {
       this.sampleForm.get('symptoms').get(type.value).value.forEach((value, i) => {
 
         if (value == true) {
-          symptoms.push(this.type_symptoms[i].name);
+          symptoms.push(this.type_symptoms[i].value);
         }
 
       });
@@ -456,9 +461,11 @@ export class SampleFormComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Error', 'An error occurred while trying to send sample form');
       }
     }, (err: HttpErrorResponse) => {
       //Handled in error-handler
+      this.notificationService.showErrorNotification('Error', 'An error occurred while trying to send sample form');
     })
 
   }
@@ -491,7 +498,7 @@ export class SampleFormComponent implements OnInit {
           }
         });
 
-        this.sampleForm.get('plantation_details').disable();
+        // this.sampleForm.get('plantation_details').disable();
         this.sampleForm.get('plantation_details').get('farm').enable();
       }
 
@@ -554,7 +561,7 @@ export class SampleFormComponent implements OnInit {
             }
           });
 
-          this.sampleForm.get('plantation_details').disable();
+          // this.sampleForm.get('plantation_details').disable();
           this.sampleForm.get('plantation_details').get('farm').enable();
 
         } else {

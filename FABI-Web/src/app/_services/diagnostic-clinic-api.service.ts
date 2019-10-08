@@ -172,6 +172,7 @@ export class DiagnosticClinicAPIService {
     let method = 'POST';
 
     const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
       "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
@@ -207,10 +208,10 @@ export class DiagnosticClinicAPIService {
     let method = 'POST';
 
     const postData = {
-      // "orgName": this.authService.getCurrentSessionValue.user.organisation,
-      // "userID": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": "PendingOrg6",
-      "userID": "1570469049518",
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
+      // "orgName": "PendingOrg6",
+      // "userID": "1570469049518",
       "data": {
         "sample": sampleDetails
       }
@@ -222,8 +223,8 @@ export class DiagnosticClinicAPIService {
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
         'Accept': 'application/json',
-        // 'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
-        'Authorization': `Bearer 2a2be1526acc985f468b36d029f9baf701ba90d5`
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+        // 'Authorization': `Bearer 2a2be1526acc985f468b36d029f9baf701ba90d5`
 
       },
       body: postData,
