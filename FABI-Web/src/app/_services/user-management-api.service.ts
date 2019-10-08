@@ -33,6 +33,7 @@ const getAllOrganizationMembers = `${config.userManagementURL}/getAllOrgMembers`
 const getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;
 const updateStaffMemberDetailsURL = `${config.userManagementURL}/updateStaffMember`;
 const updateOrganizationMemberDetailsURL = `${config.userManagementURL}/updateOrgMember`;
+// const getIndividualDeta/ilsURL = `${config.userManagementURL}/getIndividualDetails`;
 
 //Object for defining how a member of FABI is structured
 export interface Member {
@@ -930,4 +931,117 @@ export class UserManagementAPIService {
 
     return this.http.request<any>(method, getFABIAdminURL, options);
   }
+
+
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // //                                                    GET SESSIONLESS USER DETAILS
+  // /**
+  //  * This function is used to get the details for a single member.
+  //  * 
+  //  * @param {string} email The email of the user
+  //  * @param {string} org The organisation of the user
+  //  * 
+  //  * @returns API response @type any
+  //  *
+  //  * @memberof UserManagementAPIService
+  //  */
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // getSessionlessUserDetails(org: string, email: string){
+  //   let method = 'POST';
+
+  //   const postData = {
+  //     "email": email,
+  //     "orgName": org
+  //   }
+
+  //   const options = {
+  //     headers: {
+  //       'cache-control': 'no-cache',
+  //       'Content-Type': 'application/json',
+  //       "Access-Control-Allow-Origin": "*",
+  //       'Accept': 'application/json'
+  //     },
+  //     body: postData,
+  //     json: true
+  //   };
+
+  //   return this.http.request<any>(method, getIndividualDetailsURL, options);
+  // }
+
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // //                                                    RESET FABI PASSWORD
+  // /**
+  //  * This function is used to reset a forgotten password for FABI staff.
+  //  * 
+  //  * @param {string} email The email of the user
+  //  * @param {string} password The new password for the user
+  //  * @param {string} id The id number of the user
+  //  * 
+  //  * @returns API response @type any
+  //  *
+  //  * @memberof UserManagementAPIService
+  //  */
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // resetFABIPassword(password: string, id: string){
+  //   let method = 'POST';
+
+  //   const postData = {
+  //     "id": id,
+  //     "fields": {
+  //       "password": password
+  //     }
+  //   }
+
+  //   const options = {
+  //     headers: {
+  //       'cache-control': 'no-cache',
+  //       'Content-Type': 'application/json',
+  //       "Access-Control-Allow-Origin": "*",
+  //       'Accept': 'application/json'
+  //     },
+  //     body: postData,
+  //     json: true
+  //   };
+
+  //   return this.http.request<any>(method, updateStaffMemberDetailsURL, options);
+  // }
+
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // //                                                    RESET ORG MEMBER PASSWORD
+  // /**
+  //  * This function is used to reset a forgotten password for FABI staff.
+  //  * 
+  //  * @param {string} org The organisation of the user
+  //  * @param {string} password The new password for the user
+  //  * @param {string} id The id number of the user
+  //  * 
+  //  * @returns API response @type any
+  //  *
+  //  * @memberof UserManagementAPIService
+  //  */
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // resetOrgMemberPassword(password: string, id: string, org: string){
+  //   let method = 'POST';
+
+  //   const postData = {
+  //     "orgName": org,
+  //     "id": id,
+  //     "fields": {
+  //       "password": password
+  //     }
+  //   }
+
+  //   const options = {
+  //     headers: {
+  //       'cache-control': 'no-cache',
+  //       'Content-Type': 'application/json',
+  //       "Access-Control-Allow-Origin": "*",
+  //       'Accept': 'application/json'
+  //     },
+  //     body: postData,
+  //     json: true
+  //   };
+
+  //   return this.http.request<any>(method, updateOrganizationMemberDetailsURL, options);
+  // }
 }

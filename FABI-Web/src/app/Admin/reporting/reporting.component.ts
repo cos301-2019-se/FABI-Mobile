@@ -18,9 +18,11 @@ import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
+
 //These imports are used to created a downloadable PDF of the reports
 import * as jspdf from 'jspdf';
 import 'jspdf-autotable';
+
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';

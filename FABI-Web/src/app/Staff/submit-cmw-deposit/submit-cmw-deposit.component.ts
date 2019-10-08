@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -21,6 +21,8 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { CMWDeposit, CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationService } from '../../_services/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @core.Component({
   selector: 'app-submit-cmw-deposit',
@@ -108,6 +110,7 @@ export class SubmitCmwDepositComponent implements core.OnInit {
    * Creates an instance of SubmitCmwDepositComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
+   * @param {NotificationService} notificationService For calling the Notification service
    * @param {CultureCollectionAPIService} cultureCollectionService for making calls to the Culture Collection API Service
    * @param {NotificationLoggingAPIService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
@@ -126,6 +129,7 @@ export class SubmitCmwDepositComponent implements core.OnInit {
     private cultureCollectionService: CultureCollectionAPIService,
     private authService: AuthenticationService,
     private router: Router,
+    private notificationService: NotificationService,
     private notificationLoggingService: NotificationLoggingService
   ) {
     this.cmwDepositForm = this.formBuilder.group({
@@ -354,18 +358,15 @@ export class SubmitCmwDepositComponent implements core.OnInit {
         this.cmwDepositForm.reset();
 
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("CMW Deposit form successfully submitted.", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification("Submitted Deposit Form", "Your CMW deposit form has been successfully submitted");
       }
       else {
         //Error handling
-
-        //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Could not submit CMW Deposit form. Please try again.", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification("Error Submitting Form", "There was an error in submiting the deposit form. Please try again");
       }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Error Submitting Form", "There was an error in submiting the deposit form. Please try again");
     });
   }
 

@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -136,6 +136,7 @@ export class StaffNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
   }
@@ -238,6 +239,7 @@ export class StaffNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
   }
@@ -314,6 +316,7 @@ export class StaffNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
   }
@@ -352,7 +355,7 @@ export class StaffNotificationComponent implements core.OnInit {
 
     this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.ID, this.newNotifications).subscribe((response: any) => {
       if (response.success == true) {
-
+        //Successfully removed notification
       }
       else {
         //Error handling

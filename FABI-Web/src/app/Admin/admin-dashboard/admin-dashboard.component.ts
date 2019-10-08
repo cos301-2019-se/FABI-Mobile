@@ -62,8 +62,7 @@ export class AdminDashboardComponent implements core.OnInit {
 
   /** Object array for holding the administrators -  @type {AdminMember[]} */
   admins: AdminMember[] = [];
-  /** Object array for holding the staff members -  @type {StaffMember
-   * []} */
+  /** Object array for holding the staff members -  @type {StaffMember []} */
   staff: StaffMember[] = [];
 
   /** Object array for holding all of FABI's samples -  @type {Object[]} */
