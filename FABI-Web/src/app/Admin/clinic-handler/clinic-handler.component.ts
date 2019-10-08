@@ -243,8 +243,6 @@ export class ClinicHandlerComponent implements core.OnInit {
 
     this.valid = true;
 
-    
-
     const LstaffName = this.addStaffForm.controls.user.value.fname;
     const LstaffSurname = this.addStaffForm.controls.user.value.surname;
     const LstaffEmail = this.addStaffForm.controls.user.value.email;

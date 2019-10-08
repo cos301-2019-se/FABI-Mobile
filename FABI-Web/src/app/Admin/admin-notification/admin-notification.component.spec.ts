@@ -1,18 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-//Router
-import { RouterTestingModule } from '@angular/router/testing';
-//Import form components
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-//Import the materials component
-import { MaterialModule } from '../../materials';
-//Http Testing
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-//Animation Testing
-import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DebugElement, NgModule } from '@angular/core';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+
+import { RouterTestingModule } from '@angular/router/testing';
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+import { MaterialModule } from '../../materials';
+
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient } from '@angular/common/http';
+
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { DebugElement } from '@angular/core';
 
 import { AdminNotificationComponent } from './admin-notification.component';
 
@@ -48,10 +52,17 @@ describe('AdminNotificationComponent', () => {
     fixture.autoDetectChanges();
   });
 
+  // -------- Component Creation Tests - Boilerplate Test Case --------
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  // -------- Service Creation Tests --------
+  it('should be defined', () => {
+    expect(UserManagementAPIService).toBeTruthy();
+  });
+
+  // -------- Service Tests --------
   it('get All Staff', () => {
     let spy = spyOn(UserManagementService, 'getAllFABIStaff');
     component.getAllStaff();

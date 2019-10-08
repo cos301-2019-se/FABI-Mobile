@@ -23,8 +23,6 @@ import { LoadingComponent } from "../_loading/loading.component";
 import { UserManagementAPIService } from "../_services/user-management-api.service";
 import { CookieService } from 'ngx-cookie-service';
 
-
-
 @core.Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -204,4 +202,3 @@ export class HomeComponent implements core.OnInit {
   }
 
 }
-

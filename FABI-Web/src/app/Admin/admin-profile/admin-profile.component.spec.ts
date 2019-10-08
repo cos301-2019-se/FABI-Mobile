@@ -2,22 +2,28 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import 'jasmine';
 
 import { AdminProfileComponent } from './admin-profile.component';
-//Router
+
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
+
 import { RouterTestingModule } from '@angular/router/testing';
 
-//Import form components
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-//Import the materials component
 import { MaterialModule } from '../../materials';
 
-//Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { HttpClient } from '@angular/common/http';
 
-//Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { DebugElement } from '@angular/core';
+
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
+
+import { FilterPipe } from '../../_pipes/filter.pipe';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import {MatDialogModule} from '@angular/material/dialog';
@@ -26,21 +32,25 @@ describe('AdminProfileComponent', () => {
   let component: AdminProfileComponent;
   let fixture: ComponentFixture<AdminProfileComponent>;
 
+  let UserManagementService: UserManagementAPIService;
+  let notificationLoggingService: NotificationLoggingService;
+  let authService: AuthenticationService;
+
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
-        return { "user" : "" };
+        return { 'user' : '' };
     }
-  } 
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule, 
-        MaterialModule, 
-        RouterTestingModule, 
-        HttpClientTestingModule, 
-        NoopAnimationsModule, 
-        BrowserAnimationsModule, 
+        ReactiveFormsModule,
+        MaterialModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        NoopAnimationsModule,
+        BrowserAnimationsModule,
         MatDialogModule
       ],
       declarations: [ AdminProfileComponent ],
@@ -57,55 +67,104 @@ describe('AdminProfileComponent', () => {
     fixture = TestBed.createComponent(AdminProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    UserManagementService = new UserManagementAPIService( null , null);
+    notificationLoggingService = new NotificationLoggingService(null, null);
+    authService = new AuthenticationService(null);
   });
 
+  // -------- Component Creation Tests - Boilerplate Test Case --------
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it("Empty form expect invalid", () => {
-    component.adminProfileForm.controls.admin_name.setValue("");
-    component.adminProfileForm.controls.admin_surname.setValue("");
-    component.adminProfileForm.controls.admin_email.setValue("");
-    component.adminProfileForm.controls.admin_type.setValue("");
-
-    expect(component.adminProfileForm.valid).toBeFalsy();
+  // -------- Service Creation Tests --------
+  it('should be defined', () => {
+    expect(AuthenticationService).toBeTruthy();
   });
 
-  it("Empty admin surname expect admin surname invalid", () => {
-    component.adminProfileForm.controls.admin_name.setValue("Tester");
-    component.adminProfileForm.controls.admin_surname.setValue("");
-    component.adminProfileForm.controls.admin_email.setValue("");
-    component.adminProfileForm.controls.admin_type.setValue("");
+  it('should be defined', () => {
+    expect(UserManagementAPIService).toBeTruthy();
+  });
+
+  it('should be defined', () => {
+    expect(NotificationLoggingService).toBeTruthy();
+  });
+
+  // -------- Initial State Tests --------
+  it('Component initial state', () => {
+    expect(component.submitted).toBeFalsy();
+    expect(component.profileTab).toBeFalsy();
+    expect(component.isEditingProfile).toBeFalsy();
+    expect(component.userProfileLoading).toBeTruthy();
+  });
+
+  // -------- Form Controls Tests --------
+  it('Empty admin name expect admin name invalid', () => {
+    component.adminProfileForm.controls.admin_name.setValue('');
+
+    expect(component.adminProfileForm.controls.admin_name.valid).toBeFalsy();
+  });
+
+  it('Empty admin surname expect admin surname invalid', () => {
+    component.adminProfileForm.controls.admin_surname.setValue('');
 
     expect(component.adminProfileForm.controls.admin_surname.valid).toBeFalsy();
   });
 
-  it("Empty admin email expect admin email invalid", () => {
-    component.adminProfileForm.controls.admin_name.setValue("TesterFName");
-    component.adminProfileForm.controls.admin_surname.setValue("TesterLName");
-    component.adminProfileForm.controls.admin_email.setValue("");
-    component.adminProfileForm.controls.admin_type.setValue("");
+  it('Empty admin email expect admin email invalid', () => {
+    component.adminProfileForm.controls.admin_email.setValue('');
 
     expect(component.adminProfileForm.controls.admin_email.valid).toBeFalsy();
   });
 
-  it("Empty admin type expect admin type invalid", () => {
-    component.adminProfileForm.controls.admin_name.setValue("TesterFName");
-    component.adminProfileForm.controls.admin_surname.setValue("TesterLName");
-    component.adminProfileForm.controls.admin_email.setValue("tester@gmail.com");
-    component.adminProfileForm.controls.admin_type.setValue("");
+  it('Empty admin type expect admin type invalid', () => {
+    component.adminProfileForm.controls.admin_type.setValue('');
 
     expect(component.adminProfileForm.controls.admin_type.valid).toBeFalsy();
   });
 
-  it("Valid form expect true", () => {
-    component.adminProfileForm.controls.admin_name.setValue("TesterFName");
-    component.adminProfileForm.controls.admin_surname.setValue("TesterLName");
-    component.adminProfileForm.controls.admin_email.setValue("tester@gmail.com");
-    component.adminProfileForm.controls.admin_type.setValue("super");
+  it('Empty form expect invalid', () => {
+    component.adminProfileForm.controls.admin_name.setValue('');
+    component.adminProfileForm.controls.admin_surname.setValue('');
+    component.adminProfileForm.controls.admin_email.setValue('');
+    component.adminProfileForm.controls.admin_type.setValue('');
+
+    expect(component.adminProfileForm.valid).toBeFalsy();
+  });
+
+  it('Valid form expect true', () => {
+    component.adminProfileForm.controls.admin_name.setValue('TesterFName');
+    component.adminProfileForm.controls.admin_surname.setValue('TesterLName');
+    component.adminProfileForm.controls.admin_email.setValue('tester@gmail.com');
+    component.adminProfileForm.controls.admin_type.setValue('super');
 
     expect(component.adminProfileForm.valid).toBeTruthy();
+  });
+
+  // -------- Service Tests --------
+  it('get user details', () =>{
+    let spy = spyOn(UserManagementService, 'getUserDetails');
+    component.loadAdminProfileDetails();
+    expect(spy).toBeTruthy();
+  });
+
+  it('update fabi member details', () =>{
+    let spy = spyOn(UserManagementService, 'updateFABIMemberDetails');
+    component.saveChanges();
+    expect(spy).toBeTruthy();
+  });
+
+  it('update staff password', () =>{
+    let spy = spyOn(UserManagementService, 'updateStaffPassword');
+    component.changePassword();
+    expect(spy).toBeTruthy();
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
   });
 
 });
