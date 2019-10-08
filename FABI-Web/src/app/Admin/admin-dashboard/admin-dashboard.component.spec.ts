@@ -1,29 +1,100 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminDashboardComponent } from './admin-dashboard.component';
+import { AdminNotificationComponent } from '../admin-notification/admin-notification.component';
+import { AdminProfileComponent } from '../admin-profile/admin-profile.component';
+import { AdminHelpComponent } from '../admin-help/admin-help.component';
 import { MaterialModule} from '../../materials';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FilterPipe } from '../../_pipes/filter.pipe';
 
-// describe('AdminDashboardComponent', () => {
-//   let component: AdminDashboardComponent;
-//   let fixture: ComponentFixture<AdminDashboardComponent>;
+//Router
+import { RouterTestingModule } from '@angular/router/testing';
 
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [ AdminDashboardComponent ],
-//       imports: [MaterialModule,
-//         NoopAnimationsModule]
-//     })
-//     .compileComponents();
-//   }));
+//Import form components
+import { ReactiveFormsModule } from '@angular/forms';
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(AdminDashboardComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
+//Http Testing
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient } from '@angular/common/http';
+
+describe('AdminDashboardComponent', () => {
+  let component: AdminDashboardComponent;
+  let fixture: ComponentFixture<AdminDashboardComponent>;
+  let UserManagementService: UserManagementAPIService;
+  let DiagnosticClinicService : DiagnosticClinicAPIService;
+  let authService : AuthenticationService;
+
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  } 
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+            AdminDashboardComponent,
+            AdminNotificationComponent,
+            AdminHelpComponent,
+            AdminProfileComponent,
+            FilterPipe
+        ],
+      imports: [
+            MaterialModule,
+            ReactiveFormsModule,
+            HttpClientTestingModule,
+            NoopAnimationsModule,
+            RouterTestingModule
+        ],
+        providers: [
+            { provide: AuthenticationService, useClass: MockAuthenticationService }
+          ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AdminDashboardComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges(); 
+    UserManagementService = new UserManagementAPIService( null , null);
+    DiagnosticClinicService = new DiagnosticClinicAPIService(null, null);
+    authService = new AuthenticationService(null);
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('get Number Of Fabi Members', () =>{
+    let spy = spyOn(UserManagementService, 'getAllFABIStaff');
+    component.getNumberOfFABIMembers();
+    expect(spy).toBeTruthy();
+  });
+
+  it('get Number Of FABI Samples', () =>{
+    let spy = spyOn(DiagnosticClinicService, 'getAllSamples');
+    component.getNumberOfFABIMembers();
+    expect(spy).toBeTruthy();
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
+  });
+
+  it('toggle notification tab', () =>{
+    expect(component.toggleNotificationsTab()).toBeUndefined();
+  });
+
+  it('toggle profile tab', () =>{
+    expect(component.toggleProfileTab()).toBeUndefined();
+  });
+
+});

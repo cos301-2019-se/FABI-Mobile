@@ -25,10 +25,14 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 
 import { FilterPipe } from '../../_pipes/filter.pipe';
 import { AuthenticationService } from 'src/app/_services/authentication.service'
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
+
 
 describe('ReportingComponent', () => {
   let component: ReportingComponent;
   let fixture: ComponentFixture<ReportingComponent>;
+  let UserManagementService: UserManagementAPIService;
+
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -59,9 +63,21 @@ describe('ReportingComponent', () => {
     fixture = TestBed.createComponent(ReportingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    UserManagementService = new UserManagementAPIService( null , null);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('load user details', () => {
+    expect(component.loadUserDetails("")).toEqual('');
+  });
+
+  it('get All staff', () =>{
+    let spy = spyOn(UserManagementService, 'getAllFABIStaff');
+    component.getAllStaff();
+    expect(spy).toBeTruthy();
+  });
+
 });

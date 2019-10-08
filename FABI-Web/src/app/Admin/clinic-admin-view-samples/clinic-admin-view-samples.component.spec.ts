@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +26,7 @@ import { FilterPipe } from '../../_pipes/filter.pipe';
 describe('ClinicAdminViewSamplesComponent', () => {
   let component: ClinicAdminViewSamplesComponent;
   let fixture: ComponentFixture<ClinicAdminViewSamplesComponent>;
+  let DiagnosticClinicService : DiagnosticClinicAPIService;
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -50,9 +52,17 @@ describe('ClinicAdminViewSamplesComponent', () => {
     fixture = TestBed.createComponent(ClinicAdminViewSamplesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    DiagnosticClinicService = new DiagnosticClinicAPIService(null, null);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('view samples', () => {
+    let spy = spyOn(DiagnosticClinicService, 'getAllSamples');
+    component.viewSamples();
+    expect(spy).toBeTruthy();
+  });
+
 });
