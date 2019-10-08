@@ -83,6 +83,11 @@ export class DiagnosticClinicAPIService {
     const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
     const method = "POST";
 
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
+    }
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -90,6 +95,7 @@ export class DiagnosticClinicAPIService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
+      body: postData,
       json: true
     };
 
@@ -140,7 +146,8 @@ export class DiagnosticClinicAPIService {
     let method = 'POST';
 
     const postData = {
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
     }
 
     const options = {
@@ -250,7 +257,9 @@ export class DiagnosticClinicAPIService {
     let method = 'POST';
 
     const postData = {
-      "refNum": sampleRefNum
+      "refNum": sampleRefNum,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
     }
 
     const options = {
@@ -286,7 +295,9 @@ export class DiagnosticClinicAPIService {
 
     const postData = {
       "refNum": sample.referenceNumber,
-      "status": status
+      "status": status,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
     }
 
     const options = {

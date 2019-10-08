@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, October 7th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -52,6 +52,7 @@ export interface POSTOrganization {
 export interface POSTMember {
   orgName: string;        //The name of the organization to be fetched
   id: string;             //THe ID of the user
+  userID: string
 }
 
 //Object for defning the JSOn object to be sent when the details of a FABI member are updated
@@ -65,6 +66,7 @@ export interface UpdateMember {
 export interface POSTUpdateMember {
   orgName: string,
   id: string;                 //The ID number of the FABI member to be updated
+  userID: string
   fields: UpdateMember;       //The fields to the updated
 }
 
@@ -79,6 +81,7 @@ export interface UpdateOrganization {
 export interface POSTUpdateOrganization {
   orgName: string;            //The name of the organization
   id: string;                 //The ID of the organization member to be updated
+  userID: string
   fields: UpdateMember;       //The fields to be updated
 }
 
@@ -116,7 +119,8 @@ export class UserManagementAPIService {
   getAllFABIStaff() {
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -151,7 +155,7 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getUserDetails(organization: string, idNo: string) {    
-    var data: POSTMember = { orgName: organization, id: idNo };
+    var data: POSTMember = { orgName: organization, id: idNo, userID: this.authService.getCurrentSessionValue.user.ID };
 
     const options = {
       method: 'POST',
@@ -195,6 +199,7 @@ export class UserManagementAPIService {
     var data: POSTUpdateMember = { 
       orgName: this.authService.getCurrentSessionValue.user.organisation,
       id: this.authService.getCurrentSessionValue.user.ID, 
+      userID: this.authService.getCurrentSessionValue.user.ID,
       fields: member 
     };
 
@@ -244,6 +249,7 @@ export class UserManagementAPIService {
     var data: POSTUpdateOrganization = { 
       orgName: this.authService.getCurrentSessionValue.user.organisation,
       id: this.authService.getCurrentSessionValue.user.ID, 
+      userID: this.authService.getCurrentSessionValue.user.ID,
       fields: member 
     };
 
@@ -284,7 +290,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -318,7 +325,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -353,7 +361,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -385,6 +394,12 @@ export class UserManagementAPIService {
     const getAllOrganizationsURL = `${config.userManagementURL}/getAllOrganizations`;
     const method = 'POST';
     
+    const postData = {
+      "id": this.authService.getCurrentSessionValue.user.ID,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
+    }
+
     const options = {
       headers: new HttpHeaders({
         'cache-control': 'no-cache',
@@ -393,6 +408,7 @@ export class UserManagementAPIService {
         'Accept': 'application/json',
         // 'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       }),
+      body: postData,
       json: true
     };
 
@@ -418,7 +434,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -495,6 +512,11 @@ export class UserManagementAPIService {
     let getPendingOrganizationURL = `${config.userManagementURL}/getAllPendingOrganizations`;
     let method = 'POST';
 
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
+    }
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -503,6 +525,7 @@ export class UserManagementAPIService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
+      body: postData,
       json: true
     };
 
@@ -565,7 +588,9 @@ export class UserManagementAPIService {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "staff": staffDetails,
       "databases": databasePrivileges,
-      "userType": staffInfo.position
+      "userType": staffInfo.position,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -632,7 +657,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -669,7 +695,9 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "admin": staffInfo
+      "admin": staffInfo,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -709,7 +737,8 @@ export class UserManagementAPIService {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "orgName": orgInfo.orgName,
       "member": memberInfo,
-      "userType": "Member"
+      "userType": "Member",
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
     
     const options = {
@@ -745,7 +774,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "orgName": this.authService.getCurrentSessionValue.user.organisation,
-      "id": memberInfo.id
+      "id": memberInfo.id,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -778,7 +808,9 @@ export class UserManagementAPIService {
     let method = 'POST';
 
     const postData = {
-      "id": this.authService.getCurrentSessionValue.user.ID
+      "id": this.authService.getCurrentSessionValue.user.ID,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -812,7 +844,9 @@ export class UserManagementAPIService {
     let method = 'POST';
 
     const postData = {
-      "id": this.authService.getCurrentSessionValue.user.ID
+      "id": this.authService.getCurrentSessionValue.user.ID,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -851,7 +885,9 @@ export class UserManagementAPIService {
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "oldPass": oldPassword,
-      "newPass": newPassword
+      "newPass": newPassword,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
     
     const options = {
@@ -891,7 +927,8 @@ export class UserManagementAPIService {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "oldPass": oldPassword,
       "newPass": newPassword,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -914,7 +951,9 @@ export class UserManagementAPIService {
     let method = 'POST';
 
     const postData = {
-      "id": this.authService.getCurrentSessionValue.user.ID
+      "id": this.authService.getCurrentSessionValue.user.ID,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
