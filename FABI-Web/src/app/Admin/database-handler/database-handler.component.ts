@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -26,6 +26,7 @@ import { DatabaseManagementService } from "../../_services/database-management.s
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { Porting } from '../../_services/porting.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 
 
 
@@ -131,7 +132,8 @@ export class DatabaseHandlerComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService,
     private dbService: DatabaseManagementService,
     private formBuilder: FormBuilder,
-    private portCSV: Porting
+    private portCSV: Porting,
+    private notificationService: NotificationService
   ) {
     this.portingForm = this.formBuilder.group({
       databaseName: ['', Validators.required],
@@ -295,11 +297,12 @@ export class DatabaseHandlerComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Error', 'An error occurred while downloading');
       }
  
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
-
+      this.notificationService.showErrorNotification('Error', 'An error occurred while downloading');
       loadingRef.close();
     });
   }
@@ -324,8 +327,12 @@ export class DatabaseHandlerComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load databases');
       }
-    });
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load databases');
+      //Handled in error-handler
+  });
   }
 
 

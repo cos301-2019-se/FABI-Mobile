@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, October 7th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,16 +14,18 @@
  */
 
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { NotificationService } from 'src/app/_services/notification.service';
+import * as Interface from '../../_interfaces/interfaces';
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
-import * as Interface from '../../_interfaces/interfaces';
 
 
 @core.Component({
@@ -36,7 +38,7 @@ export class ClinicHandlerComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
+
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
   /** Indicates if the profile tab is hidden/shown - @type {boolean} */
@@ -98,7 +100,8 @@ export class ClinicHandlerComponent implements core.OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-  ) { 
+    private notificationService: NotificationService
+  ) {
     this.addStaffForm = this.formBuilder.group({
       user: ['', Validators.required],
       database_privileges: new FormArray([])
@@ -122,7 +125,7 @@ export class ClinicHandlerComponent implements core.OnInit {
       if (response.success == true && response.code == 200) {
 
         this.adminUsers = response.data.qs.admins;
-        
+
         //POPUP MESSAGE
       }
       else if (response.success == false) {
@@ -243,7 +246,7 @@ export class ClinicHandlerComponent implements core.OnInit {
 
     this.valid = true;
 
-    
+
 
     const LstaffName = this.addStaffForm.controls.user.value.fname;
     const LstaffSurname = this.addStaffForm.controls.user.value.surname;
@@ -271,13 +274,15 @@ export class ClinicHandlerComponent implements core.OnInit {
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Clinic Admin Added", "Dismiss", {
-          duration: 6000
-        });
+        this.notificationService.showSuccessNotification('Member Added');
       }
-      else if (response.success == false) {
+      else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Failed', 'An error occurred while adding member.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showErrorNotification('Failed', 'An error occurred while adding member.');
+      //Handled in error-handler
     });
   }
 

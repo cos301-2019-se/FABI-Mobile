@@ -1,0 +1,7 @@
+service: dtree
+runtime: python
+env: flex
+entrypoint: gunicorn -b :$PORT Predictor:app
+
+runtime_config:
+    python_version: 3

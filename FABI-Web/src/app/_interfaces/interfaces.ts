@@ -4,7 +4,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Monday, October 7th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -241,44 +241,13 @@ export interface SampleFormData {
   }
 
   // Type of Sample
-  types: string[],
-  // types: {
-  //   soil: boolean,                     //Soil sample type
-  //   stems: boolean,                    //Stems sample type
-  //   roots: boolean,                    //Roots sample type
-  //   twigs: boolean,                    //Twigs sample type
-  //   leaves: boolean,                   //Leaves sample type
-  //   seedlings: boolean,                //Seedlings sample type
-  //   media: boolean,                    //Media sample type
-  //   water: boolean,                    //Water sample type
-  //   insect: boolean,                   //Insect sample type
-  //   nuts: boolean,                     //Nuts sample type
-  //   other: boolean,                    //Other type of sample (if any)
-  // }
-
-  // Symptoms
-  symptoms: {
-    wilt: boolean,                         //Wilt symptom
-    stunting: boolean,                     //Stunting symptom
-    leafspot: boolean,                     //Leafspot symptom
-    rootrot: boolean,                      //Rootrot symptom
-    dieback: boolean,                      //Dieback symptom
-    cankers: boolean,                      //Cankers symptom 
-    death: boolean,                        //Death symptom 
-    wood: boolean,                         //Wood symptom
-    other: boolean,                        //Other symptoms (if any)
-  }
+  types: SampleTypeDescription[],
 
   // Distribution of Symptoms
-  distribution: {
-    localized: boolean,               //The localized distribution
-    scattered: boolean,                //The scattered distribution
-    general: boolean,                  //The general distribution
-    clumps: boolean,                   //The clumps distribution
-    na: boolean,                       //The na distribution
-    other: boolean,                    //Other distributions (if any)
-    percentage_plants_affected: number,           //The percentage of plants affected
-  }
+  distribution: string,
+
+  // Percentage of plants affected
+  percentage_plants_affected: string,           //The percentage of plants affected
 
   // Conditons
   conditions: {
@@ -297,8 +266,10 @@ export interface SampleFormData {
   }
 }
 
-
-
+export interface SampleTypeDescription {
+  type: string,
+  symptoms: string
+}
 
 
 

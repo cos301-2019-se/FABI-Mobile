@@ -14,6 +14,7 @@
  */
 
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -22,22 +23,8 @@ import { ToastrService } from 'ngx-toastr';
 import * as Interface from '../_interfaces/interfaces';
 import { LoadingComponent } from "../_loading/loading.component";
 import { AuthenticationService } from '../_services/authentication.service';
-import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
-
-export interface AdminMember {
-  fname: string;
-  surname: string;
-  email: string;
-  id: string;
-  type: string;
-}
-
-export interface StaffMember {
-  fname: string;
-  surname: string;
-  email: string;
-  id: string;
-}
+import { UserManagementAPIService } from "../_services/user-management-api.service";
+import { NotificationService } from "../_services/notification.service";
 
 @core.Component({
   selector: 'app-login',
@@ -71,11 +58,6 @@ export class LoginComponent implements core.OnInit {
   loading: boolean = false;
   /** Selected organisation on dropdown. Used to adjust login form according to organisation selected - @type {string} */
   selectedOrg: string;
-
-  /** Object array for holding the administrators -  @type {AdminMember[]} */
-  admins: AdminMember[] = [];
-  /** Object array for holding the staff members -  @type {StaffMember []} */
-  staff: StaffMember[] = [];
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          FORM VALIDATION
@@ -118,6 +100,7 @@ export class LoginComponent implements core.OnInit {
     private router: Router,
     private toaster: ToastrService,
     private userManagementService: UserManagementAPIService,
+    private notificationService: NotificationService
   ) {
 
     // if(!this.previousUserData.email && this.previousUserData.email == null) {
@@ -174,10 +157,14 @@ export class LoginComponent implements core.OnInit {
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
       }
-      else if (response.success == false) {
+      else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'There was an error loading the organizations');
       }
-    });
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'There was an error loading the organizations');
+      //Handled in error-handler
+  });
 
     //-------- Form Validation --------
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -218,7 +205,7 @@ export class LoginComponent implements core.OnInit {
       return;
     }
 
-    this.valid = true;            
+    this.valid = true;
 
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Logging in..." } });
 
@@ -254,53 +241,17 @@ export class LoginComponent implements core.OnInit {
         } else if (response.userDetails.userType == 'Staff') {
           this.router.navigate(['/staff-dashboard']);
         } else {
-          let snackBarRef = this.snackBar.open("User not supported", "Dismiss", {
-            duration: 3000
-          });
+          this.notificationService.showErrorNotification('User not supported', '');
         }
 
-
-      } else if (response.success == false) {
+      } else  {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Login Failed', 'An error occured while logging in. \n Please try again.');
       }
-    });
-
-    this.loading = false;
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                              GET FABI MEMBERS
-  /**
-   *  This function will fecth all the staff members of FABI.
-   * 
-   * @memberof LoginComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getFABIMembers() {
-    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
-      if (response.success == true) {
-        var data = response.data.qs.staff;
-
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].userType == "SuperUser") {
-            var tempAdmin: AdminMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id, type: "Super User" };
-            this.admins.push(tempAdmin);
-          }
-          else if (data[i].userType == "ClinicAdmin") {
-            var tempAdmin: AdminMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id, type: "Clinic Admin" };
-            this.admins.push(tempAdmin);
-          }
-          else if (data[i].userType == "CultureAdmin") {
-            var tempAdmin: AdminMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id, type: "Culture Admin" };
-            this.admins.push(tempAdmin);
-          }
-          else if (data[i].userType == "Staff") {
-            var tempStaff: StaffMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id };
-            this.staff.push(tempStaff);
-          }
-        }
-      }
+    }, (err: http.HttpErrorResponse) => {
+        loadingRef.close();
+        this.notificationService.showErrorNotification('Login Failed', 'An error occured while logging in. \n Please try again.');
+        //Handled in error-handler
     });
   }
 
