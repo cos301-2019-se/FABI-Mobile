@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, October 7th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -223,7 +223,6 @@ export class AdminProfileComponent implements core.OnInit {
           admin_email: data.email,
           admin_type: data.userType
         });
-        this.notificationService.showWarningNotification('', 'Could not load profile details.');
       }
       else {
         //Error handling
