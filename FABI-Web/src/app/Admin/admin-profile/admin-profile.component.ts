@@ -226,10 +226,10 @@ export class AdminProfileComponent implements core.OnInit {
       }
       else {
         //Error handling
-        this.notificationService.showWarningNotification('', 'Could not load profile details.');
+        this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
       }
     }, (err: HttpErrorResponse) => {
-      this.notificationService.showWarningNotification('', 'Could not load profile details.');
+      this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
       //Handled in error-handler
     });
   }
@@ -278,7 +278,7 @@ export class AdminProfileComponent implements core.OnInit {
       loadingRef.close();
       this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       //Handled in error-handler
-  });
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -321,7 +321,7 @@ export class AdminProfileComponent implements core.OnInit {
       loadingRef.close();
       this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
       //Handled in error-handler
-  });
+    });
   }
 
 

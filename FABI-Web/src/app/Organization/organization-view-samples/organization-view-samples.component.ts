@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,12 +14,14 @@
  */
 
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 //Include Material Components
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 
 
 @core.Component({
@@ -60,7 +62,8 @@ export class OrganizationViewSamplesComponent implements core.OnInit {
     private authService: AuthenticationService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
 
@@ -109,14 +112,16 @@ export class OrganizationViewSamplesComponent implements core.OnInit {
       if (response.success == true && response.code == 200) {
 
         this.samples = response.data.samples;
-
-
         //Deactivate loading table spinners
         this.sampleTableLoading = false;
 
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load samples.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load samples.');
+      //Handled in error-handler
     });
   }
 

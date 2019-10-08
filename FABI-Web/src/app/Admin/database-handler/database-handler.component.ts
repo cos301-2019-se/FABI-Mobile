@@ -280,9 +280,9 @@ export class DatabaseHandlerComponent implements OnInit {
     this.submitted = false;
 
     this.dbService.retrieveDatabase(dbname).subscribe((response: any) => {
-      
+
       loadingRef.close();
-      
+
       if (response.success == true && response.code == 200) {
         data = response.data.docs;
         let CSVdata = this.portCSV.extractDatabase(data, dbname);
@@ -297,12 +297,12 @@ export class DatabaseHandlerComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
-        this.notificationService.showErrorNotification('Error', 'An error occurred while downloading');
+        this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
       }
- 
+
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
-      this.notificationService.showErrorNotification('Error', 'An error occurred while downloading');
+      this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
       loadingRef.close();
     });
   }
@@ -332,7 +332,7 @@ export class DatabaseHandlerComponent implements OnInit {
     }, (err: http.HttpErrorResponse) => {
       this.notificationService.showWarningNotification('Error', 'Could not load databases');
       //Handled in error-handler
-  });
+    });
   }
 
 
@@ -365,11 +365,14 @@ export class DatabaseHandlerComponent implements OnInit {
         //Deactivate loading view database spinners
         this.viewDatabaseLoading = false;
 
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load database details');
       }
-    });
+    }, (err: http.HttpErrorResponse) => {
+        this.notificationService.showWarningNotification('Error', 'Could not load database details');
+        //Handled in error-handler
+      });
   }
 
 
@@ -402,12 +405,13 @@ export class DatabaseHandlerComponent implements OnInit {
 
           this.refreshDataSource();
 
-        }
-        else if (response.success == false) {
+        } else {
           //POPUP MESSAGE
+          this.notificationService.showErrorNotification('Upload Failed', 'An error occurred while porting');
         }
       }, (err: http.HttpErrorResponse) => {
         //Handled in error-handler
+        this.notificationService.showErrorNotification('Upload Failed', 'An error occurred while porting');
       });
     }
   }
@@ -431,7 +435,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /**
    * This function prompts the user to confirm if they wish to remove the selected database
    *
-   * @memberof StaffHandlerComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   dropDatabasePrompt1(dbname: string) {
@@ -452,7 +456,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /**
    * This function prompts the user to confirm if they wish to remove the selected database
    *
-   * @memberof StaffHandlerComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   dropDatabasePrompt2() {
@@ -471,7 +475,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /**
    * This function calls the *database-management* service to remove the selected database
    *
-   * @memberof StaffHandlerComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   dropDatabase() {
@@ -483,10 +487,13 @@ export class DatabaseHandlerComponent implements OnInit {
           duration: 3000
         });
         this.refreshDataSource();
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the database');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the database');
     });
   }
 
@@ -495,7 +502,7 @@ export class DatabaseHandlerComponent implements OnInit {
   /**
    * This function refreshes the Datasource (in most cases, the table that has changed)
    *
-   * @memberof StaffHandlerComponent
+   * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
