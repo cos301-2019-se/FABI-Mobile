@@ -56,4 +56,25 @@ describe('MapsWindowComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('select Location', () => {
+    let spy = spyOn(component, "getAddress");
+    component.selectLocation({coords:{lat:11, lng:22}});
+    expect(component.location.latitude).toEqual(11);
+    expect(component.location.longitude).toEqual(22);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('change Map Type from roadmap to hybrid', () => {
+    component.map_type = 'roadmap';
+    component.changeMapType();
+    expect(component.map_type).toEqual('hybrid');
+  });
+
+  it('change Map Type from hybrid to roadmap', () => {
+    component.map_type = 'hybrid';
+    component.changeMapType();
+    expect(component.map_type).toEqual('roadmap');
+  });
+
 });
