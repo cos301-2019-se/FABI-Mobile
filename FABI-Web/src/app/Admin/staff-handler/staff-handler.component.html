@@ -116,7 +116,7 @@
       <div class="statistics">
 
         <!-- Statistic Box -->
-        <div class="overview-statistic-box">
+        <div class="overview-statistic-box" *ngIf="numberOfStaffMembers">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Overview Statistics</h5>
@@ -129,7 +129,7 @@
         <!-- Statistic Box -->
 
         <!-- Statistic Box -->
-        <div class="statistic-box">
+        <div class="statistic-box" *ngIf="numberOfStaffMembers">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Total Staff Members</h5>
@@ -140,6 +140,19 @@
           </div>
         </div>
         <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box" *ngIf="!numberOfStaffMembers">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Statistics</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p>Unfortunately there are no statistics available at this time</p>
+            </div>
+          </div>
+        </div>
+        <!-- / Statistic Box -->
 
       </div>
       <!-- / Statistics -->
@@ -526,73 +539,12 @@
 
   </div>
   <!-- / Profile Section -->
-
   <!-- Help Section -->
   <div id="help" *ngIf="helpTab">
     <i class="fas fa-arrow-left" (click)="toggleHelpTab()"></i>
     <br />
-    <h3>HELP</h3>
-    <!-- Help Items -->
-    <div class="help-items">
 
-      <!-- Help Item -->
-      <div class="help-item">
-        <div class="help-icon">
-          <i class="fas fa-address-card"></i>
-        </div>
-        <div class="help-heading">
-          <h6>Staff</h6>
-        </div>
-        <div class="help-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-      <!-- / Help Item -->
-
-      <!-- Help Item -->
-      <div class="help-item">
-        <div class="help-icon">
-          <i class="fas fa-building"></i>
-        </div>
-        <div class="help-heading">
-          <h6>Organization</h6>
-        </div>
-        <div class="help-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-      <!-- / Help Item -->
-
-      <!-- Help Item -->
-      <div class="help-item">
-        <div class="help-icon">
-          <i class="fas fa-database"></i>
-        </div>
-        <div class="help-heading">
-          <h6>Databases</h6>
-        </div>
-        <div class="help-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-      <!-- / Help Item -->
-
-      <!-- Help Item -->
-      <div class="help-item">
-        <div class="help-icon">
-          <i class="fas fa-stethoscope"></i>
-        </div>
-        <div class="help-heading">
-          <h6>Diagnostic Clinic</h6>
-        </div>
-        <div class="help-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-      <!-- / Help Item -->
-
-    </div>
-    <!-- Help Items -->
+    <app-admin-help></app-admin-help>
 
   </div>
   <!-- / Help Section -->
