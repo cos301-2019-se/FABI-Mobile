@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,10 +13,12 @@
  * <<license>>
  */
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/_services/notification.service';
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { LoadingComponent } from "../../_loading/loading.component";
 import { AuthenticationService } from '../../_services/authentication.service';
@@ -123,7 +125,8 @@ export class OrganizationProfileComponent implements core.OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private userManagementService: UserManagementAPIService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService
   ) {
     this.adminProfileForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
@@ -203,7 +206,11 @@ export class OrganizationProfileComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
+      //Handled in error-handler
     });
   }
 
@@ -270,16 +277,16 @@ export class OrganizationProfileComponent implements core.OnInit {
         this.loadAdminProfileDetails();
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Profile Updated', '');
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
+      //Handled in error-handler
     });
   }
 
@@ -312,17 +319,17 @@ export class OrganizationProfileComponent implements core.OnInit {
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully changed password", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Password Changed', '');
 
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
+      //Handled in error-handler
     });
   }
 

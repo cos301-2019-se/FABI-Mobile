@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,6 +22,8 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { DiagnosticClinicAPIService, Sample } from '../../_services/diagnostic-clinic-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import * as userManagementApiService from '../../_services/user-management-api.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationService } from 'src/app/_services/notification.service';
 
 
 @core.Component({
@@ -102,7 +104,8 @@ export class OrganizationDashboardComponent implements core.OnInit {
     public sanitizer: DomSanitizer,
     private notificationLoggingService: NotificationLoggingService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService
   ) {
     this.adminProfileForm = this.formBuilder.group({
       organization_name: '',
@@ -172,7 +175,7 @@ export class OrganizationDashboardComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadOrganizationSamples() {
     this.diagnosticClinicService.retrieveAllOrganizationSamples().subscribe((response: any) => {
-      if (response.success == true) {
+      if (response.success == true && response.code == 200) {
         var data = response.data.samples;
         var num = 0;
 
@@ -181,7 +184,12 @@ export class OrganizationDashboardComponent implements core.OnInit {
         }
 
         this.sampleStats = num.toString();
+      } else {
+        this.notificationService.showWarningNotification('Error', 'Could not load samples');
       }
+    }, (err: HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showWarningNotification('Error', 'Could not load samples');
     });
   }
 

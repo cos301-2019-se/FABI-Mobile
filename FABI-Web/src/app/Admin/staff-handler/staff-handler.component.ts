@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,10 +14,12 @@
  */
 
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/_services/notification.service';
 import * as Interface from '../../_interfaces/interfaces';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
@@ -144,7 +146,8 @@ export class StaffHandlerComponent implements core.OnInit {
     private dialog: MatDialog,
     private router: Router,
     private userManagementService: UserManagementAPIService,
-    private notificationLoggingService: NotificationLoggingService
+    private notificationLoggingService: NotificationLoggingService,
+    private notificationService: NotificationService
   ) {
 
     // const formControls = this.privileges.map(control => new FormControl(false));
@@ -235,10 +238,13 @@ export class StaffHandlerComponent implements core.OnInit {
           (this.addStaffForm.controls.database_privileges as FormArray).push(control)
         });
 
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load databases');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showWarningNotification('Error', 'Could not load databases');
     });
   }
 
@@ -330,14 +336,15 @@ export class StaffHandlerComponent implements core.OnInit {
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Staff Member Added", "Dismiss", {
-          duration: 6000
-        });
+        this.notificationService.showSuccessNotification('Member Added', '');
         this.refreshDataSource();
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
     });
   }
 
@@ -390,14 +397,15 @@ export class StaffHandlerComponent implements core.OnInit {
     this.userManagementService.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Staff Member Removed", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Member Removed', '');
         this.refreshDataSource();
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the member');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the member');
     });
   }
 
@@ -433,10 +441,13 @@ export class StaffHandlerComponent implements core.OnInit {
         this.staffTableLoading = false;
 
 
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load staff members');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showWarningNotification('Error', 'Could not load staff members');
     });
   }
 

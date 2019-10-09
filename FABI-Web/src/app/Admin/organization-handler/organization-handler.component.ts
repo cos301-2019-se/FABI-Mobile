@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,10 +14,12 @@
  */
 
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/_services/notification.service';
 import * as Interface from '../../_interfaces/interfaces';
 import { LoadingComponent } from "../../_loading/loading.component";
 import { AuthenticationService } from '../../_services/authentication.service';
@@ -125,7 +127,8 @@ export class OrganizationHandlerComponent implements core.OnInit {
     private dialog: MatDialog,
     private router: Router,
     private userManagementService: UserManagementAPIService,
-    private notificationLoggingService: NotificationLoggingService
+    private notificationLoggingService: NotificationLoggingService,
+    private notificationService: NotificationService
   ) {
     this.registerOrgForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
@@ -212,13 +215,15 @@ export class OrganizationHandlerComponent implements core.OnInit {
         //POPUP MESSAGE
 
         this.refreshDataSource();
-        let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
-          duration: 6000
-        });
+        this.notificationService.showSuccessNotification('Registered Organization', '');
 
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
     });
   }
 
@@ -277,14 +282,15 @@ export class OrganizationHandlerComponent implements core.OnInit {
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Organization Removed", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Organization Removed', '');
         this.refreshDataSource();
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the organization');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the organization');
     });
   }
 
@@ -325,10 +331,13 @@ export class OrganizationHandlerComponent implements core.OnInit {
         //Deactivate loading table spinners
         this.organizationTableLoading = false;
 
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load organizations');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showWarningNotification('Error', 'Could not load organizations');
     });
   }
 
@@ -349,10 +358,13 @@ export class OrganizationHandlerComponent implements core.OnInit {
 
         this.pendingOrganizations = response.data.Organizations;
 
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load pending organizations');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showWarningNotification('Error', 'Could not load pending organizations');
     });
   }
 
@@ -377,13 +389,15 @@ export class OrganizationHandlerComponent implements core.OnInit {
         //POPUP MESSAGE
 
         this.refreshDataSource();
-        let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
-          duration: 6000
-        });
+        this.notificationService.showSuccessNotification('Registered Organization', '');
 
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
     });
 
   }

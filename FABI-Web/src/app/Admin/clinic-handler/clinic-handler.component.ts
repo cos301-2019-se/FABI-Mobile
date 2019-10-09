@@ -274,14 +274,14 @@ export class ClinicHandlerComponent implements core.OnInit {
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        this.notificationService.showSuccessNotification('Member Added');
+        this.notificationService.showSuccessNotification('Member Added', '');
       }
       else {
         //POPUP MESSAGE
-        this.notificationService.showErrorNotification('Failed', 'An error occurred while adding member.');
+        this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding member.');
       }
     }, (err: http.HttpErrorResponse) => {
-      this.notificationService.showErrorNotification('Failed', 'An error occurred while adding member.');
+      this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding member.');
       //Handled in error-handler
     });
   }

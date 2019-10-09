@@ -5,7 +5,7 @@
  * Created Date: Monday, July 15th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -199,6 +199,12 @@ export class CultureCollectionAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllRequestLogs() {
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
+    }
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -207,6 +213,7 @@ export class CultureCollectionAPIService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
+      body: postData,
       json: true
     };
 
@@ -225,6 +232,12 @@ export class CultureCollectionAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllDepositLogs() {
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
+    }
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -233,6 +246,7 @@ export class CultureCollectionAPIService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
+      body: postData,
       json: true
     };
 
@@ -252,6 +266,12 @@ export class CultureCollectionAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllRevitalizationLogs() {
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
+    }
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -259,6 +279,7 @@ export class CultureCollectionAPIService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
+      body: postData,
       json: true
     };
 
@@ -277,6 +298,12 @@ export class CultureCollectionAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllProcessedLogs() {
+
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
+    }
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -284,6 +311,7 @@ export class CultureCollectionAPIService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
+      body: postData,
       json: true
     };
 
@@ -303,6 +331,7 @@ export class CultureCollectionAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   submitCMWDepositForm(data: CMWDeposit) {
+    
     const options = {
       method: 'POST',
       url: submitCMWDepositFormURL,
