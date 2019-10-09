@@ -10,12 +10,16 @@
    TOP NAV STYLING [GENERAL]
    ========================================================================== */
 
+a:hover {
+    cursor: pointer;
+}
+
 /* Navbar Heading Styling */
 .pos-f-t {
     display: block;
 }
 
-.pos-f-t.top-nav{
+.pos-f-t.top-nav {
     display: block !important;
 }
 
@@ -222,7 +226,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 }
 
 @media(min-height:769px) {
-    .bottom-nav-items {    
+    .bottom-nav-items {
         position: sticky;
         bottom: 25px;
     }
@@ -288,7 +292,8 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     padding: 10px;
 
-    width: auto;
+    min-width: 100px;
+
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -321,7 +326,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 
     padding: 10px;
 
-    width: auto;
+
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -355,7 +360,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: auto;
+
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -389,7 +394,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: auto;
+
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -422,7 +427,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: auto;
+
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -455,7 +460,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: auto;
+
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -488,7 +493,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: auto;
+
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -522,7 +527,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     padding: 5px;
     margin: 5px;
 
-    width: auto;
+
 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
@@ -985,17 +990,17 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
     }
 
     #notifications i {
-    
+
         margin-top: 75px;
     }
-    
+
 }
 
 @media (min-width: 768px) {
     #notifications i {
         margin-top: 0;
     }
-    
+
 }
 
 .notification-loading {
@@ -1103,7 +1108,7 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
         width: 60vh;
     }
 
-    #profile i {    
+    #profile i {
         margin-top: 75px;
     }
 }
@@ -1127,10 +1132,10 @@ div#navbarToggleExternalContent div.bg-dark.p-4 {
 }
 
 @media (min-width: 768px) {
-    #profile i {    
+    #profile i {
         margin-top: 0;
     }
-    
+
 }
 
 @media (min-height: 803px) {

@@ -217,9 +217,9 @@
               *ngFor="let pendingOrganization of pendingOrganizations | filter : 'pendingOrganizations' : searchOrganization">
               <td>{{pendingOrganization.orgName}}</td>
               <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
+                <button class="btn btn-default-viewOrg" data-toggle="modal" data-target="#viewModal"
                   [id]="pendingOrganization.email" (click)="selectOrganisation(pendingOrganization)">View</button>
-                <button class="btn btn-default-save" data-toggle="modal" [id]="pendingOrganization.email"
+                <button class="btn btn-default-verify" data-toggle="modal" [id]="pendingOrganization.email"
                   (click)="registerPendingOrg(pendingOrganization)">Verify</button>
                 <button class="btn btn-default-delete" data-toggle="modal" [id]="pendingOrganization.email"
                   (click)="declinePendingeOrg(pendingOrganization)">Decline</button>
