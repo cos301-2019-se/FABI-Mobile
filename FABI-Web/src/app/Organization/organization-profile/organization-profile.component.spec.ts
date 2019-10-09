@@ -151,4 +151,48 @@ describe('OrganizationProfileComponent', () => {
     expect(spy).toBeTruthy();
   });
 
+  it('show password', () =>{
+    component.passwordInput = { nativeElement: {type:"password"} };
+    component.passwordInput.nativeElement.type = 'password';
+    component.showPassword();
+    expect(component.passwordInput.nativeElement.type).toEqual('text');
+  });
+
+  it('hide password', () =>{
+    component.passwordInput = { nativeElement: {type:"text"} };
+    component.passwordInput.nativeElement.type = 'text';
+    component.showPassword();
+    expect(component.passwordInput.nativeElement.type).toEqual('password');
+  });
+
+  it('show confirm password', () =>{
+    component.confirmInput = { nativeElement: {type:"password"} };
+    component.confirmInput.nativeElement.type = 'password';
+    component.showConfirmedPassword();
+    expect(component.confirmInput.nativeElement.type).toEqual('text');
+  });
+
+  it('hide confirm password', () =>{
+    component.confirmInput = { nativeElement: {type:"text"} };
+    component.confirmInput.nativeElement.type = 'text';
+    component.showConfirmedPassword();
+    expect(component.confirmInput.nativeElement.type).toEqual('password');
+  });
+
+  it('stop editing profile', () =>{
+    component.isEditingProfile = true;
+    component.editProfileToggle();
+    expect(component.adminProfileForm.controls.admin_name.enabled).toBeFalsy();
+    expect(component.adminProfileForm.controls.admin_surname.enabled).toBeFalsy();
+    expect(component.adminProfileForm.controls.admin_email.enabled).toBeFalsy();
+  });
+
+  it('editing profile', () =>{
+    component.isEditingProfile = false;
+    component.editProfileToggle();
+    expect(component.adminProfileForm.controls.admin_name.enabled).toBeTruthy();
+    expect(component.adminProfileForm.controls.admin_surname.enabled).toBeTruthy();
+    expect(component.adminProfileForm.controls.admin_email.enabled).toBeTruthy();
+  });
+
 });

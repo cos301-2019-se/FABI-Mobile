@@ -112,4 +112,9 @@ describe('OrganizationViewSamplesComponent', () => {
     expect(spy).toBeTruthy();
   });
 
+  it('resetSampleFields', () =>{
+    component.resetSampleFields();
+    expect(component.sampleFields).toEqual([]);
+  });
+
 });

@@ -199,4 +199,28 @@ describe('MemberHandlerComponent', () => {
     expect(spy).toBeTruthy();
   });
 
+  it('view organization members', () =>{
+    let spy = spyOn(component, 'viewMembers');
+    component.refreshDataSource();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('load Admin Profile Details', () =>{
+    let spy = spyOn(UserManagementService, 'getUserDetails');
+    component.loadAdminProfileDetails();
+    expect(spy).toBeTruthy();
+  });
+
+  it('save changes', () =>{
+    let spy = spyOn(UserManagementService, 'updateFABIMemberDetails');
+    component.saveChanges();
+    expect(spy).toBeTruthy();
+  });
+
+  it('reset Member Fields', () =>{
+    let spy = spyOn(component.addMemberForm, 'reset');
+    component.resetMemberFields();
+    expect(spy).toBeTruthy();
+  });
+
 });

@@ -100,11 +100,13 @@ describe('OrganizationNotificationComponent', () => {
   });
 
   // -------- Service Tests --------
-  // it('remove notification', () => {
-  //   let spy = spyOn(notifService, 'updateFABIMemberNotifications');
-  //   let id = "0";
-  //   component.removeNotification(id);
-  //   expect(spy).toBeTruthy();
-  // });
+  it('remove notification', () => {
+    component.currentUser = {ID:"0"};
+    let spy = spyOn(notifService, 'updateFABIMemberNotifications');
+    component.removeNotification("0");
+    expect(spy).toBeTruthy();
+  });
+
+
 
 });
