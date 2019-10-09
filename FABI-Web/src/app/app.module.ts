@@ -23,10 +23,7 @@ import { StaffHandlerComponent } from './Admin/staff-handler/staff-handler.compo
 import { ViewFormsComponent } from './Admin/view-forms/view-forms.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AdminDivComponent } from './Dynamic-Components/admin-div/admin-div.component';
-import { NotificationDivComponent } from './Dynamic-Components/notification-div/notification-div.component';
-import { SampleDivComponent } from './Dynamic-Components/sample-div/sample-div.component';
-import { StaffDivComponent } from './Dynamic-Components/staff-div/staff-div.component';
+
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MapsWindowComponent } from './maps-window/maps-window.component';
@@ -100,10 +97,6 @@ import { AgmCoreModule } from '@agm/core';
     SubmitCmwDepositComponent,
     SubmitCmwRevitalizationComponent,
     LoadingComponent,
-    AdminDivComponent,
-    StaffDivComponent,
-    NotificationDivComponent,
-    SampleDivComponent,
     AdminProfileComponent,
     StaffProfileComponent,
     ViewFormsComponent,
@@ -131,10 +124,6 @@ import { AgmCoreModule } from '@agm/core';
   ],
   entryComponents: [
     LoadingComponent,
-    AdminDivComponent,
-    StaffDivComponent,
-    NotificationDivComponent,
-    SampleDivComponent,
     ErrorComponent,
     MapsWindowComponent
   ],
