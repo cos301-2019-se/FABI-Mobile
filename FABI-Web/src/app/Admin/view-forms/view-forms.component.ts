@@ -5,7 +5,7 @@
  * Created Date: Monday, August 5th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -18,12 +18,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
+
 //These imports are used to created a downloadable PDF of the forms
 import * as jspdf from 'jspdf';
+
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { CultureCollectionAPIService, ProcessedForm, UpdateDepositForm } from '../../_services/culture-collection-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationService } from '../../_services/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @core.Component({
@@ -238,6 +242,7 @@ export class ViewFormsComponent implements core.OnInit {
    * Creates an instance of ReportingComponent.
    * 
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {NotificationService} notificationService FOr calling the Notification service
    * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API Service
    * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
    * @param {AuthenticationService} authService for calling the *authentication* service
@@ -252,6 +257,7 @@ export class ViewFormsComponent implements core.OnInit {
   constructor(
     private notificationLoggingService: NotificationLoggingService,
     private userManagementService: UserManagementAPIService,
+    private notificationService: NotificationService,
     private snackBar: MatSnackBar,
     private renderer: core.Renderer2,
     private formBuilder: FormBuilder,
@@ -366,6 +372,7 @@ export class ViewFormsComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notificationService.showErrorNotification("Error loading Deposit Forms", "An error occurred trying to load the deposit forms. Please refresh the page.");
       }
     });
   }
@@ -404,6 +411,7 @@ export class ViewFormsComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notificationService.showErrorNotification("Error loading Request Forms", "An error occurred trying to load the request forms. Please refresh the page.");
       }
     });
   }
@@ -444,6 +452,7 @@ export class ViewFormsComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notificationService.showErrorNotification("Error loading Revitalization Forms", "An error occurred trying to load the revitalization forms. Please refresh the page.");
       }
     });
   }
@@ -487,6 +496,7 @@ export class ViewFormsComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notificationService.showErrorNotification("Error loading Processed Forms", "An error occurred trying to load the processed forms. Please refresh the page.");
       }
     });
   }
@@ -500,6 +510,11 @@ export class ViewFormsComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNextDepositForm() {
+    if(this.depositForms.length == 0){
+      this.notificationService.showWarningNotification("No Deposit Forms", "There are no deposit forms to load.");
+      return;
+    }
+
     if (this.depositFormNumber != 0) {
       if (this.depositFormNumber == this.depositForms.length - 1) {
         this.depositFormNumber = 0;
@@ -566,6 +581,11 @@ export class ViewFormsComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadPreviousDepositForm() {
+    if(this.depositForms.length == 0){
+      this.notificationService.showWarningNotification("No Deposit Forms", "There are no deposit forms to load.");
+      return;
+    }
+
     if (this.depositFormNumber != this.depositForms.length) {
       if (this.depositFormNumber <= 0) {
         this.depositFormNumber = this.depositForms.length - 1;
@@ -629,6 +649,11 @@ export class ViewFormsComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNextRequestForm() {
+    if(this.requestForms.length == 0){
+      this.notificationService.showWarningNotification("No Request Forms", "There are no request forms to load.");
+      return;
+    }
+
     if (this.requestFormNumber != 0) {
       if (this.requestFormNumber == this.requestForms.length - 1) {
         this.requestFormNumber = 0;
@@ -677,6 +702,11 @@ export class ViewFormsComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadPreviousRequestForm() {
+    if(this.requestForms.length == 0){
+      this.notificationService.showWarningNotification("No Request Forms", "There are no request forms to load.");
+      return;
+    }
+
     if (this.requestFormNumber != this.requestForms.length) {
       if (this.requestFormNumber == 0) {
         this.requestFormNumber = this.requestForms.length - 1;
@@ -722,6 +752,11 @@ export class ViewFormsComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNextRevitalizationForm() {
+    if(this.revitalizationForms.length == 0){
+      this.notificationService.showWarningNotification("No Revitalization Forms", "There are no revitalization forms to load.");
+      return;
+    }
+
     if (this.revitalizationFormNumber != 0) {
       if (this.revitalizationFormNumber == this.revitalizationForms.length - 1) {
         this.revitalizationFormNumber = 0;
@@ -773,6 +808,11 @@ export class ViewFormsComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadPreviousRevitalizationForm() {
+    if(this.revitalizationForms.length == 0){
+      this.notificationService.showWarningNotification("No Revitalization Forms", "There are no revitalization forms to load.");
+      return;
+    }
+
     if (this.revitalizationFormNumber != this.revitalizationForms.length) {
       if (this.revitalizationFormNumber == 0) {
         this.revitalizationFormNumber = this.revitalizationForms.length - 1;
@@ -821,6 +861,11 @@ export class ViewFormsComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNextProcessedForm() {
+    if(this.processedForms.length == 0){
+      this.notificationService.showWarningNotification("No Processed Forms", "There are no processed forms to load.");
+      return;
+    }
+
     if (this.processedFormNumber != 0) {
       if (this.processedFormNumber == this.processedForms.length - 1) {
         this.processedFormNumber = 0;
@@ -877,6 +922,11 @@ export class ViewFormsComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadPreviousProcessedForm() {
+    if(this.processedForms.length == 0){
+      this.notificationService.showWarningNotification("No Processed Forms", "There are no processed forms to load.");
+      return;
+    }
+
     if (this.processedFormNumber != this.processedForms.length) {
       if (this.processedFormNumber == 0) {
         this.processedFormNumber = this.processedForms.length - 1;
@@ -1136,28 +1186,21 @@ export class ViewFormsComponent implements core.OnInit {
             this.processForm.reset();
 
             //POPUP MESSAGE
-            let snackBarRef = this.snackBar.open("CMW Deposit process form successfully submitted.", "Dismiss", {
-              duration: 3000
-            });
+            this.notificationService.showSuccessNotification("Submitted Processed Form", "The processed form has been successfully submitted.");
           }
           else {
             //Error handling
-
-            //POPUP MESSAGE
-            let snackBarRef = this.snackBar.open("Could not submit CMW Deposit process form. Please try again.", "Dismiss", {
-              duration: 3000
-            });
+            this.notificationService.showErrorNotification("Error Submitting Form", "There was an error submitting the form. Please make sure all relevant information is provided.");
           }
         });
       }
       else {
         //Error handling
-
-        //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Could not submit CMW Deposit process form. Please try again.", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification("Error Submitting Form", "There was an error submitting the form. Please make sure all relevant information is provided.");
       }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Error Submitting Form", "There was an error submitting the form. Please make sure all relevant information is provided.");
     });
 
   }
@@ -1450,7 +1493,16 @@ export class ViewFormsComponent implements core.OnInit {
             this.loadNextProcessedForm();
           }
         }
+
+        this.notificationService.showSuccessNotification("Deleted Deposit Form", "The deposit form was successfully deleted");
       }
+      else{
+        //Error handling
+        this.notificationService.showErrorNotification("Error Deleting Form", "There was an error deleting the deposit form. Please try again.");
+      }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Error Deleting Form", "There was an error deleting the deposit form. Please try again.");
     });
   }
 
@@ -1466,7 +1518,16 @@ export class ViewFormsComponent implements core.OnInit {
     this.cultureCollectionService.deleteRequestForm(this.currentUser.ID, this.formID).subscribe((response: any) => {
       if (response.success == true) {
         this.loadNextRequestForm();
+
+        this.notificationService.showSuccessNotification("Deleted Request Form", "The request form was successfully deleted");
       }
+      else{
+        //Error handling
+        this.notificationService.showErrorNotification("Error Deleting Form", "There was an error deleting the request form. Please try again.");
+      }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Error Deleting Form", "There was an error deleting the request form. Please try again.");
     });
   }
 
@@ -1482,7 +1543,16 @@ export class ViewFormsComponent implements core.OnInit {
     this.cultureCollectionService.deleteRevitalizationForm(this.currentUser.ID, this.formID).subscribe((response: any) => {
       if (response.success == true) {
         this.loadNextRevitalizationForm();
+
+        this.notificationService.showSuccessNotification("Deleted Revitalization Form", "The revitalization form was successfully deleted");
       }
+      else{
+        //Error handling
+        this.notificationService.showErrorNotification("Error Deleting Form", "There was an error deleting the revitalization form. Please try again.");
+      }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Error Deleting Form", "There was an error deleting the revitalization form. Please try again.");
     });
   }
 
@@ -1498,7 +1568,16 @@ export class ViewFormsComponent implements core.OnInit {
     this.cultureCollectionService.deleteProcessedForm(this.currentUser.ID, this.processedFormID).subscribe((response: any) => {
       if (response.success == true) {
         this.loadNextProcessedForm();
+
+        this.notificationService.showSuccessNotification("Deleted Processed Form", "The processed form was successfully deleted");
       }
+      else{
+        //Error handling
+        this.notificationService.showErrorNotification("Error Deleting Form", "There was an error deleting the processed form. Please try again.");
+      }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Error Deleting Form", "There was an error deleting the processed form. Please try again.");
     });
   }
 }

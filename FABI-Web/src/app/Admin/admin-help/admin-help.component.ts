@@ -24,7 +24,6 @@ export class AdminHelpComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

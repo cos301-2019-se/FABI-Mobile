@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, October 7th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -33,6 +33,7 @@ const getAllOrganizationMembers = `${config.userManagementURL}/getAllOrgMembers`
 const getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;
 const updateStaffMemberDetailsURL = `${config.userManagementURL}/updateStaffMember`;
 const updateOrganizationMemberDetailsURL = `${config.userManagementURL}/updateOrgMember`;
+// const getIndividualDeta/ilsURL = `${config.userManagementURL}/getIndividualDetails`;
 
 //Object for defining how a member of FABI is structured
 export interface Member {
@@ -51,6 +52,7 @@ export interface POSTOrganization {
 export interface POSTMember {
   orgName: string;        //The name of the organization to be fetched
   id: string;             //THe ID of the user
+  userID: string
 }
 
 //Object for defning the JSOn object to be sent when the details of a FABI member are updated
@@ -64,6 +66,7 @@ export interface UpdateMember {
 export interface POSTUpdateMember {
   orgName: string,
   id: string;                 //The ID number of the FABI member to be updated
+  userID: string
   fields: UpdateMember;       //The fields to the updated
 }
 
@@ -78,6 +81,7 @@ export interface UpdateOrganization {
 export interface POSTUpdateOrganization {
   orgName: string;            //The name of the organization
   id: string;                 //The ID of the organization member to be updated
+  userID: string
   fields: UpdateMember;       //The fields to be updated
 }
 
@@ -115,7 +119,8 @@ export class UserManagementAPIService {
   getAllFABIStaff() {
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -150,7 +155,7 @@ export class UserManagementAPIService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getUserDetails(organization: string, idNo: string) {    
-    var data: POSTMember = { orgName: organization, id: idNo };
+    var data: POSTMember = { orgName: organization, id: idNo, userID: this.authService.getCurrentSessionValue.user.ID };
 
     const options = {
       method: 'POST',
@@ -194,6 +199,7 @@ export class UserManagementAPIService {
     var data: POSTUpdateMember = { 
       orgName: this.authService.getCurrentSessionValue.user.organisation,
       id: this.authService.getCurrentSessionValue.user.ID, 
+      userID: this.authService.getCurrentSessionValue.user.ID,
       fields: member 
     };
 
@@ -243,6 +249,7 @@ export class UserManagementAPIService {
     var data: POSTUpdateOrganization = { 
       orgName: this.authService.getCurrentSessionValue.user.organisation,
       id: this.authService.getCurrentSessionValue.user.ID, 
+      userID: this.authService.getCurrentSessionValue.user.ID,
       fields: member 
     };
 
@@ -283,7 +290,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -317,7 +325,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -352,7 +361,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -383,7 +393,7 @@ export class UserManagementAPIService {
   getAllOrganizations() {
     const getAllOrganizationsURL = `${config.userManagementURL}/getAllOrganizations`;
     const method = 'POST';
-    
+
     const options = {
       headers: new HttpHeaders({
         'cache-control': 'no-cache',
@@ -417,7 +427,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -480,8 +491,7 @@ export class UserManagementAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -494,6 +504,11 @@ export class UserManagementAPIService {
     let getPendingOrganizationURL = `${config.userManagementURL}/getAllPendingOrganizations`;
     let method = 'POST';
 
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
+    }
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -502,6 +517,7 @@ export class UserManagementAPIService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
+      body: postData,
       json: true
     };
 
@@ -543,6 +559,39 @@ export class UserManagementAPIService {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     DECLINE A PENDING ORGANISATION
+  /**
+   * Method that sends a request to the API to remove (deregister) an Organisation
+   *
+   * @param {Interface.Organisation} orgInfo The organization to be removed from the system
+   * 
+   * @returns API response @type any
+   * 
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  declineOrganizationRequest(orgInfo: Interface.Organisation) {
+    let declineOrganizationRequestURL = `${config.userManagementURL}/removePendingOrg`;
+    let method = 'POST';
+
+    const postData = orgInfo;
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, declineOrganizationRequestURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    ADD NEW FABI STAFF MEMBER
   /**
    * Method that sends a request to the API to add a new FABI Staff Member to the database
@@ -564,7 +613,9 @@ export class UserManagementAPIService {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "staff": staffDetails,
       "databases": databasePrivileges,
-      "userType": staffInfo.position
+      "userType": staffInfo.position,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -631,7 +682,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -668,7 +720,9 @@ export class UserManagementAPIService {
 
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
-      "admin": staffInfo
+      "admin": staffInfo,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -708,7 +762,8 @@ export class UserManagementAPIService {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "orgName": orgInfo.orgName,
       "member": memberInfo,
-      "userType": "Member"
+      "userType": "Member",
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
     
     const options = {
@@ -744,7 +799,8 @@ export class UserManagementAPIService {
 
     const postData = {
       "orgName": this.authService.getCurrentSessionValue.user.organisation,
-      "id": memberInfo.id
+      "id": memberInfo.id,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -777,7 +833,9 @@ export class UserManagementAPIService {
     let method = 'POST';
 
     const postData = {
-      "id": this.authService.getCurrentSessionValue.user.ID
+      "id": this.authService.getCurrentSessionValue.user.ID,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -811,7 +869,9 @@ export class UserManagementAPIService {
     let method = 'POST';
 
     const postData = {
-      "id": this.authService.getCurrentSessionValue.user.ID
+      "id": this.authService.getCurrentSessionValue.user.ID,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -850,7 +910,9 @@ export class UserManagementAPIService {
     const postData = {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "oldPass": oldPassword,
-      "newPass": newPassword
+      "newPass": newPassword,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
     
     const options = {
@@ -890,7 +952,8 @@ export class UserManagementAPIService {
       "id": this.authService.getCurrentSessionValue.user.ID,
       "oldPass": oldPassword,
       "newPass": newPassword,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -913,7 +976,9 @@ export class UserManagementAPIService {
     let method = 'POST';
 
     const postData = {
-      "id": this.authService.getCurrentSessionValue.user.ID
+      "id": this.authService.getCurrentSessionValue.user.ID,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
     const options = {
@@ -930,4 +995,117 @@ export class UserManagementAPIService {
 
     return this.http.request<any>(method, getFABIAdminURL, options);
   }
+
+
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // //                                                    GET SESSIONLESS USER DETAILS
+  // /**
+  //  * This function is used to get the details for a single member.
+  //  * 
+  //  * @param {string} email The email of the user
+  //  * @param {string} org The organisation of the user
+  //  * 
+  //  * @returns API response @type any
+  //  *
+  //  * @memberof UserManagementAPIService
+  //  */
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // getSessionlessUserDetails(org: string, email: string){
+  //   let method = 'POST';
+
+  //   const postData = {
+  //     "email": email,
+  //     "orgName": org
+  //   }
+
+  //   const options = {
+  //     headers: {
+  //       'cache-control': 'no-cache',
+  //       'Content-Type': 'application/json',
+  //       "Access-Control-Allow-Origin": "*",
+  //       'Accept': 'application/json'
+  //     },
+  //     body: postData,
+  //     json: true
+  //   };
+
+  //   return this.http.request<any>(method, getIndividualDetailsURL, options);
+  // }
+
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // //                                                    RESET FABI PASSWORD
+  // /**
+  //  * This function is used to reset a forgotten password for FABI staff.
+  //  * 
+  //  * @param {string} email The email of the user
+  //  * @param {string} password The new password for the user
+  //  * @param {string} id The id number of the user
+  //  * 
+  //  * @returns API response @type any
+  //  *
+  //  * @memberof UserManagementAPIService
+  //  */
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // resetFABIPassword(password: string, id: string){
+  //   let method = 'POST';
+
+  //   const postData = {
+  //     "id": id,
+  //     "fields": {
+  //       "password": password
+  //     }
+  //   }
+
+  //   const options = {
+  //     headers: {
+  //       'cache-control': 'no-cache',
+  //       'Content-Type': 'application/json',
+  //       "Access-Control-Allow-Origin": "*",
+  //       'Accept': 'application/json'
+  //     },
+  //     body: postData,
+  //     json: true
+  //   };
+
+  //   return this.http.request<any>(method, updateStaffMemberDetailsURL, options);
+  // }
+
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // //                                                    RESET ORG MEMBER PASSWORD
+  // /**
+  //  * This function is used to reset a forgotten password for FABI staff.
+  //  * 
+  //  * @param {string} org The organisation of the user
+  //  * @param {string} password The new password for the user
+  //  * @param {string} id The id number of the user
+  //  * 
+  //  * @returns API response @type any
+  //  *
+  //  * @memberof UserManagementAPIService
+  //  */
+  // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // resetOrgMemberPassword(password: string, id: string, org: string){
+  //   let method = 'POST';
+
+  //   const postData = {
+  //     "orgName": org,
+  //     "id": id,
+  //     "fields": {
+  //       "password": password
+  //     }
+  //   }
+
+  //   const options = {
+  //     headers: {
+  //       'cache-control': 'no-cache',
+  //       'Content-Type': 'application/json',
+  //       "Access-Control-Allow-Origin": "*",
+  //       'Accept': 'application/json'
+  //     },
+  //     body: postData,
+  //     json: true
+  //   };
+
+  //   return this.http.request<any>(method, updateOrganizationMemberDetailsURL, options);
+  // }
 }

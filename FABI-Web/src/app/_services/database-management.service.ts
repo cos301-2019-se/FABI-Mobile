@@ -5,7 +5,7 @@
  * Created Date: Sunday, July 28th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -57,7 +57,9 @@ export class DatabaseManagementService {
     let method = 'POST';
 
     const postData = {
-      "databaseName": database
+      "databaseName": database,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
     }
 
     const options = {
@@ -91,7 +93,9 @@ export class DatabaseManagementService {
 
     const postData = {
       "databaseName": dbname,
-      "data": jsonObject
+      "data": jsonObject,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
     };
 
     const options = {
@@ -124,7 +128,10 @@ export class DatabaseManagementService {
     const method = 'POST';
 
     const postData = {
-      "databaseName": dbname
+      "databaseName": dbname,
+      "dbName": dbname,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
     }
 
     const options = {

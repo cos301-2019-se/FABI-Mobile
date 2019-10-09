@@ -31,8 +31,7 @@ export class MemberMenuComponent implements core.OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            TOGGLE PROFILE 

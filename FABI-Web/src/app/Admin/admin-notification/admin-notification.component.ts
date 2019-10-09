@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -44,13 +44,7 @@ export class AdminNotificationComponent implements core.OnInit {
   numberOfUserLogs: number = 0;
   /** The total number of Database Management Logs - @type {number} */
   numberOfDatabaseLogs: number = 0;
-  /** The total number of Access Logs - @type {number} */
-  numberOfAccessLogs: number = 0;
 
-  /** The total number of FABI staff members - @type {number} */
-  numberOfFABIMembers: number;
-  /** The total number of FABI samples - @type {number} */
-  numberOfSamples: number;
   /** Indicates if there are notifications to load - @type {boolean} */
   notifications: boolean = true;
   /** The number of the notifications - @type {number} */
@@ -104,7 +98,6 @@ export class AdminNotificationComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
     this.getAllStaff();
 
     this.currentUser = this.authService.getCurrentSessionValue.user;
@@ -138,6 +131,7 @@ export class AdminNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
   }
@@ -238,6 +232,7 @@ export class AdminNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
   }
@@ -344,6 +339,7 @@ export class AdminNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
 
@@ -416,6 +412,7 @@ export class AdminNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
   }
@@ -455,7 +452,7 @@ export class AdminNotificationComponent implements core.OnInit {
 
     this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.ID, this.newNotifications).subscribe((response: any) => {
       if (response.success == true) {
-
+        //Notification has been removed
       }
       else {
         //Error handling

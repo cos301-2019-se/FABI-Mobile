@@ -195,7 +195,7 @@
                 <button class="btn btn-default-save" data-toggle="modal" [id]="pendingOrganization.email"
                   (click)="registerPendingOrg(pendingOrganization)">Verify</button>
                 <button class="btn btn-default-delete" data-toggle="modal" [id]="pendingOrganization.email"
-                  data-target="#confirmDeleteModal">Decline</button>
+                (click)="declinePendingeOrg(pendingOrganization)">Decline</button>
               </td>
             </tr>
           </tbody>

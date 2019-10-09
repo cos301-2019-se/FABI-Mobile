@@ -24,7 +24,6 @@ export class StaffHelpComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }
