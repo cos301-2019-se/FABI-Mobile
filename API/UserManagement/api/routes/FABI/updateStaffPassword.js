@@ -32,7 +32,7 @@ const db = admin.firestore();
 
 async function updateStaff(req, res) {
     
-    if(await auth.authSuperUser(req.headers.authorization)){
+    if(await auth.authSuperUser(req.headers.authorization)||await auth.authStaff(req.headers.authorization)){
         //(1)
         if (req.body.id == undefined || req.body.id == '') {
             res.setHeader('Content-Type', 'application/problem+json');
@@ -98,7 +98,8 @@ async function updateStaff(req, res) {
                             if(valid)
                             {
                                 docRef.update({password : req.body.newPass}).then(() => {
-
+                                    data = doc.data();
+                                    delete data.password
                                     db.collection('Organizations').doc('FABI').collection('Staff').doc(req.body.id).get().then( doc => {
                                         res.setHeader('Content-Type', 'application/problem+json');
                                         res.setHeader('Content-Language', 'en');
@@ -108,7 +109,7 @@ async function updateStaff(req, res) {
                                             code: 200,
                                             title: "SUCCESS",
                                             message: "User Updated",
-                                            data : doc.data()
+                                            data
                                         });
                                     });
                             })}
@@ -129,7 +130,7 @@ async function updateStaff(req, res) {
                         
                         log({
                             type: 'USER',
-                            details: '1563355277876',
+                            details: req.body.id,
                             user: req.body.id,
                             org1: 'FABI',
                             org2: 'FABI',

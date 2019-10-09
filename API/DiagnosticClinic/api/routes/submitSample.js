@@ -67,7 +67,6 @@ async function submitForm(req, res)
             });
         }
         else{
-            console.log(req.body);
             
             result = predict(getPredictionData(req)).then((result => {
                 refnum = refNumberGenerator(result);
@@ -124,7 +123,7 @@ async function submitForm(req, res)
 function getPredictionData(req)
 {
     FormData = {
-        Location : req.body.data.sample.plantation_details.farm,
+        Location : req.body.data.sample.plantation_details.city,
         Province : req.body.data.sample.plantation_details.province,
         Genus : req.body.data.sample.sample_details.plant_genus,
         Species : req.body.data.sample.sample_details.plant_species,
@@ -133,12 +132,13 @@ function getPredictionData(req)
     }
     var root = req.body.data.sample.types.filter( function(item){return (item.type=='root');} );
     var collar = req.body.data.sample.types.filter( function(item){return (item.type=='Root-Collar');} );
-    var stem = req.body.data.sample.types.filter( function(item){return (item.type=='Stem');} );
+    var stem = req.body.data.sample.types.filter( function(item){return (item.type=='Stems');} );
     var growth = req.body.data.sample.types.filter( function(item){return (item.type=='Growth-Tip');} );
-    var neeldes = req.body.data.sample.types.filter( function(item){return (item.type=='Needles/Leaves');} );
+    var neeldes = req.body.data.sample.types.filter( function(item){return (item.type=='Leaves/Needles');} );
     var type = ''
     req.body.data.sample.types.forEach( doc => {
         type += doc.type + ',';
+        console.log(doc);
     })
     type = type.substring(0, type.length - 1);
     

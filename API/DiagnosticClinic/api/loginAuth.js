@@ -44,7 +44,6 @@ module.exports = {
 	},
 	authSuperUser: function(token){
 		
-		//console.log(token)
 		return new Promise(function(resolve, reject){
 			
 			var options = {
@@ -62,12 +61,16 @@ module.exports = {
 			try{
 				options.path = '/authenticateSuperUser';
 				var url = 'https://' + options.hostname + options.path;
-				
+				console.log(url);
+				console.log("REQUEST: ")
+				console.log(options)
 				request.post(url,options, (error, response, body) => {
 					if(error){
 						reject( Error(error) );
 					}else{
-						if(response.statusCode != '200')
+						console.log("RESPONSE: ")
+						console.log(JSON.parse(response.body))
+						if(response.statusCode != 200)
 						{
 							resolve(false);
 						}
@@ -109,7 +112,7 @@ module.exports = {
 			try{
 				options.path = '/loginStaff';
 				var url = 'https://' + options.hostname + options.path;
-				console.log(url);
+				
 				request.post(url,options, (error, response, body) => {
 					if(error){
 						reject( Error(error) );
@@ -144,12 +147,16 @@ module.exports = {
 			try{
 				options.path = '/authenticateStaff';
 				var url = 'https://' + options.hostname + options.path;
-				
+				console.log(url);
+				console.log("REQUEST: ")
+				console.log(options)
 				request.post(url,options, (error, response, body) => {
 					if(error){
 						reject( Error(error) );
 					}else{
-						if(response.statusCode != '200')
+						console.log("RESPONSE: ")
+						console.log(JSON.parse(response.body))
+						if(response.statusCode != 200)
 						{
 							resolve(false);
 						}
@@ -226,12 +233,16 @@ module.exports = {
 			try{
 				options.path = '/authenticateClinicAdmin';
 				var url = 'https://' + options.hostname + options.path;
-				
+				console.log(url);
+				console.log("REQUEST: ")
+				console.log(options)
 				request.post(url,options, (error, response, body) => {
 					if(error){
 						reject( Error(error) );
 					}else{
-						if(response.statusCode != '200')
+						console.log("RESPONSE: ")
+						console.log(JSON.parse(response.body))
+						if(response.statusCode != 200)
 						{
 							resolve(false);
 						}
@@ -308,12 +319,16 @@ module.exports = {
 			try{
 				options.path = '/authenticateCultureAdmin';
 				var url = 'https://' + options.hostname + options.path;
-				
+				console.log(url);
+				console.log("REQUEST: ")
+				console.log(options)
 				request.post(url,options, (error, response, body) => {
 					if(error){
 						reject( Error(error) );
 					}else{
-						if(response.statusCode != '200')
+						console.log("RESPONSE: ")
+						console.log(JSON.parse(response.body))
+						if(response.statusCode != 200)
 						{
 							resolve(false);
 						}
@@ -390,12 +405,16 @@ module.exports = {
 			try{
 				options.path = '/authenticateOrganizationAdmin';
 				var url = 'https://' + options.hostname + options.path;
-				
+				console.log(url);
+				console.log("REQUEST: ")
+				console.log(options)
 				request.post(url,options, (error, response, body) => {
 					if(error){
 						reject( Error(error) );
 					}else{
-						if(response.statusCode != '200')
+						console.log("RESPONSE: ")
+						console.log(JSON.parse(response.body))
+						if(response.statusCode != 200)
 						{
 							resolve(false);
 						}
@@ -472,12 +491,14 @@ module.exports = {
 			try{
 				options.path = '/authenticateOrganizationMember';
 				var url = 'https://' + options.hostname + options.path;
-				
+				console.log(url);
 				request.post(url,options, (error, response, body) => {
 					if(error){
 						reject( Error(error) );
 					}else{
-						if(response.statusCode != '200')
+						console.log("RESPONSE: ")
+						console.log(JSON.parse(response.body))
+						if(response.statusCode != 200)
 						{
 							resolve(false);
 						}

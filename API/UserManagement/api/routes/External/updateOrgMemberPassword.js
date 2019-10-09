@@ -139,7 +139,7 @@ async function updateStaff(req, res) {
                         
                         log({
                             type: 'USER',
-                            details: '1563355277876',
+                            details: req.body.userID,
                             user: req.body.id,
                             org1: 'FABI',
                             org2: req.body.orgName,

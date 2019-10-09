@@ -37,14 +37,14 @@ const db = admin.firestore();
 //[END config]
 async function addMember(req, res)
 {
-    if(await auth.authOrgAdmin(req.headers.authorization)){
+    if(await auth.authOrgAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
         // (1)
         var userTypes = ['OrganizationAdmin', 'Member'];
         if (req.body.member.fname == undefined || req.body.member.fname == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
             res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
+            res.status(400).json({                                 // ******* RESPONSE STATUS? ************
                 success: false,
                 code: 400,
                 title: "BAD_REQUEST",
@@ -158,7 +158,7 @@ async function addMember(req, res)
                             log({
                                 type: 'USER',
                                 action: 'AddMemberToOrg',
-                                details: '1563355277876',
+                                details: req.body.userID,
                                 user: qs.id,
                                 org1: 'FABI',
                                 org2: req.body.orgName,

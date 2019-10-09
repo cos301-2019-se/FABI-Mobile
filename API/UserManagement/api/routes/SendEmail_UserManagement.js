@@ -8,7 +8,7 @@ const config = require('./config');
 //                                            EMAIL SETTINGS 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const transporter = nodemailer.createTransport({
+const transporterDenied = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: config.user,
@@ -16,6 +16,21 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+const transporterOrganization = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: config.user,
+      pass: config.pass
+    }
+});
+
+const transporterUser = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: config.user,
+      pass: config.pass
+    }
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                        EMAIL ORGANIZATION REQUEST DENIED
@@ -30,7 +45,7 @@ const transporter = nodemailer.createTransport({
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const sendOrganizationRequestDenied = function(orgName, email, reason) {
 
-    transporter.use('compile', hbs({
+    transporterDenied.use('compile', hbs({
         viewEngine: {
             viewPath: path.resolve(__dirname, 'templates', 'RequestDenied_Organization'),
             extName: '.hbs',
@@ -53,7 +68,7 @@ const sendOrganizationRequestDenied = function(orgName, email, reason) {
         }
     };
     
-    return transporter.sendMail(mailOptions, (error, info) => {
+    return transporterDenied.sendMail(mailOptions, (error, info) => {
         if (error)
             console.log(error);
         else
@@ -79,7 +94,7 @@ const sendOrganizationRequestDenied = function(orgName, email, reason) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const sendOrganizationTemporaryPin = function(orgName, email, fname, surname, pass) {
 
-    transporter.use('compile', hbs({
+    transporterOrganization.use('compile', hbs({
         viewEngine: {
             viewPath: path.resolve(__dirname, 'templates', 'OrganizationRegistration'),
             extName: '.hbs',
@@ -104,7 +119,7 @@ const sendOrganizationTemporaryPin = function(orgName, email, fname, surname, pa
         }
     };
     
-    return transporter.sendMail(mailOptions, (error, info) => {
+    return transporterOrganization.sendMail(mailOptions, (error, info) => {
         if (error)
             console.log(error);
         else
@@ -129,7 +144,7 @@ const sendOrganizationTemporaryPin = function(orgName, email, fname, surname, pa
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const sendUserTemporaryPin = function(orgName, email, fname, surname, pass, role) {
 
-    transporter.use('compile', hbs({
+    transporterUser.use('compile', hbs({
         viewEngine: {
             viewPath: path.resolve(__dirname, 'templates', 'MemberRegistration'),
             extName: '.hbs',
@@ -154,7 +169,7 @@ const sendUserTemporaryPin = function(orgName, email, fname, surname, pass, role
         }
     };
     
-    return transporter.sendMail(mailOptions, (error, info) => {
+    return transporterUser.sendMail(mailOptions, (error, info) => {
         if (error)
             console.log(error);
         else

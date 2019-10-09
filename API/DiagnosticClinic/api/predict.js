@@ -21,7 +21,7 @@ module.exports = function(formData){
 		
 		var options = {
 				method: 'POST',
-				hostname: 'dtree-dot-fabi-dev.appspot.com',
+				hostname: config.prediction,
 				headers: {
 				  'Content-Type': 'application/json'
 				},
@@ -31,7 +31,8 @@ module.exports = function(formData){
 		
 		try{
 			options.path = '/predict';
-			request.post(config.prediction, options, (error, response, body) => {
+			url = 'https://' + config.prediction + options.path
+			request.post(url, options, (error, response, body) => {
 				if(error){
 					console.log(error)
 				}else{
