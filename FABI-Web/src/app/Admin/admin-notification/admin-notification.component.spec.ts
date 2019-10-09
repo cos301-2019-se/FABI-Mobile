@@ -13,6 +13,7 @@ import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform
 import { DebugElement, NgModule } from '@angular/core';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
 
 import { AdminNotificationComponent } from './admin-notification.component';
 
@@ -21,6 +22,7 @@ describe('AdminNotificationComponent', () => {
   let fixture: ComponentFixture<AdminNotificationComponent>;
   let de : DebugElement;
   let UserManagementService: UserManagementAPIService;
+  let notifService: NotificationLoggingService;
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -44,6 +46,8 @@ describe('AdminNotificationComponent', () => {
     component = fixture.componentInstance;
     de = fixture.debugElement;
     UserManagementService = new UserManagementAPIService( null , null);
+    notifService = new NotificationLoggingService(null, null);
+
     component.ngOnInit();
     fixture.autoDetectChanges();
   });
@@ -61,5 +65,34 @@ describe('AdminNotificationComponent', () => {
   it('get Date (format)', () => {
     expect(component.getDate("Mon Jan 14 2019")).toEqual("14 Monday January 2019");
   });
+
+  it('get empty Date ', () => {
+    expect(component.getDate("")).toEqual("undefined undefined");
+  });
+
+  it('load logs ', () => {
+    let spy = spyOn(notifService, 'getUserLogs');
+    component.loadLogs();
+    expect(spy).toBeTruthy();
+  });
+
+  it('load Notifications', () => {
+    let spy1 = spyOn(component, 'getAllStaff');
+    let spy2 = spyOn(component, 'loadLogs');
+    component.loadNotifications();
+    expect(spy1).toHaveBeenCalled();
+    expect(spy2).toHaveBeenCalled();
+  });
+
+  it('load empty User details', () => {
+    expect(component.loadUserDetails("")).toEqual("");
+  });
+
+  it('load empty User details', () => {
+    let spy = spyOn(notifService, 'updateFABIMemberNotifications');
+    component.removeNotification("7412589630");
+    expect(spy).toBeTruthy();
+  });
+
 
 });

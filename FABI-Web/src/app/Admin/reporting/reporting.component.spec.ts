@@ -26,13 +26,16 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { FilterPipe } from '../../_pipes/filter.pipe';
 import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
-
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
 
 describe('ReportingComponent', () => {
   let component: ReportingComponent;
   let fixture: ComponentFixture<ReportingComponent>;
   let UserManagementService: UserManagementAPIService;
-
+  let NotificationLogService: NotificationLoggingService;
+  let CCservice: CultureCollectionAPIService;
+  let authService : AuthenticationService;
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -64,6 +67,9 @@ describe('ReportingComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     UserManagementService = new UserManagementAPIService( null , null);
+    NotificationLogService = new NotificationLoggingService(null, null);
+    CCservice = new CultureCollectionAPIService(null, null);
+    authService = new AuthenticationService(null);
   });
 
   it('should create', () => {
@@ -78,6 +84,124 @@ describe('ReportingComponent', () => {
     let spy = spyOn(UserManagementService, 'getAllFABIStaff');
     component.getAllStaff();
     expect(spy).toBeTruthy();
+  });
+
+  it('generate Error Report', () =>{
+    let spy = spyOn(NotificationLogService, 'getAllErrorLogs');
+    component.generateErrorReport();
+    expect(spy).toBeTruthy();
+  });
+
+  it('generate Request Report', () =>{
+    let spy = spyOn(CCservice, 'getAllRequestLogs');
+    component.generateRequestReport();
+    expect(spy).toBeTruthy();
+  });
+
+  it('generate Deposit Report', () =>{
+    let spy = spyOn(CCservice, 'getAllDepositLogs');
+    component.generateDepositReport();
+    expect(spy).toBeTruthy();
+  });
+
+  it('generate Revitalization Report', () =>{
+    let spy = spyOn(CCservice, 'getAllRevitalizationLogs');
+    component.generateRevitalizationReport();
+    expect(spy).toBeTruthy();
+  });
+
+  it('get Date (format)', () => {
+    expect(component.getDate("Mon Jan 14 2019")).toEqual("14 Monday January 2019");
+  });
+
+  it('get empty Date ', () => {
+    expect(component.getDate("")).toEqual("undefined undefined");
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
+  });
+
+  it('toggle notification tab', () =>{
+    let x = component.notificationsTab;
+    component.toggleNotificationsTab();
+    expect(component.notificationsTab == !x).toBeTruthy();
+  });
+
+  it('toggle profile tab', () =>{
+    let x = component.profileTab;
+    component.toggleProfileTab();
+    expect(component.profileTab == !x).toBeTruthy();
+  });
+
+  it('toggle help tab', () =>{
+    let x = component.helpTab;
+    component.toggleHelpTab();
+    expect(component.helpTab == !x).toBeTruthy();
+  });
+
+  it('displayProfileSaveBtn', () => {
+    component.displayProfileSaveBtn();
+    expect(component.saveBtn).toBeTruthy();
+  });
+
+  it('displayConfirmPasswordInput', () => {
+    component.displayConfirmPasswordInput();
+    expect(component.confirmPasswordInput).toBeTruthy();
+  });
+
+  it('toggle Report Section', () => {
+    let x = component.reportingTab;
+    component.toggleReportSection();
+    expect(component.logsTab).toBeFalsy();
+    expect(component.userLogs).toBeFalsy();
+    expect(component.requestLogs).toBeTruthy();
+    expect(component.requestReport).toBeTruthy();
+    expect(component.reportingTab == !x).toBeTruthy();
+  });
+
+  it('toggle Log Section', () => {
+    let x = component.logsTab;
+    component.toggleLogSection();
+    expect(component.reportingTab).toBeFalsy();
+    expect(component.requestLogs).toBeFalsy();
+    expect(component.userLogs).toBeTruthy();
+    expect(component.requestReport).toBeFalsy();
+    expect(component.logsTab == !x).toBeTruthy();
+  });
+
+  it('set user Log table', () => {
+    component.setUserLogTable();
+    expect(component.userLogs).toBeTruthy();
+    expect(component.accessLogs).toBeFalsy();
+    expect(component.databaseLogs).toBeFalsy();
+    expect(component.errorLogs).toBeFalsy();
+  });
+
+  it('set access Log table', () => {
+    component.setAccessLogTable();
+    expect(component.userLogs).toBeFalsy();
+    expect(component.accessLogs).toBeTruthy();
+    expect(component.databaseLogs).toBeFalsy();
+    expect(component.errorLogs).toBeFalsy();
+  });
+
+  it('set error Log table', () => {
+    component.setErrorLogTable();
+    expect(component.userLogs).toBeFalsy();
+    expect(component.accessLogs).toBeFalsy();
+    expect(component.databaseLogs).toBeFalsy();
+    expect(component.errorLogs).toBeTruthy();
+  });
+
+  it('set error Log table', () => {
+    component.setDatabaseLogTable();
+    expect(component.userLogs).toBeFalsy();
+    expect(component.accessLogs).toBeFalsy();
+    expect(component.databaseLogs).toBeTruthy();
+    expect(component.errorLogs).toBeFalsy();
   });
 
 });

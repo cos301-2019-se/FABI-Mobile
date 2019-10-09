@@ -90,11 +90,31 @@ describe('AdminDashboardComponent', () => {
   });
 
   it('toggle notification tab', () =>{
-    expect(component.toggleNotificationsTab()).toBeUndefined();
+    let x = component.notificationsTab;
+    component.toggleNotificationsTab();
+    expect(component.notificationsTab == !x).toBeTruthy();
   });
 
   it('toggle profile tab', () =>{
-    expect(component.toggleProfileTab()).toBeUndefined();
+    let x = component.profileTab;
+    component.toggleProfileTab();
+    expect(component.profileTab == !x).toBeTruthy();
+  });
+
+  it('toggle help tab', () =>{
+    let x = component.helpTab;
+    component.toggleHelpTab();
+    expect(component.helpTab == !x).toBeTruthy();
+  });
+
+  it('displayProfileSaveBtn', () => {
+    component.displayProfileSaveBtn();
+    expect(component.saveBtn).toBeTruthy();
+  });
+
+  it('displayConfirmPasswordInput', () => {
+    component.displayConfirmPasswordInput();
+    expect(component.confirmPasswordInput).toBeTruthy();
   });
 
 });

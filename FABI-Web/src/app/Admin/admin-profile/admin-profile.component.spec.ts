@@ -14,6 +14,7 @@ import { MaterialModule } from '../../materials';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +26,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 describe('AdminProfileComponent', () => {
   let component: AdminProfileComponent;
   let fixture: ComponentFixture<AdminProfileComponent>;
+  let UserManagementService: UserManagementAPIService;
+  let authService : AuthenticationService;
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -56,6 +59,8 @@ describe('AdminProfileComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminProfileComponent);
     component = fixture.componentInstance;
+    UserManagementService = new UserManagementAPIService( null , null);
+    authService = new AuthenticationService(null);
     fixture.detectChanges();
   });
 
@@ -106,6 +111,38 @@ describe('AdminProfileComponent', () => {
     component.adminProfileForm.controls.admin_type.setValue("super");
 
     expect(component.adminProfileForm.valid).toBeTruthy();
+  });
+
+  it('toggle profile tab', () =>{
+    let x = component.profileTab;
+    component.toggleProfileTab();
+    expect(component.profileTab == !x).toBeTruthy();
+  });
+
+  it('load Admin Profile Details', () =>{
+    let spy = spyOn(UserManagementService, 'getUserDetails');
+    component.loadAdminProfileDetails();
+    expect(spy).toBeTruthy();
+  });
+
+  it('save changes', () =>{
+    let spy = spyOn(UserManagementService, 'updateFABIMemberDetails');
+    component.saveChanges();
+    expect(component.submitted).toBeTruthy();
+    expect(spy).toBeTruthy();
+  });
+
+  it('change password', () =>{
+    let spy = spyOn(UserManagementService, 'updateStaffPassword');
+    component.changePassword();
+    expect(component.submitted).toBeTruthy();
+    expect(spy).toBeTruthy();
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
   });
 
 });

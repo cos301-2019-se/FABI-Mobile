@@ -22,11 +22,13 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { FilterPipe } from '../../_pipes/filter.pipe';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 
 describe('ClinicAdminViewSamplesComponent', () => {
   let component: ClinicAdminViewSamplesComponent;
   let fixture: ComponentFixture<ClinicAdminViewSamplesComponent>;
   let DiagnosticClinicService : DiagnosticClinicAPIService;
+  let authService : AuthenticationService;
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -53,6 +55,7 @@ describe('ClinicAdminViewSamplesComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     DiagnosticClinicService = new DiagnosticClinicAPIService(null, null);
+    authService = new AuthenticationService(null);
   });
 
   it('should create', () => {
@@ -64,5 +67,33 @@ describe('ClinicAdminViewSamplesComponent', () => {
     component.viewSamples();
     expect(spy).toBeTruthy();
   });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
+  });
+
+  it('selecting sample', () =>{
+    component.selectSample( {data : "testData"} );
+    expect(component.selectedSampleData == "testData").toBeTruthy();
+  });
+
+  it('reset Sample Fields', () =>{
+    component.resetSampleFields();
+    expect(component.sampleFields).toEqual([]);
+  });
+
+  it('updating Sample Status', () =>{
+    component.updatingSampleStatus({data : "testData"});
+    expect(component.editingSample).toEqual({data : "testData"} );
+    expect(component.isEditingSample).toBeTruthy();
+  });
+
+  // it('update Sample Status', () =>{
+  //   let spy = spyOn(DiagnosticClinicService, 'updateSamplesStatus');
+  //   component.updateSampleStatus({data : "testData"});
+  //   expect(spy).toBeTruthy();
+  // });
 
 });
