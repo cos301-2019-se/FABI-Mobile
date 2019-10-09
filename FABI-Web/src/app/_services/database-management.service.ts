@@ -5,7 +5,7 @@
  * Created Date: Sunday, July 28th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -129,6 +129,7 @@ export class DatabaseManagementService {
 
     const postData = {
       "databaseName": dbname,
+      "dbName": dbname,
       "orgName": this.authService.getCurrentSessionValue.user.organisation,
       "userID": this.authService.getCurrentSessionValue.user.ID,
     }

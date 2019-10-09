@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -124,7 +124,7 @@ export class ClinicHandlerComponent implements core.OnInit {
 
       if (response.success == true && response.code == 200) {
 
-        this.adminUsers = response.data.qs.admins;
+        this.adminUsers = response.data.qs.staff;
 
         //POPUP MESSAGE
       }
@@ -246,7 +246,7 @@ export class ClinicHandlerComponent implements core.OnInit {
 
     this.valid = true;
 
-
+    return;
 
     const LstaffName = this.addStaffForm.controls.user.value.fname;
     const LstaffSurname = this.addStaffForm.controls.user.value.surname;

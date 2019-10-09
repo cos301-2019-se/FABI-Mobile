@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -19,6 +19,7 @@ import * as core from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 import { NotificationService } from 'src/app/_services/notification.service';
 import * as Interface from '../../_interfaces/interfaces';
 import { AuthenticationService } from '../../_services/authentication.service';
@@ -301,6 +302,8 @@ export class StaffHandlerComponent implements core.OnInit {
     this.valid = true;
     this.loading = true;
 
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Adding Member" } });
+
     const LstaffName = this.addStaffForm.controls.staff_name.value;
     const LstaffSurname = this.addStaffForm.controls.staff_surname.value;
     const LstaffEmail = this.addStaffForm.controls.staff_email.value;
@@ -321,6 +324,7 @@ export class StaffHandlerComponent implements core.OnInit {
 
     this.addStaffForm.controls.database_privileges.value.forEach((value, i) => {
 
+
       if (value == true) {
         let dbPrivilege: Interface.DatabasePrivilege = {
           name: this.allDatabaseNames[i],
@@ -332,6 +336,8 @@ export class StaffHandlerComponent implements core.OnInit {
     });
 
     this.userManagementService.addStaffMember(staff_details, databasePrivileges).subscribe((response: any) => {
+
+      loadingRef.close();
       this.loading = false;
 
       if (response.success == true && response.code == 200) {
@@ -343,6 +349,7 @@ export class StaffHandlerComponent implements core.OnInit {
         this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
       }
     }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
       //Handled in error-handler
       this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
     });
@@ -394,7 +401,11 @@ export class StaffHandlerComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeStaffMember() {
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Adding Member" } });
+
     this.userManagementService.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
+
+      loadingRef.close();
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
         this.notificationService.showSuccessNotification('Member Removed', '');
@@ -404,6 +415,7 @@ export class StaffHandlerComponent implements core.OnInit {
         this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the member');
       }
     }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
       //Handled in error-handler
       this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the member');
     });

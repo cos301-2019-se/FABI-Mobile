@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,6 +22,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { MapsWindowComponent } from '../maps-window/maps-window.component';
 import * as Interface from '../_interfaces/interfaces';
+import { LoadingComponent } from '../_loading/loading.component';
 import { AuthenticationService } from '../_services/authentication.service';
 import { DiagnosticClinicAPIService } from '../_services/diagnostic-clinic-api.service';
 import { NotificationService } from '../_services/notification.service';
@@ -368,6 +369,7 @@ export class SampleFormComponent implements OnInit {
     //   return;
     // }
 
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
 
     let types: Interface.SampleTypeDescription[] = [];
 
@@ -438,11 +440,9 @@ export class SampleFormComponent implements OnInit {
 
     };
 
-    console.log(formDetails);
-
     this.clinicService.submitSampleForm(formDetails).subscribe((response: any) => {
 
-      console.log(response);
+      loadingRef.close();
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -464,6 +464,7 @@ export class SampleFormComponent implements OnInit {
         this.notificationService.showErrorNotification('Error', 'An error occurred while trying to send sample form');
       }
     }, (err: HttpErrorResponse) => {
+      loadingRef.close();
       //Handled in error-handler
       this.notificationService.showErrorNotification('Error', 'An error occurred while trying to send sample form');
     })
