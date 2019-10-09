@@ -33,7 +33,7 @@ const db = admin.firestore();
 
 async function updateMember(req, res) {
     
-    if(await auth.authOrgMember(req.headers.authorization)||await auth.authOrgAdmin(req.body.authorization)||await auth.authSuperUser(req.headers.authorization)){
+    if(await auth.authOrgMember(req.headers.authorization)||await auth.authOrgAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
         //(1)
         if (req.body.orgName == undefined || req.body.orgName == '') {
             res.setHeader('Content-Type', 'application/problem+json');

@@ -32,7 +32,7 @@ const db = admin.firestore();
 
 async function updateStaff(req, res) {
     
-    if(await auth.authOrgMember(req.headers.authorization)||await auth.authOrgAdmin(req.body.authorization)||await auth.authSuperUser(req.headers.authorization)){
+    if(await auth.authOrgMember(req.headers.authorization)||await auth.authOrgAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
         //(1)
         if (req.body.id == undefined || req.body.id == '') {
             res.setHeader('Content-Type', 'application/problem+json');

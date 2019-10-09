@@ -29,7 +29,7 @@ const db = admin.firestore();
 
 async function removeMember(req, res) {
     //(1)
-    if(await auth.authOrgAdmin(req.body.authorization)||await auth.authSuperUser(req.headers.authorization)){
+    if(await auth.authOrgAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
         if (req.body.id == undefined || req.body.id == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');

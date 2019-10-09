@@ -28,7 +28,7 @@ const db = admin.firestore();
 
 async function getOrgDetails(req, res) {
     //(1)
-    if(await auth.authSuperUser(req.headers.authorization)||await auth.authOrgAdmin(req.body.authorization)){
+    if(await auth.authSuperUser(req.headers.authorization)||await auth.authOrgAdmin(req.headers.authorization)){
         if (req.body.orgName == undefined || req.body.orgName == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
