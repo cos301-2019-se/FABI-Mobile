@@ -66,6 +66,12 @@
 
 
 
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
 
 
 <section>
@@ -130,6 +136,21 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
 
@@ -145,7 +166,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor()</code>
+<code>constructor(cookieService: CookieService)</code>
                     </td>
                 </tr>
                         <tr>
@@ -154,6 +175,36 @@
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>cookieService</td>
+                                                  
+                                                        <td>
+                                                                    <code>CookieService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -162,7 +213,53 @@
 
 
 
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnInit()</code>
+                </td>
+            </tr>
 
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="15"
+                            class="link-to-prism">src/app/app.component.ts:15</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
     <section>
     
         <h3 id="inputs">
@@ -206,35 +303,23 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
-import { Porting } from &#x27;./_services/porting.service&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CookieService } from &quot;ngx-cookie-service&quot;;
 
 @Component({
   selector: &#x27;app-root&#x27;,
   templateUrl: &#x27;./app.component.html&#x27;,
   styleUrls: [&#x27;./app.component.scss&#x27;]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title &#x3D; &#x27;FABI-Web&#x27;;
 
-  constructor(){
+  constructor(private cookieService: CookieService){
   }
 
-  // portCSV : Porting &#x3D; new Porting();
-
-  // public submitCSV(input){
-  //   const reader &#x3D; new FileReader();
-  //   reader.onload &#x3D; () &#x3D;&gt; {
-  //       let text &#x3D; reader.result;
-  //       let jsonData &#x3D; this.portCSV.convertToJSON(text); //converts file to JSON Object
-  //       console.log(jsonData);
-  //         // ** place api calls here ** //
-  //     };
-  //   reader.readAsText(input.files[0]);
-  // }
-
-
-
+  public ngOnInit(): void {
+    this.cookieService.set(&#x27;SameSite&#x27;, &#x27;None&#x27;);
+  }
 }
 
 
@@ -242,49 +327,68 @@ export class AppComponent {
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;!-- &lt;app-login&gt;&lt;/app-login&gt; --&gt;
-
+        <pre class="line-numbers"><code class="language-html">&lt;!--**********************  HOME   **************************--&gt;
 &lt;!-- &lt;app-home&gt;&lt;/app-home&gt; --&gt;
+
+&lt;!--**********************  LOGIN   **************************--&gt;
+&lt;!-- &lt;app-login&gt;&lt;/app-login&gt; --&gt;
+
+&lt;!--**********************  SIGN UP   **************************--&gt;
+&lt;!-- &lt;app-sign-up-request&gt;&lt;/app-sign-up-request&gt; --&gt;
 
 &lt;!--**********************  ADMIN   **************************--&gt;
 &lt;!-- &lt;app-admin-dashboard&gt;&lt;/app-admin-dashboard&gt;  --&gt;
-&lt;!-- &lt;app-clinic-handler&gt;&lt;/app-clinic-handler&gt; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;STILL TO DO - DONE FOR NOW &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;--&gt; 
+&lt;!-- &lt;app-clinic-handler&gt;&lt;/app-clinic-handler&gt; --&gt;
 &lt;!-- &lt;app-database-handler&gt;&lt;/app-database-handler&gt; --&gt;
 &lt;!-- &lt;app-organization-handler&gt;&lt;/app-organization-handler&gt; --&gt;
 &lt;!-- &lt;app-staff-handler&gt;&lt;/app-staff-handler&gt; --&gt;
 &lt;!-- &lt;app-reporting&gt;&lt;/app-reporting&gt; --&gt;
 &lt;!-- &lt;app-admin-profile&gt;&lt;/app-admin-profile&gt; --&gt;
+&lt;!-- &lt;app-clinic-admin-view-samples&gt;&lt;/app-clinic-admin-view&gt; --&gt;
+&lt;!-- &lt;app-view-forms&gt;&lt;/app-view-forms&gt; --&gt;
 &lt;!--************************************************--&gt;
 
 &lt;!--**********************  STAFF   **************************--&gt;
 &lt;!-- &lt;app-staff-dashboard&gt;&lt;/app-staff-dashboard&gt; --&gt;
-&lt;!-- &lt;app-submit-cbs-deposit&gt;&lt;/app-submit-cbs-deposit&gt; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;STILL TO DO - DONE FOR NOW &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;--&gt; 
-&lt;!-- &lt;app-submit-cbs-request&gt;&lt;/app-submit-cbs-request&gt; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;STILL TO DO - DONE FOR NOW &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;--&gt; 
-&lt;!-- &lt;app-submit-cmw-deposit&gt;&lt;/app-submit-cmw-deposit&gt; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;STILL TO DO - DONE FOR NOW &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;--&gt; 
-&lt;!-- &lt;app-submit-cmw-request&gt;&lt;/app-submit-cmw-request&gt; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;STILL TO DO - DONE FOR NOW &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;--&gt; 
-&lt;!-- &lt;app-submit-cmw-revitalization&gt;&lt;/app-submit-cmw-revitalization&gt; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;STILL TO DO - DONE FOR NOW &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;--&gt; 
+&lt;!-- &lt;app-submit-cmw-deposit&gt;&lt;/app-submit-cmw-deposit&gt;  --&gt;
+&lt;!-- &lt;app-submit-cmw-request&gt;&lt;/app-submit-cmw-request&gt; --&gt;
+&lt;!-- &lt;app-submit-cmw-revitalization&gt;&lt;/app-submit-cmw-revitalization&gt; --&gt;
 &lt;!-- &lt;app-staff-profile&gt;&lt;/app-staff-profile&gt; --&gt;
+&lt;!-- &lt;app-cmw-menu&gt;&lt;/app-cmw-menu&gt; --&gt;
+&lt;!-- &lt;app-staff-view-databases&gt;&lt;/app-staff-view-databases&gt; --&gt;
 &lt;!--************************************************--&gt;
 
 &lt;!--**********************  ORGANIZATION   **************************--&gt;
 &lt;!-- &lt;app-organization-dashboard&gt;&lt;/app-organization-dashboard&gt; --&gt;
 &lt;!-- &lt;app-member-handler&gt;&lt;/app-member-handler&gt; --&gt;
 &lt;!-- &lt;app-organization-profile&gt;&lt;/app-organization-profile&gt; --&gt;
-&lt;!-- &lt;app-organization-view-samples&gt;&lt;/app-organization-view-samples&gt; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;STILL TO DO - POPULATE TABLE&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;--&gt; 
+&lt;!-- &lt;app-organization-view-samples&gt;&lt;/app-organization-view-samples&gt;  --&gt;
 &lt;!--************************************************--&gt;
-
 
 &lt;!--**********************  ORGANIZATION MEMBER   **************************--&gt;
 &lt;!-- &lt;app-member-dashboard&gt;&lt;/app-member-dashboard&gt; --&gt;
-&lt;!-- &lt;app-sample-form&gt;&lt;/app-sample-form&gt; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;STILL TO DO - DONE FOR NOW &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;--&gt; 
 &lt;!-- &lt;app-member-profile&gt;&lt;/app-member-profile&gt; --&gt;
-&lt;!-- &lt;app-member-view-samples&gt;&lt;/app-member-view-samples&gt; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;STILL TO DO - POPULATE TABLE&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;--&gt; 
+&lt;!-- &lt;app-member-view-samples&gt;&lt;/app-member-view-samples&gt; --&gt;
 &lt;!--************************************************--&gt;
 
 &lt;!--**********************  UPDATE COMPONENTS   **************************--&gt;
 &lt;!-- &lt;app-update&gt;&lt;/app-update&gt; --&gt;
 &lt;!--************************************************--&gt;
 
+&lt;!--**********************  MAP WINDOW  **************************--&gt;
+&lt;!-- &lt;app-maps-window&gt;&lt;/app-maps-window&gt; --&gt;
+&lt;!--************************************************--&gt;
+
+&lt;!--**********************  SUBMIT SAMPLE  **************************--&gt;
+&lt;!-- &lt;app-sample-form&gt;&lt;/app-sample-form&gt; --&gt;
+&lt;!--************************************************--&gt;
+
+&lt;!--**********************  PRE-DIAGNOSIS  **************************--&gt;
+&lt;!-- &lt;app-pre-diagnosis&gt;&lt;/app-pre-diagnosis&gt; --&gt;
+&lt;!--************************************************--&gt;
+
+&lt;!--**********************  404 PAGE  **************************--&gt;
+&lt;!-- &lt;app-page-not-found&gt;&lt;/app-page-not-found&gt; --&gt;
 
 &lt;router-outlet&gt;&lt;/router-outlet&gt;</code></pre>
     </div>
@@ -321,8 +425,8 @@ export class AppComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!-- <app-login></app-login> --><!-- <app-home></app-home> --><!--**********************  ADMIN   **************************--><!-- <app-admin-dashboard></app-admin-dashboard>  --><!-- <app-clinic-handler></app-clinic-handler> ===============================STILL TO DO - DONE FOR NOW ==========================--> <!-- <app-database-handler></app-database-handler> --><!-- <app-organization-handler></app-organization-handler> --><!-- <app-staff-handler></app-staff-handler> --><!-- <app-reporting></app-reporting> --><!-- <app-admin-profile></app-admin-profile> --><!--************************************************--><!--**********************  STAFF   **************************--><!-- <app-staff-dashboard></app-staff-dashboard> --><!-- <app-submit-cbs-deposit></app-submit-cbs-deposit> =======================STILL TO DO - DONE FOR NOW ==========================--> <!-- <app-submit-cbs-request></app-submit-cbs-request> =======================STILL TO DO - DONE FOR NOW ==========================--> <!-- <app-submit-cmw-deposit></app-submit-cmw-deposit> =======================STILL TO DO - DONE FOR NOW ==========================--> <!-- <app-submit-cmw-request></app-submit-cmw-request> =======================STILL TO DO - DONE FOR NOW ==========================--> <!-- <app-submit-cmw-revitalization></app-submit-cmw-revitalization> =========STILL TO DO - DONE FOR NOW ==========================--> <!-- <app-staff-profile></app-staff-profile> --><!--************************************************--><!--**********************  ORGANIZATION   **************************--><!-- <app-organization-dashboard></app-organization-dashboard> --><!-- <app-member-handler></app-member-handler> --><!-- <app-organization-profile></app-organization-profile> --><!-- <app-organization-view-samples></app-organization-view-samples> =========STILL TO DO - POPULATE TABLE==========================--> <!--************************************************--><!--**********************  ORGANIZATION MEMBER   **************************--><!-- <app-member-dashboard></app-member-dashboard> --><!-- <app-sample-form></app-sample-form> =====================================STILL TO DO - DONE FOR NOW ==========================--> <!-- <app-member-profile></app-member-profile> --><!-- <app-member-view-samples></app-member-view-samples> =====================STILL TO DO - POPULATE TABLE==========================--> <!--************************************************--><!--**********************  UPDATE COMPONENTS   **************************--><!-- <app-update></app-update> --><!--************************************************--><router-outlet></router-outlet></div>'
-    var COMPONENTS = [{'name': 'AdminDashboardComponent', 'selector': 'app-admin-dashboard'},{'name': 'AdminDivComponent', 'selector': 'app-admin-div'},{'name': 'AdminProfileComponent', 'selector': 'app-admin-profile'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ClinicHandlerComponent', 'selector': 'app-clinic-handler'},{'name': 'ConfirmComponent', 'selector': 'app-confirm'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MemberDashboardComponent', 'selector': 'app-member-dashboard'},{'name': 'MemberHandlerComponent', 'selector': 'app-member-handler'},{'name': 'MemberProfileComponent', 'selector': 'app-member-profile'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'MemberViewSamplesComponent', 'selector': 'app-member-view-samples'},{'name': 'NotificationDivComponent', 'selector': 'app-notification-div'},{'name': 'OrganizationDashboardComponent', 'selector': 'app-organization-dashboard'},{'name': 'OrganizationHandlerComponent', 'selector': 'app-organization-handler'},{'name': 'OrganizationProfileComponent', 'selector': 'app-organization-profile'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'OrganizationViewSamplesComponent', 'selector': 'app-organization-view-samples'},{'name': 'ReportingComponent', 'selector': 'app-reporting'},{'name': 'SampleDivComponent', 'selector': 'app-sample-div'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'SplashComponent', 'selector': 'app-splash'},{'name': 'StaffDashboardComponent', 'selector': 'app-staff-dashboard'},{'name': 'StaffDivComponent', 'selector': 'app-staff-div'},{'name': 'StaffHandlerComponent', 'selector': 'app-staff-handler'},{'name': 'StaffProfileComponent', 'selector': 'app-staff-profile'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'SubmitCbsDepositComponent', 'selector': 'app-submit-cbs-deposit'},{'name': 'SubmitCbsRequestComponent', 'selector': 'app-submit-cbs-request'},{'name': 'SubmitCmwDepositComponent', 'selector': 'app-submit-cmw-deposit'},{'name': 'SubmitCmwRequestComponent', 'selector': 'app-submit-cmw-request'},{'name': 'SubmitCmwRevitalizationComponent', 'selector': 'app-submit-cmw-revitalization'},{'name': 'UpdateComponent', 'selector': 'app-update'}];
+        var COMPONENT_TEMPLATE = '<div><!--**********************  HOME   **************************--><!-- <app-home></app-home> --><!--**********************  LOGIN   **************************--><!-- <app-login></app-login> --><!--**********************  SIGN UP   **************************--><!-- <app-sign-up-request></app-sign-up-request> --><!--**********************  ADMIN   **************************--><!-- <app-admin-dashboard></app-admin-dashboard>  --><!-- <app-clinic-handler></app-clinic-handler> --><!-- <app-database-handler></app-database-handler> --><!-- <app-organization-handler></app-organization-handler> --><!-- <app-staff-handler></app-staff-handler> --><!-- <app-reporting></app-reporting> --><!-- <app-admin-profile></app-admin-profile> --><!-- <app-clinic-admin-view-samples></app-clinic-admin-view> --><!-- <app-view-forms></app-view-forms> --><!--************************************************--><!--**********************  STAFF   **************************--><!-- <app-staff-dashboard></app-staff-dashboard> --><!-- <app-submit-cmw-deposit></app-submit-cmw-deposit>  --><!-- <app-submit-cmw-request></app-submit-cmw-request> --><!-- <app-submit-cmw-revitalization></app-submit-cmw-revitalization> --><!-- <app-staff-profile></app-staff-profile> --><!-- <app-cmw-menu></app-cmw-menu> --><!-- <app-staff-view-databases></app-staff-view-databases> --><!--************************************************--><!--**********************  ORGANIZATION   **************************--><!-- <app-organization-dashboard></app-organization-dashboard> --><!-- <app-member-handler></app-member-handler> --><!-- <app-organization-profile></app-organization-profile> --><!-- <app-organization-view-samples></app-organization-view-samples>  --><!--************************************************--><!--**********************  ORGANIZATION MEMBER   **************************--><!-- <app-member-dashboard></app-member-dashboard> --><!-- <app-member-profile></app-member-profile> --><!-- <app-member-view-samples></app-member-view-samples> --><!--************************************************--><!--**********************  UPDATE COMPONENTS   **************************--><!-- <app-update></app-update> --><!--************************************************--><!--**********************  MAP WINDOW  **************************--><!-- <app-maps-window></app-maps-window> --><!--************************************************--><!--**********************  SUBMIT SAMPLE  **************************--><!-- <app-sample-form></app-sample-form> --><!--************************************************--><!--**********************  PRE-DIAGNOSIS  **************************--><!-- <app-pre-diagnosis></app-pre-diagnosis> --><!--************************************************--><!--**********************  404 PAGE  **************************--><!-- <app-page-not-found></app-page-not-found> --><router-outlet></router-outlet></div>'
+    var COMPONENTS = [{'name': 'AdminDivComponent', 'selector': 'app-admin-div'},{'name': 'AdminHelpComponent', 'selector': 'app-admin-help'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'DatabaseHandlerComponent', 'selector': 'app-database-handler'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'MemberHelpComponent', 'selector': 'app-member-help'},{'name': 'MemberSubmitSampleComponent', 'selector': 'app-member-submit-sample'},{'name': 'NotificationDivComponent', 'selector': 'app-notification-div'},{'name': 'OrganizationHelpComponent', 'selector': 'app-organization-help'},{'name': 'OrganizationMenuComponent', 'selector': 'app-organization-menu'},{'name': 'OrganizationSubmitSampleComponent', 'selector': 'app-organization-submit-sample'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'SampleDivComponent', 'selector': 'app-sample-div'},{'name': 'SampleFormComponent', 'selector': 'app-sample-form'},{'name': 'StaffDivComponent', 'selector': 'app-staff-div'},{'name': 'StaffHelpComponent', 'selector': 'app-staff-help'},{'name': 'StaffMenuComponent', 'selector': 'app-staff-menu'},{'name': 'StaffSubmitSampleComponent', 'selector': 'app-staff-submit-sample'},{'name': 'StaffViewDatabasesComponent', 'selector': 'app-staff-view-databases'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AppComponent'};
 </script>
@@ -337,7 +441,6 @@ export class AppComponent {
 
 
 
-                   
 
 
 

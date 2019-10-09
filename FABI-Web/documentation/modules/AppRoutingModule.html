@@ -82,11 +82,34 @@ import { MemberDashboardComponent } from &quot;./Organization-Member/member-dash
 
 import { Role } from &quot;./_interfaces/role&quot;;
 import { AuthenticationGuard } from &#x27;./_guards/authentication.guard&#x27;;
-import { UpdateComponent } from &#x27;./update/update.component&#x27;;
 import { SampleFormComponent } from &#x27;./sample-form/sample-form.component&#x27;;
 import { ReportingComponent } from &#x27;./Admin/reporting/reporting.component&#x27;;
+import { SubmitCmwRequestComponent } from &#x27;./Staff/submit-cmw-request/submit-cmw-request.component&#x27;;
+import { SubmitCmwDepositComponent } from &#x27;./Staff/submit-cmw-deposit/submit-cmw-deposit.component&#x27;;
+import { SubmitCmwRevitalizationComponent } from &#x27;./Staff/submit-cmw-revitalization/submit-cmw-revitalization.component&#x27;;
+import { ClinicHandlerComponent } from &#x27;./Admin/clinic-handler/clinic-handler.component&#x27;;
+import { PreDiagnosisComponent } from &#x27;./pre-diagnosis/pre-diagnosis.component&#x27;;
+import { PageNotFoundComponent } from &#x27;./page-not-found/page-not-found.component&#x27;;
+import { AdminProfileComponent } from &#x27;./Admin/admin-profile/admin-profile.component&#x27;;
+import { DatabaseHandlerComponent } from &#x27;./Admin/database-handler/database-handler.component&#x27;;
+import { StaffHandlerComponent } from &#x27;./Admin/staff-handler/staff-handler.component&#x27;;
+import { OrganizationHandlerComponent } from &#x27;./Admin/organization-handler/organization-handler.component&#x27;;
+import { ViewFormsComponent } from &#x27;./Admin/view-forms/view-forms.component&#x27;;
+import { MemberHandlerComponent } from &#x27;./Organization/member-handler/member-handler.component&#x27;;
+import { OrganizationProfileComponent } from &#x27;./Organization/organization-profile/organization-profile.component&#x27;;
+import { OrganizationViewSamplesComponent } from &#x27;./Organization/organization-view-samples/organization-view-samples.component&#x27;;
+import { MemberProfileComponent } from &#x27;./Organization-Member/member-profile/member-profile.component&#x27;;
+import { MemberViewSamplesComponent } from &#x27;./Organization-Member/member-view-samples/member-view-samples.component&#x27;;
+import { StaffViewDatabasesComponent } from &#x27;./Staff/staff-view-databases/staff-view-databases.component&#x27;;
+import { StaffViewSamplesComponent } from &#x27;./Staff/staff-view-samples/staff-view-samples.component&#x27;;
+import { StaffHelpComponent } from &#x27;./Staff/staff-help/staff-help.component&#x27;;
+import { CmwMenuComponent } from &#x27;./Staff/cmw-menu/cmw-menu.component&#x27;;
+import { StaffSubmitSampleComponent } from &#x27;./Staff/staff-submit-sample/staff-submit-sample.component&#x27;;
+import { StaffProfileComponent } from &#x27;./Staff/staff-profile/staff-profile.component&#x27;;
 
 const routes: Routes &#x3D; [
+
+  // HOME ROUTES
   {
     path: &#x27;home&#x27;, 
     component: HomeComponent
@@ -101,48 +124,180 @@ const routes: Routes &#x3D; [
     component: LoginComponent
   },
   {
-    path: &#x27;admin-dashboard&#x27;, 
+    path: &#x27;submit-sample&#x27;, 
+    component: SampleFormComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Member&#x27;, &#x27;Staff&#x27;, &#x27;OrganizationAdmin&#x27;] }
+  },
+  {
+    path: &#x27;pre-diagnosis&#x27;,
+    component: PreDiagnosisComponent
+  },
+  // { 
+  //   path: &quot;**&quot;,
+  //   component: PageNotFoundComponent
+  // },
+
+  // ADMIN ROUTES
+  {
+    path: &#x27;admin-dashboard&#x27;,
     component: AdminDashboardComponent,
     canActivate: [AuthenticationGuard],
-    data: { roles: [&#x27;SuperUser&#x27;, &#x27;ClinicAdmin&#x27;] }
+    data: {roles: [&#x27;ClinicAdmin&#x27;, &#x27;SuperUser&#x27;] }
   },
   {
-    path: &#x27;organization-dashboard&#x27;,
+    path: &#x27;staff-handler&#x27;, 
+    component: StaffHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;SuperUser&#x27;]}
+  },
+  {
+    path: &#x27;organization-handler&#x27;,
+    component: OrganizationHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;SuperUser&#x27;]}
+  },
+  {
+    path: &#x27;clinic-handler&#x27;, 
+    component: ClinicHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;SuperUser&#x27;, &#x27;ClinicAdmin&#x27;] }
+  },
+  {
+    path: &#x27;database-handler&#x27;, 
+    component: DatabaseHandlerComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;SuperUser&#x27;]}
+  },
+  {
+    path: &#x27;admin-profile&#x27;, 
+    component: AdminProfileComponent,
+    data: {roles: [&#x27;SuperUser&#x27;, &#x27;ClinicAdmin&#x27;]}
+  },
+  {
+    path: &#x27;reporting&#x27;, 
+    component: ReportingComponent,
+    data: {roles: [&#x27;SuperUser&#x27;]}
+  },
+  {
+    path: &#x27;view-forms&#x27;,
+    component: ViewFormsComponent
+  },
+
+  // ORGANIZATION ADMIN ROUTES
+  {
+    path: &#x27;organization-dashboard&#x27;, 
     component: OrganizationDashboardComponent,
     canActivate: [AuthenticationGuard],
-    data: { roles: [&#x27;OrganizationAdmin&#x27;] }
+    data: {roles: [&#x27;OrganizationAdmin&#x27;] }
   },
   {
-    path: &#x27;staff-dashboard&#x27;,
-    component: StaffDashboardComponent,
+    path: &#x27;member-handler&#x27;, 
+    component: MemberHandlerComponent,
     canActivate: [AuthenticationGuard],
-    data: { roles: [&#x27;Staff&#x27;] }
+    data: {roles: [&#x27;OrganizationAdmin&#x27;] }
   },
+  {
+    path: &#x27;organization-profile&#x27;, 
+    component: OrganizationProfileComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;OrganizationAdmin&#x27;] }
+  },
+  {
+    path: &#x27;organization-view-samples&#x27;, 
+    component: OrganizationViewSamplesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;OrganizationAdmin&#x27;] }
+  },
+
+  // ORGANIZATION MEMBER ROUTES
   {
     path: &#x27;member-dashboard&#x27;, 
     component: MemberDashboardComponent,
     canActivate: [AuthenticationGuard],
-    data: { roles: [&#x27;Member&#x27;] }
+    data: {roles: [&#x27;Member&#x27;] }
   },
   {
-    path: &#x27;update&#x27;,
-    component: UpdateComponent,
-  },
-  {
-    path: &#x27;submit-sample&#x27;, 
-    component: SampleFormComponent,
+    path: &#x27;member-profile&#x27;, 
+    component: MemberProfileComponent,
     canActivate: [AuthenticationGuard],
     data: {roles: [&#x27;Member&#x27;] }
   },
   {
-    path: &#x27;reporting&#x27;,
-    component: ReportingComponent
-  }
+    path: &#x27;member-view-samples&#x27;, 
+    component: MemberViewSamplesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Member&#x27;] }
+  },
 
+  // STAFF ROUTES
+  {
+    path: &#x27;staff-dashboard&#x27;, 
+    component: StaffDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;staff-profile&#x27;, 
+    component: StaffProfileComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;staff-submit-sample&#x27;, 
+    component: StaffSubmitSampleComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;cmw-menu&#x27;, 
+    component: CmwMenuComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;submit-cmw-request&#x27;, 
+    component: SubmitCmwRequestComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;submit-cmw-deposit&#x27;, 
+    component: SubmitCmwDepositComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;submit-cmw-revitalization&#x27;, 
+    component: SubmitCmwRevitalizationComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;staff-view-databases&#x27;, 
+    component: StaffViewDatabasesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;staff-view-samples&#x27;, 
+    component: StaffViewSamplesComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  },
+  {
+    path: &#x27;staff-help&#x27;, 
+    component: StaffHelpComponent,
+    canActivate: [AuthenticationGuard],
+    data: {roles: [&#x27;Staff&#x27;] }
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    scrollPositionRestoration: &#x27;enabled&#x27;,
+    anchorScrolling: &#x27;enabled&#x27;
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
@@ -159,7 +314,6 @@ export class AppRoutingModule { }
 
 
 
-                   
 
 
 

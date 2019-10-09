@@ -4,6 +4,8 @@ import { MemberSubmitSampleComponent } from './member-submit-sample.component';
 
 import { SampleFormComponent } from '../../sample-form/sample-form.component';
 
+import { MapsWindowComponent } from '../../maps-window/maps-window.component';
+
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -15,26 +17,48 @@ import { MaterialModule } from '../../materials';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AgmCoreModule } from '@agm/core';
+import { MapsAPILoader } from '@agm/core';
 
 describe('MemberSubmitSampleComponent', () => {
   let component: MemberSubmitSampleComponent;
   let fixture: ComponentFixture<MemberSubmitSampleComponent>;
 
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  } 
+
+  class MockMapsAPILoader {
+    public load(): Promise<boolean> {
+      return new Promise(() => {
+        return true;
+      });
+    }
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MemberSubmitSampleComponent, SampleFormComponent],
+      declarations: [ MemberSubmitSampleComponent, SampleFormComponent, MapsWindowComponent],
       imports: [
         MaterialModule,
         NoopAnimationsModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
-        RouterTestingModule],
-      providers: []
+        RouterTestingModule,
+        AgmCoreModule.forRoot()
+      ],
+      providers: [
+        { provide: MapsAPILoader, useClass: MockMapsAPILoader },
+        { provide: AuthenticationService, useClass: MockAuthenticationService }
+      ]
     })
     .compileComponents();
   }));

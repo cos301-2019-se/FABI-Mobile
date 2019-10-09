@@ -32,7 +32,8 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 describe('CmwMenuComponent', () => {
   let component: CmwMenuComponent;
   let fixture: ComponentFixture<CmwMenuComponent>;
-
+  let authService: AuthenticationService;
+  
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
         return { "user" : "" };
@@ -64,10 +65,47 @@ describe('CmwMenuComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CmwMenuComponent);
     component = fixture.componentInstance;
+    authService = new AuthenticationService(null);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // -------- Function Tests --------
+  it('toggle notification tab', () =>{
+    let x = component.notificationsTab;
+    component.toggleNotificationsTab();
+    expect(component.notificationsTab == !x).toBeTruthy();
+  });
+
+  it('toggle profile tab', () =>{
+    let x = component.profileTab;
+    component.toggleProfileTab();
+    expect(component.profileTab == !x).toBeTruthy();
+  });
+
+  it('toggle help tab', () =>{
+    let x = component.helpTab;
+    component.toggleHelpTab();
+    expect(component.helpTab == !x).toBeTruthy();
+  });
+
+  it('displayProfileSaveBtn', () => {
+    component.displayProfileSaveBtn();
+    expect(component.saveBtn).toBeTruthy();
+  });
+
+  it('displayConfirmPasswordInput', () => {
+    component.displayConfirmPasswordInput();
+    expect(component.confirmPasswordInput).toBeTruthy();
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
+  });
+
 });
