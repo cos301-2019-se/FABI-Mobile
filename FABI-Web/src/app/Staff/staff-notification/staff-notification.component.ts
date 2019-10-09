@@ -53,8 +53,10 @@ export class StaffNotificationComponent implements core.OnInit {
   localNotificationNumber: number = 1;
   /** Object array for holding all of the logs that have not been read -  @type {string[]} */
   allLogs: string[] = [];
+
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   private toggle_status: boolean = false;
+
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
   /** Indicates if the profile tab is hidden/shown - @type {boolean} */
@@ -67,6 +69,7 @@ export class StaffNotificationComponent implements core.OnInit {
   helpTab: boolean = false;
   /** The user that is currently logged in -  @type {any} */
   currentUser: any;
+  
   /** Object array for holding the staff members -  @type {StaffMember[]} */
   staff: StaffMember[] = [];
   /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */

@@ -24,7 +24,6 @@ export class OrganizationMenuComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

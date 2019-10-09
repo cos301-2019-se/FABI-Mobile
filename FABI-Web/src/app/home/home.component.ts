@@ -25,8 +25,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../_services/notification.service';
 
-
-
 @core.Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -38,7 +36,9 @@ export class HomeComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
   contact_form: FormGroup;
+
   /** Object for storing all forms that require validation-  @type {HTMLCollectionOf<Element>} */
   forms: HTMLCollectionOf<Element> = null;
   request_register_org: FormGroup;
@@ -121,7 +121,6 @@ export class HomeComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
     this.cookieService.set('SameSite', 'None');
 
     //-------- Form Validation --------
@@ -144,21 +143,6 @@ export class HomeComponent implements core.OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       CONTACT
-  /**
-   * This function sends an email to the admin
-   *
-   * @returns
-   * @memberof HomeComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  contact() {
-
-
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       REQUEST TO REGISTER
   /**
    * This function allwos an organizaion to request to register for the system
@@ -168,7 +152,6 @@ export class HomeComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   requestToRegister() {
-
     this.submitted = true;
 
     if (this.request_register_org.invalid) {
@@ -189,7 +172,6 @@ export class HomeComponent implements core.OnInit {
     const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };
 
     this.userManagementService.sendRequestToRegisterOrganization(org_details).subscribe((response: any) => {
-
       loadingRef.close();
 
       if (response.success == true && response.code == 200) {

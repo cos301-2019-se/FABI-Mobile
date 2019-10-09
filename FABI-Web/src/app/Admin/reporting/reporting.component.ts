@@ -5,7 +5,7 @@
  * Created Date: Wednesday, July 17td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -172,6 +172,7 @@ export class ReportingComponent implements core.OnInit {
   currentUser: any;
   /** Object array for holding the staff members -  @type {StaffMember[]} */
   staff: StaffMember[] = [];
+
   /** Stores the data table -  @type {string} */
   public tableWidget: any;
   /** The search item the user is looking for in the table -  @type {string} */
