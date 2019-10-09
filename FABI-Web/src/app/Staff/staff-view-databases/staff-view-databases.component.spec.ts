@@ -26,7 +26,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 describe('StaffViewDatabasesComponent', () => {
   let component: StaffViewDatabasesComponent;
   let fixture: ComponentFixture<StaffViewDatabasesComponent>;
-
+  let authService: AuthenticationService;
+  
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
         return { "user" : "" };
@@ -55,10 +56,52 @@ describe('StaffViewDatabasesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StaffViewDatabasesComponent);
     component = fixture.componentInstance;
+    authService = new AuthenticationService(null);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('reset Database Fields', () => {
+    component.resetDatabaseFields();
+    expect(component.fields).toEqual([]);
+    expect(component.databaseData).toEqual([]);
+  });
+
+  it('toggle notification tab', () =>{
+    let x = component.notificationsTab;
+    component.toggleNotificationsTab();
+    expect(component.notificationsTab == !x).toBeTruthy();
+  });
+
+  it('toggle profile tab', () =>{
+    let x = component.profileTab;
+    component.toggleProfileTab();
+    expect(component.profileTab == !x).toBeTruthy();
+  });
+
+  it('toggle help tab', () =>{
+    let x = component.helpTab;
+    component.toggleHelpTab();
+    expect(component.helpTab == !x).toBeTruthy();
+  });
+
+  it('displayProfileSaveBtn', () => {
+    component.displayProfileSaveBtn();
+    expect(component.saveBtn).toBeTruthy();
+  });
+
+  it('displayConfirmPasswordInput', () => {
+    component.displayConfirmPasswordInput();
+    expect(component.confirmPasswordInput).toBeTruthy();
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
+  });
+
 });

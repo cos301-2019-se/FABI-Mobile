@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthenticationService } from 'src/app/_services/authentication.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
@@ -98,7 +97,7 @@ describe('AdminNotificationComponent', () => {
     expect(component.loadUserDetails("")).toEqual("");
   });
 
-  it('load empty User details', () => {
+  it('remove notification', () => {
     let spy = spyOn(notifService, 'updateFABIMemberNotifications');
     component.removeNotification("7412589630");
     expect(spy).toBeTruthy();

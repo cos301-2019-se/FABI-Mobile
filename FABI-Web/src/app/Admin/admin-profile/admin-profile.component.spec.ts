@@ -4,7 +4,6 @@ import 'jasmine';
 import { AdminProfileComponent } from './admin-profile.component';
 
 import { AuthenticationService } from 'src/app/_services/authentication.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
@@ -33,7 +32,6 @@ describe('AdminProfileComponent', () => {
   let fixture: ComponentFixture<AdminProfileComponent>;
 
   let UserManagementService: UserManagementAPIService;
-  let notificationLoggingService: NotificationLoggingService;
   let authService: AuthenticationService;
 
   class MockAuthenticationService extends AuthenticationService{
@@ -71,7 +69,6 @@ describe('AdminProfileComponent', () => {
     fixture.detectChanges();
 
     UserManagementService = new UserManagementAPIService( null , null);
-    notificationLoggingService = new NotificationLoggingService(null, null);
     authService = new AuthenticationService(null);
   });
 
