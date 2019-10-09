@@ -168,7 +168,7 @@ describe('AdminProfileComponent', () => {
     component.changePassword();
     expect(component.submitted).toBeTruthy();
   });
-  
+
   it('update fabi member details', () =>{
     let spy = spyOn(UserManagementService, 'updateFABIMemberDetails');
     component.saveChanges();

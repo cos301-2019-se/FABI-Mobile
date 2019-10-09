@@ -23,7 +23,7 @@ import { AdminNotificationComponent } from './admin-notification.component';
 describe('AdminNotificationComponent', () => {
   let component: AdminNotificationComponent;
   let fixture: ComponentFixture<AdminNotificationComponent>;
-  let de : DebugElement;
+  let de: DebugElement;
   let UserManagementService: UserManagementAPIService;
   let notifService: NotificationLoggingService;
 

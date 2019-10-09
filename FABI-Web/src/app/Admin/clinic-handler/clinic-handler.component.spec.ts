@@ -81,18 +81,6 @@ describe('ClinicHandlerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('get DB Names', () =>{
-    let spy = spyOn(UserManagementService, 'getDatabaseNames');
-    component.getDBNames();
-    expect(spy).toBeTruthy();
-  });
-
-  it('logging out', () =>{
-    let spy = spyOn(authService, 'logoutUser');
-    component.logout();
-    expect(spy).toBeTruthy();
-  });
-
   it('toggle notification tab', () =>{
     let x = component.notificationsTab;
     component.toggleNotificationsTab();
@@ -189,6 +177,18 @@ describe('ClinicHandlerComponent', () => {
   it('add staff', () =>{
     let spy = spyOn(UserManagementService, 'addStaffMember');
     component.addStaff();
+    expect(spy).toBeTruthy();
+  });
+
+  it('get DB Names', () =>{
+    let spy = spyOn(UserManagementService, 'getDatabaseNames');
+    component.getDBNames();
+    expect(spy).toBeTruthy();
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
     expect(spy).toBeTruthy();
   });
 
