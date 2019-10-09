@@ -119,6 +119,7 @@ export class ClinicHandlerComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.resetAddFields();
     this.getDBNames();
     this.userManagementService.getFABIAdmins().subscribe((response: any) => {
 
@@ -287,11 +288,11 @@ export class ClinicHandlerComponent implements core.OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                            RESET ADD FIELDS 
+  //                                                            RESET FORMS
   /**
-   * This function will clear the inputs in the Add Staff Modal
+   * This function will clear the inputs and reset all forms
    * 
-   * @memberof StaffHandlerComponent
+   * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetAddFields() {

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 9th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -369,7 +369,7 @@ export class SampleFormComponent implements OnInit {
     //   return;
     // }
 
-    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Sending Form" } });
 
     let types: Interface.SampleTypeDescription[] = [];
 
@@ -650,6 +650,18 @@ export class SampleFormComponent implements OnInit {
 
       return null;
     };
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS 
+  /**
+   * This function will clear the inputs and reset the form
+   * 
+   * @memberof SampleFormComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetFields() {
+    this.sampleForm.reset();
   }
 
 

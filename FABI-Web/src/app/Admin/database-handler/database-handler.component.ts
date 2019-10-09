@@ -157,6 +157,7 @@ export class DatabaseHandlerComponent implements OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     //Calling the neccessary functions as the page loads
     this.getDBNames();
+    this.resetDatabaseFields();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -298,12 +299,14 @@ export class DatabaseHandlerComponent implements OnInit {
       else if (response.success == false) {
         //POPUP MESSAGE
         this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
+        this.resetDatabaseFields();
       }
 
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
       this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
       loadingRef.close();
+      this.resetDatabaseFields();
     });
   }
 
@@ -406,10 +409,12 @@ export class DatabaseHandlerComponent implements OnInit {
         } else {
           //POPUP MESSAGE
           this.notificationService.showErrorNotification('Upload Failed', 'An error occurred while porting');
+          this.resetDatabaseFields();
         }
       }, (err: http.HttpErrorResponse) => {
         //Handled in error-handler
         this.notificationService.showErrorNotification('Upload Failed', 'An error occurred while porting');
+        this.resetDatabaseFields();
       });
     }
   }
@@ -591,8 +596,7 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetDatabaseFields() {
-    this.fields = [];
-    this.databaseData = [];
+    this.portingForm.reset();
   }
 
 }

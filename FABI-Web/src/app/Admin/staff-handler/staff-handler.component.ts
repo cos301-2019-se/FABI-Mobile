@@ -191,6 +191,7 @@ export class StaffHandlerComponent implements core.OnInit {
     this.getAdminTypes();
     this.getDBNames();
     this.onChanges();
+    this.resetAddFields();
 
   }
 
@@ -347,11 +348,13 @@ export class StaffHandlerComponent implements core.OnInit {
       } else {
         //POPUP MESSAGE
         this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
+        this.resetAddFields();
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
       //Handled in error-handler
       this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
+      this.resetAddFields();
     });
   }
 

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -182,6 +182,7 @@ export class MemberHandlerComponent implements core.OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
     this.viewMembers();
+    this.resetMemberFields();
 
   }
 
@@ -244,10 +245,12 @@ export class MemberHandlerComponent implements core.OnInit {
       } else {
         //POPUP MESSAGE
         this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
+        this.resetMemberFields();
       }
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
       this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
+      this.resetMemberFields();
     });
   }
 

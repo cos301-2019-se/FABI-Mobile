@@ -162,6 +162,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
     // Calling the neccessary functions as the page loads
     this.viewOrganizations();
     this.viewPendingOrganizations();
+    this.resetAddFields();
   }
 
 
@@ -219,10 +220,12 @@ export class OrganizationHandlerComponent implements core.OnInit {
       } else {
         //POPUP MESSAGE
         this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+        this.resetAddFields();
       }
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
       this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+      this.resetAddFields();
     });
   }
 
