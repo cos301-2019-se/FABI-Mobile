@@ -24,7 +24,6 @@ export class OrganizationHelpComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

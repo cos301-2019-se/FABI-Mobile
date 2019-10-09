@@ -5,7 +5,7 @@
  * Created Date: Wednesday, August 14th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -25,15 +25,11 @@ import { UserManagementAPIService } from '../../_services/user-management-api.se
 })
 export class AdminMenuComponent implements core.OnInit {
 
-  /** The details of the user currently logged in -  @type {any} */
-  currentUser: any;
-  currentUserPrivileges: any
-
   constructor(
     private authService: AuthenticationService,
     private userManagementService: UserManagementAPIService,
-  ) { }
+  ) 
+  { }
 
   ngOnInit() { }
-
 }

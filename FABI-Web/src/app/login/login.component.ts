@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, October 7th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -48,16 +48,10 @@ export class LoginComponent implements core.OnInit {
   submitted: boolean = false;
   /** To check if form has been submitted correctly - @type {boolean} */
   valid: boolean = false;
-  /** To check if user is logged in - @type {boolean} */
-  loggedIn: boolean = false;
   /** Array of Organization objects for form dropdown - @type {Organisation[]} */
   organizations: Interface.Organisation[];
-  /** Array of User Type objects for form dropdown - @type {UserType[]} */
-  userTypes: Interface.UserType[];
   /** If page is busy loading something - @type {boolean} */
   loading: boolean = false;
-  /** Selected organisation on dropdown. Used to adjust login form according to organisation selected - @type {string} */
-  selectedOrg: string;
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          FORM VALIDATION
