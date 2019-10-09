@@ -114,25 +114,7 @@ describe('AdminDashboardComponent', () => {
     expect(component.staffTableLoading).toBeTruthy();
   });
 
-  // -------- Service Tests --------
-  it('get Number Of Fabi Members', () =>{
-    let spy = spyOn(UserManagementService, 'getAllFABIStaff');
-    component.getNumberOfFABIMembers();
-    expect(spy).toBeTruthy();
-  });
-
-  it('get Number Of FABI Samples', () =>{
-    let spy = spyOn(DiagnosticClinicService, 'getAllSamples');
-    component.getNumberOfFABIMembers();
-    expect(spy).toBeTruthy();
-  });
-
-  it('logging out', () =>{
-    let spy = spyOn(authService, 'logoutUser');
-    component.logout();
-    expect(spy).toBeTruthy();
-  });
-
+  // -------- Function Tests --------
   it('toggle notification tab', () =>{
     let x = component.notificationsTab;
     component.toggleNotificationsTab();
@@ -159,6 +141,25 @@ describe('AdminDashboardComponent', () => {
   it('displayConfirmPasswordInput', () => {
     component.displayConfirmPasswordInput();
     expect(component.confirmPasswordInput).toBeTruthy();
+  });
+
+  // -------- Service Tests --------
+  it('get Number Of Fabi Members', () =>{
+    let spy = spyOn(UserManagementService, 'getAllFABIStaff');
+    component.getNumberOfFABIMembers();
+    expect(spy).toBeTruthy();
+  });
+
+  it('get Number Of FABI Samples', () =>{
+    let spy = spyOn(DiagnosticClinicService, 'getAllSamples');
+    component.getNumberOfFABIMembers();
+    expect(spy).toBeTruthy();
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
   });
 
 });
