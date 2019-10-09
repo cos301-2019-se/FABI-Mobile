@@ -1,25 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-
-//Router
-import { RouterTestingModule } from '@angular/router/testing';
-//Import form components
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-//Import the materials component
-import { MaterialModule } from '../../materials';
-//Http Testing
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-//Animation Testing
-import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DebugElement, NgModule } from '@angular/core';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
+
+import { RouterTestingModule } from '@angular/router/testing';
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+import { MaterialModule } from '../../materials';
+
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient } from '@angular/common/http';
+
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { DebugElement } from '@angular/core';
 
 import { OrganizationNotificationComponent } from './organization-notification.component';
 
 describe('OrganizationNotificationComponent', () => {
   let component: OrganizationNotificationComponent;
   let fixture: ComponentFixture<OrganizationNotificationComponent>;
-  let de : DebugElement;
+  let de: DebugElement;
+
+  let UserManagementService: UserManagementAPIService;
+  let notifService: NotificationLoggingService;
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -34,7 +41,8 @@ describe('OrganizationNotificationComponent', () => {
       ],
       declarations: [ 
         OrganizationNotificationComponent 
-      ]
+      ],
+      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
     })
     .compileComponents();
   }));
@@ -44,11 +52,59 @@ describe('OrganizationNotificationComponent', () => {
     component = fixture.componentInstance;
     de = fixture.debugElement;
 
+    UserManagementService = new UserManagementAPIService( null , null);
+    notifService = new NotificationLoggingService(null, null);
+
     component.ngOnInit();
     fixture.detectChanges();
   });
 
+  // -------- Component Creation Tests - Boilerplate Test Case --------
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // -------- Service Creation Tests --------
+  it('should be defined', () => {
+    expect(UserManagementAPIService).toBeTruthy();
+  });
+
+  it('should be defined', () => {
+    expect(NotificationLoggingService).toBeTruthy();
+  });
+
+  // -------- Initial State Tests --------
+  it('Component initial state', () => {
+    expect(component.notificationsTab).toBeFalsy();
+    expect(component.profileTab).toBeFalsy();
+    expect(component.saveBtn).toBeFalsy();
+    expect(component.confirmPasswordInput).toBeFalsy();
+    expect(component.helpTab).toBeFalsy();
+    expect(component.notifications).toBeFalsy();
+
+    expect(component.allNotifications).toEqual([]);
+    expect(component.newNotifications).toEqual([]);
+    expect(component.allLogs).toEqual([]);
+    expect(component.organizationMembers).toEqual([]);
+    expect(component.organizationMembersExample).toEqual([]);
+    expect(component.organizationSamples).toEqual([]);
+
+    expect(component.id).toEqual('');
+    expect(component.name).toEqual('');
+    expect(component.surname).toEqual('');
+    expect(component.password).toEqual('');
+    expect(component.confirmPassword).toEqual('');
+
+
+    expect(component.notificationsLoading).toBeTruthy();
+  });
+
+  // -------- Service Tests --------
+  // it('remove notification', () => {
+  //   let spy = spyOn(notifService, 'updateFABIMemberNotifications');
+  //   let id = "0";
+  //   component.removeNotification(id);
+  //   expect(spy).toBeTruthy();
+  // });
+
 });
