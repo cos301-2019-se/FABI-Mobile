@@ -90,7 +90,7 @@
       <div class="statistics">
 
         <!-- Statistic Box -->
-        <div class="overview-statistic-box">
+        <div class="overview-statistic-box" *ngIf="memberStats && sampleStats">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Overview Statistics</h5>
@@ -104,7 +104,7 @@
         <!-- Statistic Box -->
 
         <!-- Statistic Box -->
-        <div class="statistic-box">
+        <div class="statistic-box" *ngIf="memberStats">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Number of Members</h5>
@@ -117,7 +117,7 @@
         <!-- Statistic Box -->
 
         <!-- Statistic Box -->
-        <div class="statistic-box">
+        <div class="statistic-box" *ngIf="sampleStats">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Number of Samples</h5>
@@ -128,6 +128,19 @@
           </div>
         </div>
         <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box" *ngIf="!memberStats && !sampleStats">
+            <div class="statistic-box-content">
+              <div class="statistic-box-heading">
+                <h5>Statistics</h5>
+              </div>
+              <div class="statistic-box-info">
+                <p>Unfortunately there are no statistics available at this time</p>
+              </div>
+            </div>
+          </div>
+          <!-- / Statistic Box -->
 
       </div>
       <!-- / Statistics -->

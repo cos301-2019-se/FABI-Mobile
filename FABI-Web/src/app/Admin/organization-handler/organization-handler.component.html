@@ -122,15 +122,16 @@
             <div class="statistic-box-heading">
               <h5>Overview Statistics</h5>
             </div>
-            <div class="statistic-box-info">
+            <div class="statistic-box-info" *ngIf="setOrganizationLength && setPendingOrganizationsLength">
               <p *ngIf="setOrganizationLength">Total Organizations: {{numberOfOrganizations}}</p>
+              <p *ngIf="setPendingOrganizationsLength">Total Pending Organizations: {{numberOfPendingOrganizations}}</p>
             </div>
           </div>
         </div>
         <!-- Statistic Box -->
 
         <!-- Statistic Box -->
-        <div class="statistic-box">
+        <div class="statistic-box" *ngIf="setOrganizationLength">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Total Organizations</h5>
@@ -141,6 +142,32 @@
           </div>
         </div>
         <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box" *ngIf="setPendingOrganizationsLength">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Total Pending Organizations</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p *ngIf="setPendingOrganizationsLength">{{numberOfPendingOrganizations}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box" *ngIf="!setOrganizationLength && !setPendingOrganizationsLength">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Statistics</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p>Unfortunately there are no statistics available at this time</p>
+            </div>
+          </div>
+        </div>
+        <!-- / Statistic Box -->
 
       </div>
       <!-- / Statistics -->
@@ -190,12 +217,12 @@
               *ngFor="let pendingOrganization of pendingOrganizations | filter : 'pendingOrganizations' : searchOrganization">
               <td>{{pendingOrganization.orgName}}</td>
               <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
+                <button class="btn btn-default-viewOrg" data-toggle="modal" data-target="#viewModal"
                   [id]="pendingOrganization.email" (click)="selectOrganisation(pendingOrganization)">View</button>
-                <button class="btn btn-default-save" data-toggle="modal" [id]="pendingOrganization.email"
+                <button class="btn btn-default-verify" data-toggle="modal" [id]="pendingOrganization.email"
                   (click)="registerPendingOrg(pendingOrganization)">Verify</button>
                 <button class="btn btn-default-delete" data-toggle="modal" [id]="pendingOrganization.email"
-                (click)="declinePendingeOrg(pendingOrganization)">Decline</button>
+                  (click)="declinePendingeOrg(pendingOrganization)">Decline</button>
               </td>
             </tr>
           </tbody>
