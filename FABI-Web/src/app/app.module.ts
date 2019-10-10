@@ -140,7 +140,11 @@ import { AgmCoreModule } from '@agm/core';
     OrganizationModule,
     OrganizationMemberModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
     // DataTablesModule,
     ErrorsModule,
     LayoutModule,
