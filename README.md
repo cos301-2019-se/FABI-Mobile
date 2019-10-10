@@ -1,15 +1,15 @@
  # FABI Mobile
  
- <div style="height:10px;" align="center">
-<img src="https://drive.google.com/uc?export=view&id=1zuoms4mLG9tGefRy9OVbY9WGuxMRr6cw" alt="FABI Logo" title="FABI" style="width:10px; height:5px; text-align:center;" />
-<img src="https://drive.google.com/uc?export=view&id=114zeT9UmmtfVQtCq4B2y449ur8A2SSgP" alt="FABI Logo" title="FABI" style="width:10px; height:5px; text-align:center;" />
+ <div>
+<img src="https://drive.google.com/uc?export=view&id=1zuoms4mLG9tGefRy9OVbY9WGuxMRr6cw" alt="FABI Logo" title="FABI" width = 150px height = 175px />
+<img src="https://drive.google.com/uc?export=view&id=114zeT9UmmtfVQtCq4B2y449ur8A2SSgP" alt="FABI Logo" title="FABI" width = 175px height = 175px />
 </div>
  
 ## Project Description:
 
 ##### FABI mobile is a project which consists of a web application intended to drastically modernise FABI’s existing system as well as to compliment the roll-out of their Diagnostic Clinic to the forestry and agriculture sector. The Diagnostic Clinic allows users (both internal and external) to submit samples of various plant diseases and pests so that they can be readily identified and solutions to these problems sought. 
 
-##### Another aspect of this project is to provide a central user management system whereby users are managed and authorized based on user roles.
+##### Another aspect of this project is to provide a central user management system whereby users are handled and authorized based on user roles.
 
 ##### Yet another aspect of the product is the inclusion of a pre-diagnosis system which will enable the Diagnostic Clinic administrator to receive a preliminary diagnosis from the Diagnostic Clinic regarding a sample submission. This will be used internally by FABI to aid in their analysis of the diseased plant or pest.
  
