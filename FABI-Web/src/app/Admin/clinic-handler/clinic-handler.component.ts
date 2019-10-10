@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 9th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -17,9 +17,10 @@
 import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { NotificationService } from 'src/app/_services/notification.service';
 import * as Interface from '../../_interfaces/interfaces';
@@ -100,7 +101,8 @@ export class ClinicHandlerComponent implements core.OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private dialog: MatDialog,
   ) {
     this.addStaffForm = this.formBuilder.group({
       user: ['', Validators.required],
@@ -247,13 +249,17 @@ export class ClinicHandlerComponent implements core.OnInit {
 
     this.valid = true;
 
-    return;
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Adding Clinic Admin" } });
 
     const LstaffName = this.addStaffForm.controls.user.value.fname;
     const LstaffSurname = this.addStaffForm.controls.user.value.surname;
     const LstaffEmail = this.addStaffForm.controls.user.value.email;
     const LstaffPhone = 1234567890;
     const LstaffPosition = "ClinicAdmin";
+
+    console.log(JSON.stringify(this.addStaffForm.controls.user.value));
+
+    return;
 
     const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone };
 
@@ -273,16 +279,19 @@ export class ClinicHandlerComponent implements core.OnInit {
 
     this.userManagementService.addStaffMember(staff_details, databasePrivileges).subscribe((response: any) => {
 
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        this.notificationService.showSuccessNotification('Member Added', '');
+        this.notificationService.showSuccessNotification('Clinic Admin Added', '');
       }
       else {
         //POPUP MESSAGE
-        this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding member.');
+        this.notificationService.showErrorNotification('Add Clinic Admin Failed', 'An error occurred while adding admin.');
       }
     }, (err: http.HttpErrorResponse) => {
-      this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding member.');
+      loadingRef.close();
+      this.notificationService.showErrorNotification('Add Clinic Admin Failed', 'An error occurred while adding member.');
       //Handled in error-handler
     });
   }

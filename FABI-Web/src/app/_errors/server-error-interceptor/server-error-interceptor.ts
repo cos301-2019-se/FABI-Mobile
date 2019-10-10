@@ -59,8 +59,8 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
           return throwError(error);
 
         } else if(error && error.status === 403) {
-          this.authService.logoutUser();
-          this.router.navigate(['/login']);
+          // this.authService.logoutUser();
+          // this.router.navigate(['/login']);
           this.notificationServie.showErrorNotification("Unauthorized", error.error.message);
         } else if(error && error.status === 404) {
           this.notificationServie.showErrorNotification(error.error.title, error.error.message);

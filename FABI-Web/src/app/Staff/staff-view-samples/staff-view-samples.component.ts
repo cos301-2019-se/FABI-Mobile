@@ -21,7 +21,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
 import { NotificationService } from 'src/app/_services/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import * as Interface from "../../_interfaces/interfaces";
 
 @core.Component({
   selector: 'app-staff-view-samples',
@@ -35,8 +35,11 @@ export class StaffViewSamplesComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   sampleFields: any[] = [];
+  plantationFields: any[] = [];
+  conditonsFields: any[] = [];
+  typesFields: any[] = [];
   samples: any[];
-  selectedSampleData: any
+  selectedSampleData: Interface.SampleFormData;
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   private toggle_status: boolean = false;
   /** The search item the user is looking for in the table -  @type {string} */
@@ -154,18 +157,49 @@ export class StaffViewSamplesComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectSample(sample: any) {
 
-    console.log(sample);
-
     this.selectedSampleData = sample.data.sample;
 
     Object.keys(this.selectedSampleData).forEach((column) => {
 
-      console.log(column);
-
-      let obj = {
-        'name': column
+      if(column == "plantation_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['plantation_details'][field]
+          }
+          this.plantationFields.push(obj);
+        });
       }
-      this.sampleFields.push(obj);
+      if(column == "sample_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['sample_details'][field]
+          }
+          this.sampleFields.push(obj);
+        });
+      }
+      if(column == "types") {
+        // Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          this.selectedSampleData[column].forEach(element => {
+            console.log(element);
+            let obj = {
+              'name': element['type'],
+              "data": element['symptoms']
+            }
+            this.typesFields.push(obj);
+          });
+        // });
+      }
+      if(column == "conditions") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['conditions'][field]
+          }
+          this.conditonsFields.push(obj);
+        });
+      }
 
     });
 
