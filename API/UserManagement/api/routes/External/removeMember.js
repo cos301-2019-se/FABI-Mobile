@@ -29,7 +29,7 @@ const db = admin.firestore();
 
 async function removeMember(req, res) {
     //(1)
-    if(await auth.authOrgAdmin(req.body.authorization)||await auth.authSuperUser(req.headers.authorization)){
+    if(await auth.authOrgAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
         if (req.body.id == undefined || req.body.id == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
@@ -61,9 +61,9 @@ async function removeMember(req, res) {
                 res.setHeader('Content-Type', 'application/problem+json');
                 res.setHeader('Content-Language', 'en');
                 res.setHeader("Access-Control-Allow-Origin", "*");
-                res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                     success: false,
-                    code: 404,
+                    code: 200,
                     title: "NOT FOUND",
                     message: "User does not exist"
                 });
@@ -89,7 +89,7 @@ async function removeMember(req, res) {
                 log({
                     type: 'USER',
                     action: '/removeMember',
-                    details: '1563355277876',
+                    details: req.body.userID,
                     user: qs.id,
                     org1: 'FABI',
                     org2: req.body.orgName,
