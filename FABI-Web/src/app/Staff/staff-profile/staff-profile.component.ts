@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -64,6 +64,7 @@ export class StaffProfileComponent implements core.OnInit {
   isEditingProfile: boolean = false;
   /** if the form has been submitted - @type {boolean} */
   submitted: boolean;
+  userProfileDetails: any = "";
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
@@ -207,17 +208,17 @@ export class StaffProfileComponent implements core.OnInit {
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //Temporarily holds the data returned from the API call
-        const data = response.data;
+        this.userProfileDetails = response.data;
 
         //Deactivate loading spinners
         this.userProfileLoading = false;
 
         // Fill the form inputs with the user's details
         this.staffProfileForm.setValue({
-          staff_name: data.fname,
-          staff_surname: data.surname,
-          staff_email: data.email,
-          staff_type: data.userType
+          staff_name: this.userProfileDetails.fname,
+          staff_surname: this.userProfileDetails.surname,
+          staff_email: this.userProfileDetails.email,
+          staff_type: this.userProfileDetails.userType
         });
       }
       else {
@@ -401,6 +402,26 @@ export class StaffProfileComponent implements core.OnInit {
       this.isEditingProfile = true;
     }
 
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS
+  /**
+   * This function will clear the inputs and reset all forms
+   * 
+   * @memberof StaffProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetAddFields() {
+    this.staffProfileForm.reset();
+    // Fill the form inputs with the user's details
+    this.staffProfileForm.setValue({
+      admin_name: this.userProfileDetails.fname,
+      admin_surname: this.userProfileDetails.surname,
+      admin_email: this.userProfileDetails.email,
+      admin_type: this.userProfileDetails.userType
+    });
+    this.changePasswordForm.reset();
   }
 
 }

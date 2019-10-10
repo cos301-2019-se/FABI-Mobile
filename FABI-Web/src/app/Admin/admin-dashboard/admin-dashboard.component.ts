@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, October 7th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,12 +13,14 @@
  * <<license>>
  */
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
@@ -132,7 +134,8 @@ export class AdminDashboardComponent implements core.OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService
   ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,6 +189,11 @@ export class AdminDashboardComponent implements core.OnInit {
   getNumberOfFABIMembers() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
+
+      //Deactivate loading table spinners
+      this.adminTableLoading = false;
+      this.staffTableLoading = false;
+
       if (response.success == true && response.code == 200) {
         var data = response.data.qs.staff;
 
@@ -208,10 +216,6 @@ export class AdminDashboardComponent implements core.OnInit {
           }
         }
 
-        //Deactivate loading table spinners
-        this.adminTableLoading = false;
-        this.staffTableLoading = false;
-
         this.numberOfFABIMembers = this.admins.length + this.staff.length;
         this.userStats = this.numberOfFABIMembers.toString();
       }
@@ -219,9 +223,16 @@ export class AdminDashboardComponent implements core.OnInit {
         //The FABI members could not be retrieved
         this.numberOfFABIMembers = 0;
         this.userStats = this.numberOfFABIMembers.toString();
+        this.notificationService.showWarningNotification('Error', 'Could not load members.');
 
         //TODO: Show error message
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Deactivate loading table spinners
+      this.adminTableLoading = false;
+      this.staffTableLoading = false;
+      this.notificationService.showWarningNotification('Error', 'Could not load members.');
+      //Handled in error-handler
     });
   }
 

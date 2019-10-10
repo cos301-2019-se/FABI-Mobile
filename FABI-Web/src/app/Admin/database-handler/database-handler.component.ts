@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -157,6 +157,7 @@ export class DatabaseHandlerComponent implements OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     //Calling the neccessary functions as the page loads
     this.getDBNames();
+    this.resetDatabaseFields();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -298,12 +299,14 @@ export class DatabaseHandlerComponent implements OnInit {
       else if (response.success == false) {
         //POPUP MESSAGE
         this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
+        this.resetDatabaseFields();
       }
 
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
       this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
       loadingRef.close();
+      this.resetDatabaseFields();
     });
   }
 
@@ -397,9 +400,7 @@ export class DatabaseHandlerComponent implements OnInit {
         loadingRef.close();
         if (response.success == true && response.code == 200) {
           //POPUP MESSAGE
-          let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
-            duration: 3000
-          });
+          this.notificationService.showSuccessNotification('Successfully ported CSV file', '');
 
           this.ported = true;
 
@@ -408,10 +409,12 @@ export class DatabaseHandlerComponent implements OnInit {
         } else {
           //POPUP MESSAGE
           this.notificationService.showErrorNotification('Upload Failed', 'An error occurred while porting');
+          this.resetDatabaseFields();
         }
       }, (err: http.HttpErrorResponse) => {
         //Handled in error-handler
         this.notificationService.showErrorNotification('Upload Failed', 'An error occurred while porting');
+        this.resetDatabaseFields();
       });
     }
   }
@@ -479,19 +482,21 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   dropDatabase() {
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Removing Database" } });
     this.dbService.removeDatabase(this.selectedDatabase).subscribe((response: any) => {
+
+      loadingRef.close();
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Database Removed", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Database Removed', '');
         this.refreshDataSource();
       } else {
         //POPUP MESSAGE
         this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the database');
       }
     }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
       //Handled in error-handler
       this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the database');
     });
@@ -591,8 +596,7 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetDatabaseFields() {
-    this.fields = [];
-    this.databaseData = [];
+    this.portingForm.reset();
   }
 
 }

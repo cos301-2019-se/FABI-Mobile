@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, October 7th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -76,7 +76,7 @@ export class ErrorsHandler implements core.ErrorHandler {
 
     } else {
       // Client Error Happend     
-      notificationService.showErrorNotification(error.name, error.message);
+      // notificationService.showErrorNotification(error.name, error.message);
     }
     // Log the error anyway
     // console.error(error);

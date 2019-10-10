@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -393,12 +393,6 @@ export class UserManagementAPIService {
   getAllOrganizations() {
     const getAllOrganizationsURL = `${config.userManagementURL}/getAllOrganizations`;
     const method = 'POST';
-    
-    const postData = {
-      "id": this.authService.getCurrentSessionValue.user.ID,
-      "orgName": this.authService.getCurrentSessionValue.user.organisation,
-      "userID": this.authService.getCurrentSessionValue.user.ID
-    }
 
     const options = {
       headers: new HttpHeaders({
@@ -408,7 +402,6 @@ export class UserManagementAPIService {
         'Accept': 'application/json',
         // 'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       }),
-      body: postData,
       json: true
     };
 
@@ -498,8 +491,7 @@ export class UserManagementAPIService {
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+        'Accept': 'application/json'
       },
       body: postData,
       json: true
@@ -564,6 +556,39 @@ export class UserManagementAPIService {
     };
 
     return this.http.request<any>(method, removeOrganizationURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     DECLINE A PENDING ORGANISATION
+  /**
+   * Method that sends a request to the API to remove (deregister) an Organisation
+   *
+   * @param {Interface.Organisation} orgInfo The organization to be removed from the system
+   * 
+   * @returns API response @type any
+   * 
+   * @memberof UserManagementAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  declineOrganizationRequest(orgInfo: Interface.Organisation) {
+    let declineOrganizationRequestURL = `${config.userManagementURL}/removePendingOrg`;
+    let method = 'POST';
+
+    const postData = orgInfo;
+
+    const options = {
+      headers: {
+        'cache-control': 'no-cache',
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request<any>(method, declineOrganizationRequestURL, options);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -136,7 +136,7 @@ export class OrganizationViewSamplesComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectSample(sample: any) {
 
-    this.selectedSampleData = sample.data;
+    this.selectedSampleData = sample.data.sample;
 
     Object.keys(this.selectedSampleData).forEach((column) => {
 

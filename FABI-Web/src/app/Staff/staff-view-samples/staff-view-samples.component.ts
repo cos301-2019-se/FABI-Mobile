@@ -5,7 +5,7 @@
  * Created Date: Thursday, August 22nd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -122,18 +122,21 @@ export class StaffViewSamplesComponent implements core.OnInit {
   viewSamples() {
     this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
 
+      //Deactivate loading table spinners
+      this.sampleTableLoading = false;
+
       if (response.success == true && response.code == 200) {
 
         this.samples = response.data.samples;
-
-        //Deactivate loading table spinners
-        this.sampleTableLoading = false;
 
       } else {
         //POPUP MESSAGE
         this.notificationService.showWarningNotification('Error', 'Could not load samples.');
       }
     }, (err: HttpErrorResponse) => {
+      //Deactivate loading table spinners
+      this.sampleTableLoading = false;
+      
       this.notificationService.showWarningNotification('Error', 'Could not load samples.');
       //Handled in error-handler
     });
@@ -150,9 +153,14 @@ export class StaffViewSamplesComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectSample(sample: any) {
-    this.selectedSampleData = sample.data;
+
+    console.log(sample);
+
+    this.selectedSampleData = sample.data.sample;
 
     Object.keys(this.selectedSampleData).forEach((column) => {
+
+      console.log(column);
 
       let obj = {
         'name': column

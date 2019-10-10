@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -162,6 +162,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
     // Calling the neccessary functions as the page loads
     this.viewOrganizations();
     this.viewPendingOrganizations();
+    this.resetAddFields();
   }
 
 
@@ -213,17 +214,18 @@ export class OrganizationHandlerComponent implements core.OnInit {
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-
+        this.notificationService.showSuccessNotification('Organization Registered', '');
         this.refreshDataSource();
-        this.notificationService.showSuccessNotification('Registered Organization', '');
 
       } else {
         //POPUP MESSAGE
         this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+        this.resetAddFields();
       }
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
       this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+      this.resetAddFields();
     });
   }
 
@@ -289,10 +291,12 @@ export class OrganizationHandlerComponent implements core.OnInit {
         this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the organization');
       }
     }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
       //Handled in error-handler
       this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the organization');
     });
   }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            REFRESH
@@ -304,7 +308,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
     this.viewOrganizations();
-
+    this.viewPendingOrganizations();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -387,9 +391,8 @@ export class OrganizationHandlerComponent implements core.OnInit {
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-
+        this.notificationService.showSuccessNotification('Organization Registered', '');
         this.refreshDataSource();
-        this.notificationService.showSuccessNotification('Registered Organization', '');
 
       } else {
         //POPUP MESSAGE
@@ -400,6 +403,32 @@ export class OrganizationHandlerComponent implements core.OnInit {
       this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
     });
 
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        DECLINE PENDING ORGANIZATION 
+  /**
+   * This function calls the *user-management* service to decline an organizations request to register 
+   *
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  declinePendingeOrg(org: Interface.Organisation) {
+
+    this.userManagementService.declineOrganizationRequest(org).subscribe((response: any) => {
+
+      if (response.success == true && response.code == 200) {
+        //POPUP MESSAGE
+        this.notificationService.showSuccessNotification('Declined', '');
+        this.refreshDataSource();
+      } else {
+        //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Decline Failed', 'An error occurred while declining the organizations request');
+      }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Decline Failed', 'An error occurred while declining the organizations request');
+    });
   }
 
 

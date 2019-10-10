@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -64,6 +64,7 @@ export class OrganizationProfileComponent implements core.OnInit {
   submitted: boolean;
   /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
   userProfileLoading: boolean = true;
+  userProfileDetails: any = "";
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
@@ -170,6 +171,7 @@ export class OrganizationProfileComponent implements core.OnInit {
     this.adminProfileForm.get('admin_name').disable();
     this.adminProfileForm.get('admin_surname').disable();
     this.adminProfileForm.get('admin_email').disable();
+    this.resetMemberFields();
   }
 
 
@@ -191,16 +193,16 @@ export class OrganizationProfileComponent implements core.OnInit {
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
       if (response.success == true) {
         //Temporarily holds the data returned from the API call
-        const data = response.data;
+        this.userProfileDetails = response.data;
 
         //Deactivate loading spinners
         this.userProfileLoading = false;
 
         // Fill the form inputs with the user's details
         this.adminProfileForm.setValue({
-          admin_name: data.fname,
-          admin_surname: data.surname,
-          admin_email: data.email,
+          admin_name: this.userProfileDetails.fname,
+          admin_surname: this.userProfileDetails.surname,
+          admin_email: this.userProfileDetails.email,
           organization_name: this.currentUser.organisation
         });
       }
@@ -282,10 +284,12 @@ export class OrganizationProfileComponent implements core.OnInit {
       else {
         //Error handling
         this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
+        this.resetMemberFields();
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
       this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
+      this.resetMemberFields();
       //Handled in error-handler
     });
   }
@@ -325,10 +329,12 @@ export class OrganizationProfileComponent implements core.OnInit {
       else {
         //Error handling
         this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
+        this.resetMemberFields();
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
       this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
+      this.resetMemberFields();
       //Handled in error-handler
     });
   }
@@ -407,6 +413,7 @@ export class OrganizationProfileComponent implements core.OnInit {
       this.adminProfileForm.get('admin_surname').disable();
       this.adminProfileForm.get('admin_email').disable();
       this.isEditingProfile = false;
+      this.resetMemberFields();
     } else {
       this.adminProfileForm.get('admin_name').enable();
       this.adminProfileForm.get('admin_surname').enable();
@@ -414,6 +421,26 @@ export class OrganizationProfileComponent implements core.OnInit {
       this.isEditingProfile = true;
     }
 
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS 
+  /**
+   * This function will clear the inputs and reset the form
+   * 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetMemberFields() {
+    this.adminProfileForm.reset();
+    // Fill the form inputs with the user's details
+    this.adminProfileForm.setValue({
+      admin_name: this.userProfileDetails.fname,
+      admin_surname: this.userProfileDetails.surname,
+      admin_email: this.userProfileDetails.email,
+      organization_name: this.currentUser.organisation
+    });
+    this.changePasswordForm.reset();
   }
 
 }
