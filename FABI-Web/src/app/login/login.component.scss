@@ -196,12 +196,12 @@ a.forgot-password:hover {
         color: #FFF;
     }
 
-    .form-text.text-muted {
+    #login_form .form-text.text-muted {
         color: #FFF !important;
         opacity: 0.5;
     }
 
-    .valid-feedback {
+    #login_form .valid-feedback {
         color: #FFF;
     }
 
@@ -215,16 +215,16 @@ a.forgot-password:hover {
 }
 
 @media (min-width:1024px) {
-    .form-group label {
+    #login_form .form-group label {
         color: #FFF;
     }
 
-    .form-text.text-muted {
+    #login_form .form-text.text-muted {
         color: #FFF !important;
         opacity: 0.5;
     }
 
-    .valid-feedback {
+    #login_form .valid-feedback {
         color: #FFF;
     }
 

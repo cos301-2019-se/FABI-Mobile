@@ -5,7 +5,7 @@
  * Created Date: Thursday, August 22nd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -19,6 +19,8 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
+import { NotificationService } from 'src/app/_services/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @core.Component({
@@ -59,7 +61,8 @@ export class StaffViewSamplesComponent implements core.OnInit {
     private authService: AuthenticationService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,16 +122,23 @@ export class StaffViewSamplesComponent implements core.OnInit {
   viewSamples() {
     this.diagnosticClinicService.retrieveMemberSamples().subscribe((response: any) => {
 
+      //Deactivate loading table spinners
+      this.sampleTableLoading = false;
+
       if (response.success == true && response.code == 200) {
 
         this.samples = response.data.samples;
 
-        //Deactivate loading table spinners
-        this.sampleTableLoading = false;
-
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load samples.');
       }
+    }, (err: HttpErrorResponse) => {
+      //Deactivate loading table spinners
+      this.sampleTableLoading = false;
+      
+      this.notificationService.showWarningNotification('Error', 'Could not load samples.');
+      //Handled in error-handler
     });
   }
 
@@ -143,9 +153,14 @@ export class StaffViewSamplesComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectSample(sample: any) {
-    this.selectedSampleData = sample.data;
+
+    console.log(sample);
+
+    this.selectedSampleData = sample.data.sample;
 
     Object.keys(this.selectedSampleData).forEach((column) => {
+
+      console.log(column);
 
       let obj = {
         'name': column

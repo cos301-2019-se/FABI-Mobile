@@ -59,8 +59,20 @@
             <code>src/app/_services/diagnostic-clinic-api.service.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Used for handling all <code>diagnostic clinic</code> requests and functions</p>
+
+            </p>
 
 
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
 
             <section>
     <h3 id="index">Index</h3>
@@ -76,13 +88,25 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#getAllOrganizationSamples">getAllOrganizationSamples</a>
-                            </li>
-                            <li>
                                 <a href="#getAllSamples">getAllSamples</a>
                             </li>
                             <li>
-                                <a href="#getAllSamplesForMember">getAllSamplesForMember</a>
+                                <a href="#getSamplesForFABIStaff">getSamplesForFABIStaff</a>
+                            </li>
+                            <li>
+                                <a href="#retrieveAllOrganizationSamples">retrieveAllOrganizationSamples</a>
+                            </li>
+                            <li>
+                                <a href="#retrieveMemberSamples">retrieveMemberSamples</a>
+                            </li>
+                            <li>
+                                <a href="#retrieveSampleDetails">retrieveSampleDetails</a>
+                            </li>
+                            <li>
+                                <a href="#submitSampleForm">submitSampleForm</a>
+                            </li>
+                            <li>
+                                <a href="#updateSamplesStatus">updateSamplesStatus</a>
                             </li>
                         </ul>
                     </td>
@@ -102,12 +126,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>)</code>
+<code>constructor(http: http.HttpClient, authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:51</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:58</a></div>
                             </td>
                         </tr>
 
@@ -131,7 +155,7 @@
                                                         <td>http</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                                    <code>http.HttpClient</code>
                                                         </td>
                                                   
                                                     <td>
@@ -140,6 +164,22 @@
                                                     
                                                         <td>
                                                                 <code><p>For making calls to the API</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthenticationService.html" target="_self" >AuthenticationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>for calling the <em>authentication</em> service</p>
 </code>
                                                         </td>
                                                 </tr>
@@ -157,80 +197,6 @@
     <h3 id="methods">
         Methods
     </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getAllOrganizationSamples"></a>
-                    <span class="name">
-                        <b>
-                            getAllOrganizationSamples
-                        </b>
-                        <a href="#getAllOrganizationSamples"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>getAllOrganizationSamples(organization: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="101"
-                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:101</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>This function sends a POST request to the API to retrieve a list containing
-all the samples belonging to the specified organization</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>organization</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        <p>API response </p>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -253,16 +219,15 @@ all the samples belonging to the specified organization</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="75"
-                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:75</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:82</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>This function sends a POST request to the API to retrieve a list containing
-all the samples that FABI is currently processing</p>
+                    <div class="io-description"><p>This function sends a POST request to the API to retrieve a list containing all the samples that FABI is currently processing</p>
 </div>
 
                     <div>
@@ -283,26 +248,26 @@ all the samples that FABI is currently processing</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getAllSamplesForMember"></a>
+                    <a name="getSamplesForFABIStaff"></a>
                     <span class="name">
                         <b>
-                            getAllSamplesForMember
+                            getSamplesForFABIStaff
                         </b>
-                        <a href="#getAllSamplesForMember"><span class="icon ion-ios-link"></span></a>
+                        <a href="#getSamplesForFABIStaff"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>getAllSamplesForMember(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>getSamplesForFABIStaff(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="131"
-                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:131</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="111"
+                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:111</a></div>
                 </td>
             </tr>
 
@@ -310,7 +275,335 @@ all the samples that FABI is currently processing</p>
             <tr>
                 <td class="col-md-4">
                     <div class="io-description"><p>This function sends a POST request to the API to retrieve a list containing
-all the samples that correspond to a specific organization member</p>
+all the samples corresponding to a specific user.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The id number of the user whose samples need to be fetched.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="retrieveAllOrganizationSamples"></a>
+                    <span class="name">
+                        <b>
+                            retrieveAllOrganizationSamples
+                        </b>
+                        <a href="#retrieveAllOrganizationSamples"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>retrieveAllOrganizationSamples()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="138"
+                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:138</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to retreive all Samples</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="retrieveMemberSamples"></a>
+                    <span class="name">
+                        <b>
+                            retrieveMemberSamples
+                        </b>
+                        <a href="#retrieveMemberSamples"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>retrieveMemberSamples()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="170"
+                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:170</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that sends a request to the API to retreive all Samples for a member</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="retrieveSampleDetails"></a>
+                    <span class="name">
+                        <b>
+                            retrieveSampleDetails
+                        </b>
+                        <a href="#retrieveSampleDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>retrieveSampleDetails(sampleRefNum: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="256"
+                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:256</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to fetch a specific sample form</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>sampleRefNum</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The reference number of the sample to be retrieved</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitSampleForm"></a>
+                    <span class="name">
+                        <b>
+                            submitSampleForm
+                        </b>
+                        <a href="#submitSampleForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitSampleForm(formDetails: Interface.SampleFormData)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="204"
+                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:204</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method that send a request to the API to submit a specifc Sample Form</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>formDetails</td>
+                                    <td>
+                                            <code>Interface.SampleFormData</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The details of the sample to be submitted</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateSamplesStatus"></a>
+                    <span class="name">
+                        <b>
+                            updateSamplesStatus
+                        </b>
+                        <a href="#updateSamplesStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateSamplesStatus(sample: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, status: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="290"
+                            class="link-to-prism">src/app/_services/diagnostic-clinic-api.service.ts:290</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method used to update the status of the sample</p>
 </div>
 
                     <div class="io-description">
@@ -325,7 +618,19 @@ all the samples that correspond to a specific organization member</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>id</td>
+                                    <td>sample</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>status</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -346,8 +651,7 @@ all the samples that correspond to a specific organization member</p>
 
                     </div>
                     <div class="io-description">
-                        <p>API response </p>
-
+                        
                     </div>
                 </td>
             </tr>
@@ -359,41 +663,48 @@ all the samples that correspond to a specific organization member</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { HttpClient } from &#x27;@angular/common/http&#x27;;
-import { HttpHeaders } from &#x27;@angular/common/http&#x27;;
-import { registerContentQuery } from &#x27;@angular/core/src/render3&#x27;;
-import { StaticInjector } from &#x27;@angular/core/src/di/injector&#x27;;
-import { BehaviorSubject } from &#x27;rxjs&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as http from &#x27;@angular/common/http&#x27;;
+import { Injectable } from &#x27;@angular/core&#x27;;
+import { config } from &quot;../../environments/environment.prod&quot;;
+import * as Interface from &quot;../_interfaces/interfaces&quot;;
+import { AuthenticationService } from &quot;./authentication.service&quot;;
 
-import { POSTOrganization } from &#x27;./user-management-api.service&#x27;;
 
-//Globals variables used to hold the API call urls
-const getAllSamplesURL &#x3D; &#x27;***REMOVED***/retrieveAllSamples&#x27;;
-const getAllSamplesForMemberURL &#x3D; &#x27;***REMOVED***/retrieveSamplesForMember&#x27;;
-const getOrganizationSamplesURL &#x3D; &#x27;***REMOVED***/retrieveAllOrgSamples&#x27;;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                          GLOBAL VARIABLES
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////// URL&#x27;S FOR API //////////////////////////////////////////////////////////////// 
+const getAllSamplesForMemberURL &#x3D; &#x60;${config.diagnosticClinicURL}/retrieveSamplesForMember&#x60;;
 
 //Object for defining the JSON object to be sent when requesting the samples of a specific member
 export interface POSTMember{
-    userID: string;
+  userID: string;                         //The user id of the user to be submitted
 }
 
 //Object for defining the samples received from the API call
 export interface Sample{
-    userID: string;
-    orgName: string;
-    status: string;
-    data: Species;
+  userID: string;                         //The id of the user who submitted the sample
+  orgName: string;                        //The organization that the user belongs to
+  status: string;                         //The status of the sample
+  referenceNumber: string;                //The reference number that was generated for the sample
+  data: Species;                          //The data within the sample which is the species
 }
 
 export interface Species{
-    species: string;
+  species: string;                        //The species of a sample
 }
 
-@Injectable({
-    providedIn: &#x27;root&#x27;
-})
 
+/**
+ * Used for handling all &#x60;diagnostic clinic&#x60; requests and functions
+ *
+ * @export
+ * @class DiagnosticClinicAPIService
+ */
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
 export class DiagnosticClinicAPIService {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -401,96 +712,255 @@ export class DiagnosticClinicAPIService {
   /**
    * Creates an instance of DiagnosticClinicAPIService.
    * 
-   * @param {HttpClient} http For making calls to the API
+   * @param {http.HttpClient} http For making calls to the API
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @memberof DiagnosticClinicAPIService
    */
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   constructor(private http: HttpClient) { }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(private http: http.HttpClient, private authService: AuthenticationService) { }
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                        GET_ALL_SAMPLES 
+  //                                                        GET ALL SAMPLES 
   /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the samples that FABI is currently processing
+   *    This function sends a POST request to the API to retrieve a list containing all the samples that FABI is currently processing
    *
    * @returns API response @type any
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   getAllSamples(){
-        const options &#x3D; {
-            method: &#x27;POST&#x27;,
-            url: getAllSamplesURL,
-            headers: {
-            &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
-            &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-            &#x27;Accept&#x27;: &#x27;application/json&#x27;
-            },
-            json: true
-        };
-
-        return this.http.request(&#x27;POST&#x27;, getAllSamplesURL, options);
-   }
-
-
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                   GET_ALL_ORGANIZATION_SAMPLES 
-  /**
-   *    This function sends a POST request to the API to retrieve a list containing
-   *    all the samples belonging to the specified organization
-   *
-   * @returns API response @type any
-   * @memberof DiagnosticClinicAPIService
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllOrganizationSamples(organization:string){
-    // var data: POSTOrganization &#x3D; { orgName: organization };
-    var data: POSTOrganization &#x3D; { orgName: &#x27;testOrg3&#x27;};
+  getAllSamples() {
+    const getAllSamplesURL &#x3D; &#x60;${config.diagnosticClinicURL}/retrieveAllSamples&#x60;;
+    const method &#x3D; &quot;POST&quot;;
 
     const options &#x3D; {
-        method: &#x27;POST&#x27;,
-        url: getOrganizationSamplesURL,
-        headers: {
+      headers: {
         &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
         &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-        },
-        body: data,
-        json: true
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      json: true
     };
 
-    return this.http.request(&#x27;POST&#x27;, getOrganizationSamplesURL, options);
-}
+    return this.http.request(method, getAllSamplesURL, options);
+  }
 
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                    GET_ALL_SAMPLES_FOR_MEMBER 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     GET SAMPLES FOR FABI STAFF 
   /**
    *    This function sends a POST request to the API to retrieve a list containing
-   *    all the samples that correspond to a specific organization member
+   *    all the samples corresponding to a specific user.
    *
+   * @param {string} id The id number of the user whose samples need to be fetched.
    * @returns API response @type any
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllSamplesForMember(id: string){
-    var data: POSTMember &#x3D; {userID: id};
+  getSamplesForFABIStaff(id: string) {
+    const data: POSTMember &#x3D; { userID: id };
 
     const options &#x3D; {
-        method: &#x27;POST&#x27;,
-        url: getAllSamplesForMemberURL,
-        headers: {
+      headers: {
         &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
         &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        &#x27;Accept&#x27;: &#x27;application/json&#x27;
-        },
-        body: data,
-        json: true
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: data,
+      json: true
     };
 
     return this.http.request(&#x27;POST&#x27;, getAllSamplesForMemberURL, options);
-}
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    RETREIVE ALL SAMPLES
+  /**
+   * Method that sends a request to the API to retreive all Samples
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveAllOrganizationSamples() {
+    let retrieveAllOrgSamples &#x3D; &#x60;${config.diagnosticClinicURL}/retrieveAllOrgSamples&#x60;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;orgName&quot;: this.authService.getCurrentSessionValue.user.organisation
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, retrieveAllOrgSamples, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    RETREIVE ALL SAMPLES FOR MEMBER
+  /**
+   * Method that sends a request to the API to retreive all Samples for a member
+   *
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveMemberSamples() {
+    let retrieveAllMemberSamples &#x3D; &#x60;${config.diagnosticClinicURL}/retrieveSamplesForMember&#x60;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;userID&quot;: this.authService.getCurrentSessionValue.user.ID
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, retrieveAllMemberSamples, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        SUBMIT SAMPLE FORM
+  /**
+   * Method that send a request to the API to submit a specifc Sample Form
+   *
+   * @param {Interface.SampleFormData} formDetails The details of the sample to be submitted
+   * @returns API response @type any
+   * 
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitSampleForm(formDetails: Interface.SampleFormData) {
+
+    let tempDetails &#x3D; {
+      &quot;Location&quot;: &quot;harding&quot;,
+      &quot;Province&quot;: &quot;Gauteng&quot;,
+      &quot;Genus&quot;: &quot;eucalyptus&quot;,
+      &quot;Species&quot;: &quot;radiata&quot;,
+      &quot;SampleType&quot;: &quot;root&quot;,
+      &quot;Asym_Dis&quot;: &quot;D&quot;,
+      &quot;NurseryField&quot;: &quot;F&quot;,
+      &quot;Roots&quot;: &quot;dry&quot;,
+      &quot;Root-Collar&quot;: &quot;Wilted, abitDry&quot;,
+      &quot;Stem&quot;: &quot;Girdled&quot;,
+      &quot;GrowthTip&quot;: &quot;Swelling&quot;,
+      &quot;Needles-Leaves&quot;: &quot;healthy&quot;
+    }
+
+    let submitSampleURL &#x3D; &#x60;${config.diagnosticClinicURL}/submitSample&#x60;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;orgName&quot;: this.authService.getCurrentSessionValue.user.organisation,
+      &quot;userID&quot;: this.authService.getCurrentSessionValue.user.ID,
+      &quot;data&quot;: tempDetails
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, submitSampleURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        RETRIEVE SAMPLE DETAILS
+  /**
+   * This function is used to fetch a specific sample form
+   *
+   * @param {string} sampleRefNum The reference number of the sample to be retrieved
+   * @returns API response @type any
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  retrieveSampleDetails(sampleRefNum: string) {
+    let retreiveSampleDetailsURL &#x3D; &#x60;${config.diagnosticClinicURL}/retrieveSample&#x60;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;refNum&quot;: sampleRefNum
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, retreiveSampleDetailsURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        UPDATE SAMPLE STATUS
+  /**
+   * Method used to update the status of the sample
+   *
+   * @param {*} sample
+   * @param {string} status
+   * @returns
+   * @memberof DiagnosticClinicAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateSamplesStatus(sample: any, status: string) {
+
+    let updateSampleStatusURL &#x3D; &#x60;${config.diagnosticClinicURL}/updateSampleStatus&#x60;;
+    let method &#x3D; &#x27;POST&#x27;;
+
+    const postData &#x3D; {
+      &quot;refNum&quot;: sample.referenceNumber,
+      &quot;status&quot;: status
+    }
+
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: postData,
+      json: true
+    };
+
+    return this.http.request&lt;any&gt;(method, updateSampleStatusURL, options);
+  }
 }</code></pre>
     </div>
 
@@ -502,7 +972,6 @@ export class DiagnosticClinicAPIService {
 
 
 
-                   
 
 
 

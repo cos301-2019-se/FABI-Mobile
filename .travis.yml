@@ -1,24 +1,4 @@
 language: node_js
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-  node_js:
-    - "8"
-
-  branches:
-    only:
-      - master
-      
-  before install:
-    - cd 'FABI-WEB'
-
-  before_script:
-    - npm install -g @angular/cli
-
-  script:
-    - ng build --prod --aot
-=======
->>>>>>> develop
 node_js:
     - 10.9
 
@@ -30,9 +10,4 @@ before_script:
     - npm install @angular/cli
 
 script:
-<<<<<<< HEAD
     - ng build
-=======
-    - ng build
->>>>>>> develop
->>>>>>> develop

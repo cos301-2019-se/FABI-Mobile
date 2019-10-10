@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -20,6 +20,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { LoadingComponent } from 'src/app/_loading/loading.component';
+import { NotificationService } from 'src/app/_services/notification.service';
 import * as Interface from '../../_interfaces/interfaces';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { DatabaseManagementService } from "../../_services/database-management.service";
@@ -93,7 +94,8 @@ export class StaffViewDatabasesComponent implements OnInit {
     private dbService: DatabaseManagementService,
     private formBuilder: FormBuilder,
     private portCSV: Porting,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
 
@@ -144,13 +146,15 @@ export class StaffViewDatabasesComponent implements OnInit {
         var event = new MouseEvent("click");
         downloadLink.dispatchEvent(event);
       }
-      else if (response.success == false) {
+      else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
       }
 
-      loadingRef.close();
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
+      this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
+      loadingRef.close();
     });
   }
 
@@ -169,6 +173,9 @@ export class StaffViewDatabasesComponent implements OnInit {
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Retrieving Database" } });
 
     this.dbService.retrieveDatabase(database.name).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         Object.keys(response.data.docs[0]).forEach((column) => {
           let obj = {
@@ -195,12 +202,14 @@ export class StaffViewDatabasesComponent implements OnInit {
         //   this.databasePrivileges.delete = true;
         // }
 
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load database details');
       }
 
-      loadingRef.close();
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load database details');
+      //Handled in error-handler
     });
 
   }

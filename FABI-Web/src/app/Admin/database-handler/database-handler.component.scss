@@ -11,7 +11,7 @@
   align-items: center;
 
   width: 100%;
-  min-height: 50vh;
+  min-height: 10vh;
   height: auto;
 
   padding: 15px;
@@ -50,6 +50,12 @@
   width: 95%;
 }
 
+/* Handler Actions Style
+   ========================================================================== */
+.handler-actions{
+  position: relative;
+  top: 25px;
+}
 
 
 /* Modal Style
@@ -129,4 +135,19 @@ modal {
 .confirm-actions {
   display: flex;
   justify-content: center;
+}
+
+
+/* Preview Table Style
+   ========================================================================== */
+.preview-table {
+  width: 100%;
+  height: 50%;
+
+  padding: 25px;
+  margin: 15px 0 15px 0;
+
+  background-color: #fff;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }

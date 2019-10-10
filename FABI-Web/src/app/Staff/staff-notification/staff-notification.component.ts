@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -21,7 +21,8 @@ import { CultureCollectionAPIService } from '../../_services/culture-collection-
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
-
+import { NotificationService } from '../../_services/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface StaffMember {
   fname: string;
@@ -53,8 +54,10 @@ export class StaffNotificationComponent implements core.OnInit {
   localNotificationNumber: number = 1;
   /** Object array for holding all of the logs that have not been read -  @type {string[]} */
   allLogs: string[] = [];
+
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   private toggle_status: boolean = false;
+
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
   /** Indicates if the profile tab is hidden/shown - @type {boolean} */
@@ -67,6 +70,7 @@ export class StaffNotificationComponent implements core.OnInit {
   helpTab: boolean = false;
   /** The user that is currently logged in -  @type {any} */
   currentUser: any;
+  
   /** Object array for holding the staff members -  @type {StaffMember[]} */
   staff: StaffMember[] = [];
   /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */
@@ -82,6 +86,7 @@ export class StaffNotificationComponent implements core.OnInit {
    * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API Service
    * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API Service
+   * @param {NotificationService} notificationService For calling the Notification service
    * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {Router} router
    * @param {Resolver} resolver
@@ -94,6 +99,7 @@ export class StaffNotificationComponent implements core.OnInit {
     private router: Router,
     private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
+    private notificationService: NotificationService,
     private resolver: core.ComponentFactoryResolver,
     private notificationLoggingService: NotificationLoggingService,
     private cultureCollectionService: CultureCollectionAPIService
@@ -128,7 +134,6 @@ export class StaffNotificationComponent implements core.OnInit {
     this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
       if (response.success == true) {
         var data = response.data.qs.staff;
-
         for (var i = 0; i < data.length; i++) {
           var tempStaff: StaffMember = { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id };
           this.staff.push(tempStaff);
@@ -252,6 +257,8 @@ export class StaffNotificationComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadNotifications() {
+    //Loading all the staff withing FABI
+    this.getAllStaff();
     //Loading all the logs beloning to the user
     this.loadLogs();
 
@@ -314,6 +321,7 @@ export class StaffNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
   }
@@ -343,7 +351,7 @@ export class StaffNotificationComponent implements core.OnInit {
   /**
    *  This function will remove a notification from the notification section on the HTML page.
    * 
-   * @param {string} id                   //The id of the notification to be removed
+   * @param {string} id The id of the notification to be removed
    * @memberof StaffNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -352,11 +360,15 @@ export class StaffNotificationComponent implements core.OnInit {
 
     this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.ID, this.newNotifications).subscribe((response: any) => {
       if (response.success == true) {
-
+        //Successfully removed notification
       }
       else {
         //Error handling
+        this.notificationService.showErrorNotification("Notification Error", "An error occurred when trying to remove this notification. Please try again.");
       }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Notification Error", "An error occurred when trying to remove this notification. Please try again.");
     });
   }
 

@@ -159,7 +159,7 @@ async function addStaff(req, res)
                         log({
                             type: 'USER',
                             action: 'AddMemberToOrg',
-                            details: '1563355277876',
+                            details: req.body.userID,
                             user: qs.id,
                             org1: 'FABI',
                             org2: 'FABI',

@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,11 +14,13 @@
  */
 
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 //Include Material Components
 import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/_services/notification.service';
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import * as Interface from "../../_interfaces/interfaces";
 import { LoadingComponent } from "../../_loading/loading.component";
@@ -140,7 +142,8 @@ export class MemberHandlerComponent implements core.OnInit {
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
     this.addMemberForm = this.formBuilder.group({
       member_name: ['', Validators.required],
@@ -167,7 +170,7 @@ export class MemberHandlerComponent implements core.OnInit {
     });
   }
 
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG ON INIT()
   /**
@@ -179,10 +182,11 @@ export class MemberHandlerComponent implements core.OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
     this.viewMembers();
+    this.resetMemberFields();
 
   }
 
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                    TOGGLE NOTIFICATIONS TAB
   /**
@@ -198,7 +202,7 @@ export class MemberHandlerComponent implements core.OnInit {
     this.toggle_status = !this.toggle_status;
   }
 
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          ADD MEMBER
   /**
@@ -231,19 +235,28 @@ export class MemberHandlerComponent implements core.OnInit {
     this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetMemberFields();
 
       this.loading = false;
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Member Added", "Dismiss", {
-          duration: 6000
-        });
+        this.notificationService.showSuccessNotification('Member Added', '');
         this.refreshDataSource();
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      if(err.error.code == 400 && err.error.message == "User email already exists") {
+        this.notificationService.showErrorNotification('Add Member Failed', 'User email already exists');
+      } else {
+        this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
+      }
+      this.resetMemberFields();
+      //Handled in error-handler
+      
     });
   }
 
@@ -313,14 +326,15 @@ export class MemberHandlerComponent implements core.OnInit {
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Member Removed", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Member Removed', '');
         this.refreshDataSource();
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the member');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the member');
     });
   }
 
@@ -357,10 +371,13 @@ export class MemberHandlerComponent implements core.OnInit {
         //Deactivate loading table spinners
         this.memberTableLoading = false;
 
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load members');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showWarningNotification('Error', 'Could not load members');
     });
   }
 
@@ -554,6 +571,7 @@ export class MemberHandlerComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetMemberFields() {
     this.addMemberForm.reset();
+    this.submitted = false;
   }
 
 }

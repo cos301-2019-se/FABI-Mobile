@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -43,19 +43,13 @@ export class OrganizationNotificationComponent implements core.OnInit {
   newNotifications: string[] = [];
   /** Object array for holding all of the logs that have not been read -  @type {string[]} */
   allLogs: string[] = [];
+
   /** Object array for holding the members of the organization -  @type {Member[]} */
   organizationMembers: Member[] = [];
   /** Object array for holding the members of the organization -  @type {Member[]} */
   organizationMembersExample: Member[] = [];
-  /** Object array for holding the samples of the organization -  @type {Sample[]} */
-  organizationSamples: Sample[] = [];
   /** The total number of members in the organization - @type {number} */
   numberOfOrganizationMembers: number;
-  /** The total number of samples belonging to the organization - @type {number} */
-  numberOfOrganizationSamples: number;
-  /** The name of the logged in organization - @type {string} */
-  organizationName: string = 'TestOrg4';
-  /** Indicates if there are notifications to load - @type {boolean} */
   notifications: boolean = false;
 
   /** Holds the div element (membersContainer) from the HTML page - @type {ElementRef} */
@@ -63,22 +57,6 @@ export class OrganizationNotificationComponent implements core.OnInit {
   /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
   @core.ViewChild('notificationContainer', { read: core.ViewContainerRef }) notificationContainer;
 
-  /** The staff member's email address -  @type {string} */
-  email: string = '';
-  /** The staff member's organization -  @type {string} */
-  organization: string = '';
-  /** The staff member's id -  @type {string} */
-  id: string = '';
-  /** The staff member's name -  @type {string} */
-  name: string = '';
-  /** The staff member's surname -  @type {string} */
-  surname: string = '';
-  /** The staff member's password -  @type {string} */
-  password: string = '';
-  /** The staff member's confirmed password -  @type {string} */
-  confirmPassword: string = '';
-  /** The form to display the admin member's details -  @type {FormGroup} */
-  adminProfileForm: FormGroup;
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
   /** Indicates if the profile tab is hidden/shown - @type {boolean} */
@@ -91,6 +69,7 @@ export class OrganizationNotificationComponent implements core.OnInit {
   helpTab: boolean = false;
   /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */
   notificationsLoading: boolean = true;
+  
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
 
@@ -121,12 +100,9 @@ export class OrganizationNotificationComponent implements core.OnInit {
     public sanitizer: DomSanitizer,
     private notificationLoggingService: NotificationLoggingService,
     private snackBar: MatSnackBar,
-  ) {
+  ) { }
 
-  }
-
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD NOTIFICATIONS

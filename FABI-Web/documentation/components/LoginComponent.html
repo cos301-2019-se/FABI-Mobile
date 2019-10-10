@@ -813,7 +813,6 @@ export class LoginComponent implements OnInit {
         //Setting local storage to hold the users details
         localStorage.setItem(&#x27;userID&#x27;, response.userDetails.id);
         localStorage.setItem(&#x27;userOrganization&#x27;, Lorg);
-        localStorage.setItem(&#x27;userPassword&#x27;, Lpassw);
 
         //POPUP MESSAGE
         let snackBarRef &#x3D; this.snackBar.open(&quot;Successfully Logged In&quot;, &quot;Dismiss&quot;, {

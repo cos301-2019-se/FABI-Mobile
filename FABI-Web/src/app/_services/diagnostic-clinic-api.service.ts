@@ -5,7 +5,7 @@
  * Created Date: Saturday, July 6th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -83,6 +83,11 @@ export class DiagnosticClinicAPIService {
     const getAllSamplesURL = `${config.diagnosticClinicURL}/retrieveAllSamples`;
     const method = "POST";
 
+    const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
+    }
+
     const options = {
       headers: {
         'cache-control': 'no-cache',
@@ -90,6 +95,7 @@ export class DiagnosticClinicAPIService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
       },
+      body: postData,
       json: true
     };
 
@@ -140,7 +146,8 @@ export class DiagnosticClinicAPIService {
     let method = 'POST';
 
     const postData = {
-      "orgName": this.authService.getCurrentSessionValue.user.organisation
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
     }
 
     const options = {
@@ -172,6 +179,7 @@ export class DiagnosticClinicAPIService {
     let method = 'POST';
 
     const postData = {
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
       "userID": this.authService.getCurrentSessionValue.user.ID
     }
 
@@ -201,22 +209,7 @@ export class DiagnosticClinicAPIService {
    * @memberof DiagnosticClinicAPIService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitSampleForm(formDetails: Interface.SampleFormData) {
-
-    let tempDetails = {
-      "Location": "harding",
-      "Province": "Gauteng",
-      "Genus": "eucalyptus",
-      "Species": "radiata",
-      "SampleType": "root",
-      "Asym_Dis": "D",
-      "NurseryField": "F",
-      "Roots": "dry",
-      "Root-Collar": "Wilted, abitDry",
-      "Stem": "Girdled",
-      "GrowthTip": "Swelling",
-      "Needles-Leaves": "healthy"
-    }
+  submitSampleForm(sampleDetails: Interface.SampleFormData) {
 
     let submitSampleURL = `${config.diagnosticClinicURL}/submitSample`;
     let method = 'POST';
@@ -224,7 +217,11 @@ export class DiagnosticClinicAPIService {
     const postData = {
       "orgName": this.authService.getCurrentSessionValue.user.organisation,
       "userID": this.authService.getCurrentSessionValue.user.ID,
-      "data": tempDetails
+      // "orgName": "PendingOrg6",
+      // "userID": "1570469049518",
+      "data": {
+        "sample": sampleDetails
+      }
     }
 
     const options = {
@@ -234,6 +231,8 @@ export class DiagnosticClinicAPIService {
         "Access-Control-Allow-Origin": "*",
         'Accept': 'application/json',
         'Authorization': `Bearer ${this.authService.getCurrentSessionValue.token}`
+        // 'Authorization': `Bearer 2a2be1526acc985f468b36d029f9baf701ba90d5`
+
       },
       body: postData,
       json: true
@@ -258,7 +257,9 @@ export class DiagnosticClinicAPIService {
     let method = 'POST';
 
     const postData = {
-      "refNum": sampleRefNum
+      "refNum": sampleRefNum,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
     }
 
     const options = {
@@ -294,7 +295,9 @@ export class DiagnosticClinicAPIService {
 
     const postData = {
       "refNum": sample.referenceNumber,
-      "status": status
+      "status": status,
+      "orgName": this.authService.getCurrentSessionValue.user.organisation,
+      "userID": this.authService.getCurrentSessionValue.user.ID,
     }
 
     const options = {
