@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 9th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -369,7 +369,7 @@ export class SampleFormComponent implements OnInit {
     //   return;
     // }
 
-    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Sending Form" } });
 
     let types: Interface.SampleTypeDescription[] = [];
 
@@ -652,6 +652,18 @@ export class SampleFormComponent implements OnInit {
     };
   }
 
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS 
+  /**
+   * This function will clear the inputs and reset the form
+   * 
+   * @memberof SampleFormComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetFields() {
+    this.sampleForm.reset();
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                        FORM INTERFACE CHANGES
@@ -771,10 +783,10 @@ export class SampleFormComponent implements OnInit {
   }
 
   showStepFour() {
-    // if (this.sampleForm.get('symptoms').invalid || this.sampleForm.get('distribution').invalid) {
-    //   this.submitted = true;
-    //   return;
-    // }
+    if (this.sampleForm.get('symptoms').invalid || this.sampleForm.get('distribution').invalid || this.sampleForm.get('percentage_plants_affected').invalid) {
+      this.submitted = true;
+      return;
+    }
     this.submitted = false;
 
     this.stepOneContent = false;

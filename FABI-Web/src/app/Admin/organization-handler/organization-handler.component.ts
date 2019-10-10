@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 9th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -162,6 +162,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
     // Calling the neccessary functions as the page loads
     this.viewOrganizations();
     this.viewPendingOrganizations();
+    this.resetAddFields();
   }
 
 
@@ -219,10 +220,12 @@ export class OrganizationHandlerComponent implements core.OnInit {
       } else {
         //POPUP MESSAGE
         this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+        this.resetAddFields();
       }
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
       this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+      this.resetAddFields();
     });
   }
 
@@ -387,6 +390,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
     this.userManagementService.createOrganization(org).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -398,8 +402,13 @@ export class OrganizationHandlerComponent implements core.OnInit {
         this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
       }
     }, (err: http.HttpErrorResponse) => {
+      if(err.error.code == 400 && err.error.message == "User email already exists") {
+        this.notificationService.showErrorNotification('Registration Failed', 'Organization email already exists');
+      } else {
+        this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+      }
+      this.resetAddFields();
       //Handled in error-handler
-      this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
     });
 
   }
@@ -501,6 +510,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetAddFields() {
     this.registerOrgForm.reset();
+    this.submitted = false;
   }
 
 }

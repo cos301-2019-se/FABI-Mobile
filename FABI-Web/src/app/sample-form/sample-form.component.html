@@ -297,10 +297,10 @@
                 </div>
                 <br />
                 <!-- Error Validation Feedback-->
-                <!-- <div *ngIf="sampleForm.get('types').invalid && (submitted || sampleForm.get('types').dirty)"
+                <div *ngIf="sampleForm.get('symptoms').invalid && (submitted || sampleForm.get('symptoms').dirty)"
                   class="text-danger">
-                  <p>Please specify at least 1 symptom</p>
-                </div> -->
+                  <p>Please specify at least 1 symptom for each type</p>
+                </div> 
                 <!-- / Error Validation Feedback-->
 
           </div>
@@ -369,16 +369,26 @@
             <!-- / Other -->
           </div>
 
+          <!-- Error Validation Feedback-->
+          <div *ngIf="sampleForm.get('distribution').invalid && (submitted || sampleForm.get('distribution').dirty)"
+            class="text-danger">
+            <p>Please enter all sample distribution details</p>
+          </div>
+          <!-- / Error Validation Feedback-->
+        </div>
           <br />
 
           <div class="distribution-subheading">
             <h6>Estimate of the percentage of plants affected:</h6>
           </div>
 
+
+          <div>
+
           <div class="form-row">
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="isolated"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="isolated"
                 value="isolated">
               <label class="form-check-label" for="percentage_plants_affected">
                 Isolated Cases
@@ -388,7 +398,7 @@
 
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="less_ten"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="less_ten"
                 value="less_ten">
               <label class="form-check-label" for="percentage_plants_affected">
                 Less than 10%
@@ -400,7 +410,7 @@
           <div class="form-row">
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="ten_to_twentyfive"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="ten_to_twentyfive"
                 value="ten_to_twentyfive">
               <label class="form-check-label" for="percentage_plants_affected">
                 10% - 25%
@@ -410,7 +420,7 @@
 
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="twentyfive_to_fifty"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="twentyfive_to_fifty"
                 value="twentyfive_to_fifty">
               <label class="form-check-label" for="percentage_plants_affected">
                 25% - 50%
@@ -422,7 +432,7 @@
           <div class="form-row">
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6 offset-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="greater_fifty"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="greater_fifty"
                 value="greater_fifty">
               <label class="form-check-label" for="percentage_plants_affected">
                 Greater than 50%
@@ -432,13 +442,13 @@
           </div>
 
           <!-- Error Validation Feedback-->
-          <div *ngIf="sampleForm.get('distribution').invalid && (submitted || sampleForm.get('distribution').dirty)"
+          <div *ngIf="sampleForm.get('percentage_plants_affected').invalid && (submitted || sampleForm.get('percentage_plants_affected').dirty)"
             class="text-danger">
             <p>Please enter all sample distribution details</p>
           </div>
           <!-- / Error Validation Feedback-->
-
         </div>
+        
 
         <button type="button" class="next-btn" (click)="showStepFour()">NEXT</button>
         <button type="button" class="prev-btn" (click)="showStepTwo()">PREVIOUS</button>

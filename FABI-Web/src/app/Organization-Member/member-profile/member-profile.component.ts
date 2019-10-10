@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -65,6 +65,7 @@ export class MemberProfileComponent implements core.OnInit {
   submitted: boolean;
   /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
   userProfileLoading: boolean = true;
+  userProfileDetails: any = "";
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
@@ -221,16 +222,16 @@ export class MemberProfileComponent implements core.OnInit {
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //Temporarily holds the data returned from the API call
-        const data = response.data;
+        this.userProfileDetails = response.data;
 
         //Deactivate loading spinners
         this.userProfileLoading = false;
 
         // Fill the form inputs with the user's details
         this.memberProfileForm.setValue({
-          member_name: data.fname,
-          member_surname: data.surname,
-          member_email: data.email,
+          member_name: this.userProfileDetails.fname,
+          member_surname: this.userProfileDetails.surname,
+          member_email: this.userProfileDetails.email,
           organization_name: this.currentUser.organisation
         });
       }
@@ -271,6 +272,9 @@ export class MemberProfileComponent implements core.OnInit {
     this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
@@ -286,6 +290,9 @@ export class MemberProfileComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
       this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       //Handled in error-handler
     });
@@ -317,6 +324,7 @@ export class MemberProfileComponent implements core.OnInit {
     this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
@@ -330,6 +338,7 @@ export class MemberProfileComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
+      this.resetAddFields();
       this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
       //Handled in error-handler
     });
@@ -408,6 +417,7 @@ export class MemberProfileComponent implements core.OnInit {
       this.memberProfileForm.get('member_surname').disable();
       this.memberProfileForm.get('member_email').disable();
       this.isEditingProfile = false;
+      this.resetAddFields();
     } else {
       this.memberProfileForm.get('member_name').enable();
       this.memberProfileForm.get('member_surname').enable();
@@ -415,6 +425,27 @@ export class MemberProfileComponent implements core.OnInit {
       this.isEditingProfile = true;
     }
 
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS
+  /**
+   * This function will clear the inputs and reset all forms
+   * 
+   * @memberof MemberProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetAddFields() {
+    this.memberProfileForm.reset();
+    // Fill the form inputs with the user's details
+    this.memberProfileForm.setValue({
+      member_name: this.userProfileDetails.fname,
+      member_surname: this.userProfileDetails.surname,
+      member_email: this.userProfileDetails.email,
+      organization_name: this.currentUser.organisation
+    });
+    this.changePasswordForm.reset();
+    this.submitted = false;
   }
 
 }

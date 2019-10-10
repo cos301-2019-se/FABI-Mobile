@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -182,6 +182,7 @@ export class MemberHandlerComponent implements core.OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
     this.viewMembers();
+    this.resetMemberFields();
 
   }
 
@@ -234,6 +235,7 @@ export class MemberHandlerComponent implements core.OnInit {
     this.userManagementService.addOrgMember(org_details, member_details).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetMemberFields();
 
       this.loading = false;
 
@@ -246,8 +248,15 @@ export class MemberHandlerComponent implements core.OnInit {
         this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
       }
     }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      if(err.error.code == 400 && err.error.message == "User email already exists") {
+        this.notificationService.showErrorNotification('Add Member Failed', 'User email already exists');
+      } else {
+        this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
+      }
+      this.resetMemberFields();
       //Handled in error-handler
-      this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
+      
     });
   }
 
@@ -562,6 +571,7 @@ export class MemberHandlerComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetMemberFields() {
     this.addMemberForm.reset();
+    this.submitted = false;
   }
 
 }

@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 9th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -147,7 +147,6 @@ export class LoginComponent implements core.OnInit {
   ngOnInit() {
     //-------- Load Organisation names for Drop Down --------
     this.userManagementService.getAllOrganizations().subscribe((response: any) => {
-
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
       }
@@ -208,16 +207,16 @@ export class LoginComponent implements core.OnInit {
     const Lpassw = this.loginForm.controls.password.value;
     const Lorg = this.loginForm.controls.organization.value;
 
+    this.authService.logoutUser();
+
     // User details to be passed to API
     const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
 
     this.authService.login(details).subscribe((response: any) => {
-
       loadingRef.close();
 
       // API Request successful
       if (response.success == true && response.code == 200) {
-
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open(`Welcome ${response.userDetails.fname}`, "Dismiss", {
           duration: 3000
@@ -244,7 +243,7 @@ export class LoginComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
         loadingRef.close();
-        this.notificationService.showErrorNotification('Login Failed', 'An error occured while logging in. \n Please try again.');
+        // this.notificationService.showErrorNotification('Login Failed', 'An error occured while logging in. \n Please try again.');
         //Handled in error-handler
     });
   }
