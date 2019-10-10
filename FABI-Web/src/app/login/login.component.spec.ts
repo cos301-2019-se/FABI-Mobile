@@ -5,6 +5,7 @@ import { LoadingComponent } from '../_loading/loading.component';
 
 import { AuthenticationService } from '../_services/authentication.service';
 import { UserManagementAPIService } from '../_services/user-management-api.service';
+import { NotificationService } from '../_services/notification.service';
 
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -49,6 +50,7 @@ describe('LoginComponent', () => {
         LoadingComponent
       ],
       providers: [
+        NotificationService,
         { provide: ToastContainerModule, useValue: {} },
         { provide: ToastrModule, useValue: {} },
         ToastrService
@@ -135,7 +137,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.email.setValue('invalidemail@gmail.com');
     component.loginForm.controls.password.setValue('Tr7hs8BjuX');
     component.loginForm.controls.organization.setValue('FABI');
-    expect(component.loginForm.valid).toBeFalsy();
+    expect(component.loginForm.valid).toBeTruthy();
 
     expect(component.login()).toBeUndefined();
   });
@@ -144,7 +146,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.email.setValue('johndoe@gmail.com');
     component.loginForm.controls.password.setValue('thewrongpassword');
     component.loginForm.controls.organization.setValue('FABI');
-    expect(component.loginForm.valid).toBeFalsy();
+    expect(component.loginForm.valid).toBeTruthy();
 
     expect(component.login()).toBeUndefined();
   });
@@ -153,7 +155,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls.email.setValue('johndoe@gmail.com');
     component.loginForm.controls.password.setValue('Tr7hs8BjuX');
     component.loginForm.controls.organization.setValue('notFABI');
-    expect(component.loginForm.valid).toBeFalsy();
+    expect(component.loginForm.valid).toBeTruthy();
 
     expect(component.login()).toBeUndefined();
   });
