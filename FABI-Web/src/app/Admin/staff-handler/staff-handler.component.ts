@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 9th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -321,7 +321,7 @@ export class StaffHandlerComponent implements core.OnInit {
 
     const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone };
 
-    var databasePrivileges: Interface.DatabasePrivilege[] = [];
+    var databasePrivileges: Interface.DatabasePrivilege[] = [{name: "", privileges: []}];
 
     this.addStaffForm.controls.database_privileges.value.forEach((value, i) => {
 
@@ -340,6 +340,7 @@ export class StaffHandlerComponent implements core.OnInit {
 
       loadingRef.close();
       this.loading = false;
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
@@ -348,13 +349,16 @@ export class StaffHandlerComponent implements core.OnInit {
       } else {
         //POPUP MESSAGE
         this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
-        this.resetAddFields();
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
-      //Handled in error-handler
-      this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
+      if(err.error.code == 400 && err.error.message == "User email already exists") {
+        this.notificationService.showErrorNotification('Add Member Failed', 'User email already exists');
+      } else {
+        this.notificationService.showErrorNotification('Add Member Failed', 'An error occurred while adding the member');
+      }
       this.resetAddFields();
+      //Handled in error-handler
     });
   }
 
@@ -404,7 +408,7 @@ export class StaffHandlerComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   removeStaffMember() {
-    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Adding Member" } });
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Removing Member" } });
 
     this.userManagementService.removeFABIStaffMember(this.selectedStaff).subscribe((response: any) => {
 
@@ -537,5 +541,6 @@ export class StaffHandlerComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetAddFields() {
     this.addStaffForm.reset();
+    this.submitted = false;
   }
 }

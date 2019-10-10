@@ -783,10 +783,10 @@ export class SampleFormComponent implements OnInit {
   }
 
   showStepFour() {
-    // if (this.sampleForm.get('symptoms').invalid || this.sampleForm.get('distribution').invalid) {
-    //   this.submitted = true;
-    //   return;
-    // }
+    if (this.sampleForm.get('symptoms').invalid || this.sampleForm.get('distribution').invalid || this.sampleForm.get('percentage_plants_affected').invalid) {
+      this.submitted = true;
+      return;
+    }
     this.submitted = false;
 
     this.stepOneContent = false;

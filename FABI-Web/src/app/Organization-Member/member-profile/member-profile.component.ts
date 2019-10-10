@@ -272,6 +272,9 @@ export class MemberProfileComponent implements core.OnInit {
     this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
@@ -287,6 +290,9 @@ export class MemberProfileComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
       this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       //Handled in error-handler
     });
@@ -318,6 +324,7 @@ export class MemberProfileComponent implements core.OnInit {
     this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
@@ -331,6 +338,7 @@ export class MemberProfileComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
+      this.resetAddFields();
       this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
       //Handled in error-handler
     });
@@ -431,12 +439,13 @@ export class MemberProfileComponent implements core.OnInit {
     this.memberProfileForm.reset();
     // Fill the form inputs with the user's details
     this.memberProfileForm.setValue({
-      admin_name: this.userProfileDetails.fname,
-      admin_surname: this.userProfileDetails.surname,
-      admin_email: this.userProfileDetails.email,
-      admin_type: this.userProfileDetails.userType
+      member_name: this.userProfileDetails.fname,
+      member_surname: this.userProfileDetails.surname,
+      member_email: this.userProfileDetails.email,
+      organization_name: this.currentUser.organisation
     });
     this.changePasswordForm.reset();
+    this.submitted = false;
   }
 
 }

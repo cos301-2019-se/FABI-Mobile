@@ -257,6 +257,9 @@ export class StaffProfileComponent implements core.OnInit {
     this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
@@ -272,6 +275,9 @@ export class StaffProfileComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
       this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       //Handled in error-handler
     });
@@ -303,6 +309,7 @@ export class StaffProfileComponent implements core.OnInit {
     this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
@@ -315,6 +322,7 @@ export class StaffProfileComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
+      this.resetAddFields();
       this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
       //Handled in error-handler
     });
@@ -416,12 +424,13 @@ export class StaffProfileComponent implements core.OnInit {
     this.staffProfileForm.reset();
     // Fill the form inputs with the user's details
     this.staffProfileForm.setValue({
-      admin_name: this.userProfileDetails.fname,
-      admin_surname: this.userProfileDetails.surname,
-      admin_email: this.userProfileDetails.email,
-      admin_type: this.userProfileDetails.userType
+      staff_name: this.userProfileDetails.fname,
+      staff_surname: this.userProfileDetails.surname,
+      staff_email: this.userProfileDetails.email,
+      staff_type: this.userProfileDetails.userType
     });
     this.changePasswordForm.reset();
+    this.submitted = false;
   }
 
 }

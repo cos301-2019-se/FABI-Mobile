@@ -258,7 +258,7 @@
                 <!-- /File Upload -->
               </div>
               <!-- Submit -->
-              <button *ngIf="submitted == true && portingForm.invalid" type="submit"
+              <button *ngIf="(submitted) || (submitted && portingForm.invalid)" type="submit"
                 class="btn btn-default-save">Upload</button>
               <!-- / Submit -->
               <!-- / Database File Upload Section -->
