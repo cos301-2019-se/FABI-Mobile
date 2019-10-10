@@ -87,13 +87,6 @@ describe('OrganizationNotificationComponent', () => {
     expect(component.allLogs).toEqual([]);
     expect(component.organizationMembers).toEqual([]);
     expect(component.organizationMembersExample).toEqual([]);
-    expect(component.organizationSamples).toEqual([]);
-
-    expect(component.id).toEqual('');
-    expect(component.name).toEqual('');
-    expect(component.surname).toEqual('');
-    expect(component.password).toEqual('');
-    expect(component.confirmPassword).toEqual('');
 
 
     expect(component.notificationsLoading).toBeTruthy();

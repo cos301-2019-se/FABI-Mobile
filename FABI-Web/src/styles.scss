@@ -14,6 +14,10 @@ a:hover {
     cursor: pointer;
 }
 
+.modal-backdrop {
+    z-index: -1;
+  }
+
 /* Navbar Heading Styling */
 .pos-f-t {
     display: block;

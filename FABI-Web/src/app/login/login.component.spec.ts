@@ -90,7 +90,6 @@ describe('LoginComponent', () => {
     expect(component.loginForm.invalid).toBeTruthy();
     expect(component.submitted).toBeFalsy();
     expect(component.valid).toBeFalsy();
-    expect(component.loggedIn).toBeFalsy();
     expect(component.loading).toBeFalsy();
   });
 
