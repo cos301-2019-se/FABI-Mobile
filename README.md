@@ -20,8 +20,8 @@
   - [System Requirments Specification](https://drive.google.com/file/d/1E7IQ1AnOAoHywCSzPf8s_ZMcr_qK20vg/view?usp=sharing)
   - [Coding Standards Document](https://drive.google.com/file/d/17qzn81O7YsrfYEGfqcfM2fBYbwJtOBNR/view?usp=sharing)
   -  [Testing Policy](https://drive.google.com/file/d/1nrrTMaDWhuDk6l0vt182sGsULI55GEbi/view?usp=sharing)  
-  -  [User Manual](https://drive.google.com/file/d/1EgdAPcsHrDcNzohiTi_7zqJWIXzOErp2/view?usp=sharing)
-  - [Organization User Manual](https://drive.google.com/file/d/1WmnunZhpUSGRUS0GgtiQSTbBFvjNjuDb/view?usp=sharing)
+  -  [User Manual](https://drive.google.com/file/d/1AndIEYq4z6hI2ZLYG-NsBC-IstzW45GG/view?usp=sharing)
+  - [Organization User Manual](https://drive.google.com/file/d/1aEoaI_9jmkHjkFuxXkBXPkjQDllSNI6C/view?usp=sharing)
   - [Overview Presentation](https://docs.google.com/presentation/d/1VbTXs8X7zrWnlnVac4awau8aMn8qUsw_FhL8Fp3rc6I/edit?usp=sharing)
   - [System Video Guide](https://drive.google.com/file/d/1_GnB4AD8M_TtIGbHmV41mGmwPm66ZpjF/view?usp=sharing)
   
