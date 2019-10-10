@@ -4,11 +4,18 @@ import { MaterialModule } from '../../materials';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 describe('MemberProfileComponent', () => {
   let component: MemberProfileComponent;
   let fixture: ComponentFixture<MemberProfileComponent>;
+
+  class MockAuthenticationService extends AuthenticationService{
+    public get getCurrentSessionValue() {
+        return { "user" : "" };
+    }
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,7 +26,8 @@ describe('MemberProfileComponent', () => {
       MatSnackBarModule, 
       MatDialogModule,
       RouterTestingModule
-    ]
+    ],
+    providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
     })
     .compileComponents();
   }));
@@ -33,4 +41,42 @@ describe('MemberProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it("Empty form expect invalid", () => {
+    component.memberProfileForm.controls.organization_name.setValue("");
+    component.memberProfileForm.controls.member_name.setValue("");
+    component.memberProfileForm.controls.member_surname.setValue("");
+    component.memberProfileForm.controls.member_email.setValue("");
+
+    expect(component.memberProfileForm.valid).toBeFalsy();
+  });
+
+  it("Empty member name expect member name invalid", () => {
+    component.memberProfileForm.controls.organization_name.setValue("Test");
+    component.memberProfileForm.controls.member_name.setValue("");
+    component.memberProfileForm.controls.member_surname.setValue("");
+    component.memberProfileForm.controls.member_email.setValue("");
+
+    expect(component.memberProfileForm.controls.member_name.valid).toBeFalsy();
+  });
+
+  it("Empty member surname expect member surname invalid", () => {
+    component.memberProfileForm.controls.organization_name.setValue("Test");
+    component.memberProfileForm.controls.member_name.setValue("TesterFName");
+    component.memberProfileForm.controls.member_surname.setValue("");
+    component.memberProfileForm.controls.member_email.setValue("");
+
+    expect(component.memberProfileForm.controls.member_surname.valid).toBeFalsy();
+  });
+
+  it("Empty member email expect member email invalid", () => {
+    component.memberProfileForm.controls.organization_name.setValue("Test");
+    component.memberProfileForm.controls.member_name.setValue("TesterFName");
+    component.memberProfileForm.controls.member_surname.setValue("TesterLName");
+    component.memberProfileForm.controls.member_email.setValue("");
+
+    expect(component.memberProfileForm.controls.member_email.valid).toBeFalsy();
+  });
+
+  
 });

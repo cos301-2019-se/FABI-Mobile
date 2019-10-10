@@ -1,7 +1,8 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component'
+import { HomeComponent } from './home/home.component';
+import { CookieService } from "ngx-cookie-service";
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -25,12 +26,12 @@ describe('AppComponent', () => {
       imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+        { provide: MatDialogRef, useValue: {} },
+        CookieService
       ],
       declarations: [
         AppComponent,
-        HomeComponent
-      ],
+        HomeComponent,      ],
     }).compileComponents();
   }));
 

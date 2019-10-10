@@ -26,10 +26,6 @@ import { AuthenticationService } from '../../_services/authentication.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-
-
-
-
 @core.Component({
   selector: 'app-organization-handler',
   templateUrl: './organization-handler.component.html',
