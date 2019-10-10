@@ -157,22 +157,23 @@
 
         <!-- Statistic Box -->
         <div class="statistic-box" *ngIf="!sampleStats && !userStats">
-            <div class="statistic-box-content">
-              <div class="statistic-box-heading">
-                <h5>Statistics</h5>
-              </div>
-              <div class="statistic-box-info">
-                <p>Unfortunately there are no statistics available at this time</p>
-              </div>
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Statistics</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p>Unfortunately there are no statistics available at this time</p>
             </div>
           </div>
-          <!-- / Statistic Box -->
+        </div>
+        <!-- / Statistic Box -->
 
       </div>
       <!-- / Statistics -->
 
       <!-- Handler Shortcuts -->
-      <div class="handler-shortcuts" *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'DatabaseAdmin' || currentUser.permission == 'ClinicAdmin')">
+      <div class="handler-shortcuts"
+        *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'DatabaseAdmin' || currentUser.permission == 'ClinicAdmin')">
 
         <!-- Menu Shortcut Row -->
         <div class="menu-row">
