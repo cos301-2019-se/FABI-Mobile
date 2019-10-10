@@ -5,7 +5,7 @@
  * Created Date: Wednesday, August 14th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -124,7 +124,9 @@ export class MapsWindowComponent implements core.OnInit {
           this.infoTitle = "Current Location";
           this.getAddress(this.location.latitude, this.location.longitude);
         }
-      }, (error: PositionError) => console.log(error));
+      }, (error: PositionError) => {
+        
+      });
     } else {
       alert("Geolocation is not supported by this browser.");
     }
