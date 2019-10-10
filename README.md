@@ -1,8 +1,8 @@
  # FABI Mobile
  
  <div style="height:50px;" align="center">
-<img src="https://drive.google.com/uc?export=view&id=1zuoms4mLG9tGefRy9OVbY9WGuxMRr6cw" alt="FABI Logo" title="FABI" style="width:50px; height:25px; text-align:center;" />
-<img src="https://drive.google.com/uc?export=view&id=114zeT9UmmtfVQtCq4B2y449ur8A2SSgP" alt="FABI Logo" title="FABI" style="width:50px; height:25px; text-align:center;" />
+<img src="https://drive.google.com/uc?export=view&id=1zuoms4mLG9tGefRy9OVbY9WGuxMRr6cw" alt="FABI Logo" title="FABI" style="width:10px; height:5px; text-align:center;" />
+<img src="https://drive.google.com/uc?export=view&id=114zeT9UmmtfVQtCq4B2y449ur8A2SSgP" alt="FABI Logo" title="FABI" style="width:10px; height:5px; text-align:center;" />
 </div>
  
 ## Project Description:
