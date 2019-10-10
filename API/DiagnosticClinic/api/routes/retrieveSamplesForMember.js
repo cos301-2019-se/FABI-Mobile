@@ -26,7 +26,7 @@ const db = admin.firestore();
 
 //(1)
 async function getMember(req, res) {
-    if(await auth.authClinicAdmin(req.headers.authorization)||await auth.authOrgMember(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
+    if(await auth.authClinicAdmin(req.headers.authorization)||await auth.authOrgMember(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)||await auth.authStaff(req.headers.authorization)){
         if (req.body.userID == undefined || req.body.userID == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');

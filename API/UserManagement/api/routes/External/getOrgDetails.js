@@ -28,7 +28,7 @@ const db = admin.firestore();
 
 async function getOrgDetails(req, res) {
     //(1)
-    if(await auth.authSuperUser(req.headers.authorization)||await auth.authOrgAdmin(req.body.authorization)){
+    if(await auth.authSuperUser(req.headers.authorization)||await auth.authOrgAdmin(req.headers.authorization)){
         if (req.body.orgName == undefined || req.body.orgName == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
@@ -50,9 +50,9 @@ async function getOrgDetails(req, res) {
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                         success: false,
-                        code: 404,
+                        code: 200,
                         title: "FAILURE",
                         message: "Organization not found"   
                     });

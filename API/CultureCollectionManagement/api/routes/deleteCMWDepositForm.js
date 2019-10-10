@@ -26,8 +26,8 @@ const db = admin.firestore();
 
 async function submitForm(req, res)
 {
-    if(await auth.authCCAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
-        
+    if(await auth.authCCAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)||await auth.authStaff(req.headers.authorization)){
+        console.log('authorized')
         if (req.body.userID == undefined || req.body.userID == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
@@ -59,15 +59,15 @@ async function submitForm(req, res)
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                         success: false,
-                        code: 404,
+                        code: 200,
                         title: "NOT FOUND",
                         message: "Form does not exist"
                     });
                 }
+                else{
                     qs = doc.data();
-                    delete qs.password;
                     //(3)
                     memRef.delete().then(() => {
                         res.setHeader('Content-Type', 'application/problem+json');
@@ -85,6 +85,7 @@ async function submitForm(req, res)
                                 });
                                 
                     });
+                }
                     
             });
         }

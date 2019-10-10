@@ -28,7 +28,7 @@ const db = admin.firestore();
 //(1)
 async function getMember(req, res) {
 
-    if(await auth.authSuperUser(req.headers.authorization)||await auth.authOrgAdmin(req.body.authorization)){
+    if(await auth.authClinicAdmin(req.headers.authorization)||await auth.authOrgMember(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)||await auth.authCCAdmin(req.headers.authorization)||await auth.authOrgAdmin(req.headers.authorization)||await auth.authStaff(req.headers.authorization)){
         if (req.body.id == undefined || req.body.id == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
@@ -63,9 +63,9 @@ async function getMember(req, res) {
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                         success: false,
-                        code: 404,
+                        code: 200,
                         title: "NOT FOUND",
                         message: "User does not exist"
                     });
@@ -109,9 +109,9 @@ async function getMember(req, res) {
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                         success: false,
-                        code: 404,
+                        code: 200,
                         title: "NOT FOUND",
                         message: "User does not exist"
                     });

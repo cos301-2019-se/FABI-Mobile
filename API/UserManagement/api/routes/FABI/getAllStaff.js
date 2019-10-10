@@ -33,6 +33,7 @@ async function getAllStaff(req, res) {
 
     if(await auth.authSuperUser(req.headers.authorization)){
         //(1)
+        
         var staffRef = db.collection('Organizations').doc('FABI').collection('Staff');
         staffRef.get().then(snapshot => {
                 var qs = {staff : []}

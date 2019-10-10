@@ -23,15 +23,16 @@ router.post('/', getUserTypes);
 
 // [START config]
 userTypesFABI = {
-    1 : "admin",
-    2 : "databaseAdmin",
-    3 : "fabiStaff"
+    1 : "SuperUser",
+    2 : "ClinicAdmin",
+    3 : "Staff",
+    4 : "CultureAdmin"
 }
 
 userTypesOrg = 
 {
-    1 : "orgAdmin",
-    2 : "orgMember"
+    5 : "Member",
+    6 : "OrganizationAdmin"
 }
 
 function getUserTypes(req, res) {

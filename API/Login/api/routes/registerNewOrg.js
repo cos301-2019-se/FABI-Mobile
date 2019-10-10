@@ -126,18 +126,7 @@ function addOrganization(req, res)
         mail.sendOrganizationRequestToOrg(qs.orgName, qs.admin.email);
         mail.sendOrganizationRequestToFABI(qs.orgName, qs.admin.fname, qs.admin.surname, qs.admin.email);
 
-    }).catch((err) => {
-        console.log("Database connection error: " + err);
-        res.setHeader('Content-Type', 'application/problem+json');
-        res.setHeader('Content-Language', 'en');
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.status(500).json({                                  // ******* RESPONSE STATUS? ************
-            success: false,
-            code: 500,
-            title: "INTERNAL SERVER ERROR",
-            message: "Error Connecting to User Database"  
-        });
-    });
+    })
 
 }
 }

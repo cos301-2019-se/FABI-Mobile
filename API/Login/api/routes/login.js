@@ -248,9 +248,9 @@ function loginAdmin(req, res)
                     res.setHeader('Content-Type', 'application/problem+json');
                     res.setHeader('Content-Language', 'en');
                     res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(404).json({                                  // ******* RESPONSE STATUS? ************
+                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
                         success: false,
-                        code: 404,
+                        code: 200,
                         title: "NOT FOUND",
                         message: "User does not exist"
                     });
@@ -310,7 +310,11 @@ function loginAdmin(req, res)
                                                 code: 401,
                                                 title: "NOT AUTHENTICATED",
                                                 message: "LOGIN FAILED",
-                                                data : JSON.parse(response.body)
+                                                data : {
+                                                    "code": 400,
+                                                    "error": "invalid_grant",
+                                                    "error_description": "User credentials are invalid"
+                                                }
                                             })
                                         }
                                         else{

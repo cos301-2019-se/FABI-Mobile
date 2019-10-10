@@ -32,7 +32,7 @@ const db = admin.firestore();
 async function getAllStaff(req, res) {
 
     //(1)
-    if(await auth.authCCAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
+    if(await auth.authCCAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)||await auth.authStaff(req.headers.authorization)){
         var staffRef = db.collection('CultureCollection').doc('CMWDeposit').collection('Forms');
         staffRef.get().then(snapshot => {
                 var qs = {forms : []}
