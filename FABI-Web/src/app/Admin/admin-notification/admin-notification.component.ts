@@ -23,6 +23,8 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { DatabaseManagementLogs, NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationService } from '../../_services/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @core.Component({
   selector: 'app-admin-notification',
@@ -65,6 +67,7 @@ export class AdminNotificationComponent implements core.OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {NotificationService} notificationService For calling the Notification service
    * @param {core.ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {DomSanitizer} sanitizer
    * @param {core.ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
@@ -77,6 +80,7 @@ export class AdminNotificationComponent implements core.OnInit {
     public sanitizer: DomSanitizer,
     private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
+    private notificationService: NotificationService,
     private notificationLoggingService: NotificationLoggingService,
     private resolver: core.ComponentFactoryResolver,
     private authService: AuthenticationService,
@@ -112,13 +116,6 @@ export class AdminNotificationComponent implements core.OnInit {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
     this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
       if (response.success == true) {
-        //Temporary array to hold the array of admins retuned from the API call
-        var data = response.data.qs.admins;
-        for (var i = 0; i < data.length; i++) {
-          var tempMember: Member = { Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id };
-          this.staff.push(tempMember);
-        }
-
         //Temporary array to hold the array of staff returned from the API call
         var data = response.data.qs.staff;
         for (var i = 0; i < data.length; i++) {
@@ -128,7 +125,6 @@ export class AdminNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
-        this.notifications = false;
       }
     });
   }
@@ -229,7 +225,6 @@ export class AdminNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
-        this.notifications = false;
       }
     });
   }
@@ -420,6 +415,8 @@ export class AdminNotificationComponent implements core.OnInit {
   /**
    *  This function will be called so that the information of a specific user can be fetched
    * 
+   *  @param {string} userID The id number of the user to be found
+   * 
    *  @memberof AdminNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -439,7 +436,7 @@ export class AdminNotificationComponent implements core.OnInit {
   /**
    *  This function will remove a notification from the notification section on the HTML page.
    * 
-   * @param {string} id                   //The id of the notification to be removed
+   * @param {string} id The id of the notification to be removed
    * 
    * @memberof AdminNotificationComponent
    */
@@ -453,7 +450,11 @@ export class AdminNotificationComponent implements core.OnInit {
       }
       else {
         //Error handling
+        this.notificationService.showErrorNotification("Notification Error", "An error occurred when trying to remove this notification. Please try again.");
       }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Notification Error", "An error occurred when trying to remove this notification. Please try again.");
     });
   }
 

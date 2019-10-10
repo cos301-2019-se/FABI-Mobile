@@ -147,7 +147,6 @@ export class LoginComponent implements core.OnInit {
   ngOnInit() {
     //-------- Load Organisation names for Drop Down --------
     this.userManagementService.getAllOrganizations().subscribe((response: any) => {
-      console.log("here");
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
       }
@@ -210,47 +209,14 @@ export class LoginComponent implements core.OnInit {
 
     this.authService.logoutUser();
 
-    // if(this.authService.isLoggedIn == true) {
-    //   console.log(2);
-    //   if(this.authService.getCurrentSessionValue.token) {
-    //     console.log(3);
-    //     if(this.authService.getCurrentSessionValue.user.email == Lemail && this.authService.getCurrentSessionValue.user.organisation == Lorg) {
-    //       console.log(4);
-    //       this.notificationService.showSuccessNotification("Already Logged In", "");
-    //       if (this.authService.getCurrentSessionValue.user.permission == 'SuperUser') {
-    //         this.router.navigate(['/admin-dashboard']);
-    //       } else if (this.authService.getCurrentSessionValue.user.permission == 'ClinicAdmin') {
-    //         this.router.navigate(['/clinic-handler']);
-    //       } else if (this.authService.getCurrentSessionValue.user.permission == 'OrganizationAdmin') {
-    //         this.router.navigate(['/organization-dashboard']);
-    //       } else if (this.authService.getCurrentSessionValue.user.permission == 'Member') {
-    //         this.router.navigate(['/member-dashboard']);
-    //       } else if (this.authService.getCurrentSessionValue.user.permission == 'Staff') {
-    //         this.router.navigate(['/staff-dashboard']);
-    //       } else {
-    //         this.notificationService.showErrorNotification('User not supported', '');
-    //       }
-    //     }
-    //   } else {
-    //     console.log(5);
-    //     this.authService.logoutUser();
-    //     // this.notificationService.showWarningNotification("Session Expired", "Please login again to continue");
-    //     // return;
-    //   }
-    // }
-
-    console.log(6);
-
     // User details to be passed to API
     const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
 
     this.authService.login(details).subscribe((response: any) => {
-
       loadingRef.close();
 
       // API Request successful
       if (response.success == true && response.code == 200) {
-
         //POPUP MESSAGE
         let snackBarRef = this.snackBar.open(`Welcome ${response.userDetails.fname}`, "Dismiss", {
           duration: 3000

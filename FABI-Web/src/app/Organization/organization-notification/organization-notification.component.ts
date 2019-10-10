@@ -100,12 +100,9 @@ export class OrganizationNotificationComponent implements core.OnInit {
     public sanitizer: DomSanitizer,
     private notificationLoggingService: NotificationLoggingService,
     private snackBar: MatSnackBar,
-  ) {
+  ) { }
 
-  }
-
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  LOAD NOTIFICATIONS
