@@ -18,13 +18,13 @@
 
  ### Project Links
  <details>
-  - [System Requirments Specification](https://drive.google.com/file/d/1E7IQ1AnOAoHywCSzPf8s_ZMcr_qK20vg/view?usp=sharing)
-  - [Coding Standards Document](https://drive.google.com/file/d/17qzn81O7YsrfYEGfqcfM2fBYbwJtOBNR/view?usp=sharing)
-  -  [Testing Policy](https://drive.google.com/open?id=1I15_cTvppMLwd4qmaj3ACeBw86ofFmb3)  
-  -  [User Manual](https://drive.google.com/file/d/1AndIEYq4z6hI2ZLYG-NsBC-IstzW45GG/view?usp=sharing)
-  - [Organization User Manual](https://drive.google.com/file/d/1aEoaI_9jmkHjkFuxXkBXPkjQDllSNI6C/view?usp=sharing)
-  - [Overview Presentation](https://docs.google.com/presentation/d/1VbTXs8X7zrWnlnVac4awau8aMn8qUsw_FhL8Fp3rc6I/edit?usp=sharing)
-  - [System Video Guide](https://drive.google.com/file/d/1_GnB4AD8M_TtIGbHmV41mGmwPm66ZpjF/view?usp=sharing)
+  <div>- [System Requirments Specification](https://drive.google.com/file/d/1E7IQ1AnOAoHywCSzPf8s_ZMcr_qK20vg/view?usp=sharing)</div>
+  <div>- [Coding Standards Document](https://drive.google.com/file/d/17qzn81O7YsrfYEGfqcfM2fBYbwJtOBNR/view?usp=sharing)</div>
+ <div-  [Testing Policy](https://drive.google.com/open?id=1I15_cTvppMLwd4qmaj3ACeBw86ofFmb3)</div>
+  <div>-  [User Manual](https://drive.google.com/file/d/1AndIEYq4z6hI2ZLYG-NsBC-IstzW45GG/view?usp=sharing)</div>
+  <div>- [Organization User Manual](https://drive.google.com/file/d/1aEoaI_9jmkHjkFuxXkBXPkjQDllSNI6C/view?usp=sharing)</div>
+  <div>- [Overview Presentation](https://docs.google.com/presentation/d/1VbTXs8X7zrWnlnVac4awau8aMn8qUsw_FhL8Fp3rc6I/edit?usp=sharing)</div>
+  <div>- [System Video Guide](https://drive.google.com/file/d/1_GnB4AD8M_TtIGbHmV41mGmwPm66ZpjF/view?usp=sharing)</div>
   </details>
  ### Project Management
   - [Trello Board](https://trello.com/b/8eHApP3L)
@@ -34,3 +34,5 @@
   
  ### API Documentation
   - [API Documentation](https://docs.google.com/document/d/152uRnjIvPLhIUICAdrP81QzDYHDmgYwpzoRo9Kz-PQE/edit?usp=sharing)
+ ### Live Deployment
+  - [FABI-Mobile](https://fabi-dev.appspot.com)
