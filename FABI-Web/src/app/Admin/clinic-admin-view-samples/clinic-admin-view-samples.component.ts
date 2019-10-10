@@ -215,12 +215,17 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
       if (response.success == true && response.code == 200) {
 
         loadingRef.close();
-
         this.viewSamples();
+        this.notificationService.showSuccessNotification('Sample Status Updated', '');
 
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Update Status Failed', 'An error occurred while updating the sample status.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.notificationService.showErrorNotification('Update Status Failed', 'An error occurred while updating the sample status.');
+      //Handled in error-handler
     });
   }
 
