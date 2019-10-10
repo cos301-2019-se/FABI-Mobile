@@ -26,10 +26,6 @@ import { AuthenticationService } from '../../_services/authentication.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-
-
-
-
 @core.Component({
   selector: 'app-organization-handler',
   templateUrl: './organization-handler.component.html',
@@ -59,8 +55,12 @@ export class OrganizationHandlerComponent implements core.OnInit {
   pendingOrganizations: Interface.Organisation[];
   /** The total number of Organization - @type {number} */
   numberOfOrganizations: number = 0;
+  /** The total number of pending Organization - @type {number} */
+  numberOfPendingOrganizations: number = 0;
   /** The flag which indicates that the numberOfOrganizations has been set - @type {boolean} */
   setOrganizationLength: boolean = false;
+  /** The flag which indicates that the numberOfPendingOrganizations has been set - @type {boolean} */
+  setPendingOrganizationsLength: boolean = false;
   deleteData: Interface.Confirm = { title: '', message: '', info: '', cancel: '', confirm: '' };
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
@@ -361,6 +361,8 @@ export class OrganizationHandlerComponent implements core.OnInit {
       if (response.success == true && response.code == 200) {
 
         this.pendingOrganizations = response.data.Organizations;
+        this.numberOfPendingOrganizations = this.pendingOrganizations.length;
+        this.setPendingOrganizationsLength = true;
 
       } else {
         //POPUP MESSAGE

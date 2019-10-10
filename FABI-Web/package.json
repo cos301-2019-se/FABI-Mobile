@@ -78,5 +78,7 @@
     "typescript": "~3.2.2",
     "zone.js": "~0.8.26"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "karma-spec-reporter": "0.0.32"
+  }
 }

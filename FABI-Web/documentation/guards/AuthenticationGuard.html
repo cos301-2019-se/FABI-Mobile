@@ -61,9 +61,29 @@
                 <code>src/app/_guards/authentication.guard.ts</code>
             </p>
 
+                <p class="comment">
+                <h3>Description</h3>
+                </p>
+                <p class="comment">
+                    <p>FOR ACTIVATING COMPONENTS</p>
+
+                </p>
 
 
+                <p class="comment">
+                <h3>Implements</h3>
+                </p>
+                <p class="comment">
+                                <code><a href="https://angular.io/api/router/CanActivate" target="_blank" >CanActivate</a></code>
+                                <code><a href="https://angular.io/api/router/CanActivateChild" target="_blank" >CanActivateChild</a></code>
+                                <code><a href="https://angular.io/api/router/CanLoad" target="_blank" >CanLoad</a></code>
+                </p>
 
+                <p class="comment">
+                <h3>Example</h3>
+                </p>
+                <div class="io-description">
+                </div>
 
                 <section>
     <h3 id="index">Index</h3>
@@ -105,17 +125,19 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, service: <a href="../injectables/HttpService.html">HttpService</a>)</code>
+<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/_guards/authentication.guard.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/_guards/authentication.guard.ts:33</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Creates an instance of AuthenticationGuard.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -124,6 +146,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -138,18 +161,26 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>for routing/navigating to other components</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
-                                                        <td>service</td>
+                                                        <td>authService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/HttpService.html" target="_self" >HttpService</a></code>
+                                                                        <code><a href="../injectables/AuthenticationService.html" target="_self" >AuthenticationService</a></code>
                                                         </td>
                                                   
                                                     <td>
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>for calling the <em>authentication</em> service</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -187,14 +218,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="16"
-                            class="link-to-prism">src/app/_guards/authentication.guard.ts:16</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">src/app/_guards/authentication.guard.ts:60</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to test if a user has the permissions/privileges to activate (navigate to) a specific component </p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -204,6 +237,7 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -218,6 +252,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>route to be activated</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>state</td>
@@ -230,6 +268,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>represents the state of the router at a moment in time.</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -269,8 +311,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="38"
-                            class="link-to-prism">src/app/_guards/authentication.guard.ts:38</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="86"
+                            class="link-to-prism">src/app/_guards/authentication.guard.ts:86</a></div>
                 </td>
             </tr>
 
@@ -351,8 +393,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">src/app/_guards/authentication.guard.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">src/app/_guards/authentication.guard.ts:92</a></div>
                 </td>
             </tr>
 
@@ -416,39 +458,72 @@
 
 
         <div class="tab-pane fade  tab-source-code" id="c-source">
-            <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from &#x27;@angular/router&#x27;;
+            <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as core from &#x27;@angular/core&#x27;;
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from &#x27;@angular/router&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
-import { HttpService } from &#x27;../_services/http.service&#x27;;
+import { AuthenticationService } from &#x27;../_services/authentication.service&#x27;;
 
-@Injectable({
+/**
+ * FOR ACTIVATING COMPONENTS
+ *
+ * @export
+ * @class AuthenticationGuard
+ * @implements {CanActivate}
+ * @implements {CanActivateChild}
+ * @implements {CanLoad}
+ */
+@core.Injectable({
   providedIn: &#x27;root&#x27;
 })
 export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLoad {
-  
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          CONSTRUCTOR
+  /**
+   * Creates an instance of AuthenticationGuard.
+   * @param {Router} router for routing/navigating to other components
+   * @param {AuthenticationService} authService for calling the *authentication* service
+   * @memberof AuthenticationGuard
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private router: Router,
-    private service: HttpService
-  ) {}
+    private authService: AuthenticationService
+  ) { }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          CAN ACTIVATE 
+  /**
+   * This function is used to test if a user has the permissions/privileges to activate (navigate to) a specific component 
+   *
+   * @param {ActivatedRouteSnapshot} next route to be activated
+   * @param {RouterStateSnapshot} state represents the state of the router at a moment in time.
+   * @returns {(Observable&lt;boolean | UrlTree&gt; | Promise&lt;boolean | UrlTree&gt; | boolean | UrlTree)}
+   * @memberof AuthenticationGuard
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable&lt;boolean | UrlTree&gt; | Promise&lt;boolean | UrlTree&gt; | boolean | UrlTree {
 
-    const user &#x3D; this.service.currentSessionValue;
+    const user &#x3D; this.authService.getCurrentSessionValue;   // current user
 
-    if(user) {
+    // if current user exists (user logged into session)
+    if (user) {
 
-      if(next.data.roles &amp;&amp; next.data.roles.indexOf(user.user.permission) &#x3D;&#x3D;&#x3D; -1) {
+      // if user does not have permission - return false
+      if (next.data.roles &amp;&amp; next.data.roles.indexOf(user.user.permission) &#x3D;&#x3D;&#x3D; -1) {
 
         this.router.navigate([&#x27;/&#x27;]);
         return false;
-        
+
       }
 
+      // else - return true
       return true;
     }
-      
+
+    // else rerouted to login page
     this.router.navigate([&#x27;/login&#x27;]);
     return false;
   }
@@ -464,7 +539,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
     segments: UrlSegment[]): Observable&lt;boolean&gt; | Promise&lt;boolean&gt; | boolean {
     return true;
   }
-  
+
 }
 </code></pre>
         </div>
@@ -474,7 +549,6 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
 
 
 
-                   
 
 
 

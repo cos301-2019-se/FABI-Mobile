@@ -1,0 +1,1776 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>fabi-web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">fabi-web documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>StaffNotificationComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/Staff/staff-notification/staff-notification.component.ts</code>
+        </p>
+
+
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                        <code></code>
+            </p>
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#allLogs">allLogs</a>
+                            </li>
+                            <li>
+                                <a href="#allNotifications">allNotifications</a>
+                            </li>
+                            <li>
+                                <a href="#confirmPasswordInput">confirmPasswordInput</a>
+                            </li>
+                            <li>
+                                <a href="#currentUser">currentUser</a>
+                            </li>
+                            <li>
+                                <a href="#helpTab">helpTab</a>
+                            </li>
+                            <li>
+                                <a href="#localNotificationNumber">localNotificationNumber</a>
+                            </li>
+                            <li>
+                                <a href="#newNotifications">newNotifications</a>
+                            </li>
+                            <li>
+                                <a href="#notifications">notifications</a>
+                            </li>
+                            <li>
+                                <a href="#notificationsLoading">notificationsLoading</a>
+                            </li>
+                            <li>
+                                <a href="#notificationsTab">notificationsTab</a>
+                            </li>
+                            <li>
+                                <a href="#numberOfUserLogs">numberOfUserLogs</a>
+                            </li>
+                            <li>
+                                <a href="#profileTab">profileTab</a>
+                            </li>
+                            <li>
+                                <a href="#saveBtn">saveBtn</a>
+                            </li>
+                            <li>
+                                <a href="#staff">staff</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#toggle_status">toggle_status</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getAllStaff">getAllStaff</a>
+                            </li>
+                            <li>
+                                <a href="#getDate">getDate</a>
+                            </li>
+                            <li>
+                                <a href="#loadLogs">loadLogs</a>
+                            </li>
+                            <li>
+                                <a href="#loadNotifications">loadNotifications</a>
+                            </li>
+                            <li>
+                                <a href="#loadUserDetails">loadUserDetails</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#removeNotification">removeNotification</a>
+                            </li>
+                            <li>
+                                <a href="#toggleNotificaitonsTab">toggleNotificaitonsTab</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, userManagementService: <a href="../classes/UserManagementAPIService.html">UserManagementAPIService</a>, diagnosticClinicService: <a href="../injectables/DiagnosticClinicAPIService.html">DiagnosticClinicAPIService</a>, resolver: core.ComponentFactoryResolver, notificationLoggingService: <a href="../injectables/NotificationLoggingService.html">NotificationLoggingService</a>, cultureCollectionService: <a href="../injectables/CultureCollectionAPIService.html">CultureCollectionAPIService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:73</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Creates an instance of StaffNotificationComponent.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthenticationService.html" target="_self" >AuthenticationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>for calling the <em>authentication</em> service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>userManagementService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/UserManagementAPIService.html" target="_self" >UserManagementAPIService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>For calling the User Management API Service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>diagnosticClinicService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DiagnosticClinicAPIService.html" target="_self" >DiagnosticClinicAPIService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>For calling the Diagnostic Clinic API Service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>resolver</td>
+                                                  
+                                                        <td>
+                                                                    <code>core.ComponentFactoryResolver</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>notificationLoggingService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NotificationLoggingService.html" target="_self" >NotificationLoggingService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>For calling the Notification Logging API service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cultureCollectionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CultureCollectionAPIService.html" target="_self" >CultureCollectionAPIService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>For calling the Culture Collection API Service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="allLogs"></a>
+                        <span class="name">
+                            <b>
+                            allLogs</b>
+                            <a href="#allLogs"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>string[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:55</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Object array for holding all of the logs that have not been read -  @type {string[]} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="allNotifications"></a>
+                        <span class="name">
+                            <b>
+                            allNotifications</b>
+                            <a href="#allNotifications"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>any[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:45</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Object array for holding all of the logs -  @type {any[]} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="confirmPasswordInput"></a>
+                        <span class="name">
+                            <b>
+                            confirmPasswordInput</b>
+                            <a href="#confirmPasswordInput"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:65</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentUser"></a>
+                        <span class="name">
+                            <b>
+                            currentUser</b>
+                            <a href="#currentUser"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:69</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The user that is currently logged in -  @type {any} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="helpTab"></a>
+                        <span class="name">
+                            <b>
+                            helpTab</b>
+                            <a href="#helpTab"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:67</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if the help tab is hidden/shown - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="localNotificationNumber"></a>
+                        <span class="name">
+                            <b>
+                            localNotificationNumber</b>
+                            <a href="#localNotificationNumber"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>1</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:53</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The number of the notifications - @type {number} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="newNotifications"></a>
+                        <span class="name">
+                            <b>
+                            newNotifications</b>
+                            <a href="#newNotifications"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>any[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Object array for holding all of the logs that have not been read -  @type {any[]} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="notifications"></a>
+                        <span class="name">
+                            <b>
+                            notifications</b>
+                            <a href="#notifications"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>true</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:49</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if there are notifications to load - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="notificationsLoading"></a>
+                        <span class="name">
+                            <b>
+                            notificationsLoading</b>
+                            <a href="#notificationsLoading"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>true</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:73</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="notificationsTab"></a>
+                        <span class="name">
+                            <b>
+                            notificationsTab</b>
+                            <a href="#notificationsTab"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:59</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if the notifications tab is hidden/shown - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="numberOfUserLogs"></a>
+                        <span class="name">
+                            <b>
+                            numberOfUserLogs</b>
+                            <a href="#numberOfUserLogs"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:51</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The total number of User Logs - @type {number} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="profileTab"></a>
+                        <span class="name">
+                            <b>
+                            profileTab</b>
+                            <a href="#profileTab"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:61</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if the profile tab is hidden/shown - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="saveBtn"></a>
+                        <span class="name">
+                            <b>
+                            saveBtn</b>
+                            <a href="#saveBtn"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if the save button is hidden/shown on the profile tab- @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="staff"></a>
+                        <span class="name">
+                            <b>
+                            staff</b>
+                            <a href="#staff"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>StaffMember[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:71</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Object array for holding the staff members -  @type {StaffMember[]} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="toggle_status"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            toggle_status</b>
+                            <a href="#toggle_status"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:57</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates if the notifications tab is hidden/shown - @type {boolean} </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllStaff"></a>
+                    <span class="name">
+                        <b>
+                            getAllStaff
+                        </b>
+                        <a href="#getAllStaff"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllStaff()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="126"
+                            class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:126</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will be used to get all the staff members of FABI and load them into an array</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDate"></a>
+                    <span class="name">
+                        <b>
+                            getDate
+                        </b>
+                        <a href="#getDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDate(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="153"
+                            class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:153</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will put the string date provided into a more readable format for the notifications</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>date</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The date of the log</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadLogs"></a>
+                    <span class="name">
+                        <b>
+                            loadLogs
+                        </b>
+                        <a href="#loadLogs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadLogs()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="229"
+                            class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:229</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will load all of the user&#39;s logs into a string array.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadNotifications"></a>
+                    <span class="name">
+                        <b>
+                            loadNotifications
+                        </b>
+                        <a href="#loadNotifications"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadNotifications()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="254"
+                            class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:254</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will load the staff member&#39;s notifications into the notification section on the HTML page</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadUserDetails"></a>
+                    <span class="name">
+                        <b>
+                            loadUserDetails
+                        </b>
+                        <a href="#loadUserDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadUserDetails(userID: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="330"
+                            class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:330</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will be called so that the information of a specific user can be fetched</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userID</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The user id of the user whose details need to be fetched</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="111"
+                            class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:111</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is called when the page loads</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeNotification"></a>
+                    <span class="name">
+                        <b>
+                            removeNotification
+                        </b>
+                        <a href="#removeNotification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeNotification(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="350"
+                            class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:350</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function will remove a notification from the notification section on the HTML page.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>//The id of the notification to be removed</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleNotificaitonsTab"></a>
+                    <span class="name">
+                        <b>
+                            toggleNotificaitonsTab
+                        </b>
+                        <a href="#toggleNotificaitonsTab"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleNotificaitonsTab()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="374"
+                            class="link-to-prism">src/app/Staff/staff-notification/staff-notification.component.ts:374</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to toggle the notifications tab.</p>
+<p>If set to true, a class is added which ensures that the notifications tab is displayed. 
+If set to flase, a class is removed which hides the notifications tab.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as core from &#x27;@angular/core&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { AuthenticationService } from &#x27;src/app/_services/authentication.service&#x27;;
+import { CultureCollectionAPIService } from &#x27;../../_services/culture-collection-api.service&#x27;;
+import { DiagnosticClinicAPIService } from &#x27;../../_services/diagnostic-clinic-api.service&#x27;;
+import { NotificationLoggingService, UserLogs } from &#x27;../../_services/notification-logging.service&#x27;;
+import { UserManagementAPIService } from &#x27;../../_services/user-management-api.service&#x27;;
+
+
+export interface StaffMember {
+  fname: string;
+  surname: string;
+  email: string;
+  id: string;
+}
+
+@core.Component({
+  selector: &#x27;app-staff-notification&#x27;,
+  templateUrl: &#x27;./staff-notification.component.html&#x27;,
+  styleUrls: [&#x27;./staff-notification.component.scss&#x27;]
+})
+export class StaffNotificationComponent implements core.OnInit {
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /** Object array for holding all of the logs -  @type {any[]} */
+  allNotifications: any[] &#x3D; [];
+  /** Object array for holding all of the logs that have not been read -  @type {any[]} */
+  newNotifications: any[] &#x3D; [];
+  /** Indicates if there are notifications to load - @type {boolean} */
+  notifications: boolean &#x3D; true;
+  /** The total number of User Logs - @type {number} */
+  numberOfUserLogs: number &#x3D; 0;
+  /** The number of the notifications - @type {number} */
+  localNotificationNumber: number &#x3D; 1;
+  /** Object array for holding all of the logs that have not been read -  @type {string[]} */
+  allLogs: string[] &#x3D; [];
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  private toggle_status: boolean &#x3D; false;
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  notificationsTab: boolean &#x3D; false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
+  profileTab: boolean &#x3D; false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
+  saveBtn: boolean &#x3D; false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
+  confirmPasswordInput: boolean &#x3D; false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
+  helpTab: boolean &#x3D; false;
+  /** The user that is currently logged in -  @type {any} */
+  currentUser: any;
+  /** Object array for holding the staff members -  @type {StaffMember[]} */
+  staff: StaffMember[] &#x3D; [];
+  /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */
+  notificationsLoading: boolean &#x3D; true;
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       CONSTRUCTOR
+  /**
+   * Creates an instance of StaffNotificationComponent.
+   * 
+   * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
+   * @param {CultureCollectionAPIService} cultureCollectionService For calling the Culture Collection API Service
+   * @param {UserManagementAPIService} userManagementService For calling the User Management API Service
+   * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API Service
+   * @param {AuthenticationService} authService for calling the *authentication* service
+   * @param {Router} router
+   * @param {Resolver} resolver
+   * 
+   * @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router,
+    private userManagementService: UserManagementAPIService,
+    private diagnosticClinicService: DiagnosticClinicAPIService,
+    private resolver: core.ComponentFactoryResolver,
+    private notificationLoggingService: NotificationLoggingService,
+    private cultureCollectionService: CultureCollectionAPIService
+  ) { }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      NG ON INIT()  
+  /**
+   * This function is called when the page loads
+   *
+   * @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ngOnInit() {
+    // Set current user logged in
+    this.currentUser &#x3D; this.authService.getCurrentSessionValue.user;
+
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    GET ALL STAFF
+  /**
+   *  This function will be used to get all the staff members of FABI and load them into an array
+   * 
+   *  @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllStaff() {
+    //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
+    this.userManagementService.getAllFABIStaff().subscribe((response: any) &#x3D;&gt; {
+      if (response.success &#x3D;&#x3D; true) {
+        var data &#x3D; response.data.qs.staff;
+
+        for (var i &#x3D; 0; i &lt; data.length; i++) {
+          var tempStaff: StaffMember &#x3D; { fname: data[i].fname, surname: data[i].surname, email: data[i].email, id: data[i].id };
+          this.staff.push(tempStaff);
+        }
+      }
+      else {
+        //Error handling
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET DATE
+  /**
+   *  This function will put the string date provided into a more readable format for the notifications
+   * 
+   * @param {string} date The date of the log
+   * 
+   * @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getDate(date: string) {
+    var tempDate &#x3D; (date).split(&#x27; &#x27;);
+    var newDate &#x3D; &#x27;&#x27;;
+
+    newDate +&#x3D; tempDate[2];
+
+    if (tempDate[0] &#x3D;&#x3D; &#x27;Mon&#x27;) {
+      newDate +&#x3D; &#x27; Monday &#x27;;
+    }
+    else if (tempDate[0] &#x3D;&#x3D; &#x27;Tue&#x27; || tempDate[0] &#x3D;&#x3D; &#x27;Tu&#x27; || tempDate[0] &#x3D;&#x3D; &#x27;Tues&#x27;) {
+      newDate +&#x3D; &#x27; Tuesday &#x27;;
+    }
+    else if (tempDate[0] &#x3D;&#x3D; &#x27;Wed&#x27;) {
+      newDate +&#x3D; &#x27; Wednesday &#x27;;
+    }
+    else if (tempDate[0] &#x3D;&#x3D; &#x27;Thu&#x27; || tempDate[0] &#x3D;&#x3D; &#x27;Thur&#x27; || tempDate[0] &#x3D;&#x3D; &#x27;Thurs&#x27;) {
+      newDate +&#x3D; &#x27; Thursday &#x27;;
+    }
+    else if (tempDate[0] &#x3D;&#x3D; &#x27;Fri&#x27;) {
+      newDate +&#x3D; &#x27; Friday &#x27;;
+    }
+    else if (tempDate[0] &#x3D;&#x3D; &#x27;Sat&#x27;) {
+      newDate +&#x3D; &#x27; Saturday &#x27;;
+    }
+    else if (tempDate[0] &#x3D;&#x3D; &#x27;Sun&#x27;) {
+      newDate +&#x3D; &#x27; Sunday &#x27;;
+    }
+
+    if (tempDate[1] &#x3D;&#x3D; &#x27;Jan&#x27;) {
+      newDate +&#x3D; &#x27;January&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Feb&#x27;) {
+      newDate +&#x3D; &#x27;February&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Mar&#x27;) {
+      newDate +&#x3D; &#x27;March&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Apr&#x27;) {
+      newDate +&#x3D; &#x27;April&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Jun&#x27;) {
+      newDate +&#x3D; &#x27;June&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Jul&#x27;) {
+      newDate +&#x3D; &#x27;July&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Aug&#x27;) {
+      newDate +&#x3D; &#x27;August&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Sep&#x27; || tempDate[1] &#x3D;&#x3D; &#x27;Sept&#x27;) {
+      newDate +&#x3D; &#x27;September&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Oct&#x27;) {
+      newDate +&#x3D; &#x27;October&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Nov&#x27;) {
+      newDate +&#x3D; &#x27;November&#x27;;
+    }
+    else if (tempDate[1] &#x3D;&#x3D; &#x27;Dec&#x27;) {
+      newDate +&#x3D; &#x27;December&#x27;;
+    }
+
+    newDate +&#x3D; &#x27; &#x27; + tempDate[3];
+
+    return newDate;
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       LOAD LOGS
+  /**
+   *  This function will load all of the user&#x27;s logs into a string array.
+   * 
+   * @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadLogs() {
+    //Making a call to the notification logging service to return all logs belonging to the user
+    this.notificationLoggingService.getUserLogs(this.currentUser.ID).subscribe((response: any) &#x3D;&gt; {
+      if (response.success &#x3D;&#x3D; true) {
+        var data &#x3D; response.data.content.data.Logs;
+
+        for (var i &#x3D; 0; i &lt; data.length; i++) {
+          this.allLogs.push(data[i].id);
+        }
+      }
+      else {
+        //Error handling
+      }
+    });
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    LOAD NOTIFICATIONS
+  /**
+   *  This function will load the staff member&#x27;s notifications into the notification section on the HTML page
+   * 
+   * @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadNotifications() {
+    //Loading all the logs beloning to the user
+    this.loadLogs();
+
+    //Making a call too the notification logging service to return all USER logs
+    this.notificationLoggingService.getAllUserLogs().subscribe((response: any) &#x3D;&gt; {
+      if (response.success &#x3D; true) {
+        //Temporarily holds the data returned from the API call
+        const data &#x3D; response.data.content.data.Logs;
+
+        for (var i &#x3D; 0; i &lt; data.length; i++) {
+          for (var j &#x3D; 0; j &lt; this.allLogs.length; j++) {
+            if (data[i].date &#x3D;&#x3D; this.allLogs[j]) {
+              //A temporary instance of UserLogs that will be added to the allNotifications array
+              var tempLogU: UserLogs &#x3D; { LogID: data[i].date, Type: &#x27;USER&#x27;, Action: data[i].action, Date: this.getDate(data[i].dateString), Details: data[i].details, User: data[i].user, Organization1: data[i].org1, Organization2: data[i].org2, MoreInfo: data[i].moreInfo, ID: this.localNotificationNumber };
+
+              //Getting the name and surname of the users passed using their id numbers
+              var user &#x3D; this.loadUserDetails(tempLogU.Details);
+
+              if (tempLogU.Action &#x3D;&#x3D; &quot;/createOrganization&quot;) {
+                tempLogU.Action &#x3D; &quot;New organization &quot; + tempLogU.User + &quot; was added to the system by &quot; + user;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs +&#x3D; 1;
+                this.localNotificationNumber +&#x3D; 1;
+              }
+              else if (tempLogU.Action &#x3D;&#x3D; &quot;/addStaff&quot;) {
+                tempLogU.Action &#x3D; &quot;New user, &quot; + this.loadUserDetails(tempLogU.User) + &quot;, was added to the system by &quot; + user;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs +&#x3D; 1;
+                this.localNotificationNumber +&#x3D; 1;
+              }
+              else if (tempLogU.Action &#x3D;&#x3D; &quot;C&quot;) {
+                tempLogU.Action &#x3D; &quot;New user, &quot; + this.loadUserDetails(tempLogU.User) + &quot;, was added to the system by &quot; + user;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs +&#x3D; 1;
+                this.localNotificationNumber +&#x3D; 1;
+              }
+              else if (tempLogU.Action &#x3D;&#x3D; &quot;/removeOrg&quot;) {
+                tempLogU.Action &#x3D; &quot;Organization &quot; + tempLogU.User + &quot; was removed from the system by &quot; + user;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs +&#x3D; 1;
+                this.localNotificationNumber +&#x3D; 1;
+              }
+              else if (tempLogU.Action &#x3D;&#x3D; &quot;/removeStaff&quot;) {
+                tempLogU.Action &#x3D; &quot;New user, &quot; + this.loadUserDetails(tempLogU.User) + &quot;, was removed from the system by &quot; + user;
+
+                this.allNotifications.push(tempLogU);
+                this.numberOfUserLogs +&#x3D; 1;
+                this.localNotificationNumber +&#x3D; 1;
+              }
+            }
+          }
+        }
+
+        //Deactivate loading table spinners
+        this.notificationsLoading &#x3D; false;
+      }
+      else {
+        //Error handling
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      LOAD USER DETAILS
+  /**
+   *  This function will be called so that the information of a specific user can be fetched
+   *  @param {string} userID The user id of the user whose details need to be fetched
+   * 
+   *  @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  loadUserDetails(userID: string) {
+    var person &#x3D; &#x27;&#x27;;
+    for (var i &#x3D; 0; i &lt; this.staff.length; i++) {
+      if (this.staff[i].id &#x3D;&#x3D; userID) {
+        person &#x3D; this.staff[i].fname + &#x27; &#x27; + this.staff[i].surname;
+      }
+    }
+
+    return person;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                       REMOVE NOTIFICATIONS
+  /**
+   *  This function will remove a notification from the notification section on the HTML page.
+   * 
+   * @param {string} id                   //The id of the notification to be removed
+   * @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  removeNotification(id: string) {
+    this.newNotifications.push(id);
+
+    this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.ID, this.newNotifications).subscribe((response: any) &#x3D;&gt; {
+      if (response.success &#x3D;&#x3D; true) {
+
+      }
+      else {
+        //Error handling
+      }
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    TOGGLE NOTIFICATIONS TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof StaffNotificationComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab() {
+    this.toggle_status &#x3D; !this.toggle_status;
+  }
+
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'StaffNotificationComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

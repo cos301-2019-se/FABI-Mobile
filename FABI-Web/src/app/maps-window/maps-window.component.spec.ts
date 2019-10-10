@@ -26,12 +26,20 @@ describe('MapsWindowComponent', () => {
   let component: MapsWindowComponent;
   let fixture: ComponentFixture<MapsWindowComponent>;
 
+  class MockMapsAPILoader {
+    public load(): Promise<boolean> {
+      return new Promise(() => {
+        return true;
+      });
+    }
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MapsWindowComponent ],
-      imports: [ReactiveFormsModule, AgmCoreModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [ReactiveFormsModule, AgmCoreModule.forRoot(), RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
-        MapsAPILoader,
+        { provide: MapsAPILoader, useClass: MockMapsAPILoader },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
       ]
@@ -48,4 +56,25 @@ describe('MapsWindowComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('select Location', () => {
+    let spy = spyOn(component, "getAddress");
+    component.selectLocation({coords:{lat:11, lng:22}});
+    expect(component.location.latitude).toEqual(11);
+    expect(component.location.longitude).toEqual(22);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('change Map Type from roadmap to hybrid', () => {
+    component.map_type = 'roadmap';
+    component.changeMapType();
+    expect(component.map_type).toEqual('hybrid');
+  });
+
+  it('change Map Type from hybrid to roadmap', () => {
+    component.map_type = 'hybrid';
+    component.changeMapType();
+    expect(component.map_type).toEqual('roadmap');
+  });
+
 });

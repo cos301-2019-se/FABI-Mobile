@@ -220,8 +220,8 @@
                 <!-- Database Name -->
                 <div class="form-group active2database-name">
                   <label class="databaseName" for="databaseNameInput"></label>
-                  <input formControlName="databaseName" type='text' id='databaseNameInput' placeholder="Database name"
-                    #pDBname required [ngClass]="{
+                  <input formControlName="databaseName" class="form-control" type='text' id='databaseNameInput'
+                    placeholder="Database name" #pDBname required [ngClass]="{
                   'is-invalid': portingForm.controls['databaseName'].invalid && (submitted || portingForm.controls['databaseName'].dirty), 
                   'is-valid': portingForm.controls['databaseName'].valid}">
                   <!-- Error Validation Feedback-->
@@ -279,7 +279,7 @@
               <!-- Preview Actions -->
 
               <!-- Preview Table -->
-              <div class="dashboard-table table-responsive">
+              <div class="preview-table table-responsive">
                 <table class="table table-hover" *ngIf="preview" id="previewTable">
                   <thead>
                     <tr>
@@ -320,7 +320,13 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="form">
+
+          <!-- Loading Spinner -->
+          <div class="spinner-grow text-secondary loading" role="status" *ngIf="databaseTableLoading">
+          </div>
+          <!-- /Loading Spinner -->
+
+          <div class="form" *ngIf="allDatabaseNames && !databaseTableLoading">
 
             <!-- Database Dropdown -->
             <div class="form-group">

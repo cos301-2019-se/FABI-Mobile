@@ -93,7 +93,7 @@ export class HomeComponent implements core.OnInit {
     this.contact_form = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
-      mesage: ['', Validators.required]
+      message: ['', Validators.required]
     })
 
     this.request_register_org = this.formBuilder.group({
@@ -191,4 +191,3 @@ export class HomeComponent implements core.OnInit {
   }
 
 }
-

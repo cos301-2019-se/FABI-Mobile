@@ -1,7 +1,7 @@
 <!-- Extra Table Information -->
-<div class="table-information" *ngIf="!samples">
+<div class="table-information" *ngIf="!samples && !sampleTableLoading">
   <h6>There are currently no samples</h6>
-  <i class="fas fa-plus-circle" routerLink="/member-handler"></i>
+  <i class="fas fa-plus-circle" routerLink="/organization-submit-sample"></i>
 </div>
 <!-- / Extra Table Information -->
 
