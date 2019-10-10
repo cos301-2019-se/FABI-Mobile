@@ -243,7 +243,7 @@ export class LoginComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
         loadingRef.close();
-        this.notificationService.showErrorNotification('Login Failed', 'An error occured while logging in. \n Please try again.');
+        // this.notificationService.showErrorNotification('Login Failed', 'An error occured while logging in. \n Please try again.');
         //Handled in error-handler
     });
   }

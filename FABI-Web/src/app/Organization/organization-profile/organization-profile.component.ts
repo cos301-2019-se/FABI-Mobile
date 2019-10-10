@@ -273,23 +273,26 @@ export class OrganizationProfileComponent implements core.OnInit {
     this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetMemberFields();
 
       if (response.success == true) {
         //Reloading the updated user's details
         this.loadAdminProfileDetails();
-
         //Display message to say that details were successfully saved
         this.notificationService.showSuccessNotification('Profile Updated', '');
       }
       else {
         //Error handling
         this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
-        this.resetMemberFields();
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
-      this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
+      this.isEditingProfile = true;
+      this.editProfileToggle();
       this.resetMemberFields();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       //Handled in error-handler
     });
   }
@@ -319,17 +322,16 @@ export class OrganizationProfileComponent implements core.OnInit {
     this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetMemberFields();
 
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
         this.notificationService.showSuccessNotification('Password Changed', '');
-
       }
       else {
         //Error handling
         this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
-        this.resetMemberFields();
       }
     }, (err: http.HttpErrorResponse) => {
       loadingRef.close();
@@ -441,6 +443,7 @@ export class OrganizationProfileComponent implements core.OnInit {
       organization_name: this.currentUser.organisation
     });
     this.changePasswordForm.reset();
+    this.submitted = false;
   }
 
 }

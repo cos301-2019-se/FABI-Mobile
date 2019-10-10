@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 9th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -158,6 +158,7 @@ export class DatabaseHandlerComponent implements OnInit {
     //Calling the neccessary functions as the page loads
     this.getDBNames();
     this.resetDatabaseFields();
+    this.preview = false;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,8 +193,6 @@ export class DatabaseHandlerComponent implements OnInit {
 
     this.loading = true;
     this.dbname = this.port.nativeElement.value;
-
-    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "" } });
 
     this.submitted = false;
 
@@ -257,7 +256,6 @@ export class DatabaseHandlerComponent implements OnInit {
       this.headings = headingNames.split(',');
     }
 
-    loadingRef.close();
     this.preview = true;
   }
 
@@ -597,6 +595,9 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetDatabaseFields() {
     this.portingForm.reset();
+    this.preview = false;
+    this.columns = [];
+    this.headings = [];
   }
 
 }

@@ -262,6 +262,9 @@ export class AdminProfileComponent implements core.OnInit {
     this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetAddFields();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
 
       if (response.success == true && response.code == 200) {
 
@@ -275,11 +278,12 @@ export class AdminProfileComponent implements core.OnInit {
       else {
         //Error handling
         this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details.');
-        this.resetAddFields();
       }
     }, (err: HttpErrorResponse) => {
       loadingRef.close();
       this.resetAddFields();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
       this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       //Handled in error-handler
     });
@@ -310,17 +314,16 @@ export class AdminProfileComponent implements core.OnInit {
     this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
         this.notificationService.showSuccessNotification('Password Changed', '');
-
       }
       else {
         //Error handling
         this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
-        this.resetAddFields();
       }
     }, (err: HttpErrorResponse) => {
       loadingRef.close();
@@ -409,6 +412,7 @@ export class AdminProfileComponent implements core.OnInit {
       admin_type: this.userProfileDetails.userType
     });
     this.changePasswordForm.reset();
+    this.submitted = false;
   }
 
 }
