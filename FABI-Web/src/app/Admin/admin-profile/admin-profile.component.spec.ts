@@ -19,13 +19,14 @@ import { HttpClient } from '@angular/common/http';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DebugElement } from '@angular/core';
-
+import { NotificationService } from '../../_services/notification.service';
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 import { FilterPipe } from '../../_pipes/filter.pipe';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import {MatDialogModule} from '@angular/material/dialog';
+import { Subscribable } from 'rxjs';
 
 describe('AdminProfileComponent', () => {
   let component: AdminProfileComponent;
@@ -36,7 +37,7 @@ describe('AdminProfileComponent', () => {
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
-        return { 'user' : '' };
+        return { 'user' : {'organisation' :'', 'ID':''} };
     }
   }
 
@@ -49,10 +50,12 @@ describe('AdminProfileComponent', () => {
         HttpClientTestingModule,
         NoopAnimationsModule,
         BrowserAnimationsModule,
-        MatDialogModule
+        MatDialogModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
       ],
       declarations: [ AdminProfileComponent ],
       providers: [
+        NotificationService,
+        ToastrService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: AuthenticationService, useClass: MockAuthenticationService }
@@ -67,7 +70,6 @@ describe('AdminProfileComponent', () => {
     UserManagementService = new UserManagementAPIService( null , null);
     authService = new AuthenticationService(null);
     fixture.detectChanges();
-
     UserManagementService = new UserManagementAPIService( null , null);
     authService = new AuthenticationService(null);
   });

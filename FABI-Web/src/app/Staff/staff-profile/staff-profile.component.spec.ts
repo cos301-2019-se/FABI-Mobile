@@ -4,13 +4,13 @@ import 'jasmine';
 import { StaffProfileComponent } from './staff-profile.component';
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { NotificationService } from '../../_services/notification.service';
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
 
 //Import the materials component
 import { MaterialModule } from '../../materials';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
@@ -39,8 +39,9 @@ describe('StaffProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ StaffProfileComponent ],
-      imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [ReactiveFormsModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
+        NotificationService, ToastrService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: AuthenticationService, useClass: MockAuthenticationService }

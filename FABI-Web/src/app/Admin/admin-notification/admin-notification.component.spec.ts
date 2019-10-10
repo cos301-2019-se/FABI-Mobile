@@ -12,7 +12,8 @@ import { MaterialModule } from '../../materials';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
-
+import { NotificationService } from '../../_services/notification.service';
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DebugElement } from '@angular/core';
@@ -35,10 +36,14 @@ describe('AdminNotificationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-         MaterialModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
+         MaterialModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
       ],
       declarations: [  AdminNotificationComponent ],
-      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+      providers: [
+        NotificationService,
+        ToastrService,
+        { provide: AuthenticationService, useClass: MockAuthenticationService } 
+      ]
     })
     .compileComponents();
   }));

@@ -24,6 +24,7 @@ import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform
 
 import { DebugElement } from '@angular/core';
 
+import { NotificationService } from '../../_services/notification.service';
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 import { FilterPipe } from '../../_pipes/filter.pipe';
@@ -48,7 +49,7 @@ describe('ViewFormsComponent', () => {
         RouterTestingModule, 
         HttpClientTestingModule, 
         NoopAnimationsModule, 
-        BrowserAnimationsModule
+        BrowserAnimationsModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
       ],
       declarations: [ ViewFormsComponent,
         AdminNotificationComponent,
@@ -56,6 +57,8 @@ describe('ViewFormsComponent', () => {
         AdminHelpComponent
       ],
       providers:[
+        NotificationService,
+        ToastrService,
         { provide: AuthenticationService, useClass: MockAuthenticationService }
       ]
     })

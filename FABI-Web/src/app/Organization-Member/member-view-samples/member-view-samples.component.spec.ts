@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NotificationService } from '../../_services/notification.service';
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,8 +36,10 @@ describe('MemberViewSamplesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MemberViewSamplesComponent, FilterPipe ],
-      imports: [ MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [ MatSnackBarModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
+        NotificationService,
+        ToastrService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: MatSnackBar, useValue: {} },

@@ -22,7 +22,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
 
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NotificationService } from '../../_services/notification.service';
 import { DebugElement } from '@angular/core';
 
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
@@ -60,8 +60,14 @@ describe('StaffDashboardComponent', () => {
         StaffViewSamplesComponent,
         FilterPipe
       ],
-      imports: [ReactiveFormsModule, RouterTestingModule, MaterialModule, NoopAnimationsModule, BrowserAnimationsModule, HttpClientTestingModule],
-      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+      imports: [ReactiveFormsModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, RouterTestingModule, MaterialModule, NoopAnimationsModule, BrowserAnimationsModule, HttpClientTestingModule],
+      providers: [ 
+        NotificationService,
+        ToastrService,
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: AuthenticationService, useClass: MockAuthenticationService } 
+      ]
     })
     .compileComponents();
   }));
