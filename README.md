@@ -22,11 +22,12 @@
  <ul>
   <li><a href = https://drive.google.com/file/d/1E7IQ1AnOAoHywCSzPf8s_ZMcr_qK20vg/view?usp=sharing>System Requirments Specification</a></li>
   <li><a href = https://drive.google.com/file/d/17qzn81O7YsrfYEGfqcfM2fBYbwJtOBNR/view?usp=sharing>Coding Standards Document</a></li>
- <li><a href = https://drive.google.com/open?id=1I15_cTvppMLwd4qmaj3ACeBw86ofFmb3>Testing Policy]</a></li>
+ <li><a href = https://drive.google.com/open?id=1I15_cTvppMLwd4qmaj3ACeBw86ofFmb3>Testing Policy</a></li>
   <li><a href = https://drive.google.com/file/d/1AndIEYq4z6hI2ZLYG-NsBC-IstzW45GG/view?usp=sharing>User Manual</a></li>
   <li><a href = https://drive.google.com/file/d/1aEoaI_9jmkHjkFuxXkBXPkjQDllSNI6C/view?usp=sharing>Organization User Manual</a></li>
   <li><a href = https://docs.google.com/presentation/d/1VbTXs8X7zrWnlnVac4awau8aMn8qUsw_FhL8Fp3rc6I/edit?usp=sharing>Overview Presentation</a></li>
   <li><a href = https://drive.google.com/file/d/1_GnB4AD8M_TtIGbHmV41mGmwPm66ZpjF/view?usp=sharing>System Video Guide</a></li>
+  <li><a href = https://drive.google.com/file/d/1MTfGTUFAi0uy2cRbb70UG_YXMXa4nNZn/view?usp=sharing>FABI Mobile Product Video</a></li>
  </ul>
   </details>
   
