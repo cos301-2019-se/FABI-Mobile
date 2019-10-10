@@ -62,11 +62,38 @@
 
         <div class="view-fields">
 
-          <div class="form-row" *ngFor="let field of sampleFields">
+          <h6>Plantation Details</h6>
+          <div class="form-row" *ngFor="let field of plantationFields">
             <!-- Sample Data -->
             <div class="form-group col-md-6">
               <label>{{field.name}}</label>
-              <p class="form-control form-control-sm">{{selectedSampleData[field.name]}}</p>
+              <p class="form-control form-control-sm">{{field.data}}</p>
+            </div>
+            <!-- / Sample Data -->
+          </div>
+          <h6>Sample Details</h6>
+          <div class="form-row" *ngFor="let field of sampleFields">
+            <!-- Sample Data -->
+            <div class="form-group col-md-6">
+              <label>{{field.name}}</label> <p class="form-control form-control-sm">{{field.data}}</p>
+            </div>
+            <!-- / Sample Data -->
+          </div>
+          <h6>Sample Types</h6>
+          <div class="form-row" *ngFor="let field of typesFields">
+            <!-- Sample Data -->
+            <div class="form-group col-md-6">
+              <label>{{field.name}}</label>
+              <p class="form-control form-control-sm">{{field.data}}</p>
+            </div>
+            <!-- / Sample Data -->
+          </div>
+          <h6>Conditions</h6>
+          <div class="form-row" *ngFor="let field of conditonsFields">
+            <!-- Sample Data -->
+            <div class="form-group col-md-6">
+              <label>{{field.name}}</label>
+              <p class="form-control form-control-sm">{{field.data}}</p>
             </div>
             <!-- / Sample Data -->
           </div>

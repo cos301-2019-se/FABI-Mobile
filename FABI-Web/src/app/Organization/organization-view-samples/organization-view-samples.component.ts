@@ -39,6 +39,9 @@ export class OrganizationViewSamplesComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   sampleFields: any[] = [];
+  plantationFields: any[] = [];
+  conditonsFields: any[] = [];
+  typesFields: any[] = [];
   samples: any[];
   selectedSampleData: any;
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
@@ -140,10 +143,45 @@ export class OrganizationViewSamplesComponent implements core.OnInit {
 
     Object.keys(this.selectedSampleData).forEach((column) => {
 
-      let obj = {
-        'name': column
+      if(column == "plantation_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['plantation_details'][field]
+          }
+          this.plantationFields.push(obj);
+        });
       }
-      this.sampleFields.push(obj);
+      if(column == "sample_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['sample_details'][field]
+          }
+          this.sampleFields.push(obj);
+        });
+      }
+      if(column == "types") {
+        // Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          this.selectedSampleData[column].forEach(element => {
+            console.log(element);
+            let obj = {
+              'name': element['type'],
+              "data": element['symptoms']
+            }
+            this.typesFields.push(obj);
+          });
+        // });
+      }
+      if(column == "conditions") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['conditions'][field]
+          }
+          this.conditonsFields.push(obj);
+        });
+      }
 
     });
 
