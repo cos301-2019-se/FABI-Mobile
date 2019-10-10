@@ -9,9 +9,9 @@
 
 ##### FABI mobile is a project which consists of a web application intended to drastically modernise FABI’s existing system as well as to compliment the roll-out of their Diagnostic Clinic to the forestry and agriculture sector. The Diagnostic Clinic allows users (both internal and external) to submit samples of various plant diseases and pests so that they can be readily identified and solutions to these problems sought. 
 
-##### Another aspect of this project is to provide a central user management system whereby users are handled and authorized based on user roles.
+##### An important aspect of this project is to provide a central user management system whereby users are handled and authorized based on user roles.
 
-##### Yet another aspect of the product is the inclusion of a pre-diagnosis system which will enable the Diagnostic Clinic administrator to receive a preliminary diagnosis from the Diagnostic Clinic regarding a sample submission. This will be used internally by FABI to aid in their analysis of the diseased plant or pest.
+##### The product includes a pre-diagnosis system which which can perform a preliminary diagnosis on a submitted sample.
  
 
 ## Links  
