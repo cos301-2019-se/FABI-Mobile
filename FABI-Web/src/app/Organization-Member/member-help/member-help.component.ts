@@ -24,7 +24,6 @@ export class MemberHelpComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

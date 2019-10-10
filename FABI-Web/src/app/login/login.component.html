@@ -72,7 +72,7 @@
           </div>
         </div>
         <!-- / Error Validation Feedback-->
-        <a href="#" class="forgot-password">Forgot password?</a>
+        <p style="color: white" class="forgot-password" data-toggle="modal" data-target="#forgotPasswordModal">Forgot password?</p>
       </div>
       <!-- / Password -->
 
@@ -94,3 +94,86 @@
 
 </div>
 <!-- / Login -->
+
+<!-- Forgot Password Section -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <!-- Modal Header-->
+        <div class="modal-header">
+          <h5 class="modal-title" id="forgotPasswordModalTitle">Reset Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetForgotFields()">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <!-- / Modal Header-->
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div class="form">
+
+            <!-- Add Staff Form -->
+            <form id="forgot_password_form" class="needs-validation" [formGroup]="forgotPasswordForm"
+              novalidate>
+              <div class="row">
+
+                <!-- Email -->
+                <div class="form-group">
+                  <label for="forogt_email">Email address</label>
+                  <input type="email" class="form-control" id="forgot_email" aria-describedby="emailHelp"
+                    placeholder="Enter email" formControlName="forgot_email">
+                </div>
+                  <!-- Error Validation Feedback-->
+                <!-- / Email -->
+
+                <!-- Organisation -->
+                <div class="form-group">
+                  <label for="organization2">Organization</label>
+                  <select class="form-control form-control-sm"  id="organization2" formControlName="organization2">
+                    <option value="" selected>
+                      Please select an organization
+                    </option>
+                    <option *ngFor="let organization of organizations" [value]="organization.orgName">
+                      {{organization.orgName}}
+                    </option>
+                  </select>
+                  <!-- Error Validation Feedback-->
+                </div>
+                <!-- / Organisation -->
+
+                <!-- Password -->
+                <div class="form-group">
+                  <label for="new_password">New Password</label>
+                  <input type="password" class="form-control" id="new_password"
+                    placeholder="Enter new password" formControlName="new_password">
+                </div>
+                  <!-- Error Validation Feedback-->
+                <!-- / Password -->
+
+                <!-- Password -->
+                <div class="form-group">
+                  <label for="new_password2">Re-enter New Password</label>
+                  <input type="password" class="form-control" id="new_password2"
+                    placeholder="Re-enter new password" formControlName="new_password2">
+                </div>
+                  <!-- Error Validation Feedback-->
+                <!-- / Password -->
+
+                <!-- Submit -->
+                <button type="button" (click)="forgotPassword()" class="btn btn-default-save">Reset Password</button>
+                <!-- / Submit -->
+
+              </div>
+            </form>
+            <!-- / Add Staff Form -->
+
+          </div>
+        </div>
+        <!-- / Modal Body -->
+
+      </div>
+
+    </div>
+  </div>
+  <!-- / Forgot Password Section -->

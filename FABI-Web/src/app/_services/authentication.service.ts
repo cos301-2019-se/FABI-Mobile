@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, October 7th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -173,7 +173,7 @@ export class AuthenticationService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public get isLoggedIn(): any {
     if (localStorage.getItem('loggedIn')) {
-      return JSON.parse(localStorage.getItem('loggedIn'));
+      return localStorage.getItem('loggedIn');
     }
     return false;
   }
@@ -253,7 +253,8 @@ export class AuthenticationService {
 
     const postData = {
       "orgName": this.getCurrentSessionValue.user.organisation,
-      "id": this.getCurrentSessionValue.user.ID
+      "id": this.getCurrentSessionValue.user.ID,
+      "userID": this.getCurrentSessionValue.user.ID,
     }
 
     const options = {

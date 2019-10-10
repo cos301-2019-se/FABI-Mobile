@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -22,8 +22,10 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { MapsWindowComponent } from '../maps-window/maps-window.component';
 import * as Interface from '../_interfaces/interfaces';
+import { LoadingComponent } from '../_loading/loading.component';
 import { AuthenticationService } from '../_services/authentication.service';
 import { DiagnosticClinicAPIService } from '../_services/diagnostic-clinic-api.service';
+import { NotificationService } from '../_services/notification.service';
 
 /** Global declaration of 'google' so that it can be used throught this page - @type {any} */
 declare var google: any;
@@ -67,44 +69,88 @@ export class SampleFormComponent implements OnInit {
 
   sample_types: any = [
     {
-      value: false,
-      name: "soil"
+      value: "soil",
+      name: "Soil",
     },
     {
-      value: false,
-      name: "stems"
+      value: "stems",
+      name: "Stems"
     },
     {
-      value: false,
-      name: "roots"
+      value: "root",
+      name: "root"
     },
     {
-      value: false,
-      name: "twigs/branches"
+      value: "twigs",
+      name: "Twigs/Branches"
     },
     {
-      value: false,
-      name: "leaves/needles"
+      value: "leaves",
+      name: "Leaves/Needles"
     },
     {
-      value: false,
-      name: "seedlings/cuttings"
+      value: "seedlings",
+      name: "Seedlings/Cuttings"
+      // name: "Seed/Cuttings"
     },
     {
-      value: false,
-      name: "media plates"
+      value: "media",
+      name: "Media Plates"
     },
     {
-      value: false,
-      name: "water"
+      value: "water",
+      name: "Water"
     },
     {
-      value: false,
-      name: "insect specimens"
+      value: "insect",
+      name: "Insect Specimens"
     },
     {
-      value: false,
-      name: "nuts"
+      value: "nuts",
+      name: "Nuts"
+    },
+    {
+      value: "rootcollar",
+      name: "Root-Collar"
+    }
+  ]
+
+  type_symptoms: any = [
+    {
+      value: "wilted",
+      name: "Wilted"
+    },
+    {
+      value: "Stunting",
+      name: "Stunting"
+    },
+    {
+      value: "Dry",
+      name: "Dry"
+    },
+    {
+      value: "Leaf Spot",
+      name: "Leaf Spot"
+    },
+    {
+      value: "Root Rot",
+      name: "Root Rot"
+    },
+    {
+      value: "Die-back",
+      name: "Die-back"
+    },
+    {
+      value: "Cankers",
+      name: "Cankers"
+    },
+    {
+      value: "Death",
+      name: "Death"
+    },
+    {
+      value: "Wood Borer Damage/Holes/Tunnels/Frass(sawdust)",
+      name: "Wood Borer Damage/Holes/Tunnels/Frass(sawdust)"
     }
   ]
 
@@ -137,7 +183,8 @@ export class SampleFormComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private mapLoader: core.MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private notificationService: NotificationService
   ) {
     this.sampleForm = this.formBuilder.group({
 
@@ -168,15 +215,18 @@ export class SampleFormComponent implements OnInit {
 
       // Symptoms
       symptoms: this.formBuilder.group({
-        wilt: [false],
-        stunting: [false],
-        leafspot: [false],
-        rootrot: [false],
-        dieback: [false],
-        cankers: [false],
-        death: [false],
-        wood: [false],
-        other: [''],
+        soil: new FormArray([]),
+        stems: new FormArray([]),
+        root: new FormArray([]),
+        twigs: new FormArray([]),
+        leaves: new FormArray([]),
+        seedlings: new FormArray([]),
+        media: new FormArray([]),
+        water: new FormArray([]),
+        insect: new FormArray([]),
+        nuts: new FormArray([]),
+        rootcollar: new FormArray([]),
+        // other: new FormArray([]),
       }, { validator: this.requireCheckboxesToBeCheckedValidator() }),
 
       // Distribution of Symptoms
@@ -188,6 +238,8 @@ export class SampleFormComponent implements OnInit {
         na: [false],
         other: [''],
       }, { validator: this.requireCheckboxesToBeCheckedValidator() }),
+
+      // Percentage of plants affected
       percentage_plants_affected: ['', Validators.required],
 
       // Conditions
@@ -251,6 +303,51 @@ export class SampleFormComponent implements OnInit {
       (this.sampleForm.get('types').get('set_types') as FormArray).push(control)
     });
 
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('soil') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('stems') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('root') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('twigs') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('leaves') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('media') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('seedlings') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('water') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('insect') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('nuts') as FormArray).push(control)
+    });
+    this.type_symptoms.map(() => {
+      const control = new FormControl(false);
+      (this.sampleForm.get('symptoms').get('rootcollar') as FormArray).push(control)
+    });
+
     this.stepOneContent = true;
     this.sampleDetails = true;
     this.symptoms = true;
@@ -266,11 +363,36 @@ export class SampleFormComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   sendForm() {
-    this.submitted = true;
+    // this.submitted = true;
 
-    if (this.sampleForm.invalid) {
-      return;
-    }
+    // if (this.sampleForm.invalid) {
+    //   return;
+    // }
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Sending Form" } });
+
+    let types: Interface.SampleTypeDescription[] = [];
+
+    this.sampleTypesSelected.forEach((type: any) => {
+
+      let symptoms: string[] = [];
+
+      this.sampleForm.get('symptoms').get(type.value).value.forEach((value, i) => {
+
+        if (value == true) {
+          symptoms.push(this.type_symptoms[i].value);
+        }
+
+      });
+
+      let typeDescription: Interface.SampleTypeDescription = {
+        type: type.name,
+        symptoms: symptoms.join()
+      };
+
+      types.push(typeDescription);
+    });
+
 
     const formDetails: Interface.SampleFormData = {
       // Sample Details
@@ -293,31 +415,12 @@ export class SampleFormComponent implements OnInit {
       },
 
       // Type of Sample
-      types: this.sampleTypesSelected,
-
-      // Symptoms
-      symptoms: {
-        wilt: this.sampleForm.get('symptoms').get('wilt').value,
-        stunting: this.sampleForm.get('symptoms').get('stunting').value,
-        leafspot: this.sampleForm.get('symptoms').get('leafspot').value,
-        rootrot: this.sampleForm.get('symptoms').get('rootrot').value,
-        dieback: this.sampleForm.get('symptoms').get('dieback').value,
-        cankers: this.sampleForm.get('symptoms').get('cankers').value,
-        death: this.sampleForm.get('symptoms').get('death').value,
-        wood: this.sampleForm.get('symptoms').get('wood').value,
-        other: this.sampleForm.get('symptoms').get('other').value
-      },
+      types: types,
 
       // Distribution of Symptoms
-      distribution: {
-        localized: this.sampleForm.get('distribution').get('localized').value,
-        scattered: this.sampleForm.get('distribution').get('scattered').value,
-        general: this.sampleForm.get('distribution').get('general').value,
-        clumps: this.sampleForm.get('distribution').get('clumps').value,
-        na: this.sampleForm.get('distribution').get('na').value,
-        other: this.sampleForm.get('distribution').get('other').value,
-        percentage_plants_affected: this.sampleForm.get('percentage_plants_affected').value
-      },
+      distribution: "",
+
+      percentage_plants_affected: "",
 
       // Conditons
       conditions: {
@@ -338,11 +441,12 @@ export class SampleFormComponent implements OnInit {
     };
 
     this.clinicService.submitSampleForm(formDetails).subscribe((response: any) => {
+
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Successfully Submitted Form", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Sample Form Sent', 'Please see your email for reference number');
 
         //Set pre-diagnosis
         localStorage.setItem('pre-diagnosis', response.data.prediagnosis);
@@ -357,9 +461,12 @@ export class SampleFormComponent implements OnInit {
       }
       else if (response.success == false) {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Error', 'An error occurred while trying to send sample form');
       }
     }, (err: HttpErrorResponse) => {
+      loadingRef.close();
       //Handled in error-handler
+      this.notificationService.showErrorNotification('Error', 'An error occurred while trying to send sample form');
     })
 
   }
@@ -392,7 +499,7 @@ export class SampleFormComponent implements OnInit {
           }
         });
 
-        this.sampleForm.get('plantation_details').disable();
+        // this.sampleForm.get('plantation_details').disable();
         this.sampleForm.get('plantation_details').get('farm').enable();
       }
 
@@ -455,7 +562,7 @@ export class SampleFormComponent implements OnInit {
             }
           });
 
-          this.sampleForm.get('plantation_details').disable();
+          // this.sampleForm.get('plantation_details').disable();
           this.sampleForm.get('plantation_details').get('farm').enable();
 
         } else {
@@ -482,7 +589,7 @@ export class SampleFormComponent implements OnInit {
 
     this.sampleForm.get('types').get('set_types').value.forEach((value, i) => {
       if (value == true) {
-        this.sampleTypesSelected.push(this.sample_types[i].name);
+        this.sampleTypesSelected.push(this.sample_types[i]);
       }
     });
 
@@ -543,6 +650,18 @@ export class SampleFormComponent implements OnInit {
 
       return null;
     };
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS 
+  /**
+   * This function will clear the inputs and reset the form
+   * 
+   * @memberof SampleFormComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetFields() {
+    this.sampleForm.reset();
   }
 
 
@@ -664,7 +783,7 @@ export class SampleFormComponent implements OnInit {
   }
 
   showStepFour() {
-    if (this.sampleForm.get('symptoms').invalid || this.sampleForm.get('distribution').invalid) {
+    if (this.sampleForm.get('symptoms').invalid || this.sampleForm.get('distribution').invalid || this.sampleForm.get('percentage_plants_affected').invalid) {
       this.submitted = true;
       return;
     }

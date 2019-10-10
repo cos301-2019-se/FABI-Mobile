@@ -24,7 +24,6 @@ export class StaffMenuComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

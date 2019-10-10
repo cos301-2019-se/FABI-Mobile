@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,12 +13,14 @@
  * <<license>>
  */
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { LoadingComponent } from 'src/app/_loading/loading.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 
@@ -62,6 +64,7 @@ export class StaffProfileComponent implements core.OnInit {
   isEditingProfile: boolean = false;
   /** if the form has been submitted - @type {boolean} */
   submitted: boolean;
+  userProfileDetails: any = "";
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
@@ -125,7 +128,8 @@ export class StaffProfileComponent implements core.OnInit {
     private snackBar: MatSnackBar,
     private authService: AuthenticationService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService
   ) {
     this.staffProfileForm = this.formBuilder.group({
       staff_name: '',
@@ -204,22 +208,26 @@ export class StaffProfileComponent implements core.OnInit {
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
         //Temporarily holds the data returned from the API call
-        const data = response.data;
+        this.userProfileDetails = response.data;
 
         //Deactivate loading spinners
         this.userProfileLoading = false;
 
         // Fill the form inputs with the user's details
         this.staffProfileForm.setValue({
-          staff_name: data.fname,
-          staff_surname: data.surname,
-          staff_email: data.email,
-          staff_type: data.userType
+          staff_name: this.userProfileDetails.fname,
+          staff_surname: this.userProfileDetails.surname,
+          staff_email: this.userProfileDetails.email,
+          staff_type: this.userProfileDetails.userType
         });
       }
       else {
         //Error handling
+        this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
+      //Handled in error-handler
     });
   }
 
@@ -249,6 +257,9 @@ export class StaffProfileComponent implements core.OnInit {
     this.userManagementService.updateFABIMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
@@ -256,16 +267,19 @@ export class StaffProfileComponent implements core.OnInit {
         this.loadStaffProfileDetails();
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Profile Updated', '');
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
+      //Handled in error-handler
     });
   }
 
@@ -295,20 +309,22 @@ export class StaffProfileComponent implements core.OnInit {
     this.userManagementService.updateStaffPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully changed password.", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Password Changed', '');
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.resetAddFields();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
+      //Handled in error-handler
     });
   }
 
@@ -394,6 +410,27 @@ export class StaffProfileComponent implements core.OnInit {
       this.isEditingProfile = true;
     }
 
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS
+  /**
+   * This function will clear the inputs and reset all forms
+   * 
+   * @memberof StaffProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetAddFields() {
+    this.staffProfileForm.reset();
+    // Fill the form inputs with the user's details
+    this.staffProfileForm.setValue({
+      staff_name: this.userProfileDetails.fname,
+      staff_surname: this.userProfileDetails.surname,
+      staff_email: this.userProfileDetails.email,
+      staff_type: this.userProfileDetails.userType
+    });
+    this.changePasswordForm.reset();
+    this.submitted = false;
   }
 
 }

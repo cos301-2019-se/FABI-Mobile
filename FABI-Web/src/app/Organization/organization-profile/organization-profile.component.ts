@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,10 +13,12 @@
  * <<license>>
  */
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/_services/notification.service';
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
 import { LoadingComponent } from "../../_loading/loading.component";
 import { AuthenticationService } from '../../_services/authentication.service';
@@ -62,6 +64,7 @@ export class OrganizationProfileComponent implements core.OnInit {
   submitted: boolean;
   /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
   userProfileLoading: boolean = true;
+  userProfileDetails: any = "";
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
   @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
@@ -123,7 +126,8 @@ export class OrganizationProfileComponent implements core.OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private userManagementService: UserManagementAPIService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService
   ) {
     this.adminProfileForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
@@ -167,6 +171,7 @@ export class OrganizationProfileComponent implements core.OnInit {
     this.adminProfileForm.get('admin_name').disable();
     this.adminProfileForm.get('admin_surname').disable();
     this.adminProfileForm.get('admin_email').disable();
+    this.resetMemberFields();
   }
 
 
@@ -188,22 +193,26 @@ export class OrganizationProfileComponent implements core.OnInit {
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
       if (response.success == true) {
         //Temporarily holds the data returned from the API call
-        const data = response.data;
+        this.userProfileDetails = response.data;
 
         //Deactivate loading spinners
         this.userProfileLoading = false;
 
         // Fill the form inputs with the user's details
         this.adminProfileForm.setValue({
-          admin_name: data.fname,
-          admin_surname: data.surname,
-          admin_email: data.email,
+          admin_name: this.userProfileDetails.fname,
+          admin_surname: this.userProfileDetails.surname,
+          admin_email: this.userProfileDetails.email,
           organization_name: this.currentUser.organisation
         });
       }
       else {
         //Error handling
+        this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
+      //Handled in error-handler
     });
   }
 
@@ -264,22 +273,27 @@ export class OrganizationProfileComponent implements core.OnInit {
     this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetMemberFields();
 
       if (response.success == true) {
         //Reloading the updated user's details
         this.loadAdminProfileDetails();
-
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Profile Updated', '');
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetMemberFields();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
+      //Handled in error-handler
     });
   }
 
@@ -308,21 +322,22 @@ export class OrganizationProfileComponent implements core.OnInit {
     this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetMemberFields();
 
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully changed password", "Dismiss", {
-          duration: 3000
-        });
-
+        this.notificationService.showSuccessNotification('Password Changed', '');
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
+      this.resetMemberFields();
+      //Handled in error-handler
     });
   }
 
@@ -400,6 +415,7 @@ export class OrganizationProfileComponent implements core.OnInit {
       this.adminProfileForm.get('admin_surname').disable();
       this.adminProfileForm.get('admin_email').disable();
       this.isEditingProfile = false;
+      this.resetMemberFields();
     } else {
       this.adminProfileForm.get('admin_name').enable();
       this.adminProfileForm.get('admin_surname').enable();
@@ -407,6 +423,27 @@ export class OrganizationProfileComponent implements core.OnInit {
       this.isEditingProfile = true;
     }
 
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS 
+  /**
+   * This function will clear the inputs and reset the form
+   * 
+   * @memberof OrganizationProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetMemberFields() {
+    this.adminProfileForm.reset();
+    // Fill the form inputs with the user's details
+    this.adminProfileForm.setValue({
+      admin_name: this.userProfileDetails.fname,
+      admin_surname: this.userProfileDetails.surname,
+      admin_email: this.userProfileDetails.email,
+      organization_name: this.currentUser.organisation
+    });
+    this.changePasswordForm.reset();
+    this.submitted = false;
   }
 
 }

@@ -5,7 +5,7 @@
  * Created Date: Monday, August 19th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, October 6th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,6 +14,7 @@
  */
 
 
+import * as http from '@angular/common/http';
 import * as core from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
@@ -21,6 +22,7 @@ import { Router } from '@angular/router';
 import { LoadingComponent } from 'src/app/_loading/loading.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 
 @core.Component({
   selector: 'app-clinic-admin-view-samples',
@@ -66,6 +68,7 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
     private dialog: MatDialog,
     private router: Router,
     private formBuilder: FormBuilder,
+    private notificationService: NotificationService
   ) {
     this.updateSampleStatusForm = this.formBuilder.group({
       sample_status: ['', Validators.required]
@@ -136,9 +139,13 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
         //Deactivate loading table spinners
         this.sampleTableLoading = false;
 
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showWarningNotification('Error', 'Could not load samples');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load samples');
+      //Handled in error-handler
     });
   }
 

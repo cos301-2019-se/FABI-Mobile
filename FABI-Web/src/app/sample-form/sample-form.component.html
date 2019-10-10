@@ -239,9 +239,9 @@
           <div formGroupName="types">
 
             <div class="form-check col-md-6" formArrayName="set_types"
-              *ngFor="let type of sampleForm.get('types').get('set_types').controls; let i = index" id="types">
+              *ngFor="let type of sample_types; let i = index" id="types">
               <input type="checkbox" class="form-check-input" [formControlName]="i" (change)="selectSampleType()">
-              <label class="form-check-label">{{sample_types[i].name}}</label>
+              <label class="form-check-label">{{type.name}}</label>
             </div>
 
             <br />
@@ -284,96 +284,24 @@
 
       <div class="form-fields" id="symptoms" *ngIf="symptoms">
 
+        <div formGroupName="symptoms">
         <div *ngFor="let type of sampleTypesSelected">
 
-          <div formGroupName="symptoms">
-            <h5>{{type}}</h5>
+          
+            <h5>{{type.name}}</h5>
 
-            <div class="form-row">
-              <!-- Wilt -->
-              <div class="form-check col-md-6">
-                <input type="checkbox" class="form-check-input" id="wilt" formControlName="wilt">
-                <label class="form-check-label" for="wilt">Wilt</label>
-              </div>
-              <!-- / Wilt -->
-
-              <!-- Stunting -->
-              <div class="form-check col-md-6">
-                <input type="checkbox" class="form-check-input" id="stunting" formControlName="stunting">
-                <label class="form-check-label" for="stunting">Stunting</label>
-              </div>
-              <!-- / Stunting -->
-            </div>
-
-            <div class="form-row">
-              <!-- Leaf Spot -->
-              <div class="form-check col-md-6">
-                <input type="checkbox" class="form-check-input" id="leafspot" formControlName="leafspot">
-                <label class="form-check-label" for="leafspot">Leaf Spot</label>
-              </div>
-              <!-- / Leaf Spot -->
-
-              <!-- Root rot -->
-              <div class="form-check col-md-6">
-                <input type="checkbox" class="form-check-input" id="rootrot" formControlName="rootrot">
-                <label class="form-check-label" for="rootrot">Root rot</label>
-              </div>
-              <!-- / Root rot -->
-            </div>
-
-            <div class="form-row">
-              <!-- Die-Back -->
-              <div class="form-check col-md-6">
-                <input type="checkbox" class="form-check-input" id="dieback" formControlName="dieback">
-                <label class="form-check-label" for="dieback">Die-Back</label>
-              </div>
-              <!-- / Die-Back -->
-
-              <!-- Cankers -->
-              <div class="form-check col-md-6">
-                <input type="checkbox" class="form-check-input" id="cankers" formControlName="cankers">
-                <label class="form-check-label" for="cankers">Cankers</label>
-              </div>
-              <!-- / Cankers -->
-            </div>
-
-            <div class="form-row">
-              <!-- Death -->
-              <div class="form-check col-md-6">
-                <input type="checkbox" class="form-check-input" id="death" formControlName="death">
-                <label class="form-check-label" for="death">Death</label>
-              </div>
-              <!-- / Death -->
-
-              <!-- Wood borer -->
-              <div class="form-check col-md-6">
-                <input type="checkbox" class="form-check-input" id="wood" formControlName="wood">
-                <label class="form-check-label" for="wood">Wood borer
-                  damage/holes/tunnels/frass(sawdust)</label>
-              </div>
-              <!-- / Wood borer -->
-            </div>
-
-            <br />
-            <div class="form-row col-md-6">
-              <!-- Other -->
-              <div class="form-group">
-                <label for="other">Other</label>
-                <input type="text" class="form-control form-control-sm" id="other" formControlName="other"
-                  placeholder="Other">
-                <div class="valid-feedback">
-                  Looks good!
+                <div class="form-check col-md-6" [formArrayName]='type.value'
+                  *ngFor="let symptom of type_symptoms; let i = index" id="symptoms">
+                  <input type="checkbox" class="form-check-input" [formControlName]="i" >
+                  <label class="form-check-label">{{symptom.name}}</label>
                 </div>
-              </div>
-              <!-- / Other -->
-            </div>
-
-            <!-- Error Validation Feedback-->
-            <div *ngIf="sampleForm.get('symptoms').invalid && (submitted || sampleForm.get('symptoms').dirty)"
-              class="text-danger">
-              <p>Please specify at least 1 symptom</p>
-            </div>
-            <!-- / Error Validation Feedback-->
+                <br />
+                <!-- Error Validation Feedback-->
+                <div *ngIf="sampleForm.get('symptoms').invalid && (submitted || sampleForm.get('symptoms').dirty)"
+                  class="text-danger">
+                  <p>Please specify at least 1 symptom for each type</p>
+                </div> 
+                <!-- / Error Validation Feedback-->
 
           </div>
         </div>
@@ -441,16 +369,26 @@
             <!-- / Other -->
           </div>
 
+          <!-- Error Validation Feedback-->
+          <div *ngIf="sampleForm.get('distribution').invalid && (submitted || sampleForm.get('distribution').dirty)"
+            class="text-danger">
+            <p>Please enter all sample distribution details</p>
+          </div>
+          <!-- / Error Validation Feedback-->
+        </div>
           <br />
 
           <div class="distribution-subheading">
             <h6>Estimate of the percentage of plants affected:</h6>
           </div>
 
+
+          <div>
+
           <div class="form-row">
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="isolated"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="isolated"
                 value="isolated">
               <label class="form-check-label" for="percentage_plants_affected">
                 Isolated Cases
@@ -460,7 +398,7 @@
 
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="less_ten"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="less_ten"
                 value="less_ten">
               <label class="form-check-label" for="percentage_plants_affected">
                 Less than 10%
@@ -472,7 +410,7 @@
           <div class="form-row">
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="ten_to_twentyfive"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="ten_to_twentyfive"
                 value="ten_to_twentyfive">
               <label class="form-check-label" for="percentage_plants_affected">
                 10% - 25%
@@ -482,7 +420,7 @@
 
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="twentyfive_to_fifty"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="twentyfive_to_fifty"
                 value="twentyfive_to_fifty">
               <label class="form-check-label" for="percentage_plants_affected">
                 25% - 50%
@@ -494,7 +432,7 @@
           <div class="form-row">
             <!-- Percentage_plants_affected -->
             <div class="form-check col-md-6 offset-md-6">
-              <input class="form-check-input" type="radio" name="percentage_plants_affected" id="greater_fifty"
+              <input class="form-check-input" type="radio" name="percentage_plants_affected" formControlName="percentage_plants_affected" id="greater_fifty"
                 value="greater_fifty">
               <label class="form-check-label" for="percentage_plants_affected">
                 Greater than 50%
@@ -504,13 +442,13 @@
           </div>
 
           <!-- Error Validation Feedback-->
-          <div *ngIf="sampleForm.get('distribution').invalid && (submitted || sampleForm.get('distribution').dirty)"
+          <div *ngIf="sampleForm.get('percentage_plants_affected').invalid && (submitted || sampleForm.get('percentage_plants_affected').dirty)"
             class="text-danger">
             <p>Please enter all sample distribution details</p>
           </div>
           <!-- / Error Validation Feedback-->
-
         </div>
+        
 
         <button type="button" class="next-btn" (click)="showStepFour()">NEXT</button>
         <button type="button" class="prev-btn" (click)="showStepTwo()">PREVIOUS</button>
