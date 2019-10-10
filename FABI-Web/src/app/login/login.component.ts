@@ -147,7 +147,7 @@ export class LoginComponent implements core.OnInit {
   ngOnInit() {
     //-------- Load Organisation names for Drop Down --------
     this.userManagementService.getAllOrganizations().subscribe((response: any) => {
-
+      console.log("here");
       if (response.success == true && response.code == 200) {
         this.organizations = response.data.Organizations;
       }

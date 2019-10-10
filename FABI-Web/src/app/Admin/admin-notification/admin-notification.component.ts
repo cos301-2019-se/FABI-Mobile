@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, October 9th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -23,8 +23,6 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { DatabaseManagementLogs, NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
 import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-
-
 
 @core.Component({
   selector: 'app-admin-notification',
@@ -99,7 +97,6 @@ export class AdminNotificationComponent implements core.OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.getAllStaff();
-
     this.currentUser = this.authService.getCurrentSessionValue.user;
     this.loadNotifications();
   }
@@ -248,7 +245,7 @@ export class AdminNotificationComponent implements core.OnInit {
   loadNotifications() {
     //Loading all the staff withing FABI
     this.getAllStaff();
-    //Loading all the logs beloning to the user
+    //Loading all the logs belonging to the user
     this.loadLogs();
 
     //Making a call too the notification logging service to return all USER logs
