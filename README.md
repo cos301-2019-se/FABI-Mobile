@@ -13,8 +13,9 @@
 
 ##### The product includes a pre-diagnosis system which which can perform a preliminary diagnosis on a submitted sample.
  
+<details>
 
-## Links  
+<summary><h2>Links</h2></summary>
 
  ### Project Links
  <details>
