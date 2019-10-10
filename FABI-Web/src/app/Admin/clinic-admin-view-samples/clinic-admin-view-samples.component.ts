@@ -5,7 +5,7 @@
  * Created Date: Monday, August 19th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -40,7 +40,7 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
   private toggle_status: boolean = false;
   /** The search item the user is looking for in the table -  @type {string} */
   public searchSample: string = "";
-  statusTypes = ["complete", "submitted", "diagnosing"];
+  public statusTypes = ["complete", "submitted", "diagnosing"];
   updateSampleStatusForm: FormGroup;
   editingSample: any;
   isEditingSample: boolean = false;
@@ -87,6 +87,7 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
   ngOnInit() {
     //Calling the neccessary functions as the page loads
     this.viewSamples();
+    console.log(this.statusTypes);
   }
 
 
@@ -221,5 +222,10 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
         //POPUP MESSAGE
       }
     });
+  }
+
+  cancelUpdateSampleStatus() {
+    this.editingSample = "";
+    this.isEditingSample = false;
   }
 }

@@ -151,7 +151,11 @@ import { CookieService } from "ngx-cookie-service";
     OrganizationModule,
     OrganizationMemberModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
     // DataTablesModule,
     ErrorsModule,
     LayoutModule,
