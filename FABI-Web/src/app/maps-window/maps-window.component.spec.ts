@@ -7,10 +7,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { NotificationService } from '../_services/notification.service';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -37,8 +37,10 @@ describe('MapsWindowComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MapsWindowComponent ],
-      imports: [ReactiveFormsModule, AgmCoreModule.forRoot(), RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [ReactiveFormsModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, AgmCoreModule.forRoot(), RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
+        NotificationService,
+        ToastrService,
         { provide: MapsAPILoader, useClass: MockMapsAPILoader },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }

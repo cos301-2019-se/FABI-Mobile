@@ -6,11 +6,11 @@ import { StaffProfileComponent } from '../staff-profile/staff-profile.component'
 import { StaffHelpComponent } from '../staff-help/staff-help.component'
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { NotificationService } from '../../_services/notification.service';
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -42,8 +42,9 @@ describe('StaffViewDatabasesComponent', () => {
         StaffHelpComponent,
         FilterPipe
       ],
-      imports: [MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [MatSnackBarModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
+        NotificationService, ToastrService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: MatSnackBar, useValue: {} },

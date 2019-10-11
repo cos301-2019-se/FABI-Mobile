@@ -22,7 +22,7 @@ import { HttpClient } from '@angular/common/http';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DebugElement } from '@angular/core';
-
+import { NotificationService } from '../../_services/notification.service';
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 import { FilterPipe } from '../../_pipes/filter.pipe';
@@ -51,9 +51,13 @@ describe('MemberHandlerComponent', () => {
         FilterPipe
       ],
       imports: [MaterialModule,
-        NoopAnimationsModule,
+        NoopAnimationsModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, 
         BrowserAnimationsModule, RouterTestingModule, HttpClientTestingModule ],
-        providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+      providers: [
+          NotificationService,
+          ToastrService,
+          { provide: AuthenticationService, useClass: MockAuthenticationService } 
+        ]
     })
     .compileComponents();
   }));

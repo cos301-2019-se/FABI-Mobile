@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
 //Import form components
@@ -13,6 +12,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DebugElement, NgModule } from '@angular/core';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { NotificationService } from '../../_services/notification.service';
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 import { MemberNotificationComponent } from './member-notification.component';
 
@@ -30,9 +31,14 @@ describe('MemberNotificationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-         MaterialModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
-      ],declarations: [ MemberNotificationComponent ],
-      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+         MaterialModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
+      ],
+      declarations: [ MemberNotificationComponent ],
+      providers: [ 
+        NotificationService,
+        ToastrService,
+        { provide: AuthenticationService, useClass: MockAuthenticationService } 
+      ]
     })
     .compileComponents();
   }));

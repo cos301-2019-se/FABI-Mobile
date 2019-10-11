@@ -10,10 +10,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 //Import the materials component
 import { MaterialModule } from '../../materials';
-
+import { NotificationService } from '../../_services/notification.service';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilterPipe } from '../../_pipes/filter.pipe';
@@ -37,9 +37,11 @@ describe('SubmitCmwRequestComponent', () => {
         BrowserAnimationsModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
       ],
       providers:[
+        ToastrService,
+        NotificationService,
         { provide: AuthenticationService, useClass: MockAuthenticationService }
       ]
     })

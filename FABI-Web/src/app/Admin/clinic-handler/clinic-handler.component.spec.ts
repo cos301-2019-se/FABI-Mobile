@@ -22,7 +22,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DebugElement } from '@angular/core';
-
+import { NotificationService } from '../../_services/notification.service';
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 import { PipesFiltersModule } from 'ng-pipe-filter';
@@ -57,9 +57,13 @@ describe('ClinicHandlerComponent', () => {
         NoopAnimationsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        PipesFiltersModule
+        PipesFiltersModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
       ],
-      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+      providers: [ 
+        NotificationService,
+        ToastrService,
+        { provide: AuthenticationService, useClass: MockAuthenticationService } 
+      ]
     })
     .compileComponents();
   }));

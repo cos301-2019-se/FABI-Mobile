@@ -4,11 +4,11 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
 import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
-
+import { NotificationService } from '../../_services/notification.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 import { MaterialModule } from '../../materials';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -37,12 +37,16 @@ describe('OrganizationNotificationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-         MaterialModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
+         MaterialModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule, BrowserAnimationsModule 
       ],
       declarations: [ 
         OrganizationNotificationComponent 
       ],
-      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+      providers: [ 
+        NotificationService,
+        ToastrService,
+        { provide: AuthenticationService, useClass: MockAuthenticationService } 
+      ]
     })
     .compileComponents();
   }));
