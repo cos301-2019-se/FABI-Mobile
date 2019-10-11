@@ -17,8 +17,8 @@
 
 <summary><h2>Links</h2></summary>
 
- ### Project Links
- <details>
+<details>
+ <summary><h3> Project Links</h3></summary>
  <ul>
   <li><a href = https://drive.google.com/file/d/1E7IQ1AnOAoHywCSzPf8s_ZMcr_qK20vg/view?usp=sharing>System Requirments Specification</a></li>
   <li><a href = https://drive.google.com/file/d/17qzn81O7YsrfYEGfqcfM2fBYbwJtOBNR/view?usp=sharing>Coding Standards Document</a></li>
