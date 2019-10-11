@@ -13,25 +13,26 @@
 
 ##### The product includes a pre-diagnosis system which which can perform a preliminary diagnosis on a submitted sample.
  
-<details>
+## Project Links
+<details> 
+<summary>Details</summary>
 
-<summary><h2>Links</h2></summary>
-
+### Documentation Links
 <details>
- <summary><h3> Project Links</h3></summary>
+ <summary>Links</summary>
  <ul>
-  <li><a href = https://drive.google.com/file/d/1E7IQ1AnOAoHywCSzPf8s_ZMcr_qK20vg/view?usp=sharing>System Requirments Specification</a></li>
+  <li><a href = https://drive.google.com/file/d/1E7IQ1AnOAoHywCSzPf8s_ZMcr_qK20vg/view?usp=sharing>System Requirments Specification</a     </li>
   <li><a href = https://drive.google.com/file/d/17qzn81O7YsrfYEGfqcfM2fBYbwJtOBNR/view?usp=sharing>Coding Standards Document</a></li>
- <li><a href = https://drive.google.com/file/d/1I15_cTvppMLwd4qmaj3ACeBw86ofFmb3/view?usp=sharing>Testing Policy</a></li>
+  <li><a href = https://drive.google.com/file/d/1I15_cTvppMLwd4qmaj3ACeBw86ofFmb3/view?usp=sharing>Testing Policy</a></li>
   <li><a href = https://drive.google.com/file/d/1AndIEYq4z6hI2ZLYG-NsBC-IstzW45GG/view?usp=sharing>User Manual</a></li>
   <li><a href = https://drive.google.com/file/d/1aEoaI_9jmkHjkFuxXkBXPkjQDllSNI6C/view?usp=sharing>Organization User Manual</a></li>
   <li><a href = https://docs.google.com/presentation/d/1VbTXs8X7zrWnlnVac4awau8aMn8qUsw_FhL8Fp3rc6I/edit?usp=sharing>Overview Presentation</a></li>
   <li><a href = https://drive.google.com/file/d/1MTfGTUFAi0uy2cRbb70UG_YXMXa4nNZn/view?usp=sharing>FABI Mobile Product Video</a></li>
  </ul>
-  </details>
+</details>
   
- ### Project Management
-  - [Trello Board](https://trello.com/b/8eHApP3L)
+ ### Project Management: 
+ - [Trello Board](https://trello.com/b/8eHApP3L)
   
  ### Team Profile Links
  - [Team Profiles and Links](https://docs.google.com/document/d/1vJjeYzAnjHSHvkBwMpa8e_rOYxyfs8UxwsGh3De-mAU/edit?usp=sharing)
