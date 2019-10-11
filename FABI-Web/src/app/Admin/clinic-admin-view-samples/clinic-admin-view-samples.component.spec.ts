@@ -19,7 +19,7 @@ import { HttpClient } from '@angular/common/http';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DebugElement } from '@angular/core';
-
+import { NotificationService } from '../../_services/notification.service';
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 import { FilterPipe } from '../../_pipes/filter.pipe';
@@ -39,15 +39,22 @@ describe('ClinicAdminViewSamplesComponent', () => {
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
-        return { "token" : "86451268546851" };
+        return {  "token" : "86451268546851",
+                  "user"  : {
+                    "organisation" : "",
+                    "ID" : ""
+                  }
+              };
     }
   }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FilterPipe, ClinicAdminViewSamplesComponent ],
-      imports: [ MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [ MatSnackBarModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
+        NotificationService,
+        ToastrService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: MatSnackBar, useValue: {} },

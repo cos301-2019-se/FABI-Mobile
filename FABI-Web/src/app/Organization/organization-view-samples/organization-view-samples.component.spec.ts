@@ -21,7 +21,7 @@ import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform
 import { DebugElement } from '@angular/core';
 
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
-
+import { NotificationService } from '../../_services/notification.service';
 import { FilterPipe } from '../../_pipes/filter.pipe';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -48,8 +48,10 @@ describe('OrganizationViewSamplesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OrganizationViewSamplesComponent,  FilterPipe ],
-      imports: [ MaterialModule, MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, MatDialogModule],
+      imports: [ MaterialModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, MatDialogModule],
       providers: [
+        NotificationService,
+        ToastrService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: MatSnackBar, useValue: {} },

@@ -7,11 +7,11 @@ import { UserManagementAPIService } from '../_services/user-management-api.servi
 import { CookieService } from 'ngx-cookie-service';
 
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 import { MaterialModule } from '../materials';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
+import { NotificationService } from '../_services/notification.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HomeComponent', () => {
@@ -26,9 +26,10 @@ describe('HomeComponent', () => {
       imports: [MaterialModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
       ],
-        providers: [ CookieService ]
+        providers: [ CookieService, ToastrService, NotificationService ]
     })
     .compileComponents();
   }));

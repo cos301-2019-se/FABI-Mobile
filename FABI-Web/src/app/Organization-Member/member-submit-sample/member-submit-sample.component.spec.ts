@@ -18,6 +18,8 @@ import { MaterialModule } from '../../materials';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { NotificationService } from '../../_services/notification.service';
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,9 +55,11 @@ describe('MemberSubmitSampleComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        AgmCoreModule.forRoot()
+        AgmCoreModule.forRoot(), ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
       ],
       providers: [
+        NotificationService,
+        ToastrService,
         { provide: MapsAPILoader, useClass: MockMapsAPILoader },
         { provide: AuthenticationService, useClass: MockAuthenticationService }
       ]

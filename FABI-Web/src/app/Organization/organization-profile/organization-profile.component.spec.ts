@@ -12,7 +12,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../../materials';
-
+import { NotificationService } from '../../_services/notification.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
 
@@ -33,7 +33,7 @@ describe('OrganizationProfileComponent', () => {
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
-        return { 'user' : '' };
+        return { 'user' : {'organisation' : '', 'ID' : '' } };
     }
   }
 
@@ -47,9 +47,13 @@ describe('OrganizationProfileComponent', () => {
         HttpClientTestingModule,
         MatSnackBarModule,
         MatDialogModule,
-        RouterTestingModule
+        RouterTestingModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
       ],
-      providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+      providers: [ 
+        NotificationService,
+        ToastrService,
+        { provide: AuthenticationService, useClass: MockAuthenticationService } 
+      ]
     })
     .compileComponents();
   }));
@@ -58,7 +62,8 @@ describe('OrganizationProfileComponent', () => {
     fixture = TestBed.createComponent(OrganizationProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
+    
+    component.adminProfileForm.controls.organization_name.setValue("");
     UserManagementService = new UserManagementAPIService( null , null);
     DiagnosticClinicService = new DiagnosticClinicAPIService(null, null);
     notificationLoggingService = new NotificationLoggingService(null, null);
@@ -128,30 +133,35 @@ describe('OrganizationProfileComponent', () => {
 
   // -------- Service Tests --------
   it('get user details', () =>{
+    component.adminProfileForm.controls.organization_name.setValue("");
     let spy = spyOn(UserManagementService, 'getUserDetails');
     component.loadAdminProfileDetails();
     expect(spy).toBeTruthy();
   });
 
   it('logging out', () =>{
+    component.adminProfileForm.controls.organization_name.setValue("");
     let spy = spyOn(authService, 'logoutUser');
     component.logout();
     expect(spy).toBeTruthy();
   });
 
   it('update profile details', () =>{
+    component.adminProfileForm.controls.organization_name.setValue("");
     let spy = spyOn(UserManagementService, 'updateOrganizationMemberDetails');
     component.saveChanges();
     expect(spy).toBeTruthy();
   });
 
   it('update password', () =>{
+    component.adminProfileForm.controls.organization_name.setValue("");
     let spy = spyOn(UserManagementService, 'updateOrganizationMemberPassword');
     component.changePassword();
     expect(spy).toBeTruthy();
   });
 
   it('show password', () =>{
+    component.adminProfileForm.controls.organization_name.setValue("");
     component.passwordInput = { nativeElement: {type:"password"} };
     component.passwordInput.nativeElement.type = 'password';
     component.showPassword();
@@ -159,6 +169,7 @@ describe('OrganizationProfileComponent', () => {
   });
 
   it('hide password', () =>{
+    component.adminProfileForm.controls.organization_name.setValue("");
     component.passwordInput = { nativeElement: {type:"text"} };
     component.passwordInput.nativeElement.type = 'text';
     component.showPassword();
@@ -166,6 +177,7 @@ describe('OrganizationProfileComponent', () => {
   });
 
   it('show confirm password', () =>{
+    component.adminProfileForm.controls.organization_name.setValue("");
     component.confirmInput = { nativeElement: {type:"password"} };
     component.confirmInput.nativeElement.type = 'password';
     component.showConfirmedPassword();
@@ -173,6 +185,7 @@ describe('OrganizationProfileComponent', () => {
   });
 
   it('hide confirm password', () =>{
+    component.adminProfileForm.controls.organization_name.setValue("");
     component.confirmInput = { nativeElement: {type:"text"} };
     component.confirmInput.nativeElement.type = 'text';
     component.showConfirmedPassword();
@@ -181,6 +194,7 @@ describe('OrganizationProfileComponent', () => {
 
   it('stop editing profile', () =>{
     component.isEditingProfile = true;
+    component.adminProfileForm.controls.organization_name.setValue("");
     component.editProfileToggle();
     expect(component.adminProfileForm.controls.admin_name.enabled).toBeFalsy();
     expect(component.adminProfileForm.controls.admin_surname.enabled).toBeFalsy();
@@ -189,6 +203,7 @@ describe('OrganizationProfileComponent', () => {
 
   it('editing profile', () =>{
     component.isEditingProfile = false;
+    component.adminProfileForm.controls.organization_name.setValue("");
     component.editProfileToggle();
     expect(component.adminProfileForm.controls.admin_name.enabled).toBeTruthy();
     expect(component.adminProfileForm.controls.admin_surname.enabled).toBeTruthy();

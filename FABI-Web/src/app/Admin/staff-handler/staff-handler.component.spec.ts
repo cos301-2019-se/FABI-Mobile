@@ -23,7 +23,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DebugElement } from '@angular/core';
-
+import { NotificationService } from '../../_services/notification.service';
 import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 import { FilterPipe } from '../../_pipes/filter.pipe';
@@ -52,8 +52,13 @@ describe('StaffHandlerComponent', () => {
       imports: [MaterialModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        RouterTestingModule],
-        providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+        RouterTestingModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
+      ],
+      providers: [ 
+        NotificationService,
+        ToastrService,
+        { provide: AuthenticationService, useClass: MockAuthenticationService } 
+      ]
       })
     .compileComponents();
   }));
@@ -106,17 +111,17 @@ describe('StaffHandlerComponent', () => {
 
   it('Empty admin surname expect admin surname invalid', () => {
     component.addStaffForm.controls.staff_surname.setValue('');
-    expect(component.addStaffForm.controls.admin_surname.valid).toBeFalsy();
+    expect(component.addStaffForm.controls.staff_surname.valid).toBeFalsy();
   });
 
   it('Empty admin email expect admin email invalid', () => {
     component.addStaffForm.controls.staff_email.setValue('');
-    expect(component.addStaffForm.controls.admin_email.valid).toBeFalsy();
+    expect(component.addStaffForm.controls.staff_email.valid).toBeFalsy();
   });
 
   it('Empty admin phone expect admin phone invalid', () => {
     component.addStaffForm.controls.staff_phone.setValue('');
-    expect(component.addStaffForm.controls.admin_phone.valid).toBeFalsy();
+    expect(component.addStaffForm.controls.staff_phone.valid).toBeFalsy();
   });
 
   it('Empty admin type expect admin type invalid', () => {

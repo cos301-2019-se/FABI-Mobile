@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StaffSubmitSampleComponent } from './staff-submit-sample.component';
-
+import { NotificationService } from '../../_services/notification.service';
 
 import { SampleFormComponent } from '../../sample-form/sample-form.component';
 
@@ -9,7 +9,7 @@ import { MapsWindowComponent } from '../../maps-window/maps-window.component';
 
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -47,8 +47,9 @@ describe('StaffSubmitSampleComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ StaffSubmitSampleComponent, SampleFormComponent, MapsWindowComponent ],
-      imports: [HttpClientTestingModule,  AgmCoreModule.forRoot(), NoopAnimationsModule, BrowserAnimationsModule,MaterialModule, ReactiveFormsModule, RouterTestingModule ],
+      imports: [HttpClientTestingModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule,  AgmCoreModule.forRoot(), NoopAnimationsModule, BrowserAnimationsModule,MaterialModule, ReactiveFormsModule, RouterTestingModule ],
       providers: [
+        NotificationService, ToastrService,
         { provide: MapsAPILoader, useClass: MockMapsAPILoader },
         { provide: AuthenticationService, useClass: MockAuthenticationService }
       ]

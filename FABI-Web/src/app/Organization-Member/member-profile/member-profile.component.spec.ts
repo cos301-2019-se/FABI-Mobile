@@ -6,6 +6,8 @@ import { MatSnackBarModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { NotificationService } from '../../_services/notification.service';
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 
 describe('MemberProfileComponent', () => {
   let component: MemberProfileComponent;
@@ -20,14 +22,19 @@ describe('MemberProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MemberProfileComponent ],
-      imports: [MaterialModule,
-      NoopAnimationsModule,
-      HttpClientTestingModule, 
-      MatSnackBarModule, 
-      MatDialogModule,
-      RouterTestingModule
-    ],
-    providers: [ { provide: AuthenticationService, useClass: MockAuthenticationService } ]
+      imports: [
+        MaterialModule,
+        NoopAnimationsModule,
+        HttpClientTestingModule, 
+        MatSnackBarModule, 
+        MatDialogModule,
+        RouterTestingModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
+      ],
+      providers: [ 
+        NotificationService,
+        ToastrService,
+        { provide: AuthenticationService, useClass: MockAuthenticationService } 
+      ]
     })
     .compileComponents();
   }));
