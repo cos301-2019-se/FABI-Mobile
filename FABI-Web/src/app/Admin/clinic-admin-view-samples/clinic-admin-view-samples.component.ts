@@ -45,6 +45,9 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
   editingSample: any;
   isEditingSample: boolean = false;
   sampleFields: any[] = [];
+  plantationFields: any[] = [];
+  conditonsFields: any[] = [];
+  typesFields: any[] = [];
   samples: any[];
   selectedSampleData: any
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
@@ -160,13 +163,49 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectSample(sample: any) {
-    this.selectedSampleData = sample.data;
+    this.selectedSampleData = sample.data.sample;
+
     Object.keys(this.selectedSampleData).forEach((column) => {
 
-      let obj = {
-        'name': column
+      if(column == "plantation_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['plantation_details'][field]
+          }
+          this.plantationFields.push(obj);
+        });
       }
-      this.sampleFields.push(obj);
+      if(column == "sample_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['sample_details'][field]
+          }
+          this.sampleFields.push(obj);
+        });
+      }
+      if(column == "types") {
+        // Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          this.selectedSampleData[column].forEach(element => {
+            let obj = {
+              'name': element['type'],
+              "data": element['symptoms']
+            }
+            this.typesFields.push(obj);
+          });
+        // });
+      }
+      if(column == "conditions") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['conditions'][field]
+          }
+          this.conditonsFields.push(obj);
+        });
+      }
+
     });
   }
 
@@ -215,12 +254,17 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
       if (response.success == true && response.code == 200) {
 
         loadingRef.close();
-
         this.viewSamples();
+        this.notificationService.showSuccessNotification('Sample Status Updated', '');
 
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Update Status Failed', 'An error occurred while updating the sample status.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.notificationService.showErrorNotification('Update Status Failed', 'An error occurred while updating the sample status.');
+      //Handled in error-handler
     });
   }
 

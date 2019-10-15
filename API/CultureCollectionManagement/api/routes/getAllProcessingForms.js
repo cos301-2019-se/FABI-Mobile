@@ -30,7 +30,7 @@ router.post('/', getAllStaff);
 const db = admin.firestore();
 
 async function getAllStaff(req, res) {
-    if(await auth.authCCAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)){
+    if(await auth.authCCAdmin(req.headers.authorization)||await auth.authSuperUser(req.headers.authorization)||await auth.authStaff(req.headers.authorization)){
         //(1)
         var staffRef = db.collection('CultureCollection').doc('CMWProcessing').collection('Forms');
         staffRef.get().then(snapshot => {

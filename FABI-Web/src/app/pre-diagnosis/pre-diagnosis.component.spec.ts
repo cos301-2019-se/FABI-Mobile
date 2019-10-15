@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,7 +18,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 describe('PreDiagnosisComponent', () => {
   let component: PreDiagnosisComponent;
   let fixture: ComponentFixture<PreDiagnosisComponent>;
-
+  let authService: AuthenticationService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PreDiagnosisComponent ],
@@ -33,10 +34,16 @@ describe('PreDiagnosisComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PreDiagnosisComponent);
     component = fixture.componentInstance;
+    authService = new AuthenticationService(null);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('authService should be defined', () => {
+    expect(authService).toBeTruthy();
+  });
+
 });

@@ -116,7 +116,7 @@
       <div class="statistics">
 
         <!-- Statistic Box -->
-        <div class="overview-statistic-box">
+        <div class="overview-statistic-box" *ngIf="sampleStats && userStats">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Overview Statistics</h5>
@@ -130,7 +130,7 @@
         <!-- / Statistic Box -->
 
         <!-- Statistic Box -->
-        <div class="statistic-box">
+        <div class="statistic-box" *ngIf="sampleStats">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Number of Samples</h5>
@@ -143,7 +143,7 @@
         <!-- / Statistic Box -->
 
         <!-- Statistic Box -->
-        <div class="statistic-box">
+        <div class="statistic-box" *ngIf="userStats">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Number of Users</h5>
@@ -155,11 +155,25 @@
         </div>
         <!-- / Statistic Box -->
 
+        <!-- Statistic Box -->
+        <div class="statistic-box" *ngIf="!sampleStats && !userStats">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Statistics</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p>Unfortunately there are no statistics available at this time</p>
+            </div>
+          </div>
+        </div>
+        <!-- / Statistic Box -->
+
       </div>
       <!-- / Statistics -->
 
       <!-- Handler Shortcuts -->
-      <div class="handler-shortcuts">
+      <div class="handler-shortcuts"
+        *ngIf="currentUser &&  (currentUser.permission == 'SuperUser' || currentUser.permission == 'DatabaseAdmin' || currentUser.permission == 'ClinicAdmin')">
 
         <!-- Menu Shortcut Row -->
         <div class="menu-row">

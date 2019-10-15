@@ -166,7 +166,7 @@ export interface Logs {
 ///////////////////////////////////////////////////////////////////////
 //                               POST USER
 /**
- *  //Object for defining the JSON object to be sent when requesting 
+ *  //Object for defining the JSON object to be sent when requesting
  *  the logs belonging to a member
  *
  * @export
@@ -174,14 +174,14 @@ export interface Logs {
  */
 ///////////////////////////////////////////////////////////////////////
 export interface POSTUser {
-  userID: string;         //The ID of the user
+  userID: string;         // The ID of the user
 }
 
 
 ///////////////////////////////////////////////////////////////////////
 //                               POST UPDATE
 /**
- *  //Object for defining the JSON object to be sent when updating 
+ *  //Object for defining the JSON object to be sent when updating
  *  to logs belonging to a user
  *
  * @export
@@ -189,8 +189,8 @@ export interface POSTUser {
  */
 ///////////////////////////////////////////////////////////////////////
 export interface POSTUpdate {
-  userID: string;         //The ID of the user
-  logIDs: string[];       //The logs to be removed from the user's profile
+  userID: string;         // The ID of the user
+  logIDs: string[];       //  The logs to be removed from the user's profile
 }
 
 @Injectable({
@@ -203,9 +203,9 @@ export class NotificationLoggingService {
   //                                                          CONSTRUCTOR
   /**
   * Creates an instance of NotificationLoggingService.
-  * 
+  *
   * @param {HttpClient} http For making calls to the API
-  * 
+  *
   * @memberof NotificationLoggingService
   */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,7 +218,7 @@ export class NotificationLoggingService {
    *    This function sends a POST request to the API to retrieve a list containing all the logs with type 'USER'
    *
    * @returns API response @type any
-   * 
+   *
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -244,12 +244,12 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                 GET ALL DATABASE MANAGEMENT LOGS 
+  //                                                 GET ALL DATABASE MANAGEMENT LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing all the logs with type 'DBML'
    *
    * @returns API response @type any
-   * 
+   *
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,12 +275,12 @@ export class NotificationLoggingService {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                         GET ALL ACCESS LOGS 
+  //                                                         GET ALL ACCESS LOGS
   /**
    *    This function sends a POST request to the API to retrieve a list containing all the logs with type 'ACCL'
    *
    * @returns API response @type any
-   * 
+   *
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -311,7 +311,7 @@ export class NotificationLoggingService {
    *    This function sends a POST request to the API to retrieve a list containing all the logs with type 'ERRL'
    *
    * @returns API response @type any
-   * 
+   *
    * @memberof NotificationLoggingService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

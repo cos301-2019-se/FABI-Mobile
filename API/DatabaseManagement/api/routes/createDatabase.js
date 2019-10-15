@@ -30,39 +30,6 @@ async function createDatabase(req, res)
 
     if(await auth.authSuperUser(req.headers.authorization)||await auth.authStaff(req.headers.authorization)){
         // (1) Check if all required data is received and that it is correct.
-        if (req.body.admin.name == undefined || req.body.admin.name == '') {
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "Admin name expected"
-            });
-        }
-        if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "Admin surname expected"
-            });
-        }
-        if (req.body.admin.surname == undefined || req.body.admin.surname == '') {
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(400).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                code: 400,
-                title: "BAD_REQUEST",
-                message: "Admin surname expected"
-            });
-        }
         if (req.body.databaseName == undefined || req.body.databaseName == '') {
             res.setHeader('Content-Type', 'application/problem+json');
             res.setHeader('Content-Language', 'en');
@@ -74,58 +41,54 @@ async function createDatabase(req, res)
                 message: "Database name expected"
             });
         }
-
-        const qs = {
-            databaseName : req.body.databaseName,
-            admin : {
-                fname: req.body.admin.name,
-                surname: req.body.admin.surname,
-                email: req.body.admin.email,
+        else{
+            const qs = {
+                databaseName : req.body.databaseName,
             }
+        // (2) Connect to DB
+            
+
+            adminRef = db.collection('Databases').doc(req.body.databaseName).collection('Admins').doc(req.body.admin.email).set(qs.admin).then(()=>{
+                        res.setHeader('Content-Type', 'application/problem+json');
+                        res.setHeader('Content-Language', 'en');
+                        res.setHeader("Access-Control-Allow-Origin", "*");
+                        res.status(200).json({                                  // ******* RESPONSE STATUS? ************
+                            success: true,
+                            code: 200,
+                            title: "SUCCESS",
+                            message: "Database Created",
+                            data: {
+                                databaseName: req.body.databaseName,
+                                tempPassword: pass
+                            }
+                            
+                }
+                );
+                log({
+                    type: "DBML",
+                    action: "/createDatabase",
+                    details: req.body.databaseName,
+                    user: req.body.userID,
+                    org1: 'FABI'
+                });
+            }).catch((err) => {
+                console.log("Database connection error: " + err);
+                res.setHeader('Content-Type', 'application/problem+json');
+                res.setHeader('Content-Language', 'en');
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.status(500).json({                                  // ******* RESPONSE STATUS? ************
+                    success: false,
+                    code: 500,
+                    title: "INTERNAL SERVER ERROR",
+                    message: "Error Connecting to Database"
+                });
+                log({
+                    type: "ERRL",
+                    statusCode: "502",
+                    details: "Error connecting to database"
+                });
+            });
         }
-    // (2) Connect to DB
-        
-
-        adminRef = db.collection('Databases').doc(req.body.databaseName).collection('Admins').doc(req.body.admin.email).set(qs.admin).then(()=>{
-                    res.setHeader('Content-Type', 'application/problem+json');
-                    res.setHeader('Content-Language', 'en');
-                    res.setHeader("Access-Control-Allow-Origin", "*");
-                    res.status(200).json({                                  // ******* RESPONSE STATUS? ************
-                        success: true,
-                        code: 200,
-                        title: "SUCCESS",
-                        message: "Database Created, Admin Set",
-                        data: {
-                            databaseName: req.body.databaseName,
-                            tempPassword: pass
-                        }
-                        
-            }
-            );
-            log({
-                type: "DBML",
-                action: "/createDatabase",
-                details: req.body.databaseName,
-                user: '1563355277876',
-                org1: 'FABI'
-            });
-        }).catch((err) => {
-            console.log("Database connection error: " + err);
-            res.setHeader('Content-Type', 'application/problem+json');
-            res.setHeader('Content-Language', 'en');
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.status(500).json({                                  // ******* RESPONSE STATUS? ************
-                success: false,
-                code: 500,
-                title: "INTERNAL SERVER ERROR",
-                message: "Error Connecting to Database"
-            });
-            log({
-                type: "ERRL",
-                statusCode: "502",
-                details: "Error connecting to database"
-            });
-        });
     }
     else
     {

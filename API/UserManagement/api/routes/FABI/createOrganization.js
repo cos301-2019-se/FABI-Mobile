@@ -128,7 +128,7 @@ async function addOrganization(req, res)
                         log({
                             type: 'USER',
                             action: 'AddMemberToOrg',
-                            details: '1563355277876',
+                            details: req.body.userID,
                             user: qs.admin.id,
                             org1: 'FABI',
                             org2: req.body.orgName,
@@ -160,7 +160,7 @@ async function addOrganization(req, res)
                             log({
                                 type: 'USER',
                                 action: 'AddMemberToOrg',
-                                details: '1563355277876',
+                                details: req.body.userID,
                                 user: qs.admin.id,
                                 org1: 'FABI',
                                 org2: req.body.orgName,

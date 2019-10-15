@@ -39,13 +39,14 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
 
   intercept(request: Http.HttpRequest<any>, next: Http.HttpHandler): Observable<Http.HttpEvent<any>> {
 
-    request = this.addJWTToken(request);
+    // request = this.addJWTToken(request);
+
+    console.log("----- 1 -----");
 
     return next.handle(request).pipe(
       // retry(1),
       catchError((error: Http.HttpErrorResponse) => {
 
-        console.log(error);
         if (error && error.status === 401) {
           
           if(this.authService.isLoggedIn == true) {
@@ -63,7 +64,7 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
           this.router.navigate(['/login']);
           this.notificationServie.showErrorNotification("Unauthorized", error.error.message);
         } else if(error && error.status === 404) {
-          this.notificationServie.showErrorNotification(error.error.title, error.error.message);
+          // this.notificationServie.showErrorNotification(error.error.title, error.error.message);
         } else {
           return throwError(error);
         }
@@ -71,19 +72,24 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
     );
   }
 
-  private addJWTToken(request: Http.HttpRequest<any>): Http.HttpRequest<any> {  
-    if(this.session && this.session != null && this.session != '') {
-      let token = this.session.token;
+  // private addJWTToken(request: Http.HttpRequest<any>): Http.HttpRequest<any> {  
+    // this.session = this.authService.getCurrentSessionValue;
 
-      if (token && token != null && token != '') {
-        return request.clone({
-          headers: request.headers.set(
-            this.AUTH_HEADER, `Bearer ${token}`
-          )
-        });
-      }
-    }else {
-      return request;
-    }  
-  }
+    // console.log("----- 2 -----" + JSON.stringify(this.session));
+    // if(this.session.loggedIn == true || this.session.loggedIn == "true") {
+    //   console.log("----- 3 -----");
+    //   let token = this.session.token;
+    //   console.log("----- 4 ----- " + token);
+
+    //   if (token && token != null && token != '') {
+    //     return request.clone({
+    //       headers: request.headers.set(
+    //         this.AUTH_HEADER, `Bearer ${token}`
+    //       )
+    //     });
+    //   }
+    // }else {
+    //   return request;
+    // }  
+  // }
 }

@@ -48,8 +48,8 @@ module.exports.getUser = function(username, password, callback){
             bcrypt.compare(password, member.password, (err, valid) =>
 			{
                 if(!valid){
-                    callback(false, null);
-					
+                    //callback(false, null);
+					throw('Invalid Credentials')
                 }else{
                     callback(false, member);
 					

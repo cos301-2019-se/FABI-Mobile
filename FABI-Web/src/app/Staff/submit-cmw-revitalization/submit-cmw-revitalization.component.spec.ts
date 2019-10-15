@@ -10,10 +10,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 //Import the materials component
 import { MaterialModule } from '../../materials';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
+import { NotificationService } from '../../_services/notification.service';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilterPipe } from '../../_pipes/filter.pipe';
@@ -38,9 +38,11 @@ describe('SubmitCmwRevitalizationComponent', () => {
         BrowserAnimationsModule, 
         ReactiveFormsModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule
       ],
       providers:[
+        NotificationService,
+        ToastrService,
         { provide: AuthenticationService, useClass: MockAuthenticationService }
       ]
     })

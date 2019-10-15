@@ -8,7 +8,15 @@ const config = require('./config');
 //                                            EMAIL SETTINGS 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const transporter = nodemailer.createTransport({
+const transporterSent = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: config.user,
+      pass: config.pass
+    }
+});
+
+const transporterRecieved = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: config.user,
@@ -30,13 +38,13 @@ const transporter = nodemailer.createTransport({
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const sendOrganizationRequestToOrg = function(orgName, email) {
 
-    transporter.use('compile', hbs({
+    transporterSent.use('compile', hbs({
         viewEngine: {
-            viewPath: path.resolve(__dirname, 'templates', 'RequestSent_Organization'),
+            viewPath: path.resolve(__dirname, 'routes', 'templates', 'RequestSent_Organization'),
             extName: '.hbs',
             defaultLayout: false
         },
-        viewPath: path.resolve(__dirname, 'templates', 'RequestSent_Organization'),
+        viewPath: path.resolve(__dirname, 'routes', 'templates', 'RequestSent_Organization'),
         extName: '.hbs'
     }));
     
@@ -46,13 +54,13 @@ const sendOrganizationRequestToOrg = function(orgName, email) {
         to: email,
         subject: "FABI Mobile | Request Sent",
         text: "",
-        template: 'html',
+        template: 'requestSent',
         context: {
             orgName: orgName
         }
     };
     
-    return transporter.sendMail(mailOptions, (error, info) => {
+    return transporterSent.sendMail(mailOptions, (error, info) => {
         if (error)
             console.log(error);
         else
@@ -76,13 +84,13 @@ const sendOrganizationRequestToOrg = function(orgName, email) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const sendOrganizationRequestToFABI = function(orgName, fname, surname, email) {
 
-    transporter.use('compile', hbs({
+    transporterRecieved.use('compile', hbs({
         viewEngine: {
-            viewPath: path.resolve(__dirname, 'templates', 'RequestReceived_FABI'),
+            viewPath: path.resolve(__dirname, 'routes', 'templates', 'OrganizationRequestReceived_FABI'),
             extName: '.hbs',
             defaultLayout: false
         },
-        viewPath: path.resolve(__dirname, 'templates', 'RequestReceived_FABI'),
+        viewPath: path.resolve(__dirname, 'routes', 'templates', 'OrganizationRequestReceived_FABI'),
         extName: '.hbs'
     }));
     
@@ -92,14 +100,14 @@ const sendOrganizationRequestToFABI = function(orgName, fname, surname, email) {
         to: 'novacapstone@gmail.com',                               /////////////////////////////////// change to super user ////////////////////////////////
         subject: "FABI Mobile | Organization Requested to Register",
         text: "",
-        template: 'html',
+        template: 'requestReceived',
         context: {
             orgName: orgName,
             details: `Administrator: \n Name: ${fname} ${surname} \n Email: ${email} `
         }
     };
     
-    return transporter.sendMail(mailOptions, (error, info) => {
+    return transporterRecieved.sendMail(mailOptions, (error, info) => {
         if (error)
             console.log(error);
         else
