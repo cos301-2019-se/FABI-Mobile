@@ -6,19 +6,29 @@ import { MemberNotificationComponent } from '../member-notification/member-notif
 import { MemberProfileComponent } from '../member-profile/member-profile.component'
 import { MemberHelpComponent } from '../member-help/member-help.component'
 
-import { MaterialModule } from '../../materials';
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FilterPipe } from '../../_pipes/filter.pipe';
-//Router
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
+
 import { RouterTestingModule } from '@angular/router/testing';
 
-//Import form components
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+import { MaterialModule } from '../../materials';
+
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient } from '@angular/common/http';
+
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { DebugElement } from '@angular/core';
+import { NotificationService } from '../../_services/notification.service';
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
+
+import { FilterPipe } from '../../_pipes/filter.pipe';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AuthenticationService } from 'src/app/_services/authentication.service'
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
@@ -26,6 +36,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 describe('MemberDashboardComponent', () => {
   let component: MemberDashboardComponent;
   let fixture: ComponentFixture<MemberDashboardComponent>;
+
+  let UserManagementService: UserManagementAPIService;
+  let DiagnosticClinicService: DiagnosticClinicAPIService;
+  let notificationLoggingService: NotificationLoggingService;
+  let authService: AuthenticationService;
 
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
@@ -42,8 +57,10 @@ describe('MemberDashboardComponent', () => {
         MemberHelpComponent,
         FilterPipe
       ],
-      imports: [ MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, MatDialogModule],
+      imports: [ MatSnackBarModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, MatDialogModule],
       providers: [
+        NotificationService,
+        ToastrService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: MatSnackBar, useValue: {} },
@@ -57,9 +74,80 @@ describe('MemberDashboardComponent', () => {
     fixture = TestBed.createComponent(MemberDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    UserManagementService = new UserManagementAPIService( null , null);
+    DiagnosticClinicService = new DiagnosticClinicAPIService(null, null);
+    notificationLoggingService = new NotificationLoggingService(null, null);
+    authService = new AuthenticationService(null);
   });
 
+  // -------- Component Creation Tests - Boilerplate Test Case --------
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // -------- Service Creation Tests --------
+  it('should be defined', () => {
+    expect(AuthenticationService).toBeTruthy();
+  });
+
+  it('should be defined', () => {
+    expect(UserManagementAPIService).toBeTruthy();
+  });
+
+  it('should be defined', () => {
+    expect(DiagnosticClinicAPIService).toBeTruthy();
+  });
+
+  it('should be defined', () => {
+    expect(NotificationLoggingService).toBeTruthy();
+  });
+
+  // -------- Initial State Tests --------
+  it('Component initial state', () => {
+    expect(component.notificationsTab).toBeFalsy();
+    expect(component.profileTab).toBeFalsy();
+    expect(component.saveBtn).toBeFalsy();
+    expect(component.confirmPasswordInput).toBeFalsy();
+    expect(component.helpTab).toBeFalsy();
+
+    expect(component.sampleTableLoading).toBeTruthy();
+  });
+
+  // -------- Function Tests --------
+  it('toggle notification tab', () =>{
+    let x = component.notificationsTab;
+    component.toggleNotificationsTab();
+    expect(component.notificationsTab == !x).toBeTruthy();
+  });
+
+  it('toggle profile tab', () =>{
+    let x = component.profileTab;
+    component.toggleProfileTab();
+    expect(component.profileTab == !x).toBeTruthy();
+  });
+
+  it('toggle help tab', () =>{
+    let x = component.helpTab;
+    component.toggleHelpTab();
+    expect(component.helpTab == !x).toBeTruthy();
+  });
+
+  it('displayProfileSaveBtn', () => {
+    component.displayProfileSaveBtn();
+    expect(component.saveBtn).toBeTruthy();
+  });
+
+  it('displayConfirmPasswordInput', () => {
+    component.displayConfirmPasswordInput();
+    expect(component.confirmPasswordInput).toBeTruthy();
+  });
+
+  // -------- Service Tests --------
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
+  });
+
 });

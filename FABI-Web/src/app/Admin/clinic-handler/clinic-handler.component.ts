@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Monday, August 26th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,42 +14,66 @@
  */
 
 
-import { Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
-import { OnInit} from '@angular/core';
-import { Injectable } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
+import * as http from '@angular/common/http';
+import * as core from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { sharedStylesheetJitUrl } from '@angular/compiler';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
-
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { NotificationService } from 'src/app/_services/notification.service';
+import * as Interface from '../../_interfaces/interfaces';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-clinic-handler',
   templateUrl: './clinic-handler.component.html',
   styleUrls: ['./clinic-handler.component.scss']
 })
-export class ClinicHandlerComponent implements OnInit { 
-  
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
-  profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
-  saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
-  confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
-  helpTab: boolean = false;
+export class ClinicHandlerComponent implements core.OnInit {
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          GLOBAL VARIABLES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
+  helpTab: boolean = false;
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
+  /** Object for defining the Add Staff form -  @type {FormGroup} */
+  addStaffForm: FormGroup;
+  /** To check if form has been submitted - @type {boolean} */
+  submitted: boolean = false;
+  /** To check if form has been submitted correctly - @type {boolean} */
+  valid: boolean = false;
+  /** Array of User Type objects for form dropdown - @type {UserType[]} */
+  userTypes: Interface.UserType[];
+  /** Selected user type on dropdown - @type {string} */
+  selectedUserType: string;
+  adminTypes: any[];
+  allDatabaseNames: any[];
+  adminUsers: any[];
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        FORM VALIDATORS
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  add_staff_validators = {
+    'user': [
+      { type: 'required', message: 'Please select a user' },
+    ]
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -59,25 +83,32 @@ export class ClinicHandlerComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {core.ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {DomSanitizer} sanitizer
-   * @param {ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {core.ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * 
    * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    public sanitizer: DomSanitizer, 
+    public sanitizer: DomSanitizer,
     private userManagementService: UserManagementAPIService,
-    private diagnosticClinicService: DiagnosticClinicAPIService, 
-    private notificationLoggingService: NotificationLoggingService, 
-    private resolver: ComponentFactoryResolver, 
-    private authService: AuthenticationService, 
+    private diagnosticClinicService: DiagnosticClinicAPIService,
+    private notificationLoggingService: NotificationLoggingService,
+    private resolver: core.ComponentFactoryResolver,
+    private authService: AuthenticationService,
     private router: Router,
-    private formBuilder: FormBuilder, 
-    private snackBar: MatSnackBar, 
-    ) {}
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private notificationService: NotificationService,
+    private dialog: MatDialog,
+  ) {
+    this.addStaffForm = this.formBuilder.group({
+      user: ['', Validators.required],
+      database_privileges: new FormArray([])
+    });
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          NG ON INIT  
@@ -89,8 +120,39 @@ export class ClinicHandlerComponent implements OnInit {
    * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ngOnInit() { 
-    this.currentUser = this.authService.getCurrentSessionValue.user;    
+  ngOnInit() {
+    this.resetAddFields();
+    this.getDBNames();
+    this.userManagementService.getFABIAdmins().subscribe((response: any) => {
+
+      if (response.success == true && response.code == 200) {
+
+        this.adminUsers = response.data.qs.staff;
+
+        //POPUP MESSAGE
+      }
+      else if (response.success == false) {
+        //POPUP MESSAGE
+      }
+    });
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+  }
+
+  getDBNames() {
+    this.userManagementService.getDatabaseNames().subscribe((response: any) => {
+      if (response.success == true && response.code == 200) {
+        this.allDatabaseNames = response.data.docs;
+
+        this.allDatabaseNames.map(() => {
+          const control = new FormControl(false);
+          (this.addStaffForm.controls.database_privileges as FormArray).push(control)
+        });
+
+      }
+      else if (response.success == false) {
+        //POPUP MESSAGE
+      }
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +176,7 @@ export class ClinicHandlerComponent implements OnInit {
    * @memberof ClinicHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
+  toggleNotificationsTab() {
     this.notificationsTab = !this.notificationsTab;
   }
 
@@ -176,6 +238,71 @@ export class ClinicHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetStaffFields() {
     this.helpTab = !this.helpTab;
+  }
+
+  addStaff() {
+    this.submitted = true;
+
+    if (this.addStaffForm.invalid) {
+      return;
+    }
+
+    this.valid = true;
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Adding Clinic Admin" } });
+
+    const LstaffName = this.addStaffForm.controls.user.value.fname;
+    const LstaffSurname = this.addStaffForm.controls.user.value.surname;
+    const LstaffEmail = this.addStaffForm.controls.user.value.email;
+    const LstaffPhone = 1234567890;
+    const LstaffPosition = "ClinicAdmin";
+
+
+    const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone };
+
+    var databasePrivileges: Interface.DatabasePrivilege[] = [];
+
+    this.addStaffForm.controls.database_privileges.value.forEach((value, i) => {
+
+      if (value == true) {
+        let dbPrivilege: Interface.DatabasePrivilege = {
+          name: this.allDatabaseNames[i],
+          privileges: ['retrieve']
+        };
+        databasePrivileges.push(dbPrivilege);
+      }
+
+    });
+
+    this.userManagementService.addStaffMember(staff_details, databasePrivileges).subscribe((response: any) => {
+
+      loadingRef.close();
+
+      if (response.success == true && response.code == 200) {
+        //POPUP MESSAGE
+        this.notificationService.showSuccessNotification('Clinic Admin Added', '');
+      }
+      else {
+        //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Add Clinic Admin Failed', 'An error occurred while adding admin.');
+      }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.notificationService.showErrorNotification('Add Clinic Admin Failed', 'An error occurred while adding member.');
+      //Handled in error-handler
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS
+  /**
+   * This function will clear the inputs and reset all forms
+   * 
+   * @memberof ClinicHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetAddFields() {
+    this.addStaffForm.reset();
   }
 
 }

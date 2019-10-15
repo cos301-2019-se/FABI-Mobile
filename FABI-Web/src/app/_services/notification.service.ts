@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Monday, October 7th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,20 +14,26 @@
  */
 
 
-import { Injectable } from '@angular/core';
+import * as core from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { ErrorComponent } from '../_errors/error-component/error.component';
 import { ToastrService } from 'ngx-toastr';
 
-@Injectable()
+@core.Injectable()
 
 export class NotificationService {
 
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private toastr: ToastrService) {}
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private toastr: ToastrService) { }
 
-  showErrorNotification(title: string, message: string) {
-
+  showErrorNotification(title: string, message?: string) {
     this.toastr.error(message, title);
+  }
+
+  showWarningNotification(title: string, message?: string) {
+    this.toastr.warning(message, title);
+  }
+
+  showSuccessNotification(title: string, message?: string) {
+    this.toastr.success(message, title);
   }
 
   showDialogNotification(message) {
@@ -36,10 +42,6 @@ export class NotificationService {
     //     if (result == "Retry") {
     //     }
     //   })
-  }
-
-  showWarningNotifiction(title: string, message: string) {
-    this.toastr.warning(message, title);
   }
 
 }

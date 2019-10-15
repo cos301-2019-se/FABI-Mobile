@@ -5,7 +5,7 @@
  * Created Date: Wednesday, August 14th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 29th 2019
+ * Last Modified: Sunday, October 6th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,14 +13,14 @@
  * <<license>>
  */
 
-import { Component, OnInit } from '@angular/core';
+import * as core from '@angular/core';
 
-@Component({
+@core.Component({
   selector: 'app-member-menu',
   templateUrl: './member-menu.component.html',
   styleUrls: ['./member-menu.component.scss']
 })
-export class MemberMenuComponent implements OnInit {
+export class MemberMenuComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -31,8 +31,7 @@ export class MemberMenuComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            TOGGLE PROFILE 

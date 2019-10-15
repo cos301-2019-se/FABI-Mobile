@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,30 +14,24 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation, Inject, ViewChild, ElementRef } from '@angular/core';
-import * as Interface from "../../_interfaces/interfaces";
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../_errors/error-component/error.component';
+import * as http from '@angular/common/http';
+import * as core from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
-import { AuthenticationService } from '../../_services/authentication.service';
-import { LoadingComponent } from "../../_loading/loading.component";
-import { UpdateComponent } from "../../update/update.component";
-import { template } from '@angular/core/src/render3';
-
+import { NotificationService } from 'src/app/_services/notification.service';
 import { UserManagementAPIService } from 'src/app/_services/user-management-api.service';
+import { LoadingComponent } from "../../_loading/loading.component";
+import { AuthenticationService } from '../../_services/authentication.service';
 
 
-@Component({
+@core.Component({
   selector: 'app-member-profile',
   templateUrl: './member-profile.component.html',
   styleUrls: ['./member-profile.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class MemberProfileComponent implements OnInit {
+export class MemberProfileComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -57,30 +51,30 @@ export class MemberProfileComponent implements OnInit {
   password: string = '';
   /** The staff member's confirmed password -  @type {string} */
   confirmPassword: string = '';
-
   /** The form to display the admin member's details -  @type {FormGroup} */
   memberProfileForm: FormGroup;
-
   /** The form to change the user's password -  @type {FormGroup} */
   changePasswordForm: FormGroup;
-
   /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   private toggle_status: boolean = false;
-
-  /** The user that is currently logged in - @type {boolean} */  
+  /** The user that is currently logged in - @type {boolean} */
   currentUser: any;
-
+  /** if the user is editing their profile details - @type {boolean} */
   isEditingProfile: boolean = false;
-
+  /** if the form has been submitted - @type {boolean} */
   submitted: boolean;
-
   /** Specifies if the user details have been retreived to disable the loading spinner - @type {boolean} */
   userProfileLoading: boolean = true;
+  userProfileDetails: any = "";
 
   /** Holds the input element (passwordInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("passwordInput") passwordInput: ElementRef;
+  @core.ViewChild("passwordInput") passwordInput: core.ElementRef;
   /** Holds the input element (confirmInput) from the HTML page - @type {ElementRef} */
-  @ViewChild("confirmInput") confirmInput: ElementRef;
+  @core.ViewChild("confirmInput") confirmInput: core.ElementRef;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VALIDATORS
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   member_profile_validators = {
     'member_name': [
@@ -94,7 +88,6 @@ export class MemberProfileComponent implements OnInit {
       { type: 'pattern', message: 'Invalid email' }
     ]
   }
-
 
   change_password_validators = {
     'current_password': [
@@ -121,7 +114,7 @@ export class MemberProfileComponent implements OnInit {
    * 
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {Router} router
    * @param {FormBuilder} formBuilder Used to get the form elements from the HTML page
    * 
@@ -134,7 +127,8 @@ export class MemberProfileComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private userManagementService: UserManagementAPIService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService
   ) {
     this.memberProfileForm = this.formBuilder.group({
       organization_name: '',
@@ -154,8 +148,8 @@ export class MemberProfileComponent implements OnInit {
       ])],
       confirm_password: ['', Validators.required]
     }, {
-        validator: this.PasswordMatch('new_password', 'confirm_password')
-      });
+      validator: this.PasswordMatch('new_password', 'confirm_password')
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,14 +163,6 @@ export class MemberProfileComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    // this.authService.temporaryLoginOrganisationMember().subscribe((response: any) => {
-    //   this.currentUser = this.authService.getCurrentSessionValue.user;
-    //   this.loadMemberProfileDetails();
-    // });
-
-    //******** TO BE USED IN PRODUCTION: ********
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
@@ -234,24 +220,28 @@ export class MemberProfileComponent implements OnInit {
 
     //Subscribing to the UserManagementAPIService to get all the staff members details
     this.userManagementService.getUserDetails(this.organization, this.id).subscribe((response: any) => {
-      if (response.success == true) {
+      if (response.success == true && response.code == 200) {
         //Temporarily holds the data returned from the API call
-        const data = response.data;
+        this.userProfileDetails = response.data;
 
         //Deactivate loading spinners
         this.userProfileLoading = false;
 
         // Fill the form inputs with the user's details
         this.memberProfileForm.setValue({
-          member_name: data.fname,
-          member_surname: data.surname,
-          member_email: data.email,
+          member_name: this.userProfileDetails.fname,
+          member_surname: this.userProfileDetails.surname,
+          member_email: this.userProfileDetails.email,
           organization_name: this.currentUser.organisation
         });
       }
       else {
         //Error handling
+        this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load profile details.');
+      //Handled in error-handler
     });
   }
 
@@ -282,26 +272,41 @@ export class MemberProfileComponent implements OnInit {
     this.userManagementService.updateOrganizationMemberDetails(Uemail, Uname, Usurname).subscribe((response: any) => {
 
       loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
 
-      if (response.success == true) {
+      if (response.success == true && response.code == 200) {
 
         //Reloading the updated user's details
         this.loadMemberProfileDetails();
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully saved profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Profile Updated', '');
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not save profile changes", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.isEditingProfile = true;
+      this.editProfileToggle();
+      this.resetAddFields();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not update profile details');
+      //Handled in error-handler
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        CHANGE PASSWORD
+  /**
+   * This function is used to change the users password
+   *
+   * @returns
+   * @memberof MemberProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   changePassword() {
 
     this.submitted = true;
@@ -319,25 +324,39 @@ export class MemberProfileComponent implements OnInit {
     this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
 
         //Display message to say that details were successfully saved
-        let snackBarRef = this.snackBar.open("Successfully changed password.", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Password Changed', '');
 
       }
       else {
         //Error handling
-        let snackBarRef = this.snackBar.open("Could not change password", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      this.resetAddFields();
+      this.notificationService.showErrorNotification('Update Failed', 'Could not change password');
+      //Handled in error-handler
     });
   }
 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     PASSWORD MATCH CHECK
+  /**
+   * This function will check that the *new password* and the *confirm password* fields are the same for the `change password` method.
+   *  This function is used for the form validators.
+   *
+   * @param {string} newP
+   * @param {string} confirmP
+   * @returns
+   * @memberof MemberProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   PasswordMatch(newP: string, confirmP: string) {
     return (formGroup: FormGroup) => {
       const newControl = formGroup.controls[newP];
@@ -398,6 +417,7 @@ export class MemberProfileComponent implements OnInit {
       this.memberProfileForm.get('member_surname').disable();
       this.memberProfileForm.get('member_email').disable();
       this.isEditingProfile = false;
+      this.resetAddFields();
     } else {
       this.memberProfileForm.get('member_name').enable();
       this.memberProfileForm.get('member_surname').enable();
@@ -405,6 +425,27 @@ export class MemberProfileComponent implements OnInit {
       this.isEditingProfile = true;
     }
 
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET FORMS
+  /**
+   * This function will clear the inputs and reset all forms
+   * 
+   * @memberof MemberProfileComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  resetAddFields() {
+    this.memberProfileForm.reset();
+    // Fill the form inputs with the user's details
+    this.memberProfileForm.setValue({
+      member_name: this.userProfileDetails.fname,
+      member_surname: this.userProfileDetails.surname,
+      member_email: this.userProfileDetails.email,
+      organization_name: this.currentUser.organisation
+    });
+    this.changePasswordForm.reset();
+    this.submitted = false;
   }
 
 }

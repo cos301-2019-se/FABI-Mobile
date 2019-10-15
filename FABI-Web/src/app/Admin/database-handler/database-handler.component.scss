@@ -2,9 +2,8 @@
    DATABASE HANDLER
    ========================================================================== */
 
-
-
-/* Database Tables Subsection */
+/* Table Style
+   ========================================================================== */
 .database-tables {
   display: flex;
   flex-direction: column;
@@ -12,7 +11,7 @@
   align-items: center;
 
   width: 100%;
-  min-height: 50vh;
+  min-height: 10vh;
   height: auto;
 
   padding: 15px;
@@ -51,10 +50,16 @@
   width: 95%;
 }
 
+/* Handler Actions Style
+   ========================================================================== */
+.handler-actions{
+  position: relative;
+  top: 25px;
+}
 
 
-/* Staff Handler View Staff Modal Section
-     ========================================================================== */
+/* Modal Style
+   ========================================================================== */
 
 .modal-header {
   background-color: #6aa84f;
@@ -102,7 +107,7 @@ modal {
   margin-top: 25px;
 }
 
-.preview-actions h6{
+.preview-actions h6 {
   color: #72b555;
   font-family: "Montserrat", sans-serif;
 }
@@ -114,8 +119,6 @@ modal {
 .btn.btn-default-cancel {
   width: 30%;
 }
-
-
 
 #confirmDeleteModal .modal-body {
   display: flex;
@@ -132,4 +135,19 @@ modal {
 .confirm-actions {
   display: flex;
   justify-content: center;
+}
+
+
+/* Preview Table Style
+   ========================================================================== */
+.preview-table {
+  width: 100%;
+  height: 50%;
+
+  padding: 25px;
+  margin: 15px 0 15px 0;
+
+  background-color: #fff;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }

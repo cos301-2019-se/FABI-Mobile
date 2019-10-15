@@ -5,7 +5,7 @@
  * Created Date: Tuesday, June 25th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,41 +14,41 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
-import { ViewEncapsulation } from '@angular/core';
+import * as core from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-
-
-import { UserManagementAPIService } from "../_services/user-management-api.service";
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../_errors/error-component/error.component';
-import { LoadingComponent } from "../_loading/loading.component";
-
 import * as Interface from '../_interfaces/interfaces';
+import { LoadingComponent } from "../_loading/loading.component";
+import { UserManagementAPIService } from "../_services/user-management-api.service";
+import { CookieService } from 'ngx-cookie-service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationService } from '../_services/notification.service';
 
-@Component({
+@core.Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
   contact_form: FormGroup;
+
   /** Object for storing all forms that require validation-  @type {HTMLCollectionOf<Element>} */
   forms: HTMLCollectionOf<Element> = null;
-
   request_register_org: FormGroup;
-
   submitted: boolean = false;
   valid: boolean = false;
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VAIDATORS
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   register_organization_validators = {
     'organization_name': [
       { type: 'required', message: 'Organization name is required' },
@@ -77,8 +77,8 @@ export class HomeComponent implements OnInit {
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
-   * @param {Router} router For navigating to other modules/components
-   * @memberof OrganizationHandlerComponent
+   * @param {Router} router for routing/navigating to other components
+   * @memberof HomeComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
@@ -86,12 +86,14 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService,
+    private notificationService: NotificationService
   ) {
     this.contact_form = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
-      mesage: ['', Validators.required]
+      message: ['', Validators.required]
     })
 
     this.request_register_org = this.formBuilder.group({
@@ -106,11 +108,21 @@ export class HomeComponent implements OnInit {
         Validators.required,
         // Validators.pattern('')
       ])]
-      
+
     })
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @memberof HomeComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.cookieService.set('SameSite', 'None');
+
     //-------- Form Validation --------
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     this.forms = document.getElementsByClassName("needs-validation");
@@ -131,22 +143,15 @@ export class HomeComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                       CONTACT
+  //                                                       REQUEST TO REGISTER
   /**
-   * This function sends an email to the admin
+   * This function allwos an organizaion to request to register for the system
    *
    * @returns
    * @memberof HomeComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  contact() {
-
-
-  }
-
-
   requestToRegister() {
-    
     this.submitted = true;
 
     if (this.request_register_org.invalid) {
@@ -167,28 +172,22 @@ export class HomeComponent implements OnInit {
     const org_details: Interface.Organisation = { orgName: LorgName, admin: admin_details };
 
     this.userManagementService.sendRequestToRegisterOrganization(org_details).subscribe((response: any) => {
-
       loadingRef.close();
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-
-        let snackBarRef = this.snackBar.open("Successfully Sent Request", "Dismiss", {
-          duration: 6000
-        });
-
-      } else if (response.success == false) {
+        this.notificationService.showSuccessNotification('Request Sent', '');
+      
+      } else {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Sending Request", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.requestToRegister();
-          }
-        })
+        this.notificationService.showErrorNotification('Send Request Failed', 'An error occurred while sending the request');
       }
+    }, (err: HttpErrorResponse) => {
+      loadingRef.close();
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Send Request Failed', 'An error occurred while sending the request');
     });
-    
+
   }
 
 }
-

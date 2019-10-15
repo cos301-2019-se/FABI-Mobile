@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,24 +14,21 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, ViewContainerRef, ComponentFactoryResolver} from '@angular/core';
+import * as http from '@angular/common/http';
+import { Component, ComponentFactoryResolver, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+import { LoadingComponent } from 'src/app/_loading/loading.component';
+import * as Interface from '../../_interfaces/interfaces';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { DatabaseManagementService } from "../../_services/database-management.service";
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar, MatTableDataSource } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
-import { ErrorComponent } from '../../_errors/error-component/error.component';
-import { MatTableModule } from '@angular/material/table';
-
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { Porting } from '../../_services/porting.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 
-import * as Interface  from '../../_interfaces/interfaces';
-import { LoadingComponent } from 'src/app/_loading/loading.component';
+
 
 @Component({
   selector: 'app-database-handler',
@@ -44,7 +41,7 @@ export class DatabaseHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
+
   /** Indicates if a file is loading or not - @type {boolean} */
   loading: boolean = false;
   /** Indicates if the preview table can be loaded or not - @type {boolean} */
@@ -53,41 +50,26 @@ export class DatabaseHandlerComponent implements OnInit {
   headings: any = [];
   /** Array holding the columns of the new database - @type {any} */
   columns: any = [];
-
-  jsonData: any;  
-
-  /** Holds the div element (rpDBname) from the HTML page - @type {ElementRef} */
-  @ViewChild("rpDBname") rPort : ElementRef;
-  /** Holds the div element (pDBname) from the HTML page - @type {ElementRef} */
-  @ViewChild("pDBname") port : ElementRef;
-
-  /** The data source of the HTML table - @type {MatTableDataSource([])} */ 
+  jsonData: any;
+  /** The data source of the HTML table - @type {MatTableDataSource([])} */
   databaseData: any[];
   fields: any[] = [];
-
-  public portingForm: {
-    file: any,
-    databaseName: string
-  };
-
+  /** Object for defining the Porting form -  @type {FormGroup} */
+  portingForm: FormGroup;
   allDatabaseNames: Interface.DatabasePrivilege[];
-  
   selectedDatabase: string;
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
   profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
   saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
   confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
-
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
-
   /** The name of the database to create via porting - @type {string} */
   dbname: string;
   /** Used to read the csv file for porting - @type {FileReader} */
@@ -96,18 +78,34 @@ export class DatabaseHandlerComponent implements OnInit {
   fileInput: any;
   /** Indicates if the database has been ported or not - @type {boolean} */
   ported: boolean = false;
-
   currentUserPrivileges: any;
-
   /** The search item the user is looking for in the table -  @type {string} */
   public searchDatabase: string = "";
-  /** The search item the user is looking for in the table -  @type {string} */
-  public searchView: string = "";
-
   /** Specifies if the list of databases have been retreived to disable the loading spinner - @type {boolean} */
   databaseTableLoading: boolean = true;
   /** Specifies if the selected database has been retreived to disable the loading spinner - @type {boolean} */
   viewDatabaseLoading: boolean = true;
+  deleteData: Interface.Confirm = { title: '', message: '', info: '', cancel: '', confirm: '' };
+  submitted: boolean = false;
+
+  /** Holds the div element (rpDBname) from the HTML page - @type {ElementRef} */
+  @ViewChild("rpDBname") rPort: ElementRef;
+  /** Holds the div element (pDBname) from the HTML page - @type {ElementRef} */
+  @ViewChild("pDBname") port: ElementRef;
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VALIDATORS
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  porting_validators = {
+    'databaseName': [
+      { type: 'required', message: 'Database name is required' },
+    ],
+    'file': [
+      { type: 'required', message: 'Please choose a CSV file' }
+    ]
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             CONSTRUCTOR
@@ -117,7 +115,7 @@ export class DatabaseHandlerComponent implements OnInit {
    * @param {HttpService} service For calling the 'http' API service
    * @param {MatSnackBar} snackBar 
    * @param {MatDialog} dialog 
-   * @param {Router} router
+   * @param {Router} router for routing/navigating to other components
    * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
@@ -125,22 +123,23 @@ export class DatabaseHandlerComponent implements OnInit {
    * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private authService: AuthenticationService, 
-    private snackBar: MatSnackBar, 
-    private dialog: MatDialog, 
-    private router: Router, 
-    private resolver: ComponentFactoryResolver, 
-    private userManagementService: UserManagementAPIService, 
+  constructor(private authService: AuthenticationService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private router: Router,
+    private resolver: ComponentFactoryResolver,
+    private userManagementService: UserManagementAPIService,
     private notificationLoggingService: NotificationLoggingService,
     private dbService: DatabaseManagementService,
-    private formBuilder: FormBuilder, 
-    private portCSV: Porting
-    ) {
-      this.portingForm = {
-        file: null,
-        databaseName: ''
-      }      
-  }  
+    private formBuilder: FormBuilder,
+    private portCSV: Porting,
+    private notificationService: NotificationService
+  ) {
+    this.portingForm = this.formBuilder.group({
+      databaseName: ['', Validators.required],
+      file: ['', Validators.required]
+    });
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          NG ON INIT  
@@ -153,17 +152,13 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    // this.authService.temporaryLoginSuperUser().subscribe((response : any) => {
-    //   this.currentUser = this.authService.getCurrentSessionValue.user;
-    //   this.getDBNames();
-    // });
-    
-    //******** TO BE USED IN PRODUCTION: ********
+
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     //Calling the neccessary functions as the page loads
     this.getDBNames();
+    this.resetDatabaseFields();
+    this.preview = false;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,84 +171,83 @@ export class DatabaseHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public submitCSV(input?) {
+
+    this.submitted = true;
+
+    if (input) {
+      this.fileInput = input;
+    }
+
+    if (this.fileInput == '' || this.fileInput == null) {
+      return;
+    }
+
+    if (this.portingForm.invalid) {
+      return;
+    }
+
     this.dbname = '';
-    this.fileInput = '';
     this.loading = false;
     this.headings = [];
     this.columns = [];
 
-    this.fileInput = input;
     this.loading = true;
     this.dbname = this.port.nativeElement.value;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "" }});
-    
-    if(input) {
-      this.portingForm.file = input;
-    } 
-
-    if(this.portingForm.databaseName == "" || this.portingForm.databaseName == null){
-      let snackBarRef = this.snackBar.open("Please enter a name for the database", "Dismiss", { duration: 3000 });
-      return;
-    }
-
-    if(this.portingForm.file == null || this.portingForm.file == '') {
-      let snackBarRef = this.snackBar.open("Please select a database to port", "Dismiss", { duration: 3000 });
-      return;
-    }
+    this.submitted = false;
 
     const reader = new FileReader();
-    reader.readAsText(this.portingForm.file.files[0]);
+    reader.readAsText(this.fileInput.files[0]);
     reader.onload = () => {
       let text = reader.result;
 
       //converts file to JSON Object
       this.jsonData = this.portCSV.convertToJSON(text);
-      
+
       var columnsIn = this.jsonData[0];
       var tempString = '';
       var valid = false;
-      for(var key in columnsIn){
-        if(key.indexOf(',') > -1){
+      for (var key in columnsIn) {
+        if (key.indexOf(',') > -1) {
           this.headings.push(key);
           valid = true;
         }
-        else{
+        else {
           tempString += key + ',';
         }
-      } 
+      }
 
-      if(valid == false){
+      if (valid == false) {
         tempString = tempString.slice(0, -1);
         this.headings.push(tempString);
       }
-      
+
       var valid = false;
-      for(var i = 0; i < this.jsonData.length; i++){
+      for (var i = 0; i < this.jsonData.length; i++) {
         columnsIn = this.jsonData[i];
         var tempString = '';
-        for(var key in columnsIn){
-          if(key.indexOf(',') > -1){
+        for (var key in columnsIn) {
+          if (key.indexOf(',') > -1) {
             this.columns.push(this.jsonData[i][key]);
             valid = true;
           }
-          else{
+          else {
             tempString += this.jsonData[i][key] + ',';
           }
-        } 
-        
-        if(valid == false){
+        }
+
+        if (valid == false) {
           tempString = tempString.slice(0, -1);
           this.columns.push(tempString);
         }
       }
 
-      if(this.headings.length != 0){
+      if (this.headings.length != 0) {
         this.preview = true;
       }
 
       //Making the columns into an array instead of a string
-      for(var i = 0; i < this.columns.length; i++){
+      for (var i = 0; i < this.columns.length; i++) {
         this.columns[i] = this.columns[i].split(',');
       }
 
@@ -262,7 +256,6 @@ export class DatabaseHandlerComponent implements OnInit {
       this.headings = headingNames.split(',');
     }
 
-    loadingRef.close();
     this.preview = true;
   }
 
@@ -274,74 +267,73 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getCSV(){  
+  getCSV() {
+
+    this.submitted = true;
+
     let data = "";
     let dbname = this.selectedDatabase;
 
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Downloading CSV" }});
-    
-    this.dbService.retrieveDatabase(dbname).subscribe((response:any) => {
-        if(response.success == true && response.code == 200) {
-          data = response.data.docs;
-          let CSVdata = this.portCSV.extractDatabase(data, dbname);
-          
-          //Save data in csv file and show download dialog
-          var blob = new Blob([CSVdata], {type: 'text/csv;charset=utf-8'});
-          var downloadLink = document.createElement('a');
-          downloadLink.setAttribute('download', dbname+".csv" );
-          downloadLink.setAttribute('href', window.URL.createObjectURL(blob) );
-          var event = new MouseEvent("click");
-          downloadLink.dispatchEvent(event);
-        } 
-        else if (response.success == false) {
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          })
-        }    
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Downloading CSV" } });
 
-        loadingRef.close();
-      }, (err: HttpErrorResponse) => {
+    this.submitted = false;
+
+    this.dbService.retrieveDatabase(dbname).subscribe((response: any) => {
+
+      loadingRef.close();
+
+      if (response.success == true && response.code == 200) {
+        data = response.data.docs;
+        let CSVdata = this.portCSV.extractDatabase(data, dbname);
+
+        //Save data in csv file and show download dialog
+        var blob = new Blob([CSVdata], { type: 'text/csv;charset=utf-8' });
+        var downloadLink = document.createElement('a');
+        downloadLink.setAttribute('download', dbname + ".csv");
+        downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
+        var event = new MouseEvent("click");
+        downloadLink.dispatchEvent(event);
+      }
+      else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-        dialogRef.afterClosed().subscribe((result) => {
-          if(result == "Retry") {
-            this.ngOnInit();
-          }
-        });
-      
-        loadingRef.close();
-    }); 
+        this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
+        this.resetDatabaseFields();
+      }
+
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Download Failed', 'An error occurred while downloading');
+      loadingRef.close();
+      this.resetDatabaseFields();
+    });
   }
 
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        GET DATABASE NAMES
+  /**
+   * This functions is used to get all the database names from the server
+   *
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getDBNames() {
-    this.userManagementService.getDatabaseNames().subscribe( (response:any) => {
+    this.userManagementService.getDatabaseNames().subscribe((response: any) => {
       if (response.success == true && response.code == 200) {
 
         this.allDatabaseNames = response.data.docs;
 
         //Deactivate loading table spinners
         this.databaseTableLoading = false;
-        
-      } 
+
+      }
       else if (response.success == false) {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Loading Database Names", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.getDBNames();
-          }
-        })
+        this.notificationService.showWarningNotification('Error', 'Could not load databases');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load databases');
+      //Handled in error-handler
     });
-  }
-
-  refreshDatasource() {
-    this.getDBNames();
   }
 
 
@@ -353,12 +345,14 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  public viewDatabase(databaseName : string) {
+  public viewDatabase(databaseName: string) {
     this.selectedDatabase = databaseName;
-    
-    let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Retrieving Database" }});
+
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Retrieving Database" } });
 
     this.dbService.retrieveDatabase(databaseName).subscribe((response: any) => {
+      loadingRef.close();
+
       if (response.success == true && response.code == 200) {
         Object.keys(response.data.docs[0]).forEach((column) => {
           let obj = {
@@ -371,24 +365,18 @@ export class DatabaseHandlerComponent implements OnInit {
 
         //Deactivate loading view database spinners
         this.viewDatabaseLoading = false;
-  
-      } 
-      else if (response.success == false) {
+
+      } else {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the data", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
+        this.notificationService.showWarningNotification('Error', 'Could not load database details');
       }
-
-      loadingRef.close();
-    });
-
+    }, (err: http.HttpErrorResponse) => {
+        this.notificationService.showWarningNotification('Error', 'Could not load database details');
+        //Handled in error-handler
+      });
   }
-  
-  
+
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                  SUBMIT DATABASE
   /**
@@ -397,45 +385,34 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitDatabase(){
-    if(this.ported == true){
+  submitDatabase() {
+    if (this.ported == true) {
       let snackBarRef = this.snackBar.open("The file has already been ported", "Dismiss", {
         duration: 4000
       });
     }
-    else{
-      let loadingRef = this.dialog.open(LoadingComponent, {data: { title: "Porting" }});
+    else {
+      let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Porting" } });
 
-      this.dbService.porting(this.portingForm.databaseName, this.jsonData).subscribe((response:any) => {
+      this.dbService.porting(this.portingForm.get('databaseName').value, this.jsonData).subscribe((response: any) => {
         loadingRef.close();
-        if(response.success == true && response.code == 200) {
+        if (response.success == true && response.code == 200) {
           //POPUP MESSAGE
-          let snackBarRef = this.snackBar.open("Successfully ported CSV file", "Dismiss", {
-            duration: 3000
-          });
+          this.notificationService.showSuccessNotification('Successfully ported CSV file', '');
 
           this.ported = true;
 
-          this.refreshDatasource();
-          
+          this.refreshDataSource();
+
+        } else {
+          //POPUP MESSAGE
+          this.notificationService.showErrorNotification('Upload Failed', 'An error occurred while porting');
+          this.resetDatabaseFields();
         }
-        else if (response.success == false) {
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: response.error.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          });
-        }    
-        }, (err: HttpErrorResponse) => {
-          //POPUP MESSAGE
-          let dialogRef = this.dialog.open(ErrorComponent, {data: {error: "Could not port CSV file", message: err.message}});
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result == "Retry") {
-              this.ngOnInit();
-            }
-          });
+      }, (err: http.HttpErrorResponse) => {
+        //Handled in error-handler
+        this.notificationService.showErrorNotification('Upload Failed', 'An error occurred while porting');
+        this.resetDatabaseFields();
       });
     }
   }
@@ -450,8 +427,89 @@ export class DatabaseHandlerComponent implements OnInit {
    *  @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  removePreview(){
+  removePreview() {
     this.preview = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     DROP DATABASE PROMPT 1
+  /**
+   * This function prompts the user to confirm if they wish to remove the selected database
+   *
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  dropDatabasePrompt1(dbname: string) {
+
+    this.selectedDatabase = dbname;
+
+    this.deleteData = {
+      title: "Drop Database",
+      message: "Are you sure you want to remove this database? ",
+      info: `Database : ${dbname}`,
+      cancel: "Cancel",
+      confirm: "Yes"
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                     DROP DATABASE PROMPT 2
+  /**
+   * This function prompts the user to confirm if they wish to remove the selected database
+   *
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  dropDatabasePrompt2() {
+
+    this.deleteData = {
+      title: "Destructive Operation",
+      message: "All data will be permanently removed from this system",
+      info: `Database : ${this.selectedDatabase}`,
+      cancel: "Cancel",
+      confirm: "Drop"
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                           DROP DATABASE   
+  /**
+   * This function calls the *database-management* service to remove the selected database
+   *
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  dropDatabase() {
+    let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Removing Database" } });
+    this.dbService.removeDatabase(this.selectedDatabase).subscribe((response: any) => {
+
+      loadingRef.close();
+
+      if (response.success == true && response.code == 200) {
+        //POPUP MESSAGE
+        this.notificationService.showSuccessNotification('Database Removed', '');
+        this.refreshDataSource();
+      } else {
+        //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the database');
+      }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the database');
+    });
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                                REFRESH
+  /**
+   * This function refreshes the Datasource (in most cases, the table that has changed)
+   *
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  refreshDataSource() {
+    this.getDBNames();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -475,7 +533,7 @@ export class DatabaseHandlerComponent implements OnInit {
    * @memberof DatabaseHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificationsTab(){ 
+  toggleNotificationsTab() {
     this.notificationsTab = !this.notificationsTab;
   }
 
@@ -527,9 +585,19 @@ export class DatabaseHandlerComponent implements OnInit {
     this.helpTab = !this.helpTab;
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          RESET DATABASE FIELDS
+  /**
+   * This function refreshes the databsase fields
+   *
+   * @memberof DatabaseHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetDatabaseFields() {
-    this.fields = [];
-    this.databaseData = [];
+    this.portingForm.reset();
+    this.preview = false;
+    this.columns = [];
+    this.headings = [];
   }
 
 }

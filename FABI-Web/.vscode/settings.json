@@ -65,7 +65,7 @@
 			"language": "*",
 			"template": [
 				"File Name: <<filename>>",
-				"File Path: <<filepath>>",
+				// "File Path: <<filepath>>",
 				//"Project: <<projectpath>>",
 				"Project Name: <<projectname>>",
 				"Created Date: <<filecreated('dddd, MMMM Do YYYY')>>",

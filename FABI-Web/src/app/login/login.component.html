@@ -1,6 +1,6 @@
 <!-- Login -->
 <div class="login">
-  
+
   <!-- Login Heading -->
   <div class="banner"></div>
   <div class="heading">
@@ -17,10 +17,10 @@
       <!-- Organization Drop Down -->
       <div class="form-group">
         <label for="organization">Organization</label>
-        <select class="form-control form-control-sm" [(ngModel)]="selectedOrg" id="organization" formControlName="organization" required
+        <select class="form-control form-control-sm"  id="organization" formControlName="organization" required
         [ngClass]="{
           'is-invalid': loginForm.controls['organization'].invalid && (submitted || loginForm.controls['organization'].dirty), 
-          'is-valid': loginForm.controls['organization'].valid && (submitted || loginForm.controls['organization'].dirty)}" >
+          'is-valid': loginForm.controls['organization'].valid && (submitted || loginForm.controls['organization'].dirty)}">
           <option value="" selected>
             Please select an organization
           </option>
@@ -28,48 +28,51 @@
             {{organization.orgName}}
           </option>
         </select>
-         <!-- Error Validation Feedback--> 
-         <div *ngIf="loginForm.controls['organization'].invalid && (submitted || loginForm.controls['organization'].dirty)" >
-            <div *ngFor="let validation of login_validation_messages.organization">
-                <p *ngIf="loginForm.get('organization').hasError(validation.type)">{{validation.message}}</p>
-            </div>
+        <!-- Error Validation Feedback-->
+        <div
+          *ngIf="loginForm.controls['organization'].invalid && (submitted || loginForm.controls['organization'].dirty)">
+          <div *ngFor="let validation of login_validation_messages.organization">
+            <p *ngIf="loginForm.get('organization').hasError(validation.type)" class="text-warning">
+              {{validation.message}}</p>
           </div>
-          <!-- / Error Validation Feedback--> 
+        </div>
+        <!-- / Error Validation Feedback-->
       </div>
       <!-- /Organization Drop Down -->
 
       <!-- Email -->
       <div class="form-group">
         <label for="email">Email address</label>
-        <input type="email" class="form-control form-control-sm" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Enter email" required
-        [ngClass]="{
+        <input type="email" class="form-control form-control-sm" id="email" formControlName="email"
+          aria-describedby="emailHelp" placeholder="Enter email" required [ngClass]="{
           'is-invalid': loginForm.controls['email'].invalid && (submitted || loginForm.controls['email'].dirty), 
-          'is-valid': loginForm.controls['email'].valid && (submitted || loginForm.controls['email'].dirty)}" >
-         <!-- Error Validation Feedback--> 
-        <div *ngIf="loginForm.controls['email'].invalid && (submitted || loginForm.controls['email'].dirty)" >
+          'is-valid': loginForm.controls['email'].valid && (submitted || loginForm.controls['email'].dirty)}">
+        <!-- Error Validation Feedback-->
+        <div *ngIf="loginForm.controls['email'].invalid && (submitted || loginForm.controls['email'].dirty)">
           <div *ngFor="let validation of login_validation_messages.email">
-              <p *ngIf="loginForm.get('email').hasError(validation.type)">{{validation.message}}</p>
+            <p *ngIf="loginForm.get('email').hasError(validation.type)" class="text-warning">{{validation.message}}</p>
           </div>
         </div>
-        <!-- / Error Validation Feedback--> 
+        <!-- / Error Validation Feedback-->
       </div>
       <!-- / Email -->
 
       <!-- Password -->
-      <div class="form-group" >
+      <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control form-control-sm" id="password" formControlName="password" placeholder="Password" required 
-        [ngClass]="{
+        <input type="password" class="form-control form-control-sm" id="password" formControlName="password"
+          placeholder="Password" required [ngClass]="{
           'is-invalid': loginForm.controls['password'].invalid && (submitted || loginForm.controls['password'].dirty), 
-          'is-valid': loginForm.controls['password'].valid && (submitted || loginForm.controls['password'].dirty)}" >
-         <!-- Error Validation Feedback--> 
-        <div *ngIf="loginForm.controls['password'].invalid && (submitted || loginForm.controls['password'].dirty)" >
+          'is-valid': loginForm.controls['password'].valid && (submitted || loginForm.controls['password'].dirty)}">
+        <!-- Error Validation Feedback-->
+        <div *ngIf="loginForm.controls['password'].invalid && (submitted || loginForm.controls['password'].dirty)">
           <div *ngFor="let validation of login_validation_messages.password">
-              <p *ngIf="loginForm.get('password').hasError(validation.type)">{{validation.message}}</p>
+            <p *ngIf="loginForm.get('password').hasError(validation.type)" class="text-warning">{{validation.message}}
+            </p>
           </div>
         </div>
-        <!-- / Error Validation Feedback--> 
-        <a href="#" class="forgot-password">Forgot password?</a>
+        <!-- / Error Validation Feedback-->
+        <p style="color: white" class="forgot-password" data-toggle="modal" data-target="#forgotPasswordModal">Forgot password?</p>
       </div>
       <!-- / Password -->
 
@@ -91,3 +94,86 @@
 
 </div>
 <!-- / Login -->
+
+<!-- Forgot Password Section -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <!-- Modal Header-->
+        <div class="modal-header">
+          <h5 class="modal-title" id="forgotPasswordModalTitle">Reset Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetForgotFields()">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <!-- / Modal Header-->
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div class="form">
+
+            <!-- Add Staff Form -->
+            <form id="forgot_password_form" class="needs-validation" [formGroup]="forgotPasswordForm"
+              novalidate>
+              <div class="row">
+
+                <!-- Email -->
+                <div class="form-group">
+                  <label for="forogt_email">Email address</label>
+                  <input type="email" class="form-control" id="forgot_email" aria-describedby="emailHelp"
+                    placeholder="Enter email" formControlName="forgot_email">
+                </div>
+                  <!-- Error Validation Feedback-->
+                <!-- / Email -->
+
+                <!-- Organisation -->
+                <div class="form-group">
+                  <label for="organization2">Organization</label>
+                  <select class="form-control form-control-sm"  id="organization2" formControlName="organization2">
+                    <option value="" selected>
+                      Please select an organization
+                    </option>
+                    <option *ngFor="let organization of organizations" [value]="organization.orgName">
+                      {{organization.orgName}}
+                    </option>
+                  </select>
+                  <!-- Error Validation Feedback-->
+                </div>
+                <!-- / Organisation -->
+
+                <!-- Password -->
+                <div class="form-group">
+                  <label for="new_password">New Password</label>
+                  <input type="password" class="form-control" id="new_password"
+                    placeholder="Enter new password" formControlName="new_password">
+                </div>
+                  <!-- Error Validation Feedback-->
+                <!-- / Password -->
+
+                <!-- Password -->
+                <div class="form-group">
+                  <label for="new_password2">Re-enter New Password</label>
+                  <input type="password" class="form-control" id="new_password2"
+                    placeholder="Re-enter new password" formControlName="new_password2">
+                </div>
+                  <!-- Error Validation Feedback-->
+                <!-- / Password -->
+
+                <!-- Submit -->
+                <button type="button" (click)="forgotPassword()" class="btn btn-default-save">Reset Password</button>
+                <!-- / Submit -->
+
+              </div>
+            </form>
+            <!-- / Add Staff Form -->
+
+          </div>
+        </div>
+        <!-- / Modal Body -->
+
+      </div>
+
+    </div>
+  </div>
+  <!-- / Forgot Password Section -->

@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 29th 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,23 +14,17 @@
  */
 
 
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import * as core from '@angular/core';
+import { Sample } from '../../_services/diagnostic-clinic-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
 
-import { SampleDivComponent } from '../../Dynamic-Components/sample-div/sample-div.component';
-import { DiagnosticClinicAPIService, Sample, Species } from '../../_services/diagnostic-clinic-api.service';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
 
-@Component({
+@core.Component({
   selector: 'app-member-notification',
   templateUrl: './member-notification.component.html',
   styleUrls: ['./member-notification.component.scss']
 })
-export class MemberNotificationComponent implements OnInit {
+export class MemberNotificationComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -44,37 +38,29 @@ export class MemberNotificationComponent implements OnInit {
   allLogs: string[] = [];
 
   /** Holds the div element (sampleContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('sampleContainer', {read: ViewContainerRef}) sampleContainer;
+  @core.ViewChild('sampleContainer', { read: core.ViewContainerRef }) sampleContainer;
   /** Holds the div element (notificationContainer) from the HTML page - @type {ElementRef} */
-  @ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer;
+  @core.ViewChild('notificationContainer', { read: core.ViewContainerRef }) notificationContainer;
 
-  /** The ID of the logged in member - @type {string} */ 
-  memberID: string = '1234';
-  /** The number of samples belonging to the member - @type {number} */ 
-  numberOfMemberSamples: number;
-  /** Indicates if there are notifications to load - @type {boolean} */           
-  notifications: boolean = false;  
+  /** Indicates if there are notifications to load - @type {boolean} */
+  notifications: boolean = false;
 
-  /** Object array for holding the samples for the member -  @type {Sample[]} */               
-  memberSamples: Sample[] = [];
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
   notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
   profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */  
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
   saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */  
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
   confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */  
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
   helpTab: boolean = false;
-
   /** Specifies if the notifications have been retreived to disable the loading spinner - @type {boolean} */
   notificationsLoading: boolean = true;
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
-  
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       CONSTRUCTOR
@@ -90,6 +76,7 @@ export class MemberNotificationComponent implements OnInit {
     private notificationLoggingService: NotificationLoggingService
   ) { }
 
+  
   ngOnInit() {
   }
 
@@ -101,7 +88,7 @@ export class MemberNotificationComponent implements OnInit {
    * @memberof MemberNotificationComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  loadNotifications(){}
+  loadNotifications() { }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       REMOVE NOTIFICATIONS

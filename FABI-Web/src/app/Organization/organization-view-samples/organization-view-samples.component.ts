@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Wednesday, August 21st 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,36 +14,38 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import * as http from '@angular/common/http';
+import * as core from '@angular/core';
 //Include Material Components
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
-import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-organization-view-samples',
   templateUrl: './organization-view-samples.component.html',
   styleUrls: ['./organization-view-samples.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
 
 
-export class OrganizationViewSamplesComponent implements OnInit {
+export class OrganizationViewSamplesComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   sampleFields: any[] = [];
+  plantationFields: any[] = [];
+  conditonsFields: any[] = [];
+  typesFields: any[] = [];
   samples: any[];
   selectedSampleData: any;
-
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
   sampleTableLoading: boolean = true;
-
   /** The search item the user is looking for in the table -  @type {string} */
   public searchSample: string = "";
 
@@ -51,7 +53,7 @@ export class OrganizationViewSamplesComponent implements OnInit {
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of OrganizationViewSamplesComponent.
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {MatDialog} dialog
    * @param {Router} router
@@ -63,8 +65,10 @@ export class OrganizationViewSamplesComponent implements OnInit {
     private authService: AuthenticationService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                           NG ON INIT  
@@ -111,38 +115,85 @@ export class OrganizationViewSamplesComponent implements OnInit {
       if (response.success == true && response.code == 200) {
 
         this.samples = response.data.samples;
-
-
         //Deactivate loading table spinners
         this.sampleTableLoading = false;
 
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.viewSamples();
-          }
-        })
+        this.notificationService.showWarningNotification('Error', 'Could not load samples.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load samples.');
+      //Handled in error-handler
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SELECT SAMPLE 
+  /**
+   * Called when a user selects a sample and sets the selected sample as well as it's data fields
+   *
+   * @param {*} sample
+   * @memberof OrganizationViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectSample(sample: any) {
 
-    this.selectedSampleData = sample.data;
+    this.selectedSampleData = sample.data.sample;
 
     Object.keys(this.selectedSampleData).forEach((column) => {
 
-      let obj = {
-        'name': column
+      if(column == "plantation_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['plantation_details'][field]
+          }
+          this.plantationFields.push(obj);
+        });
       }
-      this.sampleFields.push(obj);
+      if(column == "sample_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['sample_details'][field]
+          }
+          this.sampleFields.push(obj);
+        });
+      }
+      if(column == "types") {
+        // Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          this.selectedSampleData[column].forEach(element => {
+            let obj = {
+              'name': element['type'],
+              "data": element['symptoms']
+            }
+            this.typesFields.push(obj);
+          });
+        // });
+      }
+      if(column == "conditions") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['conditions'][field]
+          }
+          this.conditonsFields.push(obj);
+        });
+      }
 
     });
-        
+
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            RESET SAMPLE FIELDS 
+  /**
+   * Resets the display fields for the sample
+   *
+   * @memberof OrganizationViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   resetSampleFields() {
     this.sampleFields = [];
   }

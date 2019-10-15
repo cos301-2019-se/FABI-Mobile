@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Member Dashboard -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -86,7 +86,20 @@
       <div class="statistics">
 
         <!-- Statistic Box -->
-        <div class="statistic-box">
+        <div class="overview-statistic-box" *ngIf="numberOfMemberSamples">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Overview Statistics</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p>Number of Samples: {{numberOfMemberSamples}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box" *ngIf="numberOfMemberSamples">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Number of Samples</h5>
@@ -97,6 +110,19 @@
           </div>
         </div>
         <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box" *ngIf="!numberOfMemberSamples">
+            <div class="statistic-box-content">
+              <div class="statistic-box-heading">
+                <h5>Statistics</h5>
+              </div>
+              <div class="statistic-box-info">
+                <p>Unfortunately there are no statistics available at this time</p>
+              </div>
+            </div>
+          </div>
+          <!-- / Statistic Box -->
 
       </div>
       <!-- / Statistics -->
@@ -192,4 +218,4 @@
   <!-- / Help Section -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Member Dashboard -->

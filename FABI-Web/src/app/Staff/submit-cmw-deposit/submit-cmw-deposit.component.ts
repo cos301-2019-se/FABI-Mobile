@@ -5,7 +5,7 @@
  * Created Date: Tuesday, July 16th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Sunday, August 18th 2019
+ * Last Modified: Tuesday, October 8th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -13,23 +13,23 @@
  * <<license>>
  */
 
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
-import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { UserManagementAPIService, Member } from '../../_services/user-management-api.service';
-import { CultureCollectionAPIService, CMWDeposit } from '../../_services/culture-collection-api.service';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
+import * as core from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { CMWDeposit, CultureCollectionAPIService } from '../../_services/culture-collection-api.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
+import { UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationService } from '../../_services/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
-@Component({
+@core.Component({
   selector: 'app-submit-cmw-deposit',
   templateUrl: './submit-cmw-deposit.component.html',
   styleUrls: ['./submit-cmw-deposit.component.scss']
 })
-export class SubmitCmwDepositComponent implements OnInit {
+export class SubmitCmwDepositComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
@@ -38,8 +38,8 @@ export class SubmitCmwDepositComponent implements OnInit {
   /** The form to submit a CMW deposit form -  @type {FormGroup} */
   cmwDepositForm: FormGroup;
 
-  /** Object array for holding the staff members -  @type {string[]} */                        
-  staff: string[] = []; 
+  /** Object array for holding the staff members -  @type {string[]} */
+  staff: string[] = [];
 
   /** The cmw culture number of the form -  @type {string} */
   cmwCultureNumber: string;
@@ -88,8 +88,8 @@ export class SubmitCmwDepositComponent implements OnInit {
   /** The additional notes of the form -  @type {string} */
   additionalNotes: string;
 
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  private toggle_status: boolean = false;
 
   /** The details of the user currently logged in -  @type {any} */
   currentUser: any;
@@ -110,26 +110,28 @@ export class SubmitCmwDepositComponent implements OnInit {
    * Creates an instance of SubmitCmwDepositComponent.
    * 
    * @param {UserManagementAPIService} userManagementService For making calls to the User Management API Service
+   * @param {NotificationService} notificationService For calling the Notification service
    * @param {CultureCollectionAPIService} cultureCollectionService for making calls to the Culture Collection API Service
    * @param {NotificationLoggingAPIService} notificationLoggingService For calling the Notification Logging API service
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {FormBuilder} formBuilder Used to build the form from the HTML page
    * @param {Router} router
    * 
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
+
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private userManagementService: UserManagementAPIService,
-    private cultureCollectionService: CultureCollectionAPIService, 
-    private authService: AuthenticationService, 
+    private cultureCollectionService: CultureCollectionAPIService,
+    private authService: AuthenticationService,
     private router: Router,
+    private notificationService: NotificationService,
     private notificationLoggingService: NotificationLoggingService
-    ) { 
+  ) {
     this.cmwDepositForm = this.formBuilder.group({
       cmw_culture_number: '',
       genus: '',
@@ -178,194 +180,193 @@ export class SubmitCmwDepositComponent implements OnInit {
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  submitCMWDepositForm(){
-    if(this.cmwDepositForm.controls.cmw_culture_number.value == null || this.cmwDepositForm.controls.cmw_culture_number.value == ""){
+  submitCMWDepositForm() {
+    if (this.cmwDepositForm.controls.cmw_culture_number.value == null || this.cmwDepositForm.controls.cmw_culture_number.value == "") {
       this.cmwCultureNumber = "N/A";
     }
-    else{
+    else {
       this.cmwCultureNumber = this.cmwDepositForm.controls.cmw_culture_number.value;
     }
 
-    if(this.cmwDepositForm.controls.genus.value == null || this.cmwDepositForm.controls.genus.value == ""){
+    if (this.cmwDepositForm.controls.genus.value == null || this.cmwDepositForm.controls.genus.value == "") {
       this.genus = "N/A";
     }
-    else{
+    else {
       this.genus = this.cmwDepositForm.controls.genus.value;
     }
 
-    if(this.cmwDepositForm.controls.epitheton.value == null || this.cmwDepositForm.controls.epitheton.value == ""){
+    if (this.cmwDepositForm.controls.epitheton.value == null || this.cmwDepositForm.controls.epitheton.value == "") {
       this.epitheton = "N/A";
     }
-    else{
+    else {
       this.epitheton = this.cmwDepositForm.controls.epitheton.value;
     }
 
-    if(this.cmwDepositForm.controls.personal_collection_number.value == null || this.cmwDepositForm.controls.personal_collection_number.value == ""){
+    if (this.cmwDepositForm.controls.personal_collection_number.value == null || this.cmwDepositForm.controls.personal_collection_number.value == "") {
       this.personalCollectionNumber = "N/A";
     }
-    else{
+    else {
       this.personalCollectionNumber = this.cmwDepositForm.controls.personal_collection_number.value;
     }
 
-    if(this.cmwDepositForm.controls.international_collection_number.value == null || this.cmwDepositForm.controls.international_collection_number.value == ""){
+    if (this.cmwDepositForm.controls.international_collection_number.value == null || this.cmwDepositForm.controls.international_collection_number.value == "") {
       this.internationalCollectionNumber = "N/A";
     }
-    else{
+    else {
       this.internationalCollectionNumber = this.cmwDepositForm.controls.international_collection_number.value;
     }
 
-    if(this.cmwDepositForm.controls.herbarium_number.value == null || this.cmwDepositForm.controls.herbarium_number.value == ""){
+    if (this.cmwDepositForm.controls.herbarium_number.value == null || this.cmwDepositForm.controls.herbarium_number.value == "") {
       this.herbariumNumber = "N/A";
     }
-    else{
+    else {
       this.herbariumNumber = this.cmwDepositForm.controls.herbarium_number.value;
     }
 
-    if(this.cmwDepositForm.controls.other_FABI_collections.value == null || this.cmwDepositForm.controls.other_FABI_collections.value == ""){
+    if (this.cmwDepositForm.controls.other_FABI_collections.value == null || this.cmwDepositForm.controls.other_FABI_collections.value == "") {
       this.otherFABICollections = "N/A";
     }
-    else{
+    else {
       this.otherFABICollections = this.cmwDepositForm.controls.other_FABI_collections.value;
     }
 
-    if(this.cmwDepositForm.controls.name.value == null || this.cmwDepositForm.controls.name.value == ""){
+    if (this.cmwDepositForm.controls.name.value == null || this.cmwDepositForm.controls.name.value == "") {
       this.name = "N/A";
     }
-    else{
+    else {
       this.name = this.cmwDepositForm.controls.name.value;
     }
 
-    if(this.cmwDepositForm.controls.type_status.value == null || this.cmwDepositForm.controls.type_status.value == ""){
+    if (this.cmwDepositForm.controls.type_status.value == null || this.cmwDepositForm.controls.type_status.value == "") {
       this.typeStatus = "N/A";
     }
-    else{
+    else {
       this.typeStatus = this.cmwDepositForm.controls.type_status.value;
     }
 
-    if(this.cmwDepositForm.controls.host.value == null || this.cmwDepositForm.controls.host.value == ""){
+    if (this.cmwDepositForm.controls.host.value == null || this.cmwDepositForm.controls.host.value == "") {
       this.host = "N/A";
     }
-    else{
+    else {
       this.host = this.cmwDepositForm.controls.host.value;
     }
 
-    if(this.cmwDepositForm.controls.vector.value == null || this.cmwDepositForm.controls.vector.value == ""){
+    if (this.cmwDepositForm.controls.vector.value == null || this.cmwDepositForm.controls.vector.value == "") {
       this.vector = "N/A";
     }
-    else{
+    else {
       this.vector = this.cmwDepositForm.controls.vector.value;
     }
 
-    if(this.cmwDepositForm.controls.substrate.value == null || this.cmwDepositForm.controls.substrate.value == ""){
+    if (this.cmwDepositForm.controls.substrate.value == null || this.cmwDepositForm.controls.substrate.value == "") {
       this.substrate = "N/A";
     }
-    else{
+    else {
       this.substrate = this.cmwDepositForm.controls.substrate.value;
     }
 
-    if(this.cmwDepositForm.controls.continent.value == null || this.cmwDepositForm.controls.continent.value == ""){
+    if (this.cmwDepositForm.controls.continent.value == null || this.cmwDepositForm.controls.continent.value == "") {
       this.continent = "N/A";
     }
-    else{
+    else {
       this.continent = this.cmwDepositForm.controls.continent.value;
     }
 
-    if(this.cmwDepositForm.controls.country.value == null || this.cmwDepositForm.controls.country.value == ""){
+    if (this.cmwDepositForm.controls.country.value == null || this.cmwDepositForm.controls.country.value == "") {
       this.country = "N/A";
     }
-    else{
+    else {
       this.country = this.cmwDepositForm.controls.country.value;
     }
 
-    if(this.cmwDepositForm.controls.region.value == null || this.cmwDepositForm.controls.region.value == ""){
+    if (this.cmwDepositForm.controls.region.value == null || this.cmwDepositForm.controls.region.value == "") {
       this.region = "N/A";
     }
-    else{
+    else {
       this.region = this.cmwDepositForm.controls.region.value;
     }
 
-    if(this.cmwDepositForm.controls.locality.value == null || this.cmwDepositForm.controls.locality.value == ""){
+    if (this.cmwDepositForm.controls.locality.value == null || this.cmwDepositForm.controls.locality.value == "") {
       this.locality = "N/A";
     }
-    else{
+    else {
       this.locality = this.cmwDepositForm.controls.locality.value;
     }
 
-    if(this.cmwDepositForm.controls.gps.value == null || this.cmwDepositForm.controls.gps.value == ""){
+    if (this.cmwDepositForm.controls.gps.value == null || this.cmwDepositForm.controls.gps.value == "") {
       this.gps = "N/A";
     }
-    else{
+    else {
       this.gps = this.cmwDepositForm.controls.gps.value;
     }
 
-    if(this.cmwDepositForm.controls.collected_by.value == null || this.cmwDepositForm.controls.collected_by.value == ""){
+    if (this.cmwDepositForm.controls.collected_by.value == null || this.cmwDepositForm.controls.collected_by.value == "") {
       this.collectedBy = "N/A";
     }
-    else{
+    else {
       this.collectedBy = this.cmwDepositForm.controls.collected_by.value;
     }
-      
+
     var temp = (this.cmwDepositForm.controls.date_collected.value).toString();
     var year = temp[0] + temp[1] + temp[2] + temp[3];
     var month = temp[5] + temp[6];
     var day = temp[8] + temp[9];
     this.dateCollected = day + '/' + month + '/' + year;
 
-    if(this.cmwDepositForm.controls.isolated_by.value == null || this.cmwDepositForm.controls.isolated_by.value == ""){
+    if (this.cmwDepositForm.controls.isolated_by.value == null || this.cmwDepositForm.controls.isolated_by.value == "") {
       this.isolatedBy = "N/A";
     }
-    else{
+    else {
       this.isolatedBy = this.cmwDepositForm.controls.isolated_by.value;
     }
 
-    if(this.cmwDepositForm.controls.identified_by.value == null || this.cmwDepositForm.controls.identified_by.value == ""){
+    if (this.cmwDepositForm.controls.identified_by.value == null || this.cmwDepositForm.controls.identified_by.value == "") {
       this.identifiedBy = "N/A";
     }
-    else{
+    else {
       this.identifiedBy = this.cmwDepositForm.controls.identified_by.value;
     }
 
-    if(this.cmwDepositForm.controls.donated_by.value == null || this.cmwDepositForm.controls.donated_by.value == ""){
+    if (this.cmwDepositForm.controls.donated_by.value == null || this.cmwDepositForm.controls.donated_by.value == "") {
       this.donatedBy = "N/A";
     }
-    else{
+    else {
       this.donatedBy = this.cmwDepositForm.controls.donated_by.value;
     }
 
-    if(this.cmwDepositForm.controls.additional_notes.value == null || this.cmwDepositForm.controls.additional_notes.value == ""){
+    if (this.cmwDepositForm.controls.additional_notes.value == null || this.cmwDepositForm.controls.additional_notes.value == "") {
       this.additionalNotes = "N/A";
     }
-    else{
+    else {
       this.additionalNotes = this.cmwDepositForm.controls.additional_notes.value;
     }
 
     var date = new Date();
     var currentDate = ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
-    var deposit: CMWDeposit = {userID: this.currentUser.ID, cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
+    var deposit: CMWDeposit = {
+      userID: this.currentUser.ID, cmwCultureNumber: this.cmwCultureNumber, genus: this.genus, epitheton: this.epitheton, personalCollectionNumber: this.personalCollectionNumber,
       internationalCollectionNumber: this.internationalCollectionNumber, herbariumNumber: this.herbariumNumber, otherFABICollections: this.otherFABICollections, name: this.name,
       typeStatus: this.typeStatus, host: this.host, vector: this.vector, substrate: this.substrate, continent: this.continent, country: this.country, region: this.region,
       locality: this.locality, gps: this.gps, collectedBy: this.collectedBy, dateCollected: this.dateCollected, isolatedBy: this.isolatedBy, identifiedBy: this.identifiedBy,
-      donatedBy: this.donatedBy, additionalNotes: this.additionalNotes, dateSubmitted: currentDate, formID: ''};
- 
+      donatedBy: this.donatedBy, additionalNotes: this.additionalNotes, dateSubmitted: currentDate, formID: ''
+    };
+
     this.cultureCollectionService.submitCMWDepositForm(deposit).subscribe((response: any) => {
-      if(response.success == true){
+      if (response.success == true) {
         //Successfully submitted deposit form
         this.cmwDepositForm.reset();
 
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("CMW Deposit form successfully submitted.", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification("Submitted Deposit Form", "Your CMW deposit form has been successfully submitted");
       }
-      else{
+      else {
         //Error handling
-
-        //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Could not submit CMW Deposit form. Please try again.", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showErrorNotification("Error Submitting Form", "There was an error in submiting the deposit form. Please try again");
       }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Error Submitting Form", "There was an error in submiting the deposit form. Please try again");
     });
   }
 
@@ -378,16 +379,11 @@ export class SubmitCmwDepositComponent implements OnInit {
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  getAllStaff(){
+  getAllStaff() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
-      if(response.success == true){
-        
-        for(var i = 0; i < response.data.qs.admins.length; i++){
-          this.staff.push(response.data.qs.admins[i].surname + ', ' + response.data.qs.admins[i].fname[0]);
-        }
-
-        for(var i = 0; i < response.data.qs.staff.length; i++){
+    this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
+      if (response.success == true) {
+        for (var i = 0; i < response.data.qs.staff.length; i++) {
           this.staff.push(response.data.qs.staff[i].surname + ', ' + response.data.qs.staff[i].fname[0]);
         }
       }
@@ -405,8 +401,8 @@ export class SubmitCmwDepositComponent implements OnInit {
    * @memberof SubmitCmwDepositComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
+  toggleNotificaitonsTab() {
+    this.toggle_status = !this.toggle_status;
   }
 
 
@@ -422,7 +418,7 @@ export class SubmitCmwDepositComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.currentUser = this.authService.getCurrentSessionValue.user;
-    
+
     //Calling the neccessary functions as the page loads
     this.getAllStaff();
   }

@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Friday, October 11th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,17 +14,23 @@
  */
 
 
+import * as http from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import * as Interface from '../_interfaces/interfaces';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { config } from "../../environments/environment.prod";
+import * as Interface from '../_interfaces/interfaces';
 
+/**
+ *  Used to handle all `session and authentication` related matters. Such as making requests to the API for authentication, 
+ *  or controlling sessions values. All current users' information is handled here.
+ *
+ * @export
+ * @class AuthenticationService
+ */
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthenticationService {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,12 +38,12 @@ export class AuthenticationService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////////////// AUTHENTICATION SERVICE VARIABLES ///////////////////////////////////////////////////// 
-  
+
   /** The user that is currently logged into the system - @type {Interface.UserPrivileges} */
   private currentUser: Interface.UserPrivileges;
-  /** The current session subject based on the current user - @type {BehaviorSubject<any>} */
+  /** The current session subject - @type {BehaviorSubject<any>} */
   private currentSessionSubject: BehaviorSubject<any>;
-  /** The current session based on the current user - @type {Observable<any>} */
+  /** The current session details - @type {Observable<any>} */
   public currentSession: Observable<any>;
 
 
@@ -46,29 +52,28 @@ export class AuthenticationService {
   /**
    * Creates an instance of AuthenticationService.
    * 
-   * @param {HttpClient} http This is used to make calls to the remote API
-   * 
+   * @param {http.HttpClient} http for making http calls to the API
    * @memberof AuthenticationService
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  constructor(private http: HttpClient) {
+  constructor(private http: http.HttpClient) {
     //Setting the current session subject based on the user logged in
     this.currentSessionSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('sessionDetails')));
-    //Setting the current session base don the user logged in
+    //Setting the current session based on the user logged in
     this.currentSession = this.currentSessionSubject.asObservable();
     //Setting the current user
-    this.currentUser = {databases: []};
+    this.currentUser = { databases: [] };
   }
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                       SET SESSION VARIABLES 
   /** 
    * This function is used to set all the session information and other details pertaining to a user when that user
    * logs onto the system.
    * 
-   * @param {string} tokenDetails The token details associated with the login
-   * @param {*} user The user that has logged in
-   * @param {string} org The organization that the user belongs to
+   * @param {string} tokenDetails the token returned from the server
+   * @param {*} user the users information that has loggedin
+   * @param {string} org the users organization 
    * 
    * @memberof AuthenticationService
    */
@@ -77,7 +82,7 @@ export class AuthenticationService {
     let usersDetails = {
       'ID': user.id,
       'organisation': org,
-      'name' : user.fname,
+      'name': user.fname,
       'surname': user.surname,
       'email': user.email,
       'permission': user.userType
@@ -109,7 +114,7 @@ export class AuthenticationService {
     let usersDetails = {
       'ID': user.id,
       'organisation': this.getCurrentSessionValue.user.organisation,
-      'name' : user.fname,
+      'name': user.fname,
       'surname': user.surname,
       'email': user.email,
       'permission': user.userType,
@@ -124,18 +129,51 @@ export class AuthenticationService {
     this.currentSessionSubject.next(sess);
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         CURRENT SESSION VALUE
+  /**
+   * Get the current sessions values
+   *
+   * @readonly
+   * @type {*}
+   * @memberof AuthenticationService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public get getCurrentSessionValue(): any {
     return this.currentSessionSubject.value;
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         CURRENT USER VALUE
+  /**
+   * Get current users value
+   *
+   * @readonly
+   * @type {*}
+   * @memberof AuthenticationService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public get getCurrentUserValue(): any {
     return this.currentUser;
   }
 
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         LOGGED IN ?
+  /**
+   * Check if current user is logged in. 
+   * 
+   * @returns `true` user IS logged in , `false` user NOT logged in
+   * @readonly
+   * @type {*}
+   * @memberof AuthenticationService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public get isLoggedIn(): any {
-    if(localStorage.getItem('loggedIn')) {
-      return JSON.parse(localStorage.getItem('loggedIn'));
+    if (localStorage.getItem('loggedIn')) {
+      return localStorage.getItem('loggedIn');
     }
     return false;
   }
@@ -150,7 +188,7 @@ export class AuthenticationService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   logoutUser() {
-    localStorage.removeItem('sessionDetails');
+    localStorage.clear();
     localStorage.setItem('loggedIn', JSON.stringify(false));
     this.currentSessionSubject.next(null);
   }
@@ -158,7 +196,7 @@ export class AuthenticationService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                             LOGIN 
   /**
-   * Method that sends a request to the API to authenticate a user
+   * Method that sends a request to the API to login a user
    *
    * @param {Interface.LoginInfo} details The details of the user to be logged in
    * @returns API response @type any
@@ -167,16 +205,17 @@ export class AuthenticationService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   login(details: Interface.LoginInfo) {
+
     // Http Request URL
     let url = `${config.loginURL}/login`;
     // Http Request Method
-    let method = 'POST'; 
+    let method = 'POST';
 
     // Data to send as JSON
     const postData = details;
 
     const options = {
-      headers: new HttpHeaders({
+      headers: new http.HttpHeaders({
         'cache-control': 'no-cache',
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*",
@@ -187,9 +226,12 @@ export class AuthenticationService {
     };
 
     return this.http.request<any>(method, url, options).pipe(map(response => {
+
+      console.log(this.getCurrentSessionValue);
+      console.log(response.token);
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        if(response.userDetails.databases) {
+        if (response.userDetails.databases) {
           this.currentUser.databases = response.userDetails.databases;
         }
       }
@@ -198,156 +240,6 @@ export class AuthenticationService {
 
   }
 
-  temporaryLoginSuperUser() {    
-    const Lemail = "johnsmith@gmail.com";
-    const Lpassw = "johnpassword";
-    const Lorg = "FABI";
-
-    // User details to be passed to API
-    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
-
-    let url = `${config.loginURL}/login`; // Http Request URL
-    let method = 'POST';  // Http Request Method
-
-    const postData = details; // Data to send as JSON
-
-    const options = {
-      headers: new HttpHeaders({
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-      }),
-      body: postData,
-      json: true
-    };
-
-    return this.http.request<any>(method, url, options).pipe(map(response => {
-      
-      if (response && (response.token && response.token != '')) {
-        this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        if(response.userDetails.databases) {
-          this.currentUser.databases = response.userDetails.databases;
-        }
-      }
-      return response;
-    }));
-
-  }
-
-  temporaryLoginOrganisation() {
-    
-    const Lemail = "samjones@gmail.com";
-    const Lpassw = "Q61hoZ19v0";
-    const Lorg = "Organization1";
-
-    // User details to be passed to API
-    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
-
-    let url = `${config.loginURL}/login`; // Http Request URL
-    let method = 'POST';  // Http Request Method
-
-    const postData = details; // Data to send as JSON
-
-    const options = {
-      headers: new HttpHeaders({
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-      }),
-      body: postData,
-      json: true
-    };
-
-    return this.http.request<any>(method, url, options).pipe(map(response => {
-      if (response && (response.token && response.token != '')) {
-        this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        if(response.userDetails.databases) {
-          this.currentUser.databases = response.userDetails.databases;
-        }
-      }
-      return response;
-    }));
-
-  }
-
-  temporaryLoginOrganisationMember() {
-    
-    const Lemail = "tomjones@gmail.com";
-    const Lpassw = "fmvubzMUfG";
-    const Lorg = "Organization1";
-
-    // User details to be passed to API
-    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
-
-    let url = `${config.loginURL}/login`; // Http Request URL
-    let method = 'POST';  // Http Request Method
-
-    const postData = details; // Data to send as JSON
-
-    const options = {
-      headers: new HttpHeaders({
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-      }),
-      body: postData,
-      json: true
-    };
-
-    return this.http.request<any>(method, url, options).pipe(map(response => {
-      if (response && (response.token && response.token != '')) {
-        this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        if(response.userDetails.databases) {
-          this.currentUser.databases = response.userDetails.databases;
-        }
-      }
-      return response;
-    }));
-
-  }
-
-  temporaryLoginStaff() {
-    
-    const Lemail = "susansmith@gmail.com";
-    const Lpassw = "hdAvOrwatA";
-    const Lorg = "FABI";
-
-    // User details to be passed to API
-    const details: Interface.LoginInfo = { email: Lemail, password: Lpassw, orgName: Lorg };
-
-    // Http Request URL
-    let url = `${config.loginURL}/login`;
-    // Http Request Method
-    let method = 'POST';  
-
-    // Data to send as JSON
-    const postData = details; 
-
-    const options = {
-      headers: new HttpHeaders({
-        'cache-control': 'no-cache',
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        'Accept': 'application/json'
-      }),
-      body: postData,
-      json: true
-    };
-
-    return this.http.request<any>(method, url, options).pipe(map(response => {
-      if (response && (response.token && response.token != '')) {
-        this.setSessionVariables(response.token, response.userDetails, details.orgName);
-        if(response.userDetails.databases) {
-          this.currentUser.databases = response.userDetails.databases;
-        }
-      }
-
-      return response;
-    }));
-  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                     LOAD FABI USER PRIVILEGES 
@@ -363,7 +255,8 @@ export class AuthenticationService {
 
     const postData = {
       "orgName": this.getCurrentSessionValue.user.organisation,
-      "id": this.getCurrentSessionValue.user.ID
+      "id": this.getCurrentSessionValue.user.ID,
+      "userID": this.getCurrentSessionValue.user.ID,
     }
 
     const options = {
@@ -378,14 +271,12 @@ export class AuthenticationService {
     };
 
     this.http.request<any>(method, getUserDetailsURL, options).subscribe((response: any) => {
-
-      console.log("DETAILS: " + JSON.stringify(response));
-      if(response && (response.token && response.token != '')) {
-        if(response.data.databases) {
+      if (response && (response.token && response.token != '')) {
+        if (response.data.databases) {
           this.currentUser.databases = response.data.databases;
         }
       }
-    });    
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -399,12 +290,13 @@ export class AuthenticationService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getFABIUserPrivileges() {
-    if(this.getCurrentUserValue == '' || this.getCurrentUserValue == null) {
+    // if current users value is not set - call loadFABIUserPrivileges() to get the users details
+    if (this.getCurrentUserValue == '' || this.getCurrentUserValue == null) {
       this.loadFABIUserPrivileges();
       return this.getCurrentUserValue;
-    } 
+    } // elss return users details
     else {
       return this.getCurrentUserValue;
-    } 
+    }
   }
 }

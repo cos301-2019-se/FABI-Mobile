@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 23rd 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,37 +14,38 @@
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import * as http from '@angular/common/http';
+import * as core from '@angular/core';
 //Include Material Components
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
-import { ErrorComponent } from 'src/app/_errors/error-component/error.component';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { DiagnosticClinicAPIService } from 'src/app/_services/diagnostic-clinic-api.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 
-@Component({
+
+@core.Component({
   selector: 'app-member-view-samples',
   templateUrl: './member-view-samples.component.html',
   styleUrls: ['./member-view-samples.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class MemberViewSamplesComponent implements OnInit {
+export class MemberViewSamplesComponent implements core.OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                          GLOBAL VARIABLES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   sampleFields: any[] = [];
+  plantationFields: any[] = [];
+  conditonsFields: any[] = [];
+  typesFields: any[] = [];
   samples: any[];
   selectedSampleData: any
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */   
-  private toggle_status : boolean = false;
-
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  private toggle_status: boolean = false;
   /** The search item the user is looking for in the table -  @type {string} */
   public searchSample: string = "";
-
   /** Specifies if the list of samples have been retreived to disable the loading spinner - @type {boolean} */
   sampleTableLoading: boolean = true;
 
@@ -52,7 +53,7 @@ export class MemberViewSamplesComponent implements OnInit {
   //                                                             CONSTRUCTOR
   /**
    * Creates an instance of MemberViewSamplesComponent.
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {MatDialog} dialog
    * @param {Router} router
@@ -61,28 +62,14 @@ export class MemberViewSamplesComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private authService: AuthenticationService, 
+    private authService: AuthenticationService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
-    private dialog: MatDialog, 
-    private router: Router
-    ) { }
+    private dialog: MatDialog,
+    private router: Router,
+    private notificationService: NotificationService
+  ) { }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                  TOGGLE NOTIFICATIONS TAB
-  /**
-   *  This function is used to toggle the notifications tab.
-   *  
-   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
-   *  If set to flase, a class is removed which hides the notifications tab.
-   * 
-   * @memberof MemberViewSamplesComponent
-   */
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  toggleNotificaitonsTab(){
-    this.toggle_status = !this.toggle_status; 
-  }
 
-  
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            NG ON INIT  
   /**
@@ -96,6 +83,22 @@ export class MemberViewSamplesComponent implements OnInit {
   ngOnInit() {
     //Calling the neccessary functions as the page loads
     this.viewSamples();
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                  TOGGLE NOTIFICATIONS TAB
+  /**
+   *  This function is used to toggle the notifications tab.
+   *  
+   *  If set to true, a class is added which ensures that the notifications tab is displayed. 
+   *  If set to flase, a class is removed which hides the notifications tab.
+   * 
+   * @memberof MemberViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  toggleNotificaitonsTab() {
+    this.toggle_status = !this.toggle_status;
   }
 
 
@@ -130,34 +133,75 @@ export class MemberViewSamplesComponent implements OnInit {
 
         //Deactivate loading table spinners
         this.sampleTableLoading = false;
-        
+
       } else if (response.success == false) {
         this.sampleTableLoading = false;
-
         //POPUP MESSAGE
-        // this.samples = ["You have no samples"];
-        // let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Retrieving Samples", message: response.message, retry: true } });
-        // dialogRef.afterClosed().subscribe((result) => {
-        //   if (result == "Retry") {
-        //     this.viewSamples();
-        //   }
-        // })
+        this.notificationService.showWarningNotification('Error', 'Could not load samples.');
       }
+    }, (err: http.HttpErrorResponse) => {
+      this.notificationService.showWarningNotification('Error', 'Could not load samples.');
+      //Handled in error-handler
     });
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                            SELECT SAMPLE 
+  /**
+   * Called when a user selects a sample and sets the selected sample as well as it's data fields
+   *
+   * @param {*} sample
+   * @memberof MemberViewSamplesComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   selectSample(sample: any) {
-    this.selectedSampleData = sample.data;
-        
+    
+    this.selectedSampleData = sample.data.sample;
+
     Object.keys(this.selectedSampleData).forEach((column) => {
 
-      let obj = {
-        'name': column
+      if(column == "plantation_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['plantation_details'][field]
+          }
+          this.plantationFields.push(obj);
+        });
       }
-      this.sampleFields.push(obj);
+      if(column == "sample_details") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['sample_details'][field]
+          }
+          this.sampleFields.push(obj);
+        });
+      }
+      if(column == "types") {
+        // Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          this.selectedSampleData[column].forEach(element => {
+            let obj = {
+              'name': element['type'],
+              "data": element['symptoms']
+            }
+            this.typesFields.push(obj);
+          });
+        // });
+      }
+      if(column == "conditions") {
+        Object.keys(this.selectedSampleData[column]).forEach((field) => {
+          let obj = {
+            'name': field,
+            "data": this.selectedSampleData['conditions'][field]
+          }
+          this.conditonsFields.push(obj);
+        });
+      }
 
     });
-        
+
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

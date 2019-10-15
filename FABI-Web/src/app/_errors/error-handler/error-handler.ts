@@ -5,7 +5,7 @@
  * Created Date: Friday, June 21st 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 22nd 2019
+ * Last Modified: Wednesday, October 9th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -34,7 +34,7 @@ export class ErrorsHandler implements core.ErrorHandler {
   /**
    * Creates an instance of ErrorsHandler.
    * @param {core.Injector} injector 
-   * @param {AuthenticationService} authService used to call the *authentication* service
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * @memberof ErrorsHandler
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,34 +58,27 @@ export class ErrorsHandler implements core.ErrorHandler {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   handleError(error: Error | HttpErrorResponse) {
 
-    console.log("------------------- ERROR HANDLER ------------------");
-
     const notificationService = this.injector.get(NotificationService);
     const router = this.injector.get(Router);
 
     if (error instanceof HttpErrorResponse) {
       // Server error happened      
       if (!navigator.onLine) {
-        // No Internet connection
-        this.authService.logoutUser();
-        router.navigate(['/login']);
-        notificationService.showErrorNotification('No Internet Connection', 'Please Check Your Internet Connection');
+        // No Internet connection;
+        if(this.authService.isLoggedIn == true) {
+          router.navigate(['/login']);this.authService.logoutUser();
+          router.navigate(['/login']);
+        }   
+        notificationService.showWarningNotification('Offline', 'Please check your internet connection');
       }
-
-      console.log("------------------- ERROR HANDLER 1 ------------------");
-      console.log("------------ ERROR: " + error);
       // Http Error
-      notificationService.showErrorNotification(`${error.error.code} ${error.error.title}`, `${error.error.message} - ${error.message}`);
+      notificationService.showErrorNotification(`Error`, 'Sorry, an error occured. Please try again.');
 
     } else {
-      console.log("------------------- ERROR HANDLER 2 ------------------");
-      console.log("------ ERROR: " + error);
-
-      // Client Error Happend      
-      notificationService.showErrorNotification(error.name, error.message);
-
+      // Client Error Happend     
+      // notificationService.showErrorNotification(error.name, error.message);
     }
     // Log the error anyway
-    console.error(error);
+    // console.error(error);
   }
 }

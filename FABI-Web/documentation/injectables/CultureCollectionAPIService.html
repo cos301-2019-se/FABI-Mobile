@@ -1,0 +1,1732 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>fabi-web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">fabi-web documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>CultureCollectionAPIService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/_services/culture-collection-api.service.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Used to handled all <code>culture collection</code> requests and functions</p>
+
+            </p>
+
+
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#deleteDepositForm">deleteDepositForm</a>
+                            </li>
+                            <li>
+                                <a href="#deleteProcessedForm">deleteProcessedForm</a>
+                            </li>
+                            <li>
+                                <a href="#deleteRequestForm">deleteRequestForm</a>
+                            </li>
+                            <li>
+                                <a href="#deleteRevitalizationForm">deleteRevitalizationForm</a>
+                            </li>
+                            <li>
+                                <a href="#getAllDepositLogs">getAllDepositLogs</a>
+                            </li>
+                            <li>
+                                <a href="#getAllProcessedLogs">getAllProcessedLogs</a>
+                            </li>
+                            <li>
+                                <a href="#getAllRequestLogs">getAllRequestLogs</a>
+                            </li>
+                            <li>
+                                <a href="#getAllRevitalizationLogs">getAllRevitalizationLogs</a>
+                            </li>
+                            <li>
+                                <a href="#submitCMWDepositForm">submitCMWDepositForm</a>
+                            </li>
+                            <li>
+                                <a href="#submitCMWRequestForm">submitCMWRequestForm</a>
+                            </li>
+                            <li>
+                                <a href="#submitCMWRevitalizationForm">submitCMWRevitalizationForm</a>
+                            </li>
+                            <li>
+                                <a href="#submitProcessedForm">submitProcessedForm</a>
+                            </li>
+                            <li>
+                                <a href="#updateDepositFormStatus">updateDepositFormStatus</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: http.HttpClient, authService: <a href="../injectables/AuthenticationService.html">AuthenticationService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="175" class="link-to-prism">src/app/_services/culture-collection-api.service.ts:175</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Creates an instance of CultureCollectionAPIService.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>http.HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>for making http calls to the API</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthenticationService.html" target="_self" >AuthenticationService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>for calling the <em>authentication</em> service</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteDepositForm"></a>
+                    <span class="name">
+                        <b>
+                            deleteDepositForm
+                        </b>
+                        <a href="#deleteDepositForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteDepositForm(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, form: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="450"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:450</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to delete a deposit form on request.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>form</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteProcessedForm"></a>
+                    <span class="name">
+                        <b>
+                            deleteProcessedForm
+                        </b>
+                        <a href="#deleteProcessedForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteProcessedForm(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, form: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="540"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:540</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to delete a processed form on request.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>form</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteRequestForm"></a>
+                    <span class="name">
+                        <b>
+                            deleteRequestForm
+                        </b>
+                        <a href="#deleteRequestForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteRequestForm(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, form: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="480"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:480</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to delete a request form on request.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>form</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteRevitalizationForm"></a>
+                    <span class="name">
+                        <b>
+                            deleteRevitalizationForm
+                        </b>
+                        <a href="#deleteRevitalizationForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteRevitalizationForm(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, form: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="510"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:510</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to delete a revitalization form on request.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>form</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllDepositLogs"></a>
+                    <span class="name">
+                        <b>
+                            getAllDepositLogs
+                        </b>
+                        <a href="#getAllDepositLogs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllDepositLogs()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="227"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:227</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function sends a POST request to the API to retrieve a list containing
+all the logs with type &#39;DEPOSIT&#39;</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllProcessedLogs"></a>
+                    <span class="name">
+                        <b>
+                            getAllProcessedLogs
+                        </b>
+                        <a href="#getAllProcessedLogs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllProcessedLogs()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="279"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:279</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function sends a POST request to the API to retrieve a list containing
+all the logs with type &#39;PROCESSED&#39;</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllRequestLogs"></a>
+                    <span class="name">
+                        <b>
+                            getAllRequestLogs
+                        </b>
+                        <a href="#getAllRequestLogs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllRequestLogs()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="201"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:201</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function sends a POST request to the API to retrieve a list containing
+all the logs with type &#39;REQUEST&#39;</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllRevitalizationLogs"></a>
+                    <span class="name">
+                        <b>
+                            getAllRevitalizationLogs
+                        </b>
+                        <a href="#getAllRevitalizationLogs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllRevitalizationLogs()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="254"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:254</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function sends a POST request to the API to retrieve a list containing
+all the logs with type &#39;REVITALIZATION&#39;</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitCMWDepositForm"></a>
+                    <span class="name">
+                        <b>
+                            submitCMWDepositForm
+                        </b>
+                        <a href="#submitCMWDepositForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitCMWDepositForm(data: <a href="../interfaces/CMWDeposit.html">CMWDeposit</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="305"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:305</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function sends a POST request to the server to submit a CMW deposit form and save it to the
+database.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/CMWDeposit.html" target="_self" >CMWDeposit</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitCMWRequestForm"></a>
+                    <span class="name">
+                        <b>
+                            submitCMWRequestForm
+                        </b>
+                        <a href="#submitCMWRequestForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitCMWRequestForm(data: <a href="../interfaces/CMWRequest.html">CMWRequest</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="335"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:335</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function sends a POST request to the server to submit a CMW request form and save it to the
+database.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/CMWRequest.html" target="_self" >CMWRequest</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitCMWRevitalizationForm"></a>
+                    <span class="name">
+                        <b>
+                            submitCMWRevitalizationForm
+                        </b>
+                        <a href="#submitCMWRevitalizationForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitCMWRevitalizationForm(data: <a href="../interfaces/CMWRevitalization.html">CMWRevitalization</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="363"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:363</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function sends a POST request to the server to submit a CMW revitalization form and save it to the
+database.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/CMWRevitalization.html" target="_self" >CMWRevitalization</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitProcessedForm"></a>
+                    <span class="name">
+                        <b>
+                            submitProcessedForm
+                        </b>
+                        <a href="#submitProcessedForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitProcessedForm(data: <a href="../interfaces/ProcessedForm.html">ProcessedForm</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="393"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:393</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function sends a POST request to the server to submit a process form for a deposit form and save it to the
+database.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ProcessedForm.html" target="_self" >ProcessedForm</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateDepositFormStatus"></a>
+                    <span class="name">
+                        <b>
+                            updateDepositFormStatus
+                        </b>
+                        <a href="#updateDepositFormStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateDepositFormStatus(data: <a href="../interfaces/UpdateDepositForm.html">UpdateDepositForm</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="422"
+                            class="link-to-prism">src/app/_services/culture-collection-api.service.ts:422</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This function is used to update the status of a deposit form to &#39;processed&#39;.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/UpdateDepositForm.html" target="_self" >UpdateDepositForm</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>API response </p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import * as http from &#x27;@angular/common/http&#x27;;
+import { Injectable } from &#x27;@angular/core&#x27;;
+import { config } from &quot;../../environments/environment.prod&quot;;
+import { AuthenticationService } from &#x27;./authentication.service&#x27;;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                          GLOBAL VARIABLES
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////// URL&#x27;S FOR API //////////////////////////////////////////////////////////////// 
+const getRequestLogsURL &#x3D; &#x60;${config.cultureClinicURL}/getAllRequestForms&#x60;;
+const getDepositLogsURL &#x3D; &#x60;${config.cultureClinicURL}/getAllDepositForms&#x60;;
+const getRevitalizationLogsURL &#x3D; &#x60;${config.cultureClinicURL}/getAllRevitalizationForms&#x60;;
+const getProcessedLogsURL &#x3D; &#x60;${config.cultureClinicURL}/getAllProcessingForms&#x60;;
+const submitCMWDepositFormURL &#x3D; &#x60;${config.cultureClinicURL}/submitCMWDepositForm&#x60;;
+const submitCMWRequestFormURL &#x3D; &#x60;${config.cultureClinicURL}/submitCMWRequestForm&#x60;;
+const submitCMWRevitalizationFormURL &#x3D; &#x60;${config.cultureClinicURL}/submitCMWRevitalizationForm&#x60;;
+const submitProcessedFormURL &#x3D; &#x60;${config.cultureClinicURL}/submitCMWProcessingForm&#x60;;
+const updateDepositFormStatusURL &#x3D; &#x60;${config.cultureClinicURL}/updateDepositStatus&#x60;;
+const deleteDepositFormURL &#x3D; &#x60;${config.cultureClinicURL}/deleteCMWDepositForm&#x60;;
+const deleteRequestFormURL &#x3D; &#x60;${config.cultureClinicURL}/deleteCMWRequestForm&#x60;;
+const deleteRevitalizationFormURL &#x3D; &#x60;${config.cultureClinicURL}/deleteCMWRevitalizationForm&#x60;;
+const deleteProcessedFormURL &#x3D; &#x60;${config.cultureClinicURL}/deleteCMWProcessingForm&#x60;;
+
+
+///////////////////////////////////////////////////////////////////////
+//                            CMW DEPOSIT
+/**
+ *  Object for defining the CMW deposit form values
+ *
+ * @export
+ * @interface CMWDeposit
+ */
+///////////////////////////////////////////////////////////////////////
+export interface CMWDeposit {
+  userID: string;                         //The user id of the user submitting the form
+  cmwCultureNumber: string;               //The culture number
+  genus: string;                          //The genus of the culture
+  epitheton: string;                      //The epitheton of the culture
+  personalCollectionNumber: string;       //The personal collection number (if any)
+  internationalCollectionNumber: string;  //The international collection number (if any)
+  herbariumNumber: string;                //The herbarium number of the culture
+  otherFABICollections: string;           //Indicates if there are currently any other collections
+  name: string;                           //The name of the culture
+  typeStatus: string;                     //The type status of the culture
+  host: string;                           //The host of the culture
+  vector: string;                         //The vector of the culture
+  substrate: string;                      //The substrate of the culture
+  continent: string;                      //The continent where the culture originated from
+  country: string;                        //The country where the culture originated from
+  region: string;                         //The region where the culture originated from
+  locality: string;                       //The locality of the culture
+  gps: string;                            //The GPS coordinates of where the culture originated from
+  collectedBy: string;                    //The user who collected the culture
+  dateCollected: string;                  //The date that the culture was collected
+  isolatedBy: string;                     //The user who isolated the culture
+  identifiedBy: string;                   //The user who identified the culture
+  donatedBy: string;                      //The user who donated the culture (if any)
+  additionalNotes: string;                //Any additional notes (if any)
+  dateSubmitted: string;                  //The date that the form was submitted
+  formID: string;                         //The id number for the actual form
+}
+
+
+///////////////////////////////////////////////////////////////////////
+//                            CMW REQUEST
+/**
+ *  Object for defining the CMW request form values
+ *
+ * @export
+ * @interface CMWRequest
+ */
+///////////////////////////////////////////////////////////////////////
+export interface CMWRequest {
+  userID: string;                         //The user id of the user submitting the form
+  requestor: string;                      //The user who is requesting the culture
+  taxonName: string;                      //The taxon name of the culture
+  cultureNumber: string;                  //The culture number
+  dateRequested: string;                  //The date that the culture is requested for
+  referenceNumber: string;                //The reference number
+  notes: string;                          //Any notes (if any)
+  dateSubmitted: string;                  //The date that the form was submitted
+}
+
+///////////////////////////////////////////////////////////////////////
+//                            CMW REVILIZATION
+/**
+ * Object for defining the CMW revitalization form values
+ *
+ * @export
+ * @interface CMWRevitalization
+ */
+///////////////////////////////////////////////////////////////////////
+export interface CMWRevitalization {
+  userID: string;                         //The user id of the user submitting the form
+  requestor: string;                      //The user who is requesting the culture
+  currentName: string;                    //The current name of the culture
+  nameBionumerics: string;                //The bionumeric name of the culture
+  cultureNumber: string;                  //The culture number
+  cultureCondition: string;               //The condition of the culture
+  sequenceDateSubmitted: string;          //The sequence date submitted (if any)
+  referenceNumber: string;                //The reference number
+  dateRequested: string;                  //The date that the culture is requested
+  dateReturned: string;                   //The date that the culture was returned
+  dateSubmitted: string;                  //The date that the form was submitted
+}
+
+
+///////////////////////////////////////////////////////////////////////
+//                            PROCESSED FORM
+/**
+ * Object for defining the processed deposit form values
+ *
+ * @export
+ * @interface ProcessedForm
+ */
+///////////////////////////////////////////////////////////////////////
+export interface ProcessedForm {
+  userID: string;                         //The user id of the user submitting the form
+  statusOfCulture: string;               //The status of the culture for the processed form
+  agarSlants: string;                     //The agar slants for the processed form
+  water: string;                          //The water for the processed form
+  oil: string;                            //The oil for the processed form
+  roomTemperature: string;                //The room temperature for the processed form
+  c18: string;                            //The c18 for the processed form
+  freezeDried: string;                    //The freezed dried for the processed form
+  freeze: string;                         //The freeze for the processed form
+  dateOfCollectionValidation: string;     //The date of collection validation for the processed form
+  microscopeSlides: string;               //The microscope slides for the processed form
+  dateSubmittedProcessedForm: string;     //The date submitted for the processed form
+  cultureCollectionNumber: string;        //The culture collection number for the processed form
+}
+
+
+///////////////////////////////////////////////////////////////////////
+//                          UPDATED DEPOSIT FORM
+/**
+ * Object for defining the object for updating the status of a deposit form
+ *
+ * @export
+ * @interface UpdateDepositForm
+ */
+///////////////////////////////////////////////////////////////////////
+export interface UpdateDepositForm {
+  userID: string;                         //The user id off the user submitting the form
+  status: string;                         //The new status of the deposit form
+  formID: string;                         //The id of the form to be updated
+}
+
+
+/**
+ * Used to handled all &#x60;culture collection&#x60; requests and functions
+ *
+ * @export
+ * @class CultureCollectionAPIService
+ */
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class CultureCollectionAPIService {
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          CONSTRUCTOR
+  /**
+  * Creates an instance of CultureCollectionAPIService.
+  * 
+  * @param {http.HttpClient} http for making http calls to the API
+  * @param {AuthenticationService} authService for calling the *authentication* service
+  * @memberof CultureCollectionAPIService
+  */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  constructor(private http: http.HttpClient, private authService: AuthenticationService) { }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET ALL REQUEST LOGS
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type &#x27;REQUEST&#x27;
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllRequestLogs() {
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, getRequestLogsURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET ALL DEPOSIT LOGS
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type &#x27;DEPOSIT&#x27;
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllDepositLogs() {
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, getDepositLogsURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET ALL REVITALIZATION LOGS
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type &#x27;REVITALIZATION&#x27;
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllRevitalizationLogs() {
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, getRevitalizationLogsURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         GET ALL PROCESSED LOGS
+  /**
+   *    This function sends a POST request to the API to retrieve a list containing
+   *    all the logs with type &#x27;PROCESSED&#x27;
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  getAllProcessedLogs() {
+    const options &#x3D; {
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, getProcessedLogsURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                      SUBMIT CMW DEPOSIT FORM 
+  /**
+   *    This function sends a POST request to the server to submit a CMW deposit form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCMWDepositForm(data: CMWDeposit) {
+    const options &#x3D; {
+      method: &#x27;POST&#x27;,
+      url: submitCMWDepositFormURL,
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, submitCMWDepositFormURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT CMW REQUEST FORM 
+  /**
+   *    This function sends a POST request to the server to submit a CMW request form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCMWRequestForm(data: CMWRequest) {
+    const options &#x3D; {
+      headers: new http.HttpHeaders({
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      }),
+      body: data,
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, submitCMWRequestFormURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT CMW REVITALIZATION FORM 
+  /**
+   *    This function sends a POST request to the server to submit a CMW revitalization form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitCMWRevitalizationForm(data: CMWRevitalization) {
+    const options &#x3D; {
+      method: &#x27;POST&#x27;,
+      url: submitCMWRevitalizationFormURL,
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, submitCMWRevitalizationFormURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    SUBMIT PROCESSED FORM 
+  /**
+   *    This function sends a POST request to the server to submit a process form for a deposit form and save it to the
+   *    database.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  submitProcessedForm(data: ProcessedForm) {
+    const options &#x3D; {
+      method: &#x27;POST&#x27;,
+      url: submitProcessedFormURL,
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, submitProcessedFormURL, options);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    UPDATE DEPOSIT FORM STATUS 
+  /**
+   *    This function is used to update the status of a deposit form to &#x27;processed&#x27;.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateDepositFormStatus(data: UpdateDepositForm) {
+    const options &#x3D; {
+      method: &#x27;POST&#x27;,
+      url: updateDepositFormStatusURL,
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, updateDepositFormStatusURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE DEPOSIT FORM 
+  /**
+   *    This function is used to delete a deposit form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteDepositForm(id: string, form: string) {
+    var data &#x3D; { userID: id, formID: form };
+
+    const options &#x3D; {
+      method: &#x27;POST&#x27;,
+      url: deleteDepositFormURL,
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, deleteDepositFormURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE REQUEST FORM 
+  /**
+   *    This function is used to delete a request form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteRequestForm(id: string, form: string) {
+    var data &#x3D; { userID: id, formID: form };
+
+    const options &#x3D; {
+      method: &#x27;POST&#x27;,
+      url: deleteRequestFormURL,
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, deleteRequestFormURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE REVITALIZATION FORM 
+  /**
+   *    This function is used to delete a revitalization form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteRevitalizationForm(id: string, form: string) {
+    var data &#x3D; { userID: id, formID: form };
+
+    const options &#x3D; {
+      method: &#x27;POST&#x27;,
+      url: deleteRevitalizationFormURL,
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, deleteRevitalizationFormURL, options);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    DELETE PROCESSED FORM 
+  /**
+   *    This function is used to delete a processed form on request.
+   *
+   * @returns API response @type any
+   * 
+   * @memberof CultureCollectionAPIService
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  deleteProcessedForm(id: string, form: string) {
+    var data &#x3D; { userID: id, formID: form };
+
+    const options &#x3D; {
+      method: &#x27;POST&#x27;,
+      url: deleteProcessedFormURL,
+      headers: {
+        &#x27;cache-control&#x27;: &#x27;no-cache&#x27;,
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        &quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;,
+        &#x27;Accept&#x27;: &#x27;application/json&#x27;,
+        &#x27;Authorization&#x27;: &#x60;Bearer ${this.authService.getCurrentSessionValue.token}&#x60;
+      },
+      body: data,
+      json: true
+    };
+
+    return this.http.request(&#x27;POST&#x27;, deleteProcessedFormURL, options);
+  }
+
+}</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'CultureCollectionAPIService.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, August 23rd 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,33 +14,25 @@
  */
 
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ViewEncapsulation } from '@angular/core';
-
-import { AuthenticationService } from '../../_services/authentication.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
-import { MatDialog } from '@angular/material';
-import { ErrorComponent } from '../../_errors/error-component/error.component';
+import * as http from '@angular/common/http';
+import * as core from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
-import { LoadingComponent } from "../../_loading/loading.component";
-
-//Include Material Components
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-
+import { NotificationService } from 'src/app/_services/notification.service';
 import * as Interface from '../../_interfaces/interfaces';
-
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { LoadingComponent } from "../../_loading/loading.component";
+import { AuthenticationService } from '../../_services/authentication.service';
+import { NotificationLoggingService } from '../../_services/notification-logging.service';
 import { UserManagementAPIService } from '../../_services/user-management-api.service';
 
-@Component({
+@core.Component({
   selector: 'app-organization-handler',
   templateUrl: './organization-handler.component.html',
   styleUrls: ['./organization-handler.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: core.ViewEncapsulation.None
 })
-export class OrganizationHandlerComponent implements OnInit {
+export class OrganizationHandlerComponent implements core.OnInit {
 
   displayedColumns: string[] = ['Organization Name', 'Admin', "Remove"];
   dataSource = new MatTableDataSource([]);
@@ -60,16 +52,38 @@ export class OrganizationHandlerComponent implements OnInit {
   selectedOrg: Interface.Organisation = { orgName: "", admin: { fname: "", surname: "", email: "" } };
   /** Array of Organization objects - @type {Organisation[]} */
   organizations: Interface.Organisation[];
-
   pendingOrganizations: Interface.Organisation[];
   /** The total number of Organization - @type {number} */
   numberOfOrganizations: number = 0;
+  /** The total number of pending Organization - @type {number} */
+  numberOfPendingOrganizations: number = 0;
   /** The flag which indicates that the numberOfOrganizations has been set - @type {boolean} */
   setOrganizationLength: boolean = false;
-
+  /** The flag which indicates that the numberOfPendingOrganizations has been set - @type {boolean} */
+  setPendingOrganizationsLength: boolean = false;
   deleteData: Interface.Confirm = { title: '', message: '', info: '', cancel: '', confirm: '' };
+  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
+  notificationsTab: boolean = false;
+  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
+  profileTab: boolean = false;
+  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
+  saveBtn: boolean = false;
+  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
+  confirmPasswordInput: boolean = false;
+  /** Indicates if the help tab is hidden/shown - @type {boolean} */
+  helpTab: boolean = false;
+  /** The details of the user currently logged in -  @type {any} */
+  currentUser: any;
+  /** Specifies if the list of organizations have been retreived to disable the loading spinner - @type {boolean} */
+  organizationTableLoading: boolean = true;
+  /** The search item the user is looking for in the table -  @type {string} */
+  public searchOrganization: string = "";
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @core.ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                          FORM VALIDATORS
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   register_organization_validators = {
     'organization_name': [
@@ -87,28 +101,9 @@ export class OrganizationHandlerComponent implements OnInit {
     ],
     'admin_phone': [
       { type: 'required', message: 'Phone No. is required' },
-      // { type: 'pattern', message: 'Please enter a valid number' }
+      { type: 'pattern', message: 'Please enter a valid number' }
     ],
   }
-
-  /** Indicates if the notifications tab is hidden/shown - @type {boolean} */
-  notificationsTab: boolean = false;
-  /** Indicates if the profile tab is hidden/shown - @type {boolean} */
-  profileTab: boolean = false;
-  /** Indicates if the save button is hidden/shown on the profile tab- @type {boolean} */
-  saveBtn: boolean = false;
-  /** Indicates if the confirm password tab is hidden/shown on the profile tab - @type {boolean} */
-  confirmPasswordInput: boolean = false;
-  /** Indicates if the help tab is hidden/shown - @type {boolean} */
-  helpTab: boolean = false;
-  /** The details of the user currently logged in -  @type {any} */
-  currentUser: any;
-
-  /** Specifies if the list of organizations have been retreived to disable the loading spinner - @type {boolean} */
-  organizationTableLoading: boolean = true;
-
-  /** The search item the user is looking for in the table -  @type {string} */
-  public searchOrganization: string = "";
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,7 +114,7 @@ export class OrganizationHandlerComponent implements OnInit {
    * @param {FormBuilder} formBuilder For creating the login form
    * @param {MatSnackBar} snackBar For snack-bar pop-up messages
    * @param {MatDialog} dialog For dialog pop-up messages
-   * @param {Router} router For navigating to other modules/components
+   * @param {Router} router for routing/navigating to other components 
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
    * 
@@ -132,7 +127,8 @@ export class OrganizationHandlerComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private userManagementService: UserManagementAPIService,
-    private notificationLoggingService: NotificationLoggingService
+    private notificationLoggingService: NotificationLoggingService,
+    private notificationService: NotificationService
   ) {
     this.registerOrgForm = this.formBuilder.group({
       organization_name: ['', Validators.required],
@@ -144,7 +140,7 @@ export class OrganizationHandlerComponent implements OnInit {
       ])],
       admin_phone: ['', Validators.compose([
         Validators.required,
-        // Validators.pattern('')
+        Validators.pattern('^(([\+]{1}[0-9]{1,3}[\ ]{1}[0-9]{1,2}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\-]{1}[0-9]{4}[\-]{1}[0-9]{4})|([\(]{1}[0]{1}[0-9]{1}[\)]{1}[\ ]{1}[0-9]{4}([\ ]|[\-]){1}[0-9]{4})|([0-9]{4}([\ ]|[\-])?[0-9]{4})|([0]{1}[0-9]{3}[\ ]{1}[0-9]{3}[\ ]{1}[0-9]{3})|([0]{1}[0-9]{9})|([\(]{1}[0-9]{3}[\)]{1}[\ ]{1}[0-9]{3}[\-]{1}[0-9]{4})|([0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[\-]?[0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[0-9]{9}[0-9]?)|([0-9]{3}[\.]{1}[0-9]{3}[\.]{1}[0-9]{4})|([\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\.]|[\-]){1}[0-9]{4}(([\ ]?(x|ext|extension)?)([\ ]?[0-9]{3,4}))?)|([1]{1}[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\-]){1}[0-9]{4})|([\+]{1}[1]{1}[\ ]{1}[0-9]{3}[\.]{1}[0-9]{3}[\-]{1}[0-9]{4})|([\+]{1}[1]{1}[\ ]?[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}[\-]{1}[0-9]{4}))$')
       ])]
     });
   }
@@ -160,18 +156,13 @@ export class OrganizationHandlerComponent implements OnInit {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    // this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
-    //   this.currentUser = this.authService.getCurrentSessionValue.user;
-    //   this.viewOrganizations();
-    // });
 
-    //******** TO BE USED IN PRODUCTION: ********
     // Set current user logged in
     this.currentUser = this.authService.getCurrentSessionValue.user;
     // Calling the neccessary functions as the page loads
     this.viewOrganizations();
     this.viewPendingOrganizations();
+    this.resetAddFields();
   }
 
 
@@ -223,21 +214,18 @@ export class OrganizationHandlerComponent implements OnInit {
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-
+        this.notificationService.showSuccessNotification('Organization Registered', '');
         this.refreshDataSource();
-        let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
-          duration: 6000
-        });
 
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Registering Organization", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.registerOrg();
-          }
-        })
+        this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+        this.resetAddFields();
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+      this.resetAddFields();
     });
   }
 
@@ -296,22 +284,19 @@ export class OrganizationHandlerComponent implements OnInit {
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-        let snackBarRef = this.snackBar.open("Organization Removed", "Dismiss", {
-          duration: 3000
-        });
+        this.notificationService.showSuccessNotification('Organization Removed', '');
         this.refreshDataSource();
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Removing", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.removeOrg();
-          }
-        })
+        this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the organization');
       }
+    }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the organization');
     });
   }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //                                                            REFRESH
@@ -323,7 +308,7 @@ export class OrganizationHandlerComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   refreshDataSource() {
     this.viewOrganizations();
-
+    this.viewPendingOrganizations();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -350,20 +335,25 @@ export class OrganizationHandlerComponent implements OnInit {
         //Deactivate loading table spinners
         this.organizationTableLoading = false;
 
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the Organisations", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
+        this.notificationService.showWarningNotification('Error', 'Could not load organizations');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showWarningNotification('Error', 'Could not load organizations');
     });
   }
 
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    VIEW PENDING ORGANIZATIONS
+  /**
+   * This function is used to retrieve all organzaitions who have send a request to register. They're *pending* their acceptance 
+   *  or denial.
+   *
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   viewPendingOrganizations() {
 
     this.userManagementService.getPendingOrganizations().subscribe((response: any) => {
@@ -371,20 +361,28 @@ export class OrganizationHandlerComponent implements OnInit {
       if (response.success == true && response.code == 200) {
 
         this.pendingOrganizations = response.data.Organizations;
+        this.numberOfPendingOrganizations = this.pendingOrganizations.length;
+        this.setPendingOrganizationsLength = true;
 
-      }
-      else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Sorry there was an error loading the pending Organisations", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.ngOnInit();
-          }
-        })
+        this.notificationService.showWarningNotification('Error', 'Could not load pending organizations');
       }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showWarningNotification('Error', 'Could not load pending organizations');
     });
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                    REGISTER PENDING ORGANIZATIONS
+  /**
+   * This function is used to accept the organizations request to register by registering them.
+   *
+   * @param {Interface.Organisation} org
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   registerPendingOrg(org: Interface.Organisation) {
 
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Registering Organization" } });
@@ -392,26 +390,53 @@ export class OrganizationHandlerComponent implements OnInit {
     this.userManagementService.createOrganization(org).subscribe((response: any) => {
 
       loadingRef.close();
+      this.resetAddFields();
 
       if (response.success == true && response.code == 200) {
         //POPUP MESSAGE
-
+        this.notificationService.showSuccessNotification('Organization Registered', '');
         this.refreshDataSource();
-        let snackBarRef = this.snackBar.open("Successfully Registered Organization", "Dismiss", {
-          duration: 6000
-        });
 
-      } else if (response.success == false) {
+      } else {
         //POPUP MESSAGE
-        let dialogRef = this.dialog.open(ErrorComponent, { data: { error_title: "Error Registering Organization", message: response.message, retry: true } });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result == "Retry") {
-            this.registerOrg();
-          }
-        })
+        this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
       }
+    }, (err: http.HttpErrorResponse) => {
+      if(err.error.code == 400 && err.error.message == "User email already exists") {
+        this.notificationService.showErrorNotification('Registration Failed', 'Organization email already exists');
+      } else {
+        this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
+      }
+      this.resetAddFields();
+      //Handled in error-handler
     });
 
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                        DECLINE PENDING ORGANIZATION 
+  /**
+   * This function calls the *user-management* service to decline an organizations request to register 
+   *
+   * @memberof OrganizationHandlerComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  declinePendingeOrg(org: Interface.Organisation) {
+
+    this.userManagementService.declineOrganizationRequest(org).subscribe((response: any) => {
+
+      if (response.success == true && response.code == 200) {
+        //POPUP MESSAGE
+        this.notificationService.showSuccessNotification('Declined', '');
+        this.refreshDataSource();
+      } else {
+        //POPUP MESSAGE
+        this.notificationService.showErrorNotification('Decline Failed', 'An error occurred while declining the organizations request');
+      }
+    }, (err: http.HttpErrorResponse) => {
+      //Handled in error-handler
+      this.notificationService.showErrorNotification('Decline Failed', 'An error occurred while declining the organizations request');
+    });
   }
 
 
@@ -483,8 +508,9 @@ export class OrganizationHandlerComponent implements OnInit {
    * @memberof OrganizationHandlerComponent
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  resetAddFields(){
+  resetAddFields() {
     this.registerOrgForm.reset();
+    this.submitted = false;
   }
 
 }

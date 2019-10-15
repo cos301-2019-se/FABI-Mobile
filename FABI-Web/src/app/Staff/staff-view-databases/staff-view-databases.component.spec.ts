@@ -6,11 +6,11 @@ import { StaffProfileComponent } from '../staff-profile/staff-profile.component'
 import { StaffHelpComponent } from '../staff-help/staff-help.component'
 //Router
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { NotificationService } from '../../_services/notification.service';
 //Import form components
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -26,7 +26,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 describe('StaffViewDatabasesComponent', () => {
   let component: StaffViewDatabasesComponent;
   let fixture: ComponentFixture<StaffViewDatabasesComponent>;
-
+  let authService: AuthenticationService;
+  
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
         return { "user" : "" };
@@ -41,8 +42,9 @@ describe('StaffViewDatabasesComponent', () => {
         StaffHelpComponent,
         FilterPipe
       ],
-      imports: [MatSnackBarModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [MatSnackBarModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, FormsModule, MatFormFieldModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
+        NotificationService, ToastrService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: MatSnackBar, useValue: {} },
@@ -55,10 +57,52 @@ describe('StaffViewDatabasesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StaffViewDatabasesComponent);
     component = fixture.componentInstance;
+    authService = new AuthenticationService(null);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('reset Database Fields', () => {
+    component.resetDatabaseFields();
+    expect(component.fields).toEqual([]);
+    expect(component.databaseData).toEqual([]);
+  });
+
+  it('toggle notification tab', () =>{
+    let x = component.notificationsTab;
+    component.toggleNotificationsTab();
+    expect(component.notificationsTab == !x).toBeTruthy();
+  });
+
+  it('toggle profile tab', () =>{
+    let x = component.profileTab;
+    component.toggleProfileTab();
+    expect(component.profileTab == !x).toBeTruthy();
+  });
+
+  it('toggle help tab', () =>{
+    let x = component.helpTab;
+    component.toggleHelpTab();
+    expect(component.helpTab == !x).toBeTruthy();
+  });
+
+  it('displayProfileSaveBtn', () => {
+    component.displayProfileSaveBtn();
+    expect(component.saveBtn).toBeTruthy();
+  });
+
+  it('displayConfirmPasswordInput', () => {
+    component.displayConfirmPasswordInput();
+    expect(component.confirmPasswordInput).toBeTruthy();
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
+  });
+
 });

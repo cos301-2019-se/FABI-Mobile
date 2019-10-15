@@ -16,10 +16,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 //Import the materials component
 import { MaterialModule } from '../../materials';
-
+import { ToastContainerModule, ToastrModule, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 //Http Testing
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
+import { NotificationService } from '../../_services/notification.service';
 //Animation Testing
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -32,7 +32,8 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 describe('CmwMenuComponent', () => {
   let component: CmwMenuComponent;
   let fixture: ComponentFixture<CmwMenuComponent>;
-
+  let authService: AuthenticationService;
+  
   class MockAuthenticationService extends AuthenticationService{
     public get getCurrentSessionValue() {
         return { "user" : "" };
@@ -51,8 +52,10 @@ describe('CmwMenuComponent', () => {
         StaffHelpComponent,
         FilterPipe
       ],
-      imports: [ ReactiveFormsModule, MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [ ReactiveFormsModule, ToastContainerModule, ToastrModule.forRoot(), ToastrComponentlessModule, MaterialModule, RouterTestingModule, HttpClientTestingModule, NoopAnimationsModule, BrowserAnimationsModule, MatDialogModule],
       providers: [
+        NotificationService,
+        ToastrService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: AuthenticationService, useClass: MockAuthenticationService }
@@ -64,10 +67,47 @@ describe('CmwMenuComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CmwMenuComponent);
     component = fixture.componentInstance;
+    authService = new AuthenticationService(null);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // -------- Function Tests --------
+  it('toggle notification tab', () =>{
+    let x = component.notificationsTab;
+    component.toggleNotificationsTab();
+    expect(component.notificationsTab == !x).toBeTruthy();
+  });
+
+  it('toggle profile tab', () =>{
+    let x = component.profileTab;
+    component.toggleProfileTab();
+    expect(component.profileTab == !x).toBeTruthy();
+  });
+
+  it('toggle help tab', () =>{
+    let x = component.helpTab;
+    component.toggleHelpTab();
+    expect(component.helpTab == !x).toBeTruthy();
+  });
+
+  it('displayProfileSaveBtn', () => {
+    component.displayProfileSaveBtn();
+    expect(component.saveBtn).toBeTruthy();
+  });
+
+  it('displayConfirmPasswordInput', () => {
+    component.displayConfirmPasswordInput();
+    expect(component.confirmPasswordInput).toBeTruthy();
+  });
+
+  it('logging out', () =>{
+    let spy = spyOn(authService, 'logoutUser');
+    component.logout();
+    expect(spy).toBeTruthy();
+  });
+
 });

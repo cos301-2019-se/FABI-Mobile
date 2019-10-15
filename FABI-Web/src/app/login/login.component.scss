@@ -3,10 +3,7 @@
    ========================================================================== */
 
 
-/* General Styling
-   ========================================================================== */
-
-/* Login Styling
+/* Login Style
    ========================================================================== */
 
 body {
@@ -22,7 +19,7 @@ body {
     width: 100%;
     min-height: 100vh;
     height: auto;
-    
+
     background-color: #FCFCFC;
 
     position: absolute;
@@ -43,13 +40,13 @@ body {
     height: 100%;
     z-index: -2;
     opacity: (0.65);
-  
-  
+
+
     filter: blur(1px);
-  }
+}
 
 
-/* Banner Styling
+/* Banner Style
    ========================================================================== */
 
 .banner {
@@ -195,16 +192,16 @@ a.forgot-password:hover {
 
 /* Width Responsiveness */
 @media (min-width:768px) and (max-width:1199px) {
-    .form-group label {
+    #login_form .form-group label {
         color: #FFF;
     }
 
-    .form-text.text-muted {
+    #login_form .form-text.text-muted {
         color: #FFF !important;
         opacity: 0.5;
     }
 
-    .valid-feedback {
+    #login_form .valid-feedback {
         color: #FFF;
     }
 
@@ -218,16 +215,16 @@ a.forgot-password:hover {
 }
 
 @media (min-width:1024px) {
-    .form-group label {
+    #login_form .form-group label {
         color: #FFF;
     }
 
-    .form-text.text-muted {
+    #login_form .form-text.text-muted {
         color: #FFF !important;
         opacity: 0.5;
     }
 
-    .valid-feedback {
+    #login_form .valid-feedback {
         color: #FFF;
     }
 

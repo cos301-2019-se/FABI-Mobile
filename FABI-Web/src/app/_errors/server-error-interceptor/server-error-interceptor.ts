@@ -39,13 +39,14 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
 
   intercept(request: Http.HttpRequest<any>, next: Http.HttpHandler): Observable<Http.HttpEvent<any>> {
 
-    console.log("------------------- INTERCEPTOR ------------------");
+    // request = this.addJWTToken(request);
 
-    request = this.addJWTToken(request);
+    console.log("----- 1 -----");
 
     return next.handle(request).pipe(
       // retry(1),
       catchError((error: Http.HttpErrorResponse) => {
+
         if (error && error.status === 401) {
           
           if(this.authService.isLoggedIn == true) {
@@ -54,36 +55,41 @@ export class ServerErrorInterceptor implements Http.HttpInterceptor {
             this.authService.logoutUser();
             this.router.navigate(['/login']);
           } else {
-            this.notificationServie.showWarningNotifiction("Invalid Login Details", error.error.message);
+            this.notificationServie.showWarningNotification("Incorrect Login Details", error.error.message);
           }
-          
-          console.log("Server Error: " + error);
           return throwError(error);
 
+        } else if(error && error.status === 403) {
+          this.authService.logoutUser();
+          this.router.navigate(['/login']);
+          this.notificationServie.showErrorNotification("Unauthorized", error.error.message);
         } else if(error && error.status === 404) {
-          this.notificationServie.showWarningNotifiction(error.error.title, error.error.message);
-
+          // this.notificationServie.showErrorNotification(error.error.title, error.error.message);
         } else {
-          console.log("Server Error: " + error.message);
           return throwError(error);
         }
       })
     );
   }
 
-  private addJWTToken(request: Http.HttpRequest<any>): Http.HttpRequest<any> {  
-    if(this.session && this.session != null && this.session != '') {
-      let token = this.session.token;
+  // private addJWTToken(request: Http.HttpRequest<any>): Http.HttpRequest<any> {  
+    // this.session = this.authService.getCurrentSessionValue;
 
-      if (token && token != null && token != '') {
-        return request.clone({
-          headers: request.headers.set(
-            this.AUTH_HEADER, `Bearer ${token}`
-          )
-        });
-      }
-    }else {
-      return request;
-    }  
-  }
+    // console.log("----- 2 -----" + JSON.stringify(this.session));
+    // if(this.session.loggedIn == true || this.session.loggedIn == "true") {
+    //   console.log("----- 3 -----");
+    //   let token = this.session.token;
+    //   console.log("----- 4 ----- " + token);
+
+    //   if (token && token != null && token != '') {
+    //     return request.clone({
+    //       headers: request.headers.set(
+    //         this.AUTH_HEADER, `Bearer ${token}`
+    //       )
+    //     });
+    //   }
+    // }else {
+    //   return request;
+    // }  
+  // }
 }

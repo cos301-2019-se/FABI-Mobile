@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 13th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, August 15th 2019
+ * Last Modified: Thursday, October 10th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -14,32 +14,24 @@
  */
 
 
-import {
-  Component, ViewChild, ElementRef, isDevMode, Inject, Output, EventEmitter, TemplateRef,
-  ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef
-} from '@angular/core';
-import { OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { DomSanitizer } from '@angular/platform-browser';
-import { sharedStylesheetJitUrl } from '@angular/compiler';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import * as core from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-
-import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
-import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
-import { NotificationLoggingService, UserLogs, DatabaseManagementLogs, AccessLogs } from '../../_services/notification-logging.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { DiagnosticClinicAPIService } from '../../_services/diagnostic-clinic-api.service';
+import { DatabaseManagementLogs, NotificationLoggingService, UserLogs } from '../../_services/notification-logging.service';
+import { Member, UserManagementAPIService } from '../../_services/user-management-api.service';
+import { NotificationService } from '../../_services/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import * as Interface from '../../_interfaces/interfaces';
-
-@Component({
+@core.Component({
   selector: 'app-admin-notification',
   templateUrl: './admin-notification.component.html',
   styleUrls: ['./admin-notification.component.scss']
 })
-export class AdminNotificationComponent implements OnInit {
+export class AdminNotificationComponent implements core.OnInit {
 
   /** Object array for holding all of the logs -  @type {any[]} */
   allNotifications: any[] = [];
@@ -52,13 +44,7 @@ export class AdminNotificationComponent implements OnInit {
   numberOfUserLogs: number = 0;
   /** The total number of Database Management Logs - @type {number} */
   numberOfDatabaseLogs: number = 0;
-  /** The total number of Access Logs - @type {number} */
-  numberOfAccessLogs: number = 0;
 
-  /** The total number of FABI staff members - @type {number} */
-  numberOfFABIMembers: number;
-  /** The total number of FABI samples - @type {number} */
-  numberOfSamples: number;
   /** Indicates if there are notifications to load - @type {boolean} */
   notifications: boolean = true;
   /** The number of the notifications - @type {number} */
@@ -81,10 +67,11 @@ export class AdminNotificationComponent implements OnInit {
    * @param {UserManagementAPIService} userManagementService For calling the User Management API service
    * @param {DiagnosticClinicAPIService} diagnosticClinicService For calling the Diagnostic Clinic API service
    * @param {NotificationLoggingService} notificationLoggingService For calling the Notification Logging API service
-   * @param {ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
+   * @param {NotificationService} notificationService For calling the Notification service
+   * @param {core.ComponentFactoryResolver} resolver For dynamically inserting elements into the HTML page
    * @param {DomSanitizer} sanitizer
-   * @param {ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
-   * @param {AuthenticationService} authService Used for all authentication and session control
+   * @param {core.ComponentFactoryResolver} resolver Used to load dynamic elements in the HTML
+   * @param {AuthenticationService} authService for calling the *authentication* service
    * 
    * @memberof AdminDashboardComponent
    */
@@ -93,26 +80,29 @@ export class AdminNotificationComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private userManagementService: UserManagementAPIService,
     private diagnosticClinicService: DiagnosticClinicAPIService,
+    private notificationService: NotificationService,
     private notificationLoggingService: NotificationLoggingService,
-    private resolver: ComponentFactoryResolver,
+    private resolver: core.ComponentFactoryResolver,
     private authService: AuthenticationService,
     private router: Router,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar
   ) { }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                         NG ON INIT  
+  /**
+   * This function is called when the page loads
+   * 
+   * @description 
+   * 
+   * @memberof AdminDashboardComponent
+   */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    //******** TEMPORARY LOGIN FOR DEVELOPMENT: ********
-    this.authService.temporaryLoginSuperUser().subscribe((response: any) => {
-      this.currentUser = this.authService.getCurrentSessionValue.user;
-      this.loadNotifications();
-    });
-
     this.getAllStaff();
-
-    //******** TO BE USED IN PRODUCTION: ********
-    // this.currentUser = this.authService.getCurrentSessionValue.user;
-    // this.loadNotifications();
+    this.currentUser = this.authService.getCurrentSessionValue.user;
+    this.loadNotifications();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,15 +114,8 @@ export class AdminNotificationComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getAllStaff() {
     //Subscribing to the UserManagementAPIService to get a list containing all the FABI members
-    this.userManagementService.getAllFABIMembers().subscribe((response: any) => {
+    this.userManagementService.getAllFABIStaff().subscribe((response: any) => {
       if (response.success == true) {
-        //Temporary array to hold the array of admins retuned from the API call
-        var data = response.data.qs.admins;
-        for (var i = 0; i < data.length; i++) {
-          var tempMember: Member = { Email: data[i].email, Name: data[i].fname, Surname: data[i].surname, ID: data[i].id };
-          this.staff.push(tempMember);
-        }
-
         //Temporary array to hold the array of staff returned from the API call
         var data = response.data.qs.staff;
         for (var i = 0; i < data.length; i++) {
@@ -257,7 +240,7 @@ export class AdminNotificationComponent implements OnInit {
   loadNotifications() {
     //Loading all the staff withing FABI
     this.getAllStaff();
-    //Loading all the logs beloning to the user
+    //Loading all the logs belonging to the user
     this.loadLogs();
 
     //Making a call too the notification logging service to return all USER logs
@@ -348,6 +331,7 @@ export class AdminNotificationComponent implements OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
 
@@ -420,6 +404,7 @@ export class AdminNotificationComponent implements OnInit {
       }
       else {
         //Error handling
+        this.notifications = false;
       }
     });
   }
@@ -429,6 +414,8 @@ export class AdminNotificationComponent implements OnInit {
   //                                                  LOAD USER DETAILS
   /**
    *  This function will be called so that the information of a specific user can be fetched
+   * 
+   *  @param {string} userID The id number of the user to be found
    * 
    *  @memberof AdminNotificationComponent
    */
@@ -449,7 +436,7 @@ export class AdminNotificationComponent implements OnInit {
   /**
    *  This function will remove a notification from the notification section on the HTML page.
    * 
-   * @param {string} id                   //The id of the notification to be removed
+   * @param {string} id The id of the notification to be removed
    * 
    * @memberof AdminNotificationComponent
    */
@@ -459,11 +446,15 @@ export class AdminNotificationComponent implements OnInit {
 
     this.notificationLoggingService.updateFABIMemberNotifications(this.currentUser.ID, this.newNotifications).subscribe((response: any) => {
       if (response.success == true) {
-
+        //Notification has been removed
       }
       else {
         //Error handling
+        this.notificationService.showErrorNotification("Notification Error", "An error occurred when trying to remove this notification. Please try again.");
       }
+    }, (err: HttpErrorResponse) => {
+      //Error handling
+      this.notificationService.showErrorNotification("Notification Error", "An error occurred when trying to remove this notification. Please try again.");
     });
   }
 

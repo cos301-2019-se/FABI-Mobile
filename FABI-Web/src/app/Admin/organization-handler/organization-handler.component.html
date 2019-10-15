@@ -1,4 +1,4 @@
-<!-- Dashboard -->
+<!-- Organization Handler -->
 <div class="dashboard">
 
   <!-- Sidenav -->
@@ -42,33 +42,34 @@
 
           <!-- Navbar Items -->
           <li class="nav-item">
-              <a class="nav-link" routerLink="/admin-dashboard">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/database-handler">Database Handler</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" routerLink="/organization-handler">Organization Handler <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/reporting">Reporting</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="toggleHelpTab()">Help</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" (click)="logout()">Logout</a>
-            </li>
-            <!-- / Navbar Items -->
+            <a class="nav-link" routerLink="/admin-dashboard">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/staff-handler">Staff Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/database-handler">Database Handler</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="/organization-handler">Organization Handler <span
+                class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/clinic-handler">Diagnostic Clinic Handler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reporting">Reporting</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/view-forms">CMW Forms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleHelpTab()">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Logout</a>
+          </li>
+          <!-- / Navbar Items -->
         </ul>
       </div>
     </div>
@@ -121,15 +122,16 @@
             <div class="statistic-box-heading">
               <h5>Overview Statistics</h5>
             </div>
-            <div class="statistic-box-info">
+            <div class="statistic-box-info" *ngIf="setOrganizationLength && setPendingOrganizationsLength">
               <p *ngIf="setOrganizationLength">Total Organizations: {{numberOfOrganizations}}</p>
+              <p *ngIf="setPendingOrganizationsLength">Total Pending Organizations: {{numberOfPendingOrganizations}}</p>
             </div>
           </div>
         </div>
         <!-- Statistic Box -->
 
         <!-- Statistic Box -->
-        <div class="statistic-box">
+        <div class="statistic-box" *ngIf="setOrganizationLength">
           <div class="statistic-box-content">
             <div class="statistic-box-heading">
               <h5>Total Organizations</h5>
@@ -140,6 +142,32 @@
           </div>
         </div>
         <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box" *ngIf="setPendingOrganizationsLength">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Total Pending Organizations</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p *ngIf="setPendingOrganizationsLength">{{numberOfPendingOrganizations}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Statistic Box -->
+
+        <!-- Statistic Box -->
+        <div class="statistic-box" *ngIf="!setOrganizationLength && !setPendingOrganizationsLength">
+          <div class="statistic-box-content">
+            <div class="statistic-box-heading">
+              <h5>Statistics</h5>
+            </div>
+            <div class="statistic-box-info">
+              <p>Unfortunately there are no statistics available at this time</p>
+            </div>
+          </div>
+        </div>
+        <!-- / Statistic Box -->
 
       </div>
       <!-- / Statistics -->
@@ -185,15 +213,16 @@
           </thead>
 
           <tbody>
-            <tr *ngFor="let pendingOrganization of pendingOrganizations | filter : 'pendingOrganizations' : searchOrganization">
+            <tr
+              *ngFor="let pendingOrganization of pendingOrganizations | filter : 'pendingOrganizations' : searchOrganization">
               <td>{{pendingOrganization.orgName}}</td>
               <td class="table-action">
-                <button class="btn btn-default-view" data-toggle="modal" data-target="#viewModal"
+                <button class="btn btn-default-viewOrg" data-toggle="modal" data-target="#viewModal"
                   [id]="pendingOrganization.email" (click)="selectOrganisation(pendingOrganization)">View</button>
-                <button class="btn btn-default-save" data-toggle="modal" [id]="pendingOrganization.email"
-                  (click)="registerPendingOrg(pendingOrganization)" >Verify</button>
+                <button class="btn btn-default-verify" data-toggle="modal" [id]="pendingOrganization.email"
+                  (click)="registerPendingOrg(pendingOrganization)">Verify</button>
                 <button class="btn btn-default-delete" data-toggle="modal" [id]="pendingOrganization.email"
-                 data-target="#confirmDeleteModal">Decline</button>
+                  (click)="declinePendingeOrg(pendingOrganization)">Decline</button>
               </td>
             </tr>
           </tbody>
@@ -361,15 +390,14 @@
                 <div class="form-group">
                   <label for="organization_name">Organization Name</label>
                   <input type="text" class="form-control" id="organization_name" placeholder="Enter organization name"
-                    formControlName="organization_name" required
-                    [ngClass]="{
+                    formControlName="organization_name" required [ngClass]="{
                     'is-invalid': registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty), 
-                    'is-valid': registerOrgForm.controls['organization_name'].valid && (submitted || registerOrgForm.controls['organization_name'].dirty)}">
+                    'is-valid': registerOrgForm.controls['organization_name'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['organization_name'].invalid && (submitted || registerOrgForm.controls['organization_name'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.organization_name">
-                      <p *ngIf="registerOrgForm.get('organization_name').hasError(validation.type)">
+                      <p *ngIf="registerOrgForm.get('organization_name').hasError(validation.type)" class="text-danger">
                         {{validation.message}}</p>
                     </div>
                   </div>
@@ -398,15 +426,15 @@
                 <div class="form-group">
                   <label for="admin_name">Admin Name</label>
                   <input type="text" class="form-control" id="admin_name" placeholder="Enter admin name"
-                    formControlName="admin_name" required
-                    [ngClass]="{
+                    formControlName="admin_name" required [ngClass]="{
                     'is-invalid': registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty), 
-                    'is-valid': registerOrgForm.controls['admin_name'].valid && (submitted || registerOrgForm.controls['admin_name'].dirty)}">
+                    'is-valid': registerOrgForm.controls['admin_name'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['admin_name'].invalid && (submitted || registerOrgForm.controls['admin_name'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.admin_name">
-                      <p *ngIf="registerOrgForm.get('admin_name').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="registerOrgForm.get('admin_name').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -417,15 +445,15 @@
                 <div class="form-group">
                   <label for="admin_surname">Admin Surname</label>
                   <input type="text" class="form-control" id="admin_surname" placeholder="Enter admin surname"
-                    formControlName="admin_surname" required
-                    [ngClass]="{
+                    formControlName="admin_surname" required [ngClass]="{
                     'is-invalid': registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty), 
-                    'is-valid': registerOrgForm.controls['admin_surname'].valid && (submitted || registerOrgForm.controls['admin_surname'].dirty)}">
+                    'is-valid': registerOrgForm.controls['admin_surname'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['admin_surname'].invalid && (submitted || registerOrgForm.controls['admin_surname'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.admin_surname">
-                      <p *ngIf="registerOrgForm.get('admin_surname').hasError(validation.type)">{{validation.message}}
+                      <p *ngIf="registerOrgForm.get('admin_surname').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}
                       </p>
                     </div>
                   </div>
@@ -437,15 +465,15 @@
                 <div class="form-group">
                   <label for="admin_email">Email address</label>
                   <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp"
-                    placeholder="Enter email" formControlName="admin_email" required
-                    [ngClass]="{
+                    placeholder="Enter email" formControlName="admin_email" required [ngClass]="{
                     'is-invalid': registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty), 
-                    'is-valid': registerOrgForm.controls['admin_email'].valid && (submitted || registerOrgForm.controls['admin_email'].dirty)}">
+                    'is-valid': registerOrgForm.controls['admin_email'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['admin_email'].invalid && (submitted || registerOrgForm.controls['admin_email'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.admin_email">
-                      <p *ngIf="registerOrgForm.get('admin_email').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="registerOrgForm.get('admin_email').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -455,16 +483,16 @@
                 <!-- Phone -->
                 <div class="form-group">
                   <label for="admin_phone">Phone</label>
-                  <input type="text" class="form-control" id="admin_phone" placeholder="Enter phone"
-                    formControlName="admin_phone" required
-                    [ngClass]="{
+                  <input type="tel" class="form-control" id="admin_phone" placeholder="Enter phone"
+                    formControlName="admin_phone" required [ngClass]="{
                     'is-invalid': registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty), 
-                    'is-valid': registerOrgForm.controls['admin_phone'].valid && (submitted || registerOrgForm.controls['admin_phone'].dirty)}">
+                    'is-valid': registerOrgForm.controls['admin_phone'].valid && (submitted)}">
                   <!-- Error Validation Feedback-->
                   <div
                     *ngIf="registerOrgForm.controls['admin_phone'].invalid && (submitted || registerOrgForm.controls['admin_phone'].dirty)">
                     <div *ngFor="let validation of register_organization_validators.admin_phone">
-                      <p *ngIf="registerOrgForm.get('admin_phone').hasError(validation.type)">{{validation.message}}</p>
+                      <p *ngIf="registerOrgForm.get('admin_phone').hasError(validation.type)" class="text-danger">
+                        {{validation.message}}</p>
                     </div>
                   </div>
                   <!-- / Error Validation Feedback-->
@@ -551,4 +579,4 @@
   <!-- / Help Section -->
 
 </div>
-<!-- / Dashboard -->
+<!-- / Organization Handler -->
