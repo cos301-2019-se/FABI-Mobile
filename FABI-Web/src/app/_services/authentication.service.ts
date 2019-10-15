@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, October 11th 2019
+ * Last Modified: Tuesday, October 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -227,8 +227,6 @@ export class AuthenticationService {
 
     return this.http.request<any>(method, url, options).pipe(map(response => {
 
-      console.log(this.getCurrentSessionValue);
-      console.log(response.token);
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
         if (response.userDetails.databases) {

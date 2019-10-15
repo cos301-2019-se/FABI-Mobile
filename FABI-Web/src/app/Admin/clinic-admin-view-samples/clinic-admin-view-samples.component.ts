@@ -5,7 +5,7 @@
  * Created Date: Monday, August 19th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, October 10th 2019
+ * Last Modified: Tuesday, October 15th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -90,7 +90,6 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
   ngOnInit() {
     //Calling the neccessary functions as the page loads
     this.viewSamples();
-    console.log(this.statusTypes);
   }
 
 
