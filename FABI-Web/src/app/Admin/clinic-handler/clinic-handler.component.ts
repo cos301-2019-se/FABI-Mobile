@@ -257,9 +257,6 @@ export class ClinicHandlerComponent implements core.OnInit {
     const LstaffPhone = 1234567890;
     const LstaffPosition = "ClinicAdmin";
 
-    console.log(JSON.stringify(this.addStaffForm.controls.user.value));
-
-    return;
 
     const staff_details: Interface.StaffInfo = { fname: LstaffName, surname: LstaffSurname, email: LstaffEmail, position: LstaffPosition, phone: LstaffPhone };
 

@@ -182,7 +182,6 @@ export class MemberViewSamplesComponent implements core.OnInit {
       if(column == "types") {
         // Object.keys(this.selectedSampleData[column]).forEach((field) => {
           this.selectedSampleData[column].forEach(element => {
-            console.log(element);
             let obj = {
               'name': element['type'],
               "data": element['symptoms']

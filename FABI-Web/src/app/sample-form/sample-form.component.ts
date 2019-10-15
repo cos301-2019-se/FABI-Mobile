@@ -281,7 +281,9 @@ export class SampleFormComponent implements OnInit {
             this.plantationLocation = this.location;
             this.getAddress(this.location.latitude, this.location.longitude);
           }
-        }, (error: PositionError) => console.log(error));
+        }, (error: PositionError) => {
+
+        });
       } else {
         alert("Geolocation is not supported by this browser.");
       }

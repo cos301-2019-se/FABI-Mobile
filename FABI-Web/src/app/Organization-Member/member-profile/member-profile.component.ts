@@ -321,8 +321,6 @@ export class MemberProfileComponent implements core.OnInit {
 
     let loadingRef = this.dialog.open(LoadingComponent, { data: { title: "Updating Password" } });
 
-    console.log(Ucurrent, Unew);
-
     this.userManagementService.updateOrganizationMemberPassword(Ucurrent, Unew).subscribe((response: any) => {
 
       loadingRef.close();
