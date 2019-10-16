@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, October 10th 2019
+ * Last Modified: Wednesday, October 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -371,6 +371,7 @@ export class DatabaseHandlerComponent implements OnInit {
         this.notificationService.showWarningNotification('Error', 'Could not load database details');
       }
     }, (err: http.HttpErrorResponse) => {
+        loadingRef.close();
         this.notificationService.showWarningNotification('Error', 'Could not load database details');
         //Handled in error-handler
       });
@@ -413,6 +414,7 @@ export class DatabaseHandlerComponent implements OnInit {
         //Handled in error-handler
         this.notificationService.showErrorNotification('Upload Failed', 'An error occurred while porting');
         this.resetDatabaseFields();
+        loadingRef.close();
       });
     }
   }

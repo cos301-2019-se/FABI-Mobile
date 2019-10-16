@@ -5,7 +5,7 @@
  * Created Date: Monday, August 19th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, October 10th 2019
+ * Last Modified: Wednesday, October 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -250,9 +250,9 @@ export class ClinicAdminViewSamplesComponent implements core.OnInit {
 
     this.diagnosticClinicService.updateSamplesStatus(sample, this.updateSampleStatusForm.controls.sample_status.value).subscribe((response: any) => {
 
-      if (response.success == true && response.code == 200) {
+      loadingRef.close();
 
-        loadingRef.close();
+      if (response.success == true && response.code == 200) {
         this.viewSamples();
         this.notificationService.showSuccessNotification('Sample Status Updated', '');
 

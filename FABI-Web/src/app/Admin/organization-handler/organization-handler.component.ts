@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, October 10th 2019
+ * Last Modified: Wednesday, October 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -139,8 +139,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])],
       admin_phone: ['', Validators.compose([
-        Validators.required,
-        Validators.pattern('^(([\+]{1}[0-9]{1,3}[\ ]{1}[0-9]{1,2}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\-]{1}[0-9]{4}[\-]{1}[0-9]{4})|([\(]{1}[0]{1}[0-9]{1}[\)]{1}[\ ]{1}[0-9]{4}([\ ]|[\-]){1}[0-9]{4})|([0-9]{4}([\ ]|[\-])?[0-9]{4})|([0]{1}[0-9]{3}[\ ]{1}[0-9]{3}[\ ]{1}[0-9]{3})|([0]{1}[0-9]{9})|([\(]{1}[0-9]{3}[\)]{1}[\ ]{1}[0-9]{3}[\-]{1}[0-9]{4})|([0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[\-]?[0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[0-9]{9}[0-9]?)|([0-9]{3}[\.]{1}[0-9]{3}[\.]{1}[0-9]{4})|([\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\.]|[\-]){1}[0-9]{4}(([\ ]?(x|ext|extension)?)([\ ]?[0-9]{3,4}))?)|([1]{1}[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\-]){1}[0-9]{4})|([\+]{1}[1]{1}[\ ]{1}[0-9]{3}[\.]{1}[0-9]{3}[\-]{1}[0-9]{4})|([\+]{1}[1]{1}[\ ]?[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}[\-]{1}[0-9]{4}))$')
+        Validators.required
       ])]
     });
   }
@@ -224,6 +223,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
+      loadingRef.close();
       this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
       this.resetAddFields();
     });
@@ -402,6 +402,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
         this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
       }
     }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
       if(err.error.code == 400 && err.error.message == "User email already exists") {
         this.notificationService.showErrorNotification('Registration Failed', 'Organization email already exists');
       } else {
