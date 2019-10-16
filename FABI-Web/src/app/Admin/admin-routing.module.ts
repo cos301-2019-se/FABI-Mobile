@@ -33,11 +33,6 @@ import { ViewFormsComponent } from './view-forms/view-forms.component';
 
 
 const routes: Routes = [
-  { 
-    path: '',   
-    redirectTo: '/admin-dashboard', 
-    pathMatch: 'full' 
-  },
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
