@@ -68,6 +68,7 @@ import { FilterPipe } from './_pipes/filter.pipe';
 import { NotificationService } from './_services/notification.service';
 import { CookieService } from "ngx-cookie-service";
 import { AgmCoreModule } from '@agm/core';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 // import { DataTablesModule } from 'angular-datatables';
 
@@ -157,7 +158,8 @@ import { AgmCoreModule } from '@agm/core';
   providers: [
     NotificationService,
     FilterPipe,
-    CookieService
+    CookieService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
