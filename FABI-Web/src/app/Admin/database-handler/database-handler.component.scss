@@ -72,7 +72,7 @@
   color: #fff;
 }
 
-.modal-body {
+.modal-body.database-handler {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -82,23 +82,23 @@ modal {
   padding-right: 0 !important;
 }
 
-#addModal .modal-dialog {
+#addModalDialog {
   max-width: 85%;
   min-width: 30%;
   width: auto;
 }
 
-#addModal .modal-content {
+#addModalContent {
   min-height: 25vh;
   height: auto;
 }
 
-#viewDatabaseModal .modal-dialog {
+#viewModalDialog {
   max-width: 85%;
 }
 
 
-#viewDatabaseModal .modal-content {
+#viewModalContent {
   min-height: 90vh;
   height: auto;
 }

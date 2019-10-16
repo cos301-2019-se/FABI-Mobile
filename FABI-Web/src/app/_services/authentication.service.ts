@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Friday, October 11th 2019
+ * Last Modified: Wednesday, October 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -227,8 +227,6 @@ export class AuthenticationService {
 
     return this.http.request<any>(method, url, options).pipe(map(response => {
 
-      console.log(this.getCurrentSessionValue);
-      console.log(response.token);
       if (response && (response.token && response.token != '')) {
         this.setSessionVariables(response.token, response.userDetails, details.orgName);
         if (response.userDetails.databases) {
@@ -250,6 +248,8 @@ export class AuthenticationService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadFABIUserPrivileges() {
+
+    
     let getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;
     let method = 'POST';
 
@@ -291,7 +291,7 @@ export class AuthenticationService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getFABIUserPrivileges() {
     // if current users value is not set - call loadFABIUserPrivileges() to get the users details
-    if (this.getCurrentUserValue == '' || this.getCurrentUserValue == null) {
+    if (this.getCurrentUserValue == '' || this.getCurrentUserValue == null || this.getCurrentUserValue.databases == "" || this.getCurrentUserValue.databases == null) {
       this.loadFABIUserPrivileges();
       return this.getCurrentUserValue;
     } // elss return users details

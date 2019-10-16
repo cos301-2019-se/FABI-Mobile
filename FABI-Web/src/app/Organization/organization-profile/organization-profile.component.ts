@@ -5,7 +5,7 @@
  * Created Date: Friday, May 24th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Thursday, October 10th 2019
+ * Last Modified: Wednesday, October 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -277,7 +277,7 @@ export class OrganizationProfileComponent implements core.OnInit {
       this.editProfileToggle();
       this.resetMemberFields();
 
-      if (response.success == true) {
+      if (response.success == true && response.code == 200) {
         //Reloading the updated user's details
         this.loadAdminProfileDetails();
         //Display message to say that details were successfully saved
