@@ -5,7 +5,7 @@
  * Created Date: Tuesday, August 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 8th 2019
+ * Last Modified: Wednesday, October 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -112,7 +112,7 @@ export class StaffViewDatabasesComponent implements OnInit {
     this.currentUser = this.authService.getCurrentSessionValue.user;
     //Calling the neccessary functions as the page loads
     // Load Databases for Drop Down
-    this.currentUserPrivileges = this.authService.getFABIUserPrivileges;
+    this.currentUserPrivileges = this.authService.getFABIUserPrivileges();
     this.databases = this.currentUserPrivileges.databases;
   }
 
@@ -204,10 +204,12 @@ export class StaffViewDatabasesComponent implements OnInit {
 
       } else {
         //POPUP MESSAGE
+        loadingRef.close();
         this.notificationService.showWarningNotification('Error', 'Could not load database details');
       }
 
     }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
       this.notificationService.showWarningNotification('Error', 'Could not load database details');
       //Handled in error-handler
     });

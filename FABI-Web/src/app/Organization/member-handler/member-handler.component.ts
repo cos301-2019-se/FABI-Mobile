@@ -5,7 +5,7 @@
  * Created Date: Sunday, June 23rd 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 15th 2019
+ * Last Modified: Wednesday, October 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -333,6 +333,7 @@ export class MemberHandlerComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
+      loadingRef.close();
       this.notificationService.showErrorNotification('Remove Failed', 'An error occurred while removing the member');
     });
   }

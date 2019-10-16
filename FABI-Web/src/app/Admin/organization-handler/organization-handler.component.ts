@@ -5,7 +5,7 @@
  * Created Date: Thursday, July 18td 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 15th 2019
+ * Last Modified: Wednesday, October 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -223,6 +223,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
       }
     }, (err: http.HttpErrorResponse) => {
       //Handled in error-handler
+      loadingRef.close();
       this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
       this.resetAddFields();
     });
@@ -401,6 +402,7 @@ export class OrganizationHandlerComponent implements core.OnInit {
         this.notificationService.showErrorNotification('Registration Failed', 'An error occurred while registering the organization');
       }
     }, (err: http.HttpErrorResponse) => {
+      loadingRef.close();
       if(err.error.code == 400 && err.error.message == "User email already exists") {
         this.notificationService.showErrorNotification('Registration Failed', 'Organization email already exists');
       } else {

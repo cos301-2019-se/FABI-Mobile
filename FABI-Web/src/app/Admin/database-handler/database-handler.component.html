@@ -201,15 +201,15 @@
 
   <!-- Add Modal Section -->
   <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered" id="addModalDialog" role="document">
+      <div class="modal-content" id="addModalContent">
         <div class="modal-header">
           <h5 class="modal-title" id="addModalTitle">Add Database</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetDatabaseFields()">
             <span aria-hidden="true"><i class="fas fa-times"></i></span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body database-handler">
           <div class="form">
 
             <form id="" [formGroup]="portingForm" (submit)="submitCSV()" class="needs-validation" novalidate>
@@ -319,7 +319,7 @@
             <span aria-hidden="true"><i class="fas fa-times"></i></span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body database-handler">
 
           <!-- Loading Spinner -->
           <div class="spinner-grow text-secondary loading" role="status" *ngIf="databaseTableLoading">
@@ -362,7 +362,7 @@
             <span aria-hidden="true"><i class="fas fa-times"></i></span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body database-handler">
           <h4 *ngIf="deleteData.message != null || deleteData.message != ''" class="text-danger">{{deleteData.message}}
           </h4>
           <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
@@ -392,7 +392,7 @@
             <span aria-hidden="true"><i class="fas fa-times"></i></span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body database-handler">
           <h5 *ngIf="deleteData.info != null || deleteData.info != ''">{{deleteData.info}}</h5>
           <h4 *ngIf="deleteData.message != null || deleteData.message != ''" class="p-3 mb-2 bg-danger text-white">
             {{deleteData.message}}</h4>
@@ -447,15 +447,15 @@
 <!-- View Database Modal -->
 <div class="modal fade" id="viewDatabaseModal" tabindex="-1" role="dialog" aria-labelledby="viewDatabaseModalTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered" id="viewModalDialog" role="document">
+    <div class="modal-content" id="viewModalContent">
       <div class="modal-header">
         <h5 class="modal-title" id="downloadModalTitle">View Database</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetDatabaseFields()">
           <span aria-hidden="true"><i class="fas fa-times"></i></span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body database-handler">
 
         <!-- <div class="input-group search-table">
           <div class="input-group-prepend ">

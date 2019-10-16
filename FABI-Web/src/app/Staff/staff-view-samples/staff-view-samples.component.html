@@ -50,7 +50,7 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h5 class="modal-title" id="downloadModalTitle">View Sample Details</h5>
+        <h5 class="modal-title" id="viewSampleModalTitle">View Sample Details</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetSampleFields()">
           <span aria-hidden="true"><i class="fas fa-times"></i></span>
         </button>
@@ -67,7 +67,7 @@
             <!-- Sample Data -->
             <div class="form-group col-md-6">
               <label>{{field.name}}</label>
-              <p class="form-control form-control-sm">{{field.data}}</p>
+              <p class="form-control form-control-sm view-samples">{{field.data}}</p>
             </div>
             <!-- / Sample Data -->
           </div>
@@ -75,7 +75,7 @@
           <div class="form-row" *ngFor="let field of sampleFields">
             <!-- Sample Data -->
             <div class="form-group col-md-6">
-              <label>{{field.name}}</label> <p class="form-control form-control-sm">{{field.data}}</p>
+              <label>{{field.name}}</label> <p class="form-control form-control-sm view-samples">{{field.data}}</p>
             </div>
             <!-- / Sample Data -->
           </div>
@@ -84,7 +84,7 @@
             <!-- Sample Data -->
             <div class="form-group col-md-6">
               <label>{{field.name}}</label>
-              <p class="form-control form-control-sm">{{field.data}}</p>
+              <p class="form-control form-control-sm view-samples">{{field.data}}</p>
             </div>
             <!-- / Sample Data -->
           </div>
@@ -93,7 +93,7 @@
             <!-- Sample Data -->
             <div class="form-group col-md-6">
               <label>{{field.name}}</label>
-              <p class="form-control form-control-sm">{{field.data}}</p>
+              <p class="form-control form-control-sm view-samples">{{field.data}}</p>
             </div>
             <!-- / Sample Data -->
           </div>

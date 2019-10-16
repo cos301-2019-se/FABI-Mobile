@@ -5,7 +5,7 @@
  * Created Date: Thursday, June 20th 2019
  * Author: Team Nova - novacapstone@gmail.com
  * -----
- * Last Modified: Tuesday, October 15th 2019
+ * Last Modified: Wednesday, October 16th 2019
  * Modified By: Team Nova
  * -----
  * Copyright (c) 2019 University of Pretoria
@@ -248,6 +248,8 @@ export class AuthenticationService {
    */
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   loadFABIUserPrivileges() {
+
+    
     let getUserDetailsURL = `${config.userManagementURL}/getUserDetails`;
     let method = 'POST';
 
@@ -289,7 +291,7 @@ export class AuthenticationService {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getFABIUserPrivileges() {
     // if current users value is not set - call loadFABIUserPrivileges() to get the users details
-    if (this.getCurrentUserValue == '' || this.getCurrentUserValue == null) {
+    if (this.getCurrentUserValue == '' || this.getCurrentUserValue == null || this.getCurrentUserValue.databases == "" || this.getCurrentUserValue.databases == null) {
       this.loadFABIUserPrivileges();
       return this.getCurrentUserValue;
     } // elss return users details
