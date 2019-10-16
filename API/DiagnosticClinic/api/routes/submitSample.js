@@ -86,7 +86,7 @@ async function submitForm(req, res)
                     }
 
                     mailRef.get().then(doc => {
-                        mail.sendSampleSubmission(refnum, doc.data().email, doc.data().fname, doc.data().surname, result);
+                        mail.sendSampleSubmission(req.body.orgName, refnum, doc.data().email, doc.data().fname, doc.data().surname, result);
                         res.setHeader('Content-Type', 'application/problem+json');
                         res.setHeader('Content-Language', 'en');
                         res.setHeader("Access-Control-Allow-Origin", "*");
