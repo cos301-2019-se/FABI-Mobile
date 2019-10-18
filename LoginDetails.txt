@@ -1,0 +1,16 @@
+=== SuperUser ===
+Organization: FABI
+username: aeronland@gmail.com
+password: aeronpassword
+
+
+=== FABI Staff Member ===
+Organization: FABI
+username: kendrar@mweb.co.za
+password: 7cxF0YtSBv
+
+
+=== Organization Admin ===
+Organization: SAPPI
+username: u17087709@tuks.co.za
+password: luveshanpassword
